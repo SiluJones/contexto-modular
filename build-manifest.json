@@ -1,0 +1,75 @@
+{
+  "note": "Ordem EXPLICITA (anti-pitfall: sem glob/descoberta automatica). build.js troca cada marker pelo seu arquivo; falha se faltar ou sobrar marcador.",
+  "template": "src/index.template.html",
+  "output": "dist/index.html",
+  "modules": [
+    {
+      "marker": "//__KCU_NICHE:dev__//",
+      "file": "src/niches/dev.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:design__//",
+      "file": "src/niches/design.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:client__//",
+      "file": "src/niches/client.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:narrative__//",
+      "file": "src/niches/narrative.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:marketing__//",
+      "file": "src/niches/marketing.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:research__//",
+      "file": "src/niches/research.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:product__//",
+      "file": "src/niches/product.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:business__//",
+      "file": "src/niches/business.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:game__//",
+      "file": "src/niches/game.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:pixel__//",
+      "file": "src/niches/pixel.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:brainstorm__//",
+      "file": "src/niches/brainstorm.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:music__//",
+      "file": "src/niches/music.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:rpg__//",
+      "file": "src/niches/rpg.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:cuisine__//",
+      "file": "src/niches/cuisine.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:animation__//",
+      "file": "src/niches/animation.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:comics__//",
+      "file": "src/niches/comics.js"
+    },
+    {
+      "marker": "//__KCU_NICHE:custom__//",
+      "file": "src/niches/custom.js"
+    }
+  ]
+}
