@@ -1223,7 +1223,7 @@ function normNiche(n){
     behaviors:      normBehaviors(n.behaviors),
     contextFiles:   _files,
     outputs:        normOutputs(n.outputs),
-    topbar:         [...normTopbar(n.topbar), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }],
+    topbar:         [...normTopbar(n.topbar), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }],
     builderSection: normBuilderSection(n.builderSection),
     conventions:    normConventions(n.conventions),
     promptsExtra:   n.promptsExtra || []
@@ -1871,6 +1871,7 @@ function renderOutputs(niche){
      Consultado quando relevante, fácil de atualizar e versionar.
    ========================================================= */
 function groupModeOn(){ return !!(STATE.topbar && STATE.topbar.groupMode === "yes"); }
+function asuModeOn(){ return !!(STATE.topbar && STATE.topbar.asuMode === "yes"); }
 function effectiveFiles(niche){
   // O HUB.md NÃO entra no download por-nicho (seria um HUB genérico repetido em cada nicho).
   // Ele é montado e baixado na página HUB (um por grupo). O switch "Projeto em grupo?"
@@ -2168,6 +2169,17 @@ function buildClaudeMd(niche){
   L.push("");
   L.push(`Respostas em ${langTxt}, incluindo comentários quando houver código.`);
 
+if(asuModeOn()){
+  L.push("");
+  L.push("## Saída de código via ASU (patch)");
+  L.push("");
+  L.push("Este projeto entrega mudanças de código como instrução do **Atualizador Automático de Scripts (ASU)** — não arquivos inteiros. Pré-requisito: o `INSTRUCTION_GUIDE.md` está no conhecimento do Projeto e a ferramenta ASU está instalada.");
+  L.push("");
+  L.push("1. Ao pedir uma \"instrução ASU\" (ou ao alterar arquivos existentes), responda com **UM bloco `yaml`** (`format_version: \"1.0\"`) e uma linha final com `python -m src apply instrucao.yaml --root <RAIZ> --dry-run`. Nunca XML; nunca arquivos soltos.");
+  L.push("2. Prefira edições **cirúrgicas** (`replace_function`/`replace_method`/`replace_section`/`set_json_path`); para JS e outras linguagens, `type: \"text\"` + `replace_context_block` com âncoras copiadas **literalmente do arquivo real** (indentação exata), casando **uma única vez** — só o miolo no `new_content`.");
+  L.push("3. Não invente campos nem use número de linha; o `INSTRUCTION_GUIDE.md` é a referência obrigatória do formato.");
+  L.push("4. **Verificação (sessão seguinte):** se você emitiu uma instrução ASU e os arquivos do projeto estão à vista, confira no disco cada arquivo que ela tocou antes de seguir — não confie em \"deu certo\".");
+}
   if(groupModeOn()){
     L.push("");
     L.push("## Projeto em grupo (HUB compartilhado)");
