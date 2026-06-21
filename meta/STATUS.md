@@ -10,6 +10,8 @@
 - **Cérebro renomeado (D-029):** arquivo gerado do cérebro mudou de `CLAUDE.md` → `CEREBRO.md` em todos os projetos gerados (sempre, não condicional). Libera o nome `CLAUDE.md` para o arquivo-raiz do Claude Code. Todas as referências no template, triggers, behaviors e harness atualizadas.
 - **"Feedback para o ASU" no IDEIAS gerado:** nova seção logo abaixo de "Feedback para o Kit" no template universal `UNIVERSAL_IDEAS_TPL`.
 - Harness: **17/17, 0 erros, 32 checagens**.
+- **ROADMAP atualizado para v1.34.0** (modular concluído, i18n em avaliação, fase «Modo Code» aberta) — primeira atualização feita pelo método "doc por spec" (D-030).
+- Arquivos tocados nesta sessão (Code): meta/ROADMAP.md, meta/DECISOES.md, meta/STATUS.md, meta/CEREBRO.md.
 
 ## 🎯 PRÓXIMOS (decidir/fazer)
 1. **ASU quick wins:** (b) lembrete na UI quando o switch ASU é ligado (subir o `INSTRUCTION_GUIDE.md`); (c) ancorar a diretriz e o HUB no `format_version` em vez da versão da ferramenta.

@@ -4,6 +4,8 @@
 
 > **Criado em 2026-06-07.** Primeira versão. Consolida o que já foi feito (Fases 0–2) e organiza o que está por decidir/fazer (Fases 3–5 + Futuro), a partir das discussões desta sessão.
 
+> **Mudanças nesta revisão (v1.34.0):** refator **modular concluído** (D-028) — o `index.html` passou a ser gerado de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js`; produto segue **1 arquivo único** (D-001 preservado). Cérebro renomeado `CLAUDE.md`→`CEREBRO.md` (D-029), liberando `CLAUDE.md` para o arquivo-raiz do Claude Code; seção «Feedback para o ASU» no IDEIAS gerado. **Fase 4 reescrita:** a pergunta "modular vs. arquivo único" está **resolvida** (modular venceu); o que segue em avaliação é só o **i18n / idioma misto** (i-N26). A menção a "Fase 6 (i18n)" da v1.33.0 fica **consolidada na Fase 4** — nunca chegou a virar bloco próprio (P12: nada perdido, só realocado). **Nova entrega aberta:** «Modo Code». **Método novo:** atualização de doc por **spec para o Claude Code** (D-030) — ver `CEREBRO.md` §«🤝 Fluxo Chat ↔ Claude Code».
+
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB curados + variador (D-027); rótulo de grupo reescrito. **Direção estratégica aceita:** refator modular (i-N13) + i18n com idioma misto (i-N26) — sem código até decisão. Fase 6 (i18n) acrescentada ao horizonte.
 
 > **Mudanças na revisão (v1.32.0):** HUB absorveu o CANON.md do piloto (Cânone Central, códigos de área, precedência, tarefas com origem); construtor por botões + estilo do kit; diretriz de personalização das Instruções; log técnico no game. D-026.
@@ -74,11 +76,14 @@ Itens de código pequenos e de doc, sem arquitetura nova.
 3. **Aplicar o lote de feedback dos pilotos quando fechar** (i-N23: paleta global×bioma no ESTILO, prioridade visual interna no SPRITES, efeitos especiais no ANIMACAO, estado "aguardando design"; mais itens por vir das outras frentes; o item 4 — "aguardando design" — entrou via ROTEIRO na v1.29.0). Gate: decisão do usuário de fechar o lote. Triagem D-022 (base / módulo / específico). Re-validar 17/17.
 4. **Cosméticos:** MAPA.md ("17 prontos" → 16 de conteúdo + 1 construtor); reagrupar `narrative` (group literary → tema criativo); revisar README/PLANNING; revisar qualidade das Instruções geradas.
 
-## ⏸ Fase 4 — Arquitetura (EM AVALIAÇÃO — não mexer sem decisão)
-- **Refator modular** (i-N13): dados de nicho em JSON separados + núcleo central, vs. manter o HTML único (D-001).
-- **Tensão central:** o produto é "1 arquivo, sem build, roda via `file://`/GitHub Pages". `fetch()` de JSON quebra via `file://`; build embutindo JSON reintroduz toolchain.
-- **Caminho de menor arrependimento (se a dor de manutenção justificar):** modular **no repositório** + um **script simples de concatenação** que gera o `index.html` "bundled" para deploy (sem framework). Modular para desenvolver, 1 arquivo para distribuir — preserva D-001 no produto final.
-- **Gatilho de decisão:** quando editar/adicionar nicho começar a doer de verdade. Até lá, fica em avaliação.
+## ✅/⏸ Fase 4 — Arquitetura (modular CONCLUÍDO; i18n em avaliação)
+**✅ Resolvido (v1.34.0 — D-028):** o refator **modular** foi feito. O `index.html` é gerado de `src/index.template.html` + 17 módulos `src/niches/*.js` via `build.js`; saída **byte-idêntica** à v1.33.0 com tudo desligado; o `build.js` é ferramenta **do dev** — o produto segue **1 arquivo único, sem build no lado do usuário** (D-001 preservado). A tensão `file://`/`fetch()` foi resolvida por **concatenação no build** (sem framework, sem toolchain no produto) — exatamente o "caminho de menor arrependimento" que o ROADMAP previa.
+**⏸ Em avaliação — i18n / idioma misto (i-N26):** com o modular no lugar, abre-se a troca de idioma da UI e dos templates de forma auditável (UI/conversa no idioma do usuário; artefatos/código/meta em inglês). **Direção aceita; sem código até o "vai" explícito.** Risco: a migração de strings quebrar a geração → mitigação: harness 17/17 como rede, migrar por etapas validando a cada passo. (Absorve a "Fase 6 (i18n)" citada na nota da v1.33.0, que nunca virou bloco.)
+
+## ▶ Próxima entrega — Modo Code (switch do kit de arranque do Claude Code)
+Switch no kit que gera o **kit de arranque** para desenvolver um projeto **no Claude Code** (desktop e CLI): um `CLAUDE.md` **raiz** starter (comandos de build, convenções, aponta pro `meta/`), `.claude/settings.json` + comandos `/`, o **protocolo de raias** (chat reescreve/entrega inteiro e por spec; Code implementa e dá append), e os macetes de ambiente (abrir pelo PowerShell; commit sem acento). É o que praticamos aqui (dogfooding) virando feature do produto.
+- **Decisões de arranque já tomadas** (handoff 2026-06-21): `.claude/commands/` no v1 = **sim**; build no `CLAUDE.md` raiz = **placeholder** (mais simples por ora); interação com os outros switches (HUB/grupo, ASU) = **independente por ora** (não são exclusivos; um talvez não precise do outro — refinar depois).
+- **Backlog imediato:** (1) **spec do Modo Code** com as escolhas acima (o chat escreve); (2) **ASU quick wins** b/c — lembrete na UI quando o switch ASU é ligado (subir o `INSTRUCTION_GUIDE.md`); ancorar a diretriz e o HUB no `format_version` em vez da versão da ferramenta.
 
 ## 🌱 Fase 5 — Novas capacidades (IDEIAS a maturar)
 - **Guias/tutoriais/wikis** (i-N14): nicho "Aprendizado/Guia" (trilhas, fontes/cursos verificados, progresso, glossário) — começar como nicho dentro do kit; virar ferramenta dedicada só se o fluxo pedir. Conecta a "Educação" (NICHOS-CANDIDATOS, nº1). Exige rigor de fonte (casa com i-N17).

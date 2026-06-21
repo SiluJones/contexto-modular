@@ -597,6 +597,20 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 
 ---
 
+## D-030 — Atualização de doc por spec para o Claude Code (curadoria-delta)
+
+**Decisão.** Além do fluxo "o chat entrega o arquivo INTEIRO" (que **continua valendo** para reescritas de fundo/voz/reestruturação), o chat pode entregar uma **spec curta** em `meta/specs/` que descreve uma **edição cirúrgica** de um doc de curadoria (ROADMAP/CONTEXT/IDEIAS/CHANGELOG): com o **texto exato a inserir/alterar** e **âncoras semânticas** (seção/título, nunca número de linha). O Code aplica no repo.
+
+**Por quê.** (1) **Token/truncamento:** uma spec é muito menor que regerar um arquivo grande, e elimina o risco de a regeneração truncar no meio — risco real (em jun/26 surgiram duas cópias paralelas do CONTEXT por causa disso). (2) **Auditável:** o `git diff` mostra exatamente o que mudou — mais seguro para a higiene P12 do que confiar que uma regeneração completa não deixou cair nada. (3) **Diferença do ASU:** o ASU aplica patch YAML **mecânico**; o Claude Code **entende o sistema** e localiza a âncora por **significado**, com mais cuidado e validando.
+
+**Não fere a regra dura "Atualizar um doc = arquivo COMPLETO… nunca um arquivo de instruções de atualização".** Aquela regra é **anti-erro-humano** — ela proíbe empurrar trechos/instruções para o **usuário** aplicar à mão. A spec-para-Code tem **outro destinatário**: um agente cuidadoso + `git diff` como rede. São canais distintos; a regra dura segue intacta para entregas ao usuário.
+
+**Guarda-corpos.** (1) A spec é escrita sobre a **versão VIVA do repo** (mount `/mnt/project`), **nunca** de fragmento RAG. (2) O **chat autora a prosa**; o Code só **posiciona** — não inventa texto de curadoria. (3) **Um canal por doc por ciclo:** se um doc vai por spec, o chat **não** entrega o mesmo doc inteiro no mesmo ciclo (evita dois escritores → conflito). (4) **Reescrita de fundo/voz continua indo como arquivo inteiro** entregue pelo chat. (5) Vale o handoff: após a sessão do Code, o usuário sobe o repo para o chat voltar à verdade.
+
+**Escopo.** Complementa o «🤝 Fluxo Chat ↔ Claude Code» e estende o uso de `meta/specs/` (antes só tarefas de código + append) às curadorias-delta. Supersede: nada.
+
+---
+
 # FIXES — bugs graves resolvidos (formato sintoma/causa/solução/lição)
 
 > Decisões são "por que as coisas são assim"; FIXES são "o que quebrou feio e como consertamos". Não apagar.
