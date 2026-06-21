@@ -1,43 +1,58 @@
-# CONTEXT.md — Kit de Contexto Universal
+# CONTEXT.md — Kit de Contexto Modular (KCM)
 
 > O **passaporte** do projeto. Leia primeiro. Estável — muda pouco.
 > Meta deste arquivo: uma conversa NOVA entende o projeto inteiro e navega o código sem precisar de mais nada.
-> Versão de referência: **v1.33.0** · `index.html` ~580 KB / ~8409 linhas · **17/17 nichos, 0 erros** no harness.
-> (Histórico de versões fica no CHANGELOG; o "porquê" de cada escolha, no DECISOES; o estado atual, no STATUS.)
+> Versão de referência: **v1.34.0** · produto = um `index.html` (~581 KB) **gerado** de `src/` · **17/17 nichos, 0 erros** + **~32 checagens** no harness.
+> (Histórico de versões fica no CHANGELOG; o "porquê" de cada escolha, no DECISOES; o estado atual, no STATUS; ideias no IDEIAS.)
+>
+> **Mudanças nesta revisão (v1.34.0):** o projeto deixou de ser um HTML único editado à mão e passou a ser **modular** — o `index.html` é **gerado** de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js` (D-028). O **cérebro gerado** foi renomeado de `CLAUDE.md` → `CEREBRO.md` (D-029). Entrou o switch **"Saída via ASU (patch)"** (asuMode) e o **build escreve na raiz**. O **desenvolvimento migrou para o Claude Code** (§ novo "Desenvolvimento"). Nada de conteúdo se perdeu desta regeneração.
 
 ---
 
 ## 1. O que é o projeto
 
-O **Kit de Contexto Universal** é um **único `index.html`** (vanilla JS, sem build, sem deps de runtime além de JSZip via CDN) que ajuda pessoas a **manter contexto entre conversas com o Claude**. Problema que resolve: conversa longa com IA vira "papão de token" e, ao trocar de conversa, perde-se todo o contexto (decisões, ideias, estado).
+O **Kit de Contexto Modular (KCM)** é um **único `index.html`** (vanilla JS no lado do usuário, sem build, sem deps de runtime além de JSZip via CDN) que ajuda pessoas a **manter contexto entre conversas com o Claude**. Problema que resolve: conversa longa com IA vira "papão de token" e, ao trocar de conversa, perde-se todo o contexto (decisões, ideias, estado).
 
-Solução: o kit gera **arquivos vivos** (`CONTEXT.md`, `STATUS.md`, `DECISOES.md`, etc.) que o usuário sobe num Projeto do Claude.ai (ou anexa) e que fazem a IA se ambientar na hora. São **17 nichos** (16 de conteúdo + **1 construtor** `custom`). Cada nicho gera dois artefatos adaptados ao domínio: as **Instruções do Projeto** (curtas, lidas em toda mensagem) e um **CLAUDE.md completo** (subido como arquivo).
+Solução: o kit gera **arquivos vivos** (`CONTEXT.md`, `STATUS.md`, `DECISOES.md`, etc.) que o usuário sobe num Projeto do Claude.ai (ou anexa) e que fazem a IA se ambientar na hora. São **17 nichos** (16 de conteúdo + **1 construtor** `custom`). Cada nicho gera dois artefatos adaptados ao domínio: as **Instruções do Projeto** (curtas, lidas em toda mensagem) e um **`CEREBRO.md` completo** (subido como arquivo; antes chamado `CLAUDE.md` — renomeado na v1.34.0, D-029).
 
 Três capacidades hoje: **(1) manter contexto** (os arquivos vivos + logs); **(2) o kit DESENVOLVE** (narrative escreve sob direção; game cria/codifica — D-023); **(3) coordenar grupos** (HUB com Cânone Central — D-024/025/026/027).
 
-O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega.
+**Ecossistema de 3 ferramentas do usuário (o "toolchain"):** **KCM** (este — o gerador), **ASU** (Atualizador Automático de Scripts — ferramenta Python que aplica patches YAML cirúrgicos com schema+diff+backup+rollback; v0.6.0, tem GUI PySide6) e **FlatDrop** (achata repos para upload no Projeto, gera `_MANIFEST.md`). Os três se coordenam por contratos (ver "HUB" abaixo e i-N27 no IDEIAS).
+
+O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega — e a v1.34.0 foi além: **o próprio Claude Code aplicou um spec do chat** (rename CLAUDE→CEREBRO) com 17/17 + 32/32, provando o protocolo de raias (ver "Desenvolvimento").
 
 ## 2. Stack e arquitetura
 
-- **Um arquivo:** `index.html`. HTML + CSS + JS inline. Sem framework, sem build.
-- **Hospedagem:** GitHub Pages — `silujones.github.io/kit-contexto/`. Repo `github.com/SiluJones/kit-contexto`. **Site de página única → tem um `.nojekyll` na raiz** (sem ele o build do Jekyll quebra; ver FIX-005). Estrutura do repo: `index.html` na raiz, os `.md` em `meta\`, logs em `logs\`, README/PLANNING/NICHOS-CANDIDATOS na raiz.
+**Produto (lado do usuário): um arquivo.** O `index.html` final é HTML + CSS + JS inline, sem framework, **sem build no lado do usuário** — roda em `file://` e no GitHub Pages. Isso é o invariante D-001 (preservado).
+
+**Dev (como o arquivo é feito): modular (v1.34.0, D-028).** O `index.html` é **gerado** de:
+- `src/index.template.html` — o **casco** (HTML/CSS/JS comum, sem os dados de nicho).
+- `src/niches/<id>.js` — **17 módulos**, um por nicho (os objetos `NICHES.<id>`).
+- `build.js` — concatenador Node puro (lê `build-manifest.json`, falha ruidosa se faltar peça) que remonta o `index.html` **na raiz** do repo.
+- `validate.js` — o **harness** (jsdom): extrai o `<script>`, troca `boot()` por um shim, roda os 17 nichos e ~32 checagens de conteúdo. `npm install jsdom` se faltar (declarado em `package.json`).
+- `build-manifest.json` — lista os módulos na ordem do build.
+- Saída byte-idêntica à v1.33.0 com tudo desligado — o produto continua 1 arquivo único.
+
+**Repo e estrutura:** diretório de trabalho `Contexto/contexto-modular/` (download do GitHub vira `contexto-modular-main`). Push para `origin/main`. Estrutura: `index.html` na raiz, `src/` (casco + módulos), `meta/` (os `.md` de contexto, incl. `meta/specs/`), `logs/`, `.claude/settings.json` (permissões do Claude Code), `CLAUDE.md` na raiz (arquivo-raiz do Code — ≠ do `CEREBRO.md`), `HUB.md` na raiz, `validate.js`, `build.js`, `build-manifest.json`, `package.json`. `.gitignore` ignora `rascunhos/ backups/ dist/ node_modules/` (e NÃO `instrucoes/`). **Hospedagem:** GitHub Pages servindo o `index.html` da raiz — **site de página única → precisa de `.nojekyll` na raiz** (sem ele o Jekyll quebra; FIX-005). (O histórico citava o repo `kit-contexto`; o diretório atual é `contexto-modular` — confirmar a URL/repo do Pages no GitHub.)
+
 - **Bibliotecas externas (CDN):** JSZip (botão "baixar pacote ZIP"). Resto é vanilla.
-- **Persistência no browser:** `localStorage` para presets do custom, estado (STATE) e o HUB. localStorage é proibido em *artifacts* do claude.ai, mas aqui funciona porque o arquivo roda no GitHub Pages do usuário (site real). **localStorage é por origem:** presets do site publicado NÃO aparecem no arquivo local (`file://`) e vice-versa (isso já confundiu — não é bug).
-- **Questão de arquitetura em aberto (DIREÇÃO ACEITA, sem código):** migrar do HTML único para **modular** (dados de cada nicho em JSON + núcleo central). Motivação reforçada: abre **i18n** (trocar UI e dados de template de idioma, de forma auditável), inclusive **idioma misto** (artefatos/código/meta em inglês; UI e conversa em pt-BR). Detalhe e plano em **IDEIAS i-N13 (expandido) + i-N26**; preocupação do usuário = não quebrar a ferramenta (mitigação: o harness 17/17 é a rede; migrar nicho a nicho). **Não mexer sem o "vai" explícito.**
+- **Persistência no browser:** `localStorage` para presets do custom, estado (STATE) e o HUB. Proibido em *artifacts* do claude.ai, mas funciona aqui porque roda no Pages do usuário (site real). **localStorage é por origem:** presets do site publicado NÃO aparecem no arquivo local (`file://`) e vice-versa (já confundiu — não é bug).
+- **i18n (futuro, destravado pelo modular):** trocar UI e dados de template de idioma, de forma auditável, inclusive **idioma misto** (artefatos/código/meta em inglês; UI e conversa em pt-BR). Plano em IDEIAS i-N13 (expandido) + i-N26. O refator que isso exigia **já foi feito** (modular); falta a camada de idioma. Sem código até o "vai" explícito.
 
-### Mapa do JS (do topo do `<script>` para baixo)
-1. **Constantes de fundação:** `LANGS` (idiomas: "pt"/"en"/"es"/"other"); `BEHAVIORS_BASE` (**13** princípios universais — §4); `FILE_PHILOSOPHY`; `UNIVERSAL_IDEAS_TPL` (template IDEAS injetado via `normNiche` em todo nicho sem o seu — v1.29.0); `HYGIENE_RULES`; `TRIGGERS_BASE`; `UPDATE_PROTOCOL` (commit, canal de atualização, privacidade, handoff — §6); `AFFIX` (afixo de download); `OSENV`/`OS_LABELS`/`OS_CMDNOTE` (seletor de SO). **Nota:** `UNIVERSAL_HUB_TPL` existiu (v1.30.0) mas o HUB hoje é gerado pela página 06 via `buildHub()` (`effectiveFiles` NÃO injeta mais HUB.md no download por-nicho — D-025).
-2. **Objetos `NICHES.<id>`** — um por nicho (16 de conteúdo + `custom`). Começam em (números mudam ao editar): dev ~973, design ~1342, client ~1711, narrative ~2021, marketing ~2363, research ~2666, product ~2975, business ~3272, game ~3591, pixel ~3939, brainstorm ~4249, music ~4555, rpg ~4854, cuisine ~5191, animation ~5473, comics ~5804, custom ~6113.
-3. **Normalizadores:** `normNiche` (~6236; injeta o template IDEAS universal e o toggle `groupMode` no topbar), `normBehaviors`, `normConventions`, `normBuilderSection` (~6200; **FIX-004**: `opts: g.items.map(it => Array.isArray(it) ? it : [it,it])` — aceita item string OU par `[código,rótulo]`), `normFiles`, `normOutputs`, `normTopbar`.
-4. **Render:** `renderTopbar` (~6745; aceita `opts:[[v,l]]` E `options:["str"]`; campo `type:"toggle"` = switch CSS `.tsw`; handler lê checkbox e chama `renderTemplates`), `renderBehaviors`, `renderBuilder`, `renderCustomForm` (construtor unificado), `updatePreview`, `buildInstr` (Instruções), `buildClaudeMd` (CLAUDE.md completo), `renderTemplates` (usa `effectiveFiles`), `setView` (troca de aba; chama `renderHub` ao abrir a 06).
-5. **Construtor unificado (Custom):** `composeFromNiches(niches, sel)` (~7507; concatena com dedup visível + checagem de conflito; `sel` = granularidade), chips `data-sc`/classe `.chip`, `STATE._sc={selected,expanded,pieces}`; presets via `toPreset`/`fromPreset`/`mergeCustom` (localStorage — **`body` do prompt guardado como STRING**, FIX-003); atalho "Nichos salvos" na barra (aparece quando há presets).
-6. **HUB de grupo (página 06, D-025/026/027) — ~8151+:** `NICHE_CODE` (códigos curados por nicho), `baseCode(f)`, `computeCodes(frentes)` (variador de duplicata → DEV0/DEV1), `buildHub()` (gera o HUB.md populado), `renderHubChips()` (chips dos 16 nichos = adicionar frente, estilo "add"), `renderHubRows()` (linhas: ↑↓ + select + código + nome + responsável + ✕; estilo padrão do kit), `renderHub`/`wireHub`/`updateHubPreview`/`persistHub`/`loadHub`. Estado `STATE.hub={product,frentes:[{niche,name,resp,code}]}` em `LS_HUB="kit-hub-v1"` (independente de nicho).
-7. **Boot** — `boot()` no fim, try/catch com banner de erro; chama `loadHub()`+`wireHub()`.
+### Mapa do JS (do topo do `<script>` para baixo — vale para o `index.html` montado; a origem está em `src/`)
+1. **Constantes de fundação:** `LANGS` (idiomas: "pt"/"en"/"es"/"other"); `BEHAVIORS_BASE` (**13** princípios universais — §4); `FILE_PHILOSOPHY`; `UNIVERSAL_IDEAS_TPL` (template IDEAS injetado via `normNiche` em todo nicho sem o seu — tem «Feedback para o Kit» e, abaixo, «Feedback para o ASU», v1.34.0); `HYGIENE_RULES`; `TRIGGERS_BASE`; `UPDATE_PROTOCOL` (commit, canal de atualização, privacidade, handoff — §6); `AFFIX`; `OSENV`/`OS_LABELS`/`OS_CMDNOTE` (seletor de SO). **Nota:** `UNIVERSAL_HUB_TPL` existiu (v1.30.0) mas o HUB hoje é gerado pela página 06 via `buildHub()` (`effectiveFiles` NÃO injeta mais HUB.md no download por-nicho — D-025).
+2. **Objetos `NICHES.<id>`** — um por nicho (16 de conteúdo + `custom`). **Cada um vive em `src/niches/<id>.js`.** Ordem no manifesto: dev, design, client, narrative, marketing, research, product, business, game, pixel, brainstorm, music, rpg, cuisine, animation, comics, custom.
+3. **Normalizadores:** `normNiche` (injeta o template IDEAS universal e o toggle `groupMode` no topbar; e o `asuMode` quando ligado), `normBehaviors`, `normConventions`, `normBuilderSection` (**FIX-004**: aceita item string OU par `[código,rótulo]`), `normFiles`, `normOutputs`, `normTopbar`.
+4. **Render:** `renderTopbar` (aceita `opts:[[v,l]]` E `options:["str"]`; `type:"toggle"` = switch CSS `.tsw`), `renderBehaviors`, `renderBuilder`, `renderCustomForm`, `updatePreview`, `buildInstr` (Instruções), `buildClaudeMd` (gera o **CEREBRO.md** — o nome da FUNÇÃO ficou `buildClaudeMd`, mas o arquivo de saída é `CEREBRO.md`), `renderTemplates` (usa `effectiveFiles`), `setView` (troca de aba; chama `renderHub` ao abrir a 06).
+5. **Switch "Saída via ASU (patch)" (asuMode, v1.34.0):** toggle no topbar (opt-in, off por padrão); `asuModeOn()`; quando ligado, `buildClaudeMd` injeta no CEREBRO a diretriz que orienta o assistente a entregar mudanças de código via instrução ASU, **apontando** para o `INSTRUCTION_GUIDE`/`PROMPT_IA` (não congela o conteúdo do guia). Off = saída idêntica. Checagem G5 (round-trip ASU) no harness.
+6. **Construtor unificado (Custom):** `composeFromNiches(niches, sel)` (concatena com dedup visível + checagem de conflito); chips `data-sc`/`.chip`; presets via `toPreset`/`fromPreset`/`mergeCustom` (localStorage — **`body` do prompt guardado como STRING**, FIX-003); atalho "Nichos salvos" na barra.
+7. **HUB de grupo (página 06, D-025/026/027):** `NICHE_CODE` (códigos curados por nicho), `computeCodes` (variador de duplicata → DEV0/DEV1), `buildHub()` (gera o HUB.md populado), `renderHubChips`/`renderHubRows`/`renderHub`/`wireHub`/`persistHub`/`loadHub`. Estado `STATE.hub` em `LS_HUB="kit-hub-v1"`.
+8. **Boot** — `boot()` no fim, try/catch com banner de erro; chama `loadHub()`+`wireHub()`.
 
-### Shape de cada nicho — `NICHES.<id>`
+### Shape de cada nicho — `NICHES.<id>` (em `src/niches/<id>.js`)
 ```
 {
-  id, label, icon, group, category,          // group = tema visual do card (serif/literary/digital); category = core/creative/special
+  id, label, icon, group, category,          // group = tema visual do card; category = core/creative/special
   cardColor, cardTags[], cardDesc,           // card na seleção
   intro:{ headline, lede, ctxBlurb, hero },  // tela "Início"
   topbar:[ {id,label,placeholder?} | {id,label,type:"select",options|opts,default?} | {id,label,type:"toggle",default?} ],
@@ -51,89 +66,79 @@ O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega.
   isBuilder: true                            // SÓ no custom
 }
 ```
-Cada nicho tem 12 prompt cards: 6 universais (A-F, da fundação) + 6 específicos (G-L, de `promptsExtra`). O CLAUDE.md lista só TÍTULOS; os corpos vivem na aba Prompts.
+Cada nicho tem 12 prompt cards: 6 universais (A-F, da fundação) + 6 específicos (G-L). O CEREBRO lista só TÍTULOS; os corpos vivem na aba Prompts.
 
 ## 3. Método de validação (harness jsdom) — REGRA DE OURO
 
-**NUNCA publicar sem o harness verde (17/17, 0 erros JS).** O harness vive em `/home/claude/kit/validate.js` (o container PODE resetar entre sessões — recriar se sumir; `npm install jsdom` se faltar).
+**NUNCA publicar sem o harness verde (17/17, 0 erros JS, ~32 checagens).** O harness é `validate.js` (na raiz do repo agora; `node validate.js index.html`). Fluxo: editar `src/` → `node build.js` (remonta o `index.html` na raiz) → `node validate.js index.html`. As ~32 checagens cobrem D-018/022/028/029 (v1.29–v1.34) + integridade dos chips (FIX-004) + smoke/round-trip do HUB + round-trip do switch ASU (G5) + suíte de fluxos. O container PODE resetar entre sessões — recriar/`npm install jsdom` se sumir. Erros de clipboard/download no jsdom são falsos-positivos; "Boot failed: DOMException" é esperado.
 
-Como funciona: extrai o `<script>` do `index.html`, remove `boot();`, e expõe via shim `window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub}`. Para cada nicho roda `normNiche(NICHES[id])` e checa: Instruções + CLAUDE.md gerados; P12/P13 presentes (nas Instruções, na linha comprimida); sem princípio com label `undefined`; integridade dos chips do builderSection (FIX-004) + round-trip seleção→saída; **teto de 6500 caracteres por Instrução**; compressão dos universais; presença das diretrizes de cada versão (D-018/022, IDEAS universal, writes_prose, builds_game, ROTEIRO, diretriz de personalização das Instruções, seção Código/build no LOG do game); round-trip do switch HUB; smoke test do `buildHub` (códigos curados + variador DEV0/DEV1 + Cânone Central + identificadores). São ~24 checagens de conteúdo.
+## 4. Os 13 princípios universais (`BEHAVIORS_BASE`)
+1. Analisa antes de aceitar. 2. Não desperdiça tokens (pedir arquivo necessário ≠ desperdício; inventar arquivo falso = pior). 3. Direto e objetivo. 4. Admite incerteza (pesquisa o que muda antes de afirmar). 5. Explica trade-offs. 6. Instruções sempre cuidadosas. 7. Estuda o domínio antes de estruturar. 8. Verifica antes de pedir arquivo; não inventa o que falta (inferência PEDIDA é ok; **STATUS é pista, não fato** — confere o estado real antes de repetir pendência e atualiza o STATUS se já resolvida). 9. Captura ideias. 10. Cadência (fases auditáveis; não fragmenta o trivial). 11. Usa a versão mais recente que tem; só pára e pede quando não tem a que a tarefa exige. 12. **Higiene ao encolher** arquivos-chave (não encolhe em silêncio; abre com «Mudanças nesta revisão»; confere que nada único se perdeu). 13. **Pesquisa para refinar E para refutar** (busca a experiência de outros, inclusive onde a ideia já falhou).
 
-Padrão de qualidade a cada mexida: `node --check` no script extraído; `node validate.js`; balanceamento `<div>`/`</div>` (hoje 283/283); **anti-testes** (desfazer a correção numa cópia e confirmar que o teste REPROVA); sincronizar o index para `/mnt/user-data/outputs/` e conferir md5 idêntico ao validado.
-
-## 4. Os 13 princípios universais (BEHAVIORS_BASE — em todos os nichos)
-1. Analisa antes de aceitar. 2. Não desperdiça tokens (pedir arquivo necessário ≠ desperdício; inventar arquivo falso = pior). 3. Direto e objetivo. 4. Admite incerteza (pesquisa o que muda antes de afirmar). 5. Explica trade-offs. 6. Instruções sempre cuidadosas. 7. Estuda o domínio antes de estruturar. 8. Verifica antes de pedir arquivo; não inventa o que falta (inferência PEDIDA é ok; **STATUS é pista, não fato** — confere o estado real antes de repetir pendência e atualiza o STATUS se já resolvida). 9. Captura ideias. 10. Cadência (fases auditáveis; não fragmenta o trivial). 11. Usa a versão mais recente que tem; só pára e pede quando não tem a que a tarefa exige. 12. **Higiene ao encolher** arquivos-chave (não encolhe em silêncio; abre com «Mudanças nesta revisão»; confere que nada único se perdeu). 13. **Pesquisa para refinar E para refutar** (busca a experiência de outros, inclusive onde a ideia já falhou; contraponto com lastro na prática alheia).
-
-> Nas Instruções (lidas em toda mensagem) os 13 universais aparecem **comprimidos numa linha de nomes** ("Princípios universais (definição completa no CLAUDE.md): …"); só os behaviors DO NICHO viram bullets. A definição completa fica no CLAUDE.md (v1.30.0, D-024).
-
-## 5. Como as peças críticas funcionam
-
-### `today` nos templates — ARMADILHA CRÍTICA
-Nos templates `.md` (strings em `content`), datas usam `${today}` (a CONSTANTE), **NUNCA `${today()}`** — chamada de função numa template literal avaliada na carga TRAVA O BOOT (tela branca).
-
-### O HUB de grupo (página 06) — D-024 a D-027
-Para quando vários projetos do kit servem ao MESMO produto (ex.: um jogo com frentes de game/arte/enredo/música). Dois mecanismos:
-- **Por projeto:** o switch **"Projeto em grupo?"** (toggle universal no topbar de cada nicho) → ligado, adiciona ao CLAUDE.md daquele projeto a SEÇÃO que manda ler o HUB; não injeta arquivo.
-- **Group-level:** a **página 06 · HUB** (`buildHub`) monta a lista de frentes (nicho + nome + responsável por + código) e gera UM `HUB.md` populado, colado idêntico em cada projeto do grupo.
-O `HUB.md` (inspirado no `CANON.md` que o piloto montou — D-026) tem: **tabela de identificadores** (código por frente, default curado por nicho via `NICHE_CODE`, variador DEV0/DEV1 em duplicata — D-027); **diretrizes D1–D6** (nunca mexer na casa do outro; tarefa que afeta outro vira `[CÓDIGO-NNN]` na caixa dela; cada verdade tem um dono; **Cânone Central tem precedência**; atualizar na hora; tudo assinado/datado com refutação `[REFUTACAO-ID]`); **Cânone Central** (fatos travados que toda frente respeita — nomes, paleta/identidade global, dimensões, marcos); **frentes** (caixa de entrada + decididos, com responsabilidade por frente); **status rápido**. Responsabilidade fica no bloco da frente (não em 4ª seção). É o loop «Feedback para o Kit» funcionando: o piloto evoluiu a estrutura e ela voltou para o kit.
-
-### O Custom unificado (D-019)
-Um card `custom`. Tela: (1) **Compor a partir de nichos prontos** (chips dos 16; marcar abre "escolher peças" — granularidade por arquivo/comportamento/prompt; "Importar e concatenar" roda `composeFromNiches` com dedup visível + checagem de conflito e preenche o builder abaixo, na mesma tela); (2) **Custom Builder** (presets/identidade/home/arquivos/comportamentos/convenções/saídas/prompts). Tudo vai para o motor de preset (localStorage).
+## 5. Conhecimento de contexto, mount e desenvolvimento
 
 ### Contexto vs. RAG, mount, anexo — FUNDAMENTAL (D-018)
-- **Conhecimento do Projeto tem 2 modos automáticos por TAMANHO total:** *in-context* (pequeno → arquivos INTEIROS no contexto, fidelidade total) e *RAG/"Modo de pesquisa"* (grande → só FRAGMENTOS por relevância). Volta a in-context se encolher.
-- O nosso `index.html` (~580 KB) cai em RAG, mas isso NÃO impede a leitura pelo mount: arquivo que ESTÁ no mount `/mnt/project/` é lido INTEIRO com a **ferramenta de código** ligada, RAG ou não. **O que importa é como o mount é alimentado:** **o conector do GitHub alimenta só o RAG e NÃO popula o mount**; **só o upload direto** dos arquivos no Projeto popula o mount — e chegam **achatados** (sem subpastas; nomes iguais colidem → ver manifesto/`_MANIFEST.md` se houver, ou o mapa que o assistente faz no início). Caminho limpo: **subir os arquivos DIRETO no Projeto** + ferramenta de código ligada.
-- **Anexo de conversa:** fidelidade total, mas só naquela conversa (não passa adiante) e custa token a cada turno. Arquivo gerado pelo próprio assistente na conversa tem a mesma fidelidade (entrou no histórico).
-- **CUIDADO — janela é finita:** "nasceu na conversa = 100% para sempre" é FALSO. Conversa longa é truncada/compactada (aconteceu nesta sessão). Para o index grande: subir direto no Projeto e, em conversa nova, re-subir/reanexar.
-- Sincronização do GitHub é MANUAL ("Sync now") e às vezes falha silenciosamente → para o que precisa estar fresco, preferir UPLOAD DIRETO.
+- **Conhecimento do Projeto tem 2 modos automáticos por TAMANHO:** *in-context* (pequeno → arquivos INTEIROS, fidelidade total) e *RAG/"Modo de pesquisa"* (grande → só FRAGMENTOS por relevância). Volta a in-context se encolher.
+- O `index.html` (~581 KB) cai em RAG, mas isso NÃO impede a leitura pelo mount: arquivo que ESTÁ no mount `/mnt/project/` é lido INTEIRO com a **ferramenta de código** ligada, RAG ou não. **O que importa é como o mount é alimentado:** **o conector do GitHub alimenta só o RAG e NÃO popula o mount**; **só o upload direto** dos arquivos no Projeto popula o mount — e chegam **achatados** (sem subpastas; nomes iguais colidem → ver `_MANIFEST.md` se houver). Caminho limpo: **subir os arquivos DIRETO no Projeto** + ferramenta de código ligada.
+- **Anexo de conversa:** fidelidade total, mas só naquela conversa e custa token a cada turno.
+- **CUIDADO — janela é finita:** "nasceu na conversa = 100% para sempre" é FALSO. Conversa longa é truncada/compactada. Para o index grande: subir direto no Projeto e, em conversa nova, re-subir.
+
+### Desenvolvimento — Claude Code + protocolo de raias (v1.34.0)
+O desenvolvimento migrou para o **Claude Code** (desktop até segunda; CLI no trabalho). **Divisão de raias:**
+- **Chat (este, planejamento):** arquitetura, análise, pesquisa, curadoria que **reescreve** — entrega **arquivos INTEIROS** (CONTEXT/CHANGELOG/IDEIAS/ROADMAP/CEREBRO) + **o commit junto**. Nunca mais "bloco de colar".
+- **Code (execução):** implementar, corrigir, testar, `build`, `git`, e **append** em STATUS/DECISOES/logs. Specs curtas em `meta/specs/`; prompt de 1 linha "leia `meta/specs/<arq>.md` e execute". Ao fim, escreve uma linha "arquivos tocados nesta sessão" no STATUS.
+- **Regra "dois cérebros":** **append não conflita; reescrita conflita.** O repo é a única fonte de verdade; o chat sempre lê a última versão que o usuário sobe (P11). O chat entrega **todo** o meta decidido **antes** de liberar pro Code (evita desencontro).
+- **Modelo/esforço:** padrão **Sonnet 4.6 esforço baixo**; o chat **avisa** quando um spec precisa de **alto** (linha "⚠️ suba o esforço" no topo do spec) — o Code NÃO troca o próprio modelo/esforço sozinho; quem muda é o usuário (UI / `/model` / `settings.json`).
+- **Windows/macetes:** abrir o `claude` pelo **PowerShell**; **sem `ANTHROPIC_API_KEY`** (senão cobra API à parte); abrir na **pasta do repo** (não a mãe). O `.claude/settings.json` (allowlist de permissões) pula os prompts de permissão (vale desktop e CLI).
+- Sincronização do GitHub é MANUAL e às vezes falha em silêncio → para o que precisa estar fresco, UPLOAD DIRETO.
 
 ### Dois formatos de dados (normalizadores)
-Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `opts:[[v,l]]` E `options:["str"]` (causa do bug v1.11.1); `normConventions` aceita array, `true` (bloco default) ou `false`/null; `normBuilderSection` aceita item string OU par (FIX-004). Sempre rodar o harness após mexer.
+Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `opts:[[v,l]]` E `options:["str"]`; `normConventions` aceita array, `true` ou `false`/null; `normBuilderSection` aceita item string OU par (FIX-004). Sempre rodar o harness após mexer.
 
-### Dois artefatos
-`buildInstr()` → **Instruções do Projeto** (curtas, colar no campo de Instruções do Claude.ai). `buildClaudeMd()` → **CLAUDE.md completo** (fundação + protocolo + gatilhos + saídas). Abas `#tab-instr`/`#tab-claude`.
+### Dois artefatos + afixo + SO
+`buildInstr()` → **Instruções do Projeto** (curtas). `buildClaudeMd()` → **`CEREBRO.md` completo**. `AFFIX`/`applyAffix` (aba Templates: padrão/prefixo/**sufixo `__update`** para atualizar projetos sem perder conteúdo). `OSENV`+OS_CMDNOTE injeta a sintaxe de comando do SO escolhido.
 
-### Afixo de download + Seletor de SO
-`AFFIX={mode,text,sep}` + `applyAffix(name)` (aba Templates: padrão/prefixo/sufixo; o usuário usa o **sufixo `__update`** para atualizar projetos sem perder conteúdo). `OSENV={value}` + OS_LABELS + OS_CMDNOTE (campo no "Construir instrução": Windows-CMD/PowerShell/macOS/Linux/não-especificar) → injeta a sintaxe de comando certa.
-
-## 6. UPDATE_PROTOCOL (transversal — no CLAUDE.md de TODOS os nichos)
-- **commit ao final** (`commitIntro` incondicional: 3 linhas — `git add` listando arquivos, `git commit`, `git push`, Conventional Commits; `commitNota` só com a sintaxe por SO).
-- **canal de atualização do kit** — ensina o Claude do projeto a reconhecer e aplicar updates do kit trazidos para a conversa (regra nova → colar o texto; template novo → fluxo do sufixo `__update`).
+## 6. UPDATE_PROTOCOL (transversal — no CEREBRO de TODOS os nichos)
+- **commit ao final** (`commitIntro` incondicional: `git add` listando, `git commit`, `git push`, Conventional Commits; sintaxe por SO).
+- **canal de atualização do kit** — ensina o Claude do projeto a aplicar updates do kit trazidos à conversa.
 - **privacidade** — relevância + marcação, não censura.
-- **handoff/transferência** — contexto vs. RAG, regra anti-arquivo-falso, onde colocar cada arquivo, plano de handoff ao final; **manifesto de achatamento auto-detectado** (se houver `_MANIFEST.md`, é fonte de verdade de nomes; entrega pelo nome real; senão segue normal); **só upload direto popula o mount** (D-018, corrigido na v1.28.0).
-- **diretriz nova (v1.32.0):** o assistente pode **adaptar as Instruções do Projeto** a cada projeto (encurtar/trocar/remover/acrescentar), respeitando o teto de caracteres e registrando o desvio (válvula i-N22 aplicada às Instruções).
+- **handoff** — contexto vs. RAG, regra anti-arquivo-falso, onde colocar cada arquivo, plano de handoff; **manifesto de achatamento auto-detectado**; **só upload direto popula o mount** (D-018).
+- **diretriz (v1.32.0):** o assistente pode **adaptar as Instruções do Projeto** a cada projeto, registrando o desvio (válvula i-N22).
 
 ## 7. Armadilhas conhecidas (NÃO repetir)
 1. **`${today()}` em template** → tela branca. Use `${today}`.
-2. **`renderTopbar` lendo só `f.opts`** → selects vazios nos nichos com `options:`. Corrigido v1.11.1 (aceita os dois).
+2. **`renderTopbar` lendo só `f.opts`** → selects vazios. Corrigido v1.11.1 (aceita os dois).
 3. **`default:"pt-BR"` no langSel** (LANGS usa "pt") → idioma em branco. Corrigido v1.11.1.
-4. **git commit com `\`** (continuação bash) → QUEBRA no CMD do Windows. O usuário usa **CMD do Windows**: commit em UMA LINHA, `-m` repetido, **mensagem SEM acentos** (CMD corrompe).
-5. **Publicar sem validar** → NUNCA sem o harness verde (17/17). Erros de clipboard/download no jsdom são falsos-positivos; "Boot failed: DOMException" no harness é esperado.
-6. **The Brazilian House** → projeto de DESIGN GRÁFICO (cardápio físico), NÃO culinária.
-7. **Editar a partir de FRAGMENTOS (RAG, sem mount nem anexo)** → arquivo falso. Critério não é "está em RAG?", é "tenho o COMPLETO?". Com ferramenta de código leio inteiro pelo mount qualquer arquivo que ESTEJA no mount — mas o mount só é alimentado por upload direto (D-018). Sem mount nem anexo, PEÇO o arquivo; nunca reconstruo.
-8. **`toPreset` guardando `body` como função** → `JSON.stringify` descarta funções → corpo do prompt sumia. Corrigido v1.25.1 (STRING). FIX-003. Nada que vá ao localStorage pode ser função.
-9. **Construtor reescrevendo controles sem restaurar o esqueleto** → controles errados ao trocar de nicho. Corrigido com captura/restauração do esqueleto (v1.24.0). FIX-001.
-10. **GitHub Pages sem `.nojekyll`** → build do Jekyll quebra ("invalid characters… UTF-8" em `meta/STATUS.md`) e o site não atualiza. Site de página única → `.nojekyll` na raiz. FIX-005.
-11. **LOG-TEMPLATE é por-nicho (16 definições distintas)** — cada nicho customizou as seções do seu log; não dá replace global. O do **game** tem `## Código / build` (v1.32.0, resposta ao erro-260613).
-12. **Âncoras de `str_replace` reconstruídas de memória falham** — ao editar docs/código, VER o texto exato antes (várias edições falharam por 1 caractere diferente). Scripts Python que gravam só no fim abortam tudo se uma âncora não bate.
+4. **git commit com `\`** → QUEBRA no CMD do Windows. Commit em UMA LINHA, `-m` repetido, **mensagem SEM acentos**.
+5. **Publicar sem validar** → NUNCA sem o harness verde (17/17 + 32 checagens).
+6. **The Brazilian House** → projeto de DESIGN GRÁFICO, NÃO culinária.
+7. **Editar a partir de FRAGMENTOS (RAG, sem mount nem anexo)** → arquivo falso. Critério: "tenho o COMPLETO?". Sem mount nem anexo, PEÇO o arquivo; nunca reconstruo.
+8. **`toPreset` guardando `body` como função** → sumia. STRING (FIX-003). Nada no localStorage pode ser função.
+9. **Construtor reescrevendo controles sem restaurar o esqueleto** → controles errados. Corrigido v1.24.0 (FIX-001).
+10. **GitHub Pages sem `.nojekyll`** → build quebra, site não atualiza. `.nojekyll` na raiz (FIX-005).
+11. **LOG-TEMPLATE é por-nicho (16 definições distintas)** — não dá replace global. O do **game** tem `## Código / build`.
+12. **Âncoras de `str_replace`/ASU reconstruídas de memória falham** — VER o texto exato antes (várias edições falharam por 1 caractere).
+13. **Editar o `index.html` à mão** → ERRADO agora: editar `src/` e rodar `node build.js` (senão a próxima build sobrescreve).
+14. **Nomes do mount mudam por sessão** (achatado FlatDrop: `dev__src__niches.js` ou colisões `dev.js`) — conferir `_MANIFEST.md` / listar antes de mapear.
 
 ## 8. Produto / posicionamento
-- Compete e complementa a feature nativa "Pesquisar e referenciar conversas". Diferencial: portabilidade (arquivos vão pro Git, funcionam em qualquer conta), estrutura deliberada (decisão/ideia/estado separados), controle do que entra no contexto.
+- Compete e complementa a feature nativa "Pesquisar e referenciar conversas". Diferencial: portabilidade (arquivos no Git), estrutura deliberada (decisão/ideia/estado separados), controle do que entra no contexto.
 - Filosofia central: **separação contexto vs histórico** (o princípio mais sólido). Contexto = leve, recarregado sempre. Histórico = no Git, lido sob demanda.
-- Inspiração distante: GitHub spec-kit. Lições: "composição assistida > fusão automática" (base do Custom) e "doctor/lint" para conflitos (a checagem do compose).
-- **Enquadramento profissional** (Anthropic "Effective context engineering" + literatura 2025/26): janela = recurso finito; "context rot"; estratégias offload/retrieve/isolate/compress; Git para estado entre sessões — tudo valida a arquitetura do kit.
-- **Expansões em avaliação** (IDEIAS/ROADMAP): refator modular + **i18n com idioma misto** (i-N13/i-N26, direção aceita); nicho/ferramenta de **guias/tutoriais/wikis**; ferramenta de **auto-aplicação de patches** (a IA emite diffs/arquivos estruturados e uma ferramenta local aplica). "Kit desenvolve" a estender a HQ/RPG/animação/música quando os pilotos pedirem.
+- Inspiração distante: GitHub spec-kit ("composição assistida > fusão automática"; "doctor/lint" para conflitos).
+- **Enquadramento profissional** (Anthropic "Effective context engineering" + literatura 2025/26): janela = recurso finito; "context rot"; offload/retrieve/isolate/compress; Git para estado entre sessões.
+- **Expansões / em avaliação** (IDEIAS/ROADMAP): **i18n com idioma misto** (i-N13/i-N26 — o refator modular que destravava já saiu); **função "modo Code"** (switch que gera o kit de arranque do Claude Code: `CLAUDE.md` raiz starter + `.claude/settings.json` + comandos + protocolo de raias + macetes Windows, desktop e CLI — i-N29, spec a escrever); **HUB enxuto** (o aparato pesado é over-engineered para toolchain solo; manter só o registro de contratos / Cânone, com dono + versão derivada — i-N27, a validar/testar); **ciclo de vida do feedback** nas seções «Feedback para o Kit/ASU» (status + rotação para `logs/`, sem arquivo novo — i-N28). "Kit desenvolve" a estender a HQ/RPG/animação/música quando os pilotos pedirem (i-N25 música). O **ASU** e o **FlatDrop** seguem como ferramentas vivas do toolchain (não mudar fluxo deles).
 
 ## 9. Localização dos arquivos (ambiente de trabalho do Claude)
-- **Deliverable:** `/mnt/user-data/outputs/index.html`. **Meta-docs:** `/mnt/user-data/outputs/` (e o usuário coloca em `meta\` no repo). Logs em `logs/`.
-- **Mount do Projeto:** `/mnt/project/` (somente-leitura aqui). Alimentado por **upload direto** (não pelo conector do GitHub — D-018); pode estar vazio se só o conector estiver ligado; chega achatado.
-- **Scratchpad/validação:** `/home/claude/kit/` (index em disco + `validate.js` + jsdom em `node_modules`). Recriar o harness se o container resetar.
-- **Transcrições de sessões antigas:** `/mnt/transcripts/` (esta sessão: p14–p18; há `journal.txt` com o catálogo).
+- **Deliverables:** `/mnt/user-data/outputs/`. O usuário coloca: `index.html` na raiz (ou o Code gera via build), os meta em `meta/`, specs em `meta/specs/`, `settings.json` em `.claude/`.
+- **Mount do Projeto:** `/mnt/project/` (somente-leitura). Alimentado por **upload direto** (não pelo conector do GitHub — D-018); chega achatado.
+- **Scratchpad/validação:** `/home/claude/kit/` (recriar o harness se o container resetar).
+- **Transcrições de sessões antigas:** `/mnt/transcripts/` (com `journal.txt` de catálogo).
 
 ## 10. Idioma e convenções
-- **pt-BR em tudo**, inclusive comentários de código e nomes de template (profissionais: STATUS.md, DECISOES.md). (Possível idioma misto no futuro — i-N26.)
-- Entrega via `present_files`; arquivos COMPLETOS para baixar/substituir, nunca blocos soltos.
-- Commit ao final no formato CMD Windows (uma linha, `-m` repetido, SEM acentos), pronto para colar; 3 linhas (`git add` listando, `git commit`, `git push`).
-- **Handoff ao final:** dizer, arquivo por arquivo, onde colocar cada um na próxima conversa (Projeto vs. anexo) e, quando útil, montar o prompt de início.
-- **P12 (higiene ao encolher)** e **P13 (pesquisa para refinar E refutar)** valem para o nosso próprio trabalho, não só para a ferramenta.
-- Respostas concisas, sem floreio/bajulação; não fragmentar o trivial; nunca publicar sem 17/17 nichos e 0 erros; não introduzir framework/build/deps.
+- **pt-BR em tudo**, inclusive comentários de código e nomes de template (profissionais: STATUS.md, DECISOES.md). (Idioma misto no futuro — i-N26.)
+- Entrega via `present_files`; **arquivos COMPLETOS** para baixar/substituir, **nunca blocos soltos** (o chat erra se empurrar "colar no fim" — usar arquivo inteiro ou deixar o Code fazer o append).
+- Commit ao final no formato do SO (Windows: uma linha, `-m` repetido, SEM acentos), pronto para colar.
+- **Handoff ao final:** dizer, arquivo por arquivo, onde colocar cada um na próxima conversa.
+- **P12** e **P13** valem para o nosso próprio trabalho, não só para a ferramenta.
+- Respostas concisas, sem floreio/bajulação; não fragmentar o trivial; nunca publicar sem 17/17 + 32 checagens; não introduzir framework/build/deps **no lado do usuário** (o build do dev é Node, fora do produto).
+- **Dois `CLAUDE.md` não se confundem:** `meta/CEREBRO.md` (o cérebro — como o assistente trabalha) ≠ `CLAUDE.md` na raiz (lido pelo Claude Code: build, convenções, aponta pro `meta/`).

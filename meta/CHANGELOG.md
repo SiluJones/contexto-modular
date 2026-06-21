@@ -1,6 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.33.0**.
+> Histórico de versões. Versão atual: **v1.34.0**.
+
+## v1.34.0 — Refator modular, switch ASU, build na raiz, cérebro → CEREBRO.md (2026-06-21)
+
+**Mudanças nesta revisão:**
+- **Estrutura modular (infra do dev).** O `index.html` agora é **gerado** de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js`; o harness `validate.js` valida a saída (17/17 nichos + 32 checagens). Saída **byte-idêntica** à v1.33.0 com tudo desligado — o produto continua **1 arquivo único**, sem build no lado do usuário (preserva D-001). Ver **D-028**.
+- **Switch "Saída via ASU (patch)?"** (`asuMode`, opt-in, off por padrão). Injeta no cérebro gerado a diretriz que orienta o assistente a entregar mudanças de código via instrução ASU, **apontando** para o `INSTRUCTION_GUIDE`/`PROMPT_IA` (não congela o conteúdo do guia). Round-trip validado (checagem G5). Off = saída idêntica.
+- **Build na raiz.** `node build.js` passa a escrever o `index.html` direto na raiz do repo (sem `dist/`).
+- **Cérebro renomeado: `CLAUDE.md` → `CEREBRO.md`.** O arquivo gerado do cérebro muda de nome em **todos** os nichos, sempre — liberando o nome `CLAUDE.md` para o arquivo-raiz do **Claude Code**. Aplicado pelo próprio Claude Code rodando um spec do chat (dogfooding das raias). Ver **D-029**.
+- **Seção "Feedback para o ASU"** no IDEIAS gerado, logo abaixo de "Feedback para o Kit".
+
+---
+
 
 ## v1.33.0 — 2026-06-14 — Códigos de área melhores (curados + variador) + rótulo de grupo
 
