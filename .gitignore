@@ -1,0 +1,15 @@
+# === contexto-modular: o que NAO vai pro repo (nem pro upload via FlatDrop) ===
+
+# rascunhos e fontes de trabalho (txt soltos, notas) — ficam so na sua maquina
+rascunhos/
+
+# backups do ASU (rede de seguranca local; o GitHub ja e o historico)
+backups/
+
+# artefato de build (o index.html final fica versionado na RAIZ; dist/ e descartavel)
+dist/
+
+# dependencias instaladas (ex.: jsdom do harness) — recriaveis com npm install
+node_modules/
+
+# (instrucoes/ NAO entra aqui de proposito: instrucao APLICADA e registro -> vai pro repo)

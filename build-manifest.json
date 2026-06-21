@@ -1,7 +1,7 @@
 {
   "note": "Ordem EXPLICITA (anti-pitfall: sem glob/descoberta automatica). build.js troca cada marker pelo seu arquivo; falha se faltar ou sobrar marcador.",
   "template": "src/index.template.html",
-  "output": "dist/index.html",
+  "output": "index.html",
   "modules": [
     {
       "marker": "//__KCU_NICHE:dev__//",

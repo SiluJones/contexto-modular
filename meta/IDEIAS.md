@@ -387,3 +387,39 @@ Novo princípio pedido pelo usuário (ver DEC **D-020**): ao reescrever/encolher
 - **Estender "desenvolve" a HQ/RPG/animação + i-N25 (música) + lote i-N23 (pixel):** ESPERAR os pilotos pedirem; o usuário vai usar mais e dar feedback antes de qualquer mexida.
 - **Cosmético do `narrative` (sério vs criativo):** resolvido SEM alterar agrupamento — só o **rótulo de grupo** foi reescrito (v1.33.0): "Criativo & Mídia — exploração, jogos, narrativa" → "Histórias, Jogos & Mídia — mundos, arte e som".
 
+## i-N27 — HUB: manter o núcleo (registro de contratos), cortar o aparato pesado — 💡 DECIDIDA (2026-06-21, com pesquisa)
+**Veredito:** o **conceito** do HUB é válido (registrar os contratos entre KCM·ASU·FlatDrop para que mudar um surface o impacto nos outros), mas o **aparato** (caixa por frente, status relâmpago, merge canônico, "entregar HUB inteiro a cada sessão") é **over-engineered para 3 ferramentas solo** — você é o ponto único de serialização, sem concorrência real; as caixas ficam vazias e o doc drifta mesmo assim.
+**Lastro (P13):** docs de coordenação à mão apodrecem — ~60% ficam obsoletos em 6 meses; **cópia/"salvar como" é a causa nº 1 de drift**; quando a confiança no doc cai, o sistema em volta "colapsa" (colapso de **confiança**, não de dados). Prova viva: o HUB diz ASU **v0.4.0**, a ferramenta está em **v0.6.0**.
+**O que fazer:**
+- **Modelo single-file SEM cópias está certo** (a correção do Claude do ASU): **um só `HUB.md` na pasta-mãe**, lido de lá, não duplicado por repo. (Mata meu modelo antigo de cópias+sync.)
+- Manter só o **Cânone** (as ~3-4 interfaces, cada uma com **dono + versão atual**); cortar caixas/status/merge/"entregar inteiro".
+- **A versão tem que ser derivada/gerada, não digitada** — senão drifta (já drifou).
+- **Dono único do HUB:** KCM gera/possui a versão canônica; ASU e FlatDrop **propõem** (não regeneram o arquivo). Resolve a ambiguidade de autoria do cérebro do ASU (linha 224 "gerado pelo KCM" × linha 229 "ASU entrega o HUB completo") — o único risco real de choque de dados. "Colapso de projetos" é exagero: é doc de coordenação, não estado em runtime; diff+backup+§8+você pegam um contrato velho.
+- **Kit:** oferecer **duas variantes** da seção de HUB — "grupo de conteúdo" (modelo de caixas, cabe a frentes criativas) e "toolchain/infra" (só o Cânone). (= Refinar 3 do «Feedback para o Kit» do ASU; convergência das duas análises.)
+
+## i-N28 — FEEDBACK.md: NÃO criar; resolver inchaço por ciclo de vida + rotação — 💡 DECIDIDA (2026-06-21)
+**Você reconsiderou certo, e a refutação já existia (DEC-017 do ASU):** um arquivo dedicado de feedback é uma **4ª fonte de verdade** (viola "uma fonte por dado"; mais um arquivo pra manter). Pesquisa: cada arquivo a mais é mais um silo.
+**O inchaço é real**, mas o remédio é **ciclo de vida + rotação**, não arquivo novo:
+1. **Estado por entrada** nas seções «Feedback para o Kit/ASU»: status (Aberta / Enviada / Incorporada / Descartada) + data (o IDEAS do ASU já faz Ativas→Concluídas→Descartadas).
+2. **Arquivar, não apagar:** item resolvido sai da seção ativa → vai para `logs/AAAA-MM-DD.md` (é a P12 aplicada ao feedback).
+3. **Trigger = reconciliação na atualização do kit:** quando uma versão nova do kit chega, a IA compara os itens **abertos** com o CHANGELOG do kit; os atendidos viram "Incorporada" e arquivam — mas a IA **propõe** e o usuário **confirma** (humano no loop; pesquisa: auto-aplicar sem revisão é arriscado).
+**Reconciliar a tensão que criei:** a seção «Feedback para o ASU» (já adicionada no spec) = lugar de **estacionar**; emparelhar com a linha pendente no `INSTRUCTION_GUIDE` do ASU (a IA consumidora **também sinaliza na conversa**). Seção (estaciona) + sinal (conversa) + rotação (higiene) = ciclo completo, sem inchar e sem 4ª fonte.
+
+## i-N29 — Função "modo Code": gera kit de arranque (desktop E CLI) — 💡 A IMPLEMENTAR (spec a escrever)
+**O switch gera:** `CLAUDE.md` raiz starter + **`.claude/settings.json`** (permissões, como as referências satelite/mother — já entreguei um avulso pro contexto-modular) + `.claude/commands/` + protocolo de raias + macetes Windows/PowerShell. **Funciona em desktop e CLI** (mesmo motor; só muda como se abre).
+**Regra nova a embutir (vinda das referências):** **padrão Sonnet 4.6 esforço BAIXO**; o chat **avisa de forma clara** quando um spec precisa de esforço ALTO (nota "⚠️ suba o esforço para Alto nesta tarefa" no topo do spec). Esforço **proporcional à ambiguidade do spec** (baixo p/ mecânico, alto p/ exploratório).
+**O CEREBRO passa a ensinar** ao Claude-chat os macetes de Code (settings.json, esforço, abrir na pasta do repo, etc.).
+
+## i-N30 — Correções de processo chat ↔ Code — 💡 ADOTADAS (2026-06-21)
+- **Chat entrega TODO o meta decidido + o commit ANTES de liberar pro Code** (some o desencontro; foi erro meu soltar o spec antes da curadoria).
+- **Chat gera o commit ao entregar material** (uma linha, sem acento).
+- **STATUS/DECISOES — não é problema os dois atualizarem** SE: um dono por arquivo (Code faz append em STATUS/DECISOES; chat cura CHANGELOG/IDEIAS/ROADMAP — append não conflita) + o chat **sempre lê a última versão** que o usuário sobe (P11). Reforço: o Code escreve uma linha **"arquivos tocados nesta sessão"** no fim do STATUS.
+- **Balanço de ferramenta:** chat p/ divergente (arquitetura, análise, curadoria que reescreve); Code p/ convergente (implementar, testar, append). Modelo de topo p/ sessões difíceis; mais leve p/ rotina.
+
+## i-N31 — ASU quick wins (specs pendentes) e retração do syntax-check — 💡 REGISTRADO (2026-06-21)
+- **(b)** lembrete na UI quando o switch ASU é ligado (subir `INSTRUCTION_GUIDE.md`/`PROMPT_IA.md` ao Projeto consumidor).
+- **(c)** ancorar a diretriz ASU e o contrato do HUB no **`format_version`** (não na versão da ferramenta) — pra um bump que não muda o formato não exigir reescrever a diretriz/HUB.
+- **Retração:** eu havia sugerido checagem de sintaxe pós-apply no ASU; **o ASU já recusou com fundamento** (IDEAS 2026-06-19) — fora de escopo, é trabalho do compilador; o medo real é **prosa** (não código), mitigado por diff+§8+backup/rollback. Endosso a recusa + a sequência dele (docs 0.6.0 → teste de campo → conveniências).
+
+## i-N32 — Fluxo de desenvolvimento atual (registro) — 💡 (2026-06-21)
+Desenvolvimento migrou pro **Claude Code** (desktop até segunda; CLI no trabalho). Conta do trabalho conta KCM; casa conta mother/alexk. Sem `ANTHROPIC_API_KEY` (senão cobra API). Abrir o repo (não a pasta-mãe). O rename CLAUDE→CEREBRO foi feito **pelo próprio Code rodando um spec do chat** (dogfooding: 17/17 + 32/32) — o protocolo de raias funciona.
