@@ -611,6 +611,16 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 
 ---
 
+## D-031 — Switch «Modo Code»: o kit gera o arranque do Claude Code
+
+**Decisão.** Novo toggle `codeMode` ("Desenvolver no Claude Code?") no topbar, no mesmo padrão de `groupMode`/`asuMode`. Ligado, o `CEREBRO.md` gerado ganha a seção «Desenvolvimento no Claude Code» (raias chat↔Code + método doc-por-spec + segurança de aplicação + ambiente) e, opcionalmente (Tarefa B), um apêndice com o starter (`CLAUDE.md` raiz, `.claude/settings.json`, `.claude/commands/`).
+
+**Por quê.** Para que qualquer projeto gerado pelo KCM herde a capacidade de trabalhar bem no Claude Code — em especial o **doc-por-spec** (D-030), aproveitando a edição cirúrgica do agente em vez de regenerar docs inteiros. Dogfooding: é o fluxo que o próprio KCM usa, virando feature.
+
+**Escopo v1.** build no `CLAUDE.md` raiz = **placeholder**; `.claude/commands/` = **sim** (apply-spec, wrap); switches **independentes**. Aba/saída dedicada = polish futuro; no v1 o starter sai como apêndice do `CEREBRO.md`.
+
+---
+
 # FIXES — bugs graves resolvidos (formato sintoma/causa/solução/lição)
 
 > Decisões são "por que as coisas são assim"; FIXES são "o que quebrou feio e como consertamos". Não apagar.

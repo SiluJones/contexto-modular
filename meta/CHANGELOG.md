@@ -1,6 +1,14 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.34.0**.
+> Histórico de versões. Versão atual: **v1.35.0**.
+
+## v1.35.0 — Switch «Modo Code»
+- **Novo switch «Modo Code»** (D-031): ligado, o `CEREBRO.md` gerado ganha a seção «Desenvolvimento no Claude Code» — raias chat↔Code e o método **doc-por-spec** (D-030), para projetos gerados aproveitarem o Claude Code (edição cirúrgica de docs em vez de regenerar inteiros).
+- (Tarefa B) Apêndice opcional no `CEREBRO.md` com o **starter**: `CLAUDE.md` raiz (build placeholder + convenções), `.claude/settings.json`, `.claude/commands/` (`apply-spec`, `wrap`).
+- Switches independentes; `.claude/commands/` no v1; build como placeholder.
+
+---
+
 
 ## v1.34.0 — Refator modular, switch ASU, build na raiz, cérebro → CEREBRO.md (2026-06-21)
 

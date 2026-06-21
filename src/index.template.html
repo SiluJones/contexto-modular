@@ -1227,7 +1227,7 @@ function normNiche(n){
     behaviors:      normBehaviors(n.behaviors),
     contextFiles:   _files,
     outputs:        normOutputs(n.outputs),
-    topbar:         [...normTopbar(n.topbar), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }],
+    topbar:         [...normTopbar(n.topbar), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }, { id:"codeMode", label:"Desenvolver no Claude Code?", type:"toggle", default:"no" }],
     builderSection: normBuilderSection(n.builderSection),
     conventions:    normConventions(n.conventions),
     promptsExtra:   n.promptsExtra || []
@@ -1876,6 +1876,7 @@ function renderOutputs(niche){
    ========================================================= */
 function groupModeOn(){ return !!(STATE.topbar && STATE.topbar.groupMode === "yes"); }
 function asuModeOn(){ return !!(STATE.topbar && STATE.topbar.asuMode === "yes"); }
+function codeModeOn(){ return !!(STATE.topbar && STATE.topbar.codeMode === "yes"); }
 function effectiveFiles(niche){
   // O HUB.md NÃO entra no download por-nicho (seria um HUB genérico repetido em cada nicho).
   // Ele é montado e baixado na página HUB (um por grupo). O switch "Projeto em grupo?"
@@ -2196,6 +2197,79 @@ if(asuModeOn()){
     L.push("4. **Ao encerrar uma sessão que toque o grupo:** processe sua caixa (triagem → Decididos com veredito + motivo), atualize seu status relâmpago (≤3 linhas) e entregue o `HUB.md` COMPLETO, lembrando o usuário de sincronizá-lo nos outros projetos.");
     L.push("");
     L.push("O `HUB.md` é gerado na página HUB do kit (um por grupo, não por projeto) e colado idêntico em cada projeto do grupo. Cada verdade tem UM dono (lore, mecânica, visual, som…); a responsabilidade atual de cada frente fica no bloco dela no HUB (seção 2). Na dúvida de quem é dono de um dado, pergunte ao usuário — não duplique.");
+  }
+  if(codeModeOn()){
+    L.push("");
+    L.push("## Desenvolvimento no Claude Code (raias chat ↔ Code)");
+    L.push("");
+    L.push("Este projeto é desenvolvido com o **Claude Code** (CLI/desktop), além do chat de planejamento. Há duas raias:");
+    L.push("");
+    L.push('- **Chat (planejamento):** cura e ENTREGA arquivos de doc. Para reescrita de fundo/voz ou arquivo **novo/pequeno**, entrega o **arquivo inteiro**. Para um **delta estruturado** num doc **grande** (marcar fase, abrir fase, inserir nota, acrescentar item), entrega uma **spec curta** em `meta/specs/` com o **texto exato** e **âncora semântica** (seção/título, nunca nº de linha) — e o Code posiciona.');
+    L.push('- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISOES, marcar estado de fase). Aplica as specs de doc. Roda build/validação. Commita.');
+    L.push("");
+    L.push('**Método "doc por spec":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Specs **só de doc não tocam o produto** → não precisam de build; a rede é o `git diff`.');
+    L.push("");
+    L.push('**Ao APLICAR uma spec (Code):** localize cada âncora EXATAMENTE; se não achar uma, **PARE e reporte** — nunca chute um lugar próximo. Não toque em nada fora das edições nomeadas. Rode `git diff` e confira a forma esperada antes de commitar.');
+    L.push("");
+    L.push('**Ambiente:** os comandos do Code rodam por um Git Bash interno (caminhos com `/` funcionam). Mensagens de commit **sem acento**. O arquivo-raiz `CLAUDE.md` (convenções + build) e a pasta `.claude/` (permissões + comandos `/`) ficam na raiz do repo — veja-os ao iniciar.');
+  }
+  if(codeModeOn()){
+    L.push("");
+    L.push("---");
+    L.push("");
+    L.push("## Apêndice — arquivos de arranque do Claude Code (crie estes no repo)");
+    L.push("");
+    L.push('Crie os arquivos abaixo nos caminhos indicados (depois de criar, pode apagar este apêndice). São um **starter** — ajuste o comando de build e as permissões ao seu projeto.');
+    L.push("");
+    L.push("### `CLAUDE.md` (na RAIZ do repo)");
+    L.push("```markdown");
+    L.push("# <NOME DO PROJETO> — guia para o Claude Code");
+    L.push("");
+    L.push("> Arquivo-raiz lido pelo Claude Code em toda sessão. Mantenha CURTO (custa token em todo turno).");
+    L.push("> O comportamento detalhado do assistente está em `meta/CEREBRO.md`.");
+    L.push("");
+    L.push("## Ritual de início");
+    L.push("Leia `meta/CEREBRO.md` → `meta/CONTEXT.md` → `meta/STATUS.md` antes de agir. Confirme em uma frase o que entendeu.");
+    L.push("");
+    L.push("## Build / validação");
+    L.push('- Build: `<seu comando de build, ex.: npm run build>`  (PLACEHOLDER — troque pelo do seu projeto)');
+    L.push('- Testes/validação: `<seu comando de teste>` — rode antes de commitar mudança de código.');
+    L.push('- Mudança só de doc (meta/) NÃO precisa de build; a rede é o `git diff`.');
+    L.push('- Adicione seus comandos de build/teste ao `allow` de `.claude/settings.json`.');
+    L.push("");
+    L.push("## Convenções");
+    L.push("- Mensagens de commit **sem acento**.");
+    L.push("- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISOES); curadoria que reescreve vem do chat (arquivo inteiro OU spec).");
+    L.push('- Ao aplicar uma spec de `meta/specs/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.');
+    L.push("```");
+    L.push("");
+    L.push("### `.claude/settings.json`");
+    L.push("```json");
+    L.push("{");
+    L.push('  "permissions": {');
+    L.push('    "allow": [');
+    L.push('      "Read", "Edit", "Grep", "Glob",');
+    L.push('      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git add:*)", "Bash(git commit:*)", "Bash(git push:*)"');
+    L.push("    ],");
+    L.push('    "deny": ["Bash(rm -rf:*)"]');
+    L.push("  }");
+    L.push("}");
+    L.push("```");
+    L.push('(Adicione seu comando de build/teste — ex.: `"Bash(npm run build:*)"` — ao `allow`.)');
+    L.push("");
+    L.push("### `.claude/commands/apply-spec.md`");
+    L.push("```markdown");
+    L.push("Leia o arquivo de spec indicado em `meta/specs/` e execute-o.");
+    L.push("Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.");
+    L.push("Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.");
+    L.push("Spec: $ARGUMENTS");
+    L.push("```");
+    L.push("");
+    L.push("### `.claude/commands/wrap.md`");
+    L.push("```markdown");
+    L.push("Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISOES.md` se houve decisão/bug,");
+    L.push("e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).");
+    L.push("```");
   }
   L.push("");
   L.push(`*Gerado pelo Kit de Contexto Universal — nicho ${niche.label}. Edite à vontade: este arquivo é seu.*`);
