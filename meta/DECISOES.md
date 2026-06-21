@@ -567,6 +567,36 @@ O usuário sinalizou que o **refator modular (i-N13)** lhe parece boa ideia, com
 
 ---
 
+## D-028 — Refator modular: index.html gerado de src/ via build.js
+
+**Data:** 2026-06-21 · **Status:** aceita; **embutida (v1.34.0)** · Origem: i-N13 + decisão do usuário
+
+### Decisão
+O `index.html` na raiz deixou de ser editado à mão e passou a ser **gerado** por `node build.js` a partir de dois componentes: `src/index.template.html` (casco com UI + lógica, sem dados de nicho) e `src/niches/<id>.js` (17 módulos, um por nicho). O `build-manifest.json` registra a ordem de montagem. A saída é byte-idêntica à v1.33.0 com tudo desligado. O build é ferramenta **do dev** (não do usuário final) — o produto continua sendo **1 arquivo único sem build no lado do usuário** (preserva D-001). Comitar sem rodar `node build.js` + harness 17/17 é proibido pelo CLAUDE.md do projeto.
+
+### Consequências
+- Editar um nicho = editar `src/niches/<id>.js` e rodar `node build.js`. Nunca editar o `index.html` diretamente.
+- O harness (`validate.js index.html`) continua sendo a rede de segurança obrigatória.
+- Abre caminho para i18n (i-N13/i-N26): cada módulo de nicho pode ter versões por idioma sem tocar o casco.
+
+---
+
+## D-029 — Cérebro renomeado: CLAUDE.md → CEREBRO.md (em todos os projetos gerados)
+
+**Data:** 2026-06-21 · **Status:** aceita; **embutida (v1.34.0)** · Origem: spec 2026-06-20
+
+### Decisão
+O arquivo do "cérebro" gerado pelo kit (comportamento do assistente, antes chamado `CLAUDE.md`) passa a se chamar **`CEREBRO.md`** em todos os projetos gerados, sempre — não condicional. A função interna `buildClaudeMd()` mantém o nome (renomear quebraria chamadas internas), mas o download e todas as referências visíveis (UI, templates, triggers, behaviors, harness) apontam para `CEREBRO.md`.
+
+### Por quê
+O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz de instruções do projeto de desenvolvimento. Usar o mesmo nome para o cérebro gerado causava colisão semântica: o usuário não sabia qual dos dois estava lendo, e o Claude Code poderia confundir o arquivo do kit com as instruções do repositório. Liberar `CLAUDE.md` resolve a ambiguidade definitivamente.
+
+### Consequências
+- Projetos existentes que já têm `CLAUDE.md` como cérebro precisam renomear o arquivo no Projeto do Claude.ai — mudança pontual, sem perda de conteúdo.
+- O `CLAUDE.md` da raiz do repositório `contexto-modular` (lido pelo Claude Code) continua com esse nome — não é afetado.
+
+---
+
 # FIXES — bugs graves resolvidos (formato sintoma/causa/solução/lição)
 
 > Decisões são "por que as coisas são assim"; FIXES são "o que quebrou feio e como consertamos". Não apagar.

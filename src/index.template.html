@@ -666,7 +666,7 @@
               <option value="macos">macOS (zsh/bash)</option>
               <option value="linux">Linux (bash)</option>
             </select>
-            <p class="hint" style="margin-top:7px">Se o assistente for gerar comandos de terminal (git, instalação), ele usa a sintaxe certa do seu sistema. Entra nas Instruções e no CLAUDE.md.</p>
+            <p class="hint" style="margin-top:7px">Se o assistente for gerar comandos de terminal (git, instalação), ele usa a sintaxe certa do seu sistema. Entra nas Instruções e no CEREBRO.md.</p>
           </div>
         </div>
 
@@ -674,7 +674,7 @@
           <div class="outhead">
             <div class="out-tabs">
               <button class="out-tab on" id="tab-instr" data-target="instr">Instruções do Projeto</button>
-              <button class="out-tab" id="tab-claude" data-target="claude">CLAUDE.md</button>
+              <button class="out-tab" id="tab-claude" data-target="claude">CEREBRO.md</button>
             </div>
             <div style="display:flex;gap:8px">
               <button class="btn sm" id="copy-instr">⧉ Copiar</button>
@@ -731,7 +731,7 @@
     <section class="view" id="v-hub">
       <p class="kicker">Grupo de projetos</p>
       <h1 class="page">HUB.</h1>
-      <p class="lede">Para quando vários projetos do kit servem ao MESMO produto (ex.: um jogo com frentes de game design, arte, enredo e música). Monte aqui a lista de frentes do grupo: o kit gera um <code>HUB.md</code> compartilhado — diretrizes do grupo, caixa de entrada por frente e status relâmpago. <b>Um HUB por grupo</b> (não por projeto): em cada projeto, ligue o switch <em>"Projeto em grupo?"</em> para que o CLAUDE.md dele saiba ler o HUB.</p>
+      <p class="lede">Para quando vários projetos do kit servem ao MESMO produto (ex.: um jogo com frentes de game design, arte, enredo e música). Monte aqui a lista de frentes do grupo: o kit gera um <code>HUB.md</code> compartilhado — diretrizes do grupo, caixa de entrada por frente e status relâmpago. <b>Um HUB por grupo</b> (não por projeto): em cada projeto, ligue o switch <em>"Projeto em grupo?"</em> para que o CEREBRO.md dele saiba ler o HUB.</p>
 
       <div class="field" style="max-width:420px;margin-bottom:16px">
         <span class="tlabel">Nome do grupo / produto</span>
@@ -933,7 +933,11 @@ const UNIVERSAL_IDEAS_TPL = { name:"IDEAS.md", cat:"ctx",
 (com o MOTIVO — para nunca reabrir discussão já resolvida)
 
 ## Feedback para o Kit
-(observações E desvios estruturais sobre a própria estrutura/kit — ver o gatilho no CLAUDE.md; é o que volta para evoluir o kit)
+(observações E desvios estruturais sobre a própria estrutura/kit — ver o gatilho no CEREBRO.md; é o que volta para evoluir o kit)
+
+## Feedback para o ASU
+Anote aqui melhorias e bugs da ferramenta **ASU** percebidos ao usá-la neste projeto
+(para a equipe do ASU). Mesmo critério da seção acima: só o que for acionável.
 `};
 
 /* Template do HUB de grupo de projetos (i-N24): injetado quando o projeto marca "em grupo". */
@@ -953,11 +957,11 @@ const HYGIENE_RULES = [
 /* Tabela de gatilhos universal — evento → arquivo a atualizar.
    Cada nicho pode estender com gatilhos próprios. */
 const TRIGGERS_BASE = [
-  ["Início de sessão", "Lê CLAUDE.md → CONTEXT.md → STATUS.md → última entrada do CHANGELOG."],
+  ["Início de sessão", "Lê CEREBRO.md → CONTEXT.md → STATUS.md → última entrada do CHANGELOG."],
   ["Decisão importante tomada", "Entrega o DECISIONS.md completo e atualizado (nova entrada em formato ADR: contexto, decisão, alternativas, consequências)."],
   ["Bug grave resolvido", "Entrega o DECISIONS.md completo (nova entrada: sintoma, causa raiz, solução, lição)."],
   ["Ideia mencionada (sua ou minha)", "Entrega o IDEAS.md completo com a ideia capturada (na hora, sem pedir)."],
-  ["Feedback sobre o kit — dito OU feito (desvio estrutural: diretriz nova neste CLAUDE.md, template alterado/dispensado, arquivo novo criado)", "Registra na hora no IDEAS.md, seção «Feedback para o Kit»: o que foi observado/mudado e por quê. É o material que volta para evoluir o kit — sem o registro, o aprendizado deste projeto se perde."],
+  ["Feedback sobre o kit — dito OU feito (desvio estrutural: diretriz nova neste CEREBRO.md, template alterado/dispensado, arquivo novo criado)", "Registra na hora no IDEAS.md, seção «Feedback para o Kit»: o que foi observado/mudado e por quê. É o material que volta para evoluir o kit — sem o registro, o aprendizado deste projeto se perde."],
   ["Fim de sessão", "Entrega os arquivos completos afetados: STATUS.md + CHANGELOG.md (se fechou algo) + log da sessão."],
 ];
 
@@ -990,7 +994,7 @@ const UPDATE_PROTOCOL = {
     "Se eu colar (ou subir) um bloco/arquivo marcado como **atualização do Kit** — por exemplo um trecho de CHANGELOG do Kit, um princípio novo, ou um template revisado —, trate-o como instrução para os próximos outputs desta conversa, sem que eu precise recriar o projeto do zero.",
     "Ao receber uma atualização, faça um resumo de 1-3 linhas do que mudou e como isso afeta este projeto, e só então passe a aplicar — para eu confirmar que entendeu certo.",
     "Atualização de TEMPLATE: ao gerar a próxima versão do arquivo afetado, use o formato novo, preservando o conteúdo específico já existente deste projeto (não sobrescreva meus dados com o exemplo em branco do template).",
-    "Atualização de REGRA/PRINCÍPIO: incorpore ao comportamento daqui pra frente; se contradisser algo deste CLAUDE.md, aponte o conflito e me pergunte qual vale, em vez de decidir sozinho.",
+    "Atualização de REGRA/PRINCÍPIO: incorpore ao comportamento daqui pra frente; se contradisser algo deste CEREBRO.md, aponte o conflito e me pergunte qual vale, em vez de decidir sozinho.",
     "Ao integrar uma atualização do sistema/Kit num projeto já montado, PRESERVE a estrutura que já existe (nichos, docs e decisões específicas deste projeto): adapte só as camadas universal/transversal (princípios, protocolo, gatilhos). Antes de mudar, mostre em lista curta o que vai alterar, para eu aprovar — não reescreva o projeto.",
     "Feedback opcional: se eu pedir, resuma em um parágrafo o que ESTE projeto criou ou aperfeiçoou além do Kit (no nicho, na parte universal, ou num princípio) que valha levar de volta ao Kit. Sem pedido, não gera esse relatório — mantém o foco em integrar a atualização e seguir o trabalho.",
     "Na dúvida sobre se algo é uma atualização do Kit ou conteúdo do projeto, pergunte."
@@ -1892,14 +1896,14 @@ function buildInstr(niche){
     lines.push(`Estágio: ${tb.version || tb.versao || tb.fase}.`);
   }
   lines.push("");
-  lines.push("> Comportamento detalhado, regras de higiene e tabela de gatilhos estão no **CLAUDE.md** (subido como arquivo). Estas instruções trazem só o essencial, lido em toda mensagem.");
+  lines.push("> Comportamento detalhado, regras de higiene e tabela de gatilhos estão no **CEREBRO.md** (subido como arquivo). Estas instruções trazem só o essencial, lido em toda mensagem.");
 
   // Ritual de início — load-bearing, precisa estar em todo turno
   lines.push("");
   lines.push("## Ritual de início de sessão");
   const coreFiles = (niche.contextFiles||[]).map(f=>f.name);
   const readOrder = [
-    "CLAUDE.md",
+    "CEREBRO.md",
     coreFiles.find(n=>/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i.test(n)),
     coreFiles.find(n=>/STATUS/i.test(n)),
   ].filter(Boolean);
@@ -1916,7 +1920,7 @@ function buildInstr(niche){
     const baseIds = new Set(normBehaviors(BEHAVIORS_BASE).map(b => b.id));
     const uni = bhOn.filter(b => baseIds.has(b.id));
     const own = bhOn.filter(b => !baseIds.has(b.id));
-    if(uni.length) lines.push(`Princípios universais (definição completa no CLAUDE.md): ${uni.map(b => b.label.toLowerCase()).join(" · ")}.`);
+    if(uni.length) lines.push(`Princípios universais (definição completa no CEREBRO.md): ${uni.map(b => b.label.toLowerCase()).join(" · ")}.`);
     own.forEach(b => lines.push(`- **${b.label}.** ${shortDef(b.def)}`));
   }
 
@@ -1954,7 +1958,7 @@ function buildInstr(niche){
   if(_instrFiles.length){
     lines.push("");
     lines.push("## Arquivos de contexto (no Projeto)");
-    lines.push("- **CLAUDE.md** — comportamento do assistente (este conjunto de regras, em versão completa).");
+    lines.push("- **CEREBRO.md** — comportamento do assistente (este conjunto de regras, em versão completa).");
     _instrFiles.forEach(f => lines.push(`- **${f.name}** — ${f.role}`));
     lines.push("- Logs detalhados de sessão NÃO ficam no Projeto: vivem em `logs/` no Git e são lidos sob demanda.");
   }
@@ -1963,9 +1967,9 @@ function buildInstr(niche){
   if(outOn.length){
     lines.push("");
     lines.push("## Ao final de cada sessão, entregue arquivos completos");
-    lines.push("Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CLAUDE.md.");
+    lines.push("Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
     outOn.forEach(o => lines.push(`- ${o.label}`));
-    lines.push("- Higiene no CLAUDE.md (resumo: STATUS só o agora; IDEAS nunca perde; uma fonte de verdade por dado).");
+    lines.push("- Higiene no CEREBRO.md (resumo: STATUS só o agora; IDEAS nunca perde; uma fonte de verdade por dado).");
   }
 
   lines.push("");
@@ -2002,7 +2006,7 @@ function buildClaudeMd(niche){
   const langTxt = langText(tb.langSel || "pt");
   const L = [];
 
-  L.push("# CLAUDE.md — Instruções para o Assistente");
+  L.push("# CEREBRO.md — Instruções para o Assistente");
   L.push("");
   L.push("> Arquivo **estável**. Define COMO o assistente age (não O QUE o projeto é — isso é o CONTEXT).");
   L.push("> É consultado quando o comportamento precisa ser lembrado; edite quando quiser ajustar tom, ritual ou regras.");
@@ -2017,7 +2021,7 @@ function buildClaudeMd(niche){
   L.push("");
   const cf = niche.contextFiles || [];
   const order = [];
-  order.push("`CLAUDE.md` (este) — confirma comportamento e ritual");
+  order.push("`CEREBRO.md` (este) — confirma comportamento e ritual");
   const ctxF = cf.find(f=>/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i.test(f.name));
   if(ctxF) order.push(`\`${ctxF.name}\` — entende o projeto (panorama estável)`);
   const stF = cf.find(f=>/STATUS/i.test(f.name));
@@ -3197,7 +3201,7 @@ function boot(){
       if(tabClaude) tabClaude.classList.toggle("on", which === "claude");
       if(hint){
         hint.innerHTML = which === "claude"
-          ? "O <b>CLAUDE.md</b> é o comportamento completo. Suba como arquivo no Projeto (e versione no Git). É fácil de atualizar sem mexer nas Instruções."
+          ? "O <b>CEREBRO.md</b> é o comportamento completo. Suba como arquivo no Projeto (e versione no Git). É fácil de atualizar sem mexer nas Instruções."
           : "As <b>Instruções do Projeto</b> são lidas em toda mensagem — por isso vêm enxutas. Cole em <b>Projeto → Instruções</b>. Não coloque código aqui.";
       }
       updatePreview();
@@ -3218,7 +3222,7 @@ function boot(){
     if(dlBtn) dlBtn.addEventListener("click", () => {
       const niche = getCurrentNiche();
       if(STATE.outTab === "claude"){
-        downloadFile("CLAUDE.md", buildClaudeMd(niche));
+        downloadFile("CEREBRO.md", buildClaudeMd(niche));
       } else {
         downloadFile(`instrucoes-${niche.id}.txt`, buildInstr(niche));
       }
@@ -3237,7 +3241,7 @@ function boot(){
       if(AFFIX.mode === "none" || !(AFFIX.text||"").trim()){
         affixPreview.innerHTML = "Os arquivos saem com o nome original (ex.: <code>STATUS.md</code>).";
       } else {
-        affixPreview.innerHTML = `Exemplo: <code>STATUS.md</code> → <code>${escapeHTML(sample)}</code> · vale para baixar todos, ZIP, e o CLAUDE.md.`;
+        affixPreview.innerHTML = `Exemplo: <code>STATUS.md</code> → <code>${escapeHTML(sample)}</code> · vale para baixar todos, ZIP, e o CEREBRO.md.`;
       }
     };
     $$("[data-affix-mode]").forEach(btn => {
