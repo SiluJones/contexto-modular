@@ -1,11 +1,11 @@
 # STATUS — Kit de Contexto Universal — 2026-06-21
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.35.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.35) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.36.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEIAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEIAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-06-21 — v1.34.0)
+## 💬 Última sessão (2026-06-21 — v1.36.0)
 - **Refator modular (D-028) embutido:** `index.html` agora é gerado de `src/index.template.html` + 17 módulos `src/niches/*.js` via `build.js`. Produto continua 1 arquivo único, sem build no lado do usuário (preserva D-001).
 - **Cérebro renomeado (D-029):** arquivo gerado do cérebro mudou de `CLAUDE.md` → `CEREBRO.md` em todos os projetos gerados (sempre, não condicional). Libera o nome `CLAUDE.md` para o arquivo-raiz do Claude Code. Todas as referências no template, triggers, behaviors e harness atualizadas.
 - **"Feedback para o ASU" no IDEIAS gerado:** nova seção logo abaixo de "Feedback para o Kit" no template universal `UNIVERSAL_IDEAS_TPL`.
@@ -13,9 +13,10 @@
 - **ROADMAP atualizado para v1.34.0** (modular concluído, i18n em avaliação, fase «Modo Code» aberta) — primeira atualização feita pelo método "doc por spec" (D-030).
 - Arquivos tocados nesta sessão (Code): meta/ROADMAP.md, meta/DECISOES.md, meta/STATUS.md, meta/CEREBRO.md.
 - **v1.35.0 — switch «Modo Code» implementado** (D-031): toggle `codeMode` injeta no CEREBRO.md gerado as raias chat↔Code + o método doc-por-spec; (Tarefa B) apêndice com starter `.claude/`. Projetos gerados herdam a capacidade de trabalhar no Claude Code.
+- **v1.36.0 — ASU quick wins** (D-032): lembrete na UI ao ligar o ASU + diretriz ancorada no `format_version` do guia. (Parte "HUB" do item c: sem referência de versão no HUB hoje — nada a fazer.)
 
 ## 🎯 PRÓXIMOS (decidir/fazer)
-1. **ASU quick wins:** (b) lembrete na UI quando o switch ASU é ligado (subir o `INSTRUCTION_GUIDE.md`); (c) ancorar a diretriz e o HUB no `format_version` em vez da versão da ferramenta.
+1. ✅ **ASU quick wins** (v1.36.0, D-032): lembrete na UI ao ligar o switch ASU + diretriz ancorada no `format_version` do guia — **concluído**.
 2. **"Modo Code":** switch que gera o kit de arranque — `CLAUDE.md` raiz starter, `.claude/settings.json` + comandos `/`, protocolo de raias, macetes Windows/PowerShell — funcionando em desktop e CLI.
 3. **Consolidar o CINZEIRO no HUB** — EM ANDAMENTO pelo usuário.
 4. **README/PLANNING:** reescrever quando der (pitch novo — "kit desenvolve" + HUB/Cânone).

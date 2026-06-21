@@ -1,6 +1,12 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.35.0**.
+> Histórico de versões. Versão atual: **v1.36.0**.
+
+## v1.36.0 — ASU quick wins
+- **Lembrete na UI** (b): ligar "Saída via ASU?" mostra um callout para subir o `INSTRUCTION_GUIDE.md` no Projeto.
+- **Diretriz ancorada no `format_version`** (c, D-032): a diretriz do ASU cita o `format_version` do `INSTRUCTION_GUIDE.md` em vez do literal "1.0".
+
+---
 
 ## v1.35.0 — Switch «Modo Code»
 - **Novo switch «Modo Code»** (D-031): ligado, o `CEREBRO.md` gerado ganha a seção «Desenvolvimento no Claude Code» — raias chat↔Code e o método **doc-por-spec** (D-030), para projetos gerados aproveitarem o Claude Code (edição cirúrgica de docs em vez de regenerar inteiros).

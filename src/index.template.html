@@ -683,6 +683,7 @@
           </div>
           <pre id="preview-instr"></pre>
           <p class="hint" id="out-hint" style="margin-top:10px">As <b>Instruções do Projeto</b> são lidas em toda mensagem — por isso vêm enxutas. Cole em <b>Projeto → Instruções</b>. Não coloque código aqui.</p>
+          <div class="callout" id="asu-reminder" style="display:none;margin-top:10px">⚠️ <b>ASU ligado:</b> suba o <code>INSTRUCTION_GUIDE.md</code> no conhecimento do Projeto — é o <b>contrato do formato</b> (a saída usa o <code>format_version</code> que ele declara).</div>
         </div>
       </div>
     </section>
@@ -2180,7 +2181,7 @@ if(asuModeOn()){
   L.push("");
   L.push("Este projeto entrega mudanças de código como instrução do **Atualizador Automático de Scripts (ASU)** — não arquivos inteiros. Pré-requisito: o `INSTRUCTION_GUIDE.md` está no conhecimento do Projeto e a ferramenta ASU está instalada.");
   L.push("");
-  L.push("1. Ao pedir uma \"instrução ASU\" (ou ao alterar arquivos existentes), responda com **UM bloco `yaml`** (`format_version: \"1.0\"`) e uma linha final com `python -m src apply instrucao.yaml --root <RAIZ> --dry-run`. Nunca XML; nunca arquivos soltos.");
+  L.push("1. Ao pedir uma \"instrução ASU\" (ou ao alterar arquivos existentes), responda com **UM bloco `yaml`** cujo `format_version` é o declarado no `INSTRUCTION_GUIDE.md` do Projeto (não fixe um número aqui — o guia é o contrato) e uma linha final com `python -m src apply instrucao.yaml --root <RAIZ> --dry-run`. Nunca XML; nunca arquivos soltos.");
   L.push("2. Prefira edições **cirúrgicas** (`replace_function`/`replace_method`/`replace_section`/`set_json_path`); para JS e outras linguagens, `type: \"text\"` + `replace_context_block` com âncoras copiadas **literalmente do arquivo real** (indentação exata), casando **uma única vez** — só o miolo no `new_content`.");
   L.push("3. Não invente campos nem use número de linha; o `INSTRUCTION_GUIDE.md` é a referência obrigatória do formato.");
   L.push("4. **Verificação (sessão seguinte):** se você emitiu uma instrução ASU e os arquivos do projeto estão à vista, confira no disco cada arquivo que ela tocou antes de seguir — não confie em \"deu certo\".");
@@ -2309,6 +2310,8 @@ function updatePreview(){
   } else {
     p.textContent = buildInstr(niche);
   }
+  const _asuRem = $("#asu-reminder");
+  if(_asuRem) _asuRem.style.display = asuModeOn() ? "block" : "none";
 }
 
 /* =========================================================

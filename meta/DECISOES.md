@@ -661,3 +661,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 - **Causa raiz:** o GitHub Pages roda **Jekyll** por padrão e tenta renderizar TODO `.md` do repo (kramdown/commonmark). Algo na renderização do STATUS.md o fez abortar com erro de encoding. Os `.md` gerados pelo kit estão em **UTF-8 válido** (verificado: sem byte inválido, sem caractere de controle, sem BOM) — então não é arquivo malformado; é o Jekyll tropeçando (provável caractere válido que o parser rejeita, ou re-codificação no caminho até o repo). E, no fundo: **este repo não precisa de Jekyll** — o site é um único `index.html` (app de página única); os `.md` são documentos de projeto, não páginas web.
 - **Solução:** criar um arquivo vazio **`.nojekyll`** na RAIZ do repo. O GitHub Pages pula o build do Jekyll e serve os arquivos estáticos — `index.html` funciona, os `.md` ficam só armazenados, e o erro (e os avisos de Node 20 deprecado) somem.
 - **Lição:** **site de página única no GitHub Pages → `.nojekyll` desde o início.** Deixar o Jekyll processar docs de projeto não traz ganho e adiciona um modo de falha (encoding, front-matter, caracteres). Candidato a virar dica do kit no handoff de projetos que publicam no Pages (anotar em IDEIAS se reincidir).
+
+## D-032 — Diretriz do ASU ancorada no `format_version` do guia (não em literal)
+
+**Decisão.** A diretriz do ASU no `CEREBRO.md` gerado deixa de fixar `format_version: "1.0"` e passa a citar o `format_version` **declarado no `INSTRUCTION_GUIDE.md`** do Projeto. Também: lembrete na UI do kit (callout) ao ligar o switch ASU, para subir o `INSTRUCTION_GUIDE.md`.
+
+**Por quê.** O formato é o contrato **estável**; a ferramenta evolui. Ancorar no guia evita que a saída fique presa a uma versão velha quando o ASU mudar. O lembrete na UI reduz o erro de esquecer de subir o guia (sem ele, a instrução ASU não tem referência de formato).
