@@ -1,6 +1,9 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.37.0**.
+> Histórico de versões. Versão atual: **v1.38.0**.
+
+## v1.38.0 — Nomes de gestao dos nichos em ingles (Fase 1)
+- Renomeados nos nichos: DECISOES->DECISIONS, IDEIAS->IDEAS, GLOSSARIO->GLOSSARY, CONTEXTO->CONTEXT, HISTORICO->HISTORY (D-035). Conteudo de nicho permanece PT. Falta Fase 2 (camada universal STATUS+IDEAS+DECISIONS) e Fase 3 (CEREBRO por nicho).
 
 ## v1.37.1 — Nomes do repo KCM em ingles (Fase 0)
 - Repo KCM migrado: DECISOES→DECISIONS, IDEIAS→IDEAS, GLOSSARIO→GLOSSARY, HISTORICO→HISTORY + referencias (D-035). Template (nichos) vem nas Fases 1-3.

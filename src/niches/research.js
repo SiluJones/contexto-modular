@@ -49,7 +49,7 @@ NICHES.research = {
     ["Fonte nova consultada e verificada", "Entrega FONTES.md completo (citekey, dados, e a nota de por que importa)."],
     ["Hipótese criada, confirmada ou refutada", "Entrega HIPOTESES.md completo (status atualizado + o que mudou)."],
     ["Avanço na síntese / argumento", "Entrega SINTESE.md completo (o argumento no estado atual)."],
-    ["Conceito-chave definido", "Entrega SINTESE.md (ou GLOSSARIO) com a definição registrada."],
+    ["Conceito-chave definido", "Entrega SINTESE.md (ou GLOSSARY) com a definição registrada."],
   ],
   contextFiles:[
     { name:"TEMA.md", cat:"essencial", role:"A pergunta de pesquisa, o recorte, a justificativa e a tese provisória. Estável.",
@@ -203,8 +203,8 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 💬 Última sessão
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"GLOSSARIO.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.",
-      content:`# GLOSSARIO.md — Termos e Conceitos
+    { name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.",
+      content:`# GLOSSARY.md — Termos e Conceitos
 
 > **Opcional.** Use quando a pesquisa lida com vocabulário técnico denso, conceitos de autores diferentes (que podem definir o mesmo termo de modos distintos), ou jargão que se repete.
 > Complementa os «Conceitos definidos» da SINTESE — aqui entram também termos de terceiros, com a fonte.
@@ -224,8 +224,8 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Termos em outra língua
 - **[termo original]** — [tradução adotada + por que; alternativas descartadas.]
 `},
-    { name:"HISTORICO.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.",
-      content:`# HISTORICO.md — Conhecimento Consolidado
+    { name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.",
+      content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para material denso já estável que pesaria no contexto do dia a dia — uma revisão de literatura já fechada, um levantamento extenso, fichamentos antigos.
 > Não é lido no início da sessão; o assistente consulta sob demanda. Evita perder conhecimento quando um projeto/fase termina (o erro clássico de arquivar e esquecer 90% do que se leu).
@@ -275,7 +275,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
     { key:"fontes", name:"FONTES.md", role:"completo, se fonte nova foi consultada e verificada", active:true },
     { key:"hipoteses", name:"HIPOTESES.md", role:"completo, se uma hipótese mudou de status", active:true },
     { key:"sintese", name:"SINTESE.md", role:"completo, se o argumento avançou", active:true },
-    { key:"glossario", name:"GLOSSARIO.md", role:"completo, se um conceito foi definido (quando usa o arquivo)", active:false },
+    { key:"glossario", name:"GLOSSARY.md", role:"completo, se um conceito foi definido (quando usa o arquivo)", active:false },
     { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[

@@ -5,7 +5,7 @@ NICHES.design = {
   intro:{
     headline:"Do brief à arte final sem perder o conceito no caminho.",
     lede:"O risco aqui é duplo: perder a coerência visual entre peças (a cor que vira outra, a fonte que escapa) e perder o porquê das escolhas entre uma conversa e outra. Aqui o sistema visual fica registrado — paleta em todos os espaços de cor, regras de logo, decisões de conceito — e cada revisão sabe qual rodada é e o que o cliente já aprovou.",
-    ctxBlurb:"<code>PROJETO.md</code> guarda o brief e o escopo · <code>MARCA.md</code> fixa o sistema visual (logo, cores, tipografia) · <code>DECISOES.md</code> diz por que cada escolha · <code>REVISOES.md</code> rastreia versões e feedback.",
+    ctxBlurb:"<code>PROJETO.md</code> guarda o brief e o escopo · <code>MARCA.md</code> fixa o sistema visual (logo, cores, tipografia) · <code>DECISIONS.md</code> diz por que cada escolha · <code>REVISOES.md</code> rastreia versões e feedback.",
     hero:"design"
   },
   topbar:[
@@ -36,17 +36,17 @@ NICHES.design = {
   conventions:[
     "O sistema visual (paleta, tipografia, regras de logo) vive em MARCA.md; toda peça nova obedece a ele.",
     "Cores são registradas em todos os espaços relevantes: HEX e RGB (tela), CMYK (impressão offset), Pantone (cor especial) — para a marca não mudar de tom entre mídias.",
-    "Decisões de conceito (por que esta fonte, esta cor, este símbolo) vão em DECISOES.md — não basta o arquivo do design lembrar.",
+    "Decisões de conceito (por que esta fonte, esta cor, este símbolo) vão em DECISIONS.md — não basta o arquivo do design lembrar.",
     "Cada versão entregue vira entrada em REVISOES.md, com a rodada de revisão usada e o feedback recebido.",
     "Escopo (entregáveis, rodadas, exclusões) vive em PROJETO.md e é a referência para julgar pedidos novos.",
     "Para peças impressas, o checklist de pré-impressão em PRODUCAO.md é obrigatório antes de marcar como pronta."
   ],
   triggersExtra:[
-    ["Conceito ou direção visual definida", "Entrega DECISOES.md completo (por que esta direção, alternativas, racional) e MARCA.md se o sistema mudou."],
+    ["Conceito ou direção visual definida", "Entrega DECISIONS.md completo (por que esta direção, alternativas, racional) e MARCA.md se o sistema mudou."],
     ["Versão entregue ao cliente", "Entrega REVISOES.md completo (versão, rodada usada, feedback) e STATUS.md."],
-    ["Decisão de cor/fonte/símbolo", "Entrega MARCA.md e DECISOES.md completos atualizados."],
+    ["Decisão de cor/fonte/símbolo", "Entrega MARCA.md e DECISIONS.md completos atualizados."],
     ["Peça indo para impressão", "Roda e entrega o checklist de PRODUCAO.md; só marca pronta se passar."],
-    ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISOES/STATUS o impacto no escopo."],
+    ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISIONS/STATUS o impacto no escopo."],
   ],
   contextFiles:[
     {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", content:`# PROJETO.md — [Nome do Projeto]
@@ -176,7 +176,7 @@ NICHES.design = {
 ## Referências negativas
 - [Estilos/exemplos que o projeto NÃO deve seguir — explicitamente.]
 `},
-    {name:"DECISOES.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", content:`# DECISOES.md — Decisões Visuais
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", content:`# DECISIONS.md — Decisões Visuais
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das escolhas — o que o arquivo de design não conta.
 > Evita refazer a mesma discussão ("por que não usamos azul mesmo?") a cada conversa.
@@ -310,7 +310,7 @@ NICHES.design = {
 - [Peças/versões trabalhadas; o que avançou.]
 
 ## Decisões visuais
-- [O que virou DEC-N em DECISOES.md (fonte, cor, símbolo, layout).]
+- [O que virou DEC-N em DECISIONS.md (fonte, cor, símbolo, layout).]
 
 ## Revisões / feedback
 - [Versões entregues e feedback → REVISOES.md; rodada usada.]
@@ -328,7 +328,7 @@ NICHES.design = {
   outputs:[
     {key:"status", name:"STATUS.md", role:"completo: o aprovado, o que aguarda, com quem está a bola", active:true},
     {key:"revisoes", name:"REVISOES.md", role:"completo, com nova entrada se houve entrega ou feedback", active:true},
-    {key:"decisoes", name:"DECISOES.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
+    {key:"decisoes", name:"DECISIONS.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
     {key:"marca", name:"MARCA.md", role:"completo, se o sistema visual mudou (cor, fonte, regra de logo)", active:false},
     {key:"producao", name:"PRODUCAO.md", role:"completo, se uma peça foi para impressão (quando usa o arquivo)", active:false},
     {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
@@ -340,15 +340,15 @@ NICHES.design = {
     },
     { id:"H", title:"Explorar conceito / direção", when:"Hora de propor direções visuais — quero opções, não uma só.",
       fill:"brief", fillLabel:"O que vou criar + o que o brief pede (ou diga: use o PROJETO.md)",
-      body:(p,n)=>`Exploração de conceito.\n\nO QUE CRIAR:\n${p.brief||"[A peça/identidade + o que o brief pede. Ou: 'use PROJETO.md e MARCA.md']"}\n\nUsando PROJETO.md (objetivo, público, tom) e REFERENCIAS.md:\n- Proponha 2-3 direções de conceito distintas (não variações da mesma) — cada uma com: ideia central, paleta sugerida, tipografia, e como serve à dor de fundo do cliente\n- Para cada direção, diga o que ela arrisca e para quem ela funciona melhor\n- Aponte qual você recomenda e por quê (mas apresente as outras com justiça)\n- Boas práticas: apresentar mais de uma opção mostra flexibilidade sem perder direção\n\nNão detalhe execução ainda — é direção. Depois que eu escolher, registramos em DECISOES.md.`
+      body:(p,n)=>`Exploração de conceito.\n\nO QUE CRIAR:\n${p.brief||"[A peça/identidade + o que o brief pede. Ou: 'use PROJETO.md e MARCA.md']"}\n\nUsando PROJETO.md (objetivo, público, tom) e REFERENCIAS.md:\n- Proponha 2-3 direções de conceito distintas (não variações da mesma) — cada uma com: ideia central, paleta sugerida, tipografia, e como serve à dor de fundo do cliente\n- Para cada direção, diga o que ela arrisca e para quem ela funciona melhor\n- Aponte qual você recomenda e por quê (mas apresente as outras com justiça)\n- Boas práticas: apresentar mais de uma opção mostra flexibilidade sem perder direção\n\nNão detalhe execução ainda — é direção. Depois que eu escolher, registramos em DECISIONS.md.`
     },
     { id:"I", title:"Interpretar feedback visual vago", when:"Cliente deu feedback do tipo 'não gostei' / 'deixa mais X'.",
       fill:"feedback", fillLabel:"O feedback do cliente, literal (cole como ele mandou)",
-      body:(p,n)=>`Tradução de feedback visual.\n\nFEEDBACK LITERAL:\n${p.feedback||"[Cole o que o cliente disse, sem editar]"}\n\nAnalise (como designer E como o público-final):\n- Qual é o PROBLEMA concreto por trás do comentário (a intuição do cliente sobre o problema costuma estar certa)\n- A solução que ele propôs (se propôs) resolve o problema, ou trata o sintoma? A solução é trabalho meu\n- Parece feedback dele ou de uma IA/terceiro? (jargão estranho, contradição com o gosto dele em CLIENTE.md)\n- Onde conflita com decisões já aprovadas (DECISOES.md) ou com o sistema (MARCA.md)\n\nProponha: (a) 1-3 perguntas específicas de esclarecimento (\"a cor está forte demais? o título compete com a foto?\"), (b) o que dá para ajustar já com segurança, (c) o que esperar esclarecer antes de mexer. Não aplique a solução literal sem entender o problema.`
+      body:(p,n)=>`Tradução de feedback visual.\n\nFEEDBACK LITERAL:\n${p.feedback||"[Cole o que o cliente disse, sem editar]"}\n\nAnalise (como designer E como o público-final):\n- Qual é o PROBLEMA concreto por trás do comentário (a intuição do cliente sobre o problema costuma estar certa)\n- A solução que ele propôs (se propôs) resolve o problema, ou trata o sintoma? A solução é trabalho meu\n- Parece feedback dele ou de uma IA/terceiro? (jargão estranho, contradição com o gosto dele em CLIENTE.md)\n- Onde conflita com decisões já aprovadas (DECISIONS.md) ou com o sistema (MARCA.md)\n\nProponha: (a) 1-3 perguntas específicas de esclarecimento (\"a cor está forte demais? o título compete com a foto?\"), (b) o que dá para ajustar já com segurança, (c) o que esperar esclarecer antes de mexer. Não aplique a solução literal sem entender o problema.`
     },
     { id:"J", title:"Registrar decisão visual", when:"Bateu o martelo numa escolha (fonte, cor, símbolo, layout) e quero o porquê gravado.",
       fill:"decision", fillLabel:"A escolha + as alternativas que estavam na mesa",
-      body:(p,n)=>`Decisão visual.\n\nESCOLHA:\n${p.decision||"[O que foi decidido + alternativas consideradas + o que motivou]"}\n\nFaça:\n- Reformule por que esta decisão precisou ser tomada\n- Liste as alternativas e por que não\n- Articule o racional ligando ao objetivo/público/tom de PROJETO.md (e à dor de fundo do cliente)\n- Se mexe no sistema visual, atualize MARCA.md também\n\nEntregue DECISOES.md completo (nova DEC-N) e, se aplicável, MARCA.md completo. Anote se o cliente já aprovou (cruza com REVISOES.md).`
+      body:(p,n)=>`Decisão visual.\n\nESCOLHA:\n${p.decision||"[O que foi decidido + alternativas consideradas + o que motivou]"}\n\nFaça:\n- Reformule por que esta decisão precisou ser tomada\n- Liste as alternativas e por que não\n- Articule o racional ligando ao objetivo/público/tom de PROJETO.md (e à dor de fundo do cliente)\n- Se mexe no sistema visual, atualize MARCA.md também\n\nEntregue DECISIONS.md completo (nova DEC-N) e, se aplicável, MARCA.md completo. Anote se o cliente já aprovou (cruza com REVISOES.md).`
     },
     { id:"K", title:"Checklist de pré-impressão / entrega", when:"Peça pronta indo para impressão ou para entrega digital — não quero erro caro.",
       fill:"piece", fillLabel:"A peça + destino (gráfica? tela?) + specs que já sei",
@@ -356,7 +356,7 @@ NICHES.design = {
     },
     { id:"L", title:"Preparar apresentação ao cliente", when:"Vou mostrar o trabalho ao cliente e quero conduzir bem a conversa.",
       fill:"goal", fillLabel:"O que vou apresentar + o resultado que quero (aprovar? escolher entre opções?)",
-      body:(p,n)=>`Preparar apresentação ao cliente${p.client?` (${p.client})`:""}.\n\nO QUE APRESENTAR:\n${p.goal||"[A(s) peça(s)/direção(ões) + o resultado que quero: aprovação? escolha entre opções? sinal verde para arte-final?]"}\n\nUsando CLIENTE.md (como ele decide) e DECISOES.md (os porquês):\n- Como abrir: reconectar ao objetivo/dor de fundo antes de mostrar o visual (vende a solução, não só a estética)\n- Para cada peça/opção: o racional curto (por que esta escolha resolve o problema dele)\n- Antecipar as objeções prováveis dado o gosto/vetos dele, e como responder\n- Como pedir feedback ESPECÍFICO (perguntas dirigidas) em vez de \"o que achou?\"\n- Se apresentar opções: como conduzir para uma decisão sem parecer indeciso\n\nEntregue como roteiro de apresentação + um rascunho de mensagem/e-mail de envio (que eu edito antes de mandar). Lembre: você não fala com o cliente; prepara.`
+      body:(p,n)=>`Preparar apresentação ao cliente${p.client?` (${p.client})`:""}.\n\nO QUE APRESENTAR:\n${p.goal||"[A(s) peça(s)/direção(ões) + o resultado que quero: aprovação? escolha entre opções? sinal verde para arte-final?]"}\n\nUsando CLIENTE.md (como ele decide) e DECISIONS.md (os porquês):\n- Como abrir: reconectar ao objetivo/dor de fundo antes de mostrar o visual (vende a solução, não só a estética)\n- Para cada peça/opção: o racional curto (por que esta escolha resolve o problema dele)\n- Antecipar as objeções prováveis dado o gosto/vetos dele, e como responder\n- Como pedir feedback ESPECÍFICO (perguntas dirigidas) em vez de \"o que achou?\"\n- Se apresentar opções: como conduzir para uma decisão sem parecer indeciso\n\nEntregue como roteiro de apresentação + um rascunho de mensagem/e-mail de envio (que eu edito antes de mandar). Lembre: você não fala com o cliente; prepara.`
     },
   ]
 };

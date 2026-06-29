@@ -1364,7 +1364,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## Identificadores
 - **[Sigla/ID]** — [o que significa no projeto.]
 `},
-    {name:"HISTORICO.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", content:`# HISTORICO.md — Conhecimento Consolidado
+    {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para conhecimento denso que já foi aprendido e não muda mais — guias técnicos, análises de viabilidade, notas de migração — que tornariam o CONTEXT pesado demais.
 > Não é lido no início da sessão; o assistente consulta sob demanda quando o assunto aparece.
@@ -1428,7 +1428,7 @@ NICHES.design = {
   intro:{
     headline:"Do brief à arte final sem perder o conceito no caminho.",
     lede:"O risco aqui é duplo: perder a coerência visual entre peças (a cor que vira outra, a fonte que escapa) e perder o porquê das escolhas entre uma conversa e outra. Aqui o sistema visual fica registrado — paleta em todos os espaços de cor, regras de logo, decisões de conceito — e cada revisão sabe qual rodada é e o que o cliente já aprovou.",
-    ctxBlurb:"<code>PROJETO.md</code> guarda o brief e o escopo · <code>MARCA.md</code> fixa o sistema visual (logo, cores, tipografia) · <code>DECISOES.md</code> diz por que cada escolha · <code>REVISOES.md</code> rastreia versões e feedback.",
+    ctxBlurb:"<code>PROJETO.md</code> guarda o brief e o escopo · <code>MARCA.md</code> fixa o sistema visual (logo, cores, tipografia) · <code>DECISIONS.md</code> diz por que cada escolha · <code>REVISOES.md</code> rastreia versões e feedback.",
     hero:"design"
   },
   topbar:[
@@ -1459,17 +1459,17 @@ NICHES.design = {
   conventions:[
     "O sistema visual (paleta, tipografia, regras de logo) vive em MARCA.md; toda peça nova obedece a ele.",
     "Cores são registradas em todos os espaços relevantes: HEX e RGB (tela), CMYK (impressão offset), Pantone (cor especial) — para a marca não mudar de tom entre mídias.",
-    "Decisões de conceito (por que esta fonte, esta cor, este símbolo) vão em DECISOES.md — não basta o arquivo do design lembrar.",
+    "Decisões de conceito (por que esta fonte, esta cor, este símbolo) vão em DECISIONS.md — não basta o arquivo do design lembrar.",
     "Cada versão entregue vira entrada em REVISOES.md, com a rodada de revisão usada e o feedback recebido.",
     "Escopo (entregáveis, rodadas, exclusões) vive em PROJETO.md e é a referência para julgar pedidos novos.",
     "Para peças impressas, o checklist de pré-impressão em PRODUCAO.md é obrigatório antes de marcar como pronta."
   ],
   triggersExtra:[
-    ["Conceito ou direção visual definida", "Entrega DECISOES.md completo (por que esta direção, alternativas, racional) e MARCA.md se o sistema mudou."],
+    ["Conceito ou direção visual definida", "Entrega DECISIONS.md completo (por que esta direção, alternativas, racional) e MARCA.md se o sistema mudou."],
     ["Versão entregue ao cliente", "Entrega REVISOES.md completo (versão, rodada usada, feedback) e STATUS.md."],
-    ["Decisão de cor/fonte/símbolo", "Entrega MARCA.md e DECISOES.md completos atualizados."],
+    ["Decisão de cor/fonte/símbolo", "Entrega MARCA.md e DECISIONS.md completos atualizados."],
     ["Peça indo para impressão", "Roda e entrega o checklist de PRODUCAO.md; só marca pronta se passar."],
-    ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISOES/STATUS o impacto no escopo."],
+    ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISIONS/STATUS o impacto no escopo."],
   ],
   contextFiles:[
     {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", content:`# PROJETO.md — [Nome do Projeto]
@@ -1599,7 +1599,7 @@ NICHES.design = {
 ## Referências negativas
 - [Estilos/exemplos que o projeto NÃO deve seguir — explicitamente.]
 `},
-    {name:"DECISOES.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", content:`# DECISOES.md — Decisões Visuais
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", content:`# DECISIONS.md — Decisões Visuais
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das escolhas — o que o arquivo de design não conta.
 > Evita refazer a mesma discussão ("por que não usamos azul mesmo?") a cada conversa.
@@ -1733,7 +1733,7 @@ NICHES.design = {
 - [Peças/versões trabalhadas; o que avançou.]
 
 ## Decisões visuais
-- [O que virou DEC-N em DECISOES.md (fonte, cor, símbolo, layout).]
+- [O que virou DEC-N em DECISIONS.md (fonte, cor, símbolo, layout).]
 
 ## Revisões / feedback
 - [Versões entregues e feedback → REVISOES.md; rodada usada.]
@@ -1751,7 +1751,7 @@ NICHES.design = {
   outputs:[
     {key:"status", name:"STATUS.md", role:"completo: o aprovado, o que aguarda, com quem está a bola", active:true},
     {key:"revisoes", name:"REVISOES.md", role:"completo, com nova entrada se houve entrega ou feedback", active:true},
-    {key:"decisoes", name:"DECISOES.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
+    {key:"decisoes", name:"DECISIONS.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
     {key:"marca", name:"MARCA.md", role:"completo, se o sistema visual mudou (cor, fonte, regra de logo)", active:false},
     {key:"producao", name:"PRODUCAO.md", role:"completo, se uma peça foi para impressão (quando usa o arquivo)", active:false},
     {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
@@ -1763,15 +1763,15 @@ NICHES.design = {
     },
     { id:"H", title:"Explorar conceito / direção", when:"Hora de propor direções visuais — quero opções, não uma só.",
       fill:"brief", fillLabel:"O que vou criar + o que o brief pede (ou diga: use o PROJETO.md)",
-      body:(p,n)=>`Exploração de conceito.\n\nO QUE CRIAR:\n${p.brief||"[A peça/identidade + o que o brief pede. Ou: 'use PROJETO.md e MARCA.md']"}\n\nUsando PROJETO.md (objetivo, público, tom) e REFERENCIAS.md:\n- Proponha 2-3 direções de conceito distintas (não variações da mesma) — cada uma com: ideia central, paleta sugerida, tipografia, e como serve à dor de fundo do cliente\n- Para cada direção, diga o que ela arrisca e para quem ela funciona melhor\n- Aponte qual você recomenda e por quê (mas apresente as outras com justiça)\n- Boas práticas: apresentar mais de uma opção mostra flexibilidade sem perder direção\n\nNão detalhe execução ainda — é direção. Depois que eu escolher, registramos em DECISOES.md.`
+      body:(p,n)=>`Exploração de conceito.\n\nO QUE CRIAR:\n${p.brief||"[A peça/identidade + o que o brief pede. Ou: 'use PROJETO.md e MARCA.md']"}\n\nUsando PROJETO.md (objetivo, público, tom) e REFERENCIAS.md:\n- Proponha 2-3 direções de conceito distintas (não variações da mesma) — cada uma com: ideia central, paleta sugerida, tipografia, e como serve à dor de fundo do cliente\n- Para cada direção, diga o que ela arrisca e para quem ela funciona melhor\n- Aponte qual você recomenda e por quê (mas apresente as outras com justiça)\n- Boas práticas: apresentar mais de uma opção mostra flexibilidade sem perder direção\n\nNão detalhe execução ainda — é direção. Depois que eu escolher, registramos em DECISIONS.md.`
     },
     { id:"I", title:"Interpretar feedback visual vago", when:"Cliente deu feedback do tipo 'não gostei' / 'deixa mais X'.",
       fill:"feedback", fillLabel:"O feedback do cliente, literal (cole como ele mandou)",
-      body:(p,n)=>`Tradução de feedback visual.\n\nFEEDBACK LITERAL:\n${p.feedback||"[Cole o que o cliente disse, sem editar]"}\n\nAnalise (como designer E como o público-final):\n- Qual é o PROBLEMA concreto por trás do comentário (a intuição do cliente sobre o problema costuma estar certa)\n- A solução que ele propôs (se propôs) resolve o problema, ou trata o sintoma? A solução é trabalho meu\n- Parece feedback dele ou de uma IA/terceiro? (jargão estranho, contradição com o gosto dele em CLIENTE.md)\n- Onde conflita com decisões já aprovadas (DECISOES.md) ou com o sistema (MARCA.md)\n\nProponha: (a) 1-3 perguntas específicas de esclarecimento (\"a cor está forte demais? o título compete com a foto?\"), (b) o que dá para ajustar já com segurança, (c) o que esperar esclarecer antes de mexer. Não aplique a solução literal sem entender o problema.`
+      body:(p,n)=>`Tradução de feedback visual.\n\nFEEDBACK LITERAL:\n${p.feedback||"[Cole o que o cliente disse, sem editar]"}\n\nAnalise (como designer E como o público-final):\n- Qual é o PROBLEMA concreto por trás do comentário (a intuição do cliente sobre o problema costuma estar certa)\n- A solução que ele propôs (se propôs) resolve o problema, ou trata o sintoma? A solução é trabalho meu\n- Parece feedback dele ou de uma IA/terceiro? (jargão estranho, contradição com o gosto dele em CLIENTE.md)\n- Onde conflita com decisões já aprovadas (DECISIONS.md) ou com o sistema (MARCA.md)\n\nProponha: (a) 1-3 perguntas específicas de esclarecimento (\"a cor está forte demais? o título compete com a foto?\"), (b) o que dá para ajustar já com segurança, (c) o que esperar esclarecer antes de mexer. Não aplique a solução literal sem entender o problema.`
     },
     { id:"J", title:"Registrar decisão visual", when:"Bateu o martelo numa escolha (fonte, cor, símbolo, layout) e quero o porquê gravado.",
       fill:"decision", fillLabel:"A escolha + as alternativas que estavam na mesa",
-      body:(p,n)=>`Decisão visual.\n\nESCOLHA:\n${p.decision||"[O que foi decidido + alternativas consideradas + o que motivou]"}\n\nFaça:\n- Reformule por que esta decisão precisou ser tomada\n- Liste as alternativas e por que não\n- Articule o racional ligando ao objetivo/público/tom de PROJETO.md (e à dor de fundo do cliente)\n- Se mexe no sistema visual, atualize MARCA.md também\n\nEntregue DECISOES.md completo (nova DEC-N) e, se aplicável, MARCA.md completo. Anote se o cliente já aprovou (cruza com REVISOES.md).`
+      body:(p,n)=>`Decisão visual.\n\nESCOLHA:\n${p.decision||"[O que foi decidido + alternativas consideradas + o que motivou]"}\n\nFaça:\n- Reformule por que esta decisão precisou ser tomada\n- Liste as alternativas e por que não\n- Articule o racional ligando ao objetivo/público/tom de PROJETO.md (e à dor de fundo do cliente)\n- Se mexe no sistema visual, atualize MARCA.md também\n\nEntregue DECISIONS.md completo (nova DEC-N) e, se aplicável, MARCA.md completo. Anote se o cliente já aprovou (cruza com REVISOES.md).`
     },
     { id:"K", title:"Checklist de pré-impressão / entrega", when:"Peça pronta indo para impressão ou para entrega digital — não quero erro caro.",
       fill:"piece", fillLabel:"A peça + destino (gráfica? tela?) + specs que já sei",
@@ -1779,7 +1779,7 @@ NICHES.design = {
     },
     { id:"L", title:"Preparar apresentação ao cliente", when:"Vou mostrar o trabalho ao cliente e quero conduzir bem a conversa.",
       fill:"goal", fillLabel:"O que vou apresentar + o resultado que quero (aprovar? escolher entre opções?)",
-      body:(p,n)=>`Preparar apresentação ao cliente${p.client?` (${p.client})`:""}.\n\nO QUE APRESENTAR:\n${p.goal||"[A(s) peça(s)/direção(ões) + o resultado que quero: aprovação? escolha entre opções? sinal verde para arte-final?]"}\n\nUsando CLIENTE.md (como ele decide) e DECISOES.md (os porquês):\n- Como abrir: reconectar ao objetivo/dor de fundo antes de mostrar o visual (vende a solução, não só a estética)\n- Para cada peça/opção: o racional curto (por que esta escolha resolve o problema dele)\n- Antecipar as objeções prováveis dado o gosto/vetos dele, e como responder\n- Como pedir feedback ESPECÍFICO (perguntas dirigidas) em vez de \"o que achou?\"\n- Se apresentar opções: como conduzir para uma decisão sem parecer indeciso\n\nEntregue como roteiro de apresentação + um rascunho de mensagem/e-mail de envio (que eu edito antes de mandar). Lembre: você não fala com o cliente; prepara.`
+      body:(p,n)=>`Preparar apresentação ao cliente${p.client?` (${p.client})`:""}.\n\nO QUE APRESENTAR:\n${p.goal||"[A(s) peça(s)/direção(ões) + o resultado que quero: aprovação? escolha entre opções? sinal verde para arte-final?]"}\n\nUsando CLIENTE.md (como ele decide) e DECISIONS.md (os porquês):\n- Como abrir: reconectar ao objetivo/dor de fundo antes de mostrar o visual (vende a solução, não só a estética)\n- Para cada peça/opção: o racional curto (por que esta escolha resolve o problema dele)\n- Antecipar as objeções prováveis dado o gosto/vetos dele, e como responder\n- Como pedir feedback ESPECÍFICO (perguntas dirigidas) em vez de \"o que achou?\"\n- Se apresentar opções: como conduzir para uma decisão sem parecer indeciso\n\nEntregue como roteiro de apresentação + um rascunho de mensagem/e-mail de envio (que eu edito antes de mandar). Lembre: você não fala com o cliente; prepara.`
     },
   ]
 };
@@ -2140,7 +2140,7 @@ NICHES.narrative = {
   conventions:[
     "A voz é do autor — e o assistente também ESCREVE, quando pedido e sob direção: cena, capítulo, diálogo, opções. Sempre como rascunho ancorado em VOZ.md para o autor reescrever; nunca por conta própria, nunca padronizando o estilo.",
     "Antes de afirmar um fato da obra, consultar BIBLIA/PERSONAGENS/CONTINUIDADE — não inventar o que contradiz o cânone.",
-    "Grafia canônica de nomes e termos inventados vive em CONTINUIDADE (ou GLOSSARIO): um nome se escreve sempre do mesmo jeito.",
+    "Grafia canônica de nomes e termos inventados vive em CONTINUIDADE (ou GLOSSARY): um nome se escreve sempre do mesmo jeito.",
     "Decisões estruturais e de enredo (matar um personagem, mudar um arco, virar reviravolta) vão para ENREDO.md.",
     "Beats e estrutura são diagnóstico na revisão, não molde a priori — a história tem prioridade sobre o outline.",
     "Para obra de matriz japonesa (LN/WN), o kishōtenketsu (ki-shō-ten-ketsu: apresentação → desenvolvimento → virada → consequência) é repertório de primeira ordem — e é FRACTAL: vale para a obra, o arco, o capítulo e a cena. Em serial, o ketsu pode ser adiado para o capítulo seguinte (vira o gancho). Contraste e surpresa sustentam cena tanto quanto conflito.",
@@ -2351,7 +2351,7 @@ NICHES.narrative = {
 ## Pontos de convergência
 - [Onde os fios/linhas se cruzam — para sincronizar.]
 `},
-    {name:"GLOSSARIO.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", content:`# GLOSSARIO.md — Termos da Obra
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", content:`# GLOSSARY.md — Termos da Obra
 
 > **Opcional.** Use quando a obra inventa vocabulário (fantasia, ficção científica, mundos próprios) que se repete e precisa de sentido e grafia estáveis.
 > A grafia canônica também vive em CONTINUIDADE; aqui entra o SIGNIFICADO.
@@ -2802,7 +2802,7 @@ NICHES.research = {
     ["Fonte nova consultada e verificada", "Entrega FONTES.md completo (citekey, dados, e a nota de por que importa)."],
     ["Hipótese criada, confirmada ou refutada", "Entrega HIPOTESES.md completo (status atualizado + o que mudou)."],
     ["Avanço na síntese / argumento", "Entrega SINTESE.md completo (o argumento no estado atual)."],
-    ["Conceito-chave definido", "Entrega SINTESE.md (ou GLOSSARIO) com a definição registrada."],
+    ["Conceito-chave definido", "Entrega SINTESE.md (ou GLOSSARY) com a definição registrada."],
   ],
   contextFiles:[
     { name:"TEMA.md", cat:"essencial", role:"A pergunta de pesquisa, o recorte, a justificativa e a tese provisória. Estável.",
@@ -2956,8 +2956,8 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 💬 Última sessão
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"GLOSSARIO.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.",
-      content:`# GLOSSARIO.md — Termos e Conceitos
+    { name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.",
+      content:`# GLOSSARY.md — Termos e Conceitos
 
 > **Opcional.** Use quando a pesquisa lida com vocabulário técnico denso, conceitos de autores diferentes (que podem definir o mesmo termo de modos distintos), ou jargão que se repete.
 > Complementa os «Conceitos definidos» da SINTESE — aqui entram também termos de terceiros, com a fonte.
@@ -2977,8 +2977,8 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Termos em outra língua
 - **[termo original]** — [tradução adotada + por que; alternativas descartadas.]
 `},
-    { name:"HISTORICO.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.",
-      content:`# HISTORICO.md — Conhecimento Consolidado
+    { name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.",
+      content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para material denso já estável que pesaria no contexto do dia a dia — uma revisão de literatura já fechada, um levantamento extenso, fichamentos antigos.
 > Não é lido no início da sessão; o assistente consulta sob demanda. Evita perder conhecimento quando um projeto/fase termina (o erro clássico de arquivar e esquecer 90% do que se leu).
@@ -3028,7 +3028,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
     { key:"fontes", name:"FONTES.md", role:"completo, se fonte nova foi consultada e verificada", active:true },
     { key:"hipoteses", name:"HIPOTESES.md", role:"completo, se uma hipótese mudou de status", active:true },
     { key:"sintese", name:"SINTESE.md", role:"completo, se o argumento avançou", active:true },
-    { key:"glossario", name:"GLOSSARIO.md", role:"completo, se um conceito foi definido (quando usa o arquivo)", active:false },
+    { key:"glossario", name:"GLOSSARY.md", role:"completo, se um conceito foi definido (quando usa o arquivo)", active:false },
     { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
@@ -3067,7 +3067,7 @@ NICHES.product = {
   intro:{
     headline:"O problema antes da solução, e o porquê de cada decisão preservado.",
     lede:"O risco aqui é construir a coisa certa pelo motivo errado: feature pedida sem o problema entendido, decisão tomada e esquecida, prioridade definida pela voz mais alta. Aqui o problema vem antes da solução (JTBD), cada decisão guarda o racional, e a prioridade tem critério — não opinião do mais graduado.",
-    ctxBlurb:"<code>PRODUTO.md</code> fixa a visão e os princípios · <code>PERSONAS.md</code> e <code>JORNADAS.md</code> ancoram quem e como · <code>DECISOES.md</code> guarda o porquê · <code>STATUS.md</code> mostra as iniciativas e métricas.",
+    ctxBlurb:"<code>PRODUTO.md</code> fixa a visão e os princípios · <code>PERSONAS.md</code> e <code>JORNADAS.md</code> ancoram quem e como · <code>DECISIONS.md</code> guarda o porquê · <code>STATUS.md</code> mostra as iniciativas e métricas.",
     hero:"product"
   },
   topbar:[
@@ -3081,7 +3081,7 @@ NICHES.product = {
     ["successmetric","Sempre uma métrica de sucesso","Toda iniciativa nasce com a pergunta «como saberemos que deu certo?». Define o resultado esperado e a métrica antes de construir — isso previne scope creep e permite validar depois. Liga ao North Star do produto quando há um. Sem métrica, a feature é um palpite caro."],
     ["riskcall","Chama o risco antes do bonito","Aponta o risco e a hipótese frágil antes de polir a solução. Distingue o que é fato do que é suposição não validada. Em priorização, desconfia de confiança alta sem avaliação de risco — o erro mais comum. Não deixa a hipótese embutida passar como certeza."],
     ["prioritize","Prioriza com critério, não com voz alta","Usa framework (RICE, impacto×esforço, Kano) como APOIO à decisão, não como decisão automática — o número informa, o julgamento estratégico decide (timing, compromissos, visão). Afasta o «HiPPO» (a opinião do mais graduado vence). Sempre dá o argumento de por que algo NÃO deveria estar na lista."],
-    ["decisionlog","Registra a decisão e o racional","Toda decisão de produto relevante vira entrada em DECISOES.md com o porquê, as alternativas e o que se esperava. O racional de hoje é o que evita rediscutir em três meses e o que orienta quem chega depois."],
+    ["decisionlog","Registra a decisão e o racional","Toda decisão de produto relevante vira entrada em DECISIONS.md com o porquê, as alternativas e o que se esperava. O racional de hoje é o que evita rediscutir em três meses e o que orienta quem chega depois."],
     ["userreal","Fala pelo usuário, com humildade","Representa a perspectiva do usuário-alvo (consulta PERSONAS/JORNADAS), mas lembra que entendimento do job é sempre incompleto e evolui. Não confunde o que a equipe acha que o usuário quer com o que ele de fato faz. Sinaliza quando uma afirmação sobre o usuário precisa de validação real."],
   ],
   builderSection:{
@@ -3099,13 +3099,13 @@ NICHES.product = {
   conventions:[
     "Job antes de feature: nenhum pedido vira solução sem o problema/JTBD entendido primeiro.",
     "Toda iniciativa tem métrica de sucesso definida ANTES de construir (liga ao North Star quando há).",
-    "Decisões de produto relevantes vão para DECISOES.md com racional, alternativas e o que se esperava.",
+    "Decisões de produto relevantes vão para DECISIONS.md com racional, alternativas e o que se esperava.",
     "Priorização usa framework como apoio, não como veredito — o julgamento estratégico decide; registra-se o porquê de cada score.",
     "Afirmação sobre o usuário que não foi validada é marcada como hipótese, não fato.",
     "Risco e hipótese frágil são sinalizados antes de refinar a solução."
   ],
   triggersExtra:[
-    ["Decisão de produto tomada", "Entrega DECISOES.md completo (decisão, alternativas, racional, métrica esperada)."],
+    ["Decisão de produto tomada", "Entrega DECISIONS.md completo (decisão, alternativas, racional, métrica esperada)."],
     ["Pedido virou oportunidade qualificada", "Entrega STATUS.md (e PRODUTO/JORNADAS se mudou o escopo de quem/como)."],
     ["Persona ou jornada nova/revista", "Entrega PERSONAS.md ou JORNADAS.md completo."],
     ["Spec/PRD escrito ou priorização feita", "Entrega STATUS.md completo (iniciativa + métrica + prioridade)."],
@@ -3200,8 +3200,8 @@ NICHES.product = {
 ## [Próxima jornada]
 [...]
 `},
-    { name:"DECISOES.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.",
-      content:`# DECISOES.md — Decisões de Produto
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.",
+      content:`# DECISIONS.md — Decisões de Produto
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das decisões — evita rediscussão e orienta quem chega depois.
 > Decisão sem racional registrado é decisão que será refeita.
@@ -3238,7 +3238,7 @@ NICHES.product = {
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde o produto está e o que vem.
-> Item entregue/encerrado sai daqui (vira nota no log; a decisão fica em DECISOES).
+> Item entregue/encerrado sai daqui (vira nota no log; a decisão fica em DECISIONS).
 
 ---
 
@@ -3280,7 +3280,7 @@ NICHES.product = {
 - **Métrica observada:** [o que medimos.]
 - **Resultado:** [o que aconteceu — número/observação.]
 - **Aprendizado:** [o que isso ensina; confirma ou refuta a hipótese?]
-- **Decisão decorrente:** [o que fizemos com o resultado → DEC-N em DECISOES.]
+- **Decisão decorrente:** [o que fizemos com o resultado → DEC-N em DECISIONS.]
 
 ---
 
@@ -3305,7 +3305,7 @@ NICHES.product = {
 - [O que se aprendeu sobre o job/usuário → PERSONAS/JORNADAS. Marcar validado vs. suposto.]
 
 ## Decisões
-- [O que virou DEC em DECISOES.md (com métrica esperada).]
+- [O que virou DEC em DECISIONS.md (com métrica esperada).]
 
 ## Priorização
 - [O que foi priorizado e com que critério/score.]
@@ -3322,7 +3322,7 @@ NICHES.product = {
   ],
   outputs:[
     { key:"status", name:"STATUS.md", role:"completo: iniciativas, métricas, backlog priorizado", active:true },
-    { key:"decisoes", name:"DECISOES.md", role:"completo, se houve decisão de produto (com racional e métrica)", active:true },
+    { key:"decisoes", name:"DECISIONS.md", role:"completo, se houve decisão de produto (com racional e métrica)", active:true },
     { key:"personas", name:"PERSONAS.md", role:"completo, se uma persona/job foi revisto", active:false },
     { key:"jornadas", name:"JORNADAS.md", role:"completo, se uma jornada/oportunidade mudou", active:false },
     { key:"experimentos", name:"EXPERIMENTOS.md", role:"completo, se um experimento rodou (quando usa o arquivo)", active:false },
@@ -3343,11 +3343,11 @@ NICHES.product = {
     },
     { id:"J", title:"Registrar uma decisão de produto", when:"Batemos o martelo numa decisão e quero o porquê gravado.",
       fill:"decision", fillLabel:"A decisão + o que motivou + alternativas que estavam na mesa",
-      body:(p,n)=>`Decisão de produto.\n\nDECISÃO:\n${p.decision||"[O que foi decidido + o que motivou + alternativas consideradas]"}\n\nFaça:\n- Reformule o problema/oportunidade por trás da decisão (qual job/persona)\n- Liste as alternativas e por que não\n- Articule o racional ligando à visão/princípios de PRODUTO.md\n- Defina a métrica esperada: que número deve se mover e em quanto tempo (como saberemos se acertamos)\n- Aponte as hipóteses embutidas e o principal risco\n\nEntregue DECISOES.md completo (nova DEC-N). Se a decisão muda escopo de quem/como, atualize PERSONAS/JORNADAS também.`
+      body:(p,n)=>`Decisão de produto.\n\nDECISÃO:\n${p.decision||"[O que foi decidido + o que motivou + alternativas consideradas]"}\n\nFaça:\n- Reformule o problema/oportunidade por trás da decisão (qual job/persona)\n- Liste as alternativas e por que não\n- Articule o racional ligando à visão/princípios de PRODUTO.md\n- Defina a métrica esperada: que número deve se mover e em quanto tempo (como saberemos se acertamos)\n- Aponte as hipóteses embutidas e o principal risco\n\nEntregue DECISIONS.md completo (nova DEC-N). Se a decisão muda escopo de quem/como, atualize PERSONAS/JORNADAS também.`
     },
     { id:"K", title:"Analisar uma métrica / resultado", when:"Tenho um número (bom ou ruim) e quero interpretá-lo sem me enganar.",
       fill:"data", fillLabel:"A métrica + o número + o que esperava + contexto",
-      body:(p,n)=>`Análise de métrica.\n\nMÉTRICA E CONTEXTO:\n${p.data||"[A métrica + valor observado + o que esperava + o que mudou no período]"}\n\nInterprete com honestidade:\n- O que o número diz de fato — e o que ele NÃO diz (correlação ≠ causa)\n- É métrica de valor real ou de vaidade? Como se relaciona com o North Star?\n- Que explicações alternativas existem para esse movimento? (sazonalidade, mudança externa, amostra pequena)\n- O que precisaria ser verdade para essa leitura estar certa? Que dado confirmaria?\n- Ação recomendada: agir, investigar mais, ou não fazer nada ainda?\n\nNão pule para conclusão que agrada. Marque o que é evidência vs. hipótese. Se a leitura sugere uma decisão, aponte o que registrar em DECISOES.`
+      body:(p,n)=>`Análise de métrica.\n\nMÉTRICA E CONTEXTO:\n${p.data||"[A métrica + valor observado + o que esperava + o que mudou no período]"}\n\nInterprete com honestidade:\n- O que o número diz de fato — e o que ele NÃO diz (correlação ≠ causa)\n- É métrica de valor real ou de vaidade? Como se relaciona com o North Star?\n- Que explicações alternativas existem para esse movimento? (sazonalidade, mudança externa, amostra pequena)\n- O que precisaria ser verdade para essa leitura estar certa? Que dado confirmaria?\n- Ação recomendada: agir, investigar mais, ou não fazer nada ainda?\n\nNão pule para conclusão que agrada. Marque o que é evidência vs. hipótese. Se a leitura sugere uma decisão, aponte o que registrar em DECISIONS.`
     },
     { id:"L", title:"Mapear oportunidades (Opportunity Solution Tree)", when:"Tenho um resultado-alvo e quero descobrir caminhos antes de pular para soluções.",
       fill:"outcome", fillLabel:"O resultado/outcome desejado + o que já sabe das dores dos usuários",
@@ -3364,7 +3364,7 @@ NICHES.business = {
   intro:{
     headline:"Decisão de negócio com a premissa na mesa e o número honesto.",
     lede:"O risco aqui é decidir por chavão e por número que ninguém checou: a projeção otimista que vira plano, a métrica que impressiona mas esconde a queima de caixa, o framework aplicado como receita. Aqui cada análise declara suas premissas, o número vem com a conta (ou com o aviso de que é estimativa), e toda recomendação carrega o melhor contra-argumento.",
-    ctxBlurb:"<code>CONTEXTO.md</code> fixa empresa e mercado · <code>OBJETIVOS.md</code> traz metas com critério de sucesso · <code>ANALISE.md</code> guarda o raciocínio (e as premissas) · <code>DECISOES.md</code> registra o porquê.",
+    ctxBlurb:"<code>CONTEXT.md</code> fixa empresa e mercado · <code>OBJETIVOS.md</code> traz metas com critério de sucesso · <code>ANALISE.md</code> guarda o raciocínio (e as premissas) · <code>DECISIONS.md</code> registra o porquê.",
     hero:"business"
   },
   topbar:[
@@ -3379,7 +3379,7 @@ NICHES.business = {
     ["counterargue","Sempre o contraponto","Toda recomendação vem com o melhor argumento contrário (não uma versão fraca). Se a decisão parece óbvia demais, procura o que está sendo ignorado. Pergunta «o que precisaria ser verdade para esta ser a decisão errada?». Não vende a tese — testa-a."],
     ["firstprinciples","First principles antes de framework","Entende o problema real e a meta antes de aplicar qualquer framework (SWOT, OKR, Canvas, Porter). Framework é lente, não receita — usa o que esclarece e ignora o que só preenche slide. Vários podem ser combinados se cada um agregar; nenhum substitui pensar do zero sobre o caso concreto."],
     ["riskcost","Risco e custo de oportunidade","Toda decisão é avaliada pelo que arrisca E pelo que deixa de fazer (o caminho não escolhido). Aponta o downside e a probabilidade, não só o upside. Em finanças, lembra que as métricas são interdependentes — escalar aquisição com margem/retenção ruins só acelera a queima de caixa."],
-    ["strategyfilter","A estratégia é o filtro","Usa os objetivos e a estratégia (OBJETIVOS.md) como crivo de toda decisão: «isto nos aproxima da meta?». Sinaliza quando uma iniciativa atraente não serve à estratégia (distração) ou contradiz uma decisão anterior (DECISOES.md). Foco é dizer não ao que não serve."],
+    ["strategyfilter","A estratégia é o filtro","Usa os objetivos e a estratégia (OBJETIVOS.md) como crivo de toda decisão: «isto nos aproxima da meta?». Sinaliza quando uma iniciativa atraente não serve à estratégia (distração) ou contradiz uma decisão anterior (DECISIONS.md). Foco é dizer não ao que não serve."],
   ],
   builderSection:{
     title:"Enquadramento do negócio",
@@ -3402,15 +3402,15 @@ NICHES.business = {
     "A estratégia (OBJETIVOS) é o filtro: o que não serve à meta é sinalizado como distração."
   ],
   triggersExtra:[
-    ["Decisão de negócio tomada", "Entrega DECISOES.md completo (decisão, premissas, alternativas, contra-argumento, risco)."],
+    ["Decisão de negócio tomada", "Entrega DECISIONS.md completo (decisão, premissas, alternativas, contra-argumento, risco)."],
     ["Análise concluída", "Entrega ANALISE.md completo (com premissas e sensibilidade explícitas)."],
     ["Objetivo ou meta definido/revisto", "Entrega OBJETIVOS.md completo (com critério de sucesso/KR)."],
     ["Plano de ação montado/atualizado", "Entrega PLANO.md completo."],
-    ["Mudança de contexto (mercado, empresa)", "Entrega CONTEXTO.md completo atualizado."],
+    ["Mudança de contexto (mercado, empresa)", "Entrega CONTEXT.md completo atualizado."],
   ],
   contextFiles:[
-    { name:"CONTEXTO.md", cat:"essencial", role:"Empresa, mercado, momento, modelo de negócio. O pano de fundo. Estável.",
-      content:`# CONTEXTO.md — [Empresa / Projeto]
+    { name:"CONTEXT.md", cat:"essencial", role:"Empresa, mercado, momento, modelo de negócio. O pano de fundo. Estável.",
+      content:`# CONTEXT.md — [Empresa / Projeto]
 
 > Arquivo **estável**. O assistente lê primeiro para entender o negócio antes de analisar.
 > Muda pouco: só em mudança real de mercado, modelo ou momento.
@@ -3503,8 +3503,8 @@ NICHES.business = {
 ## [Próxima análise]
 [...]
 `},
-    { name:"DECISOES.md", cat:"essencial", role:"Decisões de negócio com premissas, alternativas, contraponto e risco. Cresce devagar.",
-      content:`# DECISOES.md — Decisões de Negócio
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de negócio com premissas, alternativas, contraponto e risco. Cresce devagar.",
+      content:`# DECISIONS.md — Decisões de Negócio
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das decisões — evita rediscutir e mostra com que premissas algo foi decidido (úteis para revisar quando a realidade muda).
 
@@ -3540,7 +3540,7 @@ NICHES.business = {
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
-> Item resolvido sai daqui (vira decisão em DECISOES ou nota no log).
+> Item resolvido sai daqui (vira decisão em DECISIONS ou nota no log).
 
 ---
 
@@ -3624,7 +3624,7 @@ NICHES.business = {
 - [O que foi analisado → ANALISE.md. Premissas-chave que ficaram registradas.]
 
 ## Decisões
-- [O que virou DEC em DECISOES.md (com premissas e contraponto).]
+- [O que virou DEC em DECISIONS.md (com premissas e contraponto).]
 
 ## Números
 - [Métricas calculadas/atualizadas → MODELO-FINANCEIRO ou STATUS. Marcar estimativa vs. real.]
@@ -3641,7 +3641,7 @@ NICHES.business = {
   ],
   outputs:[
     { key:"status", name:"STATUS.md", role:"completo: foco, números-chave, decisões pendentes", active:true },
-    { key:"decisoes", name:"DECISOES.md", role:"completo, se houve decisão (com premissas, contraponto, risco)", active:true },
+    { key:"decisoes", name:"DECISIONS.md", role:"completo, se houve decisão (com premissas, contraponto, risco)", active:true },
     { key:"analise", name:"ANALISE.md", role:"completo, se uma análise avançou (com premissas e sensibilidade)", active:true },
     { key:"objetivos", name:"OBJETIVOS.md", role:"completo, se um objetivo/KR mudou", active:false },
     { key:"modelo", name:"MODELO-FINANCEIRO.md", role:"completo, se houve modelagem de números (quando usa o arquivo)", active:false },
@@ -3650,7 +3650,7 @@ NICHES.business = {
   promptsExtra:[
     { id:"G", title:"Diagnosticar uma situação", when:"Quero entender onde o negócio está antes de decidir o que fazer.",
       fill:"situation", fillLabel:"A situação + os dados que você tem (cole números, contexto)",
-      body:(p,n)=>`Diagnóstico de negócio.\n\nSITUAÇÃO:\n${p.situation||"[A situação + dados disponíveis: receita, custos, mercado, o que está acontecendo]"}\n\nConsultando CONTEXTO.md e OBJETIVOS.md, faça um diagnóstico honesto:\n- Qual é o problema/oportunidade REAL (first principles), não o sintoma aparente\n- O que os números dizem — e o que eles NÃO dizem; marque o que é estimativa\n- Que lente(s) ajuda(m) aqui (SWOT, unit economics, 5 Forças...) — use só o que esclarece\n- Premissas que eu estou assumindo sem perceber\n- O contraponto: e se a leitura óbvia estiver errada?\n\nEntregue ANALISE.md completo com premissas e sensibilidade explícitas. Termine com as 1-2 perguntas que mais mudariam o diagnóstico se respondidas.`
+      body:(p,n)=>`Diagnóstico de negócio.\n\nSITUAÇÃO:\n${p.situation||"[A situação + dados disponíveis: receita, custos, mercado, o que está acontecendo]"}\n\nConsultando CONTEXT.md e OBJETIVOS.md, faça um diagnóstico honesto:\n- Qual é o problema/oportunidade REAL (first principles), não o sintoma aparente\n- O que os números dizem — e o que eles NÃO dizem; marque o que é estimativa\n- Que lente(s) ajuda(m) aqui (SWOT, unit economics, 5 Forças...) — use só o que esclarece\n- Premissas que eu estou assumindo sem perceber\n- O contraponto: e se a leitura óbvia estiver errada?\n\nEntregue ANALISE.md completo com premissas e sensibilidade explícitas. Termine com as 1-2 perguntas que mais mudariam o diagnóstico se respondidas.`
     },
     { id:"H", title:"Modelar números / unit economics", when:"Preciso calcular se a conta fecha (margem, CAC/LTV, runway).",
       fill:"numbers", fillLabel:"Os números que você tem + o que quer descobrir",
@@ -3658,19 +3658,19 @@ NICHES.business = {
     },
     { id:"I", title:"Avaliar uma decisão (com contraponto)", when:"Tenho uma decisão a tomar e quero pensá-la sem me enganar.",
       fill:"decision", fillLabel:"A decisão em jogo + as opções + o que está em jogo",
-      body:(p,n)=>`Avaliação de decisão.\n\nDECISÃO:\n${p.decision||"[A decisão + as opções na mesa + o que está em jogo (custo, risco, prazo)]"}\n\nAjude a decidir com honestidade, consultando OBJETIVOS (a estratégia é o filtro) e DECISOES (alguma decisão anterior restringe esta?):\n- Reformule a decisão real e o que ela serve (qual objetivo)\n- Para cada opção: prós, contras, e o CUSTO DE OPORTUNIDADE (o que se abre mão)\n- Premissas que cada caminho assume\n- Risco de cada opção: downside + probabilidade, não só upside\n- O melhor CONTRA-ARGUMENTO à opção que parece vencer; «o que precisaria ser verdade para ela estar errada?»\n- Recomendação, com a confiança proporcional à evidência\n\nEntregue DECISOES.md completo (nova DEC-N com premissas, contraponto e o sinal que dirá se acertamos).`
+      body:(p,n)=>`Avaliação de decisão.\n\nDECISÃO:\n${p.decision||"[A decisão + as opções na mesa + o que está em jogo (custo, risco, prazo)]"}\n\nAjude a decidir com honestidade, consultando OBJETIVOS (a estratégia é o filtro) e DECISIONS (alguma decisão anterior restringe esta?):\n- Reformule a decisão real e o que ela serve (qual objetivo)\n- Para cada opção: prós, contras, e o CUSTO DE OPORTUNIDADE (o que se abre mão)\n- Premissas que cada caminho assume\n- Risco de cada opção: downside + probabilidade, não só upside\n- O melhor CONTRA-ARGUMENTO à opção que parece vencer; «o que precisaria ser verdade para ela estar errada?»\n- Recomendação, com a confiança proporcional à evidência\n\nEntregue DECISIONS.md completo (nova DEC-N com premissas, contraponto e o sinal que dirá se acertamos).`
     },
     { id:"J", title:"Planejar (do objetivo à ação)", when:"Tenho um objetivo e preciso de um plano para chegar lá.",
       fill:"goal", fillLabel:"O objetivo + o prazo + os recursos disponíveis",
-      body:(p,n)=>`Plano de ação.\n\nOBJETIVO:\n${p.goal||"[O objetivo + prazo + recursos (capital, equipe, tempo) disponíveis]"}\n\nMonte um plano realista, ancorado em OBJETIVOS.md e CONTEXTO.md (restrições):\n- Traduza o objetivo em resultados-chave mensuráveis (se ainda não há)\n- Os poucos movimentos que mais impactam o objetivo (não uma lista de 30 itens)\n- Sequência e dependências: o que precisa vir antes do quê (cuidado: escalar antes de consertar o fundamento queima caixa)\n- Recursos x restrições: o plano cabe no que temos?\n- Riscos do plano e os sinais de alerta a monitorar\n- O que deliberadamente fica de fora (foco)\n\nEntregue PLANO.md completo. Marque as premissas do plano e o que o derrubaria.`
+      body:(p,n)=>`Plano de ação.\n\nOBJETIVO:\n${p.goal||"[O objetivo + prazo + recursos (capital, equipe, tempo) disponíveis]"}\n\nMonte um plano realista, ancorado em OBJETIVOS.md e CONTEXT.md (restrições):\n- Traduza o objetivo em resultados-chave mensuráveis (se ainda não há)\n- Os poucos movimentos que mais impactam o objetivo (não uma lista de 30 itens)\n- Sequência e dependências: o que precisa vir antes do quê (cuidado: escalar antes de consertar o fundamento queima caixa)\n- Recursos x restrições: o plano cabe no que temos?\n- Riscos do plano e os sinais de alerta a monitorar\n- O que deliberadamente fica de fora (foco)\n\nEntregue PLANO.md completo. Marque as premissas do plano e o que o derrubaria.`
     },
     { id:"K", title:"Aplicar uma lente / framework", when:"Quero analisar o negócio por um framework específico (SWOT, Canvas, Porter...).",
       fill:"frame", fillLabel:"Qual framework + o foco da análise",
-      body:(p,n)=>`Análise por framework.\n\nFRAMEWORK E FOCO:\n${p.frame||"[Qual lente: SWOT / Business Model Canvas / 5 Forças / PESTLE / etc. + o que quer enxergar com ela]"}\n\nAplique a lente com critério (lente, não receita), usando CONTEXTO.md:\n- Primeiro: o framework é mesmo o certo para esta pergunta? Se outro servir melhor, diga\n- Preencha só o que tem substância — não force caixas vazias para "completar o slide"\n- Para cada elemento, baseie em fato/dado (marque estimativa); nada de achismo genérico\n- Extraia os INSIGHTS acionáveis (o framework é meio, não fim): o que isto muda na decisão?\n- Combine com outra lente só se agregar\n\nEntregue ANALISE.md completo. Termine com "o que esta análise nos faz fazer diferente".`
+      body:(p,n)=>`Análise por framework.\n\nFRAMEWORK E FOCO:\n${p.frame||"[Qual lente: SWOT / Business Model Canvas / 5 Forças / PESTLE / etc. + o que quer enxergar com ela]"}\n\nAplique a lente com critério (lente, não receita), usando CONTEXT.md:\n- Primeiro: o framework é mesmo o certo para esta pergunta? Se outro servir melhor, diga\n- Preencha só o que tem substância — não force caixas vazias para "completar o slide"\n- Para cada elemento, baseie em fato/dado (marque estimativa); nada de achismo genérico\n- Extraia os INSIGHTS acionáveis (o framework é meio, não fim): o que isto muda na decisão?\n- Combine com outra lente só se agregar\n\nEntregue ANALISE.md completo. Termine com "o que esta análise nos faz fazer diferente".`
     },
     { id:"L", title:"Pensar cenários (e o que pode dar errado)", when:"Quero me preparar para futuros diferentes antes de me comprometer.",
       fill:"context", fillLabel:"A decisão/aposta + as incertezas que mais preocupam",
-      body:(p,n)=>`Planejamento de cenários.\n\nCONTEXTO:\n${p.context||"[A decisão/aposta + as incertezas que mais preocupam (mercado, custo, demanda, concorrência)]"}\n\nExplore os futuros possíveis:\n- Identifique as 2-3 incertezas-chave que mais afetam o resultado\n- Monte cenários (base / otimista / pessimista, ou por eixos de incerteza) — descreva cada um e o que o dispara\n- Para cada cenário: o que aconteceria com o negócio e o que exigiria de nós\n- Movimentos «no-regret» (que valem em qualquer cenário) vs. apostas condicionais\n- Sinais antecipados a monitorar (o que indicaria que estamos indo para o cenário ruim)\n- O downside máximo: dá para sobreviver a ele? Como limitar?\n\nFoque no pessimista tanto quanto no provável — sobreviver vem antes de otimizar. Aponte o que registrar em ANALISE/DECISOES.`
+      body:(p,n)=>`Planejamento de cenários.\n\nCONTEXT:\n${p.context||"[A decisão/aposta + as incertezas que mais preocupam (mercado, custo, demanda, concorrência)]"}\n\nExplore os futuros possíveis:\n- Identifique as 2-3 incertezas-chave que mais afetam o resultado\n- Monte cenários (base / otimista / pessimista, ou por eixos de incerteza) — descreva cada um e o que o dispara\n- Para cada cenário: o que aconteceria com o negócio e o que exigiria de nós\n- Movimentos «no-regret» (que valem em qualquer cenário) vs. apostas condicionais\n- Sinais antecipados a monitorar (o que indicaria que estamos indo para o cenário ruim)\n- O downside máximo: dá para sobreviver a ele? Como limitar?\n\nFoque no pessimista tanto quanto no provável — sobreviver vem antes de otimizar. Aponte o que registrar em ANALISE/DECISIONS.`
     },
   ]
 };
@@ -4383,7 +4383,7 @@ NICHES.brainstorm = {
   intro:{
     headline:"Pensar junto sem perder o fio — nem a honestidade.",
     lede:"O risco aqui é duplo: a ideia boa que escapa porque não foi anotada, e o parceiro que só concorda — que faz o pensar PARECER melhor em vez de torná-lo melhor. Aqui as ideias ficam guardadas com seus critérios, a divergência vem antes da convergência, e o assistente é espelho e contraponto, não eco. É o nicho deste próprio Kit: o lugar de pensar com a IA, não de deixar a IA pensar por você.",
-    ctxBlurb:"<code>TEMA.md</code> fixa o que se explora e por quê · <code>IDEIAS.md</code> é o banco que cresce (nada se perde) · <code>MAPA.md</code> organiza em clusters e eixos · <code>FILTROS.md</code> guarda os critérios de corte.",
+    ctxBlurb:"<code>TEMA.md</code> fixa o que se explora e por quê · <code>IDEAS.md</code> é o banco que cresce (nada se perde) · <code>MAPA.md</code> organiza em clusters e eixos · <code>FILTROS.md</code> guarda os critérios de corte.",
     hero:"brainstorm"
   },
   topbar:[
@@ -4401,7 +4401,7 @@ NICHES.brainstorm = {
     ["break_mental_models","Quebra modelos mentais (técnicas)","Quando a geração satura no óbvio, usa técnicas para forçar ângulos novos: SCAMPER (substituir, combinar, adaptar, modificar, outro uso, eliminar, reverter), brainstorm reverso (como PIORAR o problema?), analogias de outros domínios, inversão. A técnica é andaime para sair do senso comum, não enfeite."],
     ["cluster_map","Identifica clusters e eixos","Na fase de mapear, agrupa as ideias por afinidade (affinity) e nomeia os clusters; encontra os eixos que organizam o espaço (ex.: esforço × impacto, ousado × seguro). Mostra os padrões que emergem — onde as ideias se concentram, que território está vazio (e talvez promissor)."],
     ["criteria_transparent","Critério transparente ao convergir","Convergência sem critério é palpite disfarçado. Antes de cortar/priorizar, torna explícitos os critérios (viabilidade, impacto, alinhamento, prazo) e aplica-os à vista. Usa apoios (matriz impacto × esforço, dot voting mental, prós/contras) como ferramenta — não como veredito automático. O porquê do corte fica registrado."],
-    ["nothing_lost","Nada se perde; a síntese decide","Toda ideia que surge vai para IDEIAS.md com um ID — inclusive a descartada (com a razão), porque uma ideia morta hoje pode ressuscitar amanhã noutro contexto. E ao fim de uma fase, o assistente não devolve uma lista morna: sintetiza, recomenda um caminho, e diz o próximo passo. Captura tudo; conclui com posição."],
+    ["nothing_lost","Nada se perde; a síntese decide","Toda ideia que surge vai para IDEAS.md com um ID — inclusive a descartada (com a razão), porque uma ideia morta hoje pode ressuscitar amanhã noutro contexto. E ao fim de uma fase, o assistente não devolve uma lista morna: sintetiza, recomenda um caminho, e diz o próximo passo. Captura tudo; conclui com posição."],
     ["think_with_not_for","Pensar COM você, não POR você","A decisão e o gosto são seus; o assistente é catalisador, não substituto do seu pensamento. Levanta opções, tensiona, organiza — e devolve a escolha. Para metas, puxa para o honesto: o que é estruturalmente alcançável a partir de quem você é hoje, não o que «soa impressionante». Não deixa você se enganar."],
   ],
   builderSection:{
@@ -4422,10 +4422,10 @@ NICHES.brainstorm = {
     "Antes de avaliar opções, checar o enquadramento da pergunta (reformular como 'Como poderíamos...' quando ajuda).",
     "Quando satura no óbvio, usar técnicas (SCAMPER, reverso, analogias) para forçar ângulos novos.",
     "Convergir com critério explícito (viabilidade, impacto, alinhamento) à vista; apoios são ferramenta, não veredito.",
-    "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEIAS.md; ao fim de uma fase, sintetizar e recomendar um caminho."
+    "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEAS.md; ao fim de uma fase, sintetizar e recomendar um caminho."
   ],
   triggersExtra:[
-    ["Ideias geradas numa sessão", "Entrega IDEIAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
+    ["Ideias geradas numa sessão", "Entrega IDEAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
     ["Mapeamento/clusters definidos", "Entrega MAPA.md completo (clusters nomeados + eixos)."],
     ["Critérios de corte/priorização definidos ou aplicados", "Entrega FILTROS.md completo (critérios + o que passou/caiu e por quê)."],
     ["Tema/pergunta reformulado", "Entrega TEMA.md completo atualizado."],
@@ -4460,8 +4460,8 @@ NICHES.brainstorm = {
 > Limites do escopo da exploração — evita divergir para o infinito.
 - [Ex.: não é redesenhar o produto inteiro; não é sobre preço.]
 `},
-    { name:"IDEIAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.",
-      content:`# IDEIAS.md — Banco de Ideias
+    { name:"IDEAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.",
+      content:`# IDEAS.md — Banco de Ideias
 
 > **Cresce** e nunca encolhe: toda ideia que surge entra aqui com um ID. **Nada se perde** — a ideia descartada hoje pode servir amanhã noutro contexto.
 > Na fase de divergir, registra-se SEM julgar (volume sobre perfeição). O julgamento vem depois, em FILTROS.
@@ -4497,7 +4497,7 @@ NICHES.brainstorm = {
     { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.",
       content:`# MAPA.md — Clusters e Eixos
 
-> Organiza as ideias do IDEIAS.md em grupos com sentido — para enxergar o espaço, não uma lista solta.
+> Organiza as ideias do IDEAS.md em grupos com sentido — para enxergar o espaço, não uma lista solta.
 > O assistente atualiza conforme as ideias se acumulam e os padrões emergem.
 
 ---
@@ -4506,7 +4506,7 @@ NICHES.brainstorm = {
 > Ideias que pertencem juntas, cada grupo com um nome que captura o tema.
 ### [Nome do cluster]
 - **Do que trata:** [o tema comum.]
-- **Ideias:** [i-N, i-N, i-N → IDEIAS.md.]
+- **Ideias:** [i-N, i-N, i-N → IDEAS.md.]
 - **Leitura:** [o que este cluster sugere; está cheio (território explorado) ou tem espaço?]
 
 ---
@@ -4546,8 +4546,8 @@ NICHES.brainstorm = {
 ## Decisões de corte / priorização
 > O que avançou, o que ficou para depois, o que caiu — com o porquê.
 - **Avança:** [i-N — por quê.]
-- **Banho-maria:** [i-N — por quê → IDEIAS.md.]
-- **Cai:** [i-N — por quê → IDEIAS.md (descartadas).]
+- **Banho-maria:** [i-N — por quê → IDEAS.md.]
+- **Cai:** [i-N — por quê → IDEAS.md (descartadas).]
 
 ## O caminho recomendado
 > Ao fim da convergência: a recomendação (com confiança proporcional à evidência) e o próximo passo.
@@ -4557,7 +4557,7 @@ NICHES.brainstorm = {
       content:`# STATUS.md — Estado da Exploração
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber em que fase estamos e o que vem.
-> O detalhe vive em IDEIAS/MAPA/FILTROS; aqui fica o estado vivo e a direção.
+> O detalhe vive em IDEAS/MAPA/FILTROS; aqui fica o estado vivo e a direção.
 
 ---
 
@@ -4574,7 +4574,7 @@ NICHES.brainstorm = {
 - [A escolha que precisa ser feita + o que falta para fazê-la (gerar mais? aplicar critério?).]
 
 ## 💡 Quentes / não esquecer
-- [Ideias ou fios que estão pedindo atenção → IDEIAS.md.]
+- [Ideias ou fios que estão pedindo atenção → IDEAS.md.]
 
 ## ⚠️ Atenção
 - [Convergindo cedo demais? a pergunta está bem colocada? falta divergência ousada?]
@@ -4582,8 +4582,8 @@ NICHES.brainstorm = {
 ## 💬 Última sessão
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"DECISOES.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
-      content:`# DECISOES.md — Decisões da Exploração
+    { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
+      content:`# DECISIONS.md — Decisões da Exploração
 
 > **Opcional.** Use quando o brainstorm leva a decisões que precisam ser lembradas e justificadas depois (ex.: alimentando um projeto real).
 > Guarda o PORQUÊ — para não rediscutir e para que quem retoma entenda o caminho.
@@ -4597,7 +4597,7 @@ NICHES.brainstorm = {
 [Direto.]
 
 ### A partir de quais ideias
-[i-N, i-N → IDEIAS.md; o que do brainstorm levou aqui.]
+[i-N, i-N → IDEAS.md; o que do brainstorm levou aqui.]
 
 ### Por quê (o racional)
 [Os critérios (FILTROS) que pesaram; por que esta e não as alternativas.]
@@ -4627,7 +4627,7 @@ NICHES.brainstorm = {
 [Divergir, mapear, convergir, aprofundar, reformular a pergunta.]
 
 ## Ideias geradas / trabalhadas
-- [O que entrou em IDEIAS.md (IDs); inclui descartadas com a razão.]
+- [O que entrou em IDEAS.md (IDs); inclui descartadas com a razão.]
 
 ## Mapa
 - [Clusters/eixos novos ou ajustados → MAPA.md.]
@@ -4647,7 +4647,7 @@ NICHES.brainstorm = {
   ],
   outputs:[
     { key:"status", name:"STATUS.md", role:"completo: fase, síntese, próxima decisão", active:true },
-    { key:"ideias", name:"IDEIAS.md", role:"completo, se ideias foram geradas/trabalhadas (com IDs; inclui descartadas)", active:true },
+    { key:"ideias", name:"IDEAS.md", role:"completo, se ideias foram geradas/trabalhadas (com IDs; inclui descartadas)", active:true },
     { key:"mapa", name:"MAPA.md", role:"completo, se clusters/eixos mudaram", active:false },
     { key:"filtros", name:"FILTROS.md", role:"completo, se critérios foram definidos ou aplicados (convergência)", active:false },
     { key:"tema", name:"TEMA.md", role:"completo, se a pergunta/enquadramento mudou", active:false },
@@ -4660,23 +4660,23 @@ NICHES.brainstorm = {
     },
     { id:"H", title:"Divergir (gerar muitas ideias)", when:"Quero gerar o máximo de possibilidades, sem filtro ainda.",
       fill:"focus", fillLabel:"O foco da geração + o que já tem (ou: use TEMA.md)",
-      body:(p,n)=>`Divergência — gerar, sem julgar.\n\nFOCO:\n${p.focus||"[O foco da geração. Ou: 'a pergunta de TEMA.md']"}\n\nEstamos ABRINDO: volume sobre perfeição, sem matar ideia no nascedouro. Consultando TEMA.md e IDEIAS.md (não repetir o que já existe):\n- Gere um lote generoso de ideias — das óbvias às estranhas (as estranhas destravam as boas)\n- Cubra ângulos variados: incrementais E ousadas; de baixo custo E ambiciosas\n- Quando começar a saturar no óbvio, aplique uma técnica para forçar ângulos novos: SCAMPER (substituir/combinar/adaptar/modificar/outro uso/eliminar/reverter), brainstorm reverso (como PIORAR isto?), analogias de outro domínio\n- Não avalie ainda — mas marque, sem cortar, quais parecem ter mais energia\n\nNão me dê só o seguro e bem-comportado — empurre. Entregue IDEIAS.md completo (cada ideia com ID). O julgamento vem depois.`
+      body:(p,n)=>`Divergência — gerar, sem julgar.\n\nFOCO:\n${p.focus||"[O foco da geração. Ou: 'a pergunta de TEMA.md']"}\n\nEstamos ABRINDO: volume sobre perfeição, sem matar ideia no nascedouro. Consultando TEMA.md e IDEAS.md (não repetir o que já existe):\n- Gere um lote generoso de ideias — das óbvias às estranhas (as estranhas destravam as boas)\n- Cubra ângulos variados: incrementais E ousadas; de baixo custo E ambiciosas\n- Quando começar a saturar no óbvio, aplique uma técnica para forçar ângulos novos: SCAMPER (substituir/combinar/adaptar/modificar/outro uso/eliminar/reverter), brainstorm reverso (como PIORAR isto?), analogias de outro domínio\n- Não avalie ainda — mas marque, sem cortar, quais parecem ter mais energia\n\nNão me dê só o seguro e bem-comportado — empurre. Entregue IDEAS.md completo (cada ideia com ID). O julgamento vem depois.`
     },
     { id:"I", title:"Mapear (organizar o que surgiu)", when:"Tenho muitas ideias soltas e quero enxergar o espaço.",
-      fill:"ideas", fillLabel:"As ideias a organizar (cole, ou: use IDEIAS.md)",
-      body:(p,n)=>`Mapeamento — organizar para enxergar.\n\nIDEIAS:\n${p.ideas||"[As ideias soltas a organizar. Ou: 'as de IDEIAS.md']"}\n\nConsultando IDEIAS.md, dê forma ao espaço:\n- Agrupe por AFINIDADE (affinity): clusters de ideias que pertencem juntas; nomeie cada cluster pelo tema que captura\n- Encontre os EIXOS que organizam o espaço (ex.: esforço × impacto; incremental × ousado; quem atende)\n- Mostre onde as ideias se CONCENTRAM (território explorado) e onde está VAZIO (o quadrante que ninguém tocou — às vezes o mais promissor)\n- Aponte padrões e TENSÕES (ideias que se contradizem; temas que reaparecem; lacunas)\n\nNão é só categorizar — é revelar o que o conjunto está dizendo. Entregue MAPA.md completo. Se o mapa sugerir uma ideia nova de combinação, registre em IDEIAS.md.`
+      fill:"ideas", fillLabel:"As ideias a organizar (cole, ou: use IDEAS.md)",
+      body:(p,n)=>`Mapeamento — organizar para enxergar.\n\nIDEAS:\n${p.ideas||"[As ideias soltas a organizar. Ou: 'as de IDEAS.md']"}\n\nConsultando IDEAS.md, dê forma ao espaço:\n- Agrupe por AFINIDADE (affinity): clusters de ideias que pertencem juntas; nomeie cada cluster pelo tema que captura\n- Encontre os EIXOS que organizam o espaço (ex.: esforço × impacto; incremental × ousado; quem atende)\n- Mostre onde as ideias se CONCENTRAM (território explorado) e onde está VAZIO (o quadrante que ninguém tocou — às vezes o mais promissor)\n- Aponte padrões e TENSÕES (ideias que se contradizem; temas que reaparecem; lacunas)\n\nNão é só categorizar — é revelar o que o conjunto está dizendo. Entregue MAPA.md completo. Se o mapa sugerir uma ideia nova de combinação, registre em IDEAS.md.`
     },
     { id:"J", title:"Convergir (decidir com critério)", when:"Tenho boas opções e preciso escolher, sem ser por palpite.",
       fill:"options", fillLabel:"As opções finalistas + o que importa na decisão",
-      body:(p,n)=>`Convergência — decidir com honestidade.\n\nOPÇÕES E O QUE IMPORTA:\n${p.options||"[As opções finalistas + o que importa (prazo, recursos, meta). Ou: 'os clusters de MAPA.md']"}\n\nConsultando TEMA.md (critérios de sucesso) e FILTROS.md:\n- Torne os CRITÉRIOS explícitos primeiro (viabilidade, impacto, alinhamento, prazo) — convergir sem critério é palpite disfarçado. Algum é eliminatório?\n- Avalie as opções contra os critérios À VISTA (uma matriz simples ajuda) — mas como APOIO, não veredito automático\n- Para cada finalista: a favor, contra honesto, e «o que precisaria ser verdade para ser a escolha certa»\n- Recomende um caminho, com confiança proporcional à evidência — e diga o que vai para banho-maria e o que cai (com a razão)\n- Termine com o PRÓXIMO PASSO concreto\n\nNão fique morno em cima do muro: sintetize e tome posição (é uma recomendação, a decisão é sua). Entregue FILTROS.md completo (e IDEIAS.md atualizado com o que caiu/adiou).`
+      body:(p,n)=>`Convergência — decidir com honestidade.\n\nOPÇÕES E O QUE IMPORTA:\n${p.options||"[As opções finalistas + o que importa (prazo, recursos, meta). Ou: 'os clusters de MAPA.md']"}\n\nConsultando TEMA.md (critérios de sucesso) e FILTROS.md:\n- Torne os CRITÉRIOS explícitos primeiro (viabilidade, impacto, alinhamento, prazo) — convergir sem critério é palpite disfarçado. Algum é eliminatório?\n- Avalie as opções contra os critérios À VISTA (uma matriz simples ajuda) — mas como APOIO, não veredito automático\n- Para cada finalista: a favor, contra honesto, e «o que precisaria ser verdade para ser a escolha certa»\n- Recomende um caminho, com confiança proporcional à evidência — e diga o que vai para banho-maria e o que cai (com a razão)\n- Termine com o PRÓXIMO PASSO concreto\n\nNão fique morno em cima do muro: sintetize e tome posição (é uma recomendação, a decisão é sua). Entregue FILTROS.md completo (e IDEAS.md atualizado com o que caiu/adiou).`
     },
     { id:"K", title:"Aprofundar / pressionar uma ideia", when:"Tenho uma ideia promissora e quero testá-la a fundo (advogado do diabo).",
       fill:"idea", fillLabel:"A ideia + por que ela te atrai",
-      body:(p,n)=>`Pressão sobre uma ideia (estresse honesto, não bajulação).\n\nIDEIA:\n${p.idea||"[A ideia promissora + por que ela te atrai]"}\n\nSeja o melhor parceiro crítico que esta ideia pode ter — porque concordar com tudo não a deixaria mais forte:\n- Desenvolva o melhor CASO a favor (qual a versão mais forte dela?)\n- Faça o melhor caso CONTRA (a objeção real, não uma fraca de palha)\n- Que premissas ela exige? Quais são frágeis? «O que precisaria ser verdade para isto funcionar?»\n- Pré-mortem: imagine que falhou daqui a um ano — o que deu errado?\n- Como deixá-la mais forte / como testá-la barato antes de apostar?\n- Honestamente: ela é tão boa quanto parece, ou o entusiasmo está mascarando um furo?\n\nNão me poupe para ser agradável — o atrito é o que gera o insight. Se for boa, mostre como blindá-la; se tiver furo, aponte. Atualize IDEIAS.md com o que aprendemos.`
+      body:(p,n)=>`Pressão sobre uma ideia (estresse honesto, não bajulação).\n\nIDEIA:\n${p.idea||"[A ideia promissora + por que ela te atrai]"}\n\nSeja o melhor parceiro crítico que esta ideia pode ter — porque concordar com tudo não a deixaria mais forte:\n- Desenvolva o melhor CASO a favor (qual a versão mais forte dela?)\n- Faça o melhor caso CONTRA (a objeção real, não uma fraca de palha)\n- Que premissas ela exige? Quais são frágeis? «O que precisaria ser verdade para isto funcionar?»\n- Pré-mortem: imagine que falhou daqui a um ano — o que deu errado?\n- Como deixá-la mais forte / como testá-la barato antes de apostar?\n- Honestamente: ela é tão boa quanto parece, ou o entusiasmo está mascarando um furo?\n\nNão me poupe para ser agradável — o atrito é o que gera o insight. Se for boa, mostre como blindá-la; se tiver furo, aponte. Atualize IDEAS.md com o que aprendemos.`
     },
     { id:"L", title:"Destravar (estou empacado)", when:"Empaquei — sem ideias, ou rodando em círculo.",
       fill:"stuck", fillLabel:"Onde travei + o que já tentei",
-      body:(p,n)=>`Destravar o pensamento.\n\nONDE TRAVEI:\n${p.stuck||"[Onde empaquei — sem ideias? girando nas mesmas? não consigo decidir? + o que já tentei]"}\n\nDiagnostique e destrave (consultando TEMA/IDEIAS/MAPA):\n- Que TIPO de bloqueio é? (a pergunta mal colocada? medo de julgar e por isso nada flui? excesso de opções e paralisia? estou preso a uma suposição?)\n- Se for falta de ideias: aplique uma técnica de ruptura — inversão (e se eu quisesse o OPOSTO do objetivo?), analogia forçada (como [outro domínio] resolveria?), restrição radical (e se eu só tivesse 1 dia / R$0 / uma frase?)\n- Se for rodar em círculo: aponte a suposição que está me prendendo e proponha largá-la\n- Se for paralisia de decisão: reduza ao próximo passo MENOR e reversível — o que dá para testar barato hoje?\n- Me devolva uma pergunta que reabra o espaço, não uma resposta pronta\n\nO objetivo é fazer o pensamento voltar a fluir — pensar COM você, não por você. Capture o que surgir em IDEIAS.md.`
+      body:(p,n)=>`Destravar o pensamento.\n\nONDE TRAVEI:\n${p.stuck||"[Onde empaquei — sem ideias? girando nas mesmas? não consigo decidir? + o que já tentei]"}\n\nDiagnostique e destrave (consultando TEMA/IDEAS/MAPA):\n- Que TIPO de bloqueio é? (a pergunta mal colocada? medo de julgar e por isso nada flui? excesso de opções e paralisia? estou preso a uma suposição?)\n- Se for falta de ideias: aplique uma técnica de ruptura — inversão (e se eu quisesse o OPOSTO do objetivo?), analogia forçada (como [outro domínio] resolveria?), restrição radical (e se eu só tivesse 1 dia / R$0 / uma frase?)\n- Se for rodar em círculo: aponte a suposição que está me prendendo e proponha largá-la\n- Se for paralisia de decisão: reduza ao próximo passo MENOR e reversível — o que dá para testar barato hoje?\n- Me devolva uma pergunta que reabra o espaço, não uma resposta pronta\n\nO objetivo é fazer o pensamento voltar a fluir — pensar COM você, não por você. Capture o que surgir em IDEAS.md.`
     },
   ]
 };

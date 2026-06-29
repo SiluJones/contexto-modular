@@ -5,7 +5,7 @@ NICHES.product = {
   intro:{
     headline:"O problema antes da solução, e o porquê de cada decisão preservado.",
     lede:"O risco aqui é construir a coisa certa pelo motivo errado: feature pedida sem o problema entendido, decisão tomada e esquecida, prioridade definida pela voz mais alta. Aqui o problema vem antes da solução (JTBD), cada decisão guarda o racional, e a prioridade tem critério — não opinião do mais graduado.",
-    ctxBlurb:"<code>PRODUTO.md</code> fixa a visão e os princípios · <code>PERSONAS.md</code> e <code>JORNADAS.md</code> ancoram quem e como · <code>DECISOES.md</code> guarda o porquê · <code>STATUS.md</code> mostra as iniciativas e métricas.",
+    ctxBlurb:"<code>PRODUTO.md</code> fixa a visão e os princípios · <code>PERSONAS.md</code> e <code>JORNADAS.md</code> ancoram quem e como · <code>DECISIONS.md</code> guarda o porquê · <code>STATUS.md</code> mostra as iniciativas e métricas.",
     hero:"product"
   },
   topbar:[
@@ -19,7 +19,7 @@ NICHES.product = {
     ["successmetric","Sempre uma métrica de sucesso","Toda iniciativa nasce com a pergunta «como saberemos que deu certo?». Define o resultado esperado e a métrica antes de construir — isso previne scope creep e permite validar depois. Liga ao North Star do produto quando há um. Sem métrica, a feature é um palpite caro."],
     ["riskcall","Chama o risco antes do bonito","Aponta o risco e a hipótese frágil antes de polir a solução. Distingue o que é fato do que é suposição não validada. Em priorização, desconfia de confiança alta sem avaliação de risco — o erro mais comum. Não deixa a hipótese embutida passar como certeza."],
     ["prioritize","Prioriza com critério, não com voz alta","Usa framework (RICE, impacto×esforço, Kano) como APOIO à decisão, não como decisão automática — o número informa, o julgamento estratégico decide (timing, compromissos, visão). Afasta o «HiPPO» (a opinião do mais graduado vence). Sempre dá o argumento de por que algo NÃO deveria estar na lista."],
-    ["decisionlog","Registra a decisão e o racional","Toda decisão de produto relevante vira entrada em DECISOES.md com o porquê, as alternativas e o que se esperava. O racional de hoje é o que evita rediscutir em três meses e o que orienta quem chega depois."],
+    ["decisionlog","Registra a decisão e o racional","Toda decisão de produto relevante vira entrada em DECISIONS.md com o porquê, as alternativas e o que se esperava. O racional de hoje é o que evita rediscutir em três meses e o que orienta quem chega depois."],
     ["userreal","Fala pelo usuário, com humildade","Representa a perspectiva do usuário-alvo (consulta PERSONAS/JORNADAS), mas lembra que entendimento do job é sempre incompleto e evolui. Não confunde o que a equipe acha que o usuário quer com o que ele de fato faz. Sinaliza quando uma afirmação sobre o usuário precisa de validação real."],
   ],
   builderSection:{
@@ -37,13 +37,13 @@ NICHES.product = {
   conventions:[
     "Job antes de feature: nenhum pedido vira solução sem o problema/JTBD entendido primeiro.",
     "Toda iniciativa tem métrica de sucesso definida ANTES de construir (liga ao North Star quando há).",
-    "Decisões de produto relevantes vão para DECISOES.md com racional, alternativas e o que se esperava.",
+    "Decisões de produto relevantes vão para DECISIONS.md com racional, alternativas e o que se esperava.",
     "Priorização usa framework como apoio, não como veredito — o julgamento estratégico decide; registra-se o porquê de cada score.",
     "Afirmação sobre o usuário que não foi validada é marcada como hipótese, não fato.",
     "Risco e hipótese frágil são sinalizados antes de refinar a solução."
   ],
   triggersExtra:[
-    ["Decisão de produto tomada", "Entrega DECISOES.md completo (decisão, alternativas, racional, métrica esperada)."],
+    ["Decisão de produto tomada", "Entrega DECISIONS.md completo (decisão, alternativas, racional, métrica esperada)."],
     ["Pedido virou oportunidade qualificada", "Entrega STATUS.md (e PRODUTO/JORNADAS se mudou o escopo de quem/como)."],
     ["Persona ou jornada nova/revista", "Entrega PERSONAS.md ou JORNADAS.md completo."],
     ["Spec/PRD escrito ou priorização feita", "Entrega STATUS.md completo (iniciativa + métrica + prioridade)."],
@@ -138,8 +138,8 @@ NICHES.product = {
 ## [Próxima jornada]
 [...]
 `},
-    { name:"DECISOES.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.",
-      content:`# DECISOES.md — Decisões de Produto
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.",
+      content:`# DECISIONS.md — Decisões de Produto
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das decisões — evita rediscussão e orienta quem chega depois.
 > Decisão sem racional registrado é decisão que será refeita.
@@ -176,7 +176,7 @@ NICHES.product = {
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde o produto está e o que vem.
-> Item entregue/encerrado sai daqui (vira nota no log; a decisão fica em DECISOES).
+> Item entregue/encerrado sai daqui (vira nota no log; a decisão fica em DECISIONS).
 
 ---
 
@@ -218,7 +218,7 @@ NICHES.product = {
 - **Métrica observada:** [o que medimos.]
 - **Resultado:** [o que aconteceu — número/observação.]
 - **Aprendizado:** [o que isso ensina; confirma ou refuta a hipótese?]
-- **Decisão decorrente:** [o que fizemos com o resultado → DEC-N em DECISOES.]
+- **Decisão decorrente:** [o que fizemos com o resultado → DEC-N em DECISIONS.]
 
 ---
 
@@ -243,7 +243,7 @@ NICHES.product = {
 - [O que se aprendeu sobre o job/usuário → PERSONAS/JORNADAS. Marcar validado vs. suposto.]
 
 ## Decisões
-- [O que virou DEC em DECISOES.md (com métrica esperada).]
+- [O que virou DEC em DECISIONS.md (com métrica esperada).]
 
 ## Priorização
 - [O que foi priorizado e com que critério/score.]
@@ -260,7 +260,7 @@ NICHES.product = {
   ],
   outputs:[
     { key:"status", name:"STATUS.md", role:"completo: iniciativas, métricas, backlog priorizado", active:true },
-    { key:"decisoes", name:"DECISOES.md", role:"completo, se houve decisão de produto (com racional e métrica)", active:true },
+    { key:"decisoes", name:"DECISIONS.md", role:"completo, se houve decisão de produto (com racional e métrica)", active:true },
     { key:"personas", name:"PERSONAS.md", role:"completo, se uma persona/job foi revisto", active:false },
     { key:"jornadas", name:"JORNADAS.md", role:"completo, se uma jornada/oportunidade mudou", active:false },
     { key:"experimentos", name:"EXPERIMENTOS.md", role:"completo, se um experimento rodou (quando usa o arquivo)", active:false },
@@ -281,11 +281,11 @@ NICHES.product = {
     },
     { id:"J", title:"Registrar uma decisão de produto", when:"Batemos o martelo numa decisão e quero o porquê gravado.",
       fill:"decision", fillLabel:"A decisão + o que motivou + alternativas que estavam na mesa",
-      body:(p,n)=>`Decisão de produto.\n\nDECISÃO:\n${p.decision||"[O que foi decidido + o que motivou + alternativas consideradas]"}\n\nFaça:\n- Reformule o problema/oportunidade por trás da decisão (qual job/persona)\n- Liste as alternativas e por que não\n- Articule o racional ligando à visão/princípios de PRODUTO.md\n- Defina a métrica esperada: que número deve se mover e em quanto tempo (como saberemos se acertamos)\n- Aponte as hipóteses embutidas e o principal risco\n\nEntregue DECISOES.md completo (nova DEC-N). Se a decisão muda escopo de quem/como, atualize PERSONAS/JORNADAS também.`
+      body:(p,n)=>`Decisão de produto.\n\nDECISÃO:\n${p.decision||"[O que foi decidido + o que motivou + alternativas consideradas]"}\n\nFaça:\n- Reformule o problema/oportunidade por trás da decisão (qual job/persona)\n- Liste as alternativas e por que não\n- Articule o racional ligando à visão/princípios de PRODUTO.md\n- Defina a métrica esperada: que número deve se mover e em quanto tempo (como saberemos se acertamos)\n- Aponte as hipóteses embutidas e o principal risco\n\nEntregue DECISIONS.md completo (nova DEC-N). Se a decisão muda escopo de quem/como, atualize PERSONAS/JORNADAS também.`
     },
     { id:"K", title:"Analisar uma métrica / resultado", when:"Tenho um número (bom ou ruim) e quero interpretá-lo sem me enganar.",
       fill:"data", fillLabel:"A métrica + o número + o que esperava + contexto",
-      body:(p,n)=>`Análise de métrica.\n\nMÉTRICA E CONTEXTO:\n${p.data||"[A métrica + valor observado + o que esperava + o que mudou no período]"}\n\nInterprete com honestidade:\n- O que o número diz de fato — e o que ele NÃO diz (correlação ≠ causa)\n- É métrica de valor real ou de vaidade? Como se relaciona com o North Star?\n- Que explicações alternativas existem para esse movimento? (sazonalidade, mudança externa, amostra pequena)\n- O que precisaria ser verdade para essa leitura estar certa? Que dado confirmaria?\n- Ação recomendada: agir, investigar mais, ou não fazer nada ainda?\n\nNão pule para conclusão que agrada. Marque o que é evidência vs. hipótese. Se a leitura sugere uma decisão, aponte o que registrar em DECISOES.`
+      body:(p,n)=>`Análise de métrica.\n\nMÉTRICA E CONTEXTO:\n${p.data||"[A métrica + valor observado + o que esperava + o que mudou no período]"}\n\nInterprete com honestidade:\n- O que o número diz de fato — e o que ele NÃO diz (correlação ≠ causa)\n- É métrica de valor real ou de vaidade? Como se relaciona com o North Star?\n- Que explicações alternativas existem para esse movimento? (sazonalidade, mudança externa, amostra pequena)\n- O que precisaria ser verdade para essa leitura estar certa? Que dado confirmaria?\n- Ação recomendada: agir, investigar mais, ou não fazer nada ainda?\n\nNão pule para conclusão que agrada. Marque o que é evidência vs. hipótese. Se a leitura sugere uma decisão, aponte o que registrar em DECISIONS.`
     },
     { id:"L", title:"Mapear oportunidades (Opportunity Solution Tree)", when:"Tenho um resultado-alvo e quero descobrir caminhos antes de pular para soluções.",
       fill:"outcome", fillLabel:"O resultado/outcome desejado + o que já sabe das dores dos usuários",

@@ -5,7 +5,7 @@ NICHES.brainstorm = {
   intro:{
     headline:"Pensar junto sem perder o fio — nem a honestidade.",
     lede:"O risco aqui é duplo: a ideia boa que escapa porque não foi anotada, e o parceiro que só concorda — que faz o pensar PARECER melhor em vez de torná-lo melhor. Aqui as ideias ficam guardadas com seus critérios, a divergência vem antes da convergência, e o assistente é espelho e contraponto, não eco. É o nicho deste próprio Kit: o lugar de pensar com a IA, não de deixar a IA pensar por você.",
-    ctxBlurb:"<code>TEMA.md</code> fixa o que se explora e por quê · <code>IDEIAS.md</code> é o banco que cresce (nada se perde) · <code>MAPA.md</code> organiza em clusters e eixos · <code>FILTROS.md</code> guarda os critérios de corte.",
+    ctxBlurb:"<code>TEMA.md</code> fixa o que se explora e por quê · <code>IDEAS.md</code> é o banco que cresce (nada se perde) · <code>MAPA.md</code> organiza em clusters e eixos · <code>FILTROS.md</code> guarda os critérios de corte.",
     hero:"brainstorm"
   },
   topbar:[
@@ -23,7 +23,7 @@ NICHES.brainstorm = {
     ["break_mental_models","Quebra modelos mentais (técnicas)","Quando a geração satura no óbvio, usa técnicas para forçar ângulos novos: SCAMPER (substituir, combinar, adaptar, modificar, outro uso, eliminar, reverter), brainstorm reverso (como PIORAR o problema?), analogias de outros domínios, inversão. A técnica é andaime para sair do senso comum, não enfeite."],
     ["cluster_map","Identifica clusters e eixos","Na fase de mapear, agrupa as ideias por afinidade (affinity) e nomeia os clusters; encontra os eixos que organizam o espaço (ex.: esforço × impacto, ousado × seguro). Mostra os padrões que emergem — onde as ideias se concentram, que território está vazio (e talvez promissor)."],
     ["criteria_transparent","Critério transparente ao convergir","Convergência sem critério é palpite disfarçado. Antes de cortar/priorizar, torna explícitos os critérios (viabilidade, impacto, alinhamento, prazo) e aplica-os à vista. Usa apoios (matriz impacto × esforço, dot voting mental, prós/contras) como ferramenta — não como veredito automático. O porquê do corte fica registrado."],
-    ["nothing_lost","Nada se perde; a síntese decide","Toda ideia que surge vai para IDEIAS.md com um ID — inclusive a descartada (com a razão), porque uma ideia morta hoje pode ressuscitar amanhã noutro contexto. E ao fim de uma fase, o assistente não devolve uma lista morna: sintetiza, recomenda um caminho, e diz o próximo passo. Captura tudo; conclui com posição."],
+    ["nothing_lost","Nada se perde; a síntese decide","Toda ideia que surge vai para IDEAS.md com um ID — inclusive a descartada (com a razão), porque uma ideia morta hoje pode ressuscitar amanhã noutro contexto. E ao fim de uma fase, o assistente não devolve uma lista morna: sintetiza, recomenda um caminho, e diz o próximo passo. Captura tudo; conclui com posição."],
     ["think_with_not_for","Pensar COM você, não POR você","A decisão e o gosto são seus; o assistente é catalisador, não substituto do seu pensamento. Levanta opções, tensiona, organiza — e devolve a escolha. Para metas, puxa para o honesto: o que é estruturalmente alcançável a partir de quem você é hoje, não o que «soa impressionante». Não deixa você se enganar."],
   ],
   builderSection:{
@@ -44,10 +44,10 @@ NICHES.brainstorm = {
     "Antes de avaliar opções, checar o enquadramento da pergunta (reformular como 'Como poderíamos...' quando ajuda).",
     "Quando satura no óbvio, usar técnicas (SCAMPER, reverso, analogias) para forçar ângulos novos.",
     "Convergir com critério explícito (viabilidade, impacto, alinhamento) à vista; apoios são ferramenta, não veredito.",
-    "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEIAS.md; ao fim de uma fase, sintetizar e recomendar um caminho."
+    "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEAS.md; ao fim de uma fase, sintetizar e recomendar um caminho."
   ],
   triggersExtra:[
-    ["Ideias geradas numa sessão", "Entrega IDEIAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
+    ["Ideias geradas numa sessão", "Entrega IDEAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
     ["Mapeamento/clusters definidos", "Entrega MAPA.md completo (clusters nomeados + eixos)."],
     ["Critérios de corte/priorização definidos ou aplicados", "Entrega FILTROS.md completo (critérios + o que passou/caiu e por quê)."],
     ["Tema/pergunta reformulado", "Entrega TEMA.md completo atualizado."],
@@ -82,8 +82,8 @@ NICHES.brainstorm = {
 > Limites do escopo da exploração — evita divergir para o infinito.
 - [Ex.: não é redesenhar o produto inteiro; não é sobre preço.]
 `},
-    { name:"IDEIAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.",
-      content:`# IDEIAS.md — Banco de Ideias
+    { name:"IDEAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.",
+      content:`# IDEAS.md — Banco de Ideias
 
 > **Cresce** e nunca encolhe: toda ideia que surge entra aqui com um ID. **Nada se perde** — a ideia descartada hoje pode servir amanhã noutro contexto.
 > Na fase de divergir, registra-se SEM julgar (volume sobre perfeição). O julgamento vem depois, em FILTROS.
@@ -119,7 +119,7 @@ NICHES.brainstorm = {
     { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.",
       content:`# MAPA.md — Clusters e Eixos
 
-> Organiza as ideias do IDEIAS.md em grupos com sentido — para enxergar o espaço, não uma lista solta.
+> Organiza as ideias do IDEAS.md em grupos com sentido — para enxergar o espaço, não uma lista solta.
 > O assistente atualiza conforme as ideias se acumulam e os padrões emergem.
 
 ---
@@ -128,7 +128,7 @@ NICHES.brainstorm = {
 > Ideias que pertencem juntas, cada grupo com um nome que captura o tema.
 ### [Nome do cluster]
 - **Do que trata:** [o tema comum.]
-- **Ideias:** [i-N, i-N, i-N → IDEIAS.md.]
+- **Ideias:** [i-N, i-N, i-N → IDEAS.md.]
 - **Leitura:** [o que este cluster sugere; está cheio (território explorado) ou tem espaço?]
 
 ---
@@ -168,8 +168,8 @@ NICHES.brainstorm = {
 ## Decisões de corte / priorização
 > O que avançou, o que ficou para depois, o que caiu — com o porquê.
 - **Avança:** [i-N — por quê.]
-- **Banho-maria:** [i-N — por quê → IDEIAS.md.]
-- **Cai:** [i-N — por quê → IDEIAS.md (descartadas).]
+- **Banho-maria:** [i-N — por quê → IDEAS.md.]
+- **Cai:** [i-N — por quê → IDEAS.md (descartadas).]
 
 ## O caminho recomendado
 > Ao fim da convergência: a recomendação (com confiança proporcional à evidência) e o próximo passo.
@@ -179,7 +179,7 @@ NICHES.brainstorm = {
       content:`# STATUS.md — Estado da Exploração
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber em que fase estamos e o que vem.
-> O detalhe vive em IDEIAS/MAPA/FILTROS; aqui fica o estado vivo e a direção.
+> O detalhe vive em IDEAS/MAPA/FILTROS; aqui fica o estado vivo e a direção.
 
 ---
 
@@ -196,7 +196,7 @@ NICHES.brainstorm = {
 - [A escolha que precisa ser feita + o que falta para fazê-la (gerar mais? aplicar critério?).]
 
 ## 💡 Quentes / não esquecer
-- [Ideias ou fios que estão pedindo atenção → IDEIAS.md.]
+- [Ideias ou fios que estão pedindo atenção → IDEAS.md.]
 
 ## ⚠️ Atenção
 - [Convergindo cedo demais? a pergunta está bem colocada? falta divergência ousada?]
@@ -204,8 +204,8 @@ NICHES.brainstorm = {
 ## 💬 Última sessão
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"DECISOES.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
-      content:`# DECISOES.md — Decisões da Exploração
+    { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
+      content:`# DECISIONS.md — Decisões da Exploração
 
 > **Opcional.** Use quando o brainstorm leva a decisões que precisam ser lembradas e justificadas depois (ex.: alimentando um projeto real).
 > Guarda o PORQUÊ — para não rediscutir e para que quem retoma entenda o caminho.
@@ -219,7 +219,7 @@ NICHES.brainstorm = {
 [Direto.]
 
 ### A partir de quais ideias
-[i-N, i-N → IDEIAS.md; o que do brainstorm levou aqui.]
+[i-N, i-N → IDEAS.md; o que do brainstorm levou aqui.]
 
 ### Por quê (o racional)
 [Os critérios (FILTROS) que pesaram; por que esta e não as alternativas.]
@@ -249,7 +249,7 @@ NICHES.brainstorm = {
 [Divergir, mapear, convergir, aprofundar, reformular a pergunta.]
 
 ## Ideias geradas / trabalhadas
-- [O que entrou em IDEIAS.md (IDs); inclui descartadas com a razão.]
+- [O que entrou em IDEAS.md (IDs); inclui descartadas com a razão.]
 
 ## Mapa
 - [Clusters/eixos novos ou ajustados → MAPA.md.]
@@ -269,7 +269,7 @@ NICHES.brainstorm = {
   ],
   outputs:[
     { key:"status", name:"STATUS.md", role:"completo: fase, síntese, próxima decisão", active:true },
-    { key:"ideias", name:"IDEIAS.md", role:"completo, se ideias foram geradas/trabalhadas (com IDs; inclui descartadas)", active:true },
+    { key:"ideias", name:"IDEAS.md", role:"completo, se ideias foram geradas/trabalhadas (com IDs; inclui descartadas)", active:true },
     { key:"mapa", name:"MAPA.md", role:"completo, se clusters/eixos mudaram", active:false },
     { key:"filtros", name:"FILTROS.md", role:"completo, se critérios foram definidos ou aplicados (convergência)", active:false },
     { key:"tema", name:"TEMA.md", role:"completo, se a pergunta/enquadramento mudou", active:false },
@@ -282,23 +282,23 @@ NICHES.brainstorm = {
     },
     { id:"H", title:"Divergir (gerar muitas ideias)", when:"Quero gerar o máximo de possibilidades, sem filtro ainda.",
       fill:"focus", fillLabel:"O foco da geração + o que já tem (ou: use TEMA.md)",
-      body:(p,n)=>`Divergência — gerar, sem julgar.\n\nFOCO:\n${p.focus||"[O foco da geração. Ou: 'a pergunta de TEMA.md']"}\n\nEstamos ABRINDO: volume sobre perfeição, sem matar ideia no nascedouro. Consultando TEMA.md e IDEIAS.md (não repetir o que já existe):\n- Gere um lote generoso de ideias — das óbvias às estranhas (as estranhas destravam as boas)\n- Cubra ângulos variados: incrementais E ousadas; de baixo custo E ambiciosas\n- Quando começar a saturar no óbvio, aplique uma técnica para forçar ângulos novos: SCAMPER (substituir/combinar/adaptar/modificar/outro uso/eliminar/reverter), brainstorm reverso (como PIORAR isto?), analogias de outro domínio\n- Não avalie ainda — mas marque, sem cortar, quais parecem ter mais energia\n\nNão me dê só o seguro e bem-comportado — empurre. Entregue IDEIAS.md completo (cada ideia com ID). O julgamento vem depois.`
+      body:(p,n)=>`Divergência — gerar, sem julgar.\n\nFOCO:\n${p.focus||"[O foco da geração. Ou: 'a pergunta de TEMA.md']"}\n\nEstamos ABRINDO: volume sobre perfeição, sem matar ideia no nascedouro. Consultando TEMA.md e IDEAS.md (não repetir o que já existe):\n- Gere um lote generoso de ideias — das óbvias às estranhas (as estranhas destravam as boas)\n- Cubra ângulos variados: incrementais E ousadas; de baixo custo E ambiciosas\n- Quando começar a saturar no óbvio, aplique uma técnica para forçar ângulos novos: SCAMPER (substituir/combinar/adaptar/modificar/outro uso/eliminar/reverter), brainstorm reverso (como PIORAR isto?), analogias de outro domínio\n- Não avalie ainda — mas marque, sem cortar, quais parecem ter mais energia\n\nNão me dê só o seguro e bem-comportado — empurre. Entregue IDEAS.md completo (cada ideia com ID). O julgamento vem depois.`
     },
     { id:"I", title:"Mapear (organizar o que surgiu)", when:"Tenho muitas ideias soltas e quero enxergar o espaço.",
-      fill:"ideas", fillLabel:"As ideias a organizar (cole, ou: use IDEIAS.md)",
-      body:(p,n)=>`Mapeamento — organizar para enxergar.\n\nIDEIAS:\n${p.ideas||"[As ideias soltas a organizar. Ou: 'as de IDEIAS.md']"}\n\nConsultando IDEIAS.md, dê forma ao espaço:\n- Agrupe por AFINIDADE (affinity): clusters de ideias que pertencem juntas; nomeie cada cluster pelo tema que captura\n- Encontre os EIXOS que organizam o espaço (ex.: esforço × impacto; incremental × ousado; quem atende)\n- Mostre onde as ideias se CONCENTRAM (território explorado) e onde está VAZIO (o quadrante que ninguém tocou — às vezes o mais promissor)\n- Aponte padrões e TENSÕES (ideias que se contradizem; temas que reaparecem; lacunas)\n\nNão é só categorizar — é revelar o que o conjunto está dizendo. Entregue MAPA.md completo. Se o mapa sugerir uma ideia nova de combinação, registre em IDEIAS.md.`
+      fill:"ideas", fillLabel:"As ideias a organizar (cole, ou: use IDEAS.md)",
+      body:(p,n)=>`Mapeamento — organizar para enxergar.\n\nIDEAS:\n${p.ideas||"[As ideias soltas a organizar. Ou: 'as de IDEAS.md']"}\n\nConsultando IDEAS.md, dê forma ao espaço:\n- Agrupe por AFINIDADE (affinity): clusters de ideias que pertencem juntas; nomeie cada cluster pelo tema que captura\n- Encontre os EIXOS que organizam o espaço (ex.: esforço × impacto; incremental × ousado; quem atende)\n- Mostre onde as ideias se CONCENTRAM (território explorado) e onde está VAZIO (o quadrante que ninguém tocou — às vezes o mais promissor)\n- Aponte padrões e TENSÕES (ideias que se contradizem; temas que reaparecem; lacunas)\n\nNão é só categorizar — é revelar o que o conjunto está dizendo. Entregue MAPA.md completo. Se o mapa sugerir uma ideia nova de combinação, registre em IDEAS.md.`
     },
     { id:"J", title:"Convergir (decidir com critério)", when:"Tenho boas opções e preciso escolher, sem ser por palpite.",
       fill:"options", fillLabel:"As opções finalistas + o que importa na decisão",
-      body:(p,n)=>`Convergência — decidir com honestidade.\n\nOPÇÕES E O QUE IMPORTA:\n${p.options||"[As opções finalistas + o que importa (prazo, recursos, meta). Ou: 'os clusters de MAPA.md']"}\n\nConsultando TEMA.md (critérios de sucesso) e FILTROS.md:\n- Torne os CRITÉRIOS explícitos primeiro (viabilidade, impacto, alinhamento, prazo) — convergir sem critério é palpite disfarçado. Algum é eliminatório?\n- Avalie as opções contra os critérios À VISTA (uma matriz simples ajuda) — mas como APOIO, não veredito automático\n- Para cada finalista: a favor, contra honesto, e «o que precisaria ser verdade para ser a escolha certa»\n- Recomende um caminho, com confiança proporcional à evidência — e diga o que vai para banho-maria e o que cai (com a razão)\n- Termine com o PRÓXIMO PASSO concreto\n\nNão fique morno em cima do muro: sintetize e tome posição (é uma recomendação, a decisão é sua). Entregue FILTROS.md completo (e IDEIAS.md atualizado com o que caiu/adiou).`
+      body:(p,n)=>`Convergência — decidir com honestidade.\n\nOPÇÕES E O QUE IMPORTA:\n${p.options||"[As opções finalistas + o que importa (prazo, recursos, meta). Ou: 'os clusters de MAPA.md']"}\n\nConsultando TEMA.md (critérios de sucesso) e FILTROS.md:\n- Torne os CRITÉRIOS explícitos primeiro (viabilidade, impacto, alinhamento, prazo) — convergir sem critério é palpite disfarçado. Algum é eliminatório?\n- Avalie as opções contra os critérios À VISTA (uma matriz simples ajuda) — mas como APOIO, não veredito automático\n- Para cada finalista: a favor, contra honesto, e «o que precisaria ser verdade para ser a escolha certa»\n- Recomende um caminho, com confiança proporcional à evidência — e diga o que vai para banho-maria e o que cai (com a razão)\n- Termine com o PRÓXIMO PASSO concreto\n\nNão fique morno em cima do muro: sintetize e tome posição (é uma recomendação, a decisão é sua). Entregue FILTROS.md completo (e IDEAS.md atualizado com o que caiu/adiou).`
     },
     { id:"K", title:"Aprofundar / pressionar uma ideia", when:"Tenho uma ideia promissora e quero testá-la a fundo (advogado do diabo).",
       fill:"idea", fillLabel:"A ideia + por que ela te atrai",
-      body:(p,n)=>`Pressão sobre uma ideia (estresse honesto, não bajulação).\n\nIDEIA:\n${p.idea||"[A ideia promissora + por que ela te atrai]"}\n\nSeja o melhor parceiro crítico que esta ideia pode ter — porque concordar com tudo não a deixaria mais forte:\n- Desenvolva o melhor CASO a favor (qual a versão mais forte dela?)\n- Faça o melhor caso CONTRA (a objeção real, não uma fraca de palha)\n- Que premissas ela exige? Quais são frágeis? «O que precisaria ser verdade para isto funcionar?»\n- Pré-mortem: imagine que falhou daqui a um ano — o que deu errado?\n- Como deixá-la mais forte / como testá-la barato antes de apostar?\n- Honestamente: ela é tão boa quanto parece, ou o entusiasmo está mascarando um furo?\n\nNão me poupe para ser agradável — o atrito é o que gera o insight. Se for boa, mostre como blindá-la; se tiver furo, aponte. Atualize IDEIAS.md com o que aprendemos.`
+      body:(p,n)=>`Pressão sobre uma ideia (estresse honesto, não bajulação).\n\nIDEIA:\n${p.idea||"[A ideia promissora + por que ela te atrai]"}\n\nSeja o melhor parceiro crítico que esta ideia pode ter — porque concordar com tudo não a deixaria mais forte:\n- Desenvolva o melhor CASO a favor (qual a versão mais forte dela?)\n- Faça o melhor caso CONTRA (a objeção real, não uma fraca de palha)\n- Que premissas ela exige? Quais são frágeis? «O que precisaria ser verdade para isto funcionar?»\n- Pré-mortem: imagine que falhou daqui a um ano — o que deu errado?\n- Como deixá-la mais forte / como testá-la barato antes de apostar?\n- Honestamente: ela é tão boa quanto parece, ou o entusiasmo está mascarando um furo?\n\nNão me poupe para ser agradável — o atrito é o que gera o insight. Se for boa, mostre como blindá-la; se tiver furo, aponte. Atualize IDEAS.md com o que aprendemos.`
     },
     { id:"L", title:"Destravar (estou empacado)", when:"Empaquei — sem ideias, ou rodando em círculo.",
       fill:"stuck", fillLabel:"Onde travei + o que já tentei",
-      body:(p,n)=>`Destravar o pensamento.\n\nONDE TRAVEI:\n${p.stuck||"[Onde empaquei — sem ideias? girando nas mesmas? não consigo decidir? + o que já tentei]"}\n\nDiagnostique e destrave (consultando TEMA/IDEIAS/MAPA):\n- Que TIPO de bloqueio é? (a pergunta mal colocada? medo de julgar e por isso nada flui? excesso de opções e paralisia? estou preso a uma suposição?)\n- Se for falta de ideias: aplique uma técnica de ruptura — inversão (e se eu quisesse o OPOSTO do objetivo?), analogia forçada (como [outro domínio] resolveria?), restrição radical (e se eu só tivesse 1 dia / R$0 / uma frase?)\n- Se for rodar em círculo: aponte a suposição que está me prendendo e proponha largá-la\n- Se for paralisia de decisão: reduza ao próximo passo MENOR e reversível — o que dá para testar barato hoje?\n- Me devolva uma pergunta que reabra o espaço, não uma resposta pronta\n\nO objetivo é fazer o pensamento voltar a fluir — pensar COM você, não por você. Capture o que surgir em IDEIAS.md.`
+      body:(p,n)=>`Destravar o pensamento.\n\nONDE TRAVEI:\n${p.stuck||"[Onde empaquei — sem ideias? girando nas mesmas? não consigo decidir? + o que já tentei]"}\n\nDiagnostique e destrave (consultando TEMA/IDEAS/MAPA):\n- Que TIPO de bloqueio é? (a pergunta mal colocada? medo de julgar e por isso nada flui? excesso de opções e paralisia? estou preso a uma suposição?)\n- Se for falta de ideias: aplique uma técnica de ruptura — inversão (e se eu quisesse o OPOSTO do objetivo?), analogia forçada (como [outro domínio] resolveria?), restrição radical (e se eu só tivesse 1 dia / R$0 / uma frase?)\n- Se for rodar em círculo: aponte a suposição que está me prendendo e proponha largá-la\n- Se for paralisia de decisão: reduza ao próximo passo MENOR e reversível — o que dá para testar barato hoje?\n- Me devolva uma pergunta que reabra o espaço, não uma resposta pronta\n\nO objetivo é fazer o pensamento voltar a fluir — pensar COM você, não por você. Capture o que surgir em IDEAS.md.`
     },
   ]
 };

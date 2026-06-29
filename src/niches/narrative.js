@@ -38,7 +38,7 @@ NICHES.narrative = {
   conventions:[
     "A voz é do autor — e o assistente também ESCREVE, quando pedido e sob direção: cena, capítulo, diálogo, opções. Sempre como rascunho ancorado em VOZ.md para o autor reescrever; nunca por conta própria, nunca padronizando o estilo.",
     "Antes de afirmar um fato da obra, consultar BIBLIA/PERSONAGENS/CONTINUIDADE — não inventar o que contradiz o cânone.",
-    "Grafia canônica de nomes e termos inventados vive em CONTINUIDADE (ou GLOSSARIO): um nome se escreve sempre do mesmo jeito.",
+    "Grafia canônica de nomes e termos inventados vive em CONTINUIDADE (ou GLOSSARY): um nome se escreve sempre do mesmo jeito.",
     "Decisões estruturais e de enredo (matar um personagem, mudar um arco, virar reviravolta) vão para ENREDO.md.",
     "Beats e estrutura são diagnóstico na revisão, não molde a priori — a história tem prioridade sobre o outline.",
     "Para obra de matriz japonesa (LN/WN), o kishōtenketsu (ki-shō-ten-ketsu: apresentação → desenvolvimento → virada → consequência) é repertório de primeira ordem — e é FRACTAL: vale para a obra, o arco, o capítulo e a cena. Em serial, o ketsu pode ser adiado para o capítulo seguinte (vira o gancho). Contraste e surpresa sustentam cena tanto quanto conflito.",
@@ -249,7 +249,7 @@ NICHES.narrative = {
 ## Pontos de convergência
 - [Onde os fios/linhas se cruzam — para sincronizar.]
 `},
-    {name:"GLOSSARIO.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", content:`# GLOSSARIO.md — Termos da Obra
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", content:`# GLOSSARY.md — Termos da Obra
 
 > **Opcional.** Use quando a obra inventa vocabulário (fantasia, ficção científica, mundos próprios) que se repete e precisa de sentido e grafia estáveis.
 > A grafia canônica também vive em CONTINUIDADE; aqui entra o SIGNIFICADO.
