@@ -683,3 +683,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Por que.** Convencao de TI do mundo real (nomes de infra em ingles) e — decisivo — evitar **colisao** quando um nicho faz custom com dev (nao gerar `IDEAS` e `IDEIAS` para a mesma coisa). Conteudo de nicho fica na lingua do criador porque nao colide e nao e infra.
 
 **Migracao em fases:** Fase 0 = repo KCM (este commit). Fases 1-3 = template (renomear nichos; camada universal; CEREBRO por nicho + `FIX-` + commit-na-instrucao-curta).
+
+## D-036 — CEREBRO gerado é niche-aware
+
+**Decisão.** Gatilhos, higiene e a nota de "criar se faltar" passam a respeitar os `contextFiles` reais do nicho: CHANGELOG/ROADMAP só aparecem para nichos que os têm; a criação automática vale só para a camada universal (STATUS/IDEAS/DECISIONS). Commit foi para a instrução curta (dev/ASU/Modo Code); ritual de checar `.txt` avulso adicionado.
+
+**Por quê.** O CEREBRO genérico mandava nichos atualizarem/criarem CHANGELOG/ROADMAP que não fazem parte deles — gerando referência fantasma e arquivos espúrios. Commit sumia em chats ASU/normais por estar só no CEREBRO (lido 1x), não na instrução curta.

@@ -1910,11 +1910,14 @@ function buildInstr(niche){
     coreFiles.find(n=>/STATUS/i.test(n)),
   ].filter(Boolean);
   lines.push(`Antes de qualquer ação, leia nesta ordem: ${readOrder.map(f=>`\`${f}\``).join(" → ")}${coreFiles.some(n=>/CHANGELOG/i.test(n))?" → última entrada do `CHANGELOG.md`":""}.`);
+  lines.push("No início da sessão, cheque também notas avulsas `.txt` recentes no diretório do projeto e leia-as — entrada transitória do usuário (a fundir nos meta/), não fonte canônica. Se não houver, siga normalmente.");
   lines.push("Confirme em uma frase o que entendeu da tarefa antes de executar. Se houver ambiguidade real, pergunte antes.");
   if(groupModeOn()) lines.push("Projeto em grupo: existe um `HUB.md` compartilhado (gerado na página HUB do kit). Leia-o logo após o STATUS — sua caixa de entrada e o status das outras frentes. Nunca altere arquivos de outra frente; sugestões vão para a caixa dela.");
   if(asuModeOn()) lines.push("Código: **editar** arquivo existente → instrução ASU (`yaml`, nome `AAAA-MM-DD-asuNNNN.yaml`); arquivo **novo** → entregue pronto para baixar. Detalhe no CEREBRO.");
   lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir configuração diferente, recomende-a explícita (modelo / esforço Baixo→Máximo / pensamento lig-desl). Nunca afirme saber a config atual — recomende pela tarefa. Pesada com config fraca → peça aumento nomeando os níveis; folga → diga que pode baixar.");
   lines.push("**Log:** nomeie `logs/AAAA-MM-DD.md` (data ISO, sem a palavra \"log\" no nome).");
+  if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
+    lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO para copiar isolado, mensagem sem acento. Não pule o commit.");
 
   // Princípios essenciais (curtos — versão densa, não a definição longa)
   const bhAll = [...normBehaviors(BEHAVIORS_BASE), ...(niche.behaviors||[])];
@@ -2073,7 +2076,13 @@ function buildClaudeMd(niche){
   L.push("");
   L.push("## Regras de higiene (impedem inchaço e duplicação)");
   L.push("");
-  HYGIENE_RULES.forEach(r => L.push(`- ${r}`));
+  const hasChangelog = (niche.contextFiles||[]).some(f=>/CHANGELOG/i.test(f.name));
+  const hasRoadmap = (niche.contextFiles||[]).some(f=>/ROADMAP/i.test(f.name));
+  HYGIENE_RULES.forEach(r => {
+    if(!hasChangelog) r = r.replace(" e vai para o CHANGELOG (e para o log da sessão)", " e vai para o log da sessão");
+    if(!hasRoadmap)   r = r.replace(" Médio/longo prazo vive no ROADMAP, não no STATUS.", " Planos de médio/longo prazo não incham o STATUS.");
+    L.push(`- ${r}`);
+  });
 
   // Protocolo de atualização — quem faz o quê (resolve a ambiguidade de "atualize o X")
   L.push("");
@@ -2128,10 +2137,16 @@ function buildClaudeMd(niche){
   L.push("");
   L.push("| Evento | O assistente entrega |");
   L.push("|---|---|");
-  const triggers = [...TRIGGERS_BASE, ...((niche.triggersExtra)||[])];
+  const baseTriggers = TRIGGERS_BASE.map(([ev,ac])=>{
+    if(!hasChangelog){
+      ac = ac.replace(" → última entrada do CHANGELOG.", ".").replace(" + CHANGELOG.md (se fechou algo)", "");
+    }
+    return [ev, ac];
+  });
+  const triggers = [...baseTriggers, ...((niche.triggersExtra)||[])];
   triggers.forEach(([ev,ac]) => L.push(`| ${ev} | ${ac} |`));
   L.push("");
-  L.push("> Se um arquivo referenciado pelas regras acima (IDEAS, DECISIONS, etc.) ainda não existir no projeto, o assistente o CRIA na primeira necessidade — a partir do papel descrito e do modelo do kit — em vez de tratar a ausência como erro ou adiar a captura.");
+  L.push("> Se um arquivo da **camada universal** (STATUS, IDEAS, DECISIONS) referenciado acima ainda não existir, o assistente o CRIA na primeira necessidade, a partir do papel descrito. **Arquivos de outros nichos (CHANGELOG, ROADMAP, etc.) que NÃO fazem parte deste nicho não são criados** — a ausência é intencional, não um erro.");
 
   // Saídas que o assistente ENTREGA como arquivos completos
   const outOn = (niche.outputs||[]).filter(o => STATE.outputs[o.id] !== false);
@@ -2219,7 +2234,7 @@ if(asuModeOn()){
     L.push("Este projeto é desenvolvido com o **Claude Code** (CLI/desktop), além do chat de planejamento. Há duas raias:");
     L.push("");
     L.push('- **Chat (planejamento):** cura e ENTREGA arquivos de doc. Para reescrita de fundo/voz ou arquivo **novo/pequeno**, entrega o **arquivo inteiro**. Para um **delta estruturado** num doc **grande** (marcar fase, abrir fase, inserir nota, acrescentar item), entrega uma **spec curta** em `meta/specs/` com o **texto exato** e **âncora semântica** (seção/título, nunca nº de linha) — e o Code posiciona.');
-    L.push('- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISOES, marcar estado de fase). Aplica as specs de doc. Roda build/validação. Commita.');
+    L.push('- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISIONS, marcar estado de fase). Aplica as specs de doc. Roda build/validação. Commita.');
     L.push("");
     L.push('**Método "doc por spec":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Specs **só de doc não tocam o produto** → não precisam de build; a rede é o `git diff`.');
     L.push("");
@@ -2253,7 +2268,7 @@ if(asuModeOn()){
     L.push("");
     L.push("## Convenções");
     L.push("- Mensagens de commit **sem acento**.");
-    L.push("- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISOES); curadoria que reescreve vem do chat (arquivo inteiro OU spec).");
+    L.push("- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU spec).");
     L.push('- Ao aplicar uma spec de `meta/specs/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.');
     L.push("```");
     L.push("");
@@ -2281,7 +2296,7 @@ if(asuModeOn()){
     L.push("");
     L.push("### `.claude/commands/wrap.md`");
     L.push("```markdown");
-    L.push("Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISOES.md` se houve decisão/bug,");
+    L.push("Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,");
     L.push("e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).");
     L.push("```");
   }
@@ -2858,7 +2873,7 @@ function renderCustomForm(){
 
     <div class="group">
       <div class="glabel">Convenções do nicho <span class="gn">· uma por linha</span></div>
-      <textarea class="txt" id="cf-conv" rows="4" placeholder="Ex.:&#10;Decisões importantes vão em DECISOES.md.&#10;Termos técnicos têm definição na primeira ocorrência.">${escapeHTML((ws("conventions",[])||[]).join("\n"))}</textarea>
+      <textarea class="txt" id="cf-conv" rows="4" placeholder="Ex.:&#10;Decisões importantes vão em DECISIONS.md.&#10;Termos técnicos têm definição na primeira ocorrência.">${escapeHTML((ws("conventions",[])||[]).join("\n"))}</textarea>
     </div>
 
     <div class="group">

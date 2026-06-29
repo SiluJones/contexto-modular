@@ -1,6 +1,12 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.39.0**.
+> Histórico de versões. Versão atual: **v1.40.0**.
+
+## v1.40.0 — CEREBRO por nicho (Fase 3)
+- CEREBRO gerado **niche-aware** (D-036): gatilhos, higiene e a nota "criar se faltar" respeitam os `contextFiles` reais do nicho — CHANGELOG/ROADMAP só onde existem; criação automática só da camada universal (STATUS/IDEAS/DECISIONS).
+- **Commit na instrução curta** (dev via CHANGELOG / ASU / Modo Code): entrega o `git commit` pronto em bloco separado, sem acento.
+- **Ritual `.txt`**: instrução curta manda checar notas avulsas `.txt` recentes no início da sessão (entrada transitória a fundir nos meta/).
+- Limpeza do resíduo `DECISOES`→`DECISIONS` no template. Encerra a migração para inglês + Decisão 3 (Fases 0-3). Harness 17/17.
 
 ## v1.39.0 — Camada universal STATUS+IDEAS+DECISIONS (Fase 2)
 - DECISIONS.md adicionado aos 12 nichos que nao tinham (camada universal, D-035). game: residuo IDEIAS->IDEAS em prosa corrigido. Falta Fase 3 (CEREBRO por nicho).
