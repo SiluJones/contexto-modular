@@ -1,6 +1,10 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.36.0**.
+> Histórico de versões. Versão atual: **v1.37.0**.
+
+## v1.37.0 — Diretriz ASU + disciplina na instrução curta
+- **ASU editar→/novo→baixar** (D-033): diretriz reescrita conforme DEC-025 do ASU; instrução ASU nomeada `AAAA-MM-DD-asuNNNN.yaml`; lembrete e instrução curta citam ASU + `PROMPT_IA.md`.
+- **Recomendação de config** (D-034): home no CEREBRO + gatilho na instrução curta. **Nome de log** reforçado na instrução curta.
 
 ## v1.36.0 — ASU quick wins
 - **Lembrete na UI** (b): ligar "Saída via ASU?" mostra um callout para subir o `INSTRUCTION_GUIDE.md` no Projeto.

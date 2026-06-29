@@ -667,3 +667,11 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** A diretriz do ASU no `CEREBRO.md` gerado deixa de fixar `format_version: "1.0"` e passa a citar o `format_version` **declarado no `INSTRUCTION_GUIDE.md`** do Projeto. Também: lembrete na UI do kit (callout) ao ligar o switch ASU, para subir o `INSTRUCTION_GUIDE.md`.
 
 **Por quê.** O formato é o contrato **estável**; a ferramenta evolui. Ancorar no guia evita que a saída fique presa a uma versão velha quando o ASU mudar. O lembrete na UI reduz o erro de esquecer de subir o guia (sem ele, a instrução ASU não tem referência de formato).
+
+## D-033 — Diretriz ASU: editar→ASU, novo→baixar (atende DEC-025 do ASU)
+**Decisão.** A diretriz «Saída de código via ASU» passa a separar: **editar existente → instrução ASU**; **arquivo novo → entregar pra baixar** (exceto `create_file` em instrução mista; usuário pode pedir o inteiro). Instrução ASU nomeada `AAAA-MM-DD-asuNNNN.yaml`. Lembrete da UI e instrução curta também citam ASU e `PROMPT_IA.md`.
+**Por que.** Atende o pedido formal do ASU (DEC-025): embutir arquivo novo em YAML e mais caro e arrisca corromper no escape; e a instrucao curta nao reforcava ASU, entao o comportamento dependia de a IA ter lido o fim do CEREBRO. Corrige o bug real de projetos gerarem instrucao pra o usuario criar arquivo a mao.
+
+## D-034 — Recomendação de configuração ao fim da sessão
+**Decisão.** Gatilho universal: ao fim, recomendar config da proxima etapa (modelo / esforco / pensamento) de forma explicita, sem afirmar saber a config atual; parar e pedir aumento se a proxima for pesada e a config fraca; sinalizar que pode baixar se sobrou. Home no CEREBRO + linha-gatilho na instrucao curta.
+**Por que.** O modelo nao le de forma confiavel o proprio esforco/pensamento — recomendar pela tarefa e honesto (P8) e util; e diretriz so pega quando esta na instrucao curta (lida em todo turno), nao so no CEREBRO.

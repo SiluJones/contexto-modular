@@ -1,11 +1,16 @@
 # STATUS — Kit de Contexto Universal — 2026-06-21
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.36.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.37.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEIAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEIAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-06-21 — v1.36.0)
+## 💬 Última sessão (2026-06-29 — v1.37.0)
+- **Diretriz ASU reescrita (D-033):** editar→ASU (`AAAA-MM-DD-asuNNNN.yaml`); arquivo novo→baixar; lembrete UI e instrução curta citam ASU + `PROMPT_IA.md`.
+- **Recomendação de config (D-034):** home nomeada no CEREBRO + gatilho na instrução curta. Nome de log reforçado na instrução curta.
+- Harness: **17/17, 0 erros, 32 checagens**.
+
+## 💬 Sessão anterior (2026-06-21 — v1.36.0)
 - **Refator modular (D-028) embutido:** `index.html` agora é gerado de `src/index.template.html` + 17 módulos `src/niches/*.js` via `build.js`. Produto continua 1 arquivo único, sem build no lado do usuário (preserva D-001).
 - **Cérebro renomeado (D-029):** arquivo gerado do cérebro mudou de `CLAUDE.md` → `CEREBRO.md` em todos os projetos gerados (sempre, não condicional). Libera o nome `CLAUDE.md` para o arquivo-raiz do Claude Code. Todas as referências no template, triggers, behaviors e harness atualizadas.
 - **"Feedback para o ASU" no IDEIAS gerado:** nova seção logo abaixo de "Feedback para o Kit" no template universal `UNIVERSAL_IDEAS_TPL`.
