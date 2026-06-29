@@ -43,7 +43,7 @@ NICHES.game = {
     "O design parte da experiência alvo (aesthetic); mecânica que não a serve é candidata a corte.",
     "Tudo se ancora no core loop; polir o primário vem antes de adicionar o secundário.",
     "Em balanceamento, registrar a INTENÇÃO de design (curva, sensação), não só o número atual — e as premissas de quem vai jogar.",
-    "Escopo é o filtro: ideia nova é testada contra a visão e o tempo; o que não cabe vai para 'depois' (IDEIAS de pós-lançamento), não para o projeto atual.",
+    "Escopo é o filtro: ideia nova é testada contra a visão e o tempo; o que não cabe vai para 'depois' (IDEAS de pós-lançamento), não para o projeto atual.",
     "Decisão de design é hipótese: validar barato (protótipo, vertical slice, playtest) antes de comprometer produção.",
     "Lore e regras vivem coerentes em UNIVERSO/MECANICAS; o assistente consulta antes de inventar fato do mundo ou do sistema.",
     "O assistente também CONSTRÓI: protótipo jogável, código, conteúdo e dados — design vira artefato testável, não só documento. A narrativa cena a cena (missões, diálogos ramificados, lore passivo) vive em ROTEIRO.md."
@@ -53,7 +53,7 @@ NICHES.game = {
     ["Fato novo de lore/mundo/personagem", "Entrega UNIVERSO.md completo com o cânone atualizado."],
     ["Mudança de escopo (corte, adição, fase)", "Entrega PRODUCAO.md completo (o escopo atual + o que foi cortado/adiado e por quê)."],
     ["Resultado de playtest", "Entrega STATUS.md e MECANICAS.md (o que o teste confirmou/refutou; o que ajustar)."],
-    ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEIAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
+    ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
     ["Cena, missão ou diálogo ramificado escrito/decidido", "Entrega ROTEIRO.md completo (a cena no formato de jogo: escolhas com consequências, requisitos, lore passivo, estado de sincronia)."],
   ],
   contextFiles:[
@@ -252,6 +252,31 @@ NICHES.game = {
 
 ## 💬 Última sessão
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
+`},
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+
+> Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
+> Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
+> Append-only: não reescreva entradas antigas; se uma for substituída, marque «SUPERADA por DEC-N» e adicione a nova.
+
+---
+
+## DEC-[N] — [título curto]
+**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+
+### Contexto
+[Que problema ou pergunta forçou esta decisão.]
+
+### Decisão
+[O que foi decidido, em uma ou duas frases.]
+
+### Alternativas consideradas
+- **[Alternativa]** — [por que não.]
+
+---
+
+## FIX-[N] — [problema grave resolvido]
+**Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
     { name:"NIVEIS.md", cat:"opcional", role:"OPCIONAL — design de níveis/fases/encontros. Use quando o jogo tem level design estruturado.",
       content:`# NIVEIS.md — Design de Níveis

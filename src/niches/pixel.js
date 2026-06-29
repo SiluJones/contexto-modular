@@ -216,6 +216,31 @@ NICHES.pixel = {
 ## 💬 Última sessão
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+
+> Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
+> Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
+> Append-only: não reescreva entradas antigas; se uma for substituída, marque «SUPERADA por DEC-N» e adicione a nova.
+
+---
+
+## DEC-[N] — [título curto]
+**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+
+### Contexto
+[Que problema ou pergunta forçou esta decisão.]
+
+### Decisão
+[O que foi decidido, em uma ou duas frases.]
+
+### Alternativas consideradas
+- **[Alternativa]** — [por que não.]
+
+---
+
+## FIX-[N] — [problema grave resolvido]
+**Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
+`},
     { name:"TILESET.md", cat:"opcional", role:"OPCIONAL — design de tilesets e cenários: módulos, transições, regras de encaixe. Use em jogos com mapas/cenários.",
       content:`# TILESET.md — Tilesets e Cenário
 

@@ -1,6 +1,9 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.38.0**.
+> Histórico de versões. Versão atual: **v1.39.0**.
+
+## v1.39.0 — Camada universal STATUS+IDEAS+DECISIONS (Fase 2)
+- DECISIONS.md adicionado aos 12 nichos que nao tinham (camada universal, D-035). game: residuo IDEIAS->IDEAS em prosa corrigido. Falta Fase 3 (CEREBRO por nicho).
 
 ## v1.38.0 — Nomes de gestao dos nichos em ingles (Fase 1)
 - Renomeados nos nichos: DECISOES->DECISIONS, IDEIAS->IDEAS, GLOSSARIO->GLOSSARY, CONTEXTO->CONTEXT, HISTORICO->HISTORY (D-035). Conteudo de nicho permanece PT. Falta Fase 2 (camada universal STATUS+IDEAS+DECISIONS) e Fase 3 (CEREBRO por nicho).

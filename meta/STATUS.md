@@ -1,11 +1,14 @@
 # STATUS — Kit de Contexto Universal — 2026-06-21
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.38.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.39.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-06-29 — v1.38.0)
+## 💬 Última sessão (2026-06-29 — v1.39.0)
+- **Camada universal DECISIONS (D-035, Fase 2):** DECISIONS.md adicionado aos 12 nichos que nao tinham (animation, client, comics, cuisine, custom, game, marketing, music, narrative, pixel, research, rpg); game: residuo IDEIAS->IDEAS em prosa corrigido. Harness 17/17. Fase 3 pendente — exige Opus no Code.
+
+## 💬 Sessão anterior (2026-06-29 — v1.38.0)
 - **Nomes de gestao dos nichos em ingles (D-035, Fase 1):** DECISOES→DECISIONS, IDEIAS→IDEAS, GLOSSARIO→GLOSSARY, CONTEXTO→CONTEXT, HISTORICO→HISTORY nos 7 nichos afetados; conteudo de nicho permanece PT. Harness 17/17. Fases 2-3 pendentes.
 
 ## 💬 Sessão anterior (2026-06-29 — v1.37.1)
