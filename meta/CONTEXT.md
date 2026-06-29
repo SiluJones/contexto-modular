@@ -3,7 +3,7 @@
 > O **passaporte** do projeto. Leia primeiro. Estável — muda pouco.
 > Meta deste arquivo: uma conversa NOVA entende o projeto inteiro e navega o código sem precisar de mais nada.
 > Versão de referência: **v1.34.0** · produto = um `index.html` (~581 KB) **gerado** de `src/` · **17/17 nichos, 0 erros** + **~32 checagens** no harness.
-> (Histórico de versões fica no CHANGELOG; o "porquê" de cada escolha, no DECISOES; o estado atual, no STATUS; ideias no IDEIAS.)
+> (Histórico de versões fica no CHANGELOG; o "porquê" de cada escolha, no DECISIONS; o estado atual, no STATUS; ideias no IDEAS.)
 >
 > **Mudanças nesta revisão (v1.34.0):** o projeto deixou de ser um HTML único editado à mão e passou a ser **modular** — o `index.html` é **gerado** de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js` (D-028). O **cérebro gerado** foi renomeado de `CLAUDE.md` → `CEREBRO.md` (D-029). Entrou o switch **"Saída via ASU (patch)"** (asuMode) e o **build escreve na raiz**. O **desenvolvimento migrou para o Claude Code** (§ novo "Desenvolvimento"). Nada de conteúdo se perdeu desta regeneração.
 
@@ -13,11 +13,11 @@
 
 O **Kit de Contexto Modular (KCM)** é um **único `index.html`** (vanilla JS no lado do usuário, sem build, sem deps de runtime além de JSZip via CDN) que ajuda pessoas a **manter contexto entre conversas com o Claude**. Problema que resolve: conversa longa com IA vira "papão de token" e, ao trocar de conversa, perde-se todo o contexto (decisões, ideias, estado).
 
-Solução: o kit gera **arquivos vivos** (`CONTEXT.md`, `STATUS.md`, `DECISOES.md`, etc.) que o usuário sobe num Projeto do Claude.ai (ou anexa) e que fazem a IA se ambientar na hora. São **17 nichos** (16 de conteúdo + **1 construtor** `custom`). Cada nicho gera dois artefatos adaptados ao domínio: as **Instruções do Projeto** (curtas, lidas em toda mensagem) e um **`CEREBRO.md` completo** (subido como arquivo; antes chamado `CLAUDE.md` — renomeado na v1.34.0, D-029).
+Solução: o kit gera **arquivos vivos** (`CONTEXT.md`, `STATUS.md`, `DECISIONS.md`, etc.) que o usuário sobe num Projeto do Claude.ai (ou anexa) e que fazem a IA se ambientar na hora. São **17 nichos** (16 de conteúdo + **1 construtor** `custom`). Cada nicho gera dois artefatos adaptados ao domínio: as **Instruções do Projeto** (curtas, lidas em toda mensagem) e um **`CEREBRO.md` completo** (subido como arquivo; antes chamado `CLAUDE.md` — renomeado na v1.34.0, D-029).
 
 Três capacidades hoje: **(1) manter contexto** (os arquivos vivos + logs); **(2) o kit DESENVOLVE** (narrative escreve sob direção; game cria/codifica — D-023); **(3) coordenar grupos** (HUB com Cânone Central — D-024/025/026/027).
 
-**Ecossistema de 3 ferramentas do usuário (o "toolchain"):** **KCM** (este — o gerador), **ASU** (Atualizador Automático de Scripts — ferramenta Python que aplica patches YAML cirúrgicos com schema+diff+backup+rollback; v0.6.0, tem GUI PySide6) e **FlatDrop** (achata repos para upload no Projeto, gera `_MANIFEST.md`). Os três se coordenam por contratos (ver "HUB" abaixo e i-N27 no IDEIAS).
+**Ecossistema de 3 ferramentas do usuário (o "toolchain"):** **KCM** (este — o gerador), **ASU** (Atualizador Automático de Scripts — ferramenta Python que aplica patches YAML cirúrgicos com schema+diff+backup+rollback; v0.6.0, tem GUI PySide6) e **FlatDrop** (achata repos para upload no Projeto, gera `_MANIFEST.md`). Os três se coordenam por contratos (ver "HUB" abaixo e i-N27 no IDEAS).
 
 O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega — e a v1.34.0 foi além: **o próprio Claude Code aplicou um spec do chat** (rename CLAUDE→CEREBRO) com 17/17 + 32/32, provando o protocolo de raias (ver "Desenvolvimento").
 
@@ -37,7 +37,7 @@ O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega —
 
 - **Bibliotecas externas (CDN):** JSZip (botão "baixar pacote ZIP"). Resto é vanilla.
 - **Persistência no browser:** `localStorage` para presets do custom, estado (STATE) e o HUB. Proibido em *artifacts* do claude.ai, mas funciona aqui porque roda no Pages do usuário (site real). **localStorage é por origem:** presets do site publicado NÃO aparecem no arquivo local (`file://`) e vice-versa (já confundiu — não é bug).
-- **i18n (futuro, destravado pelo modular):** trocar UI e dados de template de idioma, de forma auditável, inclusive **idioma misto** (artefatos/código/meta em inglês; UI e conversa em pt-BR). Plano em IDEIAS i-N13 (expandido) + i-N26. O refator que isso exigia **já foi feito** (modular); falta a camada de idioma. Sem código até o "vai" explícito.
+- **i18n (futuro, destravado pelo modular):** trocar UI e dados de template de idioma, de forma auditável, inclusive **idioma misto** (artefatos/código/meta em inglês; UI e conversa em pt-BR). Plano em IDEAS i-N13 (expandido) + i-N26. O refator que isso exigia **já foi feito** (modular); falta a camada de idioma. Sem código até o "vai" explícito.
 
 ### Mapa do JS (do topo do `<script>` para baixo — vale para o `index.html` montado; a origem está em `src/`)
 1. **Constantes de fundação:** `LANGS` (idiomas: "pt"/"en"/"es"/"other"); `BEHAVIORS_BASE` (**13** princípios universais — §4); `FILE_PHILOSOPHY`; `UNIVERSAL_IDEAS_TPL` (template IDEAS injetado via `normNiche` em todo nicho sem o seu — tem «Feedback para o Kit» e, abaixo, «Feedback para o ASU», v1.34.0); `HYGIENE_RULES`; `TRIGGERS_BASE`; `UPDATE_PROTOCOL` (commit, canal de atualização, privacidade, handoff — §6); `AFFIX`; `OSENV`/`OS_LABELS`/`OS_CMDNOTE` (seletor de SO). **Nota:** `UNIVERSAL_HUB_TPL` existiu (v1.30.0) mas o HUB hoje é gerado pela página 06 via `buildHub()` (`effectiveFiles` NÃO injeta mais HUB.md no download por-nicho — D-025).
@@ -85,8 +85,8 @@ Cada nicho tem 12 prompt cards: 6 universais (A-F, da fundação) + 6 específic
 
 ### Desenvolvimento — Claude Code + protocolo de raias (v1.34.0)
 O desenvolvimento migrou para o **Claude Code** (desktop até segunda; CLI no trabalho). **Divisão de raias:**
-- **Chat (este, planejamento):** arquitetura, análise, pesquisa, curadoria que **reescreve** — entrega **arquivos INTEIROS** (CONTEXT/CHANGELOG/IDEIAS/ROADMAP/CEREBRO) + **o commit junto**. Nunca mais "bloco de colar".
-- **Code (execução):** implementar, corrigir, testar, `build`, `git`, e **append** em STATUS/DECISOES/logs. Specs curtas em `meta/specs/`; prompt de 1 linha "leia `meta/specs/<arq>.md` e execute". Ao fim, escreve uma linha "arquivos tocados nesta sessão" no STATUS.
+- **Chat (este, planejamento):** arquitetura, análise, pesquisa, curadoria que **reescreve** — entrega **arquivos INTEIROS** (CONTEXT/CHANGELOG/IDEAS/ROADMAP/CEREBRO) + **o commit junto**. Nunca mais "bloco de colar".
+- **Code (execução):** implementar, corrigir, testar, `build`, `git`, e **append** em STATUS/DECISIONS/logs. Specs curtas em `meta/specs/`; prompt de 1 linha "leia `meta/specs/<arq>.md` e execute". Ao fim, escreve uma linha "arquivos tocados nesta sessão" no STATUS.
 - **Regra "dois cérebros":** **append não conflita; reescrita conflita.** O repo é a única fonte de verdade; o chat sempre lê a última versão que o usuário sobe (P11). O chat entrega **todo** o meta decidido **antes** de liberar pro Code (evita desencontro).
 - **Modelo/esforço:** padrão **Sonnet 4.6 esforço baixo**; o chat **avisa** quando um spec precisa de **alto** (linha "⚠️ suba o esforço" no topo do spec) — o Code NÃO troca o próprio modelo/esforço sozinho; quem muda é o usuário (UI / `/model` / `settings.json`).
 - **Windows/macetes:** abrir o `claude` pelo **PowerShell**; **sem `ANTHROPIC_API_KEY`** (senão cobra API à parte); abrir na **pasta do repo** (não a mãe). O `.claude/settings.json` (allowlist de permissões) pula os prompts de permissão (vale desktop e CLI).
@@ -126,7 +126,7 @@ Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `op
 - Filosofia central: **separação contexto vs histórico** (o princípio mais sólido). Contexto = leve, recarregado sempre. Histórico = no Git, lido sob demanda.
 - Inspiração distante: GitHub spec-kit ("composição assistida > fusão automática"; "doctor/lint" para conflitos).
 - **Enquadramento profissional** (Anthropic "Effective context engineering" + literatura 2025/26): janela = recurso finito; "context rot"; offload/retrieve/isolate/compress; Git para estado entre sessões.
-- **Expansões / em avaliação** (IDEIAS/ROADMAP): **i18n com idioma misto** (i-N13/i-N26 — o refator modular que destravava já saiu); **função "modo Code"** (switch que gera o kit de arranque do Claude Code: `CLAUDE.md` raiz starter + `.claude/settings.json` + comandos + protocolo de raias + macetes Windows, desktop e CLI — i-N29, spec a escrever); **HUB enxuto** (o aparato pesado é over-engineered para toolchain solo; manter só o registro de contratos / Cânone, com dono + versão derivada — i-N27, a validar/testar); **ciclo de vida do feedback** nas seções «Feedback para o Kit/ASU» (status + rotação para `logs/`, sem arquivo novo — i-N28). "Kit desenvolve" a estender a HQ/RPG/animação/música quando os pilotos pedirem (i-N25 música). O **ASU** e o **FlatDrop** seguem como ferramentas vivas do toolchain (não mudar fluxo deles).
+- **Expansões / em avaliação** (IDEAS/ROADMAP): **i18n com idioma misto** (i-N13/i-N26 — o refator modular que destravava já saiu); **função "modo Code"** (switch que gera o kit de arranque do Claude Code: `CLAUDE.md` raiz starter + `.claude/settings.json` + comandos + protocolo de raias + macetes Windows, desktop e CLI — i-N29, spec a escrever); **HUB enxuto** (o aparato pesado é over-engineered para toolchain solo; manter só o registro de contratos / Cânone, com dono + versão derivada — i-N27, a validar/testar); **ciclo de vida do feedback** nas seções «Feedback para o Kit/ASU» (status + rotação para `logs/`, sem arquivo novo — i-N28). "Kit desenvolve" a estender a HQ/RPG/animação/música quando os pilotos pedirem (i-N25 música). O **ASU** e o **FlatDrop** seguem como ferramentas vivas do toolchain (não mudar fluxo deles).
 
 ## 9. Localização dos arquivos (ambiente de trabalho do Claude)
 - **Deliverables:** `/mnt/user-data/outputs/`. O usuário coloca: `index.html` na raiz (ou o Code gera via build), os meta em `meta/`, specs em `meta/specs/`, `settings.json` em `.claude/`.
@@ -135,7 +135,7 @@ Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `op
 - **Transcrições de sessões antigas:** `/mnt/transcripts/` (com `journal.txt` de catálogo).
 
 ## 10. Idioma e convenções
-- **pt-BR em tudo**, inclusive comentários de código e nomes de template (profissionais: STATUS.md, DECISOES.md). (Idioma misto no futuro — i-N26.)
+- **pt-BR em tudo**, inclusive comentários de código e nomes de template (profissionais: STATUS.md, DECISIONS.md). (Idioma misto no futuro — i-N26.)
 - Entrega via `present_files`; **arquivos COMPLETOS** para baixar/substituir, **nunca blocos soltos** (o chat erra se empurrar "colar no fim" — usar arquivo inteiro ou deixar o Code fazer o append).
 - Commit ao final no formato do SO (Windows: uma linha, `-m` repetido, SEM acentos), pronto para colar.
 - **Handoff ao final:** dizer, arquivo por arquivo, onde colocar cada um na próxima conversa.

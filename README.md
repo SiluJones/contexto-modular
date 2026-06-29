@@ -85,7 +85,7 @@ Como saber em que modo está: a tela do Projeto mostra o rótulo **"Modo de pesq
 
 **Onde colocar cada arquivo:**
 
-- **Leves e de referência** (CONTEXT, STATUS, DECISÕES, IDEIAS, scripts pequenos) → **sobem no Projeto**. Persistem em todas as conversas. Prefira **upload direto**: a sincronização do GitHub é manual (`Sync now`) e às vezes desatualiza ou falha.
+- **Leves e de referência** (CONTEXT, STATUS, DECISÕES, IDEAS, scripts pequenos) → **sobem no Projeto**. Persistem em todas as conversas. Prefira **upload direto**: a sincronização do GitHub é manual (`Sync now`) e às vezes desatualiza ou falha.
 - **Arquivos grandes, ou os que serão editados na sessão** e precisam de fidelidade exata → **anexe na conversa** (pelo clipe). O anexo vale só naquela conversa, custa contexto a cada turno, e basta anexar uma vez (reanexe só se mudar por fora). Em conversa nova, reanexe.
 - **Híbrido é o ideal:** o pesado da vez vai anexado; o resto fica no Projeto.
 

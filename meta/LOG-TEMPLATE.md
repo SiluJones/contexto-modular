@@ -6,7 +6,7 @@
 [O que eu vinha pensar/avançar nesta sessão.]
 
 ## Avançou
-- [Ideias capturadas → adicionadas em IDEIAS.md com IDs.]
+- [Ideias capturadas → adicionadas em IDEAS.md com IDs.]
 - [Clusters refinados → atualizados em MAPA.md.]
 - [Decisões tomadas.]
 - [Mudanças no código do `index.html`.]

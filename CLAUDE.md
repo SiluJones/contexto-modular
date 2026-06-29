@@ -14,7 +14,7 @@ O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html`
 - `src/niches/<id>.js` — os 17 módulos de nicho (os dados)
 - `build.js` + `build-manifest.json` — remontam o `index.html` na raiz
 - `validate.js` — harness (17 nichos + checagens transversais)
-- `meta/` — docs: `CEREBRO.md` (cérebro), `STATUS`, `DECISOES`, `CHANGELOG`, `ROADMAP`, `IDEIAS`, `CONTEXT`…
+- `meta/` — docs: `CEREBRO.md` (cérebro), `STATUS`, `DECISIONS`, `CHANGELOG`, `ROADMAP`, `IDEAS`, `CONTEXT`…
 
 ## Comandos
 - **Montar:** `node build.js`  → gera o `index.html` na raiz
@@ -30,11 +30,11 @@ O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html`
 
 ## Fluxo com o chat (planejamento)
 O chat (Claude web) cuida de design/curadoria e entrega os `meta/` **inteiros**; o Code
-implementa e **só acrescenta** em `STATUS`/`DECISOES`/`logs/`/`ROADMAP` (append-only, não
+implementa e **só acrescenta** em `STATUS`/`DECISIONS`/`logs/`/`ROADMAP` (append-only, não
 reescreve). Protocolo completo em `meta/CEREBRO.md` › «🤝 Fluxo Chat ↔ Claude Code».
 
 ## Não faça sem pedir
 - Não editar o `index.html` à mão (é gerado por `build.js`).
-- Não **reescrever** os docs de curadoria (`CONTEXT`/`IDEIAS`/`GLOSSARIO`) — isso é raia do chat;
-  aqui só **append** em `STATUS`/`DECISOES`/`logs`.
+- Não **reescrever** os docs de curadoria (`CONTEXT`/`IDEAS`/`GLOSSARY`) — isso é raia do chat;
+  aqui só **append** em `STATUS`/`DECISIONS`/`logs`.
 - Não adicionar dependências ao produto.

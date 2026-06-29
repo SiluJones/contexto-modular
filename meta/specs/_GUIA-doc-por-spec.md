@@ -1,7 +1,7 @@
 # Guia — Atualização de doc por spec para o Claude Code (D-030)
 
 > **Referência** (não é uma tarefa datada). Como o **chat** (planejamento) e o **Claude Code** (execução)
-> dividem a atualização dos `meta/`. Decisão registrada em `DECISOES.md` (D-030); regra resumida no
+> dividem a atualização dos `meta/`. Decisão registrada em `DECISIONS.md` (D-030); regra resumida no
 > `CEREBRO.md` §«🤝 Fluxo Chat ↔ Claude Code». Este guia é o **passo a passo completo** — e a **semente**
 > do que o switch «Modo Code» vai gerar para outros projetos.
 

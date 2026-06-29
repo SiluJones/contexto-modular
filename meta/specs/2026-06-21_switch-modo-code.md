@@ -53,7 +53,7 @@ com `…não duplique.");` seguida de `  }`, perto da 2199) e **ANTES** do rodap
     L.push("Este projeto é desenvolvido com o **Claude Code** (CLI/desktop), além do chat de planejamento. Há duas raias:");
     L.push("");
     L.push("- **Chat (planejamento):** cura e ENTREGA arquivos de doc. Para reescrita de fundo/voz ou arquivo **novo/pequeno**, entrega o **arquivo inteiro**. Para um **delta estruturado** num doc **grande** (marcar fase, abrir fase, inserir nota, acrescentar item), entrega uma **spec curta** em `meta/specs/` com o **texto exato** e **âncora semântica** (seção/título, nunca nº de linha) — e o Code posiciona.");
-    L.push("- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISOES, marcar estado de fase). Aplica as specs de doc. Roda build/validação. Commita.");
+    L.push("- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISIONS, marcar estado de fase). Aplica as specs de doc. Roda build/validação. Commita.");
     L.push("");
     L.push("**Método \"doc por spec\":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Specs **só de doc não tocam o produto** → não precisam de build; a rede é o `git diff`.");
     L.push("");
@@ -103,7 +103,7 @@ Leia `meta/CEREBRO.md` → `meta/CONTEXT.md` → `meta/STATUS.md` antes de agir.
 
 ## Convenções
 - Mensagens de commit **sem acento**.
-- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISOES); curadoria que reescreve vem do chat (arquivo inteiro OU spec).
+- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU spec).
 - Ao aplicar uma spec de `meta/specs/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.
 ```
 
@@ -131,7 +131,7 @@ Spec: $ARGUMENTS
 
 ### `.claude/commands/wrap.md`
 ```markdown
-Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISOES.md` se houve decisão/bug,
+Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,
 e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).
 ```
 ```
@@ -144,7 +144,7 @@ e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem 
 3. **Teste manual:** abra o `index.html`, selecione um nicho, **ligue "Desenvolver no Claude Code?"** e confira no preview do **CEREBRO.md** a seção «Desenvolvimento no Claude Code» (e, se fez a Tarefa B, o apêndice). Desligue → as seções somem.
 
 ## Ao terminar (raia do Code — append-only)
-- **`meta/DECISOES.md`** — acrescente **D-031** (confirme que é o próximo número livre):
+- **`meta/DECISIONS.md`** — acrescente **D-031** (confirme que é o próximo número livre):
 ```
 ## D-031 — Switch «Modo Code»: o kit gera o arranque do Claude Code
 
@@ -168,7 +168,7 @@ e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem 
 
 ## Commit (Code roda; Git Bash aceita `/`; mensagem **sem acento**)
 ```
-git add index_template.html index.html meta/DECISOES.md meta/CHANGELOG.md meta/STATUS.md
+git add index_template.html index.html meta/DECISIONS.md meta/CHANGELOG.md meta/STATUS.md
 git commit -m "feat: switch Modo Code (kit gera arranque do Claude Code) + doc-por-spec embutido no CEREBRO gerado" -m "Toggle codeMode injeta raias chat-Code e metodo doc-por-spec no CEREBRO.md gerado; Tarefa B apendice com starter .claude; D-031; v1.35.0"
 git push
 ```

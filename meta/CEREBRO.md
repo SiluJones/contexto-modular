@@ -20,7 +20,7 @@ O **Kit de Contexto Universal** é um único `index.html` autossuficiente (vanil
 
 O projeto está em **refinamento área por área** após o MVP: a fundação (regras universais) e os nichos vão sendo aprofundados um a um, cada um com pesquisa do domínio + feedback de uso real.
 
-Detalhes completos: `README.md`, `PLANNING.md`, `meta/STATUS.md`, `meta/CHANGELOG.md`, `meta/DECISOES.md`.
+Detalhes completos: `README.md`, `PLANNING.md`, `meta/STATUS.md`, `meta/CHANGELOG.md`, `meta/DECISIONS.md`.
 
 ---
 
@@ -29,7 +29,7 @@ Detalhes completos: `README.md`, `PLANNING.md`, `meta/STATUS.md`, `meta/CHANGELO
 1. Lê **este CEREBRO.md** — confirma como trabalhar.
 2. Lê **`meta/STATUS.md`** — descobre a fase atual e o próximo passo.
 3. Lê a última entrada de **`meta/CHANGELOG.md`** — vê o que mudou na sessão anterior.
-4. Consulta sob demanda (não por padrão): `meta/DECISOES.md` (por que as coisas são como são), `meta/IDEIAS.md`, `PLANNING.md`, e o `index.html` em si.
+4. Consulta sob demanda (não por padrão): `meta/DECISIONS.md` (por que as coisas são como são), `meta/IDEAS.md`, `PLANNING.md`, e o `index.html` em si.
 5. **Se a tarefa for mexer no `index.html`:** confirme que tem o mount dos arquivos do Projeto (`ls /mnt/project/` lista o `index.html`) — com a ferramenta de código ligada eu o leio inteiro de lá, mesmo em RAG. Se NÃO tiver o mount (ferramenta desligada) e o index não estiver anexado, NÃO edite de fragmentos — peça para ligar a ferramenta de código ou anexar o index. (Ver «Transferência e fidelidade» abaixo.)
 6. Antes de executar, confirma em uma frase o que entendeu da tarefa.
 
@@ -47,11 +47,11 @@ Estes são exatamente os princípios que o kit prega — e que praticamos aqui (
 6. **Instruções sempre cuidadosas.** Qualquer guia/passo a passo ao usuário é completo e detalhado; deixa claro o que é decisão dele vs. passo necessário.
 7. **Estuda o domínio antes de estruturar.** Ao aprofundar um nicho, pesquisa práticas/convenções/armadilhas da área antes de montar a estrutura — não inventa do zero.
 8. **Verifica antes de pedir arquivo; não inventa o que falta.** Quando o usuário diz «já subi X», a primeira ação é procurar X (mount do Projeto, uploads, conversa) — não perguntar de novo. Se não tiver o arquivo completo, faz a parte que dá e **pede** o resto — nunca inventa silenciosamente um arquivo que deveria ter. **Exceção:** se o usuário pedir explicitamente para inferir/extrapolar/completar, faz (transparente, como inferência). A regra é contra fingir ter o que não tem, não contra a inferência pedida. **E STATUS é pista, não fato** (refino v1.28.0, i-N19/D-022): antes de repetir uma pendência registrada, confere o estado real; se já foi resolvida, diz e atualiza o STATUS em vez de ecoar o registro velho.
-9. **Captura ideias.** Registra no IDEIAS tudo que o usuário mencionar, mesmo solto.
-10. **Cadência — trabalho em fases, sem fragmentar o trivial.** Trabalho grande pode ir em fases auditáveis (o plano vive em ROADMAP/IDEIAS/STATUS); cada incremento sai completo e validado. Isso não afrouxa a regra de doc/arquivo completo — o que se faz em fases é o trabalho, nunca um arquivo pela metade. E não fragmenta tarefa pequena nem enche de perguntas (proporcional ao tamanho).
+9. **Captura ideias.** Registra no IDEAS tudo que o usuário mencionar, mesmo solto.
+10. **Cadência — trabalho em fases, sem fragmentar o trivial.** Trabalho grande pode ir em fases auditáveis (o plano vive em ROADMAP/IDEAS/STATUS); cada incremento sai completo e validado. Isso não afrouxa a regra de doc/arquivo completo — o que se faz em fases é o trabalho, nunca um arquivo pela metade. E não fragmenta tarefa pequena nem enche de perguntas (proporcional ao tamanho).
 11. **Usa a versão mais recente; não mistura nem regride.** Quando há mais de uma versão, usa a mais nova que tem à vista; se a que gerou/recebeu nesta conversa for mais nova que a do Projeto/mount, usa a sua e avisa em uma linha — **sem parar para pedir**, porque já a tem. Só pára e pede quando **não tem** a versão atualizada que a tarefa exige; nunca interrompe trabalho no meio por algo que já possui. Nunca costura pedaço novo em arquivo velho.
 
-12. **Higiene ao encolher arquivos-chave (P12).** Ao reescrever/encolher CONTEXT, STATUS, DECISOES, CHANGELOG, IDEIAS ou ROADMAP, informa explicitamente o que saiu e para onde foi (ou que é redundante/obsoleto); nunca encolhe sem justificar item a item; e confere que nada único se perdeu do conjunto. (Ativo para nós — cada doc reescrito abre com a nota «Mudanças nesta revisão» — **e propagado para a ferramenta na v1.27.0**: é o 12º item de `BEHAVIORS_BASE` (id `shrink_hygiene`), no CEREBRO.md gerado de todos os nichos. Ver DEC D-020.)
+12. **Higiene ao encolher arquivos-chave (P12).** Ao reescrever/encolher CONTEXT, STATUS, DECISIONS, CHANGELOG, IDEAS ou ROADMAP, informa explicitamente o que saiu e para onde foi (ou que é redundante/obsoleto); nunca encolhe sem justificar item a item; e confere que nada único se perdeu do conjunto. (Ativo para nós — cada doc reescrito abre com a nota «Mudanças nesta revisão» — **e propagado para a ferramenta na v1.27.0**: é o 12º item de `BEHAVIORS_BASE` (id `shrink_hygiene`), no CEREBRO.md gerado de todos os nichos. Ver DEC D-020.)
 
 13. **Pesquisa para refinar E para refutar (P13).** Pesquisa a experiência de outros (casos reais, post-mortems, críticas, convenções) não só para refinar a proposta, mas para REFUTÁ-LA quando a evidência aponta contra; procura ativamente onde a ideia já falhou para os outros — não só o que a apoia — e traz o contraponto com lastro na prática alheia, não apenas na própria análise; não conclui "parece bom" sem antes confrontar com o que o mundo já tentou. (Decide a i-N17; complementa P1 "analisa antes de aceitar" e P5 "explica trade-offs" — aqui o contra-argumento vem de fora, não só do raciocínio interno. Propagado à ferramenta na v1.27.0: 13º item de `BEHAVIORS_BASE`, id `research_refute`. Por que princípio próprio e não reforço de P1/P7: ver DEC D-021.)
 
@@ -76,11 +76,11 @@ O que importa não é "está em RAG?", é **"tenho o arquivo COMPLETO por algum 
 
 Quando o desenvolvimento roda no **Claude Code** (terminal/desktop), o chat (esta frente de planejamento) e o Code editam os mesmos `meta/`. A regra que evita o conflito de "dois cérebros": **append-only não conflita; reescrita conflita.**
 
-- **O repositório é a única fonte de verdade.** O chat **para de manter cópias paralelas** dos meta-docs — minhas versões antigas de DECISOES/STATUS/ROADMAP/CHANGELOG/CONTEXT/IDEIAS ficam obsoletas assim que o repo avança. Daqui pra frente trabalho **sempre sobre a versão do repo** (que o usuário sobe).
-- **Raia do Code (edita no repo, ao fim da tarefa):** STATUS, `logs/`, **acrescenta** `DEC-`/`FIX-` em DECISOES, e marca **estado de fase** no ROADMAP. Tudo operacional/append-only → seguro.
-- **Minha raia (entrego o arquivo INTEIRO, o usuário commita):** os docs de curadoria — CONTEXT, IDEIAS, GLOSSARIO, a prosa/replanejamento do ROADMAP, a curadoria do CHANGELOG — partindo sempre da versão do repo. É a regra dura de «Como ENTREGAR as atualizações» aplicada ao fluxo do Code: **quando um `meta/` muda, gero o arquivo completo já atualizado a partir da versão atual do usuário e entrego pronto** (ele baixa e coloca na pasta; o Code lê quando precisar). **Nunca passo edição para ele aplicar à mão.**
+- **O repositório é a única fonte de verdade.** O chat **para de manter cópias paralelas** dos meta-docs — minhas versões antigas de DECISIONS/STATUS/ROADMAP/CHANGELOG/CONTEXT/IDEAS ficam obsoletas assim que o repo avança. Daqui pra frente trabalho **sempre sobre a versão do repo** (que o usuário sobe).
+- **Raia do Code (edita no repo, ao fim da tarefa):** STATUS, `logs/`, **acrescenta** `DEC-`/`FIX-` em DECISIONS, e marca **estado de fase** no ROADMAP. Tudo operacional/append-only → seguro.
+- **Minha raia (entrego o arquivo INTEIRO, o usuário commita):** os docs de curadoria — CONTEXT, IDEAS, GLOSSARY, a prosa/replanejamento do ROADMAP, a curadoria do CHANGELOG — partindo sempre da versão do repo. É a regra dura de «Como ENTREGAR as atualizações» aplicada ao fluxo do Code: **quando um `meta/` muda, gero o arquivo completo já atualizado a partir da versão atual do usuário e entrego pronto** (ele baixa e coloca na pasta; o Code lê quando precisar). **Nunca passo edição para ele aplicar à mão.**
 - **Specs (sem prompt gigante):** colar instrução enorme no Code **não funciona**. Cada tarefa de código vira uma **spec curta em `meta/specs/<arquivo>.md`** (eu escrevo), e no Code o prompt é de **uma linha** — «leia `meta/specs/<arquivo>.md` e execute» (ou «…e implemente a parte X»). **Entrego a spec e a linha exata juntas** — não deixo o prompt do CLI faltando.
-- **Curadoria-delta por spec (D-030):** quando a mudança num doc de curadoria (ROADMAP/CONTEXT/IDEIAS/CHANGELOG) for um **delta estruturado** (marcar fase, abrir fase, inserir nota de revisão, acrescentar item) — e **não** uma reescrita de fundo/voz — o chat pode entregar o **texto exato** numa spec de `meta/specs/`, com **âncora semântica** (seção/título, nunca número de linha), e o Code aplica no repo. O chat **autora a prosa**; o Code só **posiciona**. Continua valendo: reescrita de fundo vai como **arquivo inteiro** (regra dura «Como ENTREGAR as atualizações»), e **um canal por doc por ciclo** (se foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Por que não fere a regra "arquivo COMPLETO": aquela é anti-erro-**humano** (o usuário colando à mão); aqui quem aplica é um agente cuidadoso e o `git diff` é a rede.
+- **Curadoria-delta por spec (D-030):** quando a mudança num doc de curadoria (ROADMAP/CONTEXT/IDEAS/CHANGELOG) for um **delta estruturado** (marcar fase, abrir fase, inserir nota de revisão, acrescentar item) — e **não** uma reescrita de fundo/voz — o chat pode entregar o **texto exato** numa spec de `meta/specs/`, com **âncora semântica** (seção/título, nunca número de linha), e o Code aplica no repo. O chat **autora a prosa**; o Code só **posiciona**. Continua valendo: reescrita de fundo vai como **arquivo inteiro** (regra dura «Como ENTREGAR as atualizações»), e **um canal por doc por ciclo** (se foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Por que não fere a regra "arquivo COMPLETO": aquela é anti-erro-**humano** (o usuário colando à mão); aqui quem aplica é um agente cuidadoso e o `git diff` é a rede.
 - **Handoff:** depois de cada sessão do Code, o usuário **sobe o repo atualizado** (ou cola os docs mudados) para eu voltar a ficar sobre a verdade.
 
 **Ambiente (Windows):** o Code roda nativo; abrir pelo **PowerShell** (não CMD, não Git Bash — o Git Bash quebra a UI interativa do CLI). Por dentro, a execução de comandos do Code usa **Git Bash**, então caminhos com `/` funcionam para ele. Mensagens de commit seguem **sem acento** (igual à seção de commit).
@@ -112,8 +112,8 @@ Os arquivos do projeto vivem em `meta/` (mais `README.md`, `PLANNING.md`, `DEPLO
 | `PLANNING.md` | Estável | Arquitetura e racional consolidado. |
 | `meta/STATUS.md` | Rolante | Fase atual, próximos passos. O resolvido sai. |
 | `meta/CHANGELOG.md` | Cresce (topo) | Uma entrada por versão (vX.Y.Z). |
-| `meta/DECISOES.md` | Cresce devagar | Decisões D-NNN com racional. |
-| `meta/IDEIAS.md` | Segundo cérebro | Ideias capturadas; nunca perde. |
+| `meta/DECISIONS.md` | Cresce devagar | Decisões D-NNN com racional. |
+| `meta/IDEAS.md` | Segundo cérebro | Ideias capturadas; nunca perde. |
 | `meta/TEMA/MAPA/FILTROS.md` | Estável | Brainstorm de origem (o kit é nicho Brainstorm). |
 | `meta/LOG-TEMPLATE.md` | Referência | Molde de log; nunca substituído. |
 | `meta/NICHOS-CANDIDATOS.md` | Referência | Mapa dos nichos que entraram/ficaram de fora. |
@@ -122,7 +122,7 @@ Os arquivos do projeto vivem em `meta/` (mais `README.md`, `PLANNING.md`, `DEPLO
 - **Referência cruzada, não duplicação**: um dado tem uma fonte de verdade.
 - **Encolher com justificativa (P12)**: ao reescrever um arquivo-chave, abre com uma nota «Mudanças nesta revisão» (o que mudou/saiu/por quê, e para onde foi); nunca encolhe sem justificar item a item; confere que nada único se perdeu.
 - **STATUS é só o agora**: versão concluída sai do STATUS e vira entrada no CHANGELOG.
-- **DECISOES cresce devagar**: cada decisão grande vira D-NNN; não reescrever as antigas.
+- **DECISIONS cresce devagar**: cada decisão grande vira D-NNN; não reescrever as antigas.
 - **CHANGELOG por versão**: cada sessão que entrega algo ganha um vX.Y.Z no topo.
 
 ### Como ENTREGAR as atualizações (regra dura)
@@ -174,7 +174,7 @@ Nunca publicar sem o harness passar em **17/17 nichos + todas as checagens, 0 er
 - Não reescrever os prompts universais A-F (são a "gramática" comum do kit).
 - Não introduzir dependências, build, ou framework.
 - Não refazer vários nichos de uma vez — é uma área por etapa.
-- Não apagar conteúdo dos meta-docs; CHANGELOG/DECISOES/IDEIAS só crescem.
+- Não apagar conteúdo dos meta-docs; CHANGELOG/DECISIONS/IDEAS só crescem.
 - Não editar o `index.html` a partir de fragmentos (RAG). Sem o arquivo inteiro anexado, peça o anexo.
 - Não tratar feedback de outras conversas (GameDataHub etc.) como verdade absoluta: são referência, o assistente avalia e adapta.
 

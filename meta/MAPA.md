@@ -6,7 +6,7 @@
 
 ---
 
-## Clusters de ideias (do IDEIAS.md)
+## Clusters de ideias (do IDEAS.md)
 
 ### Cluster A — Pilares arquiteturais
 **Ideias:** i1, i2, i3, i7, i8

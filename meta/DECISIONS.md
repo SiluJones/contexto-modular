@@ -1,4 +1,4 @@
-# DECISÕES — Kit de Contexto Universal
+# Decisions — Kit de Contexto Universal
 
 > Decisões formais com racional. Não apague — marque como superada se mudar.
 
@@ -100,7 +100,7 @@
 
 **Decisão:** C.
 
-**Racional:** auto-referência. O kit aplicado a si mesmo. Funciona como prova de fogo do nicho Brainstorm e como demonstração de uso real. Os arquivos `TEMA.md`, `IDEIAS.md`, `MAPA.md`, `FILTROS.md`, `STATUS.md`, `CHANGELOG.md`, `LOG-TEMPLATE.md` são exatamente os que o nicho Brainstorm gera.
+**Racional:** auto-referência. O kit aplicado a si mesmo. Funciona como prova de fogo do nicho Brainstorm e como demonstração de uso real. Os arquivos `TEMA.md`, `IDEAS.md`, `MAPA.md`, `FILTROS.md`, `STATUS.md`, `CHANGELOG.md`, `LOG-TEMPLATE.md` são exatamente os que o nicho Brainstorm gera.
 
 **Status:** ativa.
 
@@ -418,7 +418,7 @@ A D-014 definiu 2 cards de construção: `custom` (Blank) e `customSmart` (Intel
 **Data:** 2026-06-07 · **Status:** aceita; **ativa para o nosso projeto**; **propagada para a ferramenta (v1.27.0)** — é o 12º item de `BEHAVIORS_BASE`
 
 ### Contexto
-Ao longo do projeto, vários arquivos-chave são reescritos/encolhidos entre sessões (CONTEXT, STATUS, DECISOES, CHANGELOG, IDEIAS, ROADMAP). O risco real: uma reescrita "enxugar" e **perder conteúdo único** sem ninguém perceber. O usuário pediu uma diretriz explícita contra isso — **tanto para o nosso projeto quanto para a ferramenta** (o kit, que gera os docs de outros projetos).
+Ao longo do projeto, vários arquivos-chave são reescritos/encolhidos entre sessões (CONTEXT, STATUS, DECISIONS, CHANGELOG, IDEAS, ROADMAP). O risco real: uma reescrita "enxugar" e **perder conteúdo único** sem ninguém perceber. O usuário pediu uma diretriz explícita contra isso — **tanto para o nosso projeto quanto para a ferramenta** (o kit, que gera os docs de outros projetos).
 
 ### A decisão (o princípio)
 > **Ao reescrever/encolher qualquer arquivo-chave (CONTEXT, STATUS, DECISIONS, CHANGELOG, IDEAS, ROADMAP), informar explicitamente o que saiu e para onde foi (ou que é redundante/obsoleto); nunca encolher sem justificar item a item, e conferir que nada único se perdeu do conjunto.**
@@ -430,7 +430,7 @@ Na prática: cada reescrita abre com uma nota "Mudanças nesta revisão" listand
 - **A ferramenta (feito, v1.27.0):** virou o **12º item de `BEHAVIORS_BASE`** (id `shrink_hygiene`) no `index.html`, aparecendo no CLAUDE.md gerado de TODOS os nichos (e como bullet curto nas Instruções, via `shortDef`). Re-validado 17/17, 0 erros. Ver CHANGELOG v1.27.0.
 
 ### Relação com diretrizes existentes
-Complementa P8 ("não inventa o que falta") e as regras de higiene ("DECISOES/CHANGELOG/IDEIAS só crescem"; "STATUS é só o agora"). P8 protege contra **inventar**; P12 protege contra **perder** ao encolher.
+Complementa P8 ("não inventa o que falta") e as regras de higiene ("DECISIONS/CHANGELOG/IDEAS só crescem"; "STATUS é só o agora"). P8 protege contra **inventar**; P12 protege contra **perder** ao encolher.
 
 ### Nota relacionada — rigor em pesquisa + refutação → **resolvida em D-021**
 O usuário perguntou se já há diretriz para o Claude **pesquisar/aprender sobre a ideia ou solicitação** não só para refinar de forma profissional, mas também para **refutar e criticar** com base no sentido e na experiência de outros. Era a i-N17. **Decidida na v1.27.0 (ver D-021):** virou um princípio próprio (P13, `research_refute`), em vez de só reforçar P1/P7.
@@ -459,7 +459,7 @@ Optou-se pela **(b) — princípio próprio, P13** (`research_refute`):
 ### Escopo / estado
 - **A ferramenta (feito, v1.27.0):** 13º item de `BEHAVIORS_BASE` (id `research_refute`), renderizado em `buildInstr` (curto) e `buildClaudeMd` (`### N.` + def longa). Re-validado 17/17, 0 erros.
 - **Nosso projeto (governança):** vale por tabela — adotamos os princípios universais do kit; registrado no CLAUDE.md/CONTEXT como P13.
-- **i-N17:** marcada **concluída** em IDEIAS (status muda, não apaga).
+- **i-N17:** marcada **concluída** em IDEAS (status muda, não apaga).
 
 ---
 
@@ -490,7 +490,7 @@ Pilotos são a **fase de validação**; rigidez agora gera resistência e perda 
 **Data:** 2026-06-12 · **Status:** aceita; **embutida (v1.29.0)** · Origem: ideia-260612 + guia do escritor + pesquisa P13
 
 ### Contexto
-Pilotos mostraram dois problemas: (a) nichos de produção tratados como "suporte" — o usuário quer que, como no dev, o kit **crie** (escreva capítulos, construa o jogo); (b) inconsistência: todos os nichos referenciam IDEAS (gatilhos/P9/higiene) mas só 2 tinham o template — assistentes reportavam "faltou o IDEIAS.md".
+Pilotos mostraram dois problemas: (a) nichos de produção tratados como "suporte" — o usuário quer que, como no dev, o kit **crie** (escreva capítulos, construa o jogo); (b) inconsistência: todos os nichos referenciam IDEAS (gatilhos/P9/higiene) mas só 2 tinham o template — assistentes reportavam "faltou o IDEAS.md".
 
 ### Decisões
 1. **IDEAS universal por injeção** (`UNIVERSAL_IDEAS_TPL` via `normNiche`, sem duplicar dev/brainstorm) + regra no CLAUDE.md gerado: arquivo referenciado inexistente → **criar na primeira necessidade** (não é erro). O template já nasce com a seção «Feedback para o Kit» (fecha o ciclo da i-N21).
@@ -563,7 +563,7 @@ O piloto em grupo, usando o HUB, evoluiu por conta própria um `CANON.md` mais m
 O código de cada frente no HUB passou a ter um **default curado por nicho** (`NICHE_CODE`: DEV, GAME, PIXEL, NARR, SOM, HQ…) em vez de derivar das 4 primeiras letras (que dava "DESE" para Desenvolvedor). Quando o mesmo código-base repete, ganha **variador numérico** (DEV0, DEV1, DEV2); código único fica sem sufixo. O campo "código" por linha continua sobrescrevendo. Implementação: `baseCode(f)` (code explícito → mapa do nicho → derivado do nome) + `computeCodes(frentes)` (aplica o sufixo só em duplicatas); `buildHub` calcula os códigos uma vez e usa por índice.
 
 ### Nota estratégica (do mesmo arquivo de respostas — NÃO é decisão ainda, é direção)
-O usuário sinalizou que o **refator modular (i-N13)** lhe parece boa ideia, com a ressalva da preocupação de quebrar a ferramenta no processo. Motivação nova e forte: o refator abre **i18n** — trocar UI e dados de template para outros idiomas de forma prática e auditável — incluindo a possibilidade de **idioma misto** (ex.: templates/metas/código/comentários em inglês profissional, enquanto a UI do kit e a conversa do Claude no projeto seguem no idioma do usuário). Atrativo para uso por terceiros / portfólio. Capturado em IDEIAS (i-N13 expandido + i-N26). Sem código até decisão explícita.
+O usuário sinalizou que o **refator modular (i-N13)** lhe parece boa ideia, com a ressalva da preocupação de quebrar a ferramenta no processo. Motivação nova e forte: o refator abre **i18n** — trocar UI e dados de template para outros idiomas de forma prática e auditável — incluindo a possibilidade de **idioma misto** (ex.: templates/metas/código/comentários em inglês profissional, enquanto a UI do kit e a conversa do Claude no projeto seguem no idioma do usuário). Atrativo para uso por terceiros / portfólio. Capturado em IDEAS (i-N13 expandido + i-N26). Sem código até decisão explícita.
 
 ---
 
@@ -599,7 +599,7 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 
 ## D-030 — Atualização de doc por spec para o Claude Code (curadoria-delta)
 
-**Decisão.** Além do fluxo "o chat entrega o arquivo INTEIRO" (que **continua valendo** para reescritas de fundo/voz/reestruturação), o chat pode entregar uma **spec curta** em `meta/specs/` que descreve uma **edição cirúrgica** de um doc de curadoria (ROADMAP/CONTEXT/IDEIAS/CHANGELOG): com o **texto exato a inserir/alterar** e **âncoras semânticas** (seção/título, nunca número de linha). O Code aplica no repo.
+**Decisão.** Além do fluxo "o chat entrega o arquivo INTEIRO" (que **continua valendo** para reescritas de fundo/voz/reestruturação), o chat pode entregar uma **spec curta** em `meta/specs/` que descreve uma **edição cirúrgica** de um doc de curadoria (ROADMAP/CONTEXT/IDEAS/CHANGELOG): com o **texto exato a inserir/alterar** e **âncoras semânticas** (seção/título, nunca número de linha). O Code aplica no repo.
 
 **Por quê.** (1) **Token/truncamento:** uma spec é muito menor que regerar um arquivo grande, e elimina o risco de a regeneração truncar no meio — risco real (em jun/26 surgiram duas cópias paralelas do CONTEXT por causa disso). (2) **Auditável:** o `git diff` mostra exatamente o que mudou — mais seguro para a higiene P12 do que confiar que uma regeneração completa não deixou cair nada. (3) **Diferença do ASU:** o ASU aplica patch YAML **mecânico**; o Claude Code **entende o sistema** e localiza a âncora por **significado**, com mais cuidado e validando.
 
@@ -660,7 +660,7 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 - **Sintoma:** após o push, o workflow "pages build and deployment" falhava (runs #32/#33); o site em `silujones.github.io/kit-contexto` não atualizava. Log: `github-pages 232 | Error: The source text contains invalid characters for the used encoding UTF-8`, ao renderizar `meta/STATUS.md`.
 - **Causa raiz:** o GitHub Pages roda **Jekyll** por padrão e tenta renderizar TODO `.md` do repo (kramdown/commonmark). Algo na renderização do STATUS.md o fez abortar com erro de encoding. Os `.md` gerados pelo kit estão em **UTF-8 válido** (verificado: sem byte inválido, sem caractere de controle, sem BOM) — então não é arquivo malformado; é o Jekyll tropeçando (provável caractere válido que o parser rejeita, ou re-codificação no caminho até o repo). E, no fundo: **este repo não precisa de Jekyll** — o site é um único `index.html` (app de página única); os `.md` são documentos de projeto, não páginas web.
 - **Solução:** criar um arquivo vazio **`.nojekyll`** na RAIZ do repo. O GitHub Pages pula o build do Jekyll e serve os arquivos estáticos — `index.html` funciona, os `.md` ficam só armazenados, e o erro (e os avisos de Node 20 deprecado) somem.
-- **Lição:** **site de página única no GitHub Pages → `.nojekyll` desde o início.** Deixar o Jekyll processar docs de projeto não traz ganho e adiciona um modo de falha (encoding, front-matter, caracteres). Candidato a virar dica do kit no handoff de projetos que publicam no Pages (anotar em IDEIAS se reincidir).
+- **Lição:** **site de página única no GitHub Pages → `.nojekyll` desde o início.** Deixar o Jekyll processar docs de projeto não traz ganho e adiciona um modo de falha (encoding, front-matter, caracteres). Candidato a virar dica do kit no handoff de projetos que publicam no Pages (anotar em IDEAS se reincidir).
 
 ## D-032 — Diretriz do ASU ancorada no `format_version` do guia (não em literal)
 
@@ -675,3 +675,11 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 ## D-034 — Recomendação de configuração ao fim da sessão
 **Decisão.** Gatilho universal: ao fim, recomendar config da proxima etapa (modelo / esforco / pensamento) de forma explicita, sem afirmar saber a config atual; parar e pedir aumento se a proxima for pesada e a config fraca; sinalizar que pode baixar se sobrou. Home no CEREBRO + linha-gatilho na instrucao curta.
 **Por que.** O modelo nao le de forma confiavel o proprio esforco/pensamento — recomendar pela tarefa e honesto (P8) e util; e diretriz so pega quando esta na instrucao curta (lida em todo turno), nao so no CEREBRO.
+
+## D-035 — Nomes de gestao padronizados em ingles (universal por nicho)
+
+**Decisao.** Os arquivos de **gestao/infra** passam a ter nome canonico em **ingles** em todo o ecossistema: `CONTEXT`, `STATUS`, `DECISIONS`, `IDEAS`, `CHANGELOG`, `ROADMAP`, `GLOSSARY`, `HISTORY`, `LOG-TEMPLATE`. Camada universal por nicho: **`STATUS`+`IDEAS`+`DECISIONS`**. Conteudo de nicho (`MECANICAS`, `BIBLIA`…) **permanece em PT**.
+
+**Por que.** Convencao de TI do mundo real (nomes de infra em ingles) e — decisivo — evitar **colisao** quando um nicho faz custom com dev (nao gerar `IDEAS` e `IDEIAS` para a mesma coisa). Conteudo de nicho fica na lingua do criador porque nao colide e nao e infra.
+
+**Migracao em fases:** Fase 0 = repo KCM (este commit). Fases 1-3 = template (renomear nichos; camada universal; CEREBRO por nicho + `FIX-` + commit-na-instrucao-curta).

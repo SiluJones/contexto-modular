@@ -1,11 +1,14 @@
 # STATUS — Kit de Contexto Universal — 2026-06-21
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.37.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.37.1**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
 
-> **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEIAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEIAS. (Histórico completo de versões no CHANGELOG.)
+> **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-06-29 — v1.37.0)
+## 💬 Última sessão (2026-06-29 — v1.37.1)
+- **Nomes de gestao em ingles (D-035, Fase 0):** `git mv` de DECISOES→DECISIONS, IDEIAS→IDEAS, GLOSSARIO→GLOSSARY, HISTORICO→HISTORY + todas as referencias nos `.md` do repo. Template (nichos, Fases 1-3) pendente.
+
+## 💬 Sessão anterior (2026-06-29 — v1.37.0)
 - **Diretriz ASU reescrita (D-033):** editar→ASU (`AAAA-MM-DD-asuNNNN.yaml`); arquivo novo→baixar; lembrete UI e instrução curta citam ASU + `PROMPT_IA.md`.
 - **Recomendação de config (D-034):** home nomeada no CEREBRO + gatilho na instrução curta. Nome de log reforçado na instrução curta.
 - Harness: **17/17, 0 erros, 32 checagens**.
@@ -13,10 +16,10 @@
 ## 💬 Sessão anterior (2026-06-21 — v1.36.0)
 - **Refator modular (D-028) embutido:** `index.html` agora é gerado de `src/index.template.html` + 17 módulos `src/niches/*.js` via `build.js`. Produto continua 1 arquivo único, sem build no lado do usuário (preserva D-001).
 - **Cérebro renomeado (D-029):** arquivo gerado do cérebro mudou de `CLAUDE.md` → `CEREBRO.md` em todos os projetos gerados (sempre, não condicional). Libera o nome `CLAUDE.md` para o arquivo-raiz do Claude Code. Todas as referências no template, triggers, behaviors e harness atualizadas.
-- **"Feedback para o ASU" no IDEIAS gerado:** nova seção logo abaixo de "Feedback para o Kit" no template universal `UNIVERSAL_IDEAS_TPL`.
+- **"Feedback para o ASU" no IDEAS gerado:** nova seção logo abaixo de "Feedback para o Kit" no template universal `UNIVERSAL_IDEAS_TPL`.
 - Harness: **17/17, 0 erros, 32 checagens**.
 - **ROADMAP atualizado para v1.34.0** (modular concluído, i18n em avaliação, fase «Modo Code» aberta) — primeira atualização feita pelo método "doc por spec" (D-030).
-- Arquivos tocados nesta sessão (Code): meta/ROADMAP.md, meta/DECISOES.md, meta/STATUS.md, meta/CEREBRO.md.
+- Arquivos tocados nesta sessão (Code): meta/ROADMAP.md, meta/DECISIONS.md, meta/STATUS.md, meta/CEREBRO.md.
 - **v1.35.0 — switch «Modo Code» implementado** (D-031): toggle `codeMode` injeta no CEREBRO.md gerado as raias chat↔Code + o método doc-por-spec; (Tarefa B) apêndice com starter `.claude/`. Projetos gerados herdam a capacidade de trabalhar no Claude Code.
 - **v1.36.0 — ASU quick wins** (D-032): lembrete na UI ao ligar o ASU + diretriz ancorada no `format_version` do guia. (Parte "HUB" do item c: sem referência de versão no HUB hoje — nada a fazer.)
 
@@ -38,15 +41,15 @@
 ✅ **Concluído nesta sessão (v1.33.0):** códigos de área curados + variador (D-027); rótulo de grupo. Direção i18n/modular capturada. Handoff completo gerado.
 ✅ **Concluído antes:** HUB inspirado no CANON.md (v1.32.0, D-026); página construtora do HUB (v1.31.0, D-025); switch + Instruções enxutas −27% (v1.30.x, D-024); FIX-005 Pages (.nojekyll); "kit desenvolve" fase 1 (v1.29.0, D-023); lote D-022 + D-018 (v1.28.0); FIX-004 chips (v1.27.1); P12/P13 (v1.27.0, D-020/D-021).
 
-## 🧭 Decisões maiores em avaliação (ver ROADMAP / IDEIAS)
+## 🧭 Decisões maiores em avaliação (ver ROADMAP / IDEAS)
 - **Refator modular + i18n (i-N13 expandido + i-N26):** migrar dados de nicho para JSON + núcleo central; abre troca de idioma da UI e dos templates de forma auditável, inclusive **idioma misto** (artefatos/código/meta em inglês; UI e conversa em pt-BR). **Direção aceita; sem código até decisão.** Risco: a migração quebrar a geração → mitigação: harness 17/17, migrar nicho a nicho validando a cada passo. (Era a Fase 4 "em avaliação"; agora com motivação forte.)
 - **Nicho/ferramenta de guias/tutoriais/wikis (i-N14):** aprender ferramentas (Aseprite/Unity/Godot/Unreal/Excel/linguagens), platinar jogos. Pode ser nicho OU ferramenta separada. Conecta a "Educação" (NICHOS-CANDIDATOS nº1).
 - **Auto-aplicação de patches (i-N15) + entrega por diff (i-N16):** a IA gera "arquivos de atualização" estruturados (estilo apply_patch) e uma ferramenta local aplica — menos trabalho manual e, com diffs em vez de arquivos inteiros, menos output tokens. Avaliar viabilidade/segurança.
 
-## 🎯 Outras pendências (sem urgência — detalhe no ROADMAP/IDEIAS)
+## 🎯 Outras pendências (sem urgência — detalhe no ROADMAP/IDEAS)
 - **README/PLANNING** desatualizados (pitch pós "kit desenvolve" + HUB) — reescrever quando der (também item 3 acima).
 - **Revisar polimento/qualidade das Instruções geradas** — em parte resolvido pela compressão (−27%) + teto de 6500; confirmar em uso real.
-- **Nichos novos (FUTURO, adiados de propósito):** ver `NICHOS-CANDIDATOS.md` — Educação & Cursos (nº1), depois Desenvolvimento Pessoal/Journaling (sensível), Jurídico/Podcast/Tradução. (i15 / i-N14 em IDEIAS.)
+- **Nichos novos (FUTURO, adiados de propósito):** ver `NICHOS-CANDIDATOS.md` — Educação & Cursos (nº1), depois Desenvolvimento Pessoal/Journaling (sensível), Jurídico/Podcast/Tradução. (i15 / i-N14 em IDEAS.)
 - **spec-kit para dev/game (i-N7, FUTURO):** análise do Spec-Driven Development quando houver mais feedback de uso.
 - **Evoluções de polish** (do CHANGELOG "possíveis v1.1/v1.2"): export/import de preset JSON (i11), tema claro (i9), tradução EN (i10 → agora dentro de i-N26/i18n), PDF dos templates (i13), drag-and-drop no Custom (i20), carimbo de versão nos downloads (i-N10). Nada prometido.
 - ✅ **Resolvidos:** MAPA.md "17 prontos" → 16+1 (v1.29.0); reagrupar/renomear narrative (rótulo do grupo, v1.33.0).
@@ -78,5 +81,5 @@ Hoje o harness está **consolidado em `/home/claude/kit/validate.js`** (boot lim
 Fechamento da conversa p14–p18 (v1.27.1 → v1.33.0). Nesta virada:
 - **Códigos de área do HUB** (D-027): defaults curados por nicho (mapa `NICHE_CODE`: DEV, GAME, PIXEL, NARR, SOM, HQ, COZ, RPG, ANIM, BRAIN/IDEIA…) e **variador** de duplicata (`computeCodes`: DEV0/DEV1/DEV2; único fica sem sufixo). Rótulo de grupo: "Histórias, Jogos & Mídia — mundos, arte e som".
 - **Direção estratégica capturada** (sem código): refator modular (i-N13) + **i18n com idioma misto** (i-N26) — UI/conversa no idioma do usuário, artefatos/código/meta em inglês. O usuário aprova a direção; preocupação = não quebrar a ferramenta (harness 17/17 é a rede).
-- **Handoff gerado** com máximo detalhe: CONTEXT (reescrito), STATUS, DECISOES, CHANGELOG, IDEIAS, ROADMAP, GLOSSARIO, LOG-TEMPLATE + HISTORICO.md + logs/2026-06-14.md.
+- **Handoff gerado** com máximo detalhe: CONTEXT (reescrito), STATUS, DECISIONS, CHANGELOG, IDEAS, ROADMAP, GLOSSARY, LOG-TEMPLATE + HISTORY.md + logs/2026-06-14.md.
 **Próximo de fato:** decidir o refator modular + i18n (item 2); o CINZEIRO no HUB segue com o usuário.

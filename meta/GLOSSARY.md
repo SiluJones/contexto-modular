@@ -1,6 +1,6 @@
-# GLOSSÁRIO — Kit de Contexto Universal
+# Glossary — Kit de Contexto Universal
 
-> Termos próprios do projeto que se repetem entre sessões. Consulte quando um nome não for óbvio. Detalhe técnico no CONTEXT; decisões no DECISOES; histórico no CHANGELOG/HISTORICO.
+> Termos próprios do projeto que se repetem entre sessões. Consulte quando um nome não for óbvio. Detalhe técnico no CONTEXT; decisões no DECISIONS; histórico no CHANGELOG/HISTORY.
 
 ## Conceitos do produto
 
@@ -10,7 +10,7 @@
 - **Instruções do Projeto:** o artefato CURTO, colado em *Projeto → Instruções*, **lido em toda mensagem**. Por isso é enxuto (os 13 princípios universais viram uma linha de nomes; só os behaviors do nicho ficam em bullets). Gerado por `buildInstr`.
 - **CLAUDE.md:** o artefato COMPLETO, subido como arquivo no Projeto. Traz comportamento detalhado, regras de higiene, tabela de gatilhos, protocolo de atualização. Gerado por `buildClaudeMd`. É a versão longa; as Instruções são o resumo.
 - **Dois artefatos:** o par Instruções (curto, toda mensagem) + CLAUDE.md (completo, sob demanda). Princípio central do design: não repetir um no outro.
-- **Dogfooding:** o kit é mantido usando o próprio kit — estes arquivos (CONTEXT, STATUS, DECISOES, CHANGELOG, IDEIAS, ROADMAP, GLOSSARIO, HISTORICO, logs) são os do próprio projeto.
+- **Dogfooding:** o kit é mantido usando o próprio kit — estes arquivos (CONTEXT, STATUS, DECISIONS, CHANGELOG, IDEAS, ROADMAP, GLOSSARY, HISTORY, logs) são os do próprio projeto.
 
 ## HUB e grupo de projetos
 
@@ -49,8 +49,8 @@
 
 ## Sistemas de identificadores (nos docs do projeto)
 
-- **DEC-NNN / D-0NN:** uma decisão de arquitetura registrada em DECISOES.md (cresce devagar; não se reescreve, supersede).
-- **FIX-NNN:** um bug grave resolvido, em DECISOES.md (formato sintoma/causa/solução/lição).
-- **i-Nxx:** uma ideia em IDEIAS.md. Ideia muda de status (Ativa → Em avaliação → Concluída → Descartada), **nunca some**.
+- **DEC-NNN / D-0NN:** uma decisão de arquitetura registrada em DECISIONS.md (cresce devagar; não se reescreve, supersede).
+- **FIX-NNN:** um bug grave resolvido, em DECISIONS.md (formato sintoma/causa/solução/lição).
+- **i-Nxx:** uma ideia em IDEAS.md. Ideia muda de status (Ativa → Em avaliação → Concluída → Descartada), **nunca some**.
 - **P1–P13:** os 13 princípios universais (ver BEHAVIORS_BASE).
 - **SemVer (vX.Y.Z):** versão da ferramenta no CHANGELOG (Keep a Changelog; cresce no topo).

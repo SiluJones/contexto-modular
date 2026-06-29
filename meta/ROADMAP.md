@@ -1,10 +1,10 @@
 # ROADMAP — Kit de Contexto Universal
 
-> Plano deliberado de evolução, em fases. Opcional por natureza (nem todo projeto tem direção de médio prazo) — aqui vale porque há decisões grandes em aberto. O QUE já saiu vive no CHANGELOG; o AGORA no STATUS; o PORQUÊ no DECISOES; as IDEIAS no IDEIAS. Este arquivo conecta tudo numa direção.
+> Plano deliberado de evolução, em fases. Opcional por natureza (nem todo projeto tem direção de médio prazo) — aqui vale porque há decisões grandes em aberto. O QUE já saiu vive no CHANGELOG; o AGORA no STATUS; o PORQUÊ no DECISIONS; as IDEAS no IDEAS. Este arquivo conecta tudo numa direção.
 
 > **Criado em 2026-06-07.** Primeira versão. Consolida o que já foi feito (Fases 0–2) e organiza o que está por decidir/fazer (Fases 3–5 + Futuro), a partir das discussões desta sessão.
 
-> **Mudanças nesta revisão (v1.34.0):** refator **modular concluído** (D-028) — o `index.html` passou a ser gerado de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js`; produto segue **1 arquivo único** (D-001 preservado). Cérebro renomeado `CLAUDE.md`→`CEREBRO.md` (D-029), liberando `CLAUDE.md` para o arquivo-raiz do Claude Code; seção «Feedback para o ASU» no IDEIAS gerado. **Fase 4 reescrita:** a pergunta "modular vs. arquivo único" está **resolvida** (modular venceu); o que segue em avaliação é só o **i18n / idioma misto** (i-N26). A menção a "Fase 6 (i18n)" da v1.33.0 fica **consolidada na Fase 4** — nunca chegou a virar bloco próprio (P12: nada perdido, só realocado). **Nova entrega aberta:** «Modo Code». **Método novo:** atualização de doc por **spec para o Claude Code** (D-030) — ver `CEREBRO.md` §«🤝 Fluxo Chat ↔ Claude Code».
+> **Mudanças nesta revisão (v1.34.0):** refator **modular concluído** (D-028) — o `index.html` passou a ser gerado de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js`; produto segue **1 arquivo único** (D-001 preservado). Cérebro renomeado `CLAUDE.md`→`CEREBRO.md` (D-029), liberando `CLAUDE.md` para o arquivo-raiz do Claude Code; seção «Feedback para o ASU» no IDEAS gerado. **Fase 4 reescrita:** a pergunta "modular vs. arquivo único" está **resolvida** (modular venceu); o que segue em avaliação é só o **i18n / idioma misto** (i-N26). A menção a "Fase 6 (i18n)" da v1.33.0 fica **consolidada na Fase 4** — nunca chegou a virar bloco próprio (P12: nada perdido, só realocado). **Nova entrega aberta:** «Modo Code». **Método novo:** atualização de doc por **spec para o Claude Code** (D-030) — ver `CEREBRO.md` §«🤝 Fluxo Chat ↔ Claude Code».
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB curados + variador (D-027); rótulo de grupo reescrito. **Direção estratégica aceita:** refator modular (i-N13) + i18n com idioma misto (i-N26) — sem código até decisão. Fase 6 (i18n) acrescentada ao horizonte.
 
@@ -64,7 +64,7 @@ Itens de código pequenos e de doc, sem arquitetura nova.
 - ✅ **D-018 — orientação mount/RAG corrigida** no CLAUDE.md gerado (3 itens do `handoffComo`) e na tela "Tokens & Fluxos" (2 callouts): só upload direto popula o mount (achatado); conector do GitHub = só busca.
 
 **✅ Concluído (v1.27.1):**
-- ✅ **FIX-004** — chips de Cliente/Narrativa não selecionáveis (conversor tratava par como string). Conserto de 1 linha + teste de regressão de chips no harness. (Ver CHANGELOG/DECISOES.)
+- ✅ **FIX-004** — chips de Cliente/Narrativa não selecionáveis (conversor tratava par como string). Conserto de 1 linha + teste de regressão de chips no harness. (Ver CHANGELOG/DECISIONS.)
 
 **✅ Concluído (v1.27.0):**
 - ✅ **P12 (higiene ao encolher) propagado à ferramenta** — 12º item de `BEHAVIORS_BASE` (`shrink_hygiene`), aparece no CLAUDE.md gerado de todos os nichos. Re-validado 17/17. (DEC D-020.)
@@ -85,7 +85,7 @@ Switch no kit que gera o **kit de arranque** para desenvolver um projeto **no Cl
 - **Decisões de arranque já tomadas** (handoff 2026-06-21): `.claude/commands/` no v1 = **sim**; build no `CLAUDE.md` raiz = **placeholder** (mais simples por ora); interação com os outros switches (HUB/grupo, ASU) = **independente por ora** (não são exclusivos; um talvez não precise do outro — refinar depois).
 - **Backlog imediato:** (1) **spec do Modo Code** com as escolhas acima (o chat escreve); (2) **ASU quick wins** b/c — lembrete na UI quando o switch ASU é ligado (subir o `INSTRUCTION_GUIDE.md`); ancorar a diretriz e o HUB no `format_version` em vez da versão da ferramenta.
 
-## 🌱 Fase 5 — Novas capacidades (IDEIAS a maturar)
+## 🌱 Fase 5 — Novas capacidades (IDEAS a maturar)
 - **Guias/tutoriais/wikis** (i-N14): nicho "Aprendizado/Guia" (trilhas, fontes/cursos verificados, progresso, glossário) — começar como nicho dentro do kit; virar ferramenta dedicada só se o fluxo pedir. Conecta a "Educação" (NICHOS-CANDIDATOS, nº1). Exige rigor de fonte (casa com i-N17).
 - **Auto-aplicação de patches** (i-N15) + **entrega por diff** (i-N16): ferramenta externa (projeto do usuário) que aplica patches que o Claude gera; no kit, um modo "auto" que faz o Claude **entregar diffs** (em vez de arquivos inteiros) quando há a ferramenta que aplica — economiza output tokens. Avaliar formato (apply_patch vs unified diff) e segurança (âncoras/validação). Reconciliar com a regra "arquivo inteiro" (só vale diff quando algo aplica automaticamente, não o usuário colando à mão).
 - **Comando/template de feedback** (i-N21 — **✅ fechada, D-022**): no piloto, gatilho leve grava em «Feedback para o Kit» (no IDEAS do piloto), **incluindo desvios estruturais** (diretriz nova no CLAUDE do piloto, `.md` novo, template alterado/dispensado); o usuário transporta a seção; o kit **triagem em 3 destinos** (absorver no template base / módulo opcional do grupo / específico do projeto). **Sem pré-aprovação** do kit para o piloto criar `.md`. Vira diretriz do item 1 da Fase 3.

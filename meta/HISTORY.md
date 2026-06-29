@@ -1,4 +1,4 @@
-# HISTÓRICO — Kit de Contexto Universal
+# History — Kit de Contexto Universal
 
 > Conhecimento consolidado das fases do projeto, lido **sob demanda**. Para o dia a dia bastam CONTEXT (o que é) + STATUS (o agora) + CHANGELOG (versões). Este arquivo guarda o ARCO — como o projeto chegou aqui — e lições grandes que não cabem no CONTEXT enxuto.
 
@@ -19,14 +19,14 @@
 **7. O HUB de grupo, em três passos (v1.30–v1.33, D-024 a D-027).** Switch "Projeto em grupo?" + Instruções enxutas (−27%) → página construtora 06 → **absorção do CANON.md** que o próprio piloto montou (Cânone Central, identificadores de área, precedência, tarefas com origem) → códigos de área curados + variador. É o caso-modelo do loop «Feedback para o Kit»: um piloto evoluiu a estrutura e ela voltou para todos. Pelo caminho, FIX-005 (Pages só publica com `.nojekyll`) e a diretriz de personalização das Instruções.
 
 ## Lições grandes (transversais, valem para o futuro)
-- **Evoluir puxado pelo uso, não pela especulação.** As melhores adições (válvula, ROTEIRO, Cânone Central) vieram de dor real de piloto. Ideias sem lastro de uso ficam represadas em IDEIAS até o sinal.
+- **Evoluir puxado pelo uso, não pela especulação.** As melhores adições (válvula, ROTEIRO, Cânone Central) vieram de dor real de piloto. Ideias sem lastro de uso ficam represadas em IDEAS até o sinal.
 - **O harness é o ativo que destrava mudanças ousadas.** 17/17 + anti-testes permitem refatorar com rede. É a mitigação central para o refator modular futuro (migrar nicho a nicho, validando).
 - **Fidelidade de arquivo é a regra mais cara de aprender.** Contexto vs. RAG vs. mount vs. anexo; só upload direto popula o mount; janela finita. Quando em dúvida, pedir o arquivo completo, nunca reconstruir.
 - **localStorage não guarda funções; CMD do Windows corrompe acentos; `${today()}` mata o boot.** Três armadilhas que voltam se esquecidas.
 
-## Ideias maiores ainda abertas (detalhe em IDEIAS)
+## Ideias maiores ainda abertas (detalhe em IDEAS)
 - **Refator modular + i18n com idioma misto (i-N13 expandido / i-N26)** — direção aceita; abre tradução auditável da UI e dos templates, e modo misto (artefatos em inglês, conversa em pt-BR). Sem código até decisão.
 - **Guias/tutoriais/wikis (i-N14)** e **auto-aplicação de patches + entrega por diff (i-N15/i-N16)**.
 - **Estender "o kit desenvolve" a HQ/RPG/animação/música** quando os pilotos pedirem.
 
-> Para o detalhe versão-a-versão, ver CHANGELOG. Para o "porquê" de cada escolha e os bugs, ver DECISOES (DEC/FIX). Para o estado atual, STATUS.
+> Para o detalhe versão-a-versão, ver CHANGELOG. Para o "porquê" de cada escolha e os bugs, ver DECISIONS (DEC/FIX). Para o estado atual, STATUS.

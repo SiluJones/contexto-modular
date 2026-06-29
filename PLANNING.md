@@ -148,7 +148,7 @@ Múltiplos presets convivem. Útil para quem trabalha em domínios não cobertos
 A pasta `meta/` é o próprio kit se documentando — usando a estrutura do nicho **Brainstorm**. É auto-referencial e serve de exemplo vivo do nicho.
 
 - `meta/TEMA.md` — o que o kit explora
-- `meta/IDEIAS.md` — banco de ideias capturadas
+- `meta/IDEAS.md` — banco de ideias capturadas
 - `meta/MAPA.md` — clusters
 - `meta/FILTROS.md` — critérios de corte
 - `meta/STATUS.md` — estado atual do projeto kit
@@ -186,7 +186,7 @@ Tudo isso poderia existir num produto maior. Este é deliberadamente um **kit-p�
 
 ## 9. Próximas evoluções possíveis (não compromissos)
 
-Em `meta/IDEIAS.md` ficam as ideias capturadas. Algumas em destaque:
+Em `meta/IDEAS.md` ficam as ideias capturadas. Algumas em destaque:
 
 - Exportar/importar presets Custom como `.json`
 - Modo "biblioteca" — galeria de presets compartilhados (precisaria de back-end)
