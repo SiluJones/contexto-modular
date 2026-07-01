@@ -2,8 +2,10 @@
 
 > O **passaporte** do projeto. Leia primeiro. Estável — muda pouco.
 > Meta deste arquivo: uma conversa NOVA entende o projeto inteiro e navega o código sem precisar de mais nada.
-> Versão de referência: **v1.34.0** · produto = um `index.html` (~581 KB) **gerado** de `src/` · **17/17 nichos, 0 erros** + **~32 checagens** no harness.
+> Versão de referência: **v1.42.0** · produto = um `index.html` (~589 KB) **gerado** de `src/` · **17/17 nichos, 0 erros** no harness.
 > (Histórico de versões fica no CHANGELOG; o "porquê" de cada escolha, no DECISIONS; o estado atual, no STATUS; ideias no IDEAS.)
+>
+> **Mudanças nesta revisão (v1.42.0):** migração de nomes de gestão para **inglês** concluída (Fases 0-3, D-035); **CEREBRO niche-aware** (D-036); **disciplina v2** completa — ASU por download + escopo código-vs-docs (D-037), config **mode-aware** (D-038), nome de spec no Modo Code (D-039), obediência feedback/nome-de-download (D-040), e **formato de nome `AAMMDD-…`** para spec/ASU (D-041). Nada de conteúdo removido.
 >
 > **Mudanças nesta revisão (v1.34.0):** o projeto deixou de ser um HTML único editado à mão e passou a ser **modular** — o `index.html` é **gerado** de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js` (D-028). O **cérebro gerado** foi renomeado de `CLAUDE.md` → `CEREBRO.md` (D-029). Entrou o switch **"Saída via ASU (patch)"** (asuMode) e o **build escreve na raiz**. O **desenvolvimento migrou para o Claude Code** (§ novo "Desenvolvimento"). Nada de conteúdo se perdeu desta regeneração.
 
@@ -33,7 +35,7 @@ O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega —
 - `build-manifest.json` — lista os módulos na ordem do build.
 - Saída byte-idêntica à v1.33.0 com tudo desligado — o produto continua 1 arquivo único.
 
-**Repo e estrutura:** diretório de trabalho `Contexto/contexto-modular/` (download do GitHub vira `contexto-modular-main`). Push para `origin/main`. Estrutura: `index.html` na raiz, `src/` (casco + módulos), `meta/` (os `.md` de contexto, incl. `meta/specs/`), `logs/`, `.claude/settings.json` (permissões do Claude Code), `CLAUDE.md` na raiz (arquivo-raiz do Code — ≠ do `CEREBRO.md`), `HUB.md` na raiz, `validate.js`, `build.js`, `build-manifest.json`, `package.json`. `.gitignore` ignora `rascunhos/ backups/ dist/ node_modules/` (e NÃO `instrucoes/`). **Hospedagem:** GitHub Pages servindo o `index.html` da raiz — **site de página única → precisa de `.nojekyll` na raiz** (sem ele o Jekyll quebra; FIX-005). (O histórico citava o repo `kit-contexto`; o diretório atual é `contexto-modular` — confirmar a URL/repo do Pages no GitHub.)
+**Repo e estrutura:** diretório de trabalho `Contexto/contexto-modular/` (download do GitHub vira `contexto-modular-main`). Push para `origin/main`. Estrutura: `index.html` na raiz, `src/` (casco + módulos), `meta/` (os `.md` de contexto, incl. `meta/specs/`), `logs/`, `.claude/settings.json` (permissões do Claude Code), `CLAUDE.md` na raiz (arquivo-raiz do Code — ≠ do `CEREBRO.md`), `HUB.md` na raiz, `validate.js`, `build.js`, `build-manifest.json`, `package.json`. `.gitignore` ignora `rascunhos/ backups/ dist/ node_modules/` (e NÃO `instrucoes/`). **Hospedagem:** GitHub Pages servindo o `index.html` da raiz — **site de página única → precisa de `.nojekyll` na raiz** (sem ele o Jekyll quebra; FIX-005). (Repo/diretório canônico: `contexto-modular` (`SiluJones/contexto-modular`); o nome antigo `kit-contexto` está aposentado.)
 
 - **Bibliotecas externas (CDN):** JSZip (botão "baixar pacote ZIP"). Resto é vanilla.
 - **Persistência no browser:** `localStorage` para presets do custom, estado (STATE) e o HUB. Proibido em *artifacts* do claude.ai, mas funciona aqui porque roda no Pages do usuário (site real). **localStorage é por origem:** presets do site publicado NÃO aparecem no arquivo local (`file://`) e vice-versa (já confundiu — não é bug).
@@ -135,6 +137,7 @@ Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `op
 - **Transcrições de sessões antigas:** `/mnt/transcripts/` (com `journal.txt` de catálogo).
 
 ## 10. Idioma e convenções
+- **Nome de spec/instrução (D-041):** formato **`AAMMDD-…`** (sem `-` na data, ano 2 díg.). Specs: `AAMMDD-specNNNN-desc.md` (ex.: `260701-spec0009-reconciliacao-meta.md`). Instruções ASU: `AAMMDD-asuNNNN.yaml`. Vale para os **novos**; não renomear os antigos do histórico.
 - **pt-BR em tudo**, inclusive comentários de código e nomes de template (profissionais: STATUS.md, DECISIONS.md). (Idioma misto no futuro — i-N26.)
 - Entrega via `present_files`; **arquivos COMPLETOS** para baixar/substituir, **nunca blocos soltos** (o chat erra se empurrar "colar no fim" — usar arquivo inteiro ou deixar o Code fazer o append).
 - Commit ao final no formato do SO (Windows: uma linha, `-m` repetido, SEM acentos), pronto para colar.

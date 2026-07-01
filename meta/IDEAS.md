@@ -423,3 +423,17 @@ Novo princípio pedido pelo usuário (ver DEC **D-020**): ao reescrever/encolher
 
 ## i-N32 — Fluxo de desenvolvimento atual (registro) — 💡 (2026-06-21)
 Desenvolvimento migrou pro **Claude Code** (desktop até segunda; CLI no trabalho). Conta do trabalho conta KCM; casa conta mother/alexk. Sem `ANTHROPIC_API_KEY` (senão cobra API). Abrir o repo (não a pasta-mãe). O rename CLAUDE→CEREBRO foi feito **pelo próprio Code rodando um spec do chat** (dogfooding: 17/17 + 32/32) — o protocolo de raias funciona.
+
+## 💡 Ativas — do usuário
+
+### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR
+A linha "Nome de download" (D-040) não coube no nicho game por ~28 chars; o Code cortou o parentético. Decidir: reescrever mais curto (preservando sentido) ou elevar o teto do harness. Nenhuma diretriz deve depender de um parentético para caber. (Nota do Code 07-01.)
+
+### 2026-06-24/28 — Termos e nomes de arquivo devem ser INVARIANTES ao idioma — A AUDITAR
+O usuário esclareceu (260624-ideias): i18n troca **UI e conteúdo-data**, mas **TERMOS e NOMES de arquivo** (CEREBRO, DECISIONS, IDEAS, o par DEC/FIX) permanecem os mesmos em qualquer idioma — é convenção de engenharia. Problema real observado em campo: projetos com `FIX` vs `BUG` divergentes, e `DEC` "não encontrado" onde o arquivo de decisões tem outro nome. Pedido: auditoria completa nos 17 nichos — listar (nicho × arquivo meta/ × termo) e padronizar junto. Também: CEREBRO/instrução de alguns nichos apontam para meta/ que o nicho não tem (D-036 mira isso; confirmar cobertura em campo, incl. `/wrap` apontando para DECISOES.md num game cujo DEC vive no MECANICAS).
+
+### 2026-06-28 — Verificação ativa de config (nível/esforço/pensamento) — REFORÇAR (liga D-034/D-038)
+O usuário quer que, ao fim de cada sessão, junto do resumo/dúvidas, o chat **verifique a config atual** e diga com clareza: se a próxima etapa precisa de mais (nomeando modelo + esforço exato — médio/alto/máximo — e pensamento), **pare e avise**; se está sobrando, **conclua a sessão** e sinalize que pode baixar (sem parar no meio de uma etapa boa). Reclamação-raiz: chats davam respostas vazias ou vagas ("aumente para o nível recomendado" sem dizer o esforço). Não deixar o sistema "duro"; é aviso honesto, não trava.
+
+### 2026-06-28 — Geração faltante em dev (gitignore/README/commit) — A PESQUISAR/REFINAR
+Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev); commit às vezes não sai e o `git commit` deve vir **separado** no copia-e-cola. O usuário aceita esperar (não quer o chat perguntando "quer que eu gere agora?"); quer **previsão e cuidado** na geração. Estender ao possível a outros nichos. (D-040 mira o commit; confirmar.)

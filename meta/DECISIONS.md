@@ -707,3 +707,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 ## D-040 — Obediencia: feedback-ASU e nome de download
 **Decisao.** Instrucao curta reforca: registrar «Feedback para o ASU» no IDEAS ao fim (quando houve feedback); arquivo para baixar usa nome simples (`IDEAS.md`), sem prefixo de pasta, salvo para desambiguar homonimos.
 **Por que.** Ambos desviaram em producao — feedback nao registrado, e `meta/IDEAS.md` baixando como `meta_IDEAS.md`. Diretriz so obedecida quando esta na instrucao curta (lida em todo turno).
+
+## D-041 — Estilo de nome de spec/ASU: AAMMDD (revisa D-039 no formato)
+
+**Decisão.** O formato do nome muda de `AAAA-MM-DD-…` para **`AAMMDD-…`** (sem `-` na data, ano 2 díg.). Specs: `AAMMDD-specNNNN-desc.md`; instruções ASU: `AAMMDD-asuNNNN.yaml`. Numeração `specNNNN`/`asuNNNN` e descrição livre mantidas; muda só o bloco de data. Vale para os novos; não renomear os antigos.
+
+**Por quê.** Preferência do usuário (estilo das próprias notas: 260701). Aplicar na geração: Modo Code (Tarefa C da spec0008 usou o formato antigo — corrigir) e a diretriz ASU (D-037 rodou com `AAAA-MM-DD-asuNNNN` — precisa follow-up).

@@ -7,6 +7,7 @@
 
 ## 💬 Última sessão (2026-07-01 — v1.42.0)
 - **Config mode-aware + nome de spec no Modo Code + obediencia (D-038/039/040, disciplina v2 Fases B-D):** diretriz de config distingue chat (modelo+esforco+pensamento) de Claude Code (modelo+`/effort`/`ultrathink`, sem toggle de pensamento); Modo Code passa a prescrever `AAAA-MM-DD-specNNNN.md`; instrucao curta reforca registro de Feedback ASU e nome simples no download. Harness 17/17. ✅ **Disciplina v2 (Fases A-D) CONCLUIDA.** Pendente: layout (spec de frontend a parte).
+- meta/ reconciliados ao estado real v1.42.0 (spec0009); mineração das notas para IDEAS; débito do teto-game e risco de nome-de-spec registrados.
 
 ## 💬 Sessão anterior (2026-06-30 — v1.41.0)
 - **ASU por download + escopo código-vs-docs (D-037, disciplina v2 Fase A):** instrução ASU passa a ser entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat; novo item de escopo código-vs-docs (código + docs de heading único como DECISIONS/CONTEXT via ASU; docs rolantes STATUS/CHANGELOG/IDEAS inteiros); dica de âncora não-ASCII. Harness 17/17.
@@ -44,6 +45,8 @@
 2. **"Modo Code":** switch que gera o kit de arranque — `CLAUDE.md` raiz starter, `.claude/settings.json` + comandos `/`, protocolo de raias, macetes Windows/PowerShell — funcionando em desktop e CLI.
 3. **Consolidar o CINZEIRO no HUB** — EM ANDAMENTO pelo usuário.
 4. **README/PLANNING:** reescrever quando der (pitch novo — "kit desenvolve" + HUB/Cânone).
+5. **Teto 6500 no nicho `game` (dívida da spec0008/D-040):** o texto exato da linha "Nome de download" estourou o teto por ~28 chars; o Code **removeu o parentético** para caber (regra preservada, justificativa retirada). Decidir no próximo ciclo se reescreve a linha mais curta ou eleva o teto. (Origem: nota do Code 07-01.)
+6. **Padronização de nome de spec não obedecida em campo:** ao atualizar o CEREBRO do ASU com o Modo Code, o projeto consumidor **não** corrigiu os nomes das specs para o padrão. Sinal de que D-039/D-041 precisam de reforço na camada lida-todo-turno (instrução curta), não só no CEREBRO. Conecta às frentes de auditoria/obediência.
 
 ## Fase atual
 🏁 **Maduro e em produção.** Publicado (`silujones.github.io/kit-contexto/`), dogfooded, com pilotos reais (jogo CINZEIRO/Fando em grupo). São **17 nichos** (16 de conteúdo + 1 construtor `custom`). Três capacidades no ar: manter contexto; o kit DESENVOLVE (narrative escreve, game cria); coordenar grupos (HUB com Cânone Central). O harness 17/17 + anti-testes é a rede de segurança a cada release.
