@@ -72,6 +72,17 @@ O que importa não é "está em RAG?", é **"tenho o arquivo COMPLETO por algum 
 
 ---
 
+## 🔁 Ciclo de verificação (spec → aplicação → conferência de volta)
+
+Toda mudança nos `meta/` (e no código) passa por um ciclo com **fecho de verificação** — não termina quando o Code/ASU diz "feito", termina quando o **chat confere o que voltou**. É o que evita perda silenciosa (o Code pode truncar/reescrever sem avisar; o ASU pode corromper âncora não-ASCII).
+
+1. **Chat autora a mudança** como spec-para-Code (`meta/specs/`) ou instrução-para-ASU (`.yaml`), **sempre sobre a versão VIVA do repo** (mount `/mnt/project`), e **declara a forma esperada do diff** (ex.: «+6 −2 linhas; nenhuma remoção fora do bloco X»). A forma esperada é o contrato da verificação.
+2. **Code/ASU aplica no PC do usuário** e roda `git diff` antes de commitar, conferindo que bate com a forma esperada (já é a raia do Code / a rede do ASU).
+3. **Usuário sobe o repo atualizado** ao Projeto (mount) na sessão seguinte.
+4. **Chat CONFERE de volta (obrigatório quando a sessão anterior aplicou specs/instruções):** para cada frente tocada, lê o arquivo que voltou e checa (a) o bloco previsto está presente e correto; (b) nada único fora do bloco sumiu (P12); (c) nomes/termos seguem o cânone. Se algo não bate, **reporta e corrige** — não segue como se tivesse dado certo. Se **nada** foi aplicado desde a última vez, pula este passo (proporcional, não cerimonial — P10).
+
+**Barato e ruidoso por design:** declarar a forma do diff transforma um bug silencioso (bytes sumindo no meio) num bug detectável (o diff não bate). É o P8 ("STATUS é pista, não fato") aplicado ao próprio handoff: o relato "deu certo" é pista; o arquivo vivo é o fato.
+
 ## 🤝 Fluxo Chat ↔ Claude Code (quando o dev usa o CLI/desktop)
 
 Quando o desenvolvimento roda no **Claude Code** (terminal/desktop), o chat (esta frente de planejamento) e o Code editam os mesmos `meta/`. A regra que evita o conflito de "dois cérebros": **append-only não conflita; reescrita conflita.**
@@ -127,10 +138,13 @@ Os arquivos do projeto vivem em `meta/` (mais `README.md`, `PLANNING.md`, `DEPLO
 
 ### Como ENTREGAR as atualizações (regra dura)
 - As mudanças que decorrem do trabalho do assistente são registradas pelo **próprio assistente** — mexeu em STATUS/CHANGELOG/etc., entrega esses arquivos atualizados sem esperar pedido.
-- **"Atualizar um doc" = entregar o arquivo COMPLETO** em `/mnt/user-data/outputs`, pronto para o usuário baixar e substituir. **Nunca** trechos para colar nem um arquivo de "instruções de atualização".
+- **"Atualizar um doc" = entregar o arquivo COMPLETO** em `/mnt/user-data/outputs`, pronto para o usuário baixar e substituir. **Nunca** trechos para colar nem um arquivo de "instruções de atualização" **para o usuário aplicar à mão**. Delta (bloco de acréscimo, edição cirúrgica) **só existe como spec-para-Code ou instrução-para-ASU** — destinatário é um agente + `git diff`, nunca o humano com copiar-e-colar. Se a entrega é para o usuário baixar, é o arquivo inteiro; sem exceção.
 - Entregar o **conjunto consistente** de uma vez. Estado meio-atualizado é pior que não mexer.
 - `/mnt/project` é somente-leitura (e pode estar vazio/atrasado): lê de lá quando houver, edita uma cópia, entrega o resultado completo pela pasta de saída.
 - **Fecha com o handoff:** onde colocar cada arquivo na próxima conversa + (quando útil) o prompt de início.
+
+### Nome de arquivo na entrega (regra dura)
+Todo arquivo entregue para baixar usa o **nome real do repo**, nunca o nome **achatado** do FlatDrop. `logs/2026-07-01.md` baixa como `2026-07-01.md` (sem `logs__`/`logs_`); `meta/IDEAS.md` baixa como `IDEAS.md` (sem `meta_`). O `_MANIFEST.md` dá o nome real — consultar antes de nomear. Prefixo de pasta **só** para desambiguar dois arquivos de mesmo nome real vindos de pastas diferentes na MESMA entrega; caso contrário, nunca.
 
 ### Verificar antes de pedir upload (regra dura)
 - Antes de pedir que o usuário suba/anexe um arquivo, verifica se ele já não está em `/mnt/project`, nos uploads, ou colado/anexado na conversa. Quando o usuário diz «já subi X», procura X primeiro.

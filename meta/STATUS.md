@@ -8,6 +8,7 @@
 ## 💬 Última sessão (2026-07-01 — v1.42.0)
 - **Config mode-aware + nome de spec no Modo Code + obediencia (D-038/039/040, disciplina v2 Fases B-D):** diretriz de config distingue chat (modelo+esforco+pensamento) de Claude Code (modelo+`/effort`/`ultrathink`, sem toggle de pensamento); Modo Code passa a prescrever `AAAA-MM-DD-specNNNN.md`; instrucao curta reforca registro de Feedback ASU e nome simples no download. Harness 17/17. ✅ **Disciplina v2 (Fases A-D) CONCLUIDA.** Pendente: layout (spec de frontend a parte).
 - meta/ reconciliados ao estado real v1.42.0 (spec0009); mineração das notas para IDEAS; débito do teto-game e risco de nome-de-spec registrados.
+- Ciclo de verificação (round-trip) gravado no CEREBRO + D-042; reforço de entrega-inteira e nome-real na entrega.
 
 ## 💬 Sessão anterior (2026-06-30 — v1.41.0)
 - **ASU por download + escopo código-vs-docs (D-037, disciplina v2 Fase A):** instrução ASU passa a ser entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat; novo item de escopo código-vs-docs (código + docs de heading único como DECISIONS/CONTEXT via ASU; docs rolantes STATUS/CHANGELOG/IDEAS inteiros); dica de âncora não-ASCII. Harness 17/17.

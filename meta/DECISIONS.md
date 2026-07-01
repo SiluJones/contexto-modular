@@ -713,3 +713,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** O formato do nome muda de `AAAA-MM-DD-…` para **`AAMMDD-…`** (sem `-` na data, ano 2 díg.). Specs: `AAMMDD-specNNNN-desc.md`; instruções ASU: `AAMMDD-asuNNNN.yaml`. Numeração `specNNNN`/`asuNNNN` e descrição livre mantidas; muda só o bloco de data. Vale para os novos; não renomear os antigos.
 
 **Por quê.** Preferência do usuário (estilo das próprias notas: 260701). Aplicar na geração: Modo Code (Tarefa C da spec0008 usou o formato antigo — corrigir) e a diretriz ASU (D-037 rodou com `AAAA-MM-DD-asuNNNN` — precisa follow-up).
+
+## D-042 — Ciclo de verificação com fecho de volta (round-trip)
+
+**Decisão.** Toda mudança nos meta/ (e código) segue um ciclo com fecho: chat autora a spec/instrução sobre a versão viva + declara a forma esperada do diff; Code/ASU aplica e confere `git diff`; usuário sobe o repo; **o chat confere de volta**, frente por frente, que o previsto foi aplicado e nada único se perdeu (P12). Obrigatório quando a sessão anterior aplicou specs/instruções; pulado quando nada mudou (proporcional, P10). Reforça, no CEREBRO: delta só para agente (Code/ASU) + `git diff`, nunca para o humano colar; nome de download é sempre o real (desachatado do FlatDrop).
+
+**Por quê.** O handoff de 07-01 entregou acréscimos para o usuário colar e um log com nome achatado — violando regras que só viviam no CEREBRO (lido 1×). Modos de falha reais do Code (truncamento por cap de buffer; regressão de reescrita-inteira; lost-in-the-middle) e do ASU (âncora não-ASCII) são silenciosos: reportam "feito". Declarar a forma do diff + conferir de volta torna o erro detectável. É o P8 aplicado ao handoff. Complementa D-030 (doc-por-spec) fechando o loop que faltava.
