@@ -1,6 +1,11 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.41.0**.
+> Histórico de versões. Versão atual: **v1.42.0**.
+
+## v1.42.0 — Config mode-aware + nome de spec no Modo Code + obediencia (disciplina v2, Fases B-D)
+- Config mode-aware (D-038): diretriz distingue chat (modelo + esforco + pensamento) de Claude Code (modelo + `/effort`/`ultrathink`/`ultracode`, sem toggle de pensamento); modelo recomendado por capacidade, nao por nome/versao.
+- Nome de spec padronizado no Modo Code (D-039): geracao do Modo Code passa a prescrever `AAAA-MM-DD-specNNNN.md` para specs (fecha Decisao 4).
+- Obediencia (D-040): instrucao curta reforca registro de «Feedback para o ASU» no IDEAS e uso de nome simples no download (sem prefixo de pasta).
 
 ## v1.41.0 — ASU por download + escopo codigo-vs-docs (disciplina v2, Fase A)
 - Instrução ASU passa a ser entregue como arquivo `.yaml` para baixar, não colada no chat (bytes UTF-8 exatos; evita corromper âncoras não-ASCII no copia-e-cola).

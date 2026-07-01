@@ -7359,7 +7359,9 @@ function buildInstr(niche){
   lines.push("Confirme em uma frase o que entendeu da tarefa antes de executar. Se houver ambiguidade real, pergunte antes.");
   if(groupModeOn()) lines.push("Projeto em grupo: existe um `HUB.md` compartilhado (gerado na página HUB do kit). Leia-o logo após o STATUS — sua caixa de entrada e o status das outras frentes. Nunca altere arquivos de outra frente; sugestões vão para a caixa dela.");
   if(asuModeOn()) lines.push("ASU: **editar** código/doc de heading único → instrução `yaml` **para baixar** (nome `AAAA-MM-DD-asuNNNN.yaml`, bytes exatos); **arquivo novo** e **docs rolantes** (STATUS/CHANGELOG/IDEAS) → arquivo inteiro para baixar. Detalhe no CEREBRO.");
-  lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir configuração diferente, recomende-a explícita (modelo / esforço Baixo→Máximo / pensamento lig-desl). Nunca afirme saber a config atual — recomende pela tarefa. Pesada com config fraca → peça aumento nomeando os níveis; folga → diga que pode baixar.");
+  if(asuModeOn()) lines.push("**Feedback ASU:** se gerou instrução ASU ou esbarrou numa limitação/pedido de melhoria da ferramenta nesta sessão, registre em «Feedback para o ASU» no IDEAS antes de fechar.");
+  lines.push("**Nome de download:** arquivo para baixar usa o nome SIMPLES (ex.: `IDEAS.md`), sem prefixo de pasta (não `meta_IDEAS.md`). Só prefixe para desambiguar dois arquivos de mesmo nome.");
+  lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir config diferente, recomende-a explícita — no chat: modelo + esforço (Baixo→Máximo) + pensamento (lig/desl); no Claude Code: modelo + `/effort` (ou `ultrathink`/`ultracode`), SEM toggle de pensamento. Nunca afirme saber a atual; recomende pela tarefa. Pesada com config fraca → peça aumento; folga → diga que pode baixar.");
   lines.push("**Log:** nomeie `logs/AAAA-MM-DD.md` (data ISO, sem a palavra \"log\" no nome).");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
     lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO para copiar isolado, mensagem sem acento. Não pule o commit.");
@@ -7641,7 +7643,9 @@ function buildClaudeMd(niche){
   L.push("");
   L.push("## Recomendação de configuração (fim de sessão)");
   L.push("");
-  L.push("No fim de cada sessão, junto do resumo e de qualquer dúvida, avalie o que a **próxima etapa** exige e recomende a configuração de forma **completa e explícita**: **modelo** (ex.: Opus vs Sonnet), **esforço** (Baixo/Médio/Alto/Extra/Máximo) e **pensamento** (ligado/desligado).");
+  L.push("No fim de cada sessão, junto do resumo e de qualquer dúvida, avalie o que a **próxima etapa** exige e recomende a configuração de forma **completa e explícita**. Os controles dependem de ONDE se trabalha:");
+  L.push("- **No chat (claude.ai):** **modelo** (recomende pela capacidade — o mais capaz vs. um mais leve —, não pelo nome/versão, que muda), **esforço** (Baixo→Máximo) e **pensamento** (ligado/desligado): três controles independentes.");
+  L.push("- **No Claude Code (CLI/desktop):** **modelo** + **nível de esforço** (`/effort` baixo→máximo, ou `xhigh`/`ultracode` onde houver). **Não há toggle de pensamento** no Code — ele é acoplado ao esforço; para um turno difícil pontual, use `ultrathink` no prompt. Nunca recomende \"ligar o pensamento\" no Code.");
   L.push("- **Nunca afirme saber a configuração atual** — ela não é legível de forma confiável. Recomende pela TAREFA e pela config que o usuário declarou.");
   L.push("- Próxima etapa **pesada** + config provável fraca → **pare e peça o aumento, nomeando os níveis exatos**.");
   L.push("- Etapa atual **leve** mas config **alta** → **não pare no meio**; termine e, no fim, sinalize \"pode baixar para X na próxima\".");
@@ -7681,6 +7685,7 @@ if(asuModeOn()){
     L.push("");
     L.push('- **Chat (planejamento):** cura e ENTREGA arquivos de doc. Para reescrita de fundo/voz ou arquivo **novo/pequeno**, entrega o **arquivo inteiro**. Para um **delta estruturado** num doc **grande** (marcar fase, abrir fase, inserir nota, acrescentar item), entrega uma **spec curta** em `meta/specs/` com o **texto exato** e **âncora semântica** (seção/título, nunca nº de linha) — e o Code posiciona.');
     L.push('- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISIONS, marcar estado de fase). Aplica as specs de doc. Roda build/validação. Commita.');
+    L.push('- **Nomes padronizados:** specs em `meta/specs/` seguem `AAAA-MM-DD-specNNNN.md` (ex.: `2026-06-30-spec0007_asu-entrega-e-escopo.md`); instruções ASU seguem `AAAA-MM-DD-asuNNNN.yaml`. Numeração sequencial e estável; a data é a de criação. O chat nomeia; o Code aplica.');
     L.push("");
     L.push('**Método "doc por spec":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Specs **só de doc não tocam o produto** → não precisam de build; a rede é o `git diff`.');
     L.push("");

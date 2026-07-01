@@ -1,12 +1,15 @@
 # STATUS — Kit de Contexto Universal — 2026-06-21
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.41.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.42.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-06-30 — v1.41.0)
-- **ASU por download + escopo código-vs-docs (D-037, disciplina v2 Fase A):** instrução ASU passa a ser entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat; novo item de escopo código-vs-docs (código + docs de heading único como DECISIONS/CONTEXT via ASU; docs rolantes STATUS/CHANGELOG/IDEAS inteiros); dica de âncora não-ASCII. Harness 17/17. **Fases B-D pendentes:** config mode-aware, nome de spec no Modo Code, obediência feedback/nome-de-download.
+## 💬 Última sessão (2026-07-01 — v1.42.0)
+- **Config mode-aware + nome de spec no Modo Code + obediencia (D-038/039/040, disciplina v2 Fases B-D):** diretriz de config distingue chat (modelo+esforco+pensamento) de Claude Code (modelo+`/effort`/`ultrathink`, sem toggle de pensamento); Modo Code passa a prescrever `AAAA-MM-DD-specNNNN.md`; instrucao curta reforca registro de Feedback ASU e nome simples no download. Harness 17/17. ✅ **Disciplina v2 (Fases A-D) CONCLUIDA.** Pendente: layout (spec de frontend a parte).
+
+## 💬 Sessão anterior (2026-06-30 — v1.41.0)
+- **ASU por download + escopo código-vs-docs (D-037, disciplina v2 Fase A):** instrução ASU passa a ser entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat; novo item de escopo código-vs-docs (código + docs de heading único como DECISIONS/CONTEXT via ASU; docs rolantes STATUS/CHANGELOG/IDEAS inteiros); dica de âncora não-ASCII. Harness 17/17.
 
 ## 💬 Sessão anterior (2026-06-29 — v1.40.0)
 - **CEREBRO niche-aware (D-036, Fase 3):** gatilhos/higiene/nota "criar se faltar" respeitam os `contextFiles` do nicho — CHANGELOG/ROADMAP só onde existem; criação automática só da camada universal (STATUS/IDEAS/DECISIONS). Commit foi para a instrução curta (dev/ASU/Modo Code); ritual de checar `.txt` avulso adicionado; limpeza `DECISOES`→`DECISIONS` no template. Harness 17/17.

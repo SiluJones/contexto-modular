@@ -695,3 +695,15 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** A instrução ASU é entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat. ASU vale para código e docs de heading único/estável (DECISIONS, CONTEXT); docs rolantes (STATUS/CHANGELOG/IDEAS) vão inteiros; reavaliar DECISIONS via ASU só perto de ~700 linhas. Âncora não-ASCII: evitar literal com `.*`.
 
 **Por quê.** Colar YAML corrompe bytes em âncoras não-ASCII (visto em produção); o INSTRUCTION_GUIDE ja espera o yaml salvo como arquivo. E patch cirúrgico briga com a higiene holística dos docs rolantes — é o D-030 aplicado ao ASU.
+
+## D-038 — Recomendacao de config e mode-aware (chat vs. Claude Code)
+**Decisao.** A diretriz de config distingue chat (modelo + esforco + pensamento) de Claude Code (modelo + `/effort`/`ultrathink`/`ultracode`, SEM toggle de pensamento) e recomenda modelo por capacidade, nao por nome/versao.
+**Por que.** Pesquisa confirmou que o Code nao tem toggle de pensamento — e acoplado ao esforco. A diretriz antiga mandava "ligar pensamento" no Code (inexistente). Nome de modelo fixo envelhece (ex.: Sonnet 5 recem-lancado).
+
+## D-039 — Nome de spec padronizado no Modo Code (fecha a Decisao 4)
+**Decisao.** A geracao do Modo Code passa a prescrever `AAAA-MM-DD-specNNNN.md` para specs (e reitera `AAAA-MM-DD-asuNNNN.yaml` para instrucoes ASU).
+**Por que.** A convencao fora decidida mas nunca chegou a geracao — projetos com Modo Code inventavam nomes (ex.: `spec-DEC-039-comportamento.md`). Fecha a lacuna.
+
+## D-040 — Obediencia: feedback-ASU e nome de download
+**Decisao.** Instrucao curta reforca: registrar «Feedback para o ASU» no IDEAS ao fim (quando houve feedback); arquivo para baixar usa nome simples (`IDEAS.md`), sem prefixo de pasta, salvo para desambiguar homonimos.
+**Por que.** Ambos desviaram em producao — feedback nao registrado, e `meta/IDEAS.md` baixando como `meta_IDEAS.md`. Diretriz so obedecida quando esta na instrucao curta (lida em todo turno).
