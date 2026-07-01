@@ -689,3 +689,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** Gatilhos, higiene e a nota de "criar se faltar" passam a respeitar os `contextFiles` reais do nicho: CHANGELOG/ROADMAP só aparecem para nichos que os têm; a criação automática vale só para a camada universal (STATUS/IDEAS/DECISIONS). Commit foi para a instrução curta (dev/ASU/Modo Code); ritual de checar `.txt` avulso adicionado.
 
 **Por quê.** O CEREBRO genérico mandava nichos atualizarem/criarem CHANGELOG/ROADMAP que não fazem parte deles — gerando referência fantasma e arquivos espúrios. Commit sumia em chats ASU/normais por estar só no CEREBRO (lido 1x), não na instrução curta.
+
+## D-037 — ASU: instrução por download + escopo código-vs-docs
+
+**Decisão.** A instrução ASU é entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat. ASU vale para código e docs de heading único/estável (DECISIONS, CONTEXT); docs rolantes (STATUS/CHANGELOG/IDEAS) vão inteiros; reavaliar DECISIONS via ASU só perto de ~700 linhas. Âncora não-ASCII: evitar literal com `.*`.
+
+**Por quê.** Colar YAML corrompe bytes em âncoras não-ASCII (visto em produção); o INSTRUCTION_GUIDE ja espera o yaml salvo como arquivo. E patch cirúrgico briga com a higiene holística dos docs rolantes — é o D-030 aplicado ao ASU.

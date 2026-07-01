@@ -1,6 +1,10 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.40.0**.
+> Histórico de versões. Versão atual: **v1.41.0**.
+
+## v1.41.0 — ASU por download + escopo codigo-vs-docs (disciplina v2, Fase A)
+- Instrução ASU passa a ser entregue como arquivo `.yaml` para baixar, não colada no chat (bytes UTF-8 exatos; evita corromper âncoras não-ASCII no copia-e-cola).
+- Novo escopo código-vs-docs (D-037): ASU vale para código e docs de heading único/estável (DECISIONS, CONTEXT); docs rolantes (STATUS/CHANGELOG/IDEAS) vão inteiros.
 
 ## v1.40.0 — CEREBRO por nicho (Fase 3)
 - CEREBRO gerado **niche-aware** (D-036): gatilhos, higiene e a nota "criar se faltar" respeitam os `contextFiles` reais do nicho — CHANGELOG/ROADMAP só onde existem; criação automática só da camada universal (STATUS/IDEAS/DECISIONS).
