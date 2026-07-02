@@ -1,6 +1,12 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.44.0**.
+> Histórico de versões. Versão atual: **v1.45.0**.
+
+## v1.45.0 — Refino da diretriz ASU por tipo de arquivo + verificacao obrigatoria (D-046)
+- Escopo do ASU refinado (revisa D-037): codigo, doc de heading estavel (DECISIONS/CONTEXT/GLOSSARY) e trecho localizado de capitulo -> ASU; escrita nova/reescrita profunda e docs rolantes de qualquer nicho (incl. equivalentes de dominio como REVISOES) -> arquivo inteiro.
+- Verificacao no disco de cada arquivo tocado por ASU passa a ser obrigatoria e autonoma (sem esperar pedido), tanto na instrucao curta quanto no CEREBRO gerado.
+- Nome do arquivo ASU corrigido de `AAAA-MM-DD-asuNNNN.yaml` para `AAMMDD-asuNNNN.yaml` (follow-up do D-041).
+- Harness 17/17, 0 erros.
 
 ## v1.44.0 — Releitura do mount por turno ao sinal de upload (D-045)
 - Instrução curta: releitura do mount (`.txt` + `_MANIFEST.md`) a cada turno em que o usuário sinalizar upload — mesmo sem nomear arquivo ("já subi", "veja o txt", "atualizei o mount") — não só na abertura da sessão. Linha fundida com o ritual `.txt` existente, sem redundância.
