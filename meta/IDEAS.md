@@ -437,3 +437,20 @@ O usuário quer que, ao fim de cada sessão, junto do resumo/dúvidas, o chat **
 
 ### 2026-06-28 — Geração faltante em dev (gitignore/README/commit) — A PESQUISAR/REFINAR
 Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev); commit às vezes não sai e o `git commit` deve vir **separado** no copia-e-cola. O usuário aceita esperar (não quer o chat perguntando "quer que eu gere agora?"); quer **previsão e cuidado** na geração. Estender ao possível a outros nichos. (D-040 mira o commit; confirmar.)
+
+## 📮 Feedback para o Kit
+
+### 2026-06-21 — Starter do Modo Code deve usar nomes-do-nicho (do ASU) — A CORRIGIR
+O ASU reportou como BUG do template: o apêndice de arranque do Modo Code (e o `wrap.md` gerado) referenciam nomes FIXOS (`DECISOES.md`, `REVISOES.md` — do nicho Design), então num projeto Dev o starter aponta para arquivos que não existem. A migração inglês (D-035/036) limpou o repo do KCM, mas a GERAÇÃO do starter ainda precisa emitir os nomes de doc DO NICHO selecionado (Dev → DECISIONS/CHANGELOG/ROADMAP; Design → DECISOES/REVISOES/MARCA). Conecta à auditoria de nomes (item "termos invariantes").
+
+### 2026-06-30 — Sinalizar modos ativos ao exportar o template (do ASU) — A DESENVOLVER
+O usuário gerou o CEREBRO com só o modo ASU ligado e saiu curto/incompleto; teve de regerar com os modos certos. A página de geração deveria sinalizar quais modos (ASU/grupo/Code) estão ativos no momento de exportar — ou avisar "exportando com o modo X só" — porque o template muda bastante e é fácil exportar a combinação errada sem perceber. É UX da página, não diretriz.
+
+### 2026-06-21 — Bootstrap do rename nas Instruções do painel (do ASU) — A REFINAR
+Ao renomear CLAUDE→CEREBRO, as Instruções do Projeto (painel, lidas em todo turno) continuam citando `CLAUDE.md`, e o assistente não edita o painel — o usuário tem de lembrar de trocar à mão. O passo de atualização do KCM deveria incluir um lembrete explícito "troque CLAUDE.md por CEREBRO.md também nas Instruções do Projeto".
+
+### 2026-06-19/21 — Duas variantes da seção HUB: conteúdo vs. toolchain/infra (do ASU) — A AVALIAR
+A seção "Projeto em grupo (HUB)" que o kit injeta assume grupo de CONTEÚDO (lore/visual/som). Num grupo que é TOOLCHAIN (ferramentas sincronizadas por contratos, HUB manual — caso ASU/KCM/FlatDrop), o texto precisa ser reescrito à mão. Sugestão: oferecer duas variantes — "grupo de conteúdo" (atual) e "toolchain/infra" (contratos + caixas de entrada + dono por interface) — ou generalizar os exemplos. Liga a i-N27 (HUB enxuto).
+
+### 2026-06-21 — Apêndice de starter descartável incha o CEREBRO (do ASU) — A AVALIAR
+O template diz "depois de criar, pode apagar este apêndice", mas até lá o CEREBRO fica inchado com blocos de starter. Como o chat já entrega os arquivos de arranque prontos, o apêndice talvez devesse ser entregue à PARTE (doc de setup), não embutido no CEREBRO.
