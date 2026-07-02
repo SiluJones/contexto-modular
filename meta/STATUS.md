@@ -10,6 +10,7 @@
 - meta/ reconciliados ao estado real v1.42.0 (spec0009); mineração das notas para IDEAS; débito do teto-game e risco de nome-de-spec registrados.
 - Ciclo de verificação (round-trip) gravado no CEREBRO + D-042; reforço de entrega-inteira e nome-real na entrega.
 - Capturados 5 feedbacks do ASU que a sessão anterior não extraiu (spec0011).
+- Auditoria de nomes dos 17 nichos concluída (D-043): repo são; política DEC/FIX por nicho formalizada; sem migração.
 
 ## 💬 Sessão anterior (2026-06-30 — v1.41.0)
 - **ASU por download + escopo código-vs-docs (D-037, disciplina v2 Fase A):** instrução ASU passa a ser entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat; novo item de escopo código-vs-docs (código + docs de heading único como DECISIONS/CONTEXT via ASU; docs rolantes STATUS/CHANGELOG/IDEAS inteiros); dica de âncora não-ASCII. Harness 17/17.

@@ -429,7 +429,7 @@ Desenvolvimento migrou pro **Claude Code** (desktop até segunda; CLI no trabalh
 ### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR
 A linha "Nome de download" (D-040) não coube no nicho game por ~28 chars; o Code cortou o parentético. Decidir: reescrever mais curto (preservando sentido) ou elevar o teto do harness. Nenhuma diretriz deve depender de um parentético para caber. (Nota do Code 07-01.)
 
-### 2026-06-24/28 — Termos e nomes de arquivo devem ser INVARIANTES ao idioma — A AUDITAR
+### 2026-06-24/28 — Termos e nomes de arquivo devem ser INVARIANTES ao idioma — AUDITADO (D-043)
 O usuário esclareceu (260624-ideias): i18n troca **UI e conteúdo-data**, mas **TERMOS e NOMES de arquivo** (CEREBRO, DECISIONS, IDEAS, o par DEC/FIX) permanecem os mesmos em qualquer idioma — é convenção de engenharia. Problema real observado em campo: projetos com `FIX` vs `BUG` divergentes, e `DEC` "não encontrado" onde o arquivo de decisões tem outro nome. Pedido: auditoria completa nos 17 nichos — listar (nicho × arquivo meta/ × termo) e padronizar junto. Também: CEREBRO/instrução de alguns nichos apontam para meta/ que o nicho não tem (D-036 mira isso; confirmar cobertura em campo, incl. `/wrap` apontando para DECISOES.md num game cujo DEC vive no MECANICAS).
 
 ### 2026-06-28 — Verificação ativa de config (nível/esforço/pensamento) — REFORÇAR (liga D-034/D-038)
