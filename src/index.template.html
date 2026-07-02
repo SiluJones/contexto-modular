@@ -1920,6 +1920,10 @@ function buildInstr(niche){
   lines.push("**Log:** nomeie `logs/AAAA-MM-DD.md` (data ISO, sem a palavra \"log\" no nome).");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
     lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO para copiar isolado, mensagem sem acento. Não pule o commit.");
+  if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
+    lines.push("**`.gitignore`:** em projeto com repo, entregue um `.gitignore` adequado ao stack na PRIMEIRA leva que crie estrutura (ex.: node_modules, dist, .env, outputs, backups). Não espere o usuario pedir; entregue junto com os primeiros arquivos.");
+  if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
+    lines.push("**README:** entregue/atualize o `README.md` quando a estrutura estabilizar (nao no rascunho inicial, para nao nascer desatualizado). Se ainda for cedo, DIGA que esta adiando e por que — nunca simplesmente omita.");
 
   // Princípios essenciais (curtos — versão densa, não a definição longa)
   const bhAll = [...normBehaviors(BEHAVIORS_BASE), ...(niche.behaviors||[])];
@@ -2109,6 +2113,7 @@ function buildClaudeMd(niche){
     L.push("");
     L.push(`> ${UPDATE_PROTOCOL.commitNota}`);
   }
+  L.push(`- **Artefatos de repo (.gitignore, README):** em projeto com repositório, o \`.gitignore\` sai na primeira leva que cria estrutura (adequado ao stack) e o \`README.md\` é entregue/atualizado quando a estrutura estabiliza (não no rascunho, para não nascer velho). O assistente gera por previsão, sem pedir permissão a cada vez; se adiar o README, diz por quê.`);
 
   // Canal de atualização do kit (transversal)
   L.push("");

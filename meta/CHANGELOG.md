@@ -1,6 +1,11 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.42.0**.
+> Histórico de versões. Versão atual: **v1.43.0**.
+
+## v1.43.0 — Diretriz de geracao: .gitignore e README no perfil dev/Code (D-044)
+- Instrução curta (perfil dev/Code): `.gitignore` adequado ao stack entregue na PRIMEIRA leva que cria estrutura; `README.md` entregue/atualizado quando a estrutura estabiliza (com aviso se adiar).
+- CEREBRO gerado: nota equivalente na seção de commit — artefatos de repo gerados por previsão, sem pedir permissão a cada vez.
+- Harness 17/17, 0 erros.
 
 ## v1.42.0 — Config mode-aware + nome de spec no Modo Code + obediencia (disciplina v2, Fases B-D)
 - Config mode-aware (D-038): diretriz distingue chat (modelo + esforco + pensamento) de Claude Code (modelo + `/effort`/`ultrathink`/`ultracode`, sem toggle de pensamento); modelo recomendado por capacidade, nao por nome/versao.
