@@ -749,3 +749,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** D-041 aplicado ao gerador: o CEREBRO gerado (`buildClaudeMd`, `src/index.template.html`) passa a emitir `AAMMDD-asuNNNN.yaml` e `AAMMDD-specNNNN-desc.md` (antes ainda emitia `AAAA-MM-DD-…` em duas linhas); logs seguem `AAAA-MM-DD` (ISO) — split proposital, não mexido.
 
 **Por quê.** D-041 só tinha sido registrado no DECISIONS, nunca aplicado ao gerador; a spec0015 corrigiu só a instrução curta, faltavam as duas linhas do CEREBRO gerado. spec0016 fecha o buraco.
+
+## D-048 — Layout desktop: builder 2 colunas ate 700px, rail sticky em <=900px, sem layout shift
+
+**Decisão.** Layout desktop: builder segue 2 colunas até 700px (antes colapsava em 900); rail vira barra superior fixa (sticky) em <=900px em vez de estática; `.out` ganha `min-height` e o fade perde o `translateY` para eliminar layout shift ao trocar opções/abas. Mobile e layout empilhado alternativo ficam como i-N33 (futuro).
+
+**Por quê.** spec0018, escopo definido pelo usuário (foco desktop): o `.builder` colapsava cedo demais (900px) desperdiçando espaço horizontal disponível; a `.rail` virava `position:static` e rolava para fora da tela em telas médias, quebrando o comportamento "semelhante independente do tamanho da tela"; `.out` com `height:fit-content` + `.view` com `translateY` no fade causavam "pulo" de layout ao trocar opções, incomodando o uso.

@@ -147,7 +147,7 @@
 
   .view{display:none;padding:38px 30px 90px;max-width:1080px;animation:fade .4s ease}
   .view.on{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
 
   h1.page{font-family:var(--disp);font-weight:900;font-size:38px;line-height:1.05;letter-spacing:-1px;margin:0 0 6px;color:var(--ink)}
   .lede{color:var(--ink-dim);font-size:16px;max-width:70ch;margin:0 0 30px}
@@ -248,7 +248,7 @@
   .txt:focus{outline:none;border-color:var(--amber)}
 
   /* output sticky preview */
-  .out{position:sticky;top:80px;background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;padding:18px;height:fit-content;max-height:calc(100vh - 110px);display:flex;flex-direction:column;box-shadow:var(--shadow)}
+  .out{position:sticky;top:80px;background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;padding:18px;min-height:340px;max-height:calc(100vh - 110px);display:flex;flex-direction:column;box-shadow:var(--shadow)}
   .outhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
   .outhead .ttl{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint)}
   .out-tabs{display:flex;gap:4px;background:var(--panel2);padding:3px;border-radius:9px;border:1px solid var(--line-soft)}
@@ -495,11 +495,10 @@
   /* ============ 7. RESPONSIVO ============ */
   @media (max-width: 900px){
     .wrap{flex-direction:column}
-    .rail{width:auto;flex:none;height:auto;position:static;border-right:none;border-bottom:1px solid var(--line-soft);flex-direction:column}
+    .rail{width:auto;flex:none;height:auto;position:sticky;top:0;z-index:30;border-right:none;border-bottom:1px solid var(--line-soft);flex-direction:column;background:rgba(22,19,13,.92);backdrop-filter:blur(10px)}
     .rail nav{flex-direction:row;flex-wrap:wrap;margin-top:18px}
     .navbtn{width:auto}
     .rail-foot{display:none}
-    .builder{grid-template-columns:1fr}
     .grid2,.grid3,.hero-design,.hero-product,.hero-comics{grid-template-columns:1fr}
     .hero-marketing,.hero-business,.hero-client{grid-template-columns:1fr 1fr}
     .hero-comics{height:auto;grid-template-rows:auto}
@@ -514,6 +513,10 @@
   @media (max-width: 560px){
     .ngrid{grid-template-columns:1fr}
     .hero-marketing,.hero-business,.hero-client{grid-template-columns:1fr}
+  }
+  @media (max-width: 700px){
+    .builder{grid-template-columns:1fr}
+    .out{position:static;max-height:none}
   }
 </style>
 </head>

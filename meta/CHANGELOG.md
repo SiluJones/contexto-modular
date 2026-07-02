@@ -1,6 +1,13 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.45.1**.
+> Histórico de versões. Versão atual: **v1.46.0**.
+
+## v1.46.0 — Layout desktop: paineis lado a lado, nav fixa e sem layout shift (D-048)
+- `.builder` (2 colunas) so colapsa a partir de 700px (antes 900px) — novo `@media (max-width: 700px)`, aproveitando o espaco horizontal ate telas mais estreitas.
+- `.rail` vira barra superior sticky (nao mais static) em `<=900px`, com fundo semi-opaco + blur para legibilidade sobre o conteudo que rola por baixo.
+- `.out` ganha `min-height:340px` (antes `height:fit-content`) e `@keyframes fade` perde o `translateY` — elimina o "pulo" de layout ao trocar opcoes/abas.
+- Mobile e layout empilhado alternativo ficam como i-N33 (futuro).
+- Harness 17/17, 0 erros.
 
 ## v1.45.1 — Fix: D-041 aplicado ao gerador, nome de spec e asu vira AAMMDD (D-047)
 - CEREBRO gerado (`buildClaudeMd`) corrigido: as duas linhas que ainda emitiam `AAAA-MM-DD-asuNNNN.yaml` e `AAAA-MM-DD-specNNNN.md` passam a emitir `AAMMDD-asuNNNN.yaml` e `AAMMDD-specNNNN-desc.md` (D-041, que so tinha sido registrado no DECISIONS, nunca aplicado ao gerador).
