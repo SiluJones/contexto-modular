@@ -7355,7 +7355,7 @@ function buildInstr(niche){
     coreFiles.find(n=>/STATUS/i.test(n)),
   ].filter(Boolean);
   lines.push(`Antes de qualquer ação, leia nesta ordem: ${readOrder.map(f=>`\`${f}\``).join(" → ")}${coreFiles.some(n=>/CHANGELOG/i.test(n))?" → última entrada do `CHANGELOG.md`":""}.`);
-  lines.push("No início da sessão, cheque também notas avulsas `.txt` recentes no diretório do projeto e leia-as — entrada transitória do usuário (a fundir nos meta/), não fonte canônica. Se não houver, siga normalmente.");
+  lines.push("No início e sempre que o usuário sinalizar upload (mesmo sem nomear o arquivo — \"já subi\", \"veja o txt\", \"atualizei o mount\"), releia o mount (notas `.txt` + `_MANIFEST.md`) ANTES de responder, nunca de memória. São entrada transitória (a fundir nos meta/), não fonte canônica; se não houver, siga.");
   lines.push("Confirme em uma frase o que entendeu da tarefa antes de executar. Se houver ambiguidade real, pergunte antes.");
   if(groupModeOn()) lines.push("Projeto em grupo: existe um `HUB.md` compartilhado (gerado na página HUB do kit). Leia-o logo após o STATUS — sua caixa de entrada e o status das outras frentes. Nunca altere arquivos de outra frente; sugestões vão para a caixa dela.");
   if(asuModeOn()) lines.push("ASU: **editar** código/doc de heading único → instrução `yaml` **para baixar** (nome `AAAA-MM-DD-asuNNNN.yaml`, bytes exatos); **arquivo novo** e **docs rolantes** (STATUS/CHANGELOG/IDEAS) → arquivo inteiro para baixar. Detalhe no CEREBRO.");

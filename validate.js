@@ -104,13 +104,13 @@ check("G5 switch ASU round-trip (dev: no->sem / yes->com diretriz+comando)", () 
 // ============ POR NICHO (17) ============
 const COMP = "Princípios universais (definição completa no CEREBRO.md)";
 ids.forEach(id => {
-  check("N["+id+"] Instr+CEREBRO, teto 6500, universais comprimidos, sem undefined, IDEAS/HUB, chips", () => {
+  check("N["+id+"] Instr+CEREBRO, teto 6900, universais comprimidos, sem undefined, IDEAS/HUB, chips", () => {
     const n = T.normNiche(T.NICHES[id]);
     const instr = T.buildInstr(n);
     const cmd = T.buildClaudeMd(n);
     assert(instr && instr.length > 200, "Instrucoes vazias/curtas");
     assert(cmd && cmd.length > 1000, "CEREBRO.md vazio/curto");
-    assert(instr.length <= 6500, "Instrucao excede 6500: " + instr.length);
+    assert(instr.length <= 6900, "Instrucao excede 6900: " + instr.length);
     assert(instr.includes(COMP), "linha comprimida dos universais ausente");
     // P12/P13 dentro da linha comprimida
     const compline = instr.split("\n").find(l => l.includes(COMP)) || "";

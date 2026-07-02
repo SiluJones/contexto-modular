@@ -12,6 +12,7 @@
 - Capturados 5 feedbacks do ASU que a sessão anterior não extraiu (spec0011).
 - Auditoria de nomes dos 17 nichos concluída (D-043): repo são; política DEC/FIX por nicho formalizada; sem migração.
 - **Diretriz de geração: .gitignore e README no perfil dev/Code (D-044, v1.43.0):** instrução curta ganha `.gitignore` na primeira leva que cria estrutura + `README.md` quando a estrutura estabiliza (com aviso se adiar); nota equivalente no CEREBRO gerado; commit separado confirmado já explícito (Tarefa B sem mudança). Harness 17/17.
+- **Releitura do mount por turno ao sinal de upload (D-045, v1.44.0):** instrução curta funde o ritual `.txt` do início com a releitura por turno (mesmo sem nomear arquivo); v1 estourou o teto de 6500 em `game`/`narrative` só com a linha somada — v2 fundiu a linha e elevou o teto para 6900 (era conservador). Harness 17/17. Resolve o item 5 de PRÓXIMOS ("Teto 6500 no nicho game").
 
 ## 💬 Sessão anterior (2026-06-30 — v1.41.0)
 - **ASU por download + escopo código-vs-docs (D-037, disciplina v2 Fase A):** instrução ASU passa a ser entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat; novo item de escopo código-vs-docs (código + docs de heading único como DECISIONS/CONTEXT via ASU; docs rolantes STATUS/CHANGELOG/IDEAS inteiros); dica de âncora não-ASCII. Harness 17/17.

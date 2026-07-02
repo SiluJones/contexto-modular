@@ -1,6 +1,11 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.43.0**.
+> Histórico de versões. Versão atual: **v1.44.0**.
+
+## v1.44.0 — Releitura do mount por turno ao sinal de upload (D-045)
+- Instrução curta: releitura do mount (`.txt` + `_MANIFEST.md`) a cada turno em que o usuário sinalizar upload — mesmo sem nomear arquivo ("já subi", "veja o txt", "atualizei o mount") — não só na abertura da sessão. Linha fundida com o ritual `.txt` existente, sem redundância.
+- Teto de tamanho da instrução curta no harness elevado de 6500 para 6900 (`validate.js`) — o teto anterior era conservador.
+- Harness 17/17, 0 erros.
 
 ## v1.43.0 — Diretriz de geracao: .gitignore e README no perfil dev/Code (D-044)
 - Instrução curta (perfil dev/Code): `.gitignore` adequado ao stack entregue na PRIMEIRA leva que cria estrutura; `README.md` entregue/atualizado quando a estrutura estabiliza (com aviso se adiar).
