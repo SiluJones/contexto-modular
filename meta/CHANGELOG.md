@@ -1,6 +1,11 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.45.0**.
+> Histórico de versões. Versão atual: **v1.45.1**.
+
+## v1.45.1 — Fix: D-041 aplicado ao gerador, nome de spec e asu vira AAMMDD (D-047)
+- CEREBRO gerado (`buildClaudeMd`) corrigido: as duas linhas que ainda emitiam `AAAA-MM-DD-asuNNNN.yaml` e `AAAA-MM-DD-specNNNN.md` passam a emitir `AAMMDD-asuNNNN.yaml` e `AAMMDD-specNNNN-desc.md` (D-041, que so tinha sido registrado no DECISIONS, nunca aplicado ao gerador).
+- Logs seguem `AAAA-MM-DD` (ISO) — split proposital, nao mexido.
+- Harness 17/17, 0 erros.
 
 ## v1.45.0 — Refino da diretriz ASU por tipo de arquivo + verificacao obrigatoria (D-046)
 - Escopo do ASU refinado (revisa D-037): codigo, doc de heading estavel (DECISIONS/CONTEXT/GLOSSARY) e trecho localizado de capitulo -> ASU; escrita nova/reescrita profunda e docs rolantes de qualquer nicho (incl. equivalentes de dominio como REVISOES) -> arquivo inteiro.
