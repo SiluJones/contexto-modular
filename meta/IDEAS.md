@@ -431,8 +431,8 @@ Reestruturar a pagina de geracao para aproveitar melhor o espaco conforme a tela
 - **Abas responsivas:** tabs em tela grande -> accordion (ou tab-list rolavel com botao) em tela pequena; labels curtos, uma so capitalizacao.
 Proximo passo: o chat entrega um **wireframe para o usuario aprovar** ANTES de virar spec de frontend (toca `index.template.html` + CSS, com harness). Nao adivinhar layout.
 
-## i-N35 — Switch skills-pack do nicho narrativa (fase B) — 💡 Ativa (2026-07-03)
-Fase B do refino do nicho narrativa (spec0021 cobriu a fase A). Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md.
+## i-N35 — Switch skills-pack do nicho narrativa (fase B) — ✅ IMPLEMENTADA (v1.49.0)
+Fase B do refino do nicho narrativa (spec0021 cobriu a fase A). Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md. spec0022: toggle niche-scoped `skillsMode` emite 4 Agent Skills (escrita-serial, checagem-continuidade, voz-calibragem, textura-mundo) como apêndice do CEREBRO, sem impacto no teto das Instruções. Harness G6, 17/17, 33/33, 0 erros.
 
 ## i-N36 — Universais da fase C (2026-07-03) — 💡 Ativa
 Fase C do refino do nicho narrativa: itens universais (não específicos do nicho) — sync instrução-curta/CEREBRO, aviso de persistência do mount, fases para pedidos compostos, modo extração de acervo. Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md.

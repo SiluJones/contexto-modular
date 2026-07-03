@@ -54,6 +54,92 @@ NICHES.narrative = {
     ["Erro mecânico apontado pelo autor na prosa", "Vira linha PERMANENTE na «Lista de invariantes» de CONTINUIDADE.md (a lista só cresce — o mesmo erro nunca se corrige duas vezes); se for erro de voz, ganha espelho também em VOZ.md → «O que EVITAR»."],
     ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada. A cada ARCO concluído, propõe 1–2 exemplos novos substituindo os mais antigos — a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar a voz atual."],
   ],
+  skillsPack:{
+    intro:"Quatro skills opcionais que empacotam o protocolo de escrita como Agent Skills nativas — carregadas sob demanda no gatilho certo, em vez de inchar as Instruções lidas em todo turno. Derivam de skills provadas em campo (projetos de novel reais); cada erro que elas previnem já aconteceu. Ligue este pacote quando a obra entra em produção de capítulos.",
+    skills:[
+      {
+        name:"escrita-serial",
+        gatilho:"o autor pede prosa nova — «escreve o capítulo», «continua a cena», «POV de X»",
+        description:"Protocolo de escrita de capítulo/cena em ficção serial: o sanduíche pré→durante→pós. USE SEMPRE que o autor pedir para escrever, continuar, expandir ou reescrever qualquer prosa da obra — capítulo, cena, diálogo, ponte — mesmo que ele não mencione «protocolo» ou «skill». Vale para qualquer POV e qualquer arco.",
+        body:[
+          "# Escrita serial — o protocolo-sanduíche",
+          "",
+          "Prosa nova nunca sai direto. A pré-checagem sozinha falha porque a prosa deriva da intenção DURANTE a geração — por isso há três camadas.",
+          "",
+          "## 1. PRÉ (antes de escrever)",
+          "- Duas fases: primeiro o ESQUELETO (beats + perguntas de continuidade + 2–3 variações com trade-offs) para o autor aprovar; só então a prosa. Evita reescrever a linha inteira.",
+          "- Reler: a ficha do POV (PERSONAGENS.md), os 2–3 parágrafos finais do capítulo anterior (âncora de voz — o novo continua a mesma frase, mesmo ritmo), e — se a cena mostra evento já escrito de outro POV — o capítulo desse evento, listando os fatos fixos (percepção pode divergir; fato, nunca).",
+          "- Levantar em CONTINUIDADE.md o «Estado atual» do personagem e a LISTA NEGATIVA: o que ele AINDA NÃO tem (skills, informações, relações não estabelecidas).",
+          "- Princípio que rege tudo: escrever A PARTIR do estado atual, NUNCA EM DIREÇÃO ao estado planejado. O plano vive no ENREDO; o que o personagem pode fazer AGORA vive na CONTINUIDADE, e é ela que governa a cena.",
+          "",
+          "## 2. DURANTE (escrevendo)",
+          "- Capítulo padrão 900–1.400 palavras. Mais longo só se a cena exigir organicamente — e aí gerar POR CENA, re-ancorando a voz entre cenas. A densidade de erro cresce com o tamanho da saída.",
+          "- A unidade de geração é a CENA; o capítulo é montagem.",
+          "",
+          "## 3. PÓS (antes de entregar — obrigatório)",
+          "- Reler o texto gerado contra a «Lista de invariantes» de CONTINUIDADE.md. Achou violação? Corrige antes de mostrar — nunca entregar sabendo de inconsistência, por menor que seja.",
+          "- Ao fim de capítulo aprovado, disparar o gatilho triplo de docs (ver skill checagem-continuidade)."
+        ],
+        applyStub:["- Teto de palavras desta obra: [ex: 1.200]","- POVs ativos e seus arquivos: [...]","- Peculiaridade de ritmo/estrutura desta obra: [...]"]
+      },
+      {
+        name:"checagem-continuidade",
+        gatilho:"antes de afirmar um fato do mundo, e ao fechar um capítulo",
+        description:"Checagem de continuidade e memória factual: lista negativa antes de escrever, auditoria de invariantes depois, e gatilho triplo ao fechar capítulo. USE ao afirmar qualquer fato da obra (poder, timeline, quem-sabe-o-quê, grafia), ao revisar prosa recém-escrita, e SEMPRE ao concluir um capítulo/cena. Procure ativamente pelos erros nomeados abaixo.",
+        body:[
+          "# Checagem de continuidade",
+          "",
+          "## Erros nomeados que a auditoria procura (releia a prosa contra cada um)",
+          "- **Capability bleeding:** personagem usa skill/item/informação antes de adquiri-la na timeline. Cheque contra a LISTA NEGATIVA do «Estado atual».",
+          "- **Vazamento de metadado estrutural:** a prosa cita «Cap. N», nome de arquivo ou rótulo de bastidores. Referência a evento passado ancora em memória diegética (lugar, sensação, tempo decorrido), nunca no índice.",
+          "- **Vocabulário de mecânica na diegese:** personagem diz «o sistema concede». Dentro do mundo, atribui-se a uma entidade que existe nele.",
+          "- **Metáfora repetida em POV paralelo:** foco diferente pede imagem diferente — reusar denuncia o autor único.",
+          "- **Drift cognitivo:** nomear o processo mental («inventariou», «calculou», «arquivou») em vez de mostrar o gesto físico que comunica o mesmo.",
+          "- **Beat silencioso sem fechamento:** eco de risco anterior sem uma linha de fechamento antes do corte de cena lê como fio abandonado.",
+          "",
+          "## Lista de invariantes (a memória viva)",
+          "Vive no topo de CONTINUIDADE.md e SÓ CRESCE. Todo erro mecânico apontado pelo autor vira linha permanente — o mesmo erro nunca se corrige duas vezes. Toda prosa nova é relida contra ela.",
+          "",
+          "## Gatilho triplo — capítulo concluído (não é um passo só)",
+          "1. STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada.",
+          "2. Busca ATIVA por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito. O doc que «parece atualizado» porque a checklist bate é o bug clássico.",
+          "3. Fatos novos da cena para CONTINUIDADE.md (incluindo novas invariantes)."
+        ],
+        applyStub:["- Invariantes já conhecidas desta obra: [...]","- Fonte-rápida (dado que muda a cada capítulo) desta obra: [ex: % de poder, contadores]","- Mecânica multi-eixo a vigiar, se houver: [...]"]
+      },
+      {
+        name:"voz-calibragem",
+        gatilho:"ao revisar se a prosa «soa como a obra», e ao retomar após pausa",
+        description:"Calibragem de voz e estilo: recalibrar contra os exemplos APROVADOS mais recentes, não os mais antigos, e manter o espelho de erros de voz. USE ao revisar se um trecho soa como a obra, ao retomar a escrita depois de uma pausa ou troca de sessão, e quando o autor aprovar/rejeitar um trecho por questão de voz.",
+        body:[
+          "# Voz e calibragem",
+          "",
+          "- A voz é do AUTOR. A skill protege o estilo dele, não o padroniza em direção a uma prosa genérica.",
+          "- Consulte VOZ.md antes de sugerir frase, descrição ou diálogo: tom, ritmo, exemplos aprovados, «O que EVITAR».",
+          "- **Recalibre contra o RECENTE:** a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar o melhor da voz atual. Ao retomar, ancore nos exemplos aprovados mais novos.",
+          "- **Voz negativa por personagem:** o que este personagem NUNCA diria nem notaria primeiro vale tanto quanto o que diria.",
+          "- **Espelho de erros:** todo erro de voz documentado (FIX / invariante) ganha uma linha em VOZ.md → «O que EVITAR». As duas listas dessincronizam se só uma for atualizada.",
+          "- Subjetivo vs. mecânico: sobre «a cena merece o pagamento emocional?», ofereça observação de leitor, não veredito — a decisão volta ao autor."
+        ],
+        applyStub:["- Trechos-âncora da voz atual (colar ou apontar): [...]","- Tiques a evitar específicos desta obra: [...]"]
+      },
+      {
+        name:"textura-mundo",
+        gatilho:"ao planejar mundo, elenco ou sistema de poder antes de escrever",
+        description:"Textura de mundo e profundidade de elenco: fichas com interior/tell físico, três camadas de elenco, teto de poder e equação de mecânica. USE ao conceber a obra, ao introduzir personagem ou facção nova, ao definir ou esclarecer o sistema de poder/magia, e quando o elenco secundário parecer passivo ou o mundo parecer papelão.",
+        body:[
+          "# Textura de mundo",
+          "",
+          "- **Ficha primária funda:** medo real; a falha que o personagem NÃO vê em si; humor específico; um tell físico (gesto/hábito que o identifica sem dizer o nome); uma contradição do arquétipo. Ficha rasa = ensemble passivo e cenas sem emoção lá na frente.",
+          "- **Três camadas de elenco:** primário (ficha completa); secundário (recorrente — precisa de UMA vida fora do protagonista que o leitor sinta); terciário (aparição pontual — uma linha ou gesto, nunca arquétipo vazio). O mundo deve parecer que continua existindo quando o protagonista não está olhando.",
+          "- **Teto de poder (obra com progressão):** UMA frase de ordem de grandeza entre o nível inicial do protagonista e o teto do mundo, definida ANTES do Cap. 1 — senão a primeira cena com algo mais forte não tem calibragem.",
+          "- **Equação de mecânica:** para sistema com mais de uma variável interagindo, amarre a EQUAÇÃO proativamente (GLOSSARY/CONTINUIDADE) — definir cada termo isolado não previne a confusão, que aparece ao montar o conjunto.",
+          "- **Personagem analítico precisa de corpo:** tell físico e ação, não só processo mental — senão «não come, só analisa»."
+        ],
+        applyStub:["- Sistema de poder/mundo desta obra em uma frase: [...]","- Teto de poder (grandeza inicial ↔ máxima): [...]","- Personagens que ainda estão rasos e precisam de interior: [...]"]
+      }
+    ]
+  },
   contextFiles:[
     {name:"BIBLIA.md", cat:"ctx", role:"A story bible: premissa, mundo, regras, tom. Enxuta (Tier 1 primeiro). Estável.", content:`# BIBLIA.md — [Nome da Obra]
 

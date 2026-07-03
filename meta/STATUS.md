@@ -1,11 +1,15 @@
 # STATUS — Kit de Contexto Universal — 2026-06-21
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.47.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~32 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.49.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~33 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-07-03 — v1.48.0)
+## 💬 Última sessão (2026-07-03 — v1.49.0)
+- **Nicho narrativa, fase B: switch skills-pack de escrita (D-051, i-N35, spec0022):** toggle niche-scoped `skillsMode` ("Gerar skills de escrita?") no topbar, presente só em nichos que declaram `skillsPack` (hoje só narrative). Ligado, o CEREBRO.md ganha o «Apêndice — skills de escrita» com 4 Agent Skills (`escrita-serial`, `checagem-continuidade`, `voz-calibragem`, `textura-mundo`), formato oficial (frontmatter `name`/`description` + seção «Aplicação neste projeto» em branco). Mesmo padrão do Modo Code: pacote vive no CEREBRO sob demanda, sem impacto no teto das Instruções (`N[narrative]` segue em 6688/6900). Harness ganha o check G6. 17/17, 33/33, 0 erros.
+- i-N35 marcada ✅ IMPLEMENTADA; i-N36 (universais da fase C) segue Ativa.
+
+## 💬 Sessão anterior (2026-07-03 — v1.48.0)
 - **Nicho narrativa, fase A do refino por feedback de campo (D-050, spec0021):** `never_writes` removido (contradizia `writes_prose`); modelo de colaboração vira escolha de fundação — grupo «Colaboração» no builder com «Rascunho dirigível» (padrão) e «Direção criativa». Novo behavior `write_discipline`: protocolo-sanduíche pré→durante→pós com 6 erros nomeados e «Lista de invariantes» que só cresce. Gatilho triplo de capítulo concluído + gatilho de erro apontado. Templates atualizados: CONTINUIDADE (Estado atual + Lista de invariantes), PERSONAGENS (interior/tell físico/3 camadas), BIBLIA (teto de poder), CRONOLOGIA (tempo relativo), GLOSSARY (equação de mecânica), VOZ (refresh por arco + espelho de erros). Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md (feedback dos 3 projetos de novel + ConStory-Bench). Harness 17/17, 32/32, 0 erros; `N[narrative]` instr 6688/6900.
 - Registradas i-N35 (switch skills-pack de escrita, fase B) e i-N36 (universais da fase C) como Ativas.
 - Item "Teto 6500 no nicho game" removido de PRÓXIMOS — absorvido pelo teto 6900 (confirmado no harness: game em 6578).

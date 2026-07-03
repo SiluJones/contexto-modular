@@ -1241,7 +1241,7 @@ function normNiche(n){
     behaviors:      normBehaviors(n.behaviors),
     contextFiles:   _files,
     outputs:        normOutputs(n.outputs),
-    topbar:         [...normTopbar(n.topbar), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }, { id:"codeMode", label:"Desenvolver no Claude Code?", type:"toggle", default:"no" }],
+    topbar:         [...normTopbar(n.topbar), ...(n.skillsPack ? [{ id:"skillsMode", label:"Gerar skills de escrita?", type:"toggle", default:"no" }] : []), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }, { id:"codeMode", label:"Desenvolver no Claude Code?", type:"toggle", default:"no" }],
     builderSection: normBuilderSection(n.builderSection),
     conventions:    normConventions(n.conventions),
     promptsExtra:   n.promptsExtra || []
@@ -1891,6 +1891,7 @@ function renderOutputs(niche){
 function groupModeOn(){ return !!(STATE.topbar && STATE.topbar.groupMode === "yes"); }
 function asuModeOn(){ return !!(STATE.topbar && STATE.topbar.asuMode === "yes"); }
 function codeModeOn(){ return !!(STATE.topbar && STATE.topbar.codeMode === "yes"); }
+function skillsPackOn(){ return !!(STATE.topbar && STATE.topbar.skillsMode === "yes"); }
 function effectiveFiles(niche){
   // O HUB.md NÃO entra no download por-nicho (seria um HUB genérico repetido em cada nicho).
   // Ele é montado e baixado na página HUB (um por grupo). O switch "Projeto em grupo?"
@@ -2323,6 +2324,38 @@ if(asuModeOn()){
     L.push("Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,");
     L.push("e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).");
     L.push("```");
+  }
+  if(skillsPackOn() && niche.skillsPack){
+    const sp = niche.skillsPack;
+    L.push("");
+    L.push("---");
+    L.push("");
+    L.push("## Apêndice — skills de escrita (Agent Skills)");
+    L.push("");
+    L.push(sp.intro);
+    L.push("");
+    L.push("**Onde instalar:** em **claude.ai**, Configurações → Capabilities/Skills → enviar cada SKILL.md (planos pagos). No **Claude Code**, salve cada uma em `.claude/skills/<nome>/SKILL.md` na raiz do repo (ou `~/.claude/skills/` para valer em todos os projetos). O mesmo arquivo serve nos dois — formato idêntico.");
+    L.push("**Como funciona:** o Claude lê só o `name` + `description` de cada skill no início da sessão; o corpo carrega sozinho quando a `description` casa com o que você pede (é *progressive disclosure* — o protocolo pesado não pesa no token de todo turno). Por isso a `description` é o gatilho e vem deliberadamente \"insistente\", com verbos concretos.");
+    L.push("**Preencha antes de usar:** cada skill tem uma seção «Aplicação neste projeto» em branco — é onde a regra genérica vira a regra DESTA obra (nomes, exemplos, invariantes reais). Skill sem essa parte preenchida rende pela metade.");
+    L.push("**Este CEREBRO e as skills se completam:** o CEREBRO define o comportamento base lido sempre; as skills carregam o protocolo detalhado no gatilho. Quando ligar as skills, o assistente as consulta nos gatilhos abaixo em vez de repetir tudo aqui.");
+    (sp.skills||[]).forEach(sk => {
+      L.push("");
+      L.push(`### \`${sk.name}/SKILL.md\``);
+      if(sk.gatilho) L.push(`> Aciona quando: ${sk.gatilho}`);
+      L.push("```markdown");
+      L.push("---");
+      L.push(`name: ${sk.name}`);
+      L.push(`description: ${sk.description}`);
+      L.push("---");
+      sk.body.forEach(b => L.push(b));
+      L.push("");
+      L.push("## Aplicação neste projeto");
+      L.push("<!-- Preencha com o específico DESTA obra. Sem isto, a skill roda genérica. -->");
+      (sk.applyStub||["- [a preencher]"]).forEach(a => L.push(a));
+      L.push("```");
+    });
+    L.push("");
+    L.push("> Depois de instalar e preencher as skills, você pode apagar este apêndice do CEREBRO — ele é um starter, não a fonte viva. As skills passam a ser a fonte do protocolo de escrita.");
   }
   L.push("");
   L.push(`*Gerado pelo Kit de Contexto Universal — nicho ${niche.label}. Edite à vontade: este arquivo é seu.*`);

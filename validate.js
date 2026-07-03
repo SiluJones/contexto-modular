@@ -101,6 +101,26 @@ check("G5 switch ASU round-trip (dev: no->sem / yes->com diretriz+comando)", () 
   return "ok";
 });
 
+check("G6 switch skills-pack (narrative: no->sem / yes->4 skills; dev nao tem o toggle)", () => {
+  const narr = T.normNiche(T.NICHES.narrative);
+  T.STATE.topbar = T.STATE.topbar || {};
+  T.STATE.topbar.skillsMode = "no";
+  const noSk = T.buildClaudeMd(narr);
+  T.STATE.topbar.skillsMode = "yes";
+  const yesSk = T.buildClaudeMd(narr);
+  T.STATE.topbar.skillsMode = "no";
+  assert(!/skills de escrita/i.test(noSk), "skillsMode=no nao deveria ter o apendice de skills");
+  assert(/skills de escrita/i.test(yesSk), "skillsMode=yes deveria ter o apendice de skills");
+  assert(/name: escrita-serial/.test(yesSk) && /name: checagem-continuidade/.test(yesSk) && /name: voz-calibragem/.test(yesSk) && /name: textura-mundo/.test(yesSk), "faltou alguma das 4 skills");
+  assert(/Aplicação neste projeto/.test(yesSk), "skill sem a secao 'Aplicacao neste projeto'");
+  assert(noSk !== yesSk, "round-trip do skills-pack nao alterou o CEREBRO.md");
+  // niche-scoping: o toggle so existe onde o nicho declara skillsPack
+  assert((narr.topbar||[]).some(t=>t.id==="skillsMode"), "narrative deveria ter o toggle skillsMode");
+  const dev = T.normNiche(T.NICHES.dev);
+  assert(!(dev.topbar||[]).some(t=>t.id==="skillsMode"), "dev NAO deveria ter o toggle skillsMode (nicho sem skillsPack)");
+  return "ok";
+});
+
 // ============ POR NICHO (17) ============
 const COMP = "Princípios universais (definição completa no CEREBRO.md)";
 ids.forEach(id => {

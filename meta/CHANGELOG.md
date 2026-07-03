@@ -1,6 +1,14 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.48.0**.
+> Histórico de versões. Versão atual: **v1.49.0**.
+
+## v1.49.0 — Nicho narrativa, fase B: switch skills-pack de escrita (i-N35, D-051)
+- Novo toggle **niche-scoped** no topbar, `skillsMode` ("Gerar skills de escrita?") — só aparece em nichos que declaram `skillsPack` (hoje so `narrative`); ausente nos outros 16.
+- Ligado, o CEREBRO.md gerado ganha o **Apêndice — skills de escrita (Agent Skills)**: 4 skills (`escrita-serial`, `checagem-continuidade`, `voz-calibragem`, `textura-mundo`) derivadas das skills provadas em campo nos 3 projetos de novel, cada uma com frontmatter `name`/`description` oficial (Agent Skills), corpo do protocolo, e seção «Aplicação neste projeto» em branco para o projeto preencher.
+- Mesmo padrão arquitetural do Modo Code: pacote vive no CEREBRO sob demanda, **sem impacto no teto das Instruções por-turno** (`N[narrative]` segue em 6688/6900).
+- Harness ganha o check **G6** (round-trip do switch + niche-scoping: narrative tem o toggle, dev não tem).
+- Base: `meta/ANALISE-REFINO-NICHO-NARRATIVO.md` (Fase B).
+- Harness 17/17, 33/33, 0 erros.
 
 ## v1.48.0 — Nicho narrativa, fase A: colaboracao como escolha, disciplina-sanduiche, templates (D-050)
 - `never_writes` removido (contradizia `writes_prose`); modelo de colaboracao vira escolha de fundacao no builder — grupo «Colaboracao» com «Rascunho dirigivel» (padrao) e «Direcao criativa» (IA escreve versao final, autor dirige e reage).
