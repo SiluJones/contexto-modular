@@ -1,6 +1,12 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.46.0**.
+> Histórico de versões. Versão atual: **v1.47.0**.
+
+## v1.47.0 — Afixo prefixo e sufixo independentes e simultaneos (i-N34, D-049)
+- Afixo no download deixa de ser escolha exclusiva (none/prefix/suffix) e passa a ter prefixo E sufixo INDEPENDENTES: dois toggles + duas caixas de texto, combinando numa unica passada de renomeio.
+- Cobre os 4 casos: nenhum (`STATUS.md`), so prefixo (`projeto__STATUS.md`), so sufixo (`STATUS__v1.8.md`), ambos (`projeto__STATUS__v1.8.md`). Preview do nome final atualiza ao vivo.
+- Mesma sanitizacao (nome de arquivo seguro) e separador `__`; vale para baixar todos, ZIP e o CEREBRO.md.
+- Harness 17/17, 0 erros.
 
 ## v1.46.0 — Layout desktop: paineis lado a lado, nav fixa e sem layout shift (D-048)
 - `.builder` (2 colunas) so colapsa a partir de 700px (antes 900px) — novo `@media (max-width: 700px)`, aproveitando o espaco horizontal ate telas mais estreitas.

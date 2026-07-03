@@ -17,6 +17,7 @@
 - **Fix: D-041 aplicado ao gerador (D-047, v1.45.1):** o CEREBRO gerado ainda emitia `AAAA-MM-DD-asuNNNN.yaml` e `AAAA-MM-DD-specNNNN.md` em duas linhas (D-041 só tinha sido registrado no DECISIONS, nunca aplicado ao gerador; spec0015 corrigiu só a instrução curta). Ambas corrigidas para `AAMMDD`; logs seguem ISO (split proposital). Harness 17/17.
 - Registradas i-N33 (layout responsivo, a escopar via wireframe) e i-N34 (afixo prefixo+sufixo simultaneos, refino da i-N3).
 - Fecho de sessao: CONTEXT atualizado para v1.46.0, pendencia-fantasma de layout limpa, i-N34 precisada.
+- **Afixo prefixo e sufixo independentes e simultaneos (D-049, v1.47.0):** afixo no download deixa de ser escolha exclusiva (none/prefix/suffix) e passa a ter dois toggles + duas caixas (prefixo e sufixo) independentes, combinando numa unica passada; cobre os 4 casos (nenhum/so prefixo/so sufixo/ambos); preview do nome final atualiza ao vivo. Fecha i-N34. Harness 17/17.
 
 ## 💬 Sessão anterior (2026-06-30 — v1.41.0)
 - **ASU por download + escopo código-vs-docs (D-037, disciplina v2 Fase A):** instrução ASU passa a ser entregue como arquivo `.yaml` para baixar (bytes UTF-8 exatos), não colada no chat; novo item de escopo código-vs-docs (código + docs de heading único como DECISIONS/CONTEXT via ASU; docs rolantes STATUS/CHANGELOG/IDEAS inteiros); dica de âncora não-ASCII. Harness 17/17.

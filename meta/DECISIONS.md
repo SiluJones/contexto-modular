@@ -755,3 +755,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** Layout desktop: builder segue 2 colunas até 700px (antes colapsava em 900); rail vira barra superior fixa (sticky) em <=900px em vez de estática; `.out` ganha `min-height` e o fade perde o `translateY` para eliminar layout shift ao trocar opções/abas. Mobile e layout empilhado alternativo ficam como i-N33 (futuro).
 
 **Por quê.** spec0018, escopo definido pelo usuário (foco desktop): o `.builder` colapsava cedo demais (900px) desperdiçando espaço horizontal disponível; a `.rail` virava `position:static` e rolava para fora da tela em telas médias, quebrando o comportamento "semelhante independente do tamanho da tela"; `.out` com `height:fit-content` + `.view` com `translateY` no fade causavam "pulo" de layout ao trocar opções, incomodando o uso.
+
+## D-049 — Afixo no download passa de escolha exclusiva para prefixo E sufixo independentes
+
+**Decisão.** Afixo no download passa de escolha exclusiva (none/prefix/suffix) para prefixo E sufixo INDEPENDENTES — dois toggles + duas caixas, combinando numa passada (i-N34). Fecha o refino da i-N3 Parte B.
+
+**Por quê.** spec0020. A i-N3 Parte B tratava prefixo/sufixo como modo exclusivo (só um por vez); o refino pedido na i-N34 permite os dois simultâneos e independentes, cobrindo os 4 casos (nenhum, só prefixo, só sufixo, ambos) numa única passada de renomeio.
