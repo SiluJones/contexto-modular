@@ -5,7 +5,12 @@
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-07-01 — v1.42.0)
+## 💬 Última sessão (2026-07-03 — v1.48.0)
+- **Nicho narrativa, fase A do refino por feedback de campo (D-050, spec0021):** `never_writes` removido (contradizia `writes_prose`); modelo de colaboração vira escolha de fundação — grupo «Colaboração» no builder com «Rascunho dirigível» (padrão) e «Direção criativa». Novo behavior `write_discipline`: protocolo-sanduíche pré→durante→pós com 6 erros nomeados e «Lista de invariantes» que só cresce. Gatilho triplo de capítulo concluído + gatilho de erro apontado. Templates atualizados: CONTINUIDADE (Estado atual + Lista de invariantes), PERSONAGENS (interior/tell físico/3 camadas), BIBLIA (teto de poder), CRONOLOGIA (tempo relativo), GLOSSARY (equação de mecânica), VOZ (refresh por arco + espelho de erros). Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md (feedback dos 3 projetos de novel + ConStory-Bench). Harness 17/17, 32/32, 0 erros; `N[narrative]` instr 6688/6900.
+- Registradas i-N35 (switch skills-pack de escrita, fase B) e i-N36 (universais da fase C) como Ativas.
+- Item "Teto 6500 no nicho game" removido de PRÓXIMOS — absorvido pelo teto 6900 (confirmado no harness: game em 6578).
+
+## 💬 Sessão anterior (2026-07-01 — v1.42.0)
 - **Config mode-aware + nome de spec no Modo Code + obediencia (D-038/039/040, disciplina v2 Fases B-D):** diretriz de config distingue chat (modelo+esforco+pensamento) de Claude Code (modelo+`/effort`/`ultrathink`, sem toggle de pensamento); Modo Code passa a prescrever `AAAA-MM-DD-specNNNN.md`; instrucao curta reforca registro de Feedback ASU e nome simples no download. Harness 17/17. ✅ **Disciplina v2 (Fases A-D) CONCLUIDA.** Layout desktop resolvido em v1.46.0 (D-048); mobile/layout empilhado alternativo ficam como i-N33 (futuro).
 - meta/ reconciliados ao estado real v1.42.0 (spec0009); mineração das notas para IDEAS; débito do teto-game e risco de nome-de-spec registrados.
 - Ciclo de verificação (round-trip) gravado no CEREBRO + D-042; reforço de entrega-inteira e nome-real na entrega.
@@ -56,8 +61,7 @@
 2. **"Modo Code":** switch que gera o kit de arranque — `CLAUDE.md` raiz starter, `.claude/settings.json` + comandos `/`, protocolo de raias, macetes Windows/PowerShell — funcionando em desktop e CLI.
 3. **Consolidar o CINZEIRO no HUB** — EM ANDAMENTO pelo usuário.
 4. **README/PLANNING:** reescrever quando der (pitch novo — "kit desenvolve" + HUB/Cânone).
-5. **Teto 6500 no nicho `game` (dívida da spec0008/D-040):** o texto exato da linha "Nome de download" estourou o teto por ~28 chars; o Code **removeu o parentético** para caber (regra preservada, justificativa retirada). Decidir no próximo ciclo se reescreve a linha mais curta ou eleva o teto. (Origem: nota do Code 07-01.)
-6. **Padronização de nome de spec não obedecida em campo:** ao atualizar o CEREBRO do ASU com o Modo Code, o projeto consumidor **não** corrigiu os nomes das specs para o padrão. Sinal de que D-039/D-041 precisam de reforço na camada lida-todo-turno (instrução curta), não só no CEREBRO. Conecta às frentes de auditoria/obediência.
+5. **Padronização de nome de spec não obedecida em campo:** ao atualizar o CEREBRO do ASU com o Modo Code, o projeto consumidor **não** corrigiu os nomes das specs para o padrão. Sinal de que D-039/D-041 precisam de reforço na camada lida-todo-turno (instrução curta), não só no CEREBRO. Conecta às frentes de auditoria/obediência.
 
 ## Fase atual
 🏁 **Maduro e em produção.** Publicado (`silujones.github.io/kit-contexto/`), dogfooded, com pilotos reais (jogo CINZEIRO/Fando em grupo). São **17 nichos** (16 de conteúdo + 1 construtor `custom`). Três capacidades no ar: manter contexto; o kit DESENVOLVE (narrative escreve, game cria); coordenar grupos (HUB com Cânone Central). O harness 17/17 + anti-testes é a rede de segurança a cada release.

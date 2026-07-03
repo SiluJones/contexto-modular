@@ -431,6 +431,12 @@ Reestruturar a pagina de geracao para aproveitar melhor o espaco conforme a tela
 - **Abas responsivas:** tabs em tela grande -> accordion (ou tab-list rolavel com botao) em tela pequena; labels curtos, uma so capitalizacao.
 Proximo passo: o chat entrega um **wireframe para o usuario aprovar** ANTES de virar spec de frontend (toca `index.template.html` + CSS, com harness). Nao adivinhar layout.
 
+## i-N35 — Switch skills-pack do nicho narrativa (fase B) — 💡 Ativa (2026-07-03)
+Fase B do refino do nicho narrativa (spec0021 cobriu a fase A). Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md.
+
+## i-N36 — Universais da fase C (2026-07-03) — 💡 Ativa
+Fase C do refino do nicho narrativa: itens universais (não específicos do nicho) — sync instrução-curta/CEREBRO, aviso de persistência do mount, fases para pedidos compostos, modo extração de acervo. Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md.
+
 ## i-N34 — Afixo prefixo E sufixo simultaneos (refino da i-N3 Parte B) — ✅ IMPLEMENTADA (v1.47.0)
 A i-N3 Parte B (afixo no download) ja esta implementada (v1.9.0), mas trata prefixo/sufixo como escolha. Refino pedido: **duas caixas de texto separadas** (uma para prefixo, uma para sufixo), **cada uma com seu switch liga/desliga independente**, para o usuario preencher e aplicar os DOIS ao mesmo tempo (ex.: `projeto__CLAUDE__v1.8.md`). UI intuitiva: rotulo claro por caixa, preview do nome resultante. E manipulacao de string no downloadFile (barato); a parte nova e a UI dos dois toggles + preview. **Precisao:** prefixo e sufixo sao INDEPENDENTES — cada um com seu switch e sua caixa; podem estar ligados os dois, um so, ou nenhum, e o resultado se combina numa unica passada (ex.: so prefixo `projeto__CLAUDE.md`; so sufixo `CLAUDE__v1.8.md`; ambos `projeto__CLAUDE__v1.8.md`; nenhum `CLAUDE.md`). Preview do nome final atualiza ao vivo conforme os toggles/caixas.
 
@@ -449,6 +455,9 @@ O usuário quer que, ao fim de cada sessão, junto do resumo/dúvidas, o chat **
 Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev); commit às vezes não sai e o `git commit` deve vir **separado** no copia-e-cola. O usuário aceita esperar (não quer o chat perguntando "quer que eu gere agora?"); quer **previsão e cuidado** na geração. Estender ao possível a outros nichos. (D-040 mira o commit; confirmar.)
 
 ## 📮 Feedback para o Kit
+
+### 2026-07-03 — Feedback consolidado dos projetos Novel 1/2/3, fase A aplicada — INCORPORADO (D-050, v1.48.0)
+Feedback consolidado dos projetos Novel 1/2/3 extraído e aplicado na fase A do nicho narrativa (ver ANALISE-REFINO-NICHO-NARRATIVO.md); pendentes: fase B (switch skills-pack de escrita) e fase C (universais: sync instrução-curta/CEREBRO, aviso de persistência do mount, fases para pedidos compostos, modo extração de acervo).
 
 ### 2026-06-21 — Starter do Modo Code deve usar nomes-do-nicho (do ASU) — A CORRIGIR
 O ASU reportou como BUG do template: o apêndice de arranque do Modo Code (e o `wrap.md` gerado) referenciam nomes FIXOS (`DECISOES.md`, `REVISOES.md` — do nicho Design), então num projeto Dev o starter aponta para arquivos que não existem. A migração inglês (D-035/036) limpou o repo do KCM, mas a GERAÇÃO do starter ainda precisa emitir os nomes de doc DO NICHO selecionado (Dev → DECISIONS/CHANGELOG/ROADMAP; Design → DECISOES/REVISOES/MARCA). Conecta à auditoria de nomes (item "termos invariantes").

@@ -1,6 +1,14 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.47.0**.
+> Histórico de versões. Versão atual: **v1.48.0**.
+
+## v1.48.0 — Nicho narrativa, fase A: colaboracao como escolha, disciplina-sanduiche, templates (D-050)
+- `never_writes` removido (contradizia `writes_prose`); modelo de colaboracao vira escolha de fundacao no builder — grupo «Colaboracao» com «Rascunho dirigivel» (padrao) e «Direcao criativa» (IA escreve versao final, autor dirige e reage).
+- Novo behavior `write_discipline`: protocolo-sanduiche pre -> durante -> pos, com 6 erros nomeados (capability bleeding, vazamento de metadado estrutural, vocabulario de mecanica na diegese, metafora repetida em POV paralelo, drift cognitivo, beat silencioso sem fechamento) e a «Lista de invariantes» que so cresce.
+- Gatilho triplo de capitulo concluido (STATUS/ENREDO + busca ativa de rotulos «Estado atual» + fatos novos em CONTINUIDADE); gatilho novo de erro apontado -> vira invariante permanente + espelho em VOZ.md.
+- Templates: CONTINUIDADE.md ganha «Estado atual» + «Lista de invariantes» no topo; PERSONAGENS.md ganha interior/tell fisico e 3 camadas de elenco; BIBLIA.md ganha teto de poder; CRONOLOGIA.md ganha tempo relativo decorrido; GLOSSARY.md ganha equacao de mecanica; VOZ.md ganha refresh por arco + espelho de erros.
+- Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md (feedback de campo dos 3 projetos de novel + ConStory-Bench 2026).
+- Harness 17/17, 32/32, 0 erros. `N[narrative]` instr 6688/6900.
 
 ## v1.47.0 — Afixo prefixo e sufixo independentes e simultaneos (i-N34, D-049)
 - Afixo no download deixa de ser escolha exclusiva (none/prefix/suffix) e passa a ter prefixo E sufixo INDEPENDENTES: dois toggles + duas caixas de texto, combinando numa unica passada de renomeio.

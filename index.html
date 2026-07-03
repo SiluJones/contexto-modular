@@ -2154,11 +2154,11 @@ NICHES.narrative = {
     {id:"phase", label:"Fase", type:"select", options:["Concepção","Rascunho (draft)","Revisão","Line edit","Finalização"]},
   ],
   behaviors:[
-    ["never_writes","A IA não escreve a história — explora, o autor decide","A voz do autor é insubstituível. O assistente nunca tenta ser o autor: ele explora possibilidades (continuações, variações, e-se), levanta opções, e o autor escolhe e escreve na própria voz. Quando gera trecho de prosa a pedido, marca como rascunho/exploração para o autor reescrever — nunca empurra prosa de IA como se fosse a versão final. Lembra ao autor de examinar se o texto soa como ELE, não só se 'soa bem'."],
     ["mechanic_vs_judgment","Separa problema mecânico de julgamento subjetivo","A IA é confiável para o MECÂNICO (continuidade, repetição, buraco de lógica, pacing irregular, nome trocado) e NÃO confiável para o SUBJETIVO (se a cena merece seu pagamento emocional, se a metáfora funciona, se a reviravolta parece merecida). Diante de uma questão subjetiva, oferece observação como leitor — não veredito — e devolve a decisão ao autor explicitamente."],
     ["continuity_memory","Continuidade tem memória: consulta antes de inventar","Antes de afirmar qualquer fato da obra (cor de olho, idade, relação, regra do mundo, evento passado), consulta BIBLIA/PERSONAGENS/CONTINUIDADE. Não inventa detalhe que contradiz o estabelecido. Quando nota um conflito (o texto novo bate com o que está registrado?), sinaliza na hora. Quando algo novo é estabelecido, registra para virar cânone."],
     ["protect_voice","Protege a voz do autor","Antes de sugerir frase, descrição ou diálogo, consulta VOZ.md (tom, ritmo, exemplos aprovados, o que evitar). Não 'corrige' a voz do autor em direção a uma prosa genérica. Aponta quando uma sugestão sua se afasta do estilo dele e oferece como alternativa, não como melhoria objetiva."],
-    ["writes_prose","Escreve com o autor, não pelo autor","Quando o autor pede, escreve de verdade — cena, capítulo, diálogo, sinopse — SEMPRE ancorado em VOZ.md, PERSONAGENS.md, ENREDO.md e CONTINUIDADE.md: contexto rico é o que separa prosa com voz de prosa genérica. Entrega como rascunho dirigível: em cena crítica ou de carga emocional alta, oferece 2–3 versões/caminhos em vez de um veredito único; marca o que inventou além do cânone como hipótese a aprovar. Vigia o drift de voz em sessões longas (compara com os exemplos aprovados de VOZ.md) e, após capítulo aprovado, atualiza CONTINUIDADE e STATUS. A voz final é do autor — rascunho é matéria-prima, não texto pronto."],
+    ["writes_prose","Escreve com o autor, no modo de colaboração escolhido","Quando o autor pede, escreve de verdade — cena, capítulo, diálogo, sinopse — SEMPRE ancorado em VOZ.md, PERSONAGENS.md, ENREDO.md e CONTINUIDADE.md. A ENTREGA segue o modo escolhido em «A obra»: no modo RASCUNHO DIRIGÍVEL (padrão se nada foi marcado), a prosa é matéria-prima para o autor reescrever — em cena crítica ou de carga emocional alta, oferece 2–3 versões/caminhos em vez de veredito único. No modo DIREÇÃO CRIATIVA, a prosa é entregue como VERSÃO FINAL (o autor dirige e reage; não reescreve linha a linha): decisões de RUMO continuam vindo como opções quando há mais de um caminho razoável; ideias do autor são avaliadas como conselho, não obedecidas como comando; nomes nunca são pedidos sem 2–4 opções fundamentadas; e quando o autor edita um arquivo diretamente fora da conversa, a versão dele é fonte de verdade a refinar, nunca a reverter. Em AMBOS os modos: marca o que inventou além do cânone como hipótese a aprovar, vigia o drift de voz em sessões longas (compara com os exemplos aprovados de VOZ.md) e, após capítulo aprovado, atualiza CONTINUIDADE e STATUS."],
+    ["write_discipline","Disciplina de escrita: pré → durante → pós","Prosa nova segue o protocolo-sanduíche — a pré-checagem sozinha não basta, porque a prosa deriva da intenção DURANTE a geração. **Duas fases:** primeiro o esqueleto da cena (beats + perguntas de continuidade + variações com trade-offs) para aprovação; só então a prosa — evita retrabalho na linha. **PRÉ:** reler a ficha do POV, os 2–3 parágrafos finais do capítulo anterior (âncora de voz — o novo continua a mesma frase, mesmo ritmo) e, se a cena mostra evento já escrito de outro POV, o(s) capítulo(s) desse evento, listando os fatos fixos (percepção pode divergir; fato, nunca); levantar em CONTINUIDADE o estado ATUAL do personagem e a LISTA NEGATIVA (o que ele AINDA NÃO tem: skills, informações, relações). Escreve-se A PARTIR do estado atual, nunca EM DIREÇÃO ao estado planejado — o plano vive no ENREDO; o que o personagem pode fazer AGORA vive na CONTINUIDADE, e é ela que governa a cena. **DURANTE:** capítulo padrão de 900–1.400 palavras; mais longo só se a cena exigir organicamente — e aí gera POR CENA, re-ancorando a voz entre cenas (a densidade de erro cresce com o tamanho da saída). **PÓS (obrigatório, antes de entregar):** reler o texto gerado contra a «Lista de invariantes» de CONTINUIDADE.md — lista viva que SÓ CRESCE: todo erro mecânico apontado pelo autor vira linha permanente, para o mesmo erro nunca ser corrigido duas vezes. Erros nomeados que a auditoria procura: capability bleeding (personagem usa skill/item/informação antes de adquiri-la na timeline), vazamento de metadado estrutural (a prosa cita «Cap. N» ou outro rótulo de bastidores — referência a evento passado ancora em memória diegética: lugar, sensação, tempo decorrido), vocabulário de mecânica na diegese (personagem diz «o sistema concede» — dentro do mundo, atribui-se a uma entidade que existe nele), metáfora repetida em POV paralelo (foco diferente pede imagem diferente), drift cognitivo (nomear o processo mental — «inventariou», «calculou», «arquivou» — em vez de mostrar o gesto físico que comunica o mesmo), e beat silencioso sem fechamento (eco de risco anterior precisa de linha de fechamento antes do corte de cena, senão lê como fio abandonado). Encontrou violação? Corrige antes de apresentar — nunca entrega sabendo de inconsistência, mesmo pequena."],
     ["beats_diagnostic","Beats como diagnóstico, não fórmula","Estruturas (três atos, Save the Cat, jornada) são ferramentas de diagnóstico, não camisas de força. Não força a história num molde nem empurra o autor a escrever 'uma versão burra do próprio estilo'. Usa beats sobretudo na revisão: se um trecho derrapa, costuma faltar limiar, escalada, escolha custosa, ou um protagonista que age — aponta isso, sem prescrever a solução."],
     ["no_overdoc","Não super-documenta a bíblia","A bíblia serve à obra, não o contrário. Mantém o registro no essencial (Tier 1: nomes, descrições-chave, regras centrais, eventos maiores); só aprofunda quando a complexidade pedir. Documentar demais rouba tempo da escrita — escrever o próximo capítulo importa mais que catalogar perfeitamente o anterior."],
   ],
@@ -2169,6 +2169,7 @@ NICHES.narrative = {
     groups:[
       {label:"Gênero", items:[["fantasy","Fantasia"],["scifi","Ficção científica"],["romance","Romance"],["horror","Terror"],["thriller","Suspense"],["literary","Literário"],["realism","Realismo"],["historical","Histórico"],["ya","YA"],["mixed","Misto"]]},
       {label:"Formato", items:[["novel","Romance"],["novella","Novela"],["short","Conto"],["series","Série/saga"],["screen","Roteiro"],["webnovel","Web novel/serial"],["graphic","Roteiro de HQ"]]},
+      {label:"Colaboração", items:[["draft","Rascunho dirigível (autor reescreve)"],["direct","Direção criativa (IA escreve, autor dirige)"]]},
       {label:"Pessoa narrativa", items:[["first","1ª pessoa"],["thirdL","3ª limitada"],["thirdO","3ª onisciente"],["second","2ª pessoa"],["mixed","Múltiplos POVs"]]},
       {label:"Tempo verbal", items:[["past","Passado"],["present","Presente"],["mixed_t","Misto"]]},
       {label:"Idioma da obra", items:[["ptbr","pt-BR"],["ptpt","pt-PT"],["en","Inglês"],["es","Espanhol"],["other","Outro"]]},
@@ -2176,11 +2177,12 @@ NICHES.narrative = {
     other:false
   },
   conventions:[
-    "A voz é do autor — e o assistente também ESCREVE, quando pedido e sob direção: cena, capítulo, diálogo, opções. Sempre como rascunho ancorado em VOZ.md para o autor reescrever; nunca por conta própria, nunca padronizando o estilo.",
+    "A prosa segue o modo de colaboração escolhido em «A obra» — rascunho dirigível (padrão) ou direção criativa (a IA escreve a versão final; o autor dirige e reage) — sempre ancorada em VOZ.md, nunca padronizando o estilo.",
     "Antes de afirmar um fato da obra, consultar BIBLIA/PERSONAGENS/CONTINUIDADE — não inventar o que contradiz o cânone.",
     "Grafia canônica de nomes e termos inventados vive em CONTINUIDADE (ou GLOSSARY): um nome se escreve sempre do mesmo jeito.",
     "Decisões estruturais e de enredo (matar um personagem, mudar um arco, virar reviravolta) vão para ENREDO.md.",
     "Beats e estrutura são diagnóstico na revisão, não molde a priori — a história tem prioridade sobre o outline.",
+    "Prosa nova = protocolo-sanduíche: fatos fixos + estado atual + lista negativa ANTES; teto de ~1.400 palavras e âncora de voz DURANTE; auditoria contra a «Lista de invariantes» (CONTINUIDADE) DEPOIS.",
     "Para obra de matriz japonesa (LN/WN), o kishōtenketsu (ki-shō-ten-ketsu: apresentação → desenvolvimento → virada → consequência) é repertório de primeira ordem — e é FRACTAL: vale para a obra, o arco, o capítulo e a cena. Em serial, o ketsu pode ser adiado para o capítulo seguinte (vira o gancho). Contraste e surpresa sustentam cena tanto quanto conflito.",
     "Manter a bíblia no essencial (Tier 1); não super-documentar."
   ],
@@ -2188,8 +2190,9 @@ NICHES.narrative = {
     ["Fato novo do mundo/personagem estabelecido", "Entrega BIBLIA.md ou PERSONAGENS.md completo com o cânone atualizado."],
     ["Decisão de enredo (morte, reviravolta, mudança de arco)", "Entrega ENREDO.md completo (a decisão + impacto no que vem)."],
     ["Inconsistência encontrada/resolvida ou grafia definida", "Entrega CONTINUIDADE.md completo (a nota de continuidade / grafia canônica)."],
-    ["Capítulo ou cena concluída", "Entrega STATUS.md e ENREDO.md completos (onde paramos, o que vem)."],
-    ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada."],
+    ["Capítulo ou cena concluída", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
+    ["Erro mecânico apontado pelo autor na prosa", "Vira linha PERMANENTE na «Lista de invariantes» de CONTINUIDADE.md (a lista só cresce — o mesmo erro nunca se corrige duas vezes); se for erro de voz, ganha espelho também em VOZ.md → «O que EVITAR»."],
+    ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada. A cada ARCO concluído, propõe 1–2 exemplos novos substituindo os mais antigos — a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar a voz atual."],
   ],
   contextFiles:[
     {name:"BIBLIA.md", cat:"ctx", role:"A story bible: premissa, mundo, regras, tom. Enxuta (Tier 1 primeiro). Estável.", content:`# BIBLIA.md — [Nome da Obra]
@@ -2212,6 +2215,7 @@ NICHES.narrative = {
 > Só o que é preciso para escrever sem se contradizer. Geografia, época, e as REGRAS que, se quebradas, geram furo.
 - **Cenário / época:** [onde e quando.]
 - **Regras do mundo:** [o que pode e não pode acontecer. Sistema de magia/tecnologia: o custo e os limites — não só o que faz, mas o que NÃO faz.]
+- **Teto de poder (obra com sistema de poder/progressão):** [UMA frase de ordem de grandeza entre o nível inicial do protagonista e o teto do mundo — o que o rank mais alto consegue fazer. Defina ANTES do Cap. 1: sem isso, a primeira cena em que o protagonista cruza com algo mais forte não tem calibragem.]
 - **Sociedade / poder:** [só o que afeta a trama: quem manda, qual a tensão social relevante.]
 
 ## Mundo — Tier 2 (só se a obra precisar)
@@ -2232,10 +2236,12 @@ NICHES.narrative = {
 ## [Nome do personagem] — [papel: protagonista / antagonista / secundário]
 - **Aparência (o que não pode variar):** [traços-chave: cor de olho/cabelo, idade, marcas. Estes são os que mais geram furo de continuidade.]
 - **Quem é:** [personalidade em 2-3 traços concretos, não adjetivos vagos.]
+- **Interior (o que dá vida):** [medo real; a falha que ele NÃO vê em si; humor específico; uma contradição do arquétipo. Ficha rasa aqui = ensemble passivo e cenas sem emoção lá na frente.]
+- **Tell físico:** [o gesto/hábito corporal que o identifica sem dizer o nome. Personagem analítico precisa de corpo tanto quanto de mente — senão "não come, só analisa".]
 - **Quer (externo) × Precisa (interno):** [o objetivo declarado vs. a verdade que falta aprender — o motor do arco.]
-- **Voz / fala:** [como fala: ritmo, vocabulário, bordões, o que NUNCA diria. Frases típicas entre aspas.]
+- **Voz / fala:** [como fala: ritmo, vocabulário, bordões, o que NUNCA diria nem notaria primeiro (a voz negativa vale tanto quanto a positiva). Frases típicas entre aspas.]
 - **Arco:** [de onde parte → para onde vai. O ponto de virada interno.]
-- **Evolução registrada:** [onde o personagem está AGORA na obra — para não regredir sem querer.]
+- **Evolução registrada:** [onde o ARCO está agora — só o que muda devagar (rank, papel, relações firmadas). Números que mudam a cada capítulo (poder, contadores, aquisições) vivem no «Estado atual» de CONTINUIDADE.md; esta ficha aponta para lá, nunca duplica o número.]
 - **Relações:** [com quem se conecta e como essa relação muda.]
 
 ---
@@ -2246,7 +2252,8 @@ NICHES.narrative = {
 ---
 
 ## Elenco secundário (uma linha cada)
-- **[Nome]** — [função na trama + o traço que o distingue.]
+> Três camadas de investimento: **primário** (ficha completa acima), **secundário** (recorrente — precisa de UMA vida fora do protagonista que o leitor sinta: um ofício, uma rotina, uma relação que não inclui o MC), **terciário** (aparição pontual — uma linha ou gesto específico, nunca arquétipo vazio). O mundo deve parecer que continua existindo quando o protagonista não está olhando.
+- **[Nome]** — [função na trama + o traço que o distingue + a vida fora do MC, se secundário.]
 `},
     {name:"ENREDO.md", cat:"ctx", role:"Estrutura e enredo: beats, o que já aconteceu, o que vem, decisões de trama. Cresce devagar.", content:`# ENREDO.md — Estrutura e Trama
 
@@ -2296,6 +2303,7 @@ NICHES.narrative = {
 
 ## Exemplos de prosa APROVADA (do autor)
 > O recurso mais útil do arquivo. Cole trechos que SOAM como a obra deve soar — a referência viva da voz.
+> **Refresque por arco concluído:** a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar o melhor da voz atual. Ao retomar após pausa, recalibre contra os exemplos mais RECENTES, não os mais antigos.
 \`\`\`
 [Trecho 1 — escrito ou aprovado pelo autor.]
 \`\`\`
@@ -2307,8 +2315,9 @@ NICHES.narrative = {
 - [Como os diálogos soam: realistas e cheios de subtexto? estilizados? Diferença de fala entre personagens vive em PERSONAGENS.md.]
 
 ## O que EVITAR
-> Tiques e clichês que não combinam com esta obra.
+> Tiques e clichês que não combinam com esta obra. **Espelho de erros:** quando um erro de voz/prosa é documentado (FIX ou invariante em CONTINUIDADE), ganha uma linha aqui também — as duas listas dessincronizam se só uma for atualizada.
 - [Ex: advérbios em -mente em excesso; "ela sentiu que"; metáforas batidas; explicar a emoção em vez de mostrar.]
+- [Ex. clássico de drift cognitivo: "inventariou", "calculou", "arquivou" como tique narrativo — trocar o verbo mental pelo gesto físico que comunica o mesmo.]
 
 ## Decisões de estilo
 - [Escolhas conscientes: presente histórico? itálico para pensamento? Cruza com a grafia em CONTINUIDADE.]
@@ -2319,6 +2328,18 @@ NICHES.narrative = {
 > O assistente consulta antes de afirmar detalhes e registra cada novo fato/correção.
 
 ---
+
+## Estado atual (fonte rápida — atualiza a CADA capítulo)
+> Dados que mudam rápido (poder, contadores, aquisições, o que o personagem TEM e SABE agora) vivem SÓ aqui — fonte única; PERSONAGENS.md aponta para cá e guarda o que muda devagar. **Rotule com o capítulo** e confira o rótulo a cada atualização: rótulo travado num capítulo velho é o bug clássico.
+> É este bloco (não o plano do ENREDO) que governa a cena sendo escrita: escreve-se A PARTIR daqui.
+- **[Personagem] — pós-Cap. [N]:** [o que tem/sabe/pode. E a LISTA NEGATIVA: o que AINDA NÃO tem — skills não adquiridas, informações não reveladas a ele, relações não estabelecidas.]
+
+## Lista de invariantes (auditoria pós-escrita — SÓ CRESCE)
+> Toda prosa nova é relida contra esta lista ANTES de ser entregue. Cada erro mecânico apontado pelo autor vira linha permanente — o mesmo erro nunca se corrige duas vezes. A lista nunca encolhe.
+| Invariante | Como verificar na prosa |
+|---|---|
+| [Ex: a skill X só existe após o evento do Cap. 7] | [nenhum uso de X antes desse ponto da timeline] |
+| [Ex: rótulo de bastidores nunca aparece na diegese] | [buscar "Cap.", números de capítulo, nomes de arquivo no texto] |
 
 ## Notas de continuidade
 > Verdades pontuais que precisam ser respeitadas. (Ex: "Sara odeia café no cap. 2 — não a transforme em barista no cap. 10".)
@@ -2404,6 +2425,12 @@ NICHES.narrative = {
 |---|---|---|---|
 | [data/marco no mundo] | [o que acontece] | [cap. narrativo] | [personagens] |
 
+## Tempo relativo decorrido (desde o evento-âncora)
+> Comece este tracker no SEGUNDO marcador temporal relativo da obra («três dias depois», «na sexta seguinte») — não espere acumular vários. Sem a soma centralizada, um «três dias depois» futuro contradiz a matemática acumulada em silêncio; manter desde cedo é barato, reconstruir depois é caro.
+| Cap. | Dias desde [âncora: Cap. 1 / evento X] | Marcador no texto |
+|---|---|---|
+| [N] | [E+12] | [«na sexta seguinte»] |
+
 ## Antes do início da obra (backstory relevante)
 - [Eventos do passado que afetam a trama, em ordem.]
 
@@ -2423,6 +2450,10 @@ NICHES.narrative = {
 
 ## Termos do mundo
 - **[Termo]** — [o que significa no mundo da obra; grafia oficial.]
+
+## Esclarecimento de mecânica (a equação completa)
+> Para mecânica com mais de uma variável interagindo (valor atual + teto + estado; dois eixos sobrepostos), amarre a EQUAÇÃO aqui, proativamente — definir cada termo isolado não previne a confusão: ela aparece quando se tenta montar o conjunto («X 35% = Y 35%? os dois têm o mesmo teto?»).
+- **[Mecânica]:** [como as variáveis se relacionam entre si; o que muda de um estado para o outro; o que fica igual.]
 
 ## Lugares
 - **[Nome]** — [o que é, onde fica.]

@@ -169,11 +169,20 @@ check("C7 game: ROTEIRO + AGUARDANDO DESIGN + '## Código / build' (conteudo de 
   assert(/##\s*Código \/ build/.test(blob), "sem secao Codigo / build no LOG do game");
   return "ok";
 });
-check("C8 narrative: writes_prose ('Escreve com o autor') + kishotenketsu", () => {
+check("C8 narrative: writes_prose + modos de colaboração + disciplina-sanduíche + kishotenketsu", () => {
   const narr = T.normNiche(T.NICHES.narrative);
   const nc = T.buildClaudeMd(narr);
   assert(/Escreve com o autor/i.test(nc), "sem behavior writes_prose");
+  assert(/RASCUNHO DIRIGÍVEL/i.test(nc) && /DIREÇÃO CRIATIVA/i.test(nc), "sem os dois modos de colaboração");
+  assert(!/A IA não escreve a história/i.test(nc), "never_writes ainda presente (contradição)");
+  assert(/capability bleeding/i.test(nc), "sem erro nomeado: capability bleeding");
+  assert(/Lista de invariantes/i.test(nc), "sem auditoria pós-escrita (Lista de invariantes)");
+  assert(/A PARTIR do estado atual/i.test(nc), "sem princípio estado-atual-vs-plano");
   assert(/kish.tenketsu/i.test(nc), "sem kishotenketsu");
+  const contFile = (narr.contextFiles||[]).find(f=>/CONTINUIDADE/i.test(f.name));
+  assert(contFile && /Estado atual/i.test(contFile.content) && /Lista de invariantes/i.test(contFile.content), "CONTINUIDADE sem Estado atual / Lista de invariantes");
+  const persFile = (narr.contextFiles||[]).find(f=>/PERSONAGENS/i.test(f.name));
+  assert(persFile && /Tell físico/i.test(persFile.content), "PERSONAGENS sem tell físico");
   return "ok";
 });
 check("C9 game: builds_game ('Cria o jogo, não só o documento')", () => {

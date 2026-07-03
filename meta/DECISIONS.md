@@ -761,3 +761,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** Afixo no download passa de escolha exclusiva (none/prefix/suffix) para prefixo E sufixo INDEPENDENTES — dois toggles + duas caixas, combinando numa passada (i-N34). Fecha o refino da i-N3 Parte B.
 
 **Por quê.** spec0020. A i-N3 Parte B tratava prefixo/sufixo como modo exclusivo (só um por vez); o refino pedido na i-N34 permite os dois simultâneos e independentes, cobrindo os 4 casos (nenhum, só prefixo, só sufixo, ambos) numa única passada de renomeio.
+
+## D-050 — Nicho narrativa, fase A do refino por feedback de campo (3 projetos de novel + ConStory-Bench)
+
+**Decisão.** O modelo de colaboração vira escolha de fundação (rascunho dirigível vs. direção criativa; `never_writes` removido — os 3 projetos o derrubaram via DEC-007), disciplina-sanduíche (pré/durante/pós com Lista de invariantes que só cresce e 6 erros nomeados), gatilho triplo de capítulo concluído com busca ativa de rótulos, e templates atualizados (Estado atual + invariantes na CONTINUIDADE, ficha com interior/tell/3 camadas, teto de poder na BIBLIA, tempo relativo na CRONOLOGIA, equação de mecânica no GLOSSARY, refresh+espelho na VOZ).
+
+**Por quê.** spec0021. Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md. Os tres projetos de novel derrubaram, independentemente, o behavior `never_writes` e adotaram o modelo "IA escreve a versão final, autor dirige" (DEC-007 do Novel 3, copiado pelos outros dois) — o nicho carregava dois behaviors em contradição. Os FIXes de campo (capability bleeding, vazamento de metadado, drift cognitivo, status-desatualizado recorrente) e a pesquisa (ConStory-Bench 2026: erros sistemáticos, densidade cresce com o tamanho da saída) pediam uma disciplina de escrita explícita.
