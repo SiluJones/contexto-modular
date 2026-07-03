@@ -2,10 +2,12 @@
 
 > O **passaporte** do projeto. Leia primeiro. Estável — muda pouco.
 > Meta deste arquivo: uma conversa NOVA entende o projeto inteiro e navega o código sem precisar de mais nada.
-> Versão de referência: **v1.42.0** · produto = um `index.html` (~589 KB) **gerado** de `src/` · **17/17 nichos, 0 erros** no harness.
+> Versão de referência: **v1.46.0** · produto = um `index.html` **gerado** de `src/` · **17/17 nichos, 0 erros** no harness.
 > (Histórico de versões fica no CHANGELOG; o "porquê" de cada escolha, no DECISIONS; o estado atual, no STATUS; ideias no IDEAS.)
 >
 > **Mudanças nesta revisão (v1.42.0):** migração de nomes de gestão para **inglês** concluída (Fases 0-3, D-035); **CEREBRO niche-aware** (D-036); **disciplina v2** completa — ASU por download + escopo código-vs-docs (D-037), config **mode-aware** (D-038), nome de spec no Modo Code (D-039), obediência feedback/nome-de-download (D-040), e **formato de nome `AAMMDD-…`** para spec/ASU (D-041). Nada de conteúdo removido.
+>
+> **Mudanças desde v1.42.0 (ate v1.46.0):** ciclo de verificação round-trip (D-042); auditoria de nomes dos 17 nichos + política DEC/FIX por nicho (D-043); diretriz de geração de `.gitignore`/README (D-044); releitura do mount por turno ao sinal de upload + teto da instrução curta 6500→6900 (D-045); refino do escopo do ASU por tipo de arquivo + verificação obrigatória, revisando o D-037 (D-046); D-041 aplicado ao gerador — nomes AAMMDD (D-047); layout desktop: builder 2 colunas até 700px, rail sticky, sem layout shift (D-048). Instrução de projeto do KCM criada (camada lida todo turno).
 >
 > **Mudanças nesta revisão (v1.34.0):** o projeto deixou de ser um HTML único editado à mão e passou a ser **modular** — o `index.html` é **gerado** de `src/index.template.html` (casco) + 17 módulos `src/niches/*.js` via `build.js` (D-028). O **cérebro gerado** foi renomeado de `CLAUDE.md` → `CEREBRO.md` (D-029). Entrou o switch **"Saída via ASU (patch)"** (asuMode) e o **build escreve na raiz**. O **desenvolvimento migrou para o Claude Code** (§ novo "Desenvolvimento"). Nada de conteúdo se perdeu desta regeneração.
 
