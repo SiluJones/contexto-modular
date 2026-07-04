@@ -37,8 +37,8 @@
     "deny": [
       "Bash(rm -rf:*)",
       "Bash(sudo:*)",
-      "Bash(git push:* --force)",
-      "Bash(git push:* -f)"
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)"
     ]
   }
 }
