@@ -6804,7 +6804,7 @@ function normNiche(n){
     behaviors:      normBehaviors(n.behaviors),
     contextFiles:   _files,
     outputs:        normOutputs(n.outputs),
-    topbar:         [...normTopbar(n.topbar), ...(n.skillsPack ? [{ id:"skillsMode", label:"Gerar skills de escrita?", type:"toggle", default:"no" }] : []), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }, { id:"codeMode", label:"Desenvolver no Claude Code?", type:"toggle", default:"no" }],
+    topbar:         [...normTopbar(n.topbar), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }, { id:"codeMode", label:"Desenvolver no Claude Code?", type:"toggle", default:"no" }],
     builderSection: normBuilderSection(n.builderSection),
     conventions:    normConventions(n.conventions),
     promptsExtra:   n.promptsExtra || []
@@ -7392,6 +7392,13 @@ function renderBuilderSection(niche){
       html += `<div class="subhead">${escapeHTML(item.label||"")}</div><input class="txt" type="text" data-text="${item.name}" value="${escAttr(cur)}" placeholder="${escAttr(item.placeholder||"")}"/>`;
     }
   });
+  // Controle de skills de escrita — vive no builder «A obra», não entre os toggles universais (spec0024). Default LIGADO.
+  if(niche.skillsPack){
+    const skOn = !(STATE.builder.skillsMode === "no");
+    html += `<div class="subhead">Skills de escrita</div>`;
+    html += `<div style="font-size:12px;color:var(--ink-faint);margin:-4px 0 8px;line-height:1.5">Gera o pacote <code>skills.zip</code> (protocolo de escrita como Agent Skills) na aba de saída. Ligado por padrão.</div>`;
+    html += `<label class="tsw" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" data-skills-toggle${skOn?" checked":""}/><span class="track"></span><span style="font-size:13px;color:var(--ink-dim)">${skOn?"Skills ativadas":"Skills desativadas"}</span></label>`;
+  }
   host.innerHTML = html;
 
   host.querySelectorAll("[data-radio]").forEach(b => {
@@ -7410,6 +7417,11 @@ function renderBuilderSection(niche){
   });
   host.querySelectorAll("[data-text]").forEach(el => {
     el.addEventListener("input", () => { STATE.builder[el.dataset.text] = el.value; persistState(); updatePreview(); });
+  });
+  const skToggle = host.querySelector("[data-skills-toggle]");
+  if(skToggle) skToggle.addEventListener("change", () => {
+    STATE.builder.skillsMode = skToggle.checked ? "yes" : "no";
+    renderBuilderSection(niche); persistState(); updatePreview(); renderTemplates(niche);
   });
 }
 
@@ -7454,7 +7466,7 @@ function renderOutputs(niche){
 function groupModeOn(){ return !!(STATE.topbar && STATE.topbar.groupMode === "yes"); }
 function asuModeOn(){ return !!(STATE.topbar && STATE.topbar.asuMode === "yes"); }
 function codeModeOn(){ return !!(STATE.topbar && STATE.topbar.codeMode === "yes"); }
-function skillsPackOn(){ return !!(STATE.topbar && STATE.topbar.skillsMode === "yes"); }
+function skillsPackOn(){ return (STATE.builder && STATE.builder.skillsMode === "no") ? false : true; }
 function effectiveFiles(niche){
   // O HUB.md NÃO entra no download por-nicho (seria um HUB genérico repetido em cada nicho).
   // Ele é montado e baixado na página HUB (um por grupo). O switch "Projeto em grupo?"

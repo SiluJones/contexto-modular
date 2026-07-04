@@ -101,33 +101,36 @@ check("G5 switch ASU round-trip (dev: no->sem / yes->com diretriz+comando)", () 
   return "ok";
 });
 
-check("G6 switch skills-pack (narrative: ponteiro no CEREBRO, corpos SO no zip; dev nao tem o toggle)", () => {
+check("G6 skills-pack (narrative: controle no builder, default LIGADO, fora do topbar; ponteiro no CEREBRO)", () => {
   const narr = T.normNiche(T.NICHES.narrative);
-  T.STATE.topbar = T.STATE.topbar || {};
-  T.STATE.topbar.skillsMode = "no";
+  T.STATE.builder = T.STATE.builder || {};
+  // default LIGADO: builder sem skillsMode => skills ativas
+  delete T.STATE.builder.skillsMode;
+  const defSk = T.buildClaudeMd(narr);
+  assert(/Skills de escrita/i.test(defSk), "default deveria ser LIGADO (secao de skills presente sem setar nada)");
+  T.STATE.builder.skillsMode = "no";
   const noSk = T.buildClaudeMd(narr);
-  T.STATE.topbar.skillsMode = "yes";
+  T.STATE.builder.skillsMode = "yes";
   const yesSk = T.buildClaudeMd(narr);
-  T.STATE.topbar.skillsMode = "no";
+  delete T.STATE.builder.skillsMode;
   assert(!/Skills de escrita/i.test(noSk), "skillsMode=no nao deveria ter a secao de skills");
-  assert(/Skills de escrita/i.test(yesSk), "skillsMode=yes deveria ter a secao de skills");
+  assert(/Skills de escrita/i.test(yesSk), "skillsMode=yes nao deveria ter a secao de skills");
   // ponteiro: os NOMES das 4 skills aparecem na tabela de gatilhos
   assert(/escrita-serial/.test(yesSk) && /checagem-continuidade/.test(yesSk) && /voz-calibragem/.test(yesSk) && /textura-mundo/.test(yesSk), "ponteiro sem alguma das 4 skills");
-  // MAS o corpo NAO fica inline no CEREBRO (progressive disclosure): sem frontmatter, sem stub, sem instrucao de apagar
+  // corpo NAO vaza pro CEREBRO
   assert(!/name: escrita-serial/.test(yesSk), "corpo da skill (frontmatter) vazou pro CEREBRO — deveria ficar so no zip");
-  assert(!/<!-- Preencha com o específico/.test(yesSk), "stub 'Aplicacao neste projeto' vazou pro CEREBRO — deveria ficar so no zip");
-  assert(!/pode apagar este ap.ndice/i.test(yesSk), "instrucao autodestrutiva 'apagar apendice' nao pode existir no CEREBRO");
+  assert(!/<!-- Preencha com o específico/.test(yesSk), "stub vazou pro CEREBRO — deveria ficar so no zip");
+  assert(!/pode apagar este ap.ndice/i.test(yesSk), "instrucao autodestrutiva nao pode existir no CEREBRO");
   assert(/skills\.zip/i.test(yesSk), "ponteiro sem apontar o pacote skills.zip");
   assert(noSk !== yesSk, "round-trip do skills-pack nao alterou o CEREBRO.md");
-  // buildSkillMd rende um SKILL.md valido a partir do dado (fonte do zip)
-  const sk0 = narr.skillsPack.skills[0];
-  const md = T.buildSkillMd(sk0);
+  // buildSkillMd rende um SKILL.md valido
+  const md = T.buildSkillMd(narr.skillsPack.skills[0]);
   assert(/^---\nname: escrita-serial\ndescription: /.test(md), "buildSkillMd sem frontmatter valido");
   assert(/Aplicação neste projeto/.test(md), "buildSkillMd sem a secao 'Aplicacao neste projeto'");
-  // niche-scoping: o toggle so existe onde o nicho declara skillsPack
-  assert((narr.topbar||[]).some(t=>t.id==="skillsMode"), "narrative deveria ter o toggle skillsMode");
+  // o controle SAIU do topbar (nao esta mais entre os toggles universais)
+  assert(!(narr.topbar||[]).some(t=>t.id==="skillsMode"), "skillsMode NAO deveria mais estar no topbar (moveu pro builder)");
   const dev = T.normNiche(T.NICHES.dev);
-  assert(!(dev.topbar||[]).some(t=>t.id==="skillsMode"), "dev NAO deveria ter o toggle skillsMode (nicho sem skillsPack)");
+  assert(!(dev.topbar||[]).some(t=>t.id==="skillsMode"), "dev nunca teve skillsMode no topbar");
   return "ok";
 });
 

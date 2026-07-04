@@ -437,6 +437,8 @@ Fase B do refino do nicho narrativa (spec0021 cobriu a fase A). Base: meta/ANALI
 ## i-N36 — Universais da fase C (2026-07-03) — 💡 Ativa
 Fase C do refino do nicho narrativa: itens universais (não específicos do nicho) — sync instrução-curta/CEREBRO, aviso de persistência do mount, fases para pedidos compostos, modo extração de acervo. Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md.
 
+**2026-07-04 — Q2 (modo skills) aplicada (spec0024, D-053):** o controle de skills de escrita saiu do topbar e foi para o builder «A obra», default LIGADO. A reforma dos 3 toggles universais (grupo/ASU/Code) + feedback ambiental (faixas/selos de cor, símbolo do Code, identidade do ASU) segue como item de pesquisa futura, junto desta i-N36.
+
 ## i-N37 — Modo Code: apêndice de arranque vira download (espelho da D-052) — spec0026 — 💡 Ativa
 D-052 (spec0023) aplicou às skills de escrita o princípio "CEREBRO só com regra fixa, sem artefato autodestrutivo/temporário": saíram do CEREBRO e viraram `skills.zip` separado. O apêndice de arranque do Modo Code (starter `.claude/commands/*.md` + instrução «pode apagar este apêndice») tem o MESMO anti-padrão e precisa do mesmo tratamento — virar download separado em vez de bloco-para-remover dentro do CEREBRO. Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q1, Nível 2).
 

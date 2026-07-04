@@ -1,6 +1,13 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.50.0**.
+> Histórico de versões. Versão atual: **v1.51.0**.
+
+## v1.51.0 — Controle de skills vai do topbar para o builder «A obra», default ligado (D-053)
+- O toggle `skillsMode` («Gerar skills de escrita?») sai do topbar (onde disputava clique com os 3 universais de grupo/ASU/Code) e passa a viver dentro do painel «A obra» do nicho `narrative`, ao lado de Gênero/Formato/Colaboração — seção «Skills de escrita» com o mesmo switch visual, já **LIGADO por padrão**.
+- Estado migra de `STATE.topbar.skillsMode` para `STATE.builder.skillsMode`; `skillsPackOn()` passa a ser default-ON (ausência OU `"yes"` = ligado; só `"no"` explícito desliga).
+- Harness G6 reescrito: prova o default LIGADO (builder vazio → seção de skills presente), o round-trip `no`/`yes`, e que `skillsMode` NÃO aparece mais no `topbar` normalizado do narrative.
+- Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q2, opção (a)).
+- Harness 17/17, 33/33, 0 erros. `N[narrative]` segue em 6688/6900.
 
 ## v1.50.0 — Skills de escrita viram pacote skills.zip separado + ponteiro no CEREBRO (D-052)
 - As 4 skills de escrita (`escrita-serial`, `checagem-continuidade`, `voz-calibragem`, `textura-mundo`) saem do apêndice inline do CEREBRO e passam a sair como **pacote `skills.zip` separado** — novo botão «↓ Baixar skills (.zip)» na aba Templates, visível só quando o nicho tem `skillsPack` E o modo skills está ligado.

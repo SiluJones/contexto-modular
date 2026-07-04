@@ -781,3 +781,11 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **E o princípio geral:** Diretriz KCM: o CEREBRO.md contém SÓ regras/diretrizes/técnicas FIXAS — nunca artefatos temporários nem instruções autodestrutivas («apague este bloco»). Qualquer material de instalação/arranque sai como arquivo/download separado, jamais como bloco-para-remover dentro de um arquivo de regras. (Aplicado às skills nesta spec; o mesmo padrão no Modo Code será corrigido na spec0026.)
 
 **Por quê.** spec0023, base: meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md (Q1, Nível 2). O switch de D-051 emitia as 4 SKILL.md inteiras como texto no CEREBRO (+10.055 chars, +29%) e ainda carregava uma instrução autodestrutiva («pode apagar este apêndice») — anti-padrão de progressive disclosure (o corpo da skill deveria carregar sob demanda, não ficar sempre lido) e um risco (usuário ou IA obedece e remove algo importante). Harness G6 reescrito para provar que o corpo NÃO vaza pro CEREBRO e que o ponteiro aponta o `skills.zip`. 17/17, 33/33, 0 erros; `N[narrative]` segue em 6688/6900.
+
+---
+
+## D-053 — Controle de skills de escrita sai do topbar e vai para o builder «A obra», default LIGADO
+
+**Decisão.** Controle de skills de escrita sai do topbar e vai para o builder «A obra» (ao lado de Colaboração), com default LIGADO. Motivo: topbar sobrecarregado causava clique-errado; «skills» é escolha DA OBRA, não modo global. Estado migra de `STATE.topbar.skillsMode` para `STATE.builder.skillsMode`; `skillsPackOn` passa a default-ON (só «no» explícito desliga). Q2/opção (a) da análise. Reforma dos 3 toggles universais fica para fase futura (pesquisa dedicada).
+
+**Por quê.** spec0024, base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q2, opção (a)). Harness G6 reescrito (default LIGADO sem setar nada; `skillsMode` some do `topbar` do narrative). 17/17, 33/33, 0 erros; `N[narrative]` segue em 6688/6900.
