@@ -789,3 +789,9 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** Controle de skills de escrita sai do topbar e vai para o builder «A obra» (ao lado de Colaboração), com default LIGADO. Motivo: topbar sobrecarregado causava clique-errado; «skills» é escolha DA OBRA, não modo global. Estado migra de `STATE.topbar.skillsMode` para `STATE.builder.skillsMode`; `skillsPackOn` passa a default-ON (só «no» explícito desliga). Q2/opção (a) da análise. Reforma dos 3 toggles universais fica para fase futura (pesquisa dedicada).
 
 **Por quê.** spec0024, base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q2, opção (a)). Harness G6 reescrito (default LIGADO sem setar nada; `skillsMode` some do `topbar` do narrative). 17/17, 33/33, 0 erros; `N[narrative]` segue em 6688/6900.
+
+## D-054 — Refino das 4 skills de escrita (Q3): 10 técnicas de campo incorporadas
+
+**Decisão.** Incorporadas 10 técnicas concretas das skills provadas em campo (Novel 2/3) aos `body` das 4 skills de escrita: discurso direto vs. reportado + teste de imersão, ratio de diálogo ~40%, flag de uma frase, regra de ouro do POV paralelo (escrita-serial); cura do drift cognitivo (verbo mental → gesto físico) + teste «ela-não-come» + anti-correção (voz-calibragem); retecer fora de cena, revelar por atrito, checklist 1-de-3 (textura-mundo); pergunta-oráculo (checagem-continuidade).
+
+**Por quê.** spec0025, base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q3) — comparação com as 4 skills provadas em campo (Novel 2/3), que tinham técnica concreta (o «como fazer») ausente do protocolo capturado na spec0022. Sem custo de contexto: as técnicas vão pros SKILL.md do zip (spec0023), o ponteiro no CEREBRO não muda. 17/17, 33/33, 0 erros; `N[narrative]` segue em 6688/6900.

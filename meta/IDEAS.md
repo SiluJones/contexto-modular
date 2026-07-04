@@ -480,3 +480,6 @@ A seção "Projeto em grupo (HUB)" que o kit injeta assume grupo de CONTEÚDO (l
 
 ### 2026-06-21 — Apêndice de starter descartável incha o CEREBRO (do ASU) — A AVALIAR
 O template diz "depois de criar, pode apagar este apêndice", mas até lá o CEREBRO fica inchado com blocos de starter. Como o chat já entrega os arquivos de arranque prontos, o apêndice talvez devesse ser entregue à PARTE (doc de setup), não embutido no CEREBRO.
+
+### 2026-07-04 — Q3 (refino das skills) aplicada — encerra o ciclo do refino narrativo — INCORPORADO (D-054, v1.52.0)
+Aplicadas as 10 técnicas de campo (Novel 2/3) aos `body` das 4 skills de escrita (spec0025). Com isso encerra o ciclo do refino narrativo: fases A/B (D-050/D-051) + Q1/Q2/Q3 (D-052/D-053/D-054). Restam: spec0026 (Modo Code espelha o princípio «CEREBRO só com regra fixa» de D-052, i-N37) e a fase futura (reforma dos 3 toggles universais + feedback ambiental, junto de i-N36).

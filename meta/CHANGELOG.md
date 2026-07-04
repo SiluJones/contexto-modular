@@ -1,6 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.51.0**.
+> Histórico de versões. Versão atual: **v1.52.0**.
+
+## v1.52.0 — Refino das 4 skills de escrita: 10 tecnicas de campo (Q3, D-054)
+- 10 técnicas concretas das skills provadas em campo (Novel 2/3) incorporadas aos `body` das 4 skills de escrita, ampliando o protocolo (spec0022) com o «como fazer».
+- `escrita-serial` ganha «Técnicas de cena»: flag de uma frase para cena simples, informação de mundo como fala (não resumo do narrador), teste de imersão, ratio de diálogo ~40%, regra de ouro do POV paralelo.
+- `checagem-continuidade` ganha a «Pergunta-oráculo»: teste operacional para prevenir capability bleeding a partir do estado, não do plano.
+- `voz-calibragem` ganha a cura do drift cognitivo (verbo mental → gesto físico), o teste «ela-não-come», e a anti-correção (não trocar tique mental por sinônimo mental, nem eliminar toda cognição).
+- `textura-mundo` ganha «Fazer o mundo respirar»: retecer fora de cena, revelar por atrito (não por palestra), checklist «pelo menos 1 dos 3 por capítulo».
+- Sem custo de contexto: as técnicas engordam o `SKILL.md` do `skills.zip` (spec0023); o ponteiro no CEREBRO não muda.
+- Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q3).
+- Harness 17/17, 33/33, 0 erros. `N[narrative]` segue em 6688/6900.
 
 ## v1.51.0 — Controle de skills vai do topbar para o builder «A obra», default ligado (D-053)
 - O toggle `skillsMode` («Gerar skills de escrita?») sai do topbar (onde disputava clique com os 3 universais de grupo/ASU/Code) e passa a viver dentro do painel «A obra» do nicho `narrative`, ao lado de Gênero/Formato/Colaboração — seção «Skills de escrita» com o mesmo switch visual, já **LIGADO por padrão**.
