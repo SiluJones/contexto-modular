@@ -54,12 +54,14 @@ um tem **um dono**; mudar um deles afeta os consumidores listados.
   modular (casco + 17 módulos + `build.js`).
 - **Responsabilidade atual:** switch **asuMode** recém-adicionado (opt-in, off por
   padrão); saída idêntica à v1.33.0 com o switch desligado.
-- **Caixa de entrada:** *(vazia)*
+- **Caixa de entrada:**
+  - `[ASU 2026-07-03]` **Diretriz «Saída de código via ASU» (C4):** reescrever o cabeçalho para "editar arquivo existente → ASU; criar arquivo novo → entregar para baixar (exceto `create_file` em instrução mista)" — a redação atual ("nunca arquivos soltos") manda ASU até para arquivo novo, o que é mais caro e frágil. Levar também uma linha-gatilho de ASU para a instrução CURTA do painel (hoje não menciona ASU) e ancorar a diretriz em `format_version >= 1.0` (já acordado). Detalhes em `kcm/mensagem-para-o-KCM-uso-do-ASU.md` (DEC-025 do ASU).
+  - `[ASU 2026-07-03]` **Usar o ASU nos próprios docs (avaliação):** viável via `markdown` + `replace_section` em arquivos de heading único (DECISIONS, parte do CONTEXT), mas NÃO recomendado para STATUS/CHANGELOG/IDEAS (edições holísticas). Ganho de token do ASU é proporcional ao tamanho — num doc de 6 KB, regenerar inteiro já é barato. Recomendação híbrida; reavaliar quando DECISIONS voltar a crescer. (Observação do VectorForge; não muda contrato — é nota de prática.)
+  - `[ASU 2026-07-03]` **Geração do template-update depende dos modos ligados:** ao exportar os `*__template-update`, a combinação de modos ativos muda bastante o resultado (uma exportação saiu com o modo errado). Sugestão: a página de geração sinalizar quais modos estão ativos no momento de exportar. Reincidência: a seção de HUB ainda vem no molde "grupo de conteúdo" — não cabe em toolchain/infra.
 
 ### ASU — Atualizador Automático de Scripts
 - **Dona de:** C2 (formato da instrução) e C3 (`INSTRUCTION_GUIDE.md`).
-- **Responsabilidade atual:** ferramenta v0.4.0 / guia v2. Aplica patches com
-  schema + diff + backup + rollback; loop de autocorreção por erro.
+- **Responsabilidade atual:** ferramenta v0.8.2 / guia atualizado (§4.7 âncoras ASCII, §6 tabela erro→correção, §8 verificação pós-aplicação). Aplica patches com schema + diff + backup (padrão fora do repo) + rollback; GUI PySide6 completa; dicas "já aplicado" sem ledger. `format_version "1.0"` inalterado — o contrato C2 NÃO mudou.
 - **Caixa de entrada:** *(vazia)*
 
 ### FlatDrop — Achatador de repositórios
@@ -73,7 +75,7 @@ um tem **um dono**; mudar um deles afeta os consumidores listados.
 ## 3. Status relâmpago
 
 - **KCM:** v1.34.0 em preparo — estrutura modular + switch ASU; harness 17/17 + 32/32; build byte-idêntico à v1.33.0 com switch off. Contrato C4 estável.
-- **ASU:** v0.4.0 estável; `format_version "1.0"` inalterado. C2/C3 estáveis.
+- **ASU:** v0.8.2 estável (133 testes); `format_version "1.0"` inalterado. C2/C3 estáveis. GUI + CLI completos; backup padrão fora do repo; dicas de âncora "já aplicado" (DEC-026).
 - **FlatDrop:** manifesto v1 estável. C1 estável.
 
 ---
