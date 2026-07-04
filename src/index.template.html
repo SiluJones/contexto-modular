@@ -711,6 +711,7 @@
         <button class="btn" id="dl-all">↓ Baixar todos</button>
         <button class="btn ghost" id="dl-zip">↓ Pacote em ZIP</button>
         <button class="btn ghost" id="dl-skills" style="display:none">↓ Baixar skills (.zip)</button>
+        <button class="btn ghost" id="dl-codekit" style="display:none">↓ Baixar kit do Claude Code (.zip)</button>
       </div>
 
       <div class="affix-box" id="affix-box">
@@ -2284,59 +2285,18 @@ if(asuModeOn()){
     L.push("");
     L.push("---");
     L.push("");
-    L.push("## Apêndice — arquivos de arranque do Claude Code (crie estes no repo)");
+    L.push("## Kit de arranque do Claude Code — pacote separado");
     L.push("");
-    L.push('Crie os arquivos abaixo nos caminhos indicados (depois de criar, pode apagar este apêndice). São um **starter** — ajuste o comando de build e as permissões ao seu projeto.');
+    L.push("Os arquivos de arranque do Claude Code (o `CLAUDE.md` raiz, `.claude/settings.json` e os comandos) NÃO vivem neste arquivo — ficam no pacote **`claude-code-kit.zip`** que o kit gera à parte (botão «Baixar kit do Claude Code (.zip)» na aba de saída). Isto mantém o CEREBRO só com regra fixa; artefato de instalação sai como arquivo.");
     L.push("");
-    L.push("### `CLAUDE.md` (na RAIZ do repo)");
-    L.push("```markdown");
-    L.push("# <NOME DO PROJETO> — guia para o Claude Code");
+    L.push("| Arquivo | Papel |");
+    L.push("|---|---|");
+    L.push("| `CLAUDE.md` (raiz) | guia curto lido pelo Code em todo turno (ritual + build + convenções) — mantenha < 200 linhas; o detalhado fica no CEREBRO |");
+    L.push("| `.claude/settings.json` | permissões (allow/deny) — adicione seu comando de build/teste ao `allow` |");
+    L.push("| `.claude/skills/apply-spec/SKILL.md` | comando `/apply-spec`: aplica uma spec de `meta/specs/` (âncora exata ou PARA e reporta) |");
+    L.push("| `.claude/skills/wrap/SKILL.md` | comando `/wrap`: fecha a tarefa (append em STATUS/DECISIONS + `git diff` + commit) |");
     L.push("");
-    L.push("> Arquivo-raiz lido pelo Claude Code em toda sessão. Mantenha CURTO (custa token em todo turno).");
-    L.push("> O comportamento detalhado do assistente está em `meta/CEREBRO.md`.");
-    L.push("");
-    L.push("## Ritual de início");
-    L.push("Leia `meta/CEREBRO.md` → `meta/CONTEXT.md` → `meta/STATUS.md` antes de agir. Confirme em uma frase o que entendeu.");
-    L.push("");
-    L.push("## Build / validação");
-    L.push('- Build: `<seu comando de build, ex.: npm run build>`  (PLACEHOLDER — troque pelo do seu projeto)');
-    L.push('- Testes/validação: `<seu comando de teste>` — rode antes de commitar mudança de código.');
-    L.push('- Mudança só de doc (meta/) NÃO precisa de build; a rede é o `git diff`.');
-    L.push('- Adicione seus comandos de build/teste ao `allow` de `.claude/settings.json`.');
-    L.push("");
-    L.push("## Convenções");
-    L.push("- Mensagens de commit **sem acento**.");
-    L.push("- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU spec).");
-    L.push('- Ao aplicar uma spec de `meta/specs/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.');
-    L.push("```");
-    L.push("");
-    L.push("### `.claude/settings.json`");
-    L.push("```json");
-    L.push("{");
-    L.push('  "permissions": {');
-    L.push('    "allow": [');
-    L.push('      "Read", "Edit", "Grep", "Glob",');
-    L.push('      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git add:*)", "Bash(git commit:*)", "Bash(git push:*)"');
-    L.push("    ],");
-    L.push('    "deny": ["Bash(rm -rf:*)"]');
-    L.push("  }");
-    L.push("}");
-    L.push("```");
-    L.push('(Adicione seu comando de build/teste — ex.: `"Bash(npm run build:*)"` — ao `allow`.)');
-    L.push("");
-    L.push("### `.claude/commands/apply-spec.md`");
-    L.push("```markdown");
-    L.push("Leia o arquivo de spec indicado em `meta/specs/` e execute-o.");
-    L.push("Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.");
-    L.push("Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.");
-    L.push("Spec: $ARGUMENTS");
-    L.push("```");
-    L.push("");
-    L.push("### `.claude/commands/wrap.md`");
-    L.push("```markdown");
-    L.push("Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,");
-    L.push("e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).");
-    L.push("```");
+    L.push("Instalação: descompacte `claude-code-kit.zip` e mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. O `README.md` do zip repete os passos e traz a cláusula anti-`.gitignore` de `.claude/`. Formato atual (2026): os comandos são **Skills** em `.claude/skills/<nome>/SKILL.md` (o `.claude/commands/*.md` legado também funcionaria, mas Skills é o recomendado e tem precedência).");
   }
   if(skillsPackOn() && niche.skillsPack){
     const sp = niche.skillsPack;
@@ -2492,6 +2452,8 @@ function renderTemplates(niche){
   // Botao de skills so aparece quando o nicho tem skillsPack E o modo skills esta ligado
   const dlSkills = $("#dl-skills");
   if(dlSkills) dlSkills.style.display = (niche && niche.skillsPack && skillsPackOn()) ? "" : "none";
+  const dlCodekit = $("#dl-codekit");
+  if(dlCodekit) dlCodekit.style.display = codeModeOn() ? "" : "none";
 }
 /* Afixo opcional nos nomes de arquivo baixados.
    Padrão: vazio (nomes saem exatamente como hoje). Só muda quando o
@@ -2607,6 +2569,108 @@ async function downloadSkillsZIP(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url; a.download = `skills.zip`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+// Monta os arquivos de arranque do Claude Code (fonte unica: mesma estrutura real do repo).
+// Comandos no formato ATUAL (2026): .claude/skills/<nome>/SKILL.md, nao o legado .claude/commands/*.md.
+function buildCodeKitFiles(){
+  const claudeMd = [
+    "# <NOME DO PROJETO> — guia para o Claude Code",
+    "",
+    "> Arquivo-raiz lido pelo Claude Code em toda sessão. Mantenha CURTO (< 200 linhas — custa token em todo turno).",
+    "> Regra prática: se remover uma linha e o Claude ainda acerta, ela não pertence aqui. Procedural detalhado → vira skill em `.claude/skills/`.",
+    "> O comportamento detalhado do assistente está em `meta/CEREBRO.md`.",
+    "",
+    "## Ritual de início",
+    "Leia `meta/CEREBRO.md` → `meta/CONTEXT.md` → `meta/STATUS.md` antes de agir. Confirme em uma frase o que entendeu.",
+    "",
+    "## Build / validação",
+    "- Build: `<seu comando de build, ex.: npm run build>`  (PLACEHOLDER — troque pelo do seu projeto)",
+    "- Testes/validação: `<seu comando de teste>` — rode antes de commitar mudança de código.",
+    "- Mudança só de doc (meta/) NÃO precisa de build; a rede é o `git diff`.",
+    "- Adicione seus comandos de build/teste ao `allow` de `.claude/settings.json`.",
+    "",
+    "## Convenções",
+    "- Mensagens de commit **sem acento**.",
+    "- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU spec).",
+    "- Ao aplicar uma spec de `meta/specs/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.",
+    "",
+    "## Config (modelo × esforço)",
+    "- Spec com diff exato já validado → **Sonnet**, esforço proporcional (mecânico = baixo/médio).",
+    "- Tarefa com julgamento sem rede (refator multi-arquivo, spec que delega decisão) → **Opus**, esforço alto.",
+    "- Esforço proporcional à ambiguidade; `/effort low` para o trivial.",
+    ""
+  ].join("\n");
+  const settings = [
+    "{",
+    '  "permissions": {',
+    '    "allow": [',
+    '      "Read", "Edit", "Grep", "Glob",',
+    '      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git add:*)", "Bash(git commit:*)", "Bash(git push:*)"',
+    "    ],",
+    '    "deny": ["Bash(rm -rf:*)"]',
+    "  }",
+    "}",
+    "",
+    "// Adicione seu comando de build/teste ao allow — ex.: \"Bash(npm run build:*)\", \"Bash(npm test:*)\"."
+  ].join("\n");
+  const applySpec = [
+    "---",
+    "name: apply-spec",
+    "description: Aplica uma spec de meta/specs/ ao repo — localiza cada âncora exatamente, substitui, e para se não achar. Use quando o usuário pedir /apply-spec ou para aplicar uma spec nomeada.",
+    "disable-model-invocation: true",
+    "---",
+    "Leia o arquivo de spec indicado em `meta/specs/` e execute-o.",
+    "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.",
+    "Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.",
+    "Spec: $ARGUMENTS",
+    ""
+  ].join("\n");
+  const wrap = [
+    "---",
+    "name: wrap",
+    "description: Encerra a tarefa — append em STATUS/DECISIONS, git diff e comando de commit. Use quando o usuário pedir /wrap ou para fechar a sessão de trabalho.",
+    "disable-model-invocation: true",
+    "---",
+    "Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,",
+    "e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).",
+    ""
+  ].join("\n");
+  return { claudeMd, settings, applySpec, wrap };
+}
+async function downloadCodeKitZIP(){
+  if(typeof JSZip === "undefined"){
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+  }
+  const f = buildCodeKitFiles();
+  const zip = new JSZip();
+  const root = "claude-code-kit";
+  zip.file(`${root}/CLAUDE.md`, f.claudeMd);
+  zip.file(`${root}/.claude/settings.json`, f.settings);
+  zip.file(`${root}/.claude/skills/apply-spec/SKILL.md`, f.applySpec);
+  zip.file(`${root}/.claude/skills/wrap/SKILL.md`, f.wrap);
+  const readme = [
+    "# Kit de arranque do Claude Code",
+    "",
+    "Gerado pelo Kit de Contexto Universal.",
+    `Data: ${today}`,
+    "",
+    "## Como instalar",
+    "Mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. Ajuste o comando de build no `CLAUDE.md` e no `allow` de `.claude/settings.json`.",
+    "",
+    "## Formato dos comandos",
+    "Os comandos vêm como **Skills** (`.claude/skills/<nome>/SKILL.md`) — o formato atual (2026). Invoque com `/apply-spec` e `/wrap`. O `disable-model-invocation: true` faz cada um rodar só quando você chama, nunca sozinho. (O formato legado `.claude/commands/*.md` também funcionaria, mas Skills é o recomendado e tem precedência.)",
+    "",
+    "## Atenção ao versionar",
+    "Se o repo tiver `.gitignore`, garanta que ele **não** ignore a pasta `.claude/` inteira — o CLAUDE.md, as permissões e os comandos devem ser versionados com o projeto. Ignore só artefatos locais, nunca `.claude/skills/` nem `.claude/settings.json`.",
+    ""
+  ].join("\n");
+  zip.file(`${root}/README.md`, readme);
+  const blob = await zip.generateAsync({type:"blob"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `claude-code-kit.zip`;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
@@ -3454,6 +3518,8 @@ function boot(){
     if(dlZip) dlZip.addEventListener("click", downloadZIP);
     const dlSkills = $("#dl-skills");
     if(dlSkills) dlSkills.addEventListener("click", downloadSkillsZIP);
+    const dlCodekit = $("#dl-codekit");
+    if(dlCodekit) dlCodekit.addEventListener("click", downloadCodeKitZIP);
 
     // Afixo opcional nos nomes de arquivo — prefixo E sufixo independentes (i-N34)
     const affixPreOn   = $("#affix-prefix-on");

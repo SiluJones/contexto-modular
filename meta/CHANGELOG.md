@@ -1,6 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.52.0**.
+> Histórico de versões. Versão atual: **v1.53.0**.
+
+## v1.53.0 — Modo Code: kit de arranque vira download separado + formato Skills atual (i-N37, D-055)
+- O apêndice inline «Apêndice — arquivos de arranque do Claude Code» sai do CEREBRO e vira **pacote `claude-code-kit.zip` separado** — novo botão «↓ Baixar kit do Claude Code (.zip)» na aba Templates, visível quando o Modo Code está ligado.
+- Estrutura `claude-code-kit/CLAUDE.md` + `.claude/settings.json` + `.claude/skills/apply-spec/SKILL.md` + `.claude/skills/wrap/SKILL.md` + `README.md`, gerada por `buildCodeKitFiles`/`downloadCodeKitZIP` reusando o mesmo JSZip do `downloadZIP`.
+- Comandos migrados do formato legado `.claude/commands/*.md` para o atual (2026) `.claude/skills/<nome>/SKILL.md`, com frontmatter `name`/`description`/`disable-model-invocation: true`.
+- CLAUDE.md starter atualizado: regra «< 200 linhas», config Sonnet/Opus atual (substitui a regra obsoleta da i-N29).
+- O CEREBRO.md gerado fica só com um **ponteiro curto** (tabela + instalação) — sem os arquivos inline e sem a instrução autodestrutiva «pode apagar este apêndice».
+- Harness ganha o check **G7**.
+- Base: `meta/ANALISE-MODO-CODE-REFINO.md`.
+- Harness 17/17, 34/34, 0 erros.
 
 ## v1.52.0 — Refino das 4 skills de escrita: 10 tecnicas de campo (Q3, D-054)
 - 10 técnicas concretas das skills provadas em campo (Novel 2/3) incorporadas aos `body` das 4 skills de escrita, ampliando o protocolo (spec0022) com o «como fazer».

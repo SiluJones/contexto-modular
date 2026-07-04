@@ -795,3 +795,11 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** Incorporadas 10 técnicas concretas das skills provadas em campo (Novel 2/3) aos `body` das 4 skills de escrita: discurso direto vs. reportado + teste de imersão, ratio de diálogo ~40%, flag de uma frase, regra de ouro do POV paralelo (escrita-serial); cura do drift cognitivo (verbo mental → gesto físico) + teste «ela-não-come» + anti-correção (voz-calibragem); retecer fora de cena, revelar por atrito, checklist 1-de-3 (textura-mundo); pergunta-oráculo (checagem-continuidade).
 
 **Por quê.** spec0025, base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q3) — comparação com as 4 skills provadas em campo (Novel 2/3), que tinham técnica concreta (o «como fazer») ausente do protocolo capturado na spec0022. Sem custo de contexto: as técnicas vão pros SKILL.md do zip (spec0023), o ponteiro no CEREBRO não muda. 17/17, 33/33, 0 erros; `N[narrative]` segue em 6688/6900.
+
+---
+
+## D-055 — Modo Code: apêndice de arranque sai do CEREBRO e vira `claude-code-kit.zip` separado, formato Skills atual
+
+**Decisão.** Modo Code: apêndice de arranque sai do CEREBRO e vira `claude-code-kit.zip` separado (botão próprio), espelhando a D-052. Remove a instrução autodestrutiva «pode apagar». Comandos migrados do formato legado `.claude/commands/*.md` para o atual `.claude/skills/<nome>/SKILL.md` (slash commands fundidos em Skills em 2026; `disable-model-invocation: true` para só rodarem por invocação). CLAUDE.md starter atualizado (regra «< 200 linhas», config Sonnet/Opus atual em vez da regra obsoleta da i-N29). Harness G7. Fecha i-N37 e o ciclo de refino de modos (skills+code).
+
+**Por quê.** spec0026, base: `meta/ANALISE-MODO-CODE-REFINO.md`. O mesmo anti-padrão da D-052 (apêndice inline + instrução autodestrutiva) existia no Modo Code, além do formato legado de comandos. 17/17, 34/34, 0 erros.

@@ -216,8 +216,10 @@ Seletor de SO no builder; injeta sintaxe em Instruções e CLAUDE.md.
 ## i-N6 — Custom Inteligente (composição assistida de nichos) — APROVADA, A IMPLEMENTAR
 A grande próxima feature. Ver D-014 (DECISIONS) e a seção dedicada no STATUS. Resumo: 2º nicho de construção que importa/concatena material de nichos existentes, com dedup visível, sub-painel de seleção fina e checagem de conflito (spec-kit-inspired). NÃO fusão automática.
 
-## i-N7 — spec-kit para refinar dev e game (FUTURO, do usuário)
+## i-N7 — spec-kit para refinar dev e game (FUTURO, do usuário) — FECHADA (2026-07-04)
 Quando tiver mais feedback de uso dos nichos dev e game, o usuário pedirá uma análise do que do GitHub spec-kit (Spec-Driven Development) pode tornar os PROCESSOS desses nichos mais completos. O usuário não tem certeza se vai conseguir usar o spec-kit em si, mas quer a análise. Anotado.
+
+**Fechamento (2026-07-04):** analisada — o KCM já pratica SDD adaptado (CEREBRO=constitution, spec=specify+plan, apply-spec=implement); empréstimo pontual (`/check-spec`) registrado como i-N39.
 
 ## i-N8 — Exemplos prontos no Custom (instanciar nichos candidatos) — IDEIA do usuário, condicional
 Após o Custom Inteligente, avaliar oferecer "exemplos" prontos para criar instantaneamente os nichos que ficaram de fora (ver NICHOS-CANDIDATOS.md) — ou instruir como criá-los. O usuário disse "se for problemático, esqueça". A reavaliar depois do Custom Inteligente.
@@ -439,10 +441,16 @@ Fase C do refino do nicho narrativa: itens universais (não específicos do nich
 
 **2026-07-04 — Q2 (modo skills) aplicada (spec0024, D-053):** o controle de skills de escrita saiu do topbar e foi para o builder «A obra», default LIGADO. A reforma dos 3 toggles universais (grupo/ASU/Code) + feedback ambiental (faixas/selos de cor, símbolo do Code, identidade do ASU) segue como item de pesquisa futura, junto desta i-N36.
 
-## i-N37 — Modo Code: apêndice de arranque vira download (espelho da D-052) — spec0026 — 💡 Ativa
-D-052 (spec0023) aplicou às skills de escrita o princípio "CEREBRO só com regra fixa, sem artefato autodestrutivo/temporário": saíram do CEREBRO e viraram `skills.zip` separado. O apêndice de arranque do Modo Code (starter `.claude/commands/*.md` + instrução «pode apagar este apêndice») tem o MESMO anti-padrão e precisa do mesmo tratamento — virar download separado em vez de bloco-para-remover dentro do CEREBRO. Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q1, Nível 2).
+## i-N37 — Modo Code: apêndice de arranque vira download (espelho da D-052) — spec0026 — ✅ IMPLEMENTADA (v1.53.0)
+D-052 (spec0023) aplicou às skills de escrita o princípio "CEREBRO só com regra fixa, sem artefato autodestrutivo/temporário": saíram do CEREBRO e viraram `skills.zip` separado. O apêndice de arranque do Modo Code (starter `.claude/commands/*.md` + instrução «pode apagar este apêndice») tinha o MESMO anti-padrão e recebeu o mesmo tratamento — vira download separado (`claude-code-kit.zip`) em vez de bloco-para-remover dentro do CEREBRO; comandos migrados para `.claude/skills/<nome>/SKILL.md` (formato atual). Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q1, Nível 2).
 
-**Q1/Nível 2 da análise:** aplicada nesta spec (skills de escrita, D-052). **Princípio geral firmado como diretriz do KCM:** o CEREBRO.md contém só regras/diretrizes/técnicas FIXAS — nunca artefatos temporários nem instruções autodestrutivas; material de instalação/arranque sai como arquivo/download separado.
+**Q1/Nível 2 da análise:** aplicada nesta spec (skills de escrita, D-052) e em spec0026 (Modo Code, D-055). **Princípio geral firmado como diretriz do KCM:** o CEREBRO.md contém só regras/diretrizes/técnicas FIXAS — nunca artefatos temporários nem instruções autodestrutivas; material de instalação/arranque sai como arquivo/download separado.
+
+## i-N38 — Hook de pre-commit que roda o harness e bloqueia commit sem verde — 💡 Ativa
+Candidato à próxima fase de Code: um hook de pre-commit (via `.claude/settings.json` ou git hook nativo) que roda `node validate.js` automaticamente antes de cada commit e bloqueia se não vier 17/17 (ou o total vigente), 0 erros. Reduz o risco de commit com harness quebrado.
+
+## i-N39 — /check-spec: gate read-only de conferência da spec antes de aplicar — 💡 Ativa
+Empréstimo pontual do `/analyze` do GitHub spec-kit (fechamento da i-N7): um comando `/check-spec` que, antes de `/apply-spec`, faz uma conferência READ-ONLY da spec contra o repo (âncoras existem? arquivos citados existem? não conflita com outra spec aberta?) e reporta divergências sem tocar em nada. Opcional — o chat já pré-valida a spec antes de entregá-la, então o ganho é uma segunda rede, não a primeira.
 
 ## i-N34 — Afixo prefixo E sufixo simultaneos (refino da i-N3 Parte B) — ✅ IMPLEMENTADA (v1.47.0)
 A i-N3 Parte B (afixo no download) ja esta implementada (v1.9.0), mas trata prefixo/sufixo como escolha. Refino pedido: **duas caixas de texto separadas** (uma para prefixo, uma para sufixo), **cada uma com seu switch liga/desliga independente**, para o usuario preencher e aplicar os DOIS ao mesmo tempo (ex.: `projeto__CLAUDE__v1.8.md`). UI intuitiva: rotulo claro por caixa, preview do nome resultante. E manipulacao de string no downloadFile (barato); a parte nova e a UI dos dois toggles + preview. **Precisao:** prefixo e sufixo sao INDEPENDENTES — cada um com seu switch e sua caixa; podem estar ligados os dois, um so, ou nenhum, e o resultado se combina numa unica passada (ex.: so prefixo `projeto__CLAUDE.md`; so sufixo `CLAUDE__v1.8.md`; ambos `projeto__CLAUDE__v1.8.md`; nenhum `CLAUDE.md`). Preview do nome final atualiza ao vivo conforme os toggles/caixas.
