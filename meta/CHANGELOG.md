@@ -1,6 +1,14 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.49.0**.
+> Histórico de versões. Versão atual: **v1.50.0**.
+
+## v1.50.0 — Skills de escrita viram pacote skills.zip separado + ponteiro no CEREBRO (D-052)
+- As 4 skills de escrita (`escrita-serial`, `checagem-continuidade`, `voz-calibragem`, `textura-mundo`) saem do apêndice inline do CEREBRO e passam a sair como **pacote `skills.zip` separado** — novo botão «↓ Baixar skills (.zip)» na aba Templates, visível só quando o nicho tem `skillsPack` E o modo skills está ligado.
+- Estrutura fiel `skills/<nome>/SKILL.md` × 4 + `skills/README.md` (instruções de instalação + cláusula anti-`.gitignore` de `.claude/`), gerada por `buildSkillMd`/`downloadSkillsZIP` reusando o mesmo JSZip do `downloadZIP`.
+- O CEREBRO.md gerado fica só com um **ponteiro curto**: intro + tabela de gatilhos + instalação — sem o corpo das skills e sem a instrução autodestrutiva «pode apagar este apêndice». Inchaço cai de **+29% para +4,4%**.
+- Harness G6 reescrito para provar que o corpo NÃO vaza pro CEREBRO (sem frontmatter, sem stub, sem instrução de apagar) e que o ponteiro aponta o `skills.zip`.
+- Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q1, Nível 2).
+- Harness 17/17, 33/33, 0 erros. `N[narrative]` segue em 6688/6900.
 
 ## v1.49.0 — Nicho narrativa, fase B: switch skills-pack de escrita (i-N35, D-051)
 - Novo toggle **niche-scoped** no topbar, `skillsMode` ("Gerar skills de escrita?") — só aparece em nichos que declaram `skillsPack` (hoje so `narrative`); ausente nos outros 16.

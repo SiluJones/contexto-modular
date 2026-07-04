@@ -710,6 +710,7 @@
       <div class="btnrow" style="margin-bottom:14px">
         <button class="btn" id="dl-all">↓ Baixar todos</button>
         <button class="btn ghost" id="dl-zip">↓ Pacote em ZIP</button>
+        <button class="btn ghost" id="dl-skills" style="display:none">↓ Baixar skills (.zip)</button>
       </div>
 
       <div class="affix-box" id="affix-box">
@@ -7892,32 +7893,19 @@ if(asuModeOn()){
     L.push("");
     L.push("---");
     L.push("");
-    L.push("## Apêndice — skills de escrita (Agent Skills)");
+    L.push("## Skills de escrita (Agent Skills) — pacote separado");
     L.push("");
     L.push(sp.intro);
     L.push("");
-    L.push("**Onde instalar:** em **claude.ai**, Configurações → Capabilities/Skills → enviar cada SKILL.md (planos pagos). No **Claude Code**, salve cada uma em `.claude/skills/<nome>/SKILL.md` na raiz do repo (ou `~/.claude/skills/` para valer em todos os projetos). O mesmo arquivo serve nos dois — formato idêntico.");
-    L.push("**Como funciona:** o Claude lê só o `name` + `description` de cada skill no início da sessão; o corpo carrega sozinho quando a `description` casa com o que você pede (é *progressive disclosure* — o protocolo pesado não pesa no token de todo turno). Por isso a `description` é o gatilho e vem deliberadamente \"insistente\", com verbos concretos.");
-    L.push("**Preencha antes de usar:** cada skill tem uma seção «Aplicação neste projeto» em branco — é onde a regra genérica vira a regra DESTA obra (nomes, exemplos, invariantes reais). Skill sem essa parte preenchida rende pela metade.");
-    L.push("**Este CEREBRO e as skills se completam:** o CEREBRO define o comportamento base lido sempre; as skills carregam o protocolo detalhado no gatilho. Quando ligar as skills, o assistente as consulta nos gatilhos abaixo em vez de repetir tudo aqui.");
+    L.push("As skills NÃO vivem neste arquivo — ficam no pacote **`skills.zip`** que o kit gera à parte (botão «Baixar skills (.zip)» na aba de saída). Cada uma carrega sozinha quando seu gatilho dispara (*progressive disclosure*): o corpo pesado não ocupa contexto até ser preciso. Consulte-as nos gatilhos abaixo em vez de reescrever o protocolo aqui.");
+    L.push("");
+    L.push("| Skill | Aciona quando |");
+    L.push("|---|---|");
     (sp.skills||[]).forEach(sk => {
-      L.push("");
-      L.push(`### \`${sk.name}/SKILL.md\``);
-      if(sk.gatilho) L.push(`> Aciona quando: ${sk.gatilho}`);
-      L.push("```markdown");
-      L.push("---");
-      L.push(`name: ${sk.name}`);
-      L.push(`description: ${sk.description}`);
-      L.push("---");
-      sk.body.forEach(b => L.push(b));
-      L.push("");
-      L.push("## Aplicação neste projeto");
-      L.push("<!-- Preencha com o específico DESTA obra. Sem isto, a skill roda genérica. -->");
-      (sk.applyStub||["- [a preencher]"]).forEach(a => L.push(a));
-      L.push("```");
+      L.push(`| \`${sk.name}\` | ${sk.gatilho||"—"} |`);
     });
     L.push("");
-    L.push("> Depois de instalar e preencher as skills, você pode apagar este apêndice do CEREBRO — ele é um starter, não a fonte viva. As skills passam a ser a fonte do protocolo de escrita.");
+    L.push("Instalação: descompacte `skills.zip` e mova a pasta `skills/` para **`.claude/skills/`** na raiz do projeto (Claude Code), ou envie cada `SKILL.md` em **claude.ai → Configurações → Skills** (planos pagos). O `README.md` dentro do zip repete estes passos. Cada skill tem uma seção «Aplicação neste projeto» em branco — preencha com o específico da obra antes de usar.");
   }
   L.push("");
   L.push(`*Gerado pelo Kit de Contexto Universal — nicho ${niche.label}. Edite à vontade: este arquivo é seu.*`);
@@ -8051,6 +8039,9 @@ function renderTemplates(niche){
       if(f) downloadFile(f.name, f.content||"");
     });
   });
+  // Botao de skills so aparece quando o nicho tem skillsPack E o modo skills esta ligado
+  const dlSkills = $("#dl-skills");
+  if(dlSkills) dlSkills.style.display = (niche && niche.skillsPack && skillsPackOn()) ? "" : "none";
 }
 /* Afixo opcional nos nomes de arquivo baixados.
    Padrão: vazio (nomes saem exatamente como hoje). Só muda quando o
@@ -8113,6 +8104,59 @@ async function downloadZIP(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url; a.download = `kit-${niche.id}-templates.zip`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+// Renderiza UM SKILL.md a partir do dado da skill (fonte unica: mesma estrutura que ia inline no CEREBRO).
+function buildSkillMd(sk){
+  const L = [];
+  L.push("---");
+  L.push(`name: ${sk.name}`);
+  L.push(`description: ${sk.description}`);
+  L.push("---");
+  (sk.body||[]).forEach(b => L.push(b));
+  L.push("");
+  L.push("## Aplicação neste projeto");
+  L.push("<!-- Preencha com o específico DESTA obra. Sem isto, a skill roda genérica. -->");
+  (sk.applyStub||["- [a preencher]"]).forEach(a => L.push(a));
+  L.push("");
+  return L.join("\n");
+}
+async function downloadSkillsZIP(){
+  const niche = getCurrentNiche();
+  if(!niche || !niche.skillsPack || !(niche.skillsPack.skills||[]).length) return;
+  if(typeof JSZip === "undefined"){
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+  }
+  const sp = niche.skillsPack;
+  const zip = new JSZip();
+  // estrutura fiel ao formato: skills/<nome>/SKILL.md — arrasta 'skills/' para dentro de .claude/
+  sp.skills.forEach(sk => zip.file(`skills/${sk.name}/SKILL.md`, buildSkillMd(sk)));
+  const readme = [
+    `# Skills de escrita — ${niche.label}`,
+    "",
+    "Pacote de Agent Skills gerado pelo Kit de Contexto Universal.",
+    `Data: ${today}`,
+    "",
+    "## Como instalar",
+    "- **Claude Code:** mova a pasta `skills/` deste zip para dentro de `.claude/` na raiz do projeto — o resultado é `.claude/skills/<nome>/SKILL.md`. (Ou `~/.claude/skills/` para valer em todos os projetos.)",
+    "- **claude.ai:** Configurações → Skills → envie cada `SKILL.md` (planos pagos).",
+    "",
+    "## Antes de usar",
+    "Cada skill tem uma seção «Aplicação neste projeto» em branco — preencha com o específico da obra (nomes, exemplos, invariantes). Sem isso, a skill roda genérica.",
+    "",
+    "## Atenção ao versionar",
+    "Se o projeto tiver `.gitignore`, garanta que ele **não** ignore a pasta `.claude/` inteira — as skills devem ser versionadas junto do projeto. Ignore apenas artefatos locais (ex.: caches), nunca `.claude/skills/`.",
+    "",
+    "## Skills incluídas",
+    ...sp.skills.map(sk => `- **${sk.name}** — ${sk.gatilho||""}`),
+    ""
+  ].join("\n");
+  zip.file("skills/README.md", readme);
+  const blob = await zip.generateAsync({type:"blob"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `skills.zip`;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
@@ -8958,6 +9002,8 @@ function boot(){
     if(dlAll) dlAll.addEventListener("click", downloadAllTemplates);
     const dlZip = $("#dl-zip");
     if(dlZip) dlZip.addEventListener("click", downloadZIP);
+    const dlSkills = $("#dl-skills");
+    if(dlSkills) dlSkills.addEventListener("click", downloadSkillsZIP);
 
     // Afixo opcional nos nomes de arquivo — prefixo E sufixo independentes (i-N34)
     const affixPreOn   = $("#affix-prefix-on");

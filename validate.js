@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -101,7 +101,7 @@ check("G5 switch ASU round-trip (dev: no->sem / yes->com diretriz+comando)", () 
   return "ok";
 });
 
-check("G6 switch skills-pack (narrative: no->sem / yes->4 skills; dev nao tem o toggle)", () => {
+check("G6 switch skills-pack (narrative: ponteiro no CEREBRO, corpos SO no zip; dev nao tem o toggle)", () => {
   const narr = T.normNiche(T.NICHES.narrative);
   T.STATE.topbar = T.STATE.topbar || {};
   T.STATE.topbar.skillsMode = "no";
@@ -109,11 +109,21 @@ check("G6 switch skills-pack (narrative: no->sem / yes->4 skills; dev nao tem o 
   T.STATE.topbar.skillsMode = "yes";
   const yesSk = T.buildClaudeMd(narr);
   T.STATE.topbar.skillsMode = "no";
-  assert(!/skills de escrita/i.test(noSk), "skillsMode=no nao deveria ter o apendice de skills");
-  assert(/skills de escrita/i.test(yesSk), "skillsMode=yes deveria ter o apendice de skills");
-  assert(/name: escrita-serial/.test(yesSk) && /name: checagem-continuidade/.test(yesSk) && /name: voz-calibragem/.test(yesSk) && /name: textura-mundo/.test(yesSk), "faltou alguma das 4 skills");
-  assert(/Aplicação neste projeto/.test(yesSk), "skill sem a secao 'Aplicacao neste projeto'");
+  assert(!/Skills de escrita/i.test(noSk), "skillsMode=no nao deveria ter a secao de skills");
+  assert(/Skills de escrita/i.test(yesSk), "skillsMode=yes deveria ter a secao de skills");
+  // ponteiro: os NOMES das 4 skills aparecem na tabela de gatilhos
+  assert(/escrita-serial/.test(yesSk) && /checagem-continuidade/.test(yesSk) && /voz-calibragem/.test(yesSk) && /textura-mundo/.test(yesSk), "ponteiro sem alguma das 4 skills");
+  // MAS o corpo NAO fica inline no CEREBRO (progressive disclosure): sem frontmatter, sem stub, sem instrucao de apagar
+  assert(!/name: escrita-serial/.test(yesSk), "corpo da skill (frontmatter) vazou pro CEREBRO — deveria ficar so no zip");
+  assert(!/<!-- Preencha com o específico/.test(yesSk), "stub 'Aplicacao neste projeto' vazou pro CEREBRO — deveria ficar so no zip");
+  assert(!/pode apagar este ap.ndice/i.test(yesSk), "instrucao autodestrutiva 'apagar apendice' nao pode existir no CEREBRO");
+  assert(/skills\.zip/i.test(yesSk), "ponteiro sem apontar o pacote skills.zip");
   assert(noSk !== yesSk, "round-trip do skills-pack nao alterou o CEREBRO.md");
+  // buildSkillMd rende um SKILL.md valido a partir do dado (fonte do zip)
+  const sk0 = narr.skillsPack.skills[0];
+  const md = T.buildSkillMd(sk0);
+  assert(/^---\nname: escrita-serial\ndescription: /.test(md), "buildSkillMd sem frontmatter valido");
+  assert(/Aplicação neste projeto/.test(md), "buildSkillMd sem a secao 'Aplicacao neste projeto'");
   // niche-scoping: o toggle so existe onde o nicho declara skillsPack
   assert((narr.topbar||[]).some(t=>t.id==="skillsMode"), "narrative deveria ter o toggle skillsMode");
   const dev = T.normNiche(T.NICHES.dev);
