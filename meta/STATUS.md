@@ -1,7 +1,8 @@
-# STATUS — Kit de Contexto Universal — 2026-06-21
+# STATUS — Kit de Contexto Universal — 2026-07-04
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.49.0**. Índice ~587 KB. Teste: **17/17 nichos, 0 erros JS** + integridade dos chips (FIX-004) + **~33 checagens de conteúdo** (D-018/022/028/029; v1.29–v1.36) + smoke/round-trip do HUB (códigos curados + variador) + suíte de fluxos. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.53.0**. Teste: **17/17 nichos, 34/34 checagens, 0 erros JS** + integridade dos chips (FIX-004) + smoke/round-trip do HUB + G6 (skills-pack) + G7 (modo Code). `N[narrative]` em 6688/6900. (Detalhe do método no CONTEXT §3.)
+> **Ciclo de refino de modos (skills+Code) FECHADO** (specs 0021→0026). Próximas frentes, todas adiadas de propósito: i-N36 (reforma dos 3 modos universais no topbar + feedback ambiental — precisa de pesquisa dedicada), i-N38 (hook de pre-commit rodando o harness), i-N39 (`/check-spec`).
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
@@ -62,7 +63,7 @@
 
 ## 🎯 PRÓXIMOS (decidir/fazer)
 1. ✅ **ASU quick wins** (v1.36.0, D-032): lembrete na UI ao ligar o switch ASU + diretriz ancorada no `format_version` do guia — **concluído**.
-2. **"Modo Code":** switch que gera o kit de arranque — `CLAUDE.md` raiz starter, `.claude/settings.json` + comandos `/`, protocolo de raias, macetes Windows/PowerShell — funcionando em desktop e CLI.
+2. ✅ **"Modo Code"** (v1.35.0, D-031; refinado em v1.53.0, D-055): switch que gera o kit de arranque — agora como pacote `claude-code-kit.zip` separado (CLAUDE.md raiz + `.claude/settings.json` + comandos no formato Skills atual), protocolo de raias no CEREBRO. **Concluído.**
 3. **Consolidar o CINZEIRO no HUB** — EM ANDAMENTO pelo usuário.
 4. **README/PLANNING:** reescrever quando der (pitch novo — "kit desenvolve" + HUB/Cânone).
 5. **Padronização de nome de spec não obedecida em campo:** ao atualizar o CEREBRO do ASU com o Modo Code, o projeto consumidor **não** corrigiu os nomes das specs para o padrão. Sinal de que D-039/D-041 precisam de reforço na camada lida-todo-turno (instrução curta), não só no CEREBRO. Conecta às frentes de auditoria/obediência.
@@ -136,3 +137,6 @@ Aplicada a spec0025 (refino das 4 skills de escrita com 10 técnicas de campo, Q
 
 ## 💬 Última sessão (2026-07-04 — v1.53.0, spec0026)
 Aplicada a spec0026 (Modo Code: kit de arranque vira download separado + formato Skills atual, i-N37, D-055) via `/apply-spec`: apêndice inline (starter `.claude/commands/*.md` + instrução autodestrutiva «pode apagar este apêndice») vira ponteiro curto (tabela + instalação) no CEREBRO; novo `buildCodeKitFiles`/`downloadCodeKitZIP` gera `claude-code-kit.zip` (`CLAUDE.md` + `.claude/settings.json` + `.claude/skills/apply-spec/SKILL.md` + `.claude/skills/wrap/SKILL.md` + `README.md`), reusando o JSZip do `downloadZIP`; comandos migram do formato legado para `.claude/skills/<nome>/SKILL.md` (frontmatter `name`/`description`/`disable-model-invocation: true`); CLAUDE.md starter atualizado (regra «< 200 linhas», config Sonnet/Opus atual). Novo botão «↓ Baixar kit do Claude Code (.zip)» na aba Templates (visível só com Modo Code ligado). Harness G7 novo. 17/17, 34/34, 0 erros. Verificação manual em navegador (servidor estático local): botão aparece/some com o toggle, CEREBRO gerado confirmado só com o ponteiro (sem inline, sem «pode apagar»), zip gerado com a estrutura correta via JSZip real. Fecha i-N37 e o ciclo de refino de modos (skills+code); i-N7 fechada (analisada); abertas i-N38 (hook de pre-commit) e i-N39 (`/check-spec`).
+
+## 💬 Última sessão (2026-07-04 — fecho de sessão, spec0027, doc-only)
+Fecho da jornada 0021→0026: cabeçalho do STATUS atualizado para 2026-07-04/v1.53.0 (corpo já estava em dia); item 2 de PRÓXIMOS marcado ✅ concluído (Modo Code); criado `logs/2026-07-04.md` com o resumo da jornada; FIX-006 registrado no DECISIONS (chat entregou meta de handoff incompletos sem avisar — sem dano ao repo, appends do Code mantiveram tudo íntegro). Ciclo de refino de modos (skills+Code) FECHADO.

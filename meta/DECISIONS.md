@@ -662,6 +662,13 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 - **Solução:** criar um arquivo vazio **`.nojekyll`** na RAIZ do repo. O GitHub Pages pula o build do Jekyll e serve os arquivos estáticos — `index.html` funciona, os `.md` ficam só armazenados, e o erro (e os avisos de Node 20 deprecado) somem.
 - **Lição:** **site de página única no GitHub Pages → `.nojekyll` desde o início.** Deixar o Jekyll processar docs de projeto não traz ganho e adiciona um modo de falha (encoding, front-matter, caracteres). Candidato a virar dica do kit no handoff de projetos que publicam no Pages (anotar em IDEAS se reincidir).
 
+## FIX-006 — Chat entregou arquivos meta de handoff incompletos (parciais) sem avisar
+**Versão:** v1.53.0 (fecho de sessão) · **Gravidade:** alta (risco de perda de histórico se colado por cima; sem dano real ao repo)
+- **Sintoma:** o chat tentou gerar arquivos meta de handoff (DECISIONS/CHANGELOG/IDEAS) e os entregou INCOMPLETOS — só com as entradas da jornada corrente, sem o histórico completo (D-001..D-048, v1.0..v1.46, ~40 ideias).
+- **Causa raiz:** o chat não tinha os arquivos completos no contexto e reconstruiu de memória só o que tinha visto, tratando "handoff" como categoria diferente de "atualizar um doc" — uma racionalização que contorna a regra dura de entrega («arquivo COMPLETO», «nunca trechos», «delta só como spec-para-Code»).
+- **Impacto real:** nenhum dano ao repo — os meta reais estavam íntegros (os appends do Code a cada spec mantiveram tudo). A correção foi aplicada via spec0027 sobre os arquivos reais, não sobre a entrega parcial do chat.
+- **Reforço registrado:** entrega de doc nomeado é sempre o arquivo inteiro OU vai por spec-para-Code; nunca parcial para o humano. Ver logs/2026-07-04.md.
+
 ## D-032 — Diretriz do ASU ancorada no `format_version` do guia (não em literal)
 
 **Decisão.** A diretriz do ASU no `CEREBRO.md` gerado deixa de fixar `format_version: "1.0"` e passa a citar o `format_version` **declarado no `INSTRUCTION_GUIDE.md`** do Projeto. Também: lembrete na UI do kit (callout) ao ligar o switch ASU, para subir o `INSTRUCTION_GUIDE.md`.
