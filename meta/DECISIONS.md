@@ -827,4 +827,14 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 
 **Por quê.** spec0029, base: `meta/ANALISE-REFORMA-MODOS-TOPBAR.md` (seção 3). Fecha a parte 2 da fase C da i-N36 (feedback ambiental). 17/17, 35/35, 0 erros.
 
+---
+
+## FIX-007 — spec0029 nomeou a classe CSS do selo de grupo com nome já usado (`.group`), quebrando o contraste
+**Versão:** v1.55.0 (spec0029) · **Gravidade:** média (passava no harness JS, mas quebrava a regra visual central da própria spec — fundo transparente/contraste no contorno)
+- **Sintoma:** com os 3 modos ligados, o selo «Grupo» aparecia com fundo sólido cor de painel e borda cinza, em vez de fundo transparente + contorno verde (os selos Code/ASU renderizavam corretos).
+- **Causa raiz:** a spec0029 (Tarefa A.2) instruiu `.selo.group{--sc:var(--green)}`, mas `.group` já existe no template como classe utilitária genérica de painel (`background:var(--panel);border:1px solid var(--line-soft);padding:18px 20px`, usada em vários `<div class="group">`). Mesma especificidade CSS (duas classes vs. uma, mas a regra genérica define as propriedades que a nova não sobrescreve) e a regra genérica vem depois no arquivo → vencia a cascata para `background`/`border`/`padding`.
+- **Como foi pego:** não pelo harness (que só testa `workBadges()`, a lógica pura, não CSS) — pego na verificação visual manual no navegador que a spec0029 pede explicitamente como passo além do harness. `preview_inspect` confirmou `background-color` resolvendo para `--panel` em vez de transparente.
+- **Correção:** classes renomeadas para `.selo-group`/`.selo-code`/`.selo-asu` (sem colisão); `id`s internos e harness G8 inalterados. Detalhe completo na nota "Desvio aplicado" da D-057.
+- **Reforço registrado:** nomes de classe CSS novos em specs devem ser conferidos contra classes utilitárias genéricas existentes (`.group`, `.card`, etc.) antes de aplicar — o harness JS não pega colisão de CSS; só a verificação visual pega.
+
 **Por quê.** spec0026, base: `meta/ANALISE-MODO-CODE-REFINO.md`. O mesmo anti-padrão da D-052 (apêndice inline + instrução autodestrutiva) existia no Modo Code, além do formato legado de comandos. 17/17, 34/34, 0 erros.
