@@ -441,6 +441,8 @@ Fase C do refino do nicho narrativa: itens universais (não específicos do nich
 
 **2026-07-04 — Q2 (modo skills) aplicada (spec0024, D-053):** o controle de skills de escrita saiu do topbar e foi para o builder «A obra», default LIGADO. A reforma dos 3 toggles universais (grupo/ASU/Code) + feedback ambiental (faixas/selos de cor, símbolo do Code, identidade do ASU) segue como item de pesquisa futura, junto desta i-N36.
 
+**2026-07-06 — fase C FECHADA (spec0028 + spec0029, D-056/D-057):** spec0028 tirou os 3 toggles universais do topbar para o painel global recolhível «Modo de trabalho» (`STATE.workmode`); spec0029 acrescentou o feedback ambiental — selos de estado multicanal (cor+glifo+rótulo), empilháveis, perto da saída, ordem estável grupo→Code→ASU. Com isso, **a fase C (reforma dos 3 modos + feedback ambiental) está feita**. Resta da i-N36 só a fase "topbar inteiro" (adiada, fora de escopo destas duas specs) + o encaixe do atualizador i-N40 (que acopla nos selos como fonte de verdade, mas entra como ação futura, sem virar 4º selo).
+
 ## i-N37 — Modo Code: apêndice de arranque vira download (espelho da D-052) — spec0026 — ✅ IMPLEMENTADA (v1.53.0)
 D-052 (spec0023) aplicou às skills de escrita o princípio "CEREBRO só com regra fixa, sem artefato autodestrutivo/temporário": saíram do CEREBRO e viraram `skills.zip` separado. O apêndice de arranque do Modo Code (starter `.claude/commands/*.md` + instrução «pode apagar este apêndice») tinha o MESMO anti-padrão e recebeu o mesmo tratamento — vira download separado (`claude-code-kit.zip`) em vez de bloco-para-remover dentro do CEREBRO; comandos migrados para `.claude/skills/<nome>/SKILL.md` (formato atual). Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q1, Nível 2).
 

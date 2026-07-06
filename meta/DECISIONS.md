@@ -817,4 +817,14 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 
 **Por quê.** spec0028, base: `meta/ANALISE-REFORMA-MODOS-TOPBAR.md` (seções 1-2) + i-N36. Pesquisa + D-053 confirmaram que toggles soltos no topbar são erro (clique-errado) e que segmented control está refutado (os 3 modos coexistem, seleção independente). Fecha a parte 1 da fase C da i-N36. 17/17, 34/34, 0 erros.
 
+---
+
+## D-057 — Selos de estado multicanal (cor+glifo+rótulo), empilháveis, perto da saída
+
+**Decisão.** Cada modo ligado (`grupo`/`Code`/`ASU`) ganha um selo discreto e empilhável acima do preview da saída, nunca cor sozinha (WCAG 1.4.1): três canais — cor (`--sc`), glifo (`.g`) e rótulo em texto. O contraste vive no contorno + texto (WCAG 1.4.11), não no preenchimento — fundo transparente, borda e texto herdam `--sc`. Ordem estável: grupo → Code → ASU (mesma ordem do painel «Modo de trabalho» da D-056). Glifos/cores fixados: grupo = `◉` + verde, Code = `⌘` + âmbar, ASU = chevron duplo `»` + `--teal:#5cc2c9` (on-dark do `#0E7C86` da análise, escolhido porque o tema é escuro). `workBadges()` é a fonte pura (testável), `renderWorkBadges()` só espelha no DOM; harness G8. O atualizador i-N40 não ganha selo — entra depois como ação futura perto da saída.
+
+**Desvio aplicado em relação à spec0029 (documentado, confirmado com o usuário durante a aplicação):** as classes CSS dos selos saíram de `.selo.group`/`.selo.code`/`.selo.asu` para `.selo.selo-group`/`.selo.selo-code`/`.selo.selo-asu`. Motivo: `.group` já existe como classe utilitária genérica no template (painéis `<div class="group">`, linha ~213) com `background:var(--panel)` + `border:1px solid var(--line-soft)` + `padding:18px 20px` — mesma especificidade do `.selo.group` da spec e declarada depois no CSS, então vencia a cascata e quebrava o selo «Grupo» (fundo sólido em vez de transparente, borda cinza em vez de verde), falhando o passo 2 da verificação visual da própria spec. Os ids internos (`workBadges()[].id === "group"`) e o harness G8 não mudaram — só o nome da classe CSS renderizada.
+
+**Por quê.** spec0029, base: `meta/ANALISE-REFORMA-MODOS-TOPBAR.md` (seção 3). Fecha a parte 2 da fase C da i-N36 (feedback ambiental). 17/17, 35/35, 0 erros.
+
 **Por quê.** spec0026, base: `meta/ANALISE-MODO-CODE-REFINO.md`. O mesmo anti-padrão da D-052 (apêndice inline + instrução autodestrutiva) existia no Modo Code, além do formato legado de comandos. 17/17, 34/34, 0 erros.

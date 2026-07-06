@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -157,6 +157,22 @@ check("G7 modo Code (dev: kit vira download separado, ponteiro no CEREBRO, sem i
   assert(/"permissions"/.test(f.settings) && /"deny"/.test(f.settings), "settings.json starter invalido");
   assert(/^---\nname: apply-spec\ndescription: /.test(f.applySpec) && /disable-model-invocation: true/.test(f.applySpec), "apply-spec nao esta no formato Skill atual");
   assert(/^---\nname: wrap\ndescription: /.test(f.wrap) && /disable-model-invocation: true/.test(f.wrap), "wrap nao esta no formato Skill atual");
+  return "ok";
+});
+
+check("G8 selos de estado: presente quando liga / ausente quando desliga / ordem estavel (grupo, Code, ASU)", () => {
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.workmode.groupMode = "no"; T.STATE.workmode.codeMode = "no"; T.STATE.workmode.asuMode = "no";
+  assert(T.workBadges().length === 0, "nenhum modo ligado deveria dar 0 selos");
+  T.STATE.workmode.groupMode = "yes"; T.STATE.workmode.codeMode = "yes"; T.STATE.workmode.asuMode = "yes";
+  const all = T.workBadges().map(s=>s.id);
+  assert(all.length === 3, "3 modos ligados deveriam dar 3 selos, deu " + all.length);
+  assert(all.join(",") === "group,code,asu", "ordem instavel: " + all.join(","));
+  T.STATE.workmode.groupMode = "no"; T.STATE.workmode.codeMode = "no";
+  const one = T.workBadges();
+  assert(one.length === 1 && one[0].id === "asu", "so ASU ligado deveria dar so o selo ASU");
+  assert(/»/.test(one[0].glyph), "selo ASU deveria usar o chevron duplo »");
+  T.STATE.workmode.asuMode = "no";
   return "ok";
 });
 
