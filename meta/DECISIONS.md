@@ -809,4 +809,12 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 
 **Decisão.** Modo Code: apêndice de arranque sai do CEREBRO e vira `claude-code-kit.zip` separado (botão próprio), espelhando a D-052. Remove a instrução autodestrutiva «pode apagar». Comandos migrados do formato legado `.claude/commands/*.md` para o atual `.claude/skills/<nome>/SKILL.md` (slash commands fundidos em Skills em 2026; `disable-model-invocation: true` para só rodarem por invocação). CLAUDE.md starter atualizado (regra «< 200 linhas», config Sonnet/Opus atual em vez da regra obsoleta da i-N29). Harness G7. Fecha i-N37 e o ciclo de refino de modos (skills+code).
 
+---
+
+## D-056 — Os 3 modos universais migram do topbar para o painel global «Modo de trabalho»
+
+**Decisão.** `groupMode`/`asuMode`/`codeMode` saem da injeção de toggles soltos no `topbar` de todo nicho e passam a viver num painel `<details class="workmode">` (checkbox agrupado sob heading, progressive disclosure nativa), posicionado no `.main` logo abaixo do topbar sticky, **fora de qualquer `.view`** — visível/recolhível de qualquer aba. Estado migra de `STATE.topbar.*` para `STATE.workmode.*`, mas continua **por-nicho** (mesma vida do antigo `STATE.topbar`): "global" aqui é alcance de UI (painel aparece em toda aba), não estado compartilhado entre nichos — a saída gerada por nicho não muda. Harness G4/G5/G7 migrados para `STATE.workmode` + guarda nova "modo NAO deveria mais estar no topbar" (trava de regressão).
+
+**Por quê.** spec0028, base: `meta/ANALISE-REFORMA-MODOS-TOPBAR.md` (seções 1-2) + i-N36. Pesquisa + D-053 confirmaram que toggles soltos no topbar são erro (clique-errado) e que segmented control está refutado (os 3 modos coexistem, seleção independente). Fecha a parte 1 da fase C da i-N36. 17/17, 34/34, 0 erros.
+
 **Por quê.** spec0026, base: `meta/ANALISE-MODO-CODE-REFINO.md`. O mesmo anti-padrão da D-052 (apêndice inline + instrução autodestrutiva) existia no Modo Code, além do formato legado de comandos. 17/17, 34/34, 0 erros.

@@ -218,6 +218,15 @@
   .tsw input:checked + .track{background:var(--amber);border-color:var(--amber)}
   .tsw input:checked + .track::after{transform:translateX(17px);background:#1a160e}
   .tsw input:focus-visible + .track{outline:2px solid var(--amber-soft);outline-offset:2px}
+  /* Modo de trabalho — painel global recolhível (spec0028) */
+  .workmode{margin:0 30px;border-bottom:1px solid var(--line-soft);background:rgba(22,19,13,.55)}
+  .workmode>summary{list-style:none;cursor:pointer;padding:11px 0;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:10px}
+  .workmode>summary::-webkit-details-marker{display:none}
+  .workmode>summary::before{content:"▸";color:var(--amber);display:inline-block;transition:transform .15s}
+  .workmode[open]>summary::before{transform:rotate(90deg)}
+  .workmode .wm-count{font-size:10px;color:var(--ink-faint);letter-spacing:.2px;text-transform:none}
+  .wm-body{display:flex;flex-wrap:wrap;gap:8px 34px;padding:2px 0 15px}
+  .wm-body .check{padding:6px 0;max-width:340px}
   /* Construtor do HUB (página de grupo) */
   .hubrow{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--line-soft);border-radius:10px;background:var(--panel);margin-bottom:8px;flex-wrap:wrap}
   .hubrow .moves{display:flex;flex-direction:column;gap:2px;flex:0 0 auto}
@@ -580,6 +589,11 @@
   <div class="main">
     <!-- TOPBAR — campos dinâmicos por nicho -->
     <div class="topbar" id="topbar"></div>
+    <!-- MODO DE TRABALHO — painel global recolhível (modos que valem para a sessão) -->
+    <details class="workmode" id="workmode" open>
+      <summary>Modo de trabalho <span class="wm-count" id="wm-count"></span></summary>
+      <div class="wm-body" id="wm-body"></div>
+    </details>
 
     <!-- ============ VIEW: INÍCIO ============ -->
     <section class="view on" id="v-inicio">
@@ -6822,7 +6836,7 @@ function normNiche(n){
     behaviors:      normBehaviors(n.behaviors),
     contextFiles:   _files,
     outputs:        normOutputs(n.outputs),
-    topbar:         [...normTopbar(n.topbar), { id:"groupMode", label:"Projeto em grupo? (gera HUB.md)", type:"toggle", default:"no" }, { id:"asuMode", label:"Saída via ASU (patch)?", type:"toggle", default:"no" }, { id:"codeMode", label:"Desenvolver no Claude Code?", type:"toggle", default:"no" }],
+    topbar:         normTopbar(n.topbar),
     builderSection: normBuilderSection(n.builderSection),
     conventions:    normConventions(n.conventions),
     promptsExtra:   n.promptsExtra || []
@@ -6835,6 +6849,7 @@ function normNiche(n){
 const STATE = {
   niche: null,
   topbar: {},
+  workmode: {},
   behaviors: {},
   builder: {},
   outputs: {},
@@ -6902,20 +6917,21 @@ function persistState(){
     try{
       localStorage.setItem(LS_NICHE, STATE.niche);
       localStorage.setItem(LS_STATE + STATE.niche, JSON.stringify({
-        topbar: STATE.topbar, behaviors: STATE.behaviors,
+        topbar: STATE.topbar, workmode: STATE.workmode, behaviors: STATE.behaviors,
         builder: STATE.builder, outputs: STATE.outputs, extra: STATE.extra, os: STATE.os
       }));
     }catch(_){}
   }
 }
 function restoreStateFor(nicheId){
-  STATE.topbar = {}; STATE.behaviors = {}; STATE.builder = {};
+  STATE.topbar = {}; STATE.workmode = {}; STATE.behaviors = {}; STATE.builder = {};
   STATE.outputs = {}; STATE.extra = ""; STATE.fillValues = {};
   try{
     const raw = localStorage.getItem(LS_STATE + nicheId);
     if(raw){
       const snap = JSON.parse(raw);
       STATE.topbar    = snap.topbar    || {};
+      STATE.workmode  = snap.workmode  || {};
       STATE.behaviors = snap.behaviors || {};
       STATE.builder   = snap.builder   || {};
       STATE.outputs   = snap.outputs   || {};
@@ -7021,6 +7037,7 @@ function setNiche(id){
   renderHero(niche);
   renderIntro(niche);
   renderTopbar(niche);
+  renderWorkmode();
   renderBuilder(niche);
   renderConventionsBlock(niche);
   renderPrompts(niche);
@@ -7246,6 +7263,32 @@ function wireSavedNichesShortcut(){
   });
 }
 
+const WORKMODE_FIELDS = [
+  { id:"groupMode", label:"Projeto em grupo",              desc:"Gera um HUB.md compartilhado; o CEREBRO passa a ler a caixa de entrada do grupo." },
+  { id:"codeMode",  label:"Desenvolver no Claude Code",    desc:"Emite o kit de arranque (CLAUDE.md, settings, skills) como download à parte." },
+  { id:"asuMode",   label:"Saída via ASU (patch)",         desc:"Edições viram instrução .yaml para baixar e aplicar; escrita nova/rolante sai inteira." },
+];
+function updateWorkCount(){
+  const c = $("#wm-count"); if(!c) return;
+  const n = WORKMODE_FIELDS.filter(f => STATE.workmode[f.id] === "yes").length;
+  c.textContent = n ? "· " + n + " ativo" + (n>1?"s":"") : "· nenhum ativo";
+}
+function renderWorkmode(){
+  const body = $("#wm-body"); if(!body) return;
+  body.innerHTML = WORKMODE_FIELDS.map(f => {
+    const on = STATE.workmode[f.id] === "yes";
+    return '<label class="check"><input type="checkbox" data-wm="' + f.id + '"' + (on?" checked":"") + '/>'
+         + '<span>' + escapeHTML(f.label) + '<small>' + escapeHTML(f.desc) + '</small></span></label>';
+  }).join("");
+  body.querySelectorAll("[data-wm]").forEach(el => {
+    el.addEventListener("change", () => {
+      STATE.workmode[el.dataset.wm] = el.checked ? "yes" : "no";
+      persistState(); updatePreview(); renderPrompts(getCurrentNiche()); renderTemplates(getCurrentNiche());
+      updateWorkCount();
+    });
+  });
+  updateWorkCount();
+}
 function renderTopbar(niche){
   const host = $("#topbar");
   if(!host) return;
@@ -7481,9 +7524,9 @@ function renderOutputs(niche){
    - buildClaudeMd(): VERSÃO COMPLETA para subir como arquivo CLAUDE.md.
      Consultado quando relevante, fácil de atualizar e versionar.
    ========================================================= */
-function groupModeOn(){ return !!(STATE.topbar && STATE.topbar.groupMode === "yes"); }
-function asuModeOn(){ return !!(STATE.topbar && STATE.topbar.asuMode === "yes"); }
-function codeModeOn(){ return !!(STATE.topbar && STATE.topbar.codeMode === "yes"); }
+function groupModeOn(){ return !!(STATE.workmode && STATE.workmode.groupMode === "yes"); }
+function asuModeOn(){ return !!(STATE.workmode && STATE.workmode.asuMode === "yes"); }
+function codeModeOn(){ return !!(STATE.workmode && STATE.workmode.codeMode === "yes"); }
 function skillsPackOn(){ return (STATE.builder && STATE.builder.skillsMode === "no") ? false : true; }
 function effectiveFiles(niche){
   // O HUB.md NÃO entra no download por-nicho (seria um HUB genérico repetido em cada nicho).

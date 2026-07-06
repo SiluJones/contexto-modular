@@ -71,14 +71,15 @@ check("G3b variador de duplicata (DEV0/DEV1; unico sem sufixo)", () => {
   return JSON.stringify(dup);
 });
 
-check("G4 switch HUB round-trip (dev: no->sem / yes->com)", () => {
+check("G4 switch HUB round-trip (dev: no->sem / yes->com; grupo fora do topbar)", () => {
   const dev = T.normNiche(T.NICHES.dev);
-  T.STATE.topbar = T.STATE.topbar || {};
-  T.STATE.topbar.groupMode = "no";
+  assert(!(dev.topbar||[]).some(t=>t.id==="groupMode"), "groupMode NAO deveria mais estar no topbar (moveu pro painel Modo de trabalho)");
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.workmode.groupMode = "no";
   const noHub = T.buildClaudeMd(dev);
-  T.STATE.topbar.groupMode = "yes";
+  T.STATE.workmode.groupMode = "yes";
   const yesHub = T.buildClaudeMd(dev);
-  T.STATE.topbar.groupMode = "no";
+  T.STATE.workmode.groupMode = "no";
   assert(!/HUB/.test(noHub), "groupMode=no nao deveria ter HUB");
   assert(/HUB/.test(yesHub), "groupMode=yes deveria ter HUB");
   assert(noHub !== yesHub, "round-trip nao alterou o CEREBRO.md");
@@ -87,12 +88,13 @@ check("G4 switch HUB round-trip (dev: no->sem / yes->com)", () => {
 
 check("G5 switch ASU round-trip (dev: no->sem / yes->com diretriz+comando)", () => {
   const dev = T.normNiche(T.NICHES.dev);
-  T.STATE.topbar = T.STATE.topbar || {};
-  T.STATE.topbar.asuMode = "no";
+  assert(!(dev.topbar||[]).some(t=>t.id==="asuMode"), "asuMode NAO deveria mais estar no topbar (moveu pro painel Modo de trabalho)");
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.workmode.asuMode = "no";
   const noAsu = T.buildClaudeMd(dev);
-  T.STATE.topbar.asuMode = "yes";
+  T.STATE.workmode.asuMode = "yes";
   const yesAsu = T.buildClaudeMd(dev);
-  T.STATE.topbar.asuMode = "no";
+  T.STATE.workmode.asuMode = "no";
   assert(!/Sa.da de c.digo via ASU/.test(noAsu), "asuMode=no nao deveria ter a diretriz ASU");
   assert(/Sa.da de c.digo via ASU/.test(yesAsu), "asuMode=yes deveria ter a diretriz ASU");
   assert(/python -m src apply/.test(yesAsu), "diretriz ASU sem o comando de aplicacao");
@@ -136,12 +138,13 @@ check("G6 skills-pack (narrative: controle no builder, default LIGADO, fora do t
 
 check("G7 modo Code (dev: kit vira download separado, ponteiro no CEREBRO, sem inline nem 'apagar')", () => {
   const dev = T.normNiche(T.NICHES.dev);
-  T.STATE.topbar = T.STATE.topbar || {};
-  T.STATE.topbar.codeMode = "no";
+  assert(!(dev.topbar||[]).some(t=>t.id==="codeMode"), "codeMode NAO deveria mais estar no topbar (moveu pro painel Modo de trabalho)");
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.workmode.codeMode = "no";
   const noC = T.buildClaudeMd(dev);
-  T.STATE.topbar.codeMode = "yes";
+  T.STATE.workmode.codeMode = "yes";
   const yesC = T.buildClaudeMd(dev);
-  T.STATE.topbar.codeMode = "no";
+  T.STATE.workmode.codeMode = "no";
   assert(!/Kit de arranque do Claude Code/i.test(noC), "codeMode=no nao deveria ter a secao do kit");
   assert(/Kit de arranque do Claude Code/i.test(yesC), "codeMode=yes deveria ter a secao (ponteiro) do kit");
   assert(/claude-code-kit\.zip/i.test(yesC), "ponteiro sem apontar o pacote claude-code-kit.zip");

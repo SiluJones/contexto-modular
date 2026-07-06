@@ -1,8 +1,8 @@
-# STATUS — Kit de Contexto Universal — 2026-07-04
+# STATUS — Kit de Contexto Universal — 2026-07-06
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.53.0**. Teste: **17/17 nichos, 34/34 checagens, 0 erros JS** + integridade dos chips (FIX-004) + smoke/round-trip do HUB + G6 (skills-pack) + G7 (modo Code). `N[narrative]` em 6688/6900. (Detalhe do método no CONTEXT §3.)
-> **Ciclo de refino de modos (skills+Code) FECHADO** (specs 0021→0026). Próximas frentes, todas adiadas de propósito: i-N36 (reforma dos 3 modos universais no topbar + feedback ambiental — precisa de pesquisa dedicada), i-N38 (hook de pre-commit rodando o harness), i-N39 (`/check-spec`).
+> Versão atual: **v1.54.0**. Teste: **17/17 nichos, 34/34 checagens, 0 erros JS** + integridade dos chips (FIX-004) + smoke/round-trip do HUB + G6 (skills-pack) + G7 (modo Code, migrado pro workmode). `N[narrative]` em 6688/6900. (Detalhe do método no CONTEXT §3.)
+> **i-N36 fase C, parte 1 FECHADA** (spec0028: os 3 modos saem do topbar pro painel «Modo de trabalho»). Próximas frentes: spec0029 (selos de estado, depende de `STATE.workmode`), i-N38 (hook de pre-commit rodando o harness), i-N39 (`/check-spec`), i-N40 (Modo Atualização, analisada/a escopar).
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
@@ -140,3 +140,6 @@ Aplicada a spec0026 (Modo Code: kit de arranque vira download separado + formato
 
 ## 💬 Última sessão (2026-07-04 — fecho de sessão, spec0027, doc-only)
 Fecho da jornada 0021→0026: cabeçalho do STATUS atualizado para 2026-07-04/v1.53.0 (corpo já estava em dia); item 2 de PRÓXIMOS marcado ✅ concluído (Modo Code); criado `logs/2026-07-04.md` com o resumo da jornada; FIX-006 registrado no DECISIONS (chat entregou meta de handoff incompletos sem avisar — sem dano ao repo, appends do Code mantiveram tudo íntegro). Ciclo de refino de modos (skills+Code) FECHADO.
+
+## 💬 Última sessão (2026-07-06 — v1.54.0, spec0028)
+Aplicada a spec0028 (painel «Modo de trabalho» global recolhível; os 3 modos saem do topbar, i-N36 fase C parte 1, D-056) via `/apply-spec`: `groupMode`/`asuMode`/`codeMode` saem da injeção de toggles soltos no `topbar` de todo nicho e passam a viver num painel `<details class="workmode">` (checkbox agrupado, progressive disclosure nativa), posicionado no `.main` logo abaixo do topbar sticky e **fora de qualquer `.view`** — visível/recolhível de qualquer aba, com contador "N ativos" no summary. Estado migra de `STATE.topbar.*` para `STATE.workmode.*`, continua **por-nicho** (persistência e saída gerada inalteradas). Harness G4/G5/G7 migrados para `STATE.workmode` + guarda nova "modo NAO deveria mais estar no topbar" (trava de regressão). 17/17, 34/34, 0 erros. Verificação manual em navegador (servidor estático local): painel aparece aberto com os 3 checkboxes + descrições, toggles sumiram do topbar, contador atualiza ao clicar, estado sobrevive a reload. Registrada i-N40 (Modo Atualização, analisada/a escopar) em IDEAS — spec0029 (selos de estado) é o próximo passo, depende dos helpers deste spec.
