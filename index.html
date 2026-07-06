@@ -39,6 +39,7 @@
     --green:#9fbf6f;
     --red:#d98a6a;
     --teal:#5cc2c9;
+    --code:#e8823a;
 
     --shadow:0 18px 50px -22px rgba(0,0,0,.8);
 
@@ -145,17 +146,6 @@
   .field input:focus,.field select:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(231,162,63,.13)}
   .sync-note{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);display:flex;align-items:center;gap:6px}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);transition:background .4s}
-  /* Selos de estado do Modo de trabalho — multicanal (cor+glifo+rótulo), empilháveis (spec0029) */
-  .selos{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-  .selo{
-    display:inline-flex;align-items:center;gap:5px;
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.4px;line-height:1;
-    padding:4px 8px;border-radius:6px;border:1px solid var(--sc);background:transparent;color:var(--sc);
-  }
-  .selo .g{font-weight:700;font-size:12px}
-  .selo.selo-group{--sc:var(--green)}
-  .selo.selo-code{--sc:var(--amber)}
-  .selo.selo-asu{--sc:var(--teal)}
 
   .view{display:none;padding:38px 30px 90px;max-width:1080px;animation:fade .4s ease}
   .view.on{display:block}
@@ -230,15 +220,20 @@
   .tsw input:checked + .track{background:var(--amber);border-color:var(--amber)}
   .tsw input:checked + .track::after{transform:translateX(17px);background:#1a160e}
   .tsw input:focus-visible + .track{outline:2px solid var(--amber-soft);outline-offset:2px}
-  /* Modo de trabalho — painel global recolhível (spec0028) */
-  .workmode{margin:0 30px;border-bottom:1px solid var(--line-soft);background:rgba(22,19,13,.55)}
-  .workmode>summary{list-style:none;cursor:pointer;padding:11px 0;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:10px}
-  .workmode>summary::-webkit-details-marker{display:none}
-  .workmode>summary::before{content:"▸";color:var(--amber);display:inline-block;transition:transform .15s}
-  .workmode[open]>summary::before{transform:rotate(90deg)}
-  .workmode .wm-count{font-size:10px;color:var(--ink-faint);letter-spacing:.2px;text-transform:none}
-  .wm-body{display:flex;flex-wrap:wrap;gap:8px 34px;padding:2px 0 15px}
-  .wm-body .check{padding:6px 0;max-width:340px}
+  /* Botões de modo de trabalho — no topbar sticky, agrupados, cor no estado ativo (spec0030) */
+  .modes{display:inline-flex;gap:6px;align-items:center;padding:4px 8px;border:1px solid var(--line-soft);border-radius:10px;background:rgba(22,19,13,.4)}
+  .modes-lbl{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);margin-right:2px}
+  .modebtn{position:relative;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.4px;line-height:1;padding:6px 10px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--ink-dim);transition:all .12s}
+  .modebtn .g{font-weight:700;font-size:13px}
+  .modebtn:hover{border-color:var(--ink-faint);color:var(--ink)}
+  .modebtn:focus-visible{outline:2px solid var(--amber-soft);outline-offset:2px}
+  .modebtn[aria-pressed="true"]{border-color:var(--mc);background:var(--mc);color:#1a160e;font-weight:700}
+  .modebtn.mode-group{--mc:var(--green)}
+  .modebtn.mode-code{--mc:var(--code)}
+  .modebtn.mode-asu{--mc:var(--teal)}
+  /* dica (tooltip) — hover/foco, não bloqueia o clique, não cobre conteúdo (WCAG 1.4.13) */
+  .modebtn .tip{position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:max-content;max-width:260px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--ink-dim);font-family:var(--body);font-size:12px;line-height:1.4;letter-spacing:0;text-transform:none;opacity:0;visibility:hidden;transform:translateY(-3px);transition:opacity .12s,transform .12s;pointer-events:none;box-shadow:var(--shadow)}
+  .modebtn:hover .tip,.modebtn:focus-visible .tip{opacity:1;visibility:visible;transform:translateY(0)}
   /* Construtor do HUB (página de grupo) */
   .hubrow{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--line-soft);border-radius:10px;background:var(--panel);margin-bottom:8px;flex-wrap:wrap}
   .hubrow .moves{display:flex;flex-direction:column;gap:2px;flex:0 0 auto}
@@ -601,11 +596,6 @@
   <div class="main">
     <!-- TOPBAR — campos dinâmicos por nicho -->
     <div class="topbar" id="topbar"></div>
-    <!-- MODO DE TRABALHO — painel global recolhível (modos que valem para a sessão) -->
-    <details class="workmode" id="workmode" open>
-      <summary>Modo de trabalho <span class="wm-count" id="wm-count"></span></summary>
-      <div class="wm-body" id="wm-body"></div>
-    </details>
 
     <!-- ============ VIEW: INÍCIO ============ -->
     <section class="view on" id="v-inicio">
@@ -713,7 +703,6 @@
               <button class="btn ghost sm" id="dl-instr">↓ baixar</button>
             </div>
           </div>
-          <div class="selos" id="work-selos" style="margin:2px 0 10px"></div>
           <pre id="preview-instr"></pre>
           <p class="hint" id="out-hint" style="margin-top:10px">As <b>Instruções do Projeto</b> são lidas em toda mensagem — por isso vêm enxutas. Cole em <b>Projeto → Instruções</b>. Não coloque código aqui.</p>
           <div class="callout" id="asu-reminder" style="display:none;margin-top:10px">⚠️ <b>ASU ligado:</b> suba o <code>INSTRUCTION_GUIDE.md</code> e o <code>PROMPT_IA.md</code> no conhecimento do Projeto — é o <b>contrato do formato</b> (a saída usa o <code>format_version</code> que ele declara).</div>
@@ -7050,7 +7039,6 @@ function setNiche(id){
   renderHero(niche);
   renderIntro(niche);
   renderTopbar(niche);
-  renderWorkmode();
   renderBuilder(niche);
   renderConventionsBlock(niche);
   renderPrompts(niche);
@@ -7276,31 +7264,36 @@ function wireSavedNichesShortcut(){
   });
 }
 
-const WORKMODE_FIELDS = [
-  { id:"groupMode", label:"Projeto em grupo",              desc:"Gera um HUB.md compartilhado; o CEREBRO passa a ler a caixa de entrada do grupo." },
-  { id:"codeMode",  label:"Desenvolver no Claude Code",    desc:"Emite o kit de arranque (CLAUDE.md, settings, skills) como download à parte." },
-  { id:"asuMode",   label:"Saída via ASU (patch)",         desc:"Edições viram instrução .yaml para baixar e aplicar; escrita nova/rolante sai inteira." },
+/* Modos de trabalho — fonte única (id do estado + rótulo/glifo/cor/descrição). Ordem estável: grupo, Code, ASU. */
+const WORK_MODES = [
+  { id:"groupMode", key:"group", label:"Grupo", glyph:"◉", cls:"mode-group",
+    desc:"Projeto em grupo — gera um HUB.md compartilhado; o CEREBRO passa a ler a caixa de entrada do grupo." },
+  { id:"codeMode",  key:"code",  label:"Code",  glyph:"⌘", cls:"mode-code",
+    desc:"Desenvolver no Claude Code — emite o kit de arranque (CLAUDE.md, settings, skills) como download à parte." },
+  { id:"asuMode",   key:"asu",   label:"ASU",   glyph:"»", cls:"mode-asu",
+    desc:"Saída via ASU (patch) — edições viram instrução .yaml para baixar e aplicar; escrita nova/rolante sai inteira." },
 ];
-function updateWorkCount(){
-  const c = $("#wm-count"); if(!c) return;
-  const n = WORKMODE_FIELDS.filter(f => STATE.workmode[f.id] === "yes").length;
-  c.textContent = n ? "· " + n + " ativo" + (n>1?"s":"") : "· nenhum ativo";
-}
-function renderWorkmode(){
-  const body = $("#wm-body"); if(!body) return;
-  body.innerHTML = WORKMODE_FIELDS.map(f => {
-    const on = STATE.workmode[f.id] === "yes";
-    return '<label class="check"><input type="checkbox" data-wm="' + f.id + '"' + (on?" checked":"") + '/>'
-         + '<span>' + escapeHTML(f.label) + '<small>' + escapeHTML(f.desc) + '</small></span></label>';
+function modesClusterHTML(){
+  const btns = WORK_MODES.map(m => {
+    const on = STATE.workmode[m.id] === "yes";
+    return '<button type="button" class="modebtn ' + m.cls + '" data-mode="' + m.id + '"'
+      + ' aria-pressed="' + (on?"true":"false") + '" aria-describedby="tip-' + m.key + '">'
+      + '<span class="g" aria-hidden="true">' + m.glyph + '</span>' + escapeHTML(m.label)
+      + '<span class="tip" role="tooltip" id="tip-' + m.key + '">' + escapeHTML(m.desc) + '</span>'
+      + '</button>';
   }).join("");
-  body.querySelectorAll("[data-wm]").forEach(el => {
-    el.addEventListener("change", () => {
-      STATE.workmode[el.dataset.wm] = el.checked ? "yes" : "no";
+  return '<div class="modes" role="group" aria-label="Modo de trabalho"><span class="modes-lbl">modo</span>' + btns + '</div>';
+}
+function wireModes(){
+  document.querySelectorAll('.modebtn[data-mode]').forEach(el => {
+    el.addEventListener("click", () => {
+      const id = el.dataset.mode;
+      const on = STATE.workmode[id] === "yes";
+      STATE.workmode[id] = on ? "no" : "yes";
+      el.setAttribute("aria-pressed", on ? "false" : "true");
       persistState(); updatePreview(); renderPrompts(getCurrentNiche()); renderTemplates(getCurrentNiche());
-      updateWorkCount();
     });
   });
-  updateWorkCount();
 }
 function renderTopbar(niche){
   const host = $("#topbar");
@@ -7308,8 +7301,9 @@ function renderTopbar(niche){
   const fields = niche.topbar || [];
   const _saved = savedNichesShortcutHTML();
   if(fields.length === 0){
-    host.innerHTML = _saved + `<div class="sync-note"><i class="dot"></i> ${niche.label}</div>`;
+    host.innerHTML = modesClusterHTML() + _saved + `<div class="sync-note"><i class="dot"></i> ${niche.label}</div>`;
     wireSavedNichesShortcut();
+    wireModes();
     return;
   }
   host.innerHTML = fields.map(f => {
@@ -7329,7 +7323,7 @@ function renderTopbar(niche){
       return `<div class="field"><span class="tlabel">${escapeHTML(f.label)}</span><label class="tsw"><input type="checkbox" data-tb="${f.id}"${on?" checked":""}/><span class="track"></span></label></div>`;
     }
     return `<div class="field"><span class="tlabel">${escapeHTML(f.label)}</span><input type="text" data-tb="${f.id}" value="${escAttr(val)}" placeholder="${escAttr(f.placeholder||"")}"/></div>`;
-  }).join("") + _saved + `<div class="sync-note"><i class="dot"></i> ${niche.label}</div>`;
+  }).join("") + _saved + modesClusterHTML() + `<div class="sync-note"><i class="dot"></i> ${niche.label}</div>`;
 
   host.querySelectorAll("[data-tb]").forEach(el => {
     const handler = () => {
@@ -7340,6 +7334,7 @@ function renderTopbar(niche){
     el.addEventListener("change", handler);
   });
   wireSavedNichesShortcut();
+  wireModes();
 }
 
 /* =========================================================
@@ -7543,21 +7538,9 @@ function codeModeOn(){ return !!(STATE.workmode && STATE.workmode.codeMode === "
 
 /* Selos de estado — fonte unica (pura, testavel no harness) + render (spec0029).
    Ordem estavel: grupo, Code, ASU. ASU = chevron duplo » + teal. */
-const WORK_SELOS = [
-  { id:"group", on:()=>groupModeOn(), label:"Grupo", glyph:"◉" },
-  { id:"code",  on:()=>codeModeOn(),  label:"Code",  glyph:"⌘" },
-  { id:"asu",   on:()=>asuModeOn(),   label:"ASU",   glyph:"»" },
-];
+/* Fonte pura dos modos ativos (usada pelo harness G8; antes alimentava os selos, hoje reflete os botões). */
 function workBadges(){
-  return WORK_SELOS.filter(s => s.on()).map(s => ({ id:s.id, label:s.label, glyph:s.glyph }));
-}
-function renderWorkBadges(){
-  const host = $("#work-selos"); if(!host) return;
-  const b = workBadges();
-  host.innerHTML = b.map(s =>
-    '<span class="selo selo-' + s.id + '"><span class="g" aria-hidden="true">' + s.glyph + '</span>' + escapeHTML(s.label) + '</span>'
-  ).join("");
-  host.style.display = b.length ? "flex" : "none";
+  return WORK_MODES.filter(m => STATE.workmode[m.id] === "yes").map(m => ({ id:m.key, label:m.label, glyph:m.glyph }));
 }
 function skillsPackOn(){ return (STATE.builder && STATE.builder.skillsMode === "no") ? false : true; }
 function effectiveFiles(niche){
@@ -8011,7 +7994,6 @@ function updatePreview(){
   }
   const _asuRem = $("#asu-reminder");
   if(_asuRem) _asuRem.style.display = asuModeOn() ? "block" : "none";
-  renderWorkBadges();
 }
 
 /* =========================================================

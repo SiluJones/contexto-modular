@@ -838,3 +838,11 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 - **Reforço registrado:** nomes de classe CSS novos em specs devem ser conferidos contra classes utilitárias genéricas existentes (`.group`, `.card`, etc.) antes de aplicar — o harness JS não pega colisão de CSS; só a verificação visual pega.
 
 **Por quê.** spec0026, base: `meta/ANALISE-MODO-CODE-REFINO.md`. O mesmo anti-padrão da D-052 (apêndice inline + instrução autodestrutiva) existia no Modo Code, além do formato legado de comandos. 17/17, 34/34, 0 erros.
+
+---
+
+## D-058 — Modos voltam ao topbar como botões-toggle agrupados; painel e selos saem
+
+**Decisão.** Os 3 modos (`groupMode`/`codeMode`/`asuMode`) saem do painel `<details class="workmode">` (D-056) e dos selos perto da saída (D-057) e passam a viver como um cluster `.modes` de botões-toggle (`.modebtn`, `aria-pressed`) dentro do próprio `#topbar`, herdando o `position:sticky` dele — fixos ao rolar de graça. Ativo, o botão enche com a cor do modo (Grupo verde, Code laranja de verdade via nova variável `--code:#e8823a`, ASU teal) + rótulo curto, multicanal (cor + rótulo + `aria-pressed`), lê em escala de cinza (cheio vs. contorno). As descrições viram tooltip própria (`.tip`, não `title`), aparecendo em `:hover` e `:focus-visible`, `pointer-events:none` (nunca bloqueia o clique), posicionada abaixo do botão, `aria-describedby` → `role="tooltip"` — decisão com lastro em WCAG 1.4.13 (conteúdo não-essencial, já que cor+rótulo bastam). `STATE.workmode` e `workBadges()` são mantidos (harness G8), `workBadges()` passa a ler a nova fonte única `WORK_MODES` (antes `WORK_SELOS`) com mesma forma/ordem de retorno.
+
+**Por quê.** spec0030, base: `meta/ANALISE-REFORMA-MODOS-TOPBAR.md` + feedback do usuário (260706-1026.txt): o painel `<details>` não é sticky (some ao rolar) e os selos perto da saída ficaram pouco visíveis; o topbar já é sticky de graça. Fecha a parte 1 da fase "topbar inteiro" da i-N36 (antes de spec0031 e spec0032). 17/17, 35/35, 0 erros.
