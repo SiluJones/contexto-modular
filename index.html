@@ -304,6 +304,20 @@
   .affix-input{flex:1;min-width:140px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-family:var(--mono);font-size:12px}
   .affix-input:disabled{opacity:.4;cursor:not-allowed}
   .affix-preview{font-size:12px;color:var(--ink-faint);margin:11px 0 0;line-height:1.5;border-top:1px solid var(--line-soft);padding-top:10px}
+  /* Cluster de ação no canto do topbar + modal de configuração (spec0031) */
+  .actions{display:inline-flex;gap:6px;align-items:center;margin-left:auto}
+  .actbtn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink-dim);font-size:15px;transition:all .12s}
+  .actbtn:hover{border-color:var(--ink-faint);color:var(--ink);background:rgba(231,162,63,.08)}
+  .actbtn:focus-visible{outline:2px solid var(--amber-soft);outline-offset:2px}
+  .cfg{width:min(560px,92vw);max-height:86vh;border:1px solid var(--line);border-radius:14px;background:var(--panel2);color:var(--ink);padding:0;box-shadow:var(--shadow)}
+  .cfg::backdrop{background:rgba(8,6,3,.62)}
+  .cfg-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line-soft)}
+  .cfg-head h2{margin:0;font-size:18px;font-weight:600;color:var(--ink)}
+  .cfg-x{width:30px;height:30px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--ink-dim);cursor:pointer;font-size:14px}
+  .cfg-x:hover{color:var(--ink);border-color:var(--ink-faint)}
+  .cfg-body{padding:18px 20px;overflow:auto}
+  .cfg-sec{margin-bottom:8px}
+  .cfg-sec>h3{margin:0 0 10px;font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint)}
 
   .flowbox{background:#0e0b06;border:1px solid var(--line);border-radius:10px;padding:14px 18px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);line-height:1.9;white-space:pre-wrap}
   .flowbox b{color:var(--amber);font-weight:600}
@@ -730,26 +744,6 @@
         <button class="btn ghost" id="dl-codekit" style="display:none">↓ Baixar kit do Claude Code (.zip)</button>
       </div>
 
-      <div class="affix-box" id="affix-box">
-        <div class="affix-row">
-          <label class="affix-tsw" title="Ligar prefixo">
-            <input type="checkbox" id="affix-prefix-on" />
-            <span class="track"></span>
-          </label>
-          <span class="affix-label">Prefixo</span>
-          <input type="text" id="affix-prefix-text" class="affix-input" placeholder="ex: meu-projeto" disabled />
-        </div>
-        <div class="affix-row">
-          <label class="affix-tsw" title="Ligar sufixo">
-            <input type="checkbox" id="affix-suffix-on" />
-            <span class="track"></span>
-          </label>
-          <span class="affix-label">Sufixo</span>
-          <input type="text" id="affix-suffix-text" class="affix-input" placeholder="ex: v1.8" disabled />
-        </div>
-        <p class="affix-preview" id="affix-preview">Os arquivos saem com o nome original (ex.: <code>STATUS.md</code>).</p>
-      </div>
-
       <div id="tpl-list"></div>
       <div class="callout" style="margin-top:24px">
         <span class="tag ctx" style="display:inline-block">contexto</span> = fica no Projeto (lido toda sessão · pequeno) ·
@@ -861,6 +855,37 @@
   </div>
 </div>
 
+  <!-- MODAL DE CONFIGURAÇÃO — aberto pela engrenagem; não troca nicho nem página (spec0031) -->
+  <dialog class="cfg" id="cfg-dialog" aria-labelledby="cfg-title">
+    <div class="cfg-head">
+      <h2 id="cfg-title">Configurações do projeto</h2>
+      <button type="button" class="cfg-x" id="cfg-close" aria-label="Fechar">✕</button>
+    </div>
+    <div class="cfg-body">
+      <section class="cfg-sec" id="cfg-sec-projeto">
+        <h3>Projeto</h3>
+        <div class="affix-box" id="affix-box">
+          <div class="affix-row">
+            <label class="affix-tsw" title="Ligar prefixo">
+              <input type="checkbox" id="affix-prefix-on" />
+              <span class="track"></span>
+            </label>
+            <span class="affix-label">Prefixo</span>
+            <input type="text" id="affix-prefix-text" class="affix-input" placeholder="ex: meu-projeto" disabled />
+          </div>
+          <div class="affix-row">
+            <label class="affix-tsw" title="Ligar sufixo">
+              <input type="checkbox" id="affix-suffix-on" />
+              <span class="track"></span>
+            </label>
+            <span class="affix-label">Sufixo</span>
+            <input type="text" id="affix-suffix-text" class="affix-input" placeholder="ex: v1.8" disabled />
+          </div>
+          <p class="affix-preview" id="affix-preview">Os arquivos saem com o nome original (ex.: <code>STATUS.md</code>).</p>
+        </div>
+      </section>
+    </div>
+  </dialog>
 
 <script>
 /* ============================================================
@@ -7295,15 +7320,26 @@ function wireModes(){
     });
   });
 }
+/* Cluster de ação do canto (spec0031). Nasce com a engrenagem; download/atualizar entram nas specs 0033/0034. */
+function actionsClusterHTML(){
+  return '<div class="actions">'
+    + '<button type="button" class="actbtn" id="act-cfg" title="Configurações do projeto" aria-label="Configurações do projeto">⚙</button>'
+    + '</div>';
+}
+function wireActions(){
+  const g = $("#act-cfg");
+  if(g) g.addEventListener("click", () => { const d = $("#cfg-dialog"); if(d && d.showModal) d.showModal(); });
+}
 function renderTopbar(niche){
   const host = $("#topbar");
   if(!host) return;
   const fields = niche.topbar || [];
   const _saved = savedNichesShortcutHTML();
   if(fields.length === 0){
-    host.innerHTML = modesClusterHTML() + _saved + `<div class="sync-note"><i class="dot"></i> ${niche.label}</div>`;
+    host.innerHTML = modesClusterHTML() + _saved + actionsClusterHTML();
     wireSavedNichesShortcut();
     wireModes();
+    wireActions();
     return;
   }
   host.innerHTML = fields.map(f => {
@@ -7323,7 +7359,7 @@ function renderTopbar(niche){
       return `<div class="field"><span class="tlabel">${escapeHTML(f.label)}</span><label class="tsw"><input type="checkbox" data-tb="${f.id}"${on?" checked":""}/><span class="track"></span></label></div>`;
     }
     return `<div class="field"><span class="tlabel">${escapeHTML(f.label)}</span><input type="text" data-tb="${f.id}" value="${escAttr(val)}" placeholder="${escAttr(f.placeholder||"")}"/></div>`;
-  }).join("") + _saved + modesClusterHTML() + `<div class="sync-note"><i class="dot"></i> ${niche.label}</div>`;
+  }).join("") + _saved + modesClusterHTML() + actionsClusterHTML();
 
   host.querySelectorAll("[data-tb]").forEach(el => {
     const handler = () => {
@@ -7335,6 +7371,7 @@ function renderTopbar(niche){
   });
   wireSavedNichesShortcut();
   wireModes();
+  wireActions();
 }
 
 /* =========================================================
@@ -9157,6 +9194,12 @@ function boot(){
     if(dlSkills) dlSkills.addEventListener("click", downloadSkillsZIP);
     const dlCodekit = $("#dl-codekit");
     if(dlCodekit) dlCodekit.addEventListener("click", downloadCodeKitZIP);
+
+    // Modal de configuração — fechar pelo X e pelo clique no backdrop (Esc é nativo do <dialog>)
+    const cfgDialog = $("#cfg-dialog");
+    const cfgClose  = $("#cfg-close");
+    if(cfgClose && cfgDialog) cfgClose.addEventListener("click", () => cfgDialog.close());
+    if(cfgDialog) cfgDialog.addEventListener("click", (e) => { if(e.target === cfgDialog) cfgDialog.close(); });
 
     // Afixo opcional nos nomes de arquivo — prefixo E sufixo independentes (i-N34)
     const affixPreOn   = $("#affix-prefix-on");
