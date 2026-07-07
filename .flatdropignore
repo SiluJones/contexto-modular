@@ -1,0 +1,27 @@
+# .flatdropignore — contexto-modular
+# Sintaxe .gitignore. Salvo na RAIZ do repo, versionado, tem a palavra final sobre o .gitignore.
+# Objetivo: enxugar o que sobe ao mount do Projeto do Claude SEM tirar o que o desenvolvimento precisa.
+# Tudo listado aqui CONTINUA versionado no git — so nao e ENVIADO ao Projeto (FlatDrop != deploy != git).
+# (Sao padroes POSITIVOS = excluir a mais o que a allowlist do FlatDrop deixaria passar.)
+
+# --- Specs aplicadas (38 e crescendo) ---
+# O desfecho de cada spec ja vive em meta/DECISIONS.md (D-0xx), meta/CHANGELOG.md e meta/STATUS.md.
+# O corpo bruto e so historico e pesa muito no mount. Mantemos apenas o guia do metodo.
+# Nota: usamos "meta/specs/*" (e nao "meta/specs/") de proposito — o git/pathspec NAO reinclui
+# um arquivo sob uma pasta excluida por inteiro, entao excluimos o conteudo e reincluimos o guia.
+meta/specs/*
+!meta/specs/_GUIA-doc-por-spec.md
+
+# Para estudar UMA spec especifica no Projeto, reinclua pontualmente (o "!" vence o ignore acima), ex.:
+# !meta/specs/260707-spec0033-campos-nicho-na-saida.md
+
+# --- Logs diarios de sessao ---
+# O "agora" esta em meta/STATUS.md; o consolidado em meta/CHANGELOG.md. O diario nao precisa
+# ir ao mount (o git guarda o historico).
+logs/
+
+# --- Build gerado (o maior arquivo do repo, ~230 KB) ---
+# O planejamento (raia Chat) sempre ancora em src/index.template.html; o index.html e
+# reconstruido pelo Code via "node build.js". No mount ele so duplica o template e custa tokens.
+# (Se algum dia quiser inspecionar o build DENTRO do Projeto, reinclua com: !index.html)
+index.html
