@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -264,6 +264,32 @@ check("C9 game: builds_game ('Cria o jogo, não só o documento')", () => {
   const game = T.normNiche(T.NICHES.game);
   const gc = T.buildClaudeMd(game);
   assert(/Cria o jogo, n.o s. o documento/i.test(gc), "sem behavior builds_game"); return "ok";
+});
+
+check("G9 update-pack: nomes planos unicos, manifesto presente, modos gatilham, CEREBRO/INSTRUCOES = fusao (dev)", () => {
+  const dev = T.normNiche(T.NICHES.dev);
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.builder  = T.STATE.builder  || {};
+  // modos alvo desligados
+  T.STATE.workmode.codeMode = "no";
+  T.STATE.builder.skillsMode = "no";
+  const p0 = T.buildUpdatePack(dev);
+  assert(p0 && p0.files && p0.files.length, "pack vazio");
+  assert(/kcm-update-manifest/.test(p0.manifest), "manifesto ausente/sem assinatura");
+  const flats0 = p0.files.map(f => f.flat);
+  assert(new Set(flats0).size === flats0.length, "nomes planos colidiram: " + flats0.join(","));
+  assert(flats0.every(n => n.indexOf("__template-update") > 0), "algum nome sem o afixo __template-update");
+  assert(!p0.files.some(f => /^\.claude|^CLAUDE\.md$/.test(f.real)), "kit-Code entrou com Code desligado");
+  assert(p0.files.some(f => f.real === "meta/CEREBRO.md" && f.nature === "fusao"), "CEREBRO deveria ser fusao");
+  assert(p0.files.some(f => f.real === "INSTRUCOES-DO-PROJETO.md" && f.nature === "fusao"), "INSTRUCOES deveria ser fusao");
+  // com Code ligado, o kit entra e os nomes seguem unicos
+  T.STATE.workmode.codeMode = "yes";
+  const p1 = T.buildUpdatePack(dev);
+  const flats1 = p1.files.map(f => f.flat);
+  assert(new Set(flats1).size === flats1.length, "nomes planos colidiram com Code: " + flats1.join(","));
+  assert(p1.files.some(f => f.real === ".claude/settings.json"), "kit-Code nao entrou com Code ligado");
+  T.STATE.workmode.codeMode = "no";
+  return "ok";
 });
 
 // ============ SUMARIO ============
