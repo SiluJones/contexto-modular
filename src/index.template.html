@@ -2067,9 +2067,17 @@ function buildInstr(niche){
   const lines = [];
   lines.push(`# Projeto: ${tb.project || tb.projeto || tb.peca || tb.tema || "[NOME]"}`);
   lines.push(`Domínio: ${niche.label}.`);
-  if(tb.version || tb.versao || tb.fase){
-    lines.push(`Estágio: ${tb.version || tb.versao || tb.fase}.`);
+  if(tb.version || tb.versao || tb.fase || tb.phase){
+    lines.push(`Estágio: ${tb.version || tb.versao || tb.fase || tb.phase}.`);
   }
+  // Contexto do projeto: campos de nicho ainda não consumidos acima (ex.: gênero, engine), só se tiverem valor (spec0033)
+  const HEADER_IDS = ["project","projeto","peca","tema","version","versao","fase","phase","langSel"];
+  const ctxBits = (niche.topbar || []).filter(f => !HEADER_IDS.includes(f.id)).map(f => {
+    const v = tb[f.id];
+    const shown = Array.isArray(v) ? v.filter(Boolean).join(", ") : (v == null ? "" : String(v).trim());
+    return shown ? `${f.label}: ${shown}` : "";
+  }).filter(Boolean);
+  if(ctxBits.length) lines.push(`Contexto do projeto: ${ctxBits.join(" · ")}.`);
   lines.push("");
   lines.push("> Comportamento detalhado, regras de higiene e tabela de gatilhos estão no **CEREBRO.md** (subido como arquivo). Estas instruções trazem só o essencial, lido em toda mensagem.");
 
