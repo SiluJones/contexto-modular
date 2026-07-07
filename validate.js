@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -289,6 +289,16 @@ check("G9 update-pack: nomes planos unicos, manifesto presente, modos gatilham, 
   assert(new Set(flats1).size === flats1.length, "nomes planos colidiram com Code: " + flats1.join(","));
   assert(p1.files.some(f => f.real === ".claude/settings.json"), "kit-Code nao entrou com Code ligado");
   T.STATE.workmode.codeMode = "no";
+  return "ok";
+});
+
+check("G10 update-prompt: disparo para IA (compara/nao-sobrescreve) e SEM blocos de diff (regra dura de entrega)", () => {
+  const dev = T.normNiche(T.NICHES.dev);
+  const s = T.buildUpdatePrompt(dev);
+  assert(s && s.length > 0, "prompt vazio");
+  assert(/compare/i.test(s), "prompt sem a rotina de comparacao");
+  assert(/nunca sobrescreva|substituicao cega/i.test(s), "prompt sem a regra de nao-sobrescrever");
+  assert(s.indexOf("```") === -1, "prompt NAO pode conter blocos de diff (fere a regra dura de entrega)");
   return "ok";
 });
 

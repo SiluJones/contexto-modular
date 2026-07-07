@@ -318,6 +318,10 @@
   .cfg-body{padding:18px 20px;overflow:auto}
   .cfg-sec{margin-bottom:8px}
   .cfg-sec>h3{margin:0 0 10px;font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint)}
+  .upd-note{font-size:13px;color:var(--ink-dim);line-height:1.5;margin:0 0 12px}
+  .upd-modes{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin:0 0 14px}
+  .upd-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .upd-hint{font-size:12px;color:var(--ink-faint);margin:12px 0 0}
   #cfg-nicho-body .subhead{margin-top:2px}
   #cfg-nicho-body .chips{margin-bottom:14px}
 
@@ -890,6 +894,23 @@
         <h3>Nicho</h3>
         <div id="cfg-nicho-body"></div>
       </section>
+    </div>
+  </dialog>
+
+  <!-- MODAL DE ATUALIZAÇÃO — pacote template-update; não troca nicho nem página (spec0036) -->
+  <dialog class="cfg" id="upd-dialog" aria-labelledby="upd-title">
+    <div class="cfg-head">
+      <h2 id="upd-title">Atualizar projeto existente</h2>
+      <button type="button" class="cfg-x" id="upd-close" aria-label="Fechar">✕</button>
+    </div>
+    <div class="cfg-body">
+      <p class="upd-note">Empacota este nicho <b>achatado + afixado</b> (<code>__template-update</code>) para subir ao mount de um projeto KCM já existente. A conversa-alvo compara com o vivo e <b>propõe o merge — nunca substitui às cegas</b>.</p>
+      <p class="upd-modes" id="upd-modes"></p>
+      <div class="upd-actions">
+        <button type="button" class="btn" id="upd-dl">↓ Baixar .zip de atualização</button>
+        <button type="button" class="btn ghost" id="upd-copy">⧉ Copiar prompt</button>
+      </div>
+      <p class="upd-hint" id="upd-hint">O prompt também vai dentro do zip como <code>_UPDATE-PROMPT.md</code>.</p>
     </div>
   </dialog>
 
@@ -7327,10 +7348,11 @@ function wireModes(){
     });
   });
 }
-/* Cluster de ação do canto (spec0031). Download estruturado (spec0034); atualizar entra na spec0035. */
+/* Cluster de ação do canto: download estruturado (spec0034) · atualizar (spec0036) · configuração (spec0031). */
 function actionsClusterHTML(){
   return '<div class="actions">'
     + '<button type="button" class="actbtn" id="act-dl" title="Baixar projeto estruturado (pasta pronta para começar)" aria-label="Baixar projeto estruturado">↓</button>'
+    + '<button type="button" class="actbtn" id="act-upd" title="Atualizar projeto existente (pacote template-update)" aria-label="Atualizar projeto existente">↻</button>'
     + '<button type="button" class="actbtn" id="act-cfg" title="Configurações do projeto" aria-label="Configurações do projeto">⚙</button>'
     + '</div>';
 }
@@ -7339,6 +7361,8 @@ function wireActions(){
   if(g) g.addEventListener("click", () => { const d = $("#cfg-dialog"); if(d && d.showModal) d.showModal(); });
   const dl = $("#act-dl");
   if(dl) dl.addEventListener("click", downloadStructuredZIP);
+  const up = $("#act-upd");
+  if(up) up.addEventListener("click", () => { renderUpdateDialog(); const d = $("#upd-dialog"); if(d && d.showModal) d.showModal(); });
 }
 function renderTopbar(niche){
   const host = $("#topbar");
@@ -8579,6 +8603,54 @@ function buildUpdatePack(niche){
   const manifest = buildUpdateManifest(niche, files, codeOn, skillsOn);
   return { files, manifest, codeOn, skillsOn, affix: UPDATE_AFFIX };
 }
+/* Prompt de atualizacao: DISPARO para a IA-alvo (comparar/propor/fundir), NUNCA lista de diffs (analise §3). */
+function buildUpdatePrompt(niche){
+  const pack = buildUpdatePack(niche);
+  if(!pack) return "";
+  const L = [];
+  L.push(`Subi um **template-update** do KCM para este projeto (nicho: ${niche.label}). No mount ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo.`);
+  L.push("");
+  L.push("Estes arquivos sao **genericos/estruturais** — propositalmente vazios do especifico desta obra; nao estranhe a falta de conteudo. Para cada um:");
+  L.push("- **Compare** com o arquivo vivo equivalente do projeto (o destino real esta no manifesto).");
+  L.push("- **Reporte-me, sem aplicar nada sozinho:** (a) novidade util que meu projeto ainda nao tem; (b) choque com o que ja existe — apresente lado a lado, eu decido; (c) algo que meu projeto tem e o template nao cobre.");
+  L.push("- **Nunca sobrescreva conteudo vivo** por template vazio.");
+  L.push("- Itens marcados **`fusao`** (CEREBRO, INSTRUCOES) carregam comportamento que meu projeto pode ter evoluido: **compare e proponha o merge, nunca substituicao cega.**");
+  L.push("");
+  L.push("Arquivos no pacote:");
+  pack.files.forEach(f => {
+    const role = (f.role || "").replace(/\s+/g, " ").trim().slice(0, 90);
+    L.push(`- \`${f.flat}\` -> \`${f.real}\` (${f.nature})${role ? " — " + role : ""}`);
+  });
+  L.push("");
+  L.push("Comece listando o que encontrou em (a), (b) e (c). Eu decido os merges.");
+  return L.join("\n");
+}
+async function downloadUpdatePack(){
+  const niche = getCurrentNiche();
+  if(!niche) return;
+  if(typeof JSZip === "undefined"){
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+  }
+  const pack = buildUpdatePack(niche);
+  if(!pack) return;
+  const zip = new JSZip();
+  pack.files.forEach(f => zip.file(f.flat, f.content || ""));   // achatado na raiz do zip
+  zip.file("_UPDATE-MANIFEST.md", pack.manifest);
+  zip.file("_UPDATE-PROMPT.md", buildUpdatePrompt(niche));
+  const blob = await zip.generateAsync({type:"blob"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `${niche.id || projectSlug(niche.label)}-template-update.zip`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+function renderUpdateDialog(){
+  const m = $("#upd-modes"); if(!m) return;
+  const niche = getCurrentNiche();
+  const codeOn = codeModeOn();
+  const skillsOn = skillsPackOn() && !!(niche && niche.skillsPack && (niche.skillsPack.skills || []).length);
+  m.innerHTML = `No pacote: <b>skills ${skillsOn ? "sim" : "nao"}</b> · <b>Code ${codeOn ? "sim" : "nao"}</b> (reflete os modos ligados agora).`;
+}
 function loadScript(src){
   return new Promise((resolve, reject) => {
     const s = document.createElement("script");
@@ -9431,6 +9503,25 @@ function boot(){
     const cfgClose  = $("#cfg-close");
     if(cfgClose && cfgDialog) cfgClose.addEventListener("click", () => cfgDialog.close());
     if(cfgDialog) cfgDialog.addEventListener("click", (e) => { if(e.target === cfgDialog) cfgDialog.close(); });
+
+    // Modal de atualização — fechar + duas saídas (baixar zip / copiar prompt) (spec0036)
+    const updDialog = $("#upd-dialog");
+    const updClose  = $("#upd-close");
+    if(updClose && updDialog) updClose.addEventListener("click", () => updDialog.close());
+    if(updDialog) updDialog.addEventListener("click", (e) => { if(e.target === updDialog) updDialog.close(); });
+    const updDl = $("#upd-dl");
+    if(updDl) updDl.addEventListener("click", downloadUpdatePack);
+    const updCopy = $("#upd-copy");
+    if(updCopy) updCopy.addEventListener("click", async () => {
+      const n = getCurrentNiche(); if(!n) return;
+      const h = $("#upd-hint");
+      try {
+        await navigator.clipboard.writeText(buildUpdatePrompt(n));
+        if(h){ h.textContent = "Prompt copiado."; setTimeout(() => { h.innerHTML = 'O prompt também vai dentro do zip como <code>_UPDATE-PROMPT.md</code>.'; }, 1800); }
+      } catch(e){
+        if(h) h.textContent = "Não foi possível copiar — o prompt está no zip como _UPDATE-PROMPT.md.";
+      }
+    });
 
     // Afixo opcional nos nomes de arquivo — prefixo E sufixo independentes (i-N34)
     const affixPreOn   = $("#affix-prefix-on");
