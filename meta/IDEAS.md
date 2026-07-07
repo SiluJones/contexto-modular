@@ -460,6 +460,9 @@ A i-N3 Parte B (afixo no download) ja esta implementada (v1.9.0), mas trata pref
 ## i-N40 — Modo Atualização: empacotar o nicho ativo (achatado + afixado + prompt) para subir num gesto a um projeto KCM existente — 💡 ANALISADA, A ESCOPAR (2026-07-06)
 Refino/descendente da **i-N3** (backdoor de atualização + afixo, já implementada). Base: `meta/ANALISE-MODO-ATUALIZACAO.md` + nota `260704-1959.txt`. Um gesto que empacota, **achatado e desambiguado**, tudo do nicho ativo (meta + CEREBRO + instrução + skills se ligado + kit-Code se ligado) num **zip achatado** + `_UPDATE-MANIFEST.md` + **prompt de atualização gerado por nicho**, para o usuário subir de uma vez ao mount de um projeto que já usa o KCM. **Decisões fixadas:** afixo `__template-update`; CEREBRO+instrução entram como build ativa do momento, classificados `fusao` (merge proposto, nunca substituição cega); **zip apenas**; a **UI do atualizador fica ADIADA** até a reforma dos 3 modos (i-N36) — entra como **ação** perto da saída, não como 4º modo/selo. Dor real: assimetria — `downloadZIP` já achata+afixa os meta, mas `downloadSkillsZIP`/`downloadCodeKitZIP` saem em subpasta sem `applyAffix`. Acopla com os selos (spec0029): mesma fonte de verdade que o manifesto do update lê.
 
+## i-N41 — Campos de nicho na saída — 💡 Ativa (2026-07-06)
+Hoje `genreSel`/`engineSel`/`phase` são preenchidos mas não entram no CEREBRO/Instruções. Fazer um bloco "Contexto do nicho" na saída consumir esses campos (gênero(s), engine, fase), para o que o usuário marca de fato moldar o contexto gerado.
+
 ## 💡 Ativas — do usuário
 
 ### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR

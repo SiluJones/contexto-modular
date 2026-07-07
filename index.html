@@ -318,6 +318,8 @@
   .cfg-body{padding:18px 20px;overflow:auto}
   .cfg-sec{margin-bottom:8px}
   .cfg-sec>h3{margin:0 0 10px;font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint)}
+  #cfg-nicho-body .subhead{margin-top:2px}
+  #cfg-nicho-body .chips{margin-bottom:14px}
 
   .flowbox{background:#0e0b06;border:1px solid var(--line);border-radius:10px;padding:14px 18px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);line-height:1.9;white-space:pre-wrap}
   .flowbox b{color:var(--amber);font-weight:600}
@@ -883,6 +885,10 @@
           </div>
           <p class="affix-preview" id="affix-preview">Os arquivos saem com o nome original (ex.: <code>STATUS.md</code>).</p>
         </div>
+      </section>
+      <section class="cfg-sec" id="cfg-sec-nicho" hidden>
+        <h3>Nicho</h3>
+        <div id="cfg-nicho-body"></div>
       </section>
     </div>
   </dialog>
@@ -3978,7 +3984,7 @@ NICHES.game = {
   },
   topbar:[
     { id:"project", label:"Jogo", placeholder:"ex: ecos-do-abismo" },
-    { id:"genreSel", label:"Gênero", type:"select",
+    { id:"genreSel", label:"Gênero (pode ser mais de um)", type:"multi", panel:"modal",
       options:["Ação","Plataforma","RPG","Estratégia","Puzzle","Roguelike","Metroidvania","Aventura","Simulação","Survival","Visual novel","Tiro","Card game","Outro"] },
     { id:"engineSel", label:"Engine", type:"select",
       options:["Godot","Unity","Unreal","GameMaker","Construct","Bevy","Phaser","LÖVE","RPG Maker","Própria","Indefinida"] },
@@ -7064,6 +7070,7 @@ function setNiche(id){
   renderHero(niche);
   renderIntro(niche);
   renderTopbar(niche);
+  renderNicheConfig(niche);
   renderBuilder(niche);
   renderConventionsBlock(niche);
   renderPrompts(niche);
@@ -7333,7 +7340,7 @@ function wireActions(){
 function renderTopbar(niche){
   const host = $("#topbar");
   if(!host) return;
-  const fields = niche.topbar || [];
+  const fields = (niche.topbar || []).filter(f => f.panel !== "modal");
   const _saved = savedNichesShortcutHTML();
   if(fields.length === 0){
     host.innerHTML = modesClusterHTML() + _saved + actionsClusterHTML();
@@ -7372,6 +7379,49 @@ function renderTopbar(niche){
   wireSavedNichesShortcut();
   wireModes();
   wireActions();
+}
+
+/* Config por-nicho dentro do modal — campos com panel:"modal".
+   multi = chips aditivos (valor-lista); segmented = chip de escolha única;
+   select/text = fallback. Reusa .chip/.chips/.subhead do builder. (spec0032) */
+function renderNicheConfig(niche){
+  const sec = $("#cfg-sec-nicho"), body = $("#cfg-nicho-body");
+  if(!sec || !body) return;
+  const fields = (niche.topbar || []).filter(f => f.panel === "modal");
+  if(fields.length === 0){ sec.hidden = true; body.innerHTML = ""; return; }
+  sec.hidden = false;
+  body.innerHTML = fields.map(f => {
+    const opts = (f.options || f.opts || []).map(o => Array.isArray(o) ? o : [o, o]);
+    if(f.type === "multi"){
+      const cur = Array.isArray(STATE.topbar[f.id]) ? STATE.topbar[f.id] : (Array.isArray(f.default) ? f.default : []);
+      const chips = opts.map(([v,l]) => `<button type="button" class="chip ${cur.includes(v)?"on":""}" data-nfmulti="${escAttr(f.id)}" data-val="${escAttr(v)}">${escapeHTML(l)}</button>`).join("");
+      return `<div class="subhead">${escapeHTML(f.label)}</div><div class="chips">${chips}</div>`;
+    }
+    if(f.type === "segmented"){
+      const cur = STATE.topbar[f.id] ?? f.default ?? "";
+      const chips = opts.map(([v,l]) => `<button type="button" class="chip ${cur===v?"on":""}" data-nfseg="${escAttr(f.id)}" data-val="${escAttr(v)}">${escapeHTML(l)}</button>`).join("");
+      return `<div class="subhead">${escapeHTML(f.label)}</div><div class="chips">${chips}</div>`;
+    }
+    const val = STATE.topbar[f.id] ?? f.default ?? "";
+    if(f.type === "select"){
+      const head = (val === "") ? `<option value="" disabled${f.default?"":" selected"}>—</option>` : "";
+      const os = head + opts.map(([v,l]) => `<option value="${escAttr(v)}"${v===val?" selected":""}>${escapeHTML(l)}</option>`).join("");
+      return `<div class="subhead">${escapeHTML(f.label)}</div><select data-nfsel="${escAttr(f.id)}" class="affix-input">${os}</select>`;
+    }
+    return `<div class="subhead">${escapeHTML(f.label)}</div><input type="text" data-nftext="${escAttr(f.id)}" class="affix-input" value="${escAttr(val)}" placeholder="${escAttr(f.placeholder||"")}"/>`;
+  }).join("");
+  const refresh = () => { persistState(); updatePreview(); renderPrompts(getCurrentNiche()); renderTemplates(getCurrentNiche()); };
+  body.querySelectorAll("[data-nfmulti]").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.nfmulti, v = b.dataset.val;
+    const cur = Array.isArray(STATE.topbar[id]) ? STATE.topbar[id] : [];
+    STATE.topbar[id] = cur.includes(v) ? cur.filter(x=>x!==v) : [...cur, v];
+    renderNicheConfig(niche); refresh();
+  }));
+  body.querySelectorAll("[data-nfseg]").forEach(b => b.addEventListener("click", () => {
+    STATE.topbar[b.dataset.nfseg] = b.dataset.val; renderNicheConfig(niche); refresh();
+  }));
+  body.querySelectorAll("[data-nfsel]").forEach(el => el.addEventListener("change", () => { STATE.topbar[el.dataset.nfsel] = el.value; refresh(); }));
+  body.querySelectorAll("[data-nftext]").forEach(el => el.addEventListener("input", () => { STATE.topbar[el.dataset.nftext] = el.value; refresh(); }));
 }
 
 /* =========================================================
