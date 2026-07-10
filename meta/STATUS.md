@@ -1,12 +1,13 @@
 # STATUS — Kit de Contexto Universal — 2026-07-06
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.64.0**. Teste: **17/17 nichos, 39/39 checagens, 0 erros JS** + integridade dos chips (FIX-004) + smoke/round-trip do HUB + G6 (skills-pack) + G7 (modo Code, migrado pro workmode) + G8 (selos de estado, agora lendo `WORK_MODES`). `N[narrative]` em 6688/6900. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.65.0**. Teste: **17/17 nichos, 40/40 checagens, 0 erros JS** + integridade dos chips (FIX-004) + smoke/round-trip do HUB + G6 (skills-pack) + G7 (modo Code, migrado pro workmode) + G8 (selos de estado, agora lendo `WORK_MODES`). `N[narrative]` em 6688/6900. (Detalhe do método no CONTEXT §3.)
 > **i-N36 fase "topbar inteiro" parte 2 aplicada** (spec0031: cluster de ação nasce com a engrenagem → modal `<dialog>` de configuração; afixo migrado da aba Templates para a seção Projeto do modal). Resta da i-N36 o atualizar (spec0033/0034) e o encaixe do atualizador i-N40. Próximas frentes: spec0032 (aba Nicho + campos `multi`/`segmented`), spec0033 (download estruturado), spec0034 (atualizar), i-N38 (hook de pre-commit rodando o harness), i-N39 (`/check-spec`).
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-07-10 — v1.64.0)
+## 💬 Última sessão (2026-07-10 — v1.65.0)
+- **FIX: ignores faltavam no pacote de atualização (D-067, spec0039):** `buildUpdatePack` vinha sem `.gitignore`/`.flatdropignore` — somados sempre, antes do manifesto, reusando `structuredGitignore`/`structuredFlatdropignore` (natureza `template`, nomes planos `gitignore__template-update` / `flatdropignore__template-update`); downloads granulares seguem só com conteúdo. G13 trava a regressão. Pacote de atualização auditado e completo. Bump minor. Harness **+1 check (G13), 39/39 → 40/40**. 17/17, 40/40, 0 erros.
 - **Modo Atualização Fase C: gatilho `UPDATE_PROTOCOL` no CEREBRO (D-066, spec0038):** `buildClaudeMd` ganha seção incondicional «Ao receber um template-update do KCM» antes de «Regras de higiene» — versão condensada e permanente do prompt da Fase B, em todo projeto gerado: reconhece sufixo `__template-update` + `_UPDATE-MANIFEST.md`, rotina comparar→reportar→nunca-sobrescrever, ciente de `template`/`fusao`. G12 trava a presença. **i-N40 fechada (Fases A+B+C completas).** Bump minor. Harness **+1 check (G12), 38/38 → 39/39**. 17/17, 39/39, 0 erros.
 
 ## 💬 Sessão anterior (2026-07-07 — v1.63.0)

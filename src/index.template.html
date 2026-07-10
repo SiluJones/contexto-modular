@@ -3035,6 +3035,11 @@ function buildUpdatePack(niche){
     files.push({ flat: updateFlat("wrap.SKILL.md"), real: ".claude/skills/wrap/SKILL.md",
       nature: "template", role: "Comando /wrap.", content: k.wrap });
   }
+  // Ignores recomendados (sempre) — sem eles o pacote de atualizacao vinha incompleto (reusa os helpers do estruturado)
+  files.push({ flat: updateFlat("gitignore"), real: ".gitignore", nature: "template",
+    role: "Ignora lixo de SO/editor.", content: structuredGitignore() });
+  files.push({ flat: updateFlat("flatdropignore"), real: ".flatdropignore", nature: "template",
+    role: "Enxuga o que sobe ao Projeto do Claude (logs/, specs no modo Code).", content: structuredFlatdropignore(codeOn) });
   const manifest = buildUpdateManifest(niche, files, codeOn, skillsOn);
   return { files, manifest, codeOn, skillsOn, affix: UPDATE_AFFIX };
 }

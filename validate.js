@@ -319,6 +319,16 @@ check("G12 CEREBRO ensina a lidar com template-update (Fase C, i-N40)", () => {
   return "ok";
 });
 
+check("G13 update-pack inclui os ignores (.gitignore e .flatdropignore)", () => {
+  const dev = T.normNiche(T.NICHES.dev);
+  const p = T.buildUpdatePack(dev);
+  assert(p.files.some(f => f.real === ".gitignore" && f.content && f.content.length), "update pack sem .gitignore");
+  assert(p.files.some(f => f.real === ".flatdropignore" && f.content && f.content.length), "update pack sem .flatdropignore");
+  const flats = p.files.map(f => f.flat);
+  assert(new Set(flats).size === flats.length, "nomes planos colidiram ao somar os ignores");
+  return "ok";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");
