@@ -1,12 +1,15 @@
 # STATUS — Kit de Contexto Universal — 2026-07-06
 
 > Rolante: só o agora + próximos passos. Item resolvido sai daqui (vai pro CHANGELOG).
-> Versão atual: **v1.57.0**. Teste: **17/17 nichos, 35/35 checagens, 0 erros JS** + integridade dos chips (FIX-004) + smoke/round-trip do HUB + G6 (skills-pack) + G7 (modo Code, migrado pro workmode) + G8 (selos de estado, agora lendo `WORK_MODES`). `N[narrative]` em 6688/6900. (Detalhe do método no CONTEXT §3.)
+> Versão atual: **v1.63.0**. Teste: **17/17 nichos, 38/38 checagens, 0 erros JS** + integridade dos chips (FIX-004) + smoke/round-trip do HUB + G6 (skills-pack) + G7 (modo Code, migrado pro workmode) + G8 (selos de estado, agora lendo `WORK_MODES`). `N[narrative]` em 6688/6900. (Detalhe do método no CONTEXT §3.)
 > **i-N36 fase "topbar inteiro" parte 2 aplicada** (spec0031: cluster de ação nasce com a engrenagem → modal `<dialog>` de configuração; afixo migrado da aba Templates para a seção Projeto do modal). Resta da i-N36 o atualizar (spec0033/0034) e o encaixe do atualizador i-N40. Próximas frentes: spec0032 (aba Nicho + campos `multi`/`segmented`), spec0033 (download estruturado), spec0034 (atualizar), i-N38 (hook de pre-commit rodando o harness), i-N39 (`/check-spec`).
 
 > **Mudanças nesta revisão (v1.33.0):** códigos de área do HUB **curados** por nicho (DEV, não "DESE") + **variador** de duplicata (DEV0/DEV1/DEV2); rótulo de grupo reescrito (D-027). Capturada a **direção estratégica**: refator modular + **i18n com idioma misto** (i-N13 expandido + i-N26 em IDEAS) — sem código até decisão. Respostas do usuário às perguntas em aberto registradas em IDEAS. (Histórico completo de versões no CHANGELOG.)
 
-## 💬 Última sessão (2026-07-03 — v1.49.0)
+## 💬 Última sessão (2026-07-07 — v1.63.0)
+- **FIX downloads incompletos + fonte única `generatedContextFiles` (D-065, spec0037):** CEREBRO/INSTRUCOES são gerados e não vivem em `contextFiles`, então `downloadZIP`/`downloadAllTemplates`/`downloadStructuredZIP` saíam sem eles (estruturado sem `meta/CEREBRO.md` — bug do usuário). Helper `generatedContextFiles` vira fonte única (CEREBRO→`meta/`, INSTRUCOES→raiz) consumida pelos três; G11 trava a regressão. Bump minor. Harness **+1 check (G11), 37/37 → 38/38**. 17/17, 38/38, 0 erros.
+
+## 💬 Sessão anterior (2026-07-03 — v1.49.0)
 - **Nicho narrativa, fase B: switch skills-pack de escrita (D-051, i-N35, spec0022):** toggle niche-scoped `skillsMode` ("Gerar skills de escrita?") no topbar, presente só em nichos que declaram `skillsPack` (hoje só narrative). Ligado, o CEREBRO.md ganha o «Apêndice — skills de escrita» com 4 Agent Skills (`escrita-serial`, `checagem-continuidade`, `voz-calibragem`, `textura-mundo`), formato oficial (frontmatter `name`/`description` + seção «Aplicação neste projeto» em branco). Mesmo padrão do Modo Code: pacote vive no CEREBRO sob demanda, sem impacto no teto das Instruções (`N[narrative]` segue em 6688/6900). Harness ganha o check G6. 17/17, 33/33, 0 erros.
 - i-N35 marcada ✅ IMPLEMENTADA; i-N36 (universais da fase C) segue Ativa.
 

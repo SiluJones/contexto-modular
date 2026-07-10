@@ -7663,6 +7663,15 @@ function effectiveFiles(niche){
   // só adiciona a SEÇÃO de instruções do HUB ao CLAUDE.md gerado deste projeto.
   return (niche && niche.contextFiles) || [];
 }
+/* Arquivos GERADOS que nao vivem em contextFiles (CEREBRO, INSTRUCOES). Fonte unica: todo download
+   de "templates" consome isto, para nunca sair pacote incompleto. meta:true -> meta/; meta:false -> raiz. */
+function generatedContextFiles(niche){
+  if(!niche) return [];
+  return [
+    { name: "CEREBRO.md", role: "Comportamento do assistente (COMO age).", content: buildClaudeMd(niche), meta: true },
+    { name: "INSTRUCOES-DO-PROJETO.md", role: "Instrucoes lidas em toda mensagem.", content: buildInstr(niche), meta: false }
+  ];
+}
 function buildInstr(niche){
   if(!niche) return "";
   const tb = STATE.topbar || {};
@@ -8260,7 +8269,8 @@ function downloadFile(name, content){
 function downloadAllTemplates(){
   const niche = getCurrentNiche();
   if(!niche || !niche.contextFiles) return;
-  niche.contextFiles.forEach((f, i) => setTimeout(() => downloadFile(f.name, f.content||""), i*120));
+  const files = [...niche.contextFiles, ...generatedContextFiles(niche)];
+  files.forEach((f, i) => setTimeout(() => downloadFile(f.name, f.content || ""), i * 120));
 }
 async function downloadZIP(){
   const niche = getCurrentNiche();
@@ -8270,6 +8280,7 @@ async function downloadZIP(){
   }
   const zip = new JSZip();
   effectiveFiles(niche).forEach(f => zip.file(applyAffix(f.name), f.content||""));
+  generatedContextFiles(niche).forEach(f => zip.file(applyAffix(f.name), f.content || ""));
   zip.file("README.md", `# Templates — ${niche.label}\n\nNicho: ${niche.label}\nGerado por: Kit de Contexto Universal\nData: ${today}\n\nArquivos:\n${niche.contextFiles.map(f=>`- **${applyAffix(f.name)}** — ${f.role}`).join("\n")}\n`);
   const blob = await zip.generateAsync({type:"blob"});
   const url = URL.createObjectURL(blob);
@@ -8500,8 +8511,8 @@ async function downloadStructuredZIP(){
 
   // meta/ — arquivos de contexto do nicho (nomes canonicos, SEM afixo: projeto novo)
   effectiveFiles(niche).forEach(f => zip.file(`${root}/meta/${f.name}`, f.content || ""));
-  // Instrucoes na raiz
-  zip.file(`${root}/INSTRUCOES-DO-PROJETO.md`, buildInstr(niche));
+  // Gerados: CEREBRO em meta/, INSTRUCOES na raiz (sem eles o pacote vinha incompleto — bug corrigido)
+  generatedContextFiles(niche).forEach(f => zip.file(`${root}/${f.meta ? "meta/" : ""}${f.name}`, f.content || ""));
   // logs/ vazia
   zip.file(`${root}/logs/.gitkeep`, "");
 

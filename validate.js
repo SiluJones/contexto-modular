@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -299,6 +299,14 @@ check("G10 update-prompt: disparo para IA (compara/nao-sobrescreve) e SEM blocos
   assert(/compare/i.test(s), "prompt sem a rotina de comparacao");
   assert(/nunca sobrescreva|substituicao cega/i.test(s), "prompt sem a regra de nao-sobrescrever");
   assert(s.indexOf("```") === -1, "prompt NAO pode conter blocos de diff (fere a regra dura de entrega)");
+  return "ok";
+});
+
+check("G11 downloads completos: gerados (CEREBRO em meta/, INSTRUCOES) na fonte compartilhada", () => {
+  const dev = T.normNiche(T.NICHES.dev);
+  const gen = T.generatedContextFiles(dev);
+  assert(gen.some(f => f.name === "CEREBRO.md" && f.meta === true && f.content && f.content.length), "CEREBRO ausente/errado nos gerados");
+  assert(gen.some(f => f.name === "INSTRUCOES-DO-PROJETO.md" && f.meta === false && f.content && f.content.length), "INSTRUCOES ausente/errado nos gerados");
   return "ok";
 });
 
