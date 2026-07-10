@@ -2297,6 +2297,9 @@ function buildClaudeMd(niche){
 
   // Higiene
   L.push("");
+  L.push("## Ao receber um template-update do KCM");
+  L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio.** Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído: propõe o merge, o usuário decide — nunca substituição cega.");
+  L.push("");
   L.push("## Regras de higiene (impedem inchaço e duplicação)");
   L.push("");
   const hasChangelog = (niche.contextFiles||[]).some(f=>/CHANGELOG/i.test(f.name));

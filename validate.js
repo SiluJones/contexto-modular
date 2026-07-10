@@ -310,6 +310,15 @@ check("G11 downloads completos: gerados (CEREBRO em meta/, INSTRUCOES) na fonte 
   return "ok";
 });
 
+check("G12 CEREBRO ensina a lidar com template-update (Fase C, i-N40)", () => {
+  const dev = T.normNiche(T.NICHES.dev);
+  const c = T.buildClaudeMd(dev);
+  assert(/template-update/.test(c), "CEREBRO sem o protocolo de template-update");
+  assert(/nunca sobrescreve|substituição cega|substituicao cega/i.test(c), "protocolo sem a regra de nao-sobrescrever");
+  assert(/fusao|fusão/i.test(c), "protocolo sem a distincao template/fusao");
+  return "ok";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");
