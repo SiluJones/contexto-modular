@@ -468,6 +468,9 @@ Refino/descendente da **i-N3** (backdoor de atualização + afixo, já implement
 Hoje `genreSel`/`engineSel`/`phase` são preenchidos mas não entram no CEREBRO/Instruções. Fazer um bloco "Contexto do nicho" na saída consumir esses campos (gênero(s), engine, fase), para o que o usuário marca de fato moldar o contexto gerado.
 **Resolução:** `buildInstr` ganhou o bloco "Contexto do projeto" (após o Estágio), emitindo os campos de `niche.topbar` não-consumidos e com valor; conserto de brinde do desencontro `phase`/`fase` no Estágio. Ver D-061.
 
+## i-N42 — Prompts C/D desatualizados: mandam gerar do zero, ignorando o download estruturado (↓) e o pacote de atualização (↻) — A REFINAR (spec seguinte)
+Os prompts de setup **C** e **D** ainda pedem à IA que **gere os arquivos do zero**, ignorando dois mecanismos que o kit já oferece: o **download estruturado** (↓, spec0034) e o **pacote de atualização** (↻, i-N40). Refino: **C** aponta para o estruturado, **D** para o pacote; ambos cientes dos modos (Code/ASU/grupo), no mesmo espírito mode-aware de E/F (spec0040). Sequência natural depois da spec0040.
+
 ## 💡 Ativas — do usuário
 
 ### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR

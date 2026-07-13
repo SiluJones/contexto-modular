@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -326,6 +326,30 @@ check("G13 update-pack inclui os ignores (.gitignore e .flatdropignore)", () => 
   assert(p.files.some(f => f.real === ".flatdropignore" && f.content && f.content.length), "update pack sem .flatdropignore");
   const flats = p.files.map(f => f.flat);
   assert(new Set(flats).size === flats.length, "nomes planos colidiram ao somar os ignores");
+  return "ok";
+});
+
+check("G14 transferencia mode-aware: Code NAO regenera meta; vanilla so o que mudou; brief nao vence os arquivos", () => {
+  const dev = T.normNiche(T.NICHES.dev);
+  const E = T.PROMPTS_BASE.find(x => x.id === "E");
+  const F = T.PROMPTS_BASE.find(x => x.id === "F");
+  assert(E && F, "prompts E/F ausentes");
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.workmode.codeMode = "no"; T.STATE.workmode.asuMode = "no"; T.STATE.workmode.groupMode = "no";
+  const vanilla = E.body({}, dev);
+  assert(/HANDOFF-BRIEF/.test(vanilla), "transferencia sem HANDOFF-BRIEF");
+  assert(/apenas os arquivos que mudaram/i.test(vanilla), "vanilla deveria pedir so os arquivos que mudaram");
+  assert(!/gere todos os arquivos de contexto/i.test(vanilla), "voltou o anti-padrao de regenerar tudo");
+  T.STATE.workmode.codeMode = "yes";
+  const code = E.body({}, dev);
+  assert(/n[aã]o regenere/i.test(code), "modo Code deveria proibir regenerar os meta no chat");
+  assert(/commitado|commit/i.test(code), "modo Code deveria exigir commit/push antes de transferir");
+  T.STATE.workmode.codeMode = "no"; T.STATE.workmode.asuMode = "yes";
+  const asu = E.body({}, dev);
+  assert(/\.yaml|ASU/i.test(asu), "modo ASU deveria mandar as edicoes por instrucao .yaml");
+  T.STATE.workmode.asuMode = "no";
+  const f = F.body({}, dev);
+  assert(/ARQUIVOS vencem/i.test(f), "retomada sem a regra de precedencia (arquivos vencem o brief)");
   return "ok";
 });
 

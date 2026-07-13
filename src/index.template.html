@@ -950,16 +950,50 @@ const PROMPTS_BASE = [
       return `Quero organizar este projeto${p.project?` (${p.project})`:""} de "${n.label}" com um sistema de documentação para transitar entre conversas sem perder contexto.\n\nSITUAÇÃO ATUAL:\n${p.situation||"[O que já foi feito, o que funciona/está pendente, principais decisões já tomadas]"}\n\nMATERIAL ATUAL:\n[Anexe os arquivos relevantes ou descreva o que existe]\n\nGere preenchidos com a realidade atual:\n${n.contextFiles.map(f=>`- ${f.name} (${f.role})`).join("\n")}\n- logs/${today}.md`;
     } },
   { id:"E", title:"Conversa pesada — transferir agora",
-    when:"Cole na conversa travada. O Claude já conhece a estrutura; não precisa subir nada.",
+    when:"Cole na conversa travada. Gera o HANDOFF-BRIEF; a memória continua nos arquivos, não é regerada aqui.",
     fill:null,
     body:(p,n)=>{
-      const files = n.contextFiles.map(f=>`- ${f.name} → ${f.role}`).join("\n");
-      return `Esta conversa está pesada. Antes de encerrarmos, gere todos os arquivos de contexto para eu continuar numa nova conversa sem perder nada. Gere com MÁXIMO DETALHE — o objetivo é que a nova conversa continue exatamente daqui sem precisar de nada desta.\n\n${files}\n- logs/${today}.md → log desta sessão\n\nDepois gere o conteúdo ATUAL e COMPLETO de cada arquivo modificado/criado. Não resuma demais.`;
+      const L = [];
+      L.push("Esta conversa está ficando pesada. Vamos preparar a transferência para uma conversa nova.");
+      L.push("");
+      L.push("**1) Gere um HANDOFF-BRIEF** (arquivo NOVO, para eu colar como primeira mensagem da próxima conversa). Ele é um ATALHO de arranque, não a memória — a memória continua nos arquivos de contexto. Inclua, com detalhe:");
+      L.push("- Onde estamos: estado atual e o que já está fechado.");
+      L.push("- O que foi feito nesta sessão — e POR QUÊ (o motivo, não só o quê).");
+      L.push("- Pendências concretas: o que fazer primeiro, com o passo exato.");
+      L.push("- Próxima frente e o que ainda NÃO foi decidido.");
+      L.push("- Armadilhas e regras aprendidas nesta sessão (o que não regredir).");
+      L.push("- Ritual de início e a configuração recomendada para a próxima etapa.");
+      L.push("");
+      L.push("**2) Atualize o contexto — sem regenerar o que não mudou:**");
+      if(codeModeOn()){
+        L.push("- O repositório é a fonte de verdade e o Claude Code já escreve nele (append em STATUS/DECISIONS/logs). **NÃO regenere os arquivos de contexto aqui no chat**: dois escritores brigam, e reescrever um doc grande no fim de uma conversa pesada é como se perde conteúdo.");
+        L.push("- Em vez disso: liste o que ainda falta registrar (o append que o Code deve fazer) e garanta que está tudo **commitado e enviado** — o repo é o que a próxima conversa vai ler.");
+      } else if(asuModeOn()){
+        L.push("- Edições em arquivos que já existem saem como **instrução .yaml (ASU)** — não me devolva o arquivo inteiro.");
+        L.push("- O HANDOFF-BRIEF é arquivo novo: esse vem inteiro.");
+      } else {
+        L.push(`- Entregue INTEIROS **apenas os arquivos que mudaram nesta sessão** (prontos para baixar e substituir), incluindo o log \`logs/${today}.md\`. Não regenere os que não mudaram.`);
+        L.push("- Antes de encolher ou reescrever qualquer arquivo, confirme que nada ÚNICO se perdeu (uma decisão, uma ideia, um detalhe que só existia ali) e me diga o que saiu e por quê.");
+      }
+      if(groupModeOn()){
+        L.push("- Processe a caixa de entrada do HUB (triagem → veredito + motivo) e entregue o `HUB.md` completo; lembre-me de sincronizá-lo nos outros projetos.");
+      }
+      L.push("");
+      L.push("Não resuma demais o brief: o objetivo é que a próxima conversa arranque exatamente daqui.");
+      return L.join("\n");
     } },
   { id:"F", title:"Retomar após transferência",
-    when:"Primeira mensagem na conversa nova, após subir os arquivos.",
+    when:"Primeira mensagem na conversa nova. Cole junto com o HANDOFF-BRIEF.",
     fill:"task", fillLabel:"O que quer fazer hoje",
-    body:(p,n)=>`Estou retomando após transferência de contexto. Leia os arquivos antes de responder, especialmente os que registram problemas, decisões e estado anterior.\n\n---\n${p.task||"[O QUE QUER FAZER HOJE]"}` },
+    body:(p,n)=>{
+      const steps = [];
+      if(codeModeOn()) steps.push("O repositório é a fonte de verdade: leia a versão atual dos arquivos (puxe antes de começar), nunca a memória.");
+      steps.push("Leia os arquivos de contexto: primeiro o que define seu comportamento, depois o estado atual, as decisões e o que ficou pendente.");
+      steps.push("Leia o HANDOFF-BRIEF da conversa anterior — ele é um ATALHO de arranque, **não a verdade**. Se o brief divergir dos arquivos, os ARQUIVOS vencem.");
+      steps.push("Confirme em UMA frase o que entendeu do estado e do próximo passo. Em ambiguidade real, pergunte antes de executar.");
+      const ritual = steps.map((s,i) => `${i+1}. ${s}`).join("\n");
+      return `Estou retomando o trabalho numa conversa nova. Antes de responder:\n\n${ritual}\n\n---\n${p.task||"[O QUE QUER FAZER HOJE]"}`;
+    } },
 ];
 
 /* ============================================================
