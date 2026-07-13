@@ -36,6 +36,10 @@
       "file": "src/niches/business.js"
     },
     {
+      "marker": "//__KCU_NICHE:career__//",
+      "file": "src/niches/career.js"
+    },
+    {
       "marker": "//__KCU_NICHE:game__//",
       "file": "src/niches/game.js"
     },

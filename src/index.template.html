@@ -419,6 +419,21 @@
   .hero-business .kpi .spark{margin-top:10px;display:flex;gap:2px;align-items:flex-end;height:24px}
   .hero-business .kpi .spark i{flex:1;background:var(--amber);opacity:.6;border-radius:1.5px;display:block}
 
+  /* Carreira: dossie/evidencia */
+  .hero-career{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;align-items:stretch}
+  .hero-career .ev{background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:16px 18px}
+  .hero-career .ev h4{margin:0 0 12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-faint)}
+  .hero-career .ev .row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px dashed var(--line)}
+  .hero-career .ev .row:first-of-type{border-top:0}
+  .hero-career .ev .row .tag{font-family:var(--mono);font-size:10px;color:var(--amber);background:rgba(0,0,0,.25);border-radius:5px;padding:2px 6px;white-space:nowrap}
+  .hero-career .ev .row .txt{font-size:12.5px;color:var(--ink-dim);line-height:1.5}
+  .hero-career .ev .row .txt b{color:var(--ink);font-weight:600}
+  .hero-career .side{background:var(--panel2);border:1px solid var(--line-soft);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+  .hero-career .side .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-faint)}
+  .hero-career .side .big{font-family:var(--disp);font-size:26px;font-weight:600;color:var(--ink);line-height:1.15}
+  .hero-career .side .delta{font-size:12.5px;color:var(--ink-dim);line-height:1.5}
+  .hero-career .side .stamp{margin-top:auto;font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--green);border-top:1px dashed var(--line);padding-top:8px}
+
   /* Game Design: HUD */
   .hero-game{background:#04130c;border:1px solid var(--amber);border-radius:12px;padding:22px 26px;font-family:'Oxanium',sans-serif;position:relative;overflow:hidden}
   .hero-game::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent)}
@@ -540,6 +555,7 @@
     .rail-foot{display:none}
     .grid2,.grid3,.hero-design,.hero-product,.hero-comics{grid-template-columns:1fr}
     .hero-marketing,.hero-business,.hero-client{grid-template-columns:1fr 1fr}
+    .hero-career{grid-template-columns:1fr}
     .hero-comics{height:auto;grid-template-rows:auto}
     .out{position:static}
     .view{padding:26px 18px 70px}
@@ -1144,7 +1160,7 @@ const LANGS  = [["pt","Português (pt-BR)"],["en","Inglês"],["es","Espanhol"],[
 const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 
 /* ============================================================
-   NICHES — dicionário completo dos 17 nichos
+   NICHES — dicionário completo dos 18 nichos
    shape:
      {
        id, label, icon, group ("serif"|"literary"|"digital"),
@@ -1220,6 +1236,9 @@ const NICHES = {};
 
 /* ---------- BUSINESS (Negócios) ---------- */
 //__KCU_NICHE:business__//
+
+/* ---------- CARREIRA (Carreira & Trabalho) ---------- */
+//__KCU_NICHE:career__//
 
 /* ---------- GAME (Game Design) ---------- */
 //__KCU_NICHE:game__//
@@ -1644,6 +1663,19 @@ function heroHTML(id){
       <div class="kpi"><div class="lbl">MRR</div><div class="val">R$ 184k</div><div class="dlt">▲ 8.2% MoM</div><div class="spark"><i style="height:30%"></i><i style="height:40%"></i><i style="height:38%"></i><i style="height:55%"></i><i style="height:60%"></i><i style="height:70%"></i><i style="height:85%"></i></div></div>
       <div class="kpi"><div class="lbl">Churn</div><div class="val">2.1%</div><div class="dlt down">▼ 0.3pp</div><div class="spark"><i style="height:60%"></i><i style="height:70%"></i><i style="height:65%"></i><i style="height:55%"></i><i style="height:50%"></i><i style="height:45%"></i><i style="height:40%"></i></div></div>
       <div class="kpi"><div class="lbl">CAC payback</div><div class="val">11.4mo</div><div class="dlt">▲ 0.6mo</div><div class="spark"><i style="height:40%"></i><i style="height:45%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:60%"></i><i style="height:62%"></i><i style="height:70%"></i></div></div>`;
+    case "career": return `
+      <div class="ev">
+        <h4>EVIDENCIAS.md · append-only</h4>
+        <div class="row"><span class="tag">EV-014</span><span class="txt"><b>Catálogo digital publicado</b> — substituiu a busca manual por SKU. Prova: repo + painel.</span></div>
+        <div class="row"><span class="tag">EV-013</span><span class="txt"><b>Conferência pedido × fornecedor</b> — função assumida em 2026-05-12. Prova: e-mail da diretoria.</span></div>
+        <div class="row"><span class="tag">EV-012</span><span class="txt"><b>Gerador de cartazes em massa</b> — de 3h para 20min por campanha.</span></div>
+      </div>
+      <div class="side">
+        <span class="lbl">Contratado × real</span>
+        <span class="big">+4 funções</span>
+        <span class="delta">assumidas desde a contratação, sem revisão de cargo ou salário — todas datadas e com prova.</span>
+        <span class="stamp">faixa: pesquisada, com fonte</span>
+      </div>`;
     case "game": return `
       <div class="row1"><span class="title">::Lumen Forge — Run 14</span><span class="lvl">Lv. 8 · 2:34:11</span></div>
       <div class="stat-grid">
@@ -3765,7 +3797,7 @@ function nicheLabelById(id){ return (NICHES[id] && NICHES[id].label) || ""; }
 /* Códigos curados por nicho (default bonito/identificável: DEV, não DESE). */
 const NICHE_CODE = { dev:"DEV", design:"DSGN", client:"CLNT", narrative:"NARR", marketing:"MKT",
   research:"PSQ", product:"PROD", business:"NEG", game:"GAME", pixel:"PIXEL", brainstorm:"IDEIA",
-  music:"SOM", rpg:"RPG", cuisine:"COZ", animation:"ANIM", comics:"HQ", custom:"AREA" };
+  music:"SOM", rpg:"RPG", cuisine:"COZ", animation:"ANIM", comics:"HQ", career:"CARR", custom:"AREA" };
 function baseCode(f){
   if(f.code && f.code.trim()) return f.code.trim().toUpperCase().replace(/\s+/g,"");
   if(f.niche && NICHE_CODE[f.niche]) return NICHE_CODE[f.niche];

@@ -1,11 +1,11 @@
 # NICHOS-CANDIDATOS.md — O mapa completo dos nichos
 
-> Recuperado dos PLANNING-PART1/PART2. O planejamento mapeou **22 nichos candidatos**; o kit lançou **16 de conteúdo + custom**. Este arquivo guarda o que entrou, o que ficou de fora e por quê — para não se perder de novo.
+> Recuperado dos PLANNING-PART1/PART2. O planejamento mapeou **22 nichos candidatos**; o kit lançou **17 de conteúdo + custom**. Este arquivo guarda o que entrou, o que ficou de fora e por quê — para não se perder de novo.
 
-## ✅ Os 16 que entraram (padrão de ouro)
-dev, client, design, narrative, research, product, marketing, business (os 8 "sérios") + game, pixel, music, rpg, cuisine, animation, comics, brainstorm (os 8 criativos). Mais `custom` (gerador).
+## ✅ Os 17 que entraram (padrão de ouro)
+dev, client, design, narrative, research, product, marketing, business (os 8 "sérios") + **career** (Carreira & Trabalho, 18º nicho — spec0041) + game, pixel, music, rpg, cuisine, animation, comics, brainstorm (os 8 criativos). Mais `custom` (gerador).
 
-> Nota: alguns candidatos do planejamento foram FUNDIDOS, não cortados. "Solo Dev Studio (jogo completo)" foi absorvido por game+pixel+music; "User Research" foi parcialmente absorvido por product (personas/jornadas); "Filosofia & Pensamento Crítico" foi parcialmente absorvido por brainstorm.
+> Nota: alguns candidatos do planejamento foram FUNDIDOS, não cortados. "Solo Dev Studio (jogo completo)" foi absorvido por game+pixel+music; "User Research" foi parcialmente absorvido por product (personas/jornadas); "Filosofia & Pensamento Crítico" foi parcialmente absorvido por brainstorm; "Desenvolvimento Pessoal & Coaching" foi parcialmente absorvido por `career` (evidência/decisão de carreira; a parte emocional/wellbeing fica de fora, por ser área sensível).
 
 ## ⬜ Os que ficaram de fora (candidatos para "extended pack" futuro ou custom)
 
@@ -36,6 +36,7 @@ dev, client, design, narrative, research, product, marketing, business (os 8 "s�
 ### Desenvolvimento Pessoal & Coaching
 - **Usuário:** autoconhecimento, metas pessoais de longo prazo, Claude como ferramenta de reflexão.
 - **Nota importante:** área sensível (emocional/wellbeing) — exige cuidado especial.
+- **Status:** **parcialmente absorvido** por `career` (spec0041) — a parte de carreira/evidência/decisão profissional está coberta (mesmo padrão de "Solo Dev Studio" e "User Research"). Um nicho próprio focaria no autoconhecimento e wellbeing, que `career` deliberadamente deixa de fora.
 - **Arquivos sugeridos:** PERFIL (valores/padrões), OBJETIVOS, REFLEXÕES (insights a não perder), COMPROMETIMENTOS, STATUS, LOG.
 
 ### User Research / Perfil de Usuário

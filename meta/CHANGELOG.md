@@ -1,6 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.53.0**.
+> Histórico de versões. Versão atual: **v1.67.0**.
+> (Nota: o corpo deste arquivo pulou de v1.53.0 direto para v1.67.0 — as versões intermediárias
+> ficaram registradas em `meta/STATUS.md` e `meta/DECISIONS.md`; o CHANGELOG andou atrasado.)
+
+## v1.67.0 — Nicho `career` (Carreira & Trabalho), o 18º nicho (spec0041, D-069)
+- Primeiro nicho de conteúdo novo desde o ciclo de refino de modos. Tese em cadeia: **fato datado + prova** (`EVIDENCIAS.md`, append-only) → **competência com lastro** (`DOSSIE.md`, derivado; toda linha aponta para um EV-xxx) → **artefato** (currículo/pitch/portfólio que nunca afirma o que não prova). Em paralelo `SITUACAO.md` mantém o **contratado × real** (linha do tempo do escopo, com data/quem-pediu/prova) e `DECISIONS.md` registra o porquê **com o melhor contra-argumento na mesa**.
+- 6 behaviors: `evidence_first`, `scope_ledger`, `benchmark_sourced`, `counterargue_before_irreversible`, `mine_projects`, `vent_is_not_fact`. Campo **Fronteiras** no builder. Regra de privacidade: projeto do usuário versiona local/privado (nunca publica salário, terceiros ou dados da empresa); o template é público.
+- Topbar `momentSel` (select) + `frentes` (multi, modal); 10 templates (CONTEXT/EVIDENCIAS/DOSSIE/SITUACAO/MERCADO/PLANO/ESTUDO/DECISIONS/STATUS/LOG-TEMPLATE); 6 prompts extras (G–L: minerar projeto, radiografia do escopo, faixa com fonte, conversa difícil, currículo com lastro, decidir).
+- Template: marcador do módulo, hero `.hero-career` (dossiê/evidência), `NICHE_CODE` (CARR), CSS responsivo; `build-manifest.json` com 18 módulos.
+- Harness: novo check **G15** (behaviors-chave + arquivos do dossiê + campos de topbar chegando ao `buildInstr` sob o teto 6900); G1 subiu para 18 nichos; linha final deixou de ser hardcoded. `N[career]` em 6179/6900.
+- 7 análises antigas renomeadas para `AAMMDD-ANALISE-*.md` em `meta/analises/`; IDEAS: i-N42 reescrita + i-N43/44/45 novas.
+- Base: `meta/analises/260713-ANALISE-NICHO-CARREIRA.md`.
+- Harness **18/18, 43/43, 0 erros**.
 
 ## v1.53.0 — Modo Code: kit de arranque vira download separado + formato Skills atual (i-N37, D-055)
 - O apêndice inline «Apêndice — arquivos de arranque do Claude Code» sai do CEREBRO e vira **pacote `claude-code-kit.zip` separado** — novo botão «↓ Baixar kit do Claude Code (.zip)» na aba Templates, visível quando o Modo Code está ligado.

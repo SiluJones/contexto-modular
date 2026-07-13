@@ -1,6 +1,6 @@
 // validate.js — harness do Kit de Contexto Universal (reconstruido da receita CONTEXT §3)
 // Uso: node validate.js [caminho/para/index.html]   (default: index.html)
-// REGRA DE OURO: 17/17 nichos, 0 erros. Anti-testes em anti-test.js.
+// REGRA DE OURO: 18/18 nichos, 0 erros. Anti-testes em anti-test.js.
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
@@ -41,9 +41,9 @@ catch(e){ console.error("FALHA AO CARREGAR:", e.message); process.exit(2); }
 const ids = Object.keys(T.NICHES);
 
 // ============ GLOBAIS ============
-check("G1 shim/__T populado, 14 chaves, 17 nichos", () => {
+check("G1 shim/__T populado, 14 chaves, 18 nichos", () => {
   assert(T && Object.keys(T).length >= 12, "poucas chaves no shim");
-  assert(ids.length === 17, "esperado 17 nichos, achou " + ids.length);
+  assert(ids.length === 18, "esperado 18 nichos, achou " + ids.length);
   return ids.length + " nichos";
 });
 
@@ -176,7 +176,7 @@ check("G8 selos de estado: presente quando liga / ausente quando desliga / ordem
   return "ok";
 });
 
-// ============ POR NICHO (17) ============
+// ============ POR NICHO (18) ============
 const COMP = "Princípios universais (definição completa no CEREBRO.md)";
 ids.forEach(id => {
   check("N["+id+"] Instr+CEREBRO, teto 6900, universais comprimidos, sem undefined, IDEAS/HUB, chips", () => {
@@ -353,6 +353,28 @@ check("G14 transferencia mode-aware: Code NAO regenera meta; vanilla so o que mu
   return "ok";
 });
 
+check("G15 nicho career: campos chegam a saida, behaviors-chave e arquivos do dossie", () => {
+  const c = T.NICHES.career;
+  assert(c, "nicho career ausente");
+  const n = T.normNiche(c);
+  const keys = (n.behaviors||[]).map(b => b.id || b[0]);
+  ["evidence_first","scope_ledger","benchmark_sourced","counterargue_before_irreversible","mine_projects","vent_is_not_fact"]
+    .forEach(k => assert(keys.includes(k), "behavior ausente no career: " + k));
+  const files = T.effectiveFiles(n).map(f => f.name);
+  ["EVIDENCIAS.md","DOSSIE.md","SITUACAO.md","MERCADO.md","PLANO.md","DECISIONS.md"]
+    .forEach(f => assert(files.includes(f), "arquivo ausente no career: " + f));
+  // spec0033: campo de topbar precisa CHEGAR ao buildInstr (nao pode ser metadado morto)
+  T.STATE.topbar = T.STATE.topbar || {};
+  T.STATE.topbar.momentSel = "Negociando na atual";
+  T.STATE.topbar.frentes = ["Aumento/revisão de cargo","Estudo"];
+  const instr = T.buildInstr(n);
+  assert(/Momento: Negociando na atual/.test(instr), "campo Momento nao chegou as Instrucoes");
+  assert(/Aumento\/revis.o de cargo/.test(instr), "campo Frentes (multi) nao chegou as Instrucoes");
+  assert(instr.length <= 6900, "instrucao do career excede 6900: " + instr.length);
+  T.STATE.topbar.momentSel = ""; T.STATE.topbar.frentes = [];
+  return "ok";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");
@@ -361,4 +383,4 @@ const nicheChecks = results.filter(r => /^N\[/.test(r.name));
 const nicheOk = nicheChecks.filter(r => r.ok).length;
 console.log("\nNichos: " + nicheOk + "/" + nicheChecks.length + " verdes | Checagens totais: " + (results.length - fail.length) + "/" + results.length);
 if(fail.length){ console.log("RESULTADO: VERMELHO (" + fail.length + " falha(s))"); process.exit(1); }
-console.log("RESULTADO: VERDE — 17/17, 0 erros");
+console.log("RESULTADO: VERDE — " + nicheOk + "/" + nicheChecks.length + ", 0 erros");

@@ -468,8 +468,21 @@ Refino/descendente da **i-N3** (backdoor de atualização + afixo, já implement
 Hoje `genreSel`/`engineSel`/`phase` são preenchidos mas não entram no CEREBRO/Instruções. Fazer um bloco "Contexto do nicho" na saída consumir esses campos (gênero(s), engine, fase), para o que o usuário marca de fato moldar o contexto gerado.
 **Resolução:** `buildInstr` ganhou o bloco "Contexto do projeto" (após o Estágio), emitindo os campos de `niche.topbar` não-consumidos e com valor; conserto de brinde do desencontro `phase`/`fase` no Estágio. Ver D-061.
 
-## i-N42 — Prompts C/D desatualizados: mandam gerar do zero, ignorando o download estruturado (↓) e o pacote de atualização (↻) — A REFINAR (spec seguinte)
-Os prompts de setup **C** e **D** ainda pedem à IA que **gere os arquivos do zero**, ignorando dois mecanismos que o kit já oferece: o **download estruturado** (↓, spec0034) e o **pacote de atualização** (↻, i-N40). Refino: **C** aponta para o estruturado, **D** para o pacote; ambos cientes dos modos (Code/ASU/grupo), no mesmo espírito mode-aware de E/F (spec0040). Sequência natural depois da spec0040.
+## i-N42 — Prompts C/D (setup do projeto receptor): reconhecer como os templates chegaram + rótulo de quem é o prompt — A REFINAR (spec seguinte)
+**REESCRITA (2026-07-13).** A leitura anterior estava errada — dizia que C/D "mandam gerar do zero, ignorando o download estruturado/pacote de atualização", tratando-os como se fossem sobre os downloads do KCM. **Não são.** C e D são os prompts do **projeto receptor**: **C = projeto novo**; **D = projeto que já existe e vai adotar o kit**. O refino real é:
+- (a) C/D devem **reconhecer como os templates chegaram** (pacote achatado × **estruturado** do botão ↓ — neste caso não se "gera do zero" o que já veio pronto);
+- (b) C/D são **mode-blind**: no **Code** o receptor tem repo → árvore + commit; no **ASU**, edição por `.yaml`;
+- (c) o **rótulo** de cada prompt deve dizer **para quem ele é** — se uma conversa do próprio KCM se confundiu, o usuário se confunde igual.
+- **D ≠ pacote de atualização:** o ↻ já tem prompt próprio + protocolo no CEREBRO (i-N40). São coisas distintas.
+
+## i-N43 — Auto-refino registrado: «problema diagnosticado → grava a armadilha» — A ESPECIFICAR
+Projetos diagnosticam a causa de um problema e **não registram** o aprendizado: fica na memória da conversa, some ao truncar/transferir, e o erro se repete. Falta um **gatilho universal**: «problema diagnosticado → grava a armadilha no DECISIONS/CEREBRO do projeto e reporta ao KCM». (Origem: nota `260709-0808`. **Verificar antes de especificar** se já existe algo truncado/corrompido no CEREBRO nessa direção.)
+
+## i-N44 — Handoff enxuto + log do Code — A ESPECIFICAR
+Handoff **não se versiona** (é atalho efêmero; o repo é a verdade), nome padronizado `_HANDOFF-AAAA-MM-DD.md`, arquivado fora do repo. O brief deve carregar **só o fio vivo** (o que não está em arquivo nenhum) e **nunca** repetir STATUS/DECISIONS. No modo **Code** ele é quase dispensável (tudo já foi para append); no **vanilla** é o único portador. Avaliar também o Code emitir um **log de sessão** (hoje o usuário copia a última mensagem à mão).
+
+## i-N45 — Prompt de retomada fixo (separar do brief datado) — A ESPECIFICAR
+Separar o **prompt de retomada permanente** (não datado, vive no CEREBRO: "leia os meta/ nesta ordem, confirme em uma frase, execute o próximo passo") do **brief datado e efêmero**. Refino natural do prompt F pós-spec0040.
 
 ## 💡 Ativas — do usuário
 
