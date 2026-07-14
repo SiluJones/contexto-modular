@@ -66,13 +66,14 @@
   html[data-niche="research"]{ --amber:#94a3b8; --amber-soft:#cbd5e1; --green:#60a5fa; --grad-a:rgba(148,163,184,.06); --grad-b:rgba(96,165,250,.05); }
   html[data-niche="product"]{ --amber:#f472b6; --amber-soft:#f9a8d4; --green:#c084fc; --grad-a:rgba(244,114,182,.09); --grad-b:rgba(192,132,252,.05); }
   html[data-niche="business"]{ --amber:#d4b896; --amber-soft:#e6d4b8; --green:#94a3b8; --grad-a:rgba(212,184,150,.07); --grad-b:rgba(148,163,184,.04); }
+  html[data-niche="career"]{ --amber:#4ade80; --amber-soft:#86efac; --green:#a3e635; --grad-a:rgba(74,222,128,.08); --grad-b:rgba(163,230,53,.05); }
   html[data-niche="game"]{ --amber:#34d399; --amber-soft:#6ee7b7; --green:#fbbf24; --grad-a:rgba(52,211,153,.08); --grad-b:rgba(251,191,36,.06); }
-  html[data-niche="pixel"]{ --amber:#22d3ee; --amber-soft:#67e8f9; --green:#a3e635; --grad-a:rgba(34,211,238,.08); --grad-b:rgba(163,230,53,.06); }
+  html[data-niche="pixel"]{ --amber:#a3e635; --amber-soft:#bef264; --green:#22d3ee; --grad-a:rgba(163,230,53,.08); --grad-b:rgba(34,211,238,.06); }
   html[data-niche="brainstorm"]{ --amber:#fbbf24; --amber-soft:#fcd34d; --green:#34d399; --grad-a:rgba(251,191,36,.09); --grad-b:rgba(52,211,153,.05); }
-  html[data-niche="music"]{ --amber:#a78bfa; --amber-soft:#c4b5fd; --green:#60a5fa; --grad-a:rgba(167,139,250,.09); --grad-b:rgba(96,165,250,.05); }
+  html[data-niche="music"]{ --amber:#22d3ee; --amber-soft:#67e8f9; --green:#a78bfa; --grad-a:rgba(34,211,238,.09); --grad-b:rgba(167,139,250,.05); }
   html[data-niche="rpg"]{ --amber:#ef4444; --amber-soft:#f87171; --green:#d97706; --grad-a:rgba(239,68,68,.08); --grad-b:rgba(217,119,6,.06); }
-  html[data-niche="cuisine"]{ --amber:#f59e0b; --amber-soft:#fbbf24; --green:#84cc16; --grad-a:rgba(245,158,11,.09); --grad-b:rgba(132,204,22,.06); }
-  html[data-niche="animation"]{ --amber:#fb923c; --amber-soft:#fdba74; --green:#f87171; --grad-a:rgba(251,146,60,.09); --grad-b:rgba(248,113,113,.05); }
+  html[data-niche="cuisine"]{ --amber:#f97316; --amber-soft:#fdba74; --green:#84cc16; --grad-a:rgba(249,115,22,.09); --grad-b:rgba(132,204,22,.06); }
+  html[data-niche="animation"]{ --amber:#818cf8; --amber-soft:#a5b4fc; --green:#f472b6; --grad-a:rgba(129,140,248,.09); --grad-b:rgba(244,114,182,.05); }
   html[data-niche="comics"]{ --amber:#e879f9; --amber-soft:#f0abfc; --green:#a78bfa; --grad-a:rgba(232,121,249,.08); --grad-b:rgba(167,139,250,.05); }
   html[data-niche="custom"]{ --amber:#cbd5e1; --amber-soft:#e2e8f0; --green:#a3e635; --grad-a:rgba(203,213,225,.06); --grad-b:rgba(163,230,53,.04); }
 
@@ -2261,7 +2262,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
    ============================================================ */
 NICHES.narrative = {
   id:"narrative", label:"Narrativa & Ficção", icon:"✍", group:"literary", category:"core",
-  cardColor:"#f59e0b", cardTags:["romance","conto","roteiro","serial"],
+  cardColor:"#7aa2f7", cardTags:["romance","conto","roteiro","serial"],
   cardDesc:"Mundo, personagens, voz e continuidade — sem perder o fio",
   intro:{
     headline:"A bíblia da obra que segura a história entre uma sessão e outra.",
@@ -2768,7 +2769,7 @@ NICHES.narrative = {
    ============================================================ */
 NICHES.marketing = {
   id:"marketing", label:"Marketing & Conteúdo", icon:"◈", group:"serif", category:"core",
-  cardColor:"#fb923c", cardTags:["conteúdo","social","newsletter","marca"],
+  cardColor:"#f87171", cardTags:["conteúdo","social","newsletter","marca"],
   cardDesc:"Pilares, voz, calendário e distribuição — conteúdo com estratégia, não avulso",
   intro:{
     headline:"Voz consistente, pilares claros, e conteúdo que não vira pilha de posts soltos.",
@@ -3727,7 +3728,7 @@ NICHES.product = {
 /* ---------- BUSINESS (Negócios) ---------- */
 NICHES.business = {
   id:"business", label:"Negócios", icon:"📊", group:"serif", category:"core",
-  cardColor:"#38bdf8", cardTags:["estratégia","finanças","decisão","operação"],
+  cardColor:"#d4b896", cardTags:["estratégia","finanças","decisão","operação"],
   cardDesc:"Estratégia, unit economics e decisões — com premissa explícita e contraponto",
   intro:{
     headline:"Decisão de negócio com a premissa na mesa e o número honesto.",
@@ -4429,7 +4430,7 @@ Uma entrada por fato. Formato:
 /* ---------- GAME (Game Design) ---------- */
 NICHES.game = {
   id:"game", label:"Game Design", icon:"🎮", group:"digital", category:"creative",
-  cardColor:"#a78bfa", cardTags:["solo dev","indie","equipe pequena"],
+  cardColor:"#34d399", cardTags:["solo dev","indie","equipe pequena"],
   cardDesc:"Core loop, sistemas, mundo e produção — da experiência ao jogo terminado",
   intro:{
     headline:"Da experiência pretendida ao jogo terminado, sem o escopo te engolir.",
@@ -4844,7 +4845,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 /* ---------- PIXEL (Pixel Art) ---------- */
 NICHES.pixel = {
   id:"pixel", label:"Pixel Art", icon:"🎨", group:"digital", category:"creative",
-  cardColor:"#34d399", cardTags:["sprites","game art","animação"],
+  cardColor:"#a3e635", cardTags:["sprites","game art","animação"],
   cardDesc:"Paleta, silhueta, clusters e animação — estilo coerente do 1º sprite ao último",
   intro:{
     headline:"Estilo coerente do primeiro sprite ao último, sem visual drift.",
@@ -5179,7 +5180,7 @@ NICHES.pixel = {
 /* ---------- BRAINSTORM (Geral + Auto-referencial) ---------- */
 NICHES.brainstorm = {
   id:"brainstorm", label:"Brainstorm", icon:"💡", group:"serif", category:"creative",
-  cardColor:"#facc15", cardTags:["ideação","estratégia","pensar junto"],
+  cardColor:"#fbbf24", cardTags:["ideação","estratégia","pensar junto"],
   cardDesc:"Divergir, mapear e convergir — pensar junto sem perder o fio. É o nicho deste próprio Kit.",
   intro:{
     headline:"Pensar junto sem perder o fio — nem a honestidade.",
@@ -5485,7 +5486,7 @@ NICHES.brainstorm = {
 /* ---------- MUSIC (Música/Produção) ---------- */
 NICHES.music = {
   id:"music", label:"Música", icon:"🎵", group:"literary", category:"creative",
-  cardColor:"#fbbf24", cardTags:["composição","produção","letra"],
+  cardColor:"#22d3ee", cardTags:["composição","produção","letra"],
   cardDesc:"Conceito, letra, arranjo e mix — do esboço à faixa que soa como você imaginou",
   intro:{
     headline:"Do esboço à faixa pronta, mantendo a voz e a intenção de cada decisão.",
@@ -5809,7 +5810,7 @@ NICHES.music = {
 /* ---------- RPG (Mestres de RPG) ---------- */
 NICHES.rpg = {
   id:"rpg", label:"RPG (Mestres)", icon:"🎲", group:"literary", category:"creative",
-  cardColor:"#c084fc", cardTags:["mesa","campanha","one-shot"],
+  cardColor:"#ef4444", cardTags:["mesa","campanha","one-shot"],
   cardDesc:"Mundo, NPCs, prep leve e improviso coerente — campanha que lembra de tudo",
   intro:{
     headline:"A campanha que lembra de tudo entre uma sessão e outra.",
@@ -6171,7 +6172,7 @@ NICHES.rpg = {
 /* ---------- CUISINE (Chefs/Cozinha) ---------- */
 NICHES.cuisine = {
   id:"cuisine", label:"Cozinha", icon:"🍳", group:"serif", category:"creative",
-  cardColor:"#fb7185", cardTags:["receitas","menu","restaurante"],
+  cardColor:"#f97316", cardTags:["receitas","menu","restaurante"],
   cardDesc:"Receitas, técnica, menu e custo — do ratio que afina o prato à carta que fecha a conta",
   intro:{
     headline:"Do ratio que afina o prato à carta que fecha a conta.",
@@ -6478,7 +6479,7 @@ NICHES.cuisine = {
 /* ---------- ANIMATION (Animação/Séries) ---------- */
 NICHES.animation = {
   id:"animation", label:"Animação", icon:"🎬", group:"serif", category:"creative",
-  cardColor:"#60a5fa", cardTags:["curta","série","motion"],
+  cardColor:"#818cf8", cardTags:["curta","série","motion"],
   cardDesc:"Roteiro, storyboard, princípios e produção — da ideia ao timing que dá vida",
   intro:{
     headline:"Da ideia ao movimento que dá vida, com o timing travado antes de animar.",
@@ -6834,7 +6835,7 @@ NICHES.animation = {
 /* ---------- COMICS (HQs/Mangás) ---------- */
 NICHES.comics = {
   id:"comics", label:"HQs", icon:"💥", group:"literary", category:"creative",
-  cardColor:"#f472b6", cardTags:["quadrinhos","mangá","webcomic"],
+  cardColor:"#e879f9", cardTags:["quadrinhos","mangá","webcomic"],
   cardDesc:"Roteiro, páginas, ritmo de quadro e arco longo — da ideia à arte sequencial",
   intro:{
     headline:"Da ideia à arte sequencial, com a sarjeta trabalhando a seu favor.",

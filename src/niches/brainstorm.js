@@ -1,6 +1,6 @@
 NICHES.brainstorm = {
   id:"brainstorm", label:"Brainstorm", icon:"💡", group:"serif", category:"creative",
-  cardColor:"#facc15", cardTags:["ideação","estratégia","pensar junto"],
+  cardColor:"#fbbf24", cardTags:["ideação","estratégia","pensar junto"],
   cardDesc:"Divergir, mapear e convergir — pensar junto sem perder o fio. É o nicho deste próprio Kit.",
   intro:{
     headline:"Pensar junto sem perder o fio — nem a honestidade.",

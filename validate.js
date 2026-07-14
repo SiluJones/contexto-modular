@@ -430,6 +430,34 @@ check("G19 CEREBRO ensina a refinar as proprias Instrucoes (orcamento, sem perde
   return "ok";
 });
 
+check("G20 paleta unificada: cardColor == cor da pagina (--amber) em TODOS os nichos", () => {
+  const html = fs.readFileSync(path, "utf8");
+  const faltando = [], divergente = [];
+  Object.keys(T.NICHES).forEach(id => {
+    const re = new RegExp('html\\[data-niche="' + id + '"\\]\\{[^}]*--amber:\\s*(#[0-9a-fA-F]{6})');
+    const m = html.match(re);
+    if(!m){ faltando.push(id); return; }
+    const pagina = m[1].toLowerCase();
+    const card = String(T.NICHES[id].cardColor || "").toLowerCase();
+    if(pagina !== card) divergente.push(id + " card:" + card + " pagina:" + pagina);
+  });
+  assert(faltando.length === 0, "nicho sem bloco [data-niche] no CSS -> " + faltando.join(", "));
+  assert(divergente.length === 0, "card e pagina com cores diferentes -> " + divergente.join(" | "));
+  return "ok";
+});
+
+check("G21 paleta sem colisao: nenhuma cor principal repetida entre nichos", () => {
+  const vistos = {};
+  const dup = [];
+  Object.keys(T.NICHES).forEach(id => {
+    const c = String(T.NICHES[id].cardColor || "").toLowerCase();
+    if(vistos[c]) dup.push(c + " -> " + vistos[c] + " e " + id);
+    vistos[c] = id;
+  });
+  assert(dup.length === 0, "cor principal repetida -> " + dup.join(" | "));
+  return "ok";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

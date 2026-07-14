@@ -1,6 +1,6 @@
 NICHES.animation = {
   id:"animation", label:"Animação", icon:"🎬", group:"serif", category:"creative",
-  cardColor:"#60a5fa", cardTags:["curta","série","motion"],
+  cardColor:"#818cf8", cardTags:["curta","série","motion"],
   cardDesc:"Roteiro, storyboard, princípios e produção — da ideia ao timing que dá vida",
   intro:{
     headline:"Da ideia ao movimento que dá vida, com o timing travado antes de animar.",

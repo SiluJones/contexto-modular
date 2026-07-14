@@ -1,6 +1,6 @@
 NICHES.narrative = {
   id:"narrative", label:"Narrativa & Ficção", icon:"✍", group:"literary", category:"core",
-  cardColor:"#f59e0b", cardTags:["romance","conto","roteiro","serial"],
+  cardColor:"#7aa2f7", cardTags:["romance","conto","roteiro","serial"],
   cardDesc:"Mundo, personagens, voz e continuidade — sem perder o fio",
   intro:{
     headline:"A bíblia da obra que segura a história entre uma sessão e outra.",

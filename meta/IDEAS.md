@@ -497,7 +497,7 @@ O topo do `meta/CHANGELOG.md` pula de v1.53 direto para v1.67: as versões v1.54
 ## i-N48 — Refino de instrução pela própria conversa — ✅ FECHADA (spec0043, D-072) — nasceu e morreu nesta spec
 O CEREBRO passa a ensinar a conversa a cuidar do próprio orçamento de instrução: seção «Refino das Instruções do Projeto» com as seis regras (cortar o que não se aplica, especializar o que se aplica, «mover é barato, apagar é caro», não inchar, uma regra por linha, teto de ~6.900 caracteres) + registro obrigatório em DECISIONS/IDEAS. Trava por G19. Fecha o buraco em que a conversa inflava ou podava demais as Instruções.
 
-## i-N49 — Paleta unificada dos nichos (é a spec0044) — A ESPECIFICAR
+## i-N49 — Paleta unificada dos nichos (é a spec0044) — FECHADA (spec0044, D-074/D-075)
 O KCM tem **duas cores por nicho** que não conversam: o `cardColor` (tela de escolha, em `src/niches/<id>.js`) e o bloco `html[data-niche="<id>"]{ --amber: … }` (página do nicho, em `src/index.template.html`). O `career` **não tem entrada `[data-niche]`** — por isso a página dele herda o âmbar padrão (o do dev): é esta a causa do «a cor do carreira é igual à do dev» (a spec0042 mexeu só no card). A spec0044 vai unificar as duas fontes por nicho, ancorando na preferência já dada pelo usuário, e resolver os **choques** que a unificação cria (dois nichos caindo na mesma cor).
 
 ## 💡 Ativas — do usuário

@@ -1,6 +1,6 @@
 NICHES.game = {
   id:"game", label:"Game Design", icon:"🎮", group:"digital", category:"creative",
-  cardColor:"#a78bfa", cardTags:["solo dev","indie","equipe pequena"],
+  cardColor:"#34d399", cardTags:["solo dev","indie","equipe pequena"],
   cardDesc:"Core loop, sistemas, mundo e produção — da experiência ao jogo terminado",
   intro:{
     headline:"Da experiência pretendida ao jogo terminado, sem o escopo te engolir.",

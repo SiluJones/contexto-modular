@@ -1,6 +1,6 @@
 NICHES.business = {
   id:"business", label:"Negócios", icon:"📊", group:"serif", category:"core",
-  cardColor:"#38bdf8", cardTags:["estratégia","finanças","decisão","operação"],
+  cardColor:"#d4b896", cardTags:["estratégia","finanças","decisão","operação"],
   cardDesc:"Estratégia, unit economics e decisões — com premissa explícita e contraponto",
   intro:{
     headline:"Decisão de negócio com a premissa na mesa e o número honesto.",

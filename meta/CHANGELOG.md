@@ -1,9 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.68.0**.
+> Histórico de versões. Versão atual: **v1.68.1**.
 > (Nota: o corpo deste arquivo pulou de v1.53.0 direto para v1.67.0 — as versões intermediárias
 > ficaram registradas em `meta/STATUS.md` e `meta/DECISIONS.md`; o CHANGELOG andou atrasado.
 > Reconstruir v1.54–v1.66 é a i-N47.)
+
+## v1.68.1 — Paleta unificada dos 18 nichos: uma cor principal por nicho (spec0044, D-074/D-075)
+- **D-074 — card == página:** o KCM tinha **duas fontes de cor por nicho** sem nada obrigando-as a concordar — `cardColor` (tela de escolha, `src/niches/<id>.js`) e `html[data-niche="<id>"]{ --amber }` (página, `src/index.template.html`). Onze nichos divergiam e o `career` **não tinha bloco `[data-niche]` nenhum**, herdando o âmbar do dev (a causa raiz do bug «carreira igual ao dev»). Agora há **uma cor principal por nicho**: o template ganha o 18º bloco `[data-niche="career"]` (novo, depois de `business`) e 11 `cardColor` foram realinhados à cor da página, com os matizes **redistribuídos** para dar separação real — pixel lima `#a3e635`, música ciano `#22d3ee`, cozinha laranja `#f97316`, animação índigo `#818cf8`, HQ fúcsia `#e879f9`, game esmeralda `#34d399`, rpg vermelho `#ef4444`, negócios bege `#d4b896`, narrativa azul `#7aa2f7`, marketing coral `#f87171`, brainstorm amarelo `#fbbf24`. Nenhuma cor principal repetida; cada nicho mantém a leitura semântica que já tinha.
+- **G20/G21 — travam a invariante:** **G20** lê o `--amber` do CSS do `index.html` e exige `cardColor == página` em todos os nichos — nicho novo sem bloco `[data-niche]` agora **quebra o harness** em vez de herdar em silêncio (era o check que faltava desde sempre). **G21** proíbe cor principal repetida entre nichos.
+- **D-075 — `.gitattributes`:** fixa LF no `.githooks/pre-commit` (`* text=auto`, `.githooks/pre-commit text eol=lf`, `*.sh text eol=lf` + `git add --renormalize`), evitando *bad interpreter* num clone novo com `core.autocrlf=true`.
+- IDEAS: i-N49 FECHADA.
+- Harness **18/18, 49/49, 0 erros**.
 
 ## v1.68.0 — Refino de instrução pela própria conversa, hook de pré-commit e `/check-spec` (spec0043, D-072/D-073)
 - **CEREBRO (D-072, i-N48):** nova seção «Refino das Instruções do Projeto». As Instruções são lidas em toda mensagem, então a versão do kit é um **ponto de partida genérico** que o projeto deve encurtar e especializar **sem perder processo**. Seis regras: cortar o que não se aplica, especializar o que se aplica, **não confundir encurtar com esquecer** («mover é barato, apagar é caro» — regra que já evitou erro real, e está no DECISIONS, some ao CEREBRO em vez de sumir), não inchar, uma regra por linha no imperativo, **teto de ~6.900 caracteres** (dizer o tamanho antes/depois) + **registrar** toda mudança em DECISIONS e «Feedback para o Kit» no IDEAS. Novo check **G19**.

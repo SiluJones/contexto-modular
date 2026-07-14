@@ -1,6 +1,6 @@
 NICHES.rpg = {
   id:"rpg", label:"RPG (Mestres)", icon:"🎲", group:"literary", category:"creative",
-  cardColor:"#c084fc", cardTags:["mesa","campanha","one-shot"],
+  cardColor:"#ef4444", cardTags:["mesa","campanha","one-shot"],
   cardDesc:"Mundo, NPCs, prep leve e improviso coerente — campanha que lembra de tudo",
   intro:{
     headline:"A campanha que lembra de tudo entre uma sessão e outra.",

@@ -1,6 +1,6 @@
 NICHES.pixel = {
   id:"pixel", label:"Pixel Art", icon:"🎨", group:"digital", category:"creative",
-  cardColor:"#34d399", cardTags:["sprites","game art","animação"],
+  cardColor:"#a3e635", cardTags:["sprites","game art","animação"],
   cardDesc:"Paleta, silhueta, clusters e animação — estilo coerente do 1º sprite ao último",
   intro:{
     headline:"Estilo coerente do primeiro sprite ao último, sem visual drift.",

@@ -1,6 +1,6 @@
 NICHES.comics = {
   id:"comics", label:"HQs", icon:"💥", group:"literary", category:"creative",
-  cardColor:"#f472b6", cardTags:["quadrinhos","mangá","webcomic"],
+  cardColor:"#e879f9", cardTags:["quadrinhos","mangá","webcomic"],
   cardDesc:"Roteiro, páginas, ritmo de quadro e arco longo — da ideia à arte sequencial",
   intro:{
     headline:"Da ideia à arte sequencial, com a sarjeta trabalhando a seu favor.",

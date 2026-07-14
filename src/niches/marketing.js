@@ -1,6 +1,6 @@
 NICHES.marketing = {
   id:"marketing", label:"Marketing & Conteúdo", icon:"◈", group:"serif", category:"core",
-  cardColor:"#fb923c", cardTags:["conteúdo","social","newsletter","marca"],
+  cardColor:"#f87171", cardTags:["conteúdo","social","newsletter","marca"],
   cardDesc:"Pilares, voz, calendário e distribuição — conteúdo com estratégia, não avulso",
   intro:{
     headline:"Voz consistente, pilares claros, e conteúdo que não vira pilha de posts soltos.",

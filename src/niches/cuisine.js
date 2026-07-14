@@ -1,6 +1,6 @@
 NICHES.cuisine = {
   id:"cuisine", label:"Cozinha", icon:"🍳", group:"serif", category:"creative",
-  cardColor:"#fb7185", cardTags:["receitas","menu","restaurante"],
+  cardColor:"#f97316", cardTags:["receitas","menu","restaurante"],
   cardDesc:"Receitas, técnica, menu e custo — do ratio que afina o prato à carta que fecha a conta",
   intro:{
     headline:"Do ratio que afina o prato à carta que fecha a conta.",

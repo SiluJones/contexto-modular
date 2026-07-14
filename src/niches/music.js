@@ -1,6 +1,6 @@
 NICHES.music = {
   id:"music", label:"Música", icon:"🎵", group:"literary", category:"creative",
-  cardColor:"#fbbf24", cardTags:["composição","produção","letra"],
+  cardColor:"#22d3ee", cardTags:["composição","produção","letra"],
   cardDesc:"Conceito, letra, arranjo e mix — do esboço à faixa que soa como você imaginou",
   intro:{
     headline:"Do esboço à faixa pronta, mantendo a voz e a intenção de cada decisão.",
