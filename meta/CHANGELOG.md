@@ -1,9 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.67.1**.
+> Histórico de versões. Versão atual: **v1.68.0**.
 > (Nota: o corpo deste arquivo pulou de v1.53.0 direto para v1.67.0 — as versões intermediárias
 > ficaram registradas em `meta/STATUS.md` e `meta/DECISIONS.md`; o CHANGELOG andou atrasado.
 > Reconstruir v1.54–v1.66 é a i-N47.)
+
+## v1.68.0 — Refino de instrução pela própria conversa, hook de pré-commit e `/check-spec` (spec0043, D-072/D-073)
+- **CEREBRO (D-072, i-N48):** nova seção «Refino das Instruções do Projeto». As Instruções são lidas em toda mensagem, então a versão do kit é um **ponto de partida genérico** que o projeto deve encurtar e especializar **sem perder processo**. Seis regras: cortar o que não se aplica, especializar o que se aplica, **não confundir encurtar com esquecer** («mover é barato, apagar é caro» — regra que já evitou erro real, e está no DECISIONS, some ao CEREBRO em vez de sumir), não inchar, uma regra por linha no imperativo, **teto de ~6.900 caracteres** (dizer o tamanho antes/depois) + **registrar** toda mudança em DECISIONS e «Feedback para o Kit» no IDEAS. Novo check **G19**.
+- **i-N38 — hook de pré-commit:** `.githooks/pre-commit` bloqueia qualquer commit que toque o produto (`src/`, `index.html`, `build.js`, `validate.js`, `build-manifest.json`) sem **build + harness verdes**, e garante que o `index.html` commitado é o do build atual. Bypass consciente por `git commit --no-verify` (emergência, não rotina). Liga-se por `git config core.hooksPath .githooks` (não viaja no clone; documentado no BUILD.md).
+- **i-N39 — `/check-spec`:** comando read-only que, antes de aplicar uma spec, confere âncoras (0 = morta, 2+ = ambígua), pré-requisitos (versão/commit/árvore limpa/colisão de arquivo novo) e o estado verde do repo — não edita, não builda, não commita. Ciclo da spec agora: `/check-spec → aplicar → build → validate → commit`.
+- IDEAS: i-N38/i-N39/i-N48 FECHADAS; i-N49 (paleta unificada dos nichos = spec0044) registrada.
+- Harness **18/18, 47/47, 0 erros**.
 
 ## v1.67.1 — Correções do career, SO no modal, engine/fase na aba Nicho, teto real no harness (spec0042, D-070/D-071)
 - **career:** cor do card `#84cc16` (lima, colidia com o âmbar do dev na grade) → `#4ade80` (verde inequívoco); **Área-alvo** vira `chips` (múltipla escolha) e amplia de 7 para 16 opções (transição de área é marcar duas); **Fronteiras** amplia para 13 opções (inclui `scopecreep`); hero do card genérico (não conta mais a vida do autor).

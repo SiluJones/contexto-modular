@@ -450,11 +450,13 @@ D-052 (spec0023) aplicou às skills de escrita o princípio "CEREBRO só com reg
 
 **Q1/Nível 2 da análise:** aplicada nesta spec (skills de escrita, D-052) e em spec0026 (Modo Code, D-055). **Princípio geral firmado como diretriz do KCM:** o CEREBRO.md contém só regras/diretrizes/técnicas FIXAS — nunca artefatos temporários nem instruções autodestrutivas; material de instalação/arranque sai como arquivo/download separado.
 
-## i-N38 — Hook de pre-commit que roda o harness e bloqueia commit sem verde — 💡 Ativa
+## i-N38 — Hook de pre-commit que roda o harness e bloqueia commit sem verde — ✅ FECHADA (spec0043, D-073)
 Candidato à próxima fase de Code: um hook de pre-commit (via `.claude/settings.json` ou git hook nativo) que roda `node validate.js` automaticamente antes de cada commit e bloqueia se não vier 17/17 (ou o total vigente), 0 erros. Reduz o risco de commit com harness quebrado.
+**Fechamento (2026-07-14, spec0043):** `.githooks/pre-commit` bloqueia commit que toque o produto sem **build + harness verdes**, e garante que o `index.html` commitado é o do build atual. Bypass consciente por `--no-verify`. Liga por `git config core.hooksPath .githooks` (não viaja no clone; documentado no BUILD.md). Teste manual do bloqueio/passagem relatado na sessão.
 
-## i-N39 — /check-spec: gate read-only de conferência da spec antes de aplicar — 💡 Ativa
+## i-N39 — /check-spec: gate read-only de conferência da spec antes de aplicar — ✅ FECHADA (spec0043, D-073)
 Empréstimo pontual do `/analyze` do GitHub spec-kit (fechamento da i-N7): um comando `/check-spec` que, antes de `/apply-spec`, faz uma conferência READ-ONLY da spec contra o repo (âncoras existem? arquivos citados existem? não conflita com outra spec aberta?) e reporta divergências sem tocar em nada. Opcional — o chat já pré-valida a spec antes de entregá-la, então o ganho é uma segunda rede, não a primeira.
+**Fechamento (2026-07-14, spec0043):** `.claude/commands/check-spec.md` — comando read-only que confere âncoras (0 = morta, 2+ = ambígua), pré-requisitos (versão/commit/árvore limpa/colisão) e o estado verde do repo antes de aplicar. Ciclo da spec agora: `/check-spec → aplicar → build → validate → commit`.
 
 ## i-N34 — Afixo prefixo E sufixo simultaneos (refino da i-N3 Parte B) — ✅ IMPLEMENTADA (v1.47.0)
 A i-N3 Parte B (afixo no download) ja esta implementada (v1.9.0), mas trata prefixo/sufixo como escolha. Refino pedido: **duas caixas de texto separadas** (uma para prefixo, uma para sufixo), **cada uma com seu switch liga/desliga independente**, para o usuario preencher e aplicar os DOIS ao mesmo tempo (ex.: `projeto__CLAUDE__v1.8.md`). UI intuitiva: rotulo claro por caixa, preview do nome resultante. E manipulacao de string no downloadFile (barato); a parte nova e a UI dos dois toggles + preview. **Precisao:** prefixo e sufixo sao INDEPENDENTES — cada um com seu switch e sua caixa; podem estar ligados os dois, um so, ou nenhum, e o resultado se combina numa unica passada (ex.: so prefixo `projeto__CLAUDE.md`; so sufixo `CLAUDE__v1.8.md`; ambos `projeto__CLAUDE__v1.8.md`; nenhum `CLAUDE.md`). Preview do nome final atualiza ao vivo conforme os toggles/caixas.
@@ -491,6 +493,12 @@ O usuário marca chips e a instrução cresce — mas ele não vê isso: o estou
 
 ## i-N47 — Reconstruir o CHANGELOG (v1.54–v1.66 nunca entraram) — A ESPECIFICAR (spec0042)
 O topo do `meta/CHANGELOG.md` pula de v1.53 direto para v1.67: as versões v1.54 a v1.66 (todas as specs desse intervalo) nunca foram registradas. Reconstruir o histórico a partir das specs/DECISIONS correspondentes, para o CHANGELOG voltar a ser uma linha do tempo contínua.
+
+## i-N48 — Refino de instrução pela própria conversa — ✅ FECHADA (spec0043, D-072) — nasceu e morreu nesta spec
+O CEREBRO passa a ensinar a conversa a cuidar do próprio orçamento de instrução: seção «Refino das Instruções do Projeto» com as seis regras (cortar o que não se aplica, especializar o que se aplica, «mover é barato, apagar é caro», não inchar, uma regra por linha, teto de ~6.900 caracteres) + registro obrigatório em DECISIONS/IDEAS. Trava por G19. Fecha o buraco em que a conversa inflava ou podava demais as Instruções.
+
+## i-N49 — Paleta unificada dos nichos (é a spec0044) — A ESPECIFICAR
+O KCM tem **duas cores por nicho** que não conversam: o `cardColor` (tela de escolha, em `src/niches/<id>.js`) e o bloco `html[data-niche="<id>"]{ --amber: … }` (página do nicho, em `src/index.template.html`). O `career` **não tem entrada `[data-niche]`** — por isso a página dele herda o âmbar padrão (o do dev): é esta a causa do «a cor do carreira é igual à do dev» (a spec0042 mexeu só no card). A spec0044 vai unificar as duas fontes por nicho, ancorando na preferência já dada pelo usuário, e resolver os **choques** que a unificação cria (dois nichos caindo na mesma cor).
 
 ## 💡 Ativas — do usuário
 

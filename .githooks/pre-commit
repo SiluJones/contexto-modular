@@ -1,0 +1,24 @@
+#!/bin/sh
+# KCM — pre-commit (i-N38). Bloqueia commit que toque o produto sem harness verde.
+# Bypass consciente: git commit --no-verify
+
+staged=$(git diff --cached --name-only)
+echo "$staged" | grep -qE '^(src/|index\.html|build\.js|validate\.js|build-manifest\.json)' || exit 0
+
+command -v node >/dev/null 2>&1 || { echo "pre-commit: node nao encontrado no PATH."; exit 1; }
+
+echo "pre-commit: rodando build..."
+node build.js || { echo "pre-commit: BUILD FALHOU - commit bloqueado."; exit 1; }
+
+# o index.html commitado precisa ser o do build atual
+if ! git diff --quiet -- index.html; then
+  echo "pre-commit: index.html estava DESATUALIZADO em relacao a src/."
+  echo "            Ele acabou de ser reconstruido. Rode: git add index.html  e refaca o commit."
+  exit 1
+fi
+
+echo "pre-commit: rodando harness..."
+node validate.js index.html || { echo "pre-commit: HARNESS VERMELHO - commit bloqueado."; exit 1; }
+
+echo "pre-commit: verde. seguindo."
+exit 0

@@ -32,3 +32,19 @@ O assistente edita os módulos, roda `build.js` + `validate.js`, e entrega o `in
 
 ## Garantia de segurança
 Migração nicho a nicho com duas redes: **md5** do bundle == original, e **harness 17/17**. Anti-teste validado: módulo corrompido faz o md5 divergir e o harness reprovar.
+
+## Hook de pré-commit (i-N38)
+`.githooks/pre-commit` bloqueia qualquer commit que **toque o produto** (`src/`, `index.html`, `build.js`, `validate.js`, `build-manifest.json`) se o **build** ou o **harness** não estiverem verdes — e ainda garante que o `index.html` commitado é o do build atual (se estava desatualizado, ele reconstrói e pede pra você `git add index.html` e refazer o commit). Commits que só mexem em `meta/` ou docs passam direto.
+
+**Ligar num clone novo** (o `core.hooksPath` fica no `.git/config`, que **não** viaja no `git clone`):
+```
+git config core.hooksPath .githooks
+git update-index --chmod=+x .githooks/pre-commit
+```
+No Windows funciona: o Git roda o hook pelo shell que ele embarca (Git Bash), mesmo você operando no PowerShell.
+
+**Bypass:** `git commit --no-verify` — só para **emergência**, nunca rotina. Se você burlou o hook, o próximo commit ainda paga a dívida (build/harness continuam sendo a régua).
+
+## Ciclo de uma spec (com o portão read-only)
+`/check-spec <caminho>` → aplicar → `node build.js` → `node validate.js index.html` → commit.
+O `/check-spec` (i-N39) é **read-only**: confere âncoras, pré-requisitos e o estado verde do repo **antes** de você mexer — não edita, não builda, não commita. Serve pra pegar âncora morta e colisão antes que custem.

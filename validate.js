@@ -421,6 +421,15 @@ check("G18 career: area-alvo e fronteiras sao chips multiplos e amplos", () => {
   return "ok";
 });
 
+check("G19 CEREBRO ensina a refinar as proprias Instrucoes (orcamento, sem perder processo)", () => {
+  const n = T.normNiche(T.NICHES.dev);
+  const md = T.buildClaudeMd(n);
+  assert(/## Refino das Instruções do Projeto/.test(md), "secao de refino ausente no CEREBRO");
+  assert(/6\.?900/.test(md), "o teto de caracteres nao aparece na secao de refino");
+  assert(/DECISIONS/.test(md) && /Feedback para o Kit/.test(md), "refino sem registro em DECISIONS/IDEAS");
+  return "ok";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");
