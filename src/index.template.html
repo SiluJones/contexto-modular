@@ -715,17 +715,6 @@
             <textarea class="txt" id="g-extra" rows="3" placeholder="Qualquer regra extra de comportamento ou estilo. Uma por linha."></textarea>
           </div>
 
-          <div class="group">
-            <div class="glabel">Seu sistema operacional <span class="gn">· opcional</span></div>
-            <select class="txt" id="g-os">
-              <option value="none">Não especificar</option>
-              <option value="win-cmd">Windows — CMD (Prompt de Comando)</option>
-              <option value="win-ps">Windows — PowerShell</option>
-              <option value="macos">macOS (zsh/bash)</option>
-              <option value="linux">Linux (bash)</option>
-            </select>
-            <p class="hint" style="margin-top:7px">Se o assistente for gerar comandos de terminal (git, instalação), ele usa a sintaxe certa do seu sistema. Entra nas Instruções e no CEREBRO.md.</p>
-          </div>
         </div>
 
         <div class="out">
@@ -905,6 +894,18 @@
           </div>
           <p class="affix-preview" id="affix-preview">Os arquivos saem com o nome original (ex.: <code>STATUS.md</code>).</p>
         </div>
+      </section>
+      <section class="cfg-sec" id="cfg-sec-ambiente">
+        <h3>Ambiente</h3>
+        <div class="subhead">Seu sistema operacional</div>
+        <select class="affix-input" id="g-os" style="width:100%">
+          <option value="none">Não especificar</option>
+          <option value="win-cmd">Windows — CMD (Prompt de Comando)</option>
+          <option value="win-ps">Windows — PowerShell</option>
+          <option value="macos">macOS (zsh/bash)</option>
+          <option value="linux">Linux (bash)</option>
+        </select>
+        <p class="affix-preview">Se o assistente gerar comandos de terminal (git, instalação), ele usa a sintaxe certa do seu sistema. Entra nas Instruções e no CEREBRO.md.</p>
       </section>
       <section class="cfg-sec" id="cfg-sec-nicho" hidden>
         <h3>Nicho</h3>
@@ -1666,14 +1667,14 @@ function heroHTML(id){
     case "career": return `
       <div class="ev">
         <h4>EVIDENCIAS.md · append-only</h4>
-        <div class="row"><span class="tag">EV-014</span><span class="txt"><b>Catálogo digital publicado</b> — substituiu a busca manual por SKU. Prova: repo + painel.</span></div>
-        <div class="row"><span class="tag">EV-013</span><span class="txt"><b>Conferência pedido × fornecedor</b> — função assumida em 2026-05-12. Prova: e-mail da diretoria.</span></div>
-        <div class="row"><span class="tag">EV-012</span><span class="txt"><b>Gerador de cartazes em massa</b> — de 3h para 20min por campanha.</span></div>
+        <div class="row"><span class="tag">EV-014</span><span class="txt"><b>Entrega que resolveu um problema real</b> — o que mudou, com número. <em>Prova:</em> link/commit/print.</span></div>
+        <div class="row"><span class="tag">EV-013</span><span class="txt"><b>Nova função assumida</b> — data + quem pediu. <em>Prova:</em> e-mail/tarefa.</span></div>
+        <div class="row"><span class="tag">EV-012</span><span class="txt"><b>Projeto próprio concluído</b> — competência demonstrada, não afirmada.</span></div>
       </div>
       <div class="side">
         <span class="lbl">Contratado × real</span>
-        <span class="big">+4 funções</span>
-        <span class="delta">assumidas desde a contratação, sem revisão de cargo ou salário — todas datadas e com prova.</span>
+        <span class="big">+N funções</span>
+        <span class="delta">assumidas desde a contratação, sem revisão de cargo ou salário — cada uma datada e com prova.</span>
         <span class="stamp">faixa: pesquisada, com fonte</span>
       </div>`;
     case "game": return `

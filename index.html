@@ -715,17 +715,6 @@
             <textarea class="txt" id="g-extra" rows="3" placeholder="Qualquer regra extra de comportamento ou estilo. Uma por linha."></textarea>
           </div>
 
-          <div class="group">
-            <div class="glabel">Seu sistema operacional <span class="gn">· opcional</span></div>
-            <select class="txt" id="g-os">
-              <option value="none">Não especificar</option>
-              <option value="win-cmd">Windows — CMD (Prompt de Comando)</option>
-              <option value="win-ps">Windows — PowerShell</option>
-              <option value="macos">macOS (zsh/bash)</option>
-              <option value="linux">Linux (bash)</option>
-            </select>
-            <p class="hint" style="margin-top:7px">Se o assistente for gerar comandos de terminal (git, instalação), ele usa a sintaxe certa do seu sistema. Entra nas Instruções e no CEREBRO.md.</p>
-          </div>
         </div>
 
         <div class="out">
@@ -905,6 +894,18 @@
           </div>
           <p class="affix-preview" id="affix-preview">Os arquivos saem com o nome original (ex.: <code>STATUS.md</code>).</p>
         </div>
+      </section>
+      <section class="cfg-sec" id="cfg-sec-ambiente">
+        <h3>Ambiente</h3>
+        <div class="subhead">Seu sistema operacional</div>
+        <select class="affix-input" id="g-os" style="width:100%">
+          <option value="none">Não especificar</option>
+          <option value="win-cmd">Windows — CMD (Prompt de Comando)</option>
+          <option value="win-ps">Windows — PowerShell</option>
+          <option value="macos">macOS (zsh/bash)</option>
+          <option value="linux">Linux (bash)</option>
+        </select>
+        <p class="affix-preview">Se o assistente gerar comandos de terminal (git, instalação), ele usa a sintaxe certa do seu sistema. Entra nas Instruções e no CEREBRO.md.</p>
       </section>
       <section class="cfg-sec" id="cfg-sec-nicho" hidden>
         <h3>Nicho</h3>
@@ -4045,7 +4046,7 @@ NICHES.business = {
 /* ---------- CARREIRA (Carreira & Trabalho) ---------- */
 NICHES.career = {
   id:"career", label:"Carreira", icon:"🧭", group:"serif", category:"core",
-  cardColor:"#84cc16", cardTags:["evidência","negociação","portfólio","decisão"],
+  cardColor:"#4ade80", cardTags:["evidência","negociação","portfólio","decisão"],
   cardDesc:"Transforma o que você já fez em prova — e prova em decisão de carreira",
   intro:{
     headline:"O que você já fez, com prova. E a decisão, com o contra-argumento na mesa.",
@@ -4073,14 +4074,21 @@ NICHES.career = {
     title:"Enquadramento profissional",
     hint:"Define alvo, limites e instrumentos. Entra nas instruções.",
     items:[
-      { kind:"radios", label:"Área-alvo", name:"target", opts:[
-        ["dev","Desenvolvimento"], ["data","Dados/BI"], ["product","Produto"], ["design","Design"], ["ops","Infra/Suporte"], ["admin","Administrativo/Ops"], ["other","Outra"] ] },
+      { kind:"chips", label:"Área-alvo (pode marcar mais de uma)", name:"target", opts:[
+        ["dev","Desenvolvimento"], ["data","Dados/BI"], ["ai","IA/ML"], ["infra","Infra/DevOps"], ["sec","Segurança"],
+        ["qa","QA/Testes"], ["product","Produto"], ["design","Design/UX"], ["support","Suporte técnico"],
+        ["admin","Administrativo/Ops"], ["pm","Gestão de projetos"], ["marketing","Marketing"], ["sales","Comercial"],
+        ["teach","Ensino/Treinamento"], ["freela","Autônomo/PJ"], ["other","Outra"] ] },
       { kind:"radios", label:"Modalidade aceita", name:"modality", opts:[
         ["onsite","Presencial"], ["hybrid","Híbrido"], ["remote","Remoto"], ["any","Indiferente"] ] },
       { kind:"chips", label:"Instrumentos a manter", name:"assets", opts:[
         ["cv","Currículo"], ["linkedin","LinkedIn"], ["github","GitHub"], ["portfolio","Portfólio/site"], ["pitch","Pitch/apresentação"], ["letter","Carta"] ] },
       { kind:"chips", label:"Fronteiras (o que você NÃO quer)", name:"limits", opts:[
-        ["clients","Atendimento a cliente"], ["oncall","Plantão/escala"], ["travel","Viagem"], ["people","Gestão de pessoas"], ["sales","Vendas"], ["onsitefix","Presencial fixo"] ] },
+        ["clients","Atendimento a cliente"], ["coldcall","Prospecção/cold call"], ["salesgoal","Meta de vendas"],
+        ["oncall","Plantão/escala"], ["overtime","Hora extra recorrente"], ["weekend","Fim de semana"],
+        ["travel","Viagem frequente"], ["relocate","Mudar de cidade"], ["onsitefix","Presencial fixo"],
+        ["people","Gestão de pessoas"], ["scopecreep","Acúmulo de função sem revisão"], ["pjforced","PJ forçado / sem registro"],
+        ["pressure","Ambiente de pressão constante"] ] },
     ]
   },
   conventions:[
@@ -4433,9 +4441,9 @@ NICHES.game = {
     { id:"project", label:"Jogo", placeholder:"ex: ecos-do-abismo" },
     { id:"genreSel", label:"Gênero", type:"multi", panel:"modal",
       options:["Ação","Plataforma","RPG","Estratégia","Puzzle","Roguelike","Metroidvania","Aventura","Simulação","Survival","Visual novel","Tiro","Card game","Outro"] },
-    { id:"engineSel", label:"Engine", type:"select",
+    { id:"engineSel", label:"Engine", type:"select", panel:"modal",
       options:["Godot","Unity","Unreal","GameMaker","Construct","Bevy","Phaser","LÖVE","RPG Maker","Própria","Indefinida"] },
-    { id:"phase", label:"Fase", type:"select",
+    { id:"phase", label:"Fase", type:"select", panel:"modal",
       options:["Conceito","Protótipo","Vertical slice","Produção","Polimento","Lançamento"] },
   ],
   behaviors:[
@@ -7618,14 +7626,14 @@ function heroHTML(id){
     case "career": return `
       <div class="ev">
         <h4>EVIDENCIAS.md · append-only</h4>
-        <div class="row"><span class="tag">EV-014</span><span class="txt"><b>Catálogo digital publicado</b> — substituiu a busca manual por SKU. Prova: repo + painel.</span></div>
-        <div class="row"><span class="tag">EV-013</span><span class="txt"><b>Conferência pedido × fornecedor</b> — função assumida em 2026-05-12. Prova: e-mail da diretoria.</span></div>
-        <div class="row"><span class="tag">EV-012</span><span class="txt"><b>Gerador de cartazes em massa</b> — de 3h para 20min por campanha.</span></div>
+        <div class="row"><span class="tag">EV-014</span><span class="txt"><b>Entrega que resolveu um problema real</b> — o que mudou, com número. <em>Prova:</em> link/commit/print.</span></div>
+        <div class="row"><span class="tag">EV-013</span><span class="txt"><b>Nova função assumida</b> — data + quem pediu. <em>Prova:</em> e-mail/tarefa.</span></div>
+        <div class="row"><span class="tag">EV-012</span><span class="txt"><b>Projeto próprio concluído</b> — competência demonstrada, não afirmada.</span></div>
       </div>
       <div class="side">
         <span class="lbl">Contratado × real</span>
-        <span class="big">+4 funções</span>
-        <span class="delta">assumidas desde a contratação, sem revisão de cargo ou salário — todas datadas e com prova.</span>
+        <span class="big">+N funções</span>
+        <span class="delta">assumidas desde a contratação, sem revisão de cargo ou salário — cada uma datada e com prova.</span>
         <span class="stamp">faixa: pesquisada, com fonte</span>
       </div>`;
     case "game": return `

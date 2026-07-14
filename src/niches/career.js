@@ -1,6 +1,6 @@
 NICHES.career = {
   id:"career", label:"Carreira", icon:"🧭", group:"serif", category:"core",
-  cardColor:"#84cc16", cardTags:["evidência","negociação","portfólio","decisão"],
+  cardColor:"#4ade80", cardTags:["evidência","negociação","portfólio","decisão"],
   cardDesc:"Transforma o que você já fez em prova — e prova em decisão de carreira",
   intro:{
     headline:"O que você já fez, com prova. E a decisão, com o contra-argumento na mesa.",
@@ -28,14 +28,21 @@ NICHES.career = {
     title:"Enquadramento profissional",
     hint:"Define alvo, limites e instrumentos. Entra nas instruções.",
     items:[
-      { kind:"radios", label:"Área-alvo", name:"target", opts:[
-        ["dev","Desenvolvimento"], ["data","Dados/BI"], ["product","Produto"], ["design","Design"], ["ops","Infra/Suporte"], ["admin","Administrativo/Ops"], ["other","Outra"] ] },
+      { kind:"chips", label:"Área-alvo (pode marcar mais de uma)", name:"target", opts:[
+        ["dev","Desenvolvimento"], ["data","Dados/BI"], ["ai","IA/ML"], ["infra","Infra/DevOps"], ["sec","Segurança"],
+        ["qa","QA/Testes"], ["product","Produto"], ["design","Design/UX"], ["support","Suporte técnico"],
+        ["admin","Administrativo/Ops"], ["pm","Gestão de projetos"], ["marketing","Marketing"], ["sales","Comercial"],
+        ["teach","Ensino/Treinamento"], ["freela","Autônomo/PJ"], ["other","Outra"] ] },
       { kind:"radios", label:"Modalidade aceita", name:"modality", opts:[
         ["onsite","Presencial"], ["hybrid","Híbrido"], ["remote","Remoto"], ["any","Indiferente"] ] },
       { kind:"chips", label:"Instrumentos a manter", name:"assets", opts:[
         ["cv","Currículo"], ["linkedin","LinkedIn"], ["github","GitHub"], ["portfolio","Portfólio/site"], ["pitch","Pitch/apresentação"], ["letter","Carta"] ] },
       { kind:"chips", label:"Fronteiras (o que você NÃO quer)", name:"limits", opts:[
-        ["clients","Atendimento a cliente"], ["oncall","Plantão/escala"], ["travel","Viagem"], ["people","Gestão de pessoas"], ["sales","Vendas"], ["onsitefix","Presencial fixo"] ] },
+        ["clients","Atendimento a cliente"], ["coldcall","Prospecção/cold call"], ["salesgoal","Meta de vendas"],
+        ["oncall","Plantão/escala"], ["overtime","Hora extra recorrente"], ["weekend","Fim de semana"],
+        ["travel","Viagem frequente"], ["relocate","Mudar de cidade"], ["onsitefix","Presencial fixo"],
+        ["people","Gestão de pessoas"], ["scopecreep","Acúmulo de função sem revisão"], ["pjforced","PJ forçado / sem registro"],
+        ["pressure","Ambiente de pressão constante"] ] },
     ]
   },
   conventions:[

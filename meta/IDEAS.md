@@ -436,12 +436,14 @@ Proximo passo: o chat entrega um **wireframe para o usuario aprovar** ANTES de v
 ## i-N35 — Switch skills-pack do nicho narrativa (fase B) — ✅ IMPLEMENTADA (v1.49.0)
 Fase B do refino do nicho narrativa (spec0021 cobriu a fase A). Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md. spec0022: toggle niche-scoped `skillsMode` emite 4 Agent Skills (escrita-serial, checagem-continuidade, voz-calibragem, textura-mundo) como apêndice do CEREBRO, sem impacto no teto das Instruções. Harness G6, 17/17, 33/33, 0 erros.
 
-## i-N36 — Universais da fase C (2026-07-03) — 💡 Ativa
+## i-N36 — Universais da fase C (2026-07-03) — ✅ FECHADA (spec0042, 2026-07-14)
 Fase C do refino do nicho narrativa: itens universais (não específicos do nicho) — sync instrução-curta/CEREBRO, aviso de persistência do mount, fases para pedidos compostos, modo extração de acervo. Base: meta/ANALISE-REFINO-NICHO-NARRATIVO.md.
 
 **2026-07-04 — Q2 (modo skills) aplicada (spec0024, D-053):** o controle de skills de escrita saiu do topbar e foi para o builder «A obra», default LIGADO. A reforma dos 3 toggles universais (grupo/ASU/Code) + feedback ambiental (faixas/selos de cor, símbolo do Code, identidade do ASU) segue como item de pesquisa futura, junto desta i-N36.
 
 **2026-07-06 — fase C FECHADA (spec0028 + spec0029, D-056/D-057):** spec0028 tirou os 3 toggles universais do topbar para o painel global recolhível «Modo de trabalho» (`STATE.workmode`); spec0029 acrescentou o feedback ambiental — selos de estado multicanal (cor+glifo+rótulo), empilháveis, perto da saída, ordem estável grupo→Code→ASU. Com isso, **a fase C (reforma dos 3 modos + feedback ambiental) está feita**. Resta da i-N36 só a fase "topbar inteiro" (adiada, fora de escopo destas duas specs) + o encaixe do atualizador i-N40 (que acopla nos selos como fonte de verdade, mas entra como ação futura, sem virar 4º selo).
+
+**2026-07-14 — i-N36 FECHADA (spec0042, D-071):** o último resíduo — o seletor de SO ainda no painel esquerdo — migrou para a seção «Ambiente» dentro do modal ⚙ (antes da aba Nicho), fechando de vez a i-N36. JS inalterado (mesmo `#g-os`, mesmo wiring/restore); DOM antes do `<script>` final (D-059), travado pelo novo check G17.
 
 ## i-N37 — Modo Code: apêndice de arranque vira download (espelho da D-052) — spec0026 — ✅ IMPLEMENTADA (v1.53.0)
 D-052 (spec0023) aplicou às skills de escrita o princípio "CEREBRO só com regra fixa, sem artefato autodestrutivo/temporário": saíram do CEREBRO e viraram `skills.zip` separado. O apêndice de arranque do Modo Code (starter `.claude/commands/*.md` + instrução «pode apagar este apêndice») tinha o MESMO anti-padrão e recebeu o mesmo tratamento — vira download separado (`claude-code-kit.zip`) em vez de bloco-para-remover dentro do CEREBRO; comandos migrados para `.claude/skills/<nome>/SKILL.md` (formato atual). Base: `meta/ANALISE-CEREBRO-MODOS-E-SKILLS.md` (Q1, Nível 2).
@@ -483,6 +485,12 @@ Handoff **não se versiona** (é atalho efêmero; o repo é a verdade), nome pad
 
 ## i-N45 — Prompt de retomada fixo (separar do brief datado) — A ESPECIFICAR
 Separar o **prompt de retomada permanente** (não datado, vive no CEREBRO: "leia os meta/ nesta ordem, confirme em uma frase, execute o próximo passo") do **brief datado e efêmero**. Refino natural do prompt F pós-spec0040.
+
+## i-N46 — Contador de caracteres da instrução na UI — A ESPECIFICAR (spec0042)
+O usuário marca chips e a instrução cresce — mas ele não vê isso: o estouro do teto só aparecia no harness (e só depois de a spec0042 medir o pior caso; ver D-070). Ideia: exibir na UI o tamanho da instrução gerada (e talvez a distância até o teto), atualizando conforme o usuário marca opções. Torna o orçamento visível para quem realmente monta o contexto, em vez de deixá-lo escondido no `validate.js`.
+
+## i-N47 — Reconstruir o CHANGELOG (v1.54–v1.66 nunca entraram) — A ESPECIFICAR (spec0042)
+O topo do `meta/CHANGELOG.md` pula de v1.53 direto para v1.67: as versões v1.54 a v1.66 (todas as specs desse intervalo) nunca foram registradas. Reconstruir o histórico a partir das specs/DECISIONS correspondentes, para o CHANGELOG voltar a ser uma linha do tempo contínua.
 
 ## 💡 Ativas — do usuário
 

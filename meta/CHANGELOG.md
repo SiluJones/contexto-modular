@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.67.0**.
+> Histórico de versões. Versão atual: **v1.67.1**.
 > (Nota: o corpo deste arquivo pulou de v1.53.0 direto para v1.67.0 — as versões intermediárias
-> ficaram registradas em `meta/STATUS.md` e `meta/DECISIONS.md`; o CHANGELOG andou atrasado.)
+> ficaram registradas em `meta/STATUS.md` e `meta/DECISIONS.md`; o CHANGELOG andou atrasado.
+> Reconstruir v1.54–v1.66 é a i-N47.)
+
+## v1.67.1 — Correções do career, SO no modal, engine/fase na aba Nicho, teto real no harness (spec0042, D-070/D-071)
+- **career:** cor do card `#84cc16` (lima, colidia com o âmbar do dev na grade) → `#4ade80` (verde inequívoco); **Área-alvo** vira `chips` (múltipla escolha) e amplia de 7 para 16 opções (transição de área é marcar duas); **Fronteiras** amplia para 13 opções (inclui `scopecreep`); hero do card genérico (não conta mais a vida do autor).
+- **i-N36 fase C fechada:** o seletor de SO (`#g-os`) sai do painel esquerdo e vai para a seção «Ambiente» dentro do modal ⚙, antes da aba Nicho. JS inalterado (mesmo id/wiring/restore); DOM antes do `<script>` final (D-059).
+- **game:** `engineSel` e `phase` ganham `panel:"modal"` → renderizam na aba Nicho do modal (muda só onde, não o que sai; `phase` segue na linha Estágio do `buildInstr`).
+- **Harness:** o check de chips (FIX-004) estava **vácuo** (lia `norm.groups`, sempre `undefined` no formato normalizado `.items`) — corrigido, com assert de não-vazio. **D-070:** dois orçamentos de instrução — base ≤ 6900 (inalterado) e **pior caso ≤ 7600** (novo **G16**, todos os chips/multi marcados), porque o teto nunca fora medido sob escolha do usuário (narrative 7174, career 7009, game 6978 já furavam 6900). Novos checks **G17** (SO no modal + D-059 + engine/fase com panel:modal) e **G18** (chips do career amplos).
+- IDEAS: i-N46 (contador de caracteres da instrução na UI), i-N47 (reconstruir o CHANGELOG v1.54–v1.66).
+- Harness **18/18, 46/46, 0 erros**.
 
 ## v1.67.0 — Nicho `career` (Carreira & Trabalho), o 18º nicho (spec0041, D-069)
 - Primeiro nicho de conteúdo novo desde o ciclo de refino de modos. Tese em cadeia: **fato datado + prova** (`EVIDENCIAS.md`, append-only) → **competência com lastro** (`DOSSIE.md`, derivado; toda linha aponta para um EV-xxx) → **artefato** (currículo/pitch/portfólio que nunca afirma o que não prova). Em paralelo `SITUACAO.md` mantém o **contratado × real** (linha do tempo do escopo, com data/quem-pediu/prova) e `DECISIONS.md` registra o porquê **com o melhor contra-argumento na mesa**.

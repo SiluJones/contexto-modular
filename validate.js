@@ -202,8 +202,9 @@ ids.forEach(id => {
     const sec = n.builderSection;
     if(sec){
       const norm = T.normBuilderSection(sec);
-      const groups = norm.groups || [];
-      groups.forEach(g => (g.opts||[]).forEach(o => {
+      const grupos = norm.items || norm.groups || [];   // formato normalizado e .items (FIX spec0042)
+      assert(grupos.length > 0, "builderSection sem itens apos normalizar em " + id);
+      grupos.forEach(g => (g.opts||[]).forEach(o => {
         assert(Array.isArray(o) && o.length === 2, "chip nao normalizado para [v,l] em "+id+": "+JSON.stringify(o));
       }));
     }
@@ -372,6 +373,51 @@ check("G15 nicho career: campos chegam a saida, behaviors-chave e arquivos do do
   assert(/Aumento\/revis.o de cargo/.test(instr), "campo Frentes (multi) nao chegou as Instrucoes");
   assert(instr.length <= 6900, "instrucao do career excede 6900: " + instr.length);
   T.STATE.topbar.momentSel = ""; T.STATE.topbar.frentes = [];
+  return "ok";
+});
+
+check("G16 teto no PIOR CASO (todos os chips/multi marcados) <= 7600 em todos os nichos", () => {
+  const over = [];
+  Object.keys(T.NICHES).forEach(id => {
+    const n = T.normNiche(T.NICHES[id]);
+    T.STATE.builder = {}; T.STATE.topbar = {};
+    const sec = n.builderSection ? T.normBuilderSection(n.builderSection) : null;
+    if(sec) (sec.items || sec.groups || []).forEach(g => { T.STATE.builder[g.name] = (g.opts||[]).map(o => o[0]); });
+    (n.topbar||[]).forEach(f => { if(f.type === "multi") T.STATE.topbar[f.id] = (f.options || f.opts || []).slice(); });
+    const len = T.buildInstr(n).length;
+    if(len > 7600) over.push(id + ":" + len);
+  });
+  T.STATE.builder = {}; T.STATE.topbar = {};
+  assert(over.length === 0, "estouraram o teto de pior caso -> " + over.join(", "));
+  return "ok";
+});
+
+check("G17 SO vive no modal e o DOM vem antes do script (D-059)", () => {
+  const html = fs.readFileSync(path, "utf8");
+  const dlg = html.indexOf('id="cfg-dialog"');
+  const os  = html.indexOf('id="g-os"');
+  const scr = html.lastIndexOf("<script>");
+  assert(dlg > 0 && os > 0, "cfg-dialog ou g-os ausentes");
+  assert(os > dlg, "o select do SO nao esta dentro do modal de configuracoes");
+  assert(os < scr, "DOM do SO depois do <script> final (D-059: listener anexaria em null)");
+  const gameTb = T.NICHES.game.topbar || [];
+  ["engineSel","phase"].forEach(fid => {
+    const f = gameTb.find(x => x.id === fid);
+    assert(f && f.panel === "modal", "campo " + fid + " do game deveria ter panel:modal");
+  });
+  return "ok";
+});
+
+check("G18 career: area-alvo e fronteiras sao chips multiplos e amplos", () => {
+  const n = T.normNiche(T.NICHES.career);
+  const sec = T.normBuilderSection(n.builderSection);
+  const it = (k) => (sec.items || []).find(g => g.name === k);
+  ["target","limits"].forEach(k => {
+    const g = it(k);
+    assert(g, "grupo ausente no career: " + k);
+    assert(g.kind === "chips", "grupo " + k + " deveria ser chips (multipla escolha)");
+    assert((g.opts||[]).length >= 10, "grupo " + k + " com poucas opcoes: " + (g.opts||[]).length);
+  });
   return "ok";
 });
 
