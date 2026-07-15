@@ -746,7 +746,7 @@
     <section class="view" id="v-prompts">
       <p class="kicker">Copiar e colar</p>
       <h1 class="page">Prompts para cada momento.</h1>
-      <p class="lede"><b>A–F</b> são universais (existem em todo nicho). <b>G em diante</b> são específicos deste nicho. Os campos lá em cima já entram automaticamente; onde houver caixa, o que você escrever substitui o marcador — se deixar vazio, o marcador permanece.</p>
+      <p class="lede"><b>A–F</b> são universais (existem em todo nicho): <b>A/B</b> dia a dia, <b>C</b> começa um projeto do zero com o KCM, <b>D</b> adota o KCM num projeto que já existe (se você já subiu o material estruturado, com <code>_MANIFEST.md</code>, o D lê pelo mapa em vez de recriar), <b>E/F</b> transferem entre conversas. <b>G em diante</b> são específicos deste nicho. Os campos lá em cima já entram automaticamente; onde houver caixa, o que você escrever substitui o marcador — vazio, o marcador permanece.</p>
       <div id="prompt-cards"></div>
     </section>
 
@@ -959,19 +959,55 @@ const PROMPTS_BASE = [
     when:"Anexe os .md pelo clipe antes de enviar.",
     fill:"task", fillLabel:"Sua solicitação",
     body:(p,n)=>`Estou anexando os arquivos de contexto. Leia-os antes de responder.\n\n---\n${p.task||"[SUA SOLICITAÇÃO]"}` },
-  { id:"C", title:"Projeto novo, do zero",
+  { id:"C", title:"Começar um projeto do zero com o KCM",
     when:"Primeira sessão de um projeto que ainda não existe.",
     fill:"about", fillLabel:"Sobre o projeto (o que é, para quem, suas ideias, o que fazer primeiro)",
     body:(p,n)=>{
       const files = n.contextFiles.map(f=>f.name).join(", ");
-      return `Vou iniciar um novo projeto${p.project?` (${p.project})`:""} no domínio "${n.label}". Ajude a desenvolver e a criar a documentação de contexto para eu transitar entre conversas sem perder nada.\n\nSOBRE O PROJETO:\n${p.about||"[Escreva tudo: o que é, para quem, suas ideias, o que fazer primeiro]"}\n\nAO FINAL, gere preenchidos (sem os comentários de exemplo, só conteúdo real):\n${files}, logs/${today}.md.\nProntos para subir no repositório e usar como contexto na próxima conversa.`;
+      const L = [];
+      L.push(`Vou iniciar um novo projeto${p.project?` (${p.project})`:""} no domínio "${n.label}". Ajude a desenvolver a ideia e a criar a documentação de contexto para eu transitar entre conversas sem perder nada.`);
+      L.push("");
+      L.push("SOBRE O PROJETO:");
+      L.push(p.about||"[Escreva tudo: o que é, para quem, suas ideias, o que fazer primeiro]");
+      L.push("");
+      L.push(`AO FINAL, gere preenchidos (sem os comentários de exemplo, só conteúdo real): ${files}, logs/${today}.md.`);
+      if(codeModeOn()){
+        L.push("");
+        L.push("**Modo Code:** este projeto vai virar um repositório. Organize a saída na árvore certa — `meta/` para os arquivos de contexto, `INSTRUCOES-DO-PROJETO.md` na raiz, `logs/` para os diários — e feche com o `git init` + primeiro commit prontos. (Se eu preferir a árvore pronta em zip, o botão ↓ do KCM já entrega tudo estruturado — me lembre disso.)");
+      } else if(asuModeOn()){
+        L.push("");
+        L.push("**Modo ASU:** projeto novo não tem o que editar — gere os arquivos inteiros normalmente nesta primeira leva.");
+      } else {
+        L.push("Prontos para eu subir a um Projeto do claude.ai (ou versionar) e usar como contexto na próxima conversa.");
+      }
+      return L.join("\n");
     } },
-  { id:"D", title:"Projeto existente — adicionar o sistema",
-    when:"Projeto em andamento que ainda não tem os arquivos de contexto.",
+  { id:"D", title:"Adotar o KCM num projeto já em andamento",
+    when:"Projeto que já existe (script, planejamento, material) e ainda não tem os arquivos de contexto.",
     fill:"situation", fillLabel:"Situação atual",
     body:(p,n)=>{
-      const files = n.contextFiles.map(f=>f.name).join(", ");
-      return `Quero organizar este projeto${p.project?` (${p.project})`:""} de "${n.label}" com um sistema de documentação para transitar entre conversas sem perder contexto.\n\nSITUAÇÃO ATUAL:\n${p.situation||"[O que já foi feito, o que funciona/está pendente, principais decisões já tomadas]"}\n\nMATERIAL ATUAL:\n[Anexe os arquivos relevantes ou descreva o que existe]\n\nGere preenchidos com a realidade atual:\n${n.contextFiles.map(f=>`- ${f.name} (${f.role})`).join("\n")}\n- logs/${today}.md`;
+      const L = [];
+      L.push(`Quero organizar este projeto${p.project?` (${p.project})`:""} de "${n.label}" com um sistema de documentação para transitar entre conversas sem perder contexto.`);
+      L.push("");
+      L.push("SITUAÇÃO ATUAL:");
+      L.push(p.situation||"[O que já foi feito, o que funciona/está pendente, principais decisões já tomadas]");
+      L.push("");
+      L.push("MATERIAL ATUAL:");
+      L.push("[Anexe os arquivos relevantes ou descreva o que existe]");
+      L.push("");
+      L.push("Antes de gerar qualquer coisa: **se eu anexei um `_MANIFEST.md`** (o mapa de um pacote estruturado — download ↓ do KCM ou FlatDrop), ele é a fonte de verdade de nomes e estrutura. Leia por ele, entenda o que JÁ veio pronto e **não regenere o que já existe** — só complemente o que falta. Sem `_MANIFEST.md`, trate o material como arquivos soltos.");
+      if(codeModeOn()){
+        L.push("");
+        L.push("**Modo Code:** o repositório é a verdade. Leia o que já está versionado e ACRESCENTE os arquivos de contexto que faltam — não reescreva o que existe.");
+      } else if(asuModeOn()){
+        L.push("");
+        L.push("**Modo ASU:** mudanças em arquivos que já existem saem como instrução `.yaml`, não como arquivo inteiro. Arquivos novos (os de contexto que ainda não existem) vêm inteiros.");
+      }
+      L.push("");
+      L.push("Gere preenchidos com a realidade atual (só os que ainda não existem, ou complementando os que vieram incompletos):");
+      L.push(n.contextFiles.map(f=>`- ${f.name} (${f.role})`).join("\n"));
+      L.push(`- logs/${today}.md`);
+      return L.join("\n");
     } },
   { id:"E", title:"Conversa pesada — transferir agora",
     when:"Cole na conversa travada. Gera o HANDOFF-BRIEF; a memória continua nos arquivos, não é regerada aqui.",
@@ -1012,6 +1048,7 @@ const PROMPTS_BASE = [
     body:(p,n)=>{
       const steps = [];
       if(codeModeOn()) steps.push("O repositório é a fonte de verdade: leia a versão atual dos arquivos (puxe antes de começar), nunca a memória.");
+      steps.push("Se houver um `_MANIFEST.md` no material (pacote estruturado — download ↓ do KCM ou FlatDrop), use-o como mapa de nomes e estrutura antes de deduzir qualquer caminho.");
       steps.push("Leia os arquivos de contexto: primeiro o que define seu comportamento, depois o estado atual, as decisões e o que ficou pendente.");
       steps.push("Leia o HANDOFF-BRIEF da conversa anterior — ele é um ATALHO de arranque, **não a verdade**. Se o brief divergir dos arquivos, os ARQUIVOS vencem.");
       steps.push("Confirme em UMA frase o que entendeu do estado e do próximo passo. Em ambiguidade real, pergunte antes de executar.");
@@ -1188,6 +1225,10 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
+// Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
+const KIT_VERSION = "1.70.0";
+// Linha de credito padrao dos artefatos gerados (README, manifestos).
+function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
 
 /* ============================================================
@@ -1581,7 +1622,7 @@ function setNiche(id){
   renderPrompts(niche);
   renderTemplates(niche);
 
-  $("#foot-niche").textContent = `${niche.label} · v1`;
+  $("#foot-niche").textContent = `${niche.label} · v${KIT_VERSION}`;
 
   $$(".ncard").forEach(c => c.classList.toggle("active", c.dataset.id === id));
 
@@ -2601,7 +2642,7 @@ if(asuModeOn()){
     L.push("Instalação: descompacte `skills.zip` e mova a pasta `skills/` para **`.claude/skills/`** na raiz do projeto (Claude Code), ou envie cada `SKILL.md` em **claude.ai → Configurações → Skills** (planos pagos). O `README.md` dentro do zip repete estes passos. Cada skill tem uma seção «Aplicação neste projeto» em branco — preencha com o específico da obra antes de usar.");
   }
   L.push("");
-  L.push(`*Gerado pelo Kit de Contexto Universal — nicho ${niche.label}. Edite à vontade: este arquivo é seu.*`);
+  L.push(`*Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — nicho ${niche.label}. Edite à vontade: este arquivo é seu.*`);
 
   return L.join("\n");
 }
@@ -2810,7 +2851,7 @@ async function downloadZIP(){
   const zip = new JSZip();
   effectiveFiles(niche).forEach(f => zip.file(applyAffix(f.name), f.content||""));
   generatedContextFiles(niche).forEach(f => zip.file(applyAffix(f.name), f.content || ""));
-  zip.file("README.md", `# Templates — ${niche.label}\n\nNicho: ${niche.label}\nGerado por: Kit de Contexto Universal\nData: ${today}\n\nArquivos:\n${niche.contextFiles.map(f=>`- **${applyAffix(f.name)}** — ${f.role}`).join("\n")}\n`);
+  zip.file("README.md", `# Templates — ${niche.label}\n\nNicho: ${niche.label}\nGerado por: Kit de Contexto Universal v${KIT_VERSION}\nData: ${today}\n\nArquivos:\n${niche.contextFiles.map(f=>`- **${applyAffix(f.name)}** — ${f.role}`).join("\n")}\n`);
   const blob = await zip.generateAsync({type:"blob"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -2846,7 +2887,7 @@ async function downloadSkillsZIP(){
   const readme = [
     `# Skills de escrita — ${niche.label}`,
     "",
-    "Pacote de Agent Skills gerado pelo Kit de Contexto Universal.",
+    `Pacote de Agent Skills gerado pelo ${kitStamp()}`,
     `Data: ${today}`,
     "",
     "## Como instalar",
@@ -2952,7 +2993,7 @@ async function downloadCodeKitZIP(){
   const readme = [
     "# Kit de arranque do Claude Code",
     "",
-    "Gerado pelo Kit de Contexto Universal.",
+    `${kitStamp()}`,
     `Data: ${today}`,
     "",
     "## Como instalar",
@@ -3005,7 +3046,7 @@ function structuredFlatdropignore(codeOn){
 function structuredReadme(niche, root, codeOn, skillsOn){
   const L = [
     `# ${root} — projeto de contexto (${niche.label})`,
-    "", "Estrutura de arranque gerada pelo Kit de Contexto Universal.", `Data: ${today}`, "",
+    "", `Estrutura de arranque gerada pelo Kit de Contexto Universal v${KIT_VERSION}.`, `Data: ${today}`, "",
     "## Estrutura",
     "- `meta/` — arquivos de contexto (CEREBRO define COMO o assistente age; CONTEXT, O QUE o projeto e; STATUS/DECISIONS/IDEAS...).",
     "- `INSTRUCOES-DO-PROJETO.md` — cole em Projeto -> Instrucoes no claude.ai (versao curta, lida em toda mensagem).",
@@ -3087,6 +3128,7 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push(`# _UPDATE-MANIFEST — ${niche.label}`);
   L.push("");
   L.push(`- Nicho: ${niche.label}`);
+  L.push(`- Kit: v${KIT_VERSION}`);
   L.push(`- Modos ligados: skills ${skillsOn ? "sim" : "nao"} · Code ${codeOn ? "sim" : "nao"}`);
   L.push(`- Data: ${today}`);
   L.push(`- Afixo: ${UPDATE_AFFIX}`);

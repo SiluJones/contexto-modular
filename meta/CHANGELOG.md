@@ -1,8 +1,14 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.69.0**.
+> Histórico de versões. Versão atual: **v1.70.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.70.0 — Prompts C/D mode+entrega-aware, `_MANIFEST` na retomada e `KIT_VERSION` exposto (spec0046, D-078/D-079)
+- **i-N42 (D-078):** os prompts universais de setup deixam de ser cegos a modo e a formato de entrega. **Títulos** explícitos (a confusão que a ideia corrige): **C** «Começar um projeto do zero com o KCM» e **D** «Adotar o KCM num projeto já em andamento» — o eixo (projeto novo × projeto que já existe) fica no próprio rótulo. Os corpos ganham ramos `codeModeOn()` (repo é a verdade: árvore + commit em C; acrescenta, não reescreve, em D) e `asuModeOn()` (adoção sai como instrução `.yaml`; arquivos novos, inteiros). O **D** detecta `_MANIFEST.md` (pacote estruturado — download ↓ do KCM ou FlatDrop): lê pelo mapa, **não regenera o que já existe**; o **F** (retomada) começa pelo `_MANIFEST.md` antes de deduzir caminhos. Texto-guia da view Prompts reescrito (explica A–F). Nenhuma lógica de detecção nova — reusa a consciência que já vivia no CEREBRO. Novo check **G23**.
+- **i-N10 (D-079):** o produto ganha `KIT_VERSION = "1.70.0"` (fonte única de versão, logo após `INSTR_TETO`). O rodapé da coluna esquerda mostra `Dev · v1.70.0` (antes um `v1` cravado); o helper `kitStamp()` carimba os READMEs (skills, kit do Code) e os demais downloads passam a citar `v${KIT_VERSION}` (Templates, estrutura de arranque, rodapé do `INSTRUCOES-DO-PROJETO`); o `_UPDATE-MANIFEST` ganha `- Kit: v1.70.0`. Espelha o que a spec0045 fez com `INSTR_TETO`. Novo check **G24**. **A partir daqui, todo bump de versão mexe em `KIT_VERSION`** (i-N50).
+- IDEAS: i-N42 e i-N10 FECHADAS; i-N50/i-N51/i-N52 registradas.
+- Harness **18/18, 52/52, 0 erros**.
 
 ## v1.69.0 — Contador de instrução na UI com `INSTR_TETO` como fonte única + CHANGELOG reconstruído (spec0045, D-076/D-077)
 - **i-N46 (D-076):** o produto ganha a constante `INSTR_TETO` (6900) — antes o teto vivia cravado em **três literais `6900`** no `validate.js` (assert do check `N`, teto do career, rótulo do check `N`). UI e harness agora leem da constante; os três literais migraram (`grep 6900 validate.js` vazio), então mudar o teto num só lugar move UI + os checks juntos. Novo elemento na saída, ao lado de «Copiar»: contador «5754 / 6900 (83%)» que reage a cada chip marcado — verde até 90%, âmbar de 90–100%, vermelho cheio acima; na aba CEREBRO vira «CEREBRO · sem teto» (lido sob demanda, sem teto). Novo check **G22** (INSTR_TETO exposto + a UI lê dele).

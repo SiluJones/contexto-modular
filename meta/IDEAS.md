@@ -234,8 +234,9 @@ Após o Custom Inteligente, avaliar oferecer "exemplos" prontos para criar insta
 **Por que importava:** o usuário pôs projetos em risco ao transferir confiando cegamente nos arquivos do Projeto em modo de busca. Ver D-015 para o fundamento técnico (docs oficiais + práticas de context engineering: janela = RAM, arquivos = disco; sumarização iterativa ancorada = papel do STATUS).
 **A vigiar (do usuário):** auditar projetos transferidos no passado para detectar corrupção por edição-via-fragmentos.
 
-## i-N10 — Afixo de versão automático / "carimbo de versão do kit" nos downloads (SEMENTE, do usuário)
+## i-N10 — Afixo de versão automático / "carimbo de versão do kit" nos downloads (SEMENTE, do usuário) — ✅ FECHADA (spec0046, D-079)
 **Status:** semente — surgiu de raspão ("um padrão convencional/identificador" na i-N3-B). Vale considerar: o kit poderia oferecer carimbar automaticamente a versão do kit no nome ou no rodapé dos arquivos gerados, ajudando o "canal de atualização" a saber de qual versão um arquivo veio. Não prometido.
+**2026-07-15 — FECHADA (spec0046, D-079):** o produto ganha `KIT_VERSION` (fonte única) — rodapé da UI (`Dev · v1.70.0`), carimbo nos READMEs dos downloads e no `_UPDATE-MANIFEST`, via helper `kitStamp()`. Espelha o que a spec0045 fez com `INSTR_TETO`. Trava por G24. Todo bump de versão passa a mexer nesta constante (i-N50).
 
 ---
 
@@ -472,12 +473,13 @@ Refino/descendente da **i-N3** (backdoor de atualização + afixo, já implement
 Hoje `genreSel`/`engineSel`/`phase` são preenchidos mas não entram no CEREBRO/Instruções. Fazer um bloco "Contexto do nicho" na saída consumir esses campos (gênero(s), engine, fase), para o que o usuário marca de fato moldar o contexto gerado.
 **Resolução:** `buildInstr` ganhou o bloco "Contexto do projeto" (após o Estágio), emitindo os campos de `niche.topbar` não-consumidos e com valor; conserto de brinde do desencontro `phase`/`fase` no Estágio. Ver D-061.
 
-## i-N42 — Prompts C/D (setup do projeto receptor): reconhecer como os templates chegaram + rótulo de quem é o prompt — A REFINAR (spec seguinte)
+## i-N42 — Prompts C/D (setup do projeto receptor): reconhecer como os templates chegaram + rótulo de quem é o prompt — ✅ FECHADA (spec0046, D-078)
 **REESCRITA (2026-07-13).** A leitura anterior estava errada — dizia que C/D "mandam gerar do zero, ignorando o download estruturado/pacote de atualização", tratando-os como se fossem sobre os downloads do KCM. **Não são.** C e D são os prompts do **projeto receptor**: **C = projeto novo**; **D = projeto que já existe e vai adotar o kit**. O refino real é:
 - (a) C/D devem **reconhecer como os templates chegaram** (pacote achatado × **estruturado** do botão ↓ — neste caso não se "gera do zero" o que já veio pronto);
 - (b) C/D são **mode-blind**: no **Code** o receptor tem repo → árvore + commit; no **ASU**, edição por `.yaml`;
 - (c) o **rótulo** de cada prompt deve dizer **para quem ele é** — se uma conversa do próprio KCM se confundiu, o usuário se confunde igual.
 - **D ≠ pacote de atualização:** o ↻ já tem prompt próprio + protocolo no CEREBRO (i-N40). São coisas distintas.
+**2026-07-15 — FECHADA (spec0046, D-078):** C vira **«Começar um projeto do zero com o KCM»**, D vira **«Adotar o KCM num projeto já em andamento»** — o eixo fica explícito no rótulo (a confusão que a ideia mirava). Os corpos ganham ramos `codeModeOn()`/`asuModeOn()` e o D detecta `_MANIFEST.md` (lê pelo mapa, não regenera); F cita `_MANIFEST.md` na retomada. Sem lógica de detecção nova — reusa a consciência que já vivia no CEREBRO. Trava por G23.
 
 ## i-N43 — Auto-refino registrado: «problema diagnosticado → grava a armadilha» — A ESPECIFICAR
 Projetos diagnosticam a causa de um problema e **não registram** o aprendizado: fica na memória da conversa, some ao truncar/transferir, e o erro se repete. Falta um **gatilho universal**: «problema diagnosticado → grava a armadilha no DECISIONS/CEREBRO do projeto e reporta ao KCM». (Origem: nota `260709-0808`. **Verificar antes de especificar** se já existe algo truncado/corrompido no CEREBRO nessa direção.)
@@ -499,6 +501,15 @@ O CEREBRO passa a ensinar a conversa a cuidar do próprio orçamento de instruç
 
 ## i-N49 — Paleta unificada dos nichos (é a spec0044) — FECHADA (spec0044, D-074/D-075)
 O KCM tem **duas cores por nicho** que não conversam: o `cardColor` (tela de escolha, em `src/niches/<id>.js`) e o bloco `html[data-niche="<id>"]{ --amber: … }` (página do nicho, em `src/index.template.html`). O `career` **não tem entrada `[data-niche]`** — por isso a página dele herda o âmbar padrão (o do dev): é esta a causa do «a cor do carreira é igual à do dev» (a spec0042 mexeu só no card). A spec0044 vai unificar as duas fontes por nicho, ancorando na preferência já dada pelo usuário, e resolver os **choques** que a unificação cria (dois nichos caindo na mesma cor).
+
+## i-N50 — Bump de versão faz parte do release — A INCORPORAR NO RITUAL
+Com a i-N10 fechada, `KIT_VERSION` (em `src/index.template.html`) é a fonte única da versão do produto. **Todo release passa a atualizar `KIT_VERSION` junto com STATUS/CHANGELOG** — anotar no CEREBRO/BUILD como passo do ritual de release, para não versionar o STATUS/CHANGELOG e esquecer a constante que aparece no rodapé e nos downloads.
+
+## i-N51 — `custom` sem prompts G+ — BAIXA PRIORIDADE
+O nicho «Personalizado» (`custom`) não tem nenhum prompt específico (G em diante). Avaliar um prompt genérico de «defina o próprio fluxo» para o construtor, para a view Prompts não ficar só com A–F no custom.
+
+## i-N52 — Consistência de contrato dos G+ — BAIXA PRIORIDADE
+Check de harness confirmando que todo prompt que pede entrada declara `fill`/`fillLabel` (contrato dos prompts específicos). Trava a regressão de um prompt novo que peça caixa sem declarar o campo.
 
 ## 💡 Ativas — do usuário
 

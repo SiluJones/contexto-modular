@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -464,6 +464,40 @@ check("G22 contador de instrucao: INSTR_TETO exposto e a UI le dele (i-N46)", ()
   assert(/id="instr-count"/.test(html), "elemento do contador ausente no HTML");
   assert(/function updateInstrCount/.test(html), "funcao updateInstrCount ausente");
   assert(/len \/ INSTR_TETO/.test(html), "contador nao usa INSTR_TETO como base");
+  return "ok";
+});
+
+check("G23 prompts de setup mode+entrega-aware (i-N42): C/D com ramos por modo, D e F citam _MANIFEST", () => {
+  const byId = id => T.PROMPTS_BASE.find(x => x.id === id);
+  const C = byId("C"), D = byId("D"), F = byId("F");
+  assert(C && D && F, "prompt C, D ou F ausente");
+  const cSrc = C.body.toString(), dSrc = D.body.toString(), fSrc = F.body.toString();
+  ["codeModeOn","asuModeOn"].forEach(m => {
+    assert(cSrc.includes(m), "prompt C nao ramifica por " + m);
+    assert(dSrc.includes(m), "prompt D nao ramifica por " + m);
+  });
+  assert(/_MANIFEST/.test(dSrc), "prompt D nao menciona _MANIFEST.md");
+  assert(/_MANIFEST/.test(fSrc), "prompt F nao menciona _MANIFEST.md na retomada");
+  assert(/zero/i.test(C.title), "titulo de C nao deixa claro 'do zero'");
+  assert(/andamento|existe|existente/i.test(D.title), "titulo de D nao deixa claro 'projeto existente'");
+  const dev = T.normNiche(T.NICHES.dev);
+  T.STATE.workmode = { codeMode:"yes" };
+  const dCode = D.body({}, dev);
+  assert(/Modo Code/.test(dCode), "ramo code de D nao disparou (estado workmode)");
+  T.STATE.workmode = { asuMode:"yes" };
+  const dAsu = D.body({}, dev);
+  assert(/Modo ASU/.test(dAsu), "ramo asu de D nao disparou");
+  T.STATE.workmode = {};
+  return "ok";
+});
+
+check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", () => {
+  assert(typeof T.KIT_VERSION === "string" && /^\d+\.\d+\.\d+$/.test(T.KIT_VERSION), "KIT_VERSION ausente ou fora do padrao semver");
+  const html = fs.readFileSync(path, "utf8");
+  assert(/KIT_VERSION/.test(html), "KIT_VERSION nao aparece no bundle");
+  assert(/\$\{KIT_VERSION\}`;/.test(html), "rodape nao usa KIT_VERSION");
+  assert(/function kitStamp/.test(html), "helper kitStamp ausente");
+  assert(/Kit de Contexto Universal v\$\{KIT_VERSION\}/.test(html), "downloads nao carimbam a versao");
   return "ok";
 });
 
