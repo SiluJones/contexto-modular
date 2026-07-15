@@ -1,9 +1,13 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.68.1**.
-> (Nota: o corpo deste arquivo pulou de v1.53.0 direto para v1.67.0 — as versões intermediárias
-> ficaram registradas em `meta/STATUS.md` e `meta/DECISIONS.md`; o CHANGELOG andou atrasado.
-> Reconstruir v1.54–v1.66 é a i-N47.)
+> Histórico de versões. Versão atual: **v1.69.0**.
+> (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
+> **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.69.0 — Contador de instrução na UI com `INSTR_TETO` como fonte única + CHANGELOG reconstruído (spec0045, D-076/D-077)
+- **i-N46 (D-076):** o produto ganha a constante `INSTR_TETO` (6900) — antes o teto vivia cravado em **três literais `6900`** no `validate.js` (assert do check `N`, teto do career, rótulo do check `N`). UI e harness agora leem da constante; os três literais migraram (`grep 6900 validate.js` vazio), então mudar o teto num só lugar move UI + os checks juntos. Novo elemento na saída, ao lado de «Copiar»: contador «5754 / 6900 (83%)» que reage a cada chip marcado — verde até 90%, âmbar de 90–100%, vermelho cheio acima; na aba CEREBRO vira «CEREBRO · sem teto» (lido sob demanda, sem teto). Novo check **G22** (INSTR_TETO exposto + a UI lê dele).
+- **i-N47 (D-077):** corpo do CHANGELOG reconstruído — v1.54 a v1.66 (12 entradas, a partir do DECISIONS/STATUS) preenchem o buraco entre v1.53.0 e v1.67.0. Registrado o salto real de numeração: **não existe v1.64.0** (v1.63.0 → v1.65.0).
+- Harness **18/18, 50/50, 0 erros**.
 
 ## v1.68.1 — Paleta unificada dos 18 nichos: uma cor principal por nicho (spec0044, D-074/D-075)
 - **D-074 — card == página:** o KCM tinha **duas fontes de cor por nicho** sem nada obrigando-as a concordar — `cardColor` (tela de escolha, `src/niches/<id>.js`) e `html[data-niche="<id>"]{ --amber }` (página, `src/index.template.html`). Onze nichos divergiam e o `career` **não tinha bloco `[data-niche]` nenhum**, herdando o âmbar do dev (a causa raiz do bug «carreira igual ao dev»). Agora há **uma cor principal por nicho**: o template ganha o 18º bloco `[data-niche="career"]` (novo, depois de `business`) e 11 `cardColor` foram realinhados à cor da página, com os matizes **redistribuídos** para dar separação real — pixel lima `#a3e635`, música ciano `#22d3ee`, cozinha laranja `#f97316`, animação índigo `#818cf8`, HQ fúcsia `#e879f9`, game esmeralda `#34d399`, rpg vermelho `#ef4444`, negócios bege `#d4b896`, narrativa azul `#7aa2f7`, marketing coral `#f87171`, brainstorm amarelo `#fbbf24`. Nenhuma cor principal repetida; cada nicho mantém a leitura semântica que já tinha.
@@ -36,6 +40,74 @@
 - 7 análises antigas renomeadas para `AAMMDD-ANALISE-*.md` em `meta/analises/`; IDEAS: i-N42 reescrita + i-N43/44/45 novas.
 - Base: `meta/analises/260713-ANALISE-NICHO-CARREIRA.md`.
 - Harness **18/18, 43/43, 0 erros**.
+
+## v1.66.0 — Prompts de transferência mode-aware; fim do "regenerar os meta no chat" (spec0040, D-068)
+- **O achado:** os prompts A–F eram o último subsistema **mode-blind** do KCM. O prompt **E** («Conversa pesada — transferir agora») mandava *"gere todos os arquivos de contexto… o conteúdo COMPLETO de cada um"* — regenerar os meta grandes no pior momento da conversa. Isso já causara perda documentada (num projeto consumidor, uma regeneração do `IDEAS.md` comeu 33 bullets), é destrutivo no modo Code (repo é a verdade + Code faz append → dois escritores) e contradiz o CEREBRO no modo ASU (edições saem por `.yaml`).
+- **Correção:** **E e F viram mode-aware.** E passa a gerar o **HANDOFF-BRIEF** (arquivo novo, atalho de arranque — não a memória) e trata o contexto por modo: Code → **não regenerar**, listar o append e exigir commit/push; ASU → edições por `.yaml`; vanilla → **só os arquivos que mudaram** + higiene P12; grupo → empilha o HUB. F vira **ritual de retomada** com precedência explícita: **os arquivos vencem o brief**.
+- `PROMPTS_BASE` exposto no SHIM; novo check **G14** trava a regressão (E/F cientes de modo, brief não vence os arquivos).
+- Prompts C/D (setup do projeto receptor) ficam para depois — viram a i-N42.
+- Harness **17/17, 41/41, 0 erros**.
+
+## v1.65.0 — FIX: ignores faltavam no pacote de atualização (spec0039, D-067)
+- **Bug (achado pelo usuário):** `buildUpdatePack` (Fase A do Modo Atualização) empacotava `meta/*`, CEREBRO, INSTRUCOES, skills e kit-Code, mas **não incluía** o `.gitignore` nem o `.flatdropignore` que o download estruturado já gerava. Um projeto que se atualizasse pelo pacote nunca recebia melhorias nesses dois arquivos.
+- **Correção:** os dois ignores passam a ser somados sempre, antes do manifesto, reusando `structuredGitignore`/`structuredFlatdropignore` (natureza `template`, nomes planos `gitignore__template-update` / `flatdropignore__template-update`). Downloads granulares seguem só com conteúdo.
+- Novo check **G13** trava a presença dos ignores no update-pack.
+- Harness **17/17, 40/40, 0 erros**.
+
+## v1.63.0 — Modo Atualização Fase C: gatilho `UPDATE_PROTOCOL` no CEREBRO; fecha a i-N40 (spec0038, D-066)
+- `buildClaudeMd` ganha uma seção **incondicional** «Ao receber um template-update do KCM», inserida antes de «Regras de higiene» — vale para **todo** projeto gerado, ligado ou não a modos. É a versão condensada e permanente do prompt da Fase B: ensina a IA-alvo a reconhecer o sufixo `__template-update` + o `_UPDATE-MANIFEST.md` e a rotina **comparar → reportar → nunca-sobrescrever** (novidade útil que falta · choque lado a lado, o usuário decide · o que o projeto tem e o template não cobre). Itens `fusao` (CEREBRO, INSTRUCOES) pedem merge proposto, nunca substituição cega.
+- Novo check **G12** trava a presença (`template-update` + regra de não-sobrescrever + distinção `template`/`fusao`).
+- **Fecha a i-N40 (Modo Atualização): Fases A + B + C completas.**
+- Harness **17/17, 39/39, 0 erros**.
+
+## v1.62.0 — FIX: CEREBRO/INSTRUCOES faltavam nos downloads; fonte única `generatedContextFiles` (spec0037, D-065)
+- **Bug (do usuário):** CEREBRO e INSTRUCOES são **gerados** e não vivem em `contextFiles`, então `downloadZIP` / `downloadAllTemplates` / `downloadStructuredZIP` saíam sem eles — o download estruturado vinha sem `meta/CEREBRO.md`.
+- **Correção:** helper `generatedContextFiles` vira a **fonte única** (CEREBRO → `meta/`, INSTRUCOES → raiz), consumida pelos três caminhos de download.
+- Novo check **G11** trava a regressão.
+- Harness **17/17, 38/38, 0 erros**.
+
+## v1.61.0 — Modo Atualização Fase B: `buildUpdatePrompt` + UI (botão ↻ → `<dialog>` de duas saídas) (spec0036, D-064)
+- `buildUpdatePrompt(niche)` monta o **disparo humano** que a conversa-alvo executa: compara cada arquivo do pacote com o vivo equivalente e **reporta** (novidade útil · choque lado a lado · o que o template não cobre); nunca sobrescreve conteúdo vivo por template vazio; itens `fusao` pedem merge. **Regra dura: o prompt jamais contém blocos de diff** — é orientação, não uma lista de edições para colar.
+- `downloadUpdatePack()` zipa (JSZip) o pacote achatado + `_UPDATE-MANIFEST.md` + `_UPDATE-PROMPT.md` como `<nicho>-template-update.zip`. UI: botão **↻** (`#act-upd`) no cluster de ação abre `<dialog id="upd-dialog">` com a linha de status dos modos ligados no momento do clique e duas ações (baixar zip / copiar prompt). O `<dialog>` fica **antes do `<script>`** (lição D-059).
+- Novo check **G10** trava a regra dura (prompt não vazio, com rotina de comparação e de não-sobrescrever, e **sem** bloco de código).
+- Harness **17/17, 37/37, 0 erros**.
+
+## v1.60.0 — Modo Atualização Fase A: motor `buildUpdatePack` (achatado + afixado + manifesto) (spec0035, D-063)
+- Motor da i-N40: `buildUpdatePack` monta o pacote de atualização de um projeto KCM existente — arquivos **achatados** e **afixados** (`__template-update`) + `_UPDATE-MANIFEST.md`, com natureza `template`/`fusao`. Resolve a colisão real: `downloadZIP` já achatava+afixava os `meta/*.md`, mas skills/kit-Code saíam em subpastas sem afixo, colidindo quando o Projeto do Claude achata tudo (vários `SKILL.md` iguais).
+- Novo check **G9**; Fases B (prompt + UI) e C (gatilho no CEREBRO) vêm nas specs seguintes.
+- Harness **17/17, 36/36, 0 erros**.
+
+## v1.59.0 — Campos de nicho entram na saída; bloco "Contexto do projeto" no `buildInstr` (spec0033, D-061)
+- **Achado:** campos de nicho como `genreSel`/`engineSel`/`phase` eram preenchidos na UI mas **não moldavam a saída** — o gênero multi da spec0032 era só cosmético. `buildInstr` ganha um bloco **«Contexto do projeto»** que injeta os campos de topbar/builder preenchidos, guardado por presença de valor (topbar vazia não emite nada, o teto 6900 segue intacto).
+- Conserta também o desencontro `phase`/`fase` — a Fase nunca aparecia na linha Estágio.
+- **Fecha a i-N41.**
+- Harness **17/17, 35/35, 0 erros**.
+
+## v1.58.0 — Download estruturado (projeto novo): árvore de pastas ciente da config (spec0034, D-062)
+- Novo botão **↓** (`#act-dl`) no cluster de ação chama `downloadStructuredZIP` — a intenção **"projeto novo"**: entrega o projeto já na árvore certa (raiz = slug do projeto) — `meta/` (nomes canônicos, sem afixo) + `INSTRUCOES-DO-PROJETO.md` na raiz + `logs/.gitkeep`; com Modo Code, soma `CLAUDE.md` + `.claude/…` + `meta/specs/.gitkeep`; skills do nicho conforme ligadas; `.gitignore` + `.flatdropignore` gerados na hora + `README.md`. O afixo **não** é aplicado (nomes limpos são a intenção de projeto novo).
+- Os downloads granulares (aba Templates) ficam — são a intenção "peças avulsas".
+- Harness **17/17, 35/35, 0 erros** (funções aditivas, verificadas no navegador com JSZip).
+
+## v1.57.0 — Sistema de campos ganha `multi`/`segmented`, roteados ao modal (spec0032, D-060)
+- Novos tipos de campo: **`multi`** (chips aditivos, valor-lista) e **`segmented`** (chip de escolha única), roteados ao modal por `panel:"modal"`. Pesquisa fixou que multi-seleção com opções visíveis pede chips, não dropdown, e que campos numerosos/defina-e-esqueça pertencem ao modal, não à topbar apertada.
+- **Gênero de jogo** vira `multi`. Aplicada depois da spec0031 (modal/dialog já existente).
+- Harness **17/17, 35/35, 0 erros** (campos de topbar ainda não entravam na saída — isso vem na spec0033).
+
+## v1.56.0 — Cluster de ação no canto + modal `<dialog>` de configuração; afixo migra para o modal (spec0031, D-059)
+- O canto do topbar vira **cluster de ação** (substitui o `.sync-note` redundante) com a engrenagem **⚙** abrindo um **modal `<dialog>`** de configuração; o **afixo** migra da aba Templates para a seção Projeto do modal.
+- **D-059 (armadilha registrada):** a spec mandava inserir o `<dialog>` depois do `</script>` final; verificação no navegador expôs que isso quebra a fiação — `boot()` roda síncrono no fim do `<script>` e o `<dialog>`, por vir depois, ainda não existia no DOM, deixando listeners anexados em `null` (o Esc nativo do `<dialog>` mascarava o bug). Correção: o bloco foi movido para **antes** do `<script>`. É a lição que vira o futuro check G17.
+- Harness **17/17, 35/35, 0 erros** (UI + realocação de HTML; nenhum `build*`/estado muda).
+
+## v1.55.0 — Modos viram botões-toggle no topbar sticky; painel e selos saem (spec0030, D-058)
+- Os 3 modos (`groupMode`/`codeMode`/`asuMode`) saem do painel `<details class="workmode">` (D-056) e dos selos perto da saída (D-057) e passam a viver como um **cluster de botões-toggle** (`.modebtn`, `aria-pressed`) dentro do `#topbar`, herdando o `position:sticky` — fixos ao rolar. Ativo, o botão enche com a cor do modo (Grupo verde, **Code laranja de verdade** via nova variável `--code:#e8823a`, ASU teal) + rótulo; lê em escala de cinza. Descrições viram tooltip própria (`.tip`, hover/focus, `pointer-events:none`, `aria-describedby` → `role="tooltip"`).
+- Corrige três dores do feedback: selos invisíveis, «Code não ficou laranja», painel que sumia ao rolar. `workBadges()` passa a ler a fonte única `WORK_MODES`.
+- Harness **17/17, 35/35, 0 erros** (check G8 mantido).
+
+## v1.54.0 — Selos de estado multicanal e refino dos modos (spec0028/spec0029, D-056/D-057)
+- **D-056:** os 3 modos universais migram do topbar para o painel global recolhível «Modo de trabalho» (`STATE.workmode`) — toggles soltos no topbar davam clique-errado; segmented control refutado (os modos coexistem).
+- **D-057:** cada modo ligado ganha um **selo multicanal** acima do preview — nunca cor sozinha (WCAG 1.4.1): cor (`--sc`) + glifo (`.g`) + rótulo; contraste no contorno e texto (fundo transparente), ordem estável grupo → Code → ASU. `workBadges()` é a fonte pura (testável), `renderWorkBadges()` espelha no DOM.
+- Novo check **G8**. *(Esta base foi logo revista pela spec0030/D-058, que devolveu os modos ao topbar como botões-toggle.)*
+- Harness **17/17, 34/34, 0 erros**.
 
 ## v1.53.0 — Modo Code: kit de arranque vira download separado + formato Skills atual (i-N37, D-055)
 - O apêndice inline «Apêndice — arquivos de arranque do Claude Code» sai do CEREBRO e vira **pacote `claude-code-kit.zip` separado** — novo botão «↓ Baixar kit do Claude Code (.zip)» na aba Templates, visível quando o Modo Code está ligado.

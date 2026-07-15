@@ -488,10 +488,10 @@ Handoff **não se versiona** (é atalho efêmero; o repo é a verdade), nome pad
 ## i-N45 — Prompt de retomada fixo (separar do brief datado) — A ESPECIFICAR
 Separar o **prompt de retomada permanente** (não datado, vive no CEREBRO: "leia os meta/ nesta ordem, confirme em uma frase, execute o próximo passo") do **brief datado e efêmero**. Refino natural do prompt F pós-spec0040.
 
-## i-N46 — Contador de caracteres da instrução na UI — A ESPECIFICAR (spec0042)
+## i-N46 — Contador de caracteres da instrução na UI — ✅ FECHADA (spec0045, D-076)
 O usuário marca chips e a instrução cresce — mas ele não vê isso: o estouro do teto só aparecia no harness (e só depois de a spec0042 medir o pior caso; ver D-070). Ideia: exibir na UI o tamanho da instrução gerada (e talvez a distância até o teto), atualizando conforme o usuário marca opções. Torna o orçamento visível para quem realmente monta o contexto, em vez de deixá-lo escondido no `validate.js`.
 
-## i-N47 — Reconstruir o CHANGELOG (v1.54–v1.66 nunca entraram) — A ESPECIFICAR (spec0042)
+## i-N47 — Reconstruir o CHANGELOG (v1.54–v1.66 nunca entraram) — ✅ FECHADA (spec0045, D-077)
 O topo do `meta/CHANGELOG.md` pula de v1.53 direto para v1.67: as versões v1.54 a v1.66 (todas as specs desse intervalo) nunca foram registradas. Reconstruir o histórico a partir das specs/DECISIONS correspondentes, para o CHANGELOG voltar a ser uma linha do tempo contínua.
 
 ## i-N48 — Refino de instrução pela própria conversa — ✅ FECHADA (spec0043, D-072) — nasceu e morreu nesta spec

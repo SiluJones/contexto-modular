@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE};';
+const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -179,13 +179,13 @@ check("G8 selos de estado: presente quando liga / ausente quando desliga / ordem
 // ============ POR NICHO (18) ============
 const COMP = "Princípios universais (definição completa no CEREBRO.md)";
 ids.forEach(id => {
-  check("N["+id+"] Instr+CEREBRO, teto 6900, universais comprimidos, sem undefined, IDEAS/HUB, chips", () => {
+  check("N["+id+"] Instr+CEREBRO, teto INSTR_TETO, universais comprimidos, sem undefined, IDEAS/HUB, chips", () => {
     const n = T.normNiche(T.NICHES[id]);
     const instr = T.buildInstr(n);
     const cmd = T.buildClaudeMd(n);
     assert(instr && instr.length > 200, "Instrucoes vazias/curtas");
     assert(cmd && cmd.length > 1000, "CEREBRO.md vazio/curto");
-    assert(instr.length <= 6900, "Instrucao excede 6900: " + instr.length);
+    assert(instr.length <= T.INSTR_TETO, "Instrucao excede " + T.INSTR_TETO + ": " + instr.length);
     assert(instr.includes(COMP), "linha comprimida dos universais ausente");
     // P12/P13 dentro da linha comprimida
     const compline = instr.split("\n").find(l => l.includes(COMP)) || "";
@@ -371,7 +371,7 @@ check("G15 nicho career: campos chegam a saida, behaviors-chave e arquivos do do
   const instr = T.buildInstr(n);
   assert(/Momento: Negociando na atual/.test(instr), "campo Momento nao chegou as Instrucoes");
   assert(/Aumento\/revis.o de cargo/.test(instr), "campo Frentes (multi) nao chegou as Instrucoes");
-  assert(instr.length <= 6900, "instrucao do career excede 6900: " + instr.length);
+  assert(instr.length <= T.INSTR_TETO, "instrucao do career excede " + T.INSTR_TETO + ": " + instr.length);
   T.STATE.topbar.momentSel = ""; T.STATE.topbar.frentes = [];
   return "ok";
 });
@@ -455,6 +455,15 @@ check("G21 paleta sem colisao: nenhuma cor principal repetida entre nichos", () 
     vistos[c] = id;
   });
   assert(dup.length === 0, "cor principal repetida -> " + dup.join(" | "));
+  return "ok";
+});
+
+check("G22 contador de instrucao: INSTR_TETO exposto e a UI le dele (i-N46)", () => {
+  assert(typeof T.INSTR_TETO === "number" && T.INSTR_TETO >= 6000, "INSTR_TETO ausente ou improvavel");
+  const html = fs.readFileSync(path, "utf8");
+  assert(/id="instr-count"/.test(html), "elemento do contador ausente no HTML");
+  assert(/function updateInstrCount/.test(html), "funcao updateInstrCount ausente");
+  assert(/len \/ INSTR_TETO/.test(html), "contador nao usa INSTR_TETO como base");
   return "ok";
 });
 

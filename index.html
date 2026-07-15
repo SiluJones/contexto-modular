@@ -187,6 +187,11 @@
   .btn.copied{background:var(--green);border-color:var(--green);color:#1a160e}
   .btnrow{display:flex;gap:10px;flex-wrap:wrap}
 
+.instr-count{font:600 11px/1.6 var(--mono,monospace);letter-spacing:.3px;align-self:center;padding:2px 8px;border-radius:999px;border:1px solid var(--line-soft);color:var(--ink-faint);white-space:nowrap}
+  .instr-count.ok{color:var(--green);border-color:color-mix(in srgb, var(--green) 40%, transparent)}
+  .instr-count.warn{color:var(--amber);border-color:color-mix(in srgb, var(--amber) 45%, transparent)}
+  .instr-count.over{color:#fff;background:#ef4444;border-color:#ef4444}
+  .instr-count.free{color:var(--ink-faint)}
   pre{background:#0e0b06;border:1px solid var(--line);border-radius:10px;padding:16px;font-family:var(--mono);font-size:12.5px;line-height:1.55;color:var(--ink);overflow:auto;white-space:pre-wrap;word-wrap:break-word;margin:0}
 
   /* builder */
@@ -725,6 +730,7 @@
               <button class="out-tab" id="tab-claude" data-target="claude">CEREBRO.md</button>
             </div>
             <div style="display:flex;gap:8px">
+              <span id="instr-count" class="instr-count" aria-live="polite" title="Tamanho das Instruções — lidas em toda mensagem"></span>
               <button class="btn sm" id="copy-instr">⧉ Copiar</button>
               <button class="btn ghost sm" id="dl-instr">↓ baixar</button>
             </div>
@@ -1180,6 +1186,8 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
      }
    ============================================================ */
 
+// Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
+const INSTR_TETO = 6900;
 const NICHES = {};
 
 /* ============================================================
@@ -8579,16 +8587,30 @@ function fileBehaviorLabel(f){
   return "—";
 }
 
+function updateInstrCount(len){
+  const el = $("#instr-count");
+  if(!el) return;
+  if(len < 0){
+    el.textContent = "CEREBRO · sem teto";
+    el.className = "instr-count free";
+    return;
+  }
+  const pct = Math.round(len / INSTR_TETO * 100);
+  el.textContent = len + " / " + INSTR_TETO + " (" + pct + "%)";
+  el.className = "instr-count " + (len > INSTR_TETO ? "over" : len > INSTR_TETO * 0.9 ? "warn" : "ok");
+  el.title = len > INSTR_TETO
+    ? "Acima do teto — as Instrucoes sao lidas em toda mensagem; peca para enxugar (o CEREBRO tem a versao longa)."
+    : "Tamanho das Instrucoes do Projeto (lidas em toda mensagem).";
+}
+
 function updatePreview(){
   const niche = getCurrentNiche();
   if(!niche) return;
   const p = $("#preview-instr");
   if(!p) return;
-  if(STATE.outTab === "claude"){
-    p.textContent = buildClaudeMd(niche);
-  } else {
-    p.textContent = buildInstr(niche);
-  }
+  const isClaude = STATE.outTab === "claude";
+  p.textContent = isClaude ? buildClaudeMd(niche) : buildInstr(niche);
+  updateInstrCount(isClaude ? -1 : buildInstr(niche).length);
   const _asuRem = $("#asu-reminder");
   if(_asuRem) _asuRem.style.display = asuModeOn() ? "block" : "none";
 }

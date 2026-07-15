@@ -982,3 +982,15 @@ O nome `CLAUDE.md` é convenção do **Claude Code** (CLI) para o arquivo-raiz d
 **Decisão.** Novo `.gitattributes` na raiz com `* text=auto`, `.githooks/pre-commit text eol=lf` e `*.sh text eol=lf`, seguido de `git add --renormalize .githooks/pre-commit`. Sem isso, num clone novo com `core.autocrlf=true` o shebang do hook vira `#!/bin/sh\r` → *bad interpreter* → o hook (D-073) morre calado, que é o pior modo de um portão de segurança falhar.
 
 **Por quê.** spec0044, nota levantada na spec0043. Blindagem do portão de pré-commit. Fora do harness (toolchain). 18/18, 49/49, 0 erros.
+
+## D-076 — `INSTR_TETO` no produto (fonte única de teto) + contador de instrução na UI
+
+**Decisão.** O produto ganha a constante `INSTR_TETO = 6900` (`src/index.template.html`), teto das Instruções do Projeto — que são lidas em toda mensagem. Antes o `6900` vivia **cravado em três literais** no `validate.js` (assert do check `N[...]`, teto do career, rótulo do check `N[...]`); os três migraram para a constante (`grep 6900 validate.js` agora vazio), então mudar o teto num único lugar move UI, os checks `N` e o check do career juntos. A saída ganha um contador ao lado de «Copiar» (`#instr-count`): «5754 / 6900 (83%)», verde até 90%, âmbar de 90–100%, vermelho cheio acima de 100%; na aba CEREBRO vira «CEREBRO · sem teto» (o CEREBRO é lido sob demanda, não tem teto). `updateInstrCount` roda dentro de `updatePreview`, então o contador reage a cada chip marcado. Novo check **G22** (INSTR_TETO exposto no SHIM + a UI lê dele: elemento, função e a base `len / INSTR_TETO`).
+
+**Por quê.** spec0045 (i-N46). O estouro do teto só aparecia no harness (D-070); quem monta o contexto marcando chips não via o orçamento crescer. Constante única mata a divergência silenciosa entre os três literais. Harness: +1 check (G22), 49/49 → 50/50. 18/18, 50/50, 0 erros.
+
+## D-077 — CHANGELOG reconstruído (v1.54–v1.66) a partir do DECISIONS
+
+**Decisão.** O corpo do `meta/CHANGELOG.md` saltava de v1.53.0 direto para v1.67.0 — 12 versões (v1.54–v1.66) só existiam no STATUS/DECISIONS. Reconstruídas a partir do DECISIONS (D-056 a D-068) e inseridas em ordem decrescente antes de v1.53.0. Registrado no topo do CHANGELOG que **não existe v1.64.0**: houve um salto real de numeração no histórico (v1.63.0 → v1.65.0).
+
+**Por quê.** spec0045 (i-N47). O CHANGELOG voltou a ser uma linha do tempo contínua (v1.53 → v1.69, sem v1.64). Doc-only, fora do harness. 18/18, 50/50, 0 erros.
