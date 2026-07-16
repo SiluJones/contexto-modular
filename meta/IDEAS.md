@@ -511,6 +511,9 @@ O nicho «Personalizado» (`custom`) não tem nenhum prompt específico (G em di
 ## i-N52 — Consistência de contrato dos G+ — BAIXA PRIORIDADE
 Check de harness confirmando que todo prompt que pede entrada declara `fill`/`fillLabel` (contrato dos prompts específicos). Trava a regressão de um prompt novo que peça caixa sem declarar o campo.
 
+## i-N53 — Doc-âncora por nicho (`anchorDoc`)
+**2026-07-16 — FECHADA (spec0047, D-080):** o resolvedor do doc de contexto deixa de adivinhar o arquivo-âncora por regex de nome; cada nicho declara `anchorDoc` (retaguarda: regex). Corrige a omissão do âncora no ritual de narrative/BIBLIA, marketing/MARCA, pixel/ESTILO, rpg/MUNDO e o choque `CONTEXT` (ASU + kit-Code) em nichos sem `CONTEXT.md`. `custom` declara `anchorDoc:null`. Trava por G25 (asu on/off). Origem: análise 260716 §A.
+
 ## 💡 Ativas — do usuário
 
 ### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR

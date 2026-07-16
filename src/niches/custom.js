@@ -1,4 +1,5 @@
 NICHES.custom = {
+  anchorDoc:null,
   id:"custom", label:"Custom", icon:"⚙️", group:"serif", category:"special",
   cardColor:"#cbd5e1", cardTags:["Compõe de nichos","Ou monta do zero","Dedup visível","Salva preset"],
   cardDesc:"Componha a partir dos nichos prontos (importa e concatena, com dedup visível) ou monte do zero: arquivos, comportamentos e prompts G+. Salve e ative como preset.",

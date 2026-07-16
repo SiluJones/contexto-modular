@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.70.0";
+const KIT_VERSION = "1.70.1";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2238,16 +2238,19 @@ function buildInstr(niche){
   lines.push("");
   lines.push("## Ritual de início de sessão");
   const coreFiles = (niche.contextFiles||[]).map(f=>f.name);
+  const ctxName = ("anchorDoc" in niche)
+    ? niche.anchorDoc
+    : coreFiles.find(n=>/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i.test(n));
   const readOrder = [
     "CEREBRO.md",
-    coreFiles.find(n=>/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i.test(n)),
+    ctxName,
     coreFiles.find(n=>/STATUS/i.test(n)),
   ].filter(Boolean);
   lines.push(`Antes de qualquer ação, leia nesta ordem: ${readOrder.map(f=>`\`${f}\``).join(" → ")}${coreFiles.some(n=>/CHANGELOG/i.test(n))?" → última entrada do `CHANGELOG.md`":""}.`);
   lines.push("No início e sempre que o usuário sinalizar upload (mesmo sem nomear o arquivo — \"já subi\", \"veja o txt\", \"atualizei o mount\"), releia o mount (notas `.txt` + `_MANIFEST.md`) ANTES de responder, nunca de memória. São entrada transitória (a fundir nos meta/), não fonte canônica; se não houver, siga.");
   lines.push("Confirme em uma frase o que entendeu da tarefa antes de executar. Se houver ambiguidade real, pergunte antes.");
   if(groupModeOn()) lines.push("Projeto em grupo: existe um `HUB.md` compartilhado (gerado na página HUB do kit). Leia-o logo após o STATUS — sua caixa de entrada e o status das outras frentes. Nunca altere arquivos de outra frente; sugestões vão para a caixa dela.");
-  if(asuModeOn()) lines.push("ASU: **editar** código, doc de heading estável (DECISIONS/CONTEXT) ou trecho localizado de capítulo → instrução `yaml` **para baixar** (nome `AAMMDD-asuNNNN.yaml`, bytes exatos, âncora copiada do arquivo real). **Escrita nova**, **reescrita profunda** e **docs rolantes** (STATUS/CHANGELOG/IDEAS/HISTORY e equivalentes que acumulam por higiene) → arquivo inteiro para baixar. Apliquei ASU? Confira no disco cada arquivo tocado antes de seguir, mesmo sem eu pedir. Detalhe no CEREBRO.");
+  if(asuModeOn()) lines.push("ASU: **editar** código, doc de heading estável (DECISIONS + o doc de contexto estável do projeto) ou trecho localizado de capítulo → instrução `yaml` **para baixar** (nome `AAMMDD-asuNNNN.yaml`, bytes exatos, âncora copiada do arquivo real). **Escrita nova**, **reescrita profunda** e **docs rolantes** (STATUS/CHANGELOG/IDEAS/HISTORY e equivalentes que acumulam por higiene) → arquivo inteiro para baixar. Apliquei ASU? Confira no disco cada arquivo tocado antes de seguir, mesmo sem eu pedir. Detalhe no CEREBRO.");
   if(asuModeOn()) lines.push("**Feedback ASU:** se gerou instrução ASU ou esbarrou numa limitação/pedido de melhoria da ferramenta nesta sessão, registre em «Feedback para o ASU» no IDEAS antes de fechar.");
   lines.push("**Nome de download:** arquivo para baixar usa o nome SIMPLES (ex.: `IDEAS.md`), sem prefixo de pasta (não `meta_IDEAS.md`). Só prefixe para desambiguar dois arquivos de mesmo nome.");
   lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir config diferente, recomende-a explícita — no chat: modelo + esforço (Baixo→Máximo) + pensamento (lig/desl); no Claude Code: modelo + `/effort` (ou `ultrathink`/`ultracode`), SEM toggle de pensamento. Nunca afirme saber a atual; recomende pela tarefa. Pesada com config fraca → peça aumento; folga → diga que pode baixar.");
@@ -2370,7 +2373,9 @@ function buildClaudeMd(niche){
   const cf = niche.contextFiles || [];
   const order = [];
   order.push("`CEREBRO.md` (este) — confirma comportamento e ritual");
-  const ctxF = cf.find(f=>/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i.test(f.name));
+  const ctxF = ("anchorDoc" in niche)
+    ? (niche.anchorDoc ? cf.find(f=>f.name===niche.anchorDoc) : null)
+    : cf.find(f=>/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i.test(f.name));
   if(ctxF) order.push(`\`${ctxF.name}\` — entende o projeto (panorama estável)`);
   const stF = cf.find(f=>/STATUS/i.test(f.name));
   if(stF) order.push(`\`${stF.name}\` — descobre o estado atual e o próximo passo`);
@@ -2571,7 +2576,7 @@ if(asuModeOn()){
   L.push("");
   L.push("1. Ao pedir uma \"instrução ASU\" (ou ao **editar** arquivos existentes), entregue a instrução **como arquivo `.yaml` para baixar** — não colada no chat: o download preserva os bytes UTF-8 exatos e evita corromper âncoras não-ASCII no copia-e-cola. Nome `AAMMDD-asuNNNN.yaml` (ex.: `260628-asu0001.yaml`), com `format_version` igual ao declarado no `INSTRUCTION_GUIDE.md` (não fixe número — o guia é o contrato). Acompanhe de UMA linha: `python -m src apply <arquivo>.yaml --root <RAIZ> --dry-run`. Nunca XML.");
   L.push("2. **Arquivo NOVO:** entregue-o pronto para baixar — não o reescreva como instrução ASU. Exceção: criação junto de edições a existentes na MESMA instrução → aí `create_file`. (Mesmo numa edição, o usuário pode preferir o arquivo inteiro para baixar — se pedir, respeite.)");
-  L.push("3. **Escopo do ASU (por tipo de arquivo):** (a) **código** e docs de **heading estável** (`DECISIONS.md`, `CONTEXT.md`, `GLOSSARY`) → ASU serve (append/troca localizada, âncora inequívoca). (b) **Capítulos / escrita longa:** edição de **trecho localizado** → ASU é até preferível (evita reescrever o capítulo todo e o risco de perder conteúdo no meio); **escrita nova ou reescrita profunda** → arquivo inteiro (não há âncora; é geração). (c) **Docs rolantes** (`STATUS`, `CHANGELOG`, `IDEAS`, `HISTORY` e equivalentes de domínio que acumulam por higiene, ex.: `REVISOES`) → **sempre inteiros**: a edição é holística (mover o resolvido, reclassificar, fundir, checar que nada único se perdeu) e um patch cirúrgico briga com a higiene; pior, o diff pode 'bater' e a higiene estar errada, porque o ASU não tem julgamento. Reavalie `DECISIONS.md` via ASU só perto de ~700 linhas. **Verificação obrigatória:** apliquei uma instrução ASU e os arquivos estão à vista? Confira no disco cada arquivo tocado antes de seguir, mesmo sem o usuário pedir — não confie em 'deu certo' (alinhado ao ponto 9 do PROMPT_IA do ASU).");
+  L.push("3. **Escopo do ASU (por tipo de arquivo):** (a) **código** e docs de **heading estável** (`DECISIONS.md`, o doc de contexto estável do projeto, `GLOSSARY`) → ASU serve (append/troca localizada, âncora inequívoca). (b) **Capítulos / escrita longa:** edição de **trecho localizado** → ASU é até preferível (evita reescrever o capítulo todo e o risco de perder conteúdo no meio); **escrita nova ou reescrita profunda** → arquivo inteiro (não há âncora; é geração). (c) **Docs rolantes** (`STATUS`, `CHANGELOG`, `IDEAS`, `HISTORY` e equivalentes de domínio que acumulam por higiene, ex.: `REVISOES`) → **sempre inteiros**: a edição é holística (mover o resolvido, reclassificar, fundir, checar que nada único se perdeu) e um patch cirúrgico briga com a higiene; pior, o diff pode 'bater' e a higiene estar errada, porque o ASU não tem julgamento. Reavalie `DECISIONS.md` via ASU só perto de ~700 linhas. **Verificação obrigatória:** apliquei uma instrução ASU e os arquivos estão à vista? Confira no disco cada arquivo tocado antes de seguir, mesmo sem o usuário pedir — não confie em 'deu certo' (alinhado ao ponto 9 do PROMPT_IA do ASU).");
   L.push("4. Prefira edições **cirúrgicas** (`replace_function`/`replace_method`/`replace_section`/`set_json_path`); para JS e outras, `type: \"text\"` + `replace_context_block` com âncoras copiadas **literalmente** do arquivo real (indentação exata), casando **uma única vez** — só o miolo no `new_content`. Se a âncora tiver caractere não-ASCII, evite o literal com `.*`: prefira uma âncora ASCII vizinha estável.");
   L.push("5. Não invente campos nem use número de linha; o `INSTRUCTION_GUIDE.md` é a referência obrigatória do formato.");
   L.push("6. **Verificação (sessão seguinte):** se emitiu uma instrução ASU e os arquivos estão à vista, confira no disco cada arquivo tocado antes de seguir — não confie em \"deu certo\".");
@@ -2923,7 +2928,7 @@ function buildCodeKitFiles(){
     "> O comportamento detalhado do assistente está em `meta/CEREBRO.md`.",
     "",
     "## Ritual de início",
-    "Leia `meta/CEREBRO.md` → `meta/CONTEXT.md` → `meta/STATUS.md` antes de agir. Confirme em uma frase o que entendeu.",
+    "Leia `meta/CEREBRO.md` → o doc de contexto do projeto (ex.: `meta/CONTEXT.md`) → `meta/STATUS.md` antes de agir. Confirme em uma frase o que entendeu.",
     "",
     "## Build / validação",
     "- Build: `<seu comando de build, ex.: npm run build>`  (PLACEHOLDER — troque pelo do seu projeto)",

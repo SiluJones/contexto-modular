@@ -1,4 +1,5 @@
 NICHES.marketing = {
+  anchorDoc:"MARCA.md",
   id:"marketing", label:"Marketing & Conteúdo", icon:"◈", group:"serif", category:"core",
   cardColor:"#f87171", cardTags:["conteúdo","social","newsletter","marca"],
   cardDesc:"Pilares, voz, calendário e distribuição — conteúdo com estratégia, não avulso",

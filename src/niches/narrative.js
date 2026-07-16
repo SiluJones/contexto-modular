@@ -1,4 +1,5 @@
 NICHES.narrative = {
+  anchorDoc:"BIBLIA.md",
   id:"narrative", label:"Narrativa & Ficção", icon:"✍", group:"literary", category:"core",
   cardColor:"#7aa2f7", cardTags:["romance","conto","roteiro","serial"],
   cardDesc:"Mundo, personagens, voz e continuidade — sem perder o fio",

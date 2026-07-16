@@ -1,4 +1,5 @@
 NICHES.pixel = {
+  anchorDoc:"ESTILO.md",
   id:"pixel", label:"Pixel Art", icon:"🎨", group:"digital", category:"creative",
   cardColor:"#a3e635", cardTags:["sprites","game art","animação"],
   cardDesc:"Paleta, silhueta, clusters e animação — estilo coerente do 1º sprite ao último",

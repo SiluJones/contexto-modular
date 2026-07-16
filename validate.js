@@ -501,6 +501,34 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {
+  const RE=/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i;
+  const semAncora=[], choque=[];
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const cf=(n.contextFiles||[]).map(f=>f.name);
+    const anchor = ("anchorDoc" in n) ? n.anchorDoc : cf.find(nm=>RE.test(nm));
+    // (a) se ha ancora (declarada nao-null ou resolvida), o ritual das Instrucoes E do CEREBRO citam-na
+    if(anchor){
+      const instr=T.buildInstr(n), cmd=T.buildClaudeMd(n);
+      if(!instr.includes(anchor)) semAncora.push(id+" Instr sem "+anchor);
+      if(!cmd.includes(anchor)) semAncora.push(id+" CEREBRO sem "+anchor);
+    }
+    // (b) Instrucoes nunca citam um .md que o nicho nao possui (asu on/off); pega o choque CONTEXT.md
+    [{},{asuMode:"yes"}].forEach(wm=>{
+      T.STATE.workmode=wm;
+      const instr=T.buildInstr(n);
+      (instr.match(/\b[A-Z][A-Z-]*\.md\b/g)||[]).forEach(lit=>{
+        if(lit==="CONTEXT.md" && !cf.includes("CONTEXT.md")) choque.push(id+" cita "+lit+" (asu:"+(!!wm.asuMode)+")");
+      });
+    });
+    T.STATE.workmode={};
+  });
+  assert(semAncora.length===0, "ritual sem doc-ancora -> "+semAncora.join(" | "));
+  assert(choque.length===0, "Instr cita .md inexistente -> "+choque.join(" | "));
+  return "ok";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

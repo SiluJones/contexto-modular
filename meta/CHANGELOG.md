@@ -1,8 +1,13 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.70.0**.
+> Histórico de versões. Versão atual: **v1.70.1**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.70.1 — Doc-âncora por nicho (`anchorDoc`) + fim do choque `CONTEXT` + G25 (spec0047, D-080)
+- **i-N53 (D-080):** o resolvedor do «doc de contexto» deixa de adivinhar o arquivo-âncora por **regex de nome** (`/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i`). Cada nicho **declara** `anchorDoc`; `buildInstr` e `buildClaudeMd` preferem a declaração e só caem na regex como retaguarda. Corrige a omissão do âncora no ritual (Instruções E CEREBRO) de **4 nichos** que a regex não casava — narrative/`BIBLIA.md`, marketing/`MARCA.md`, pixel/`ESTILO.md`, rpg/`MUNDO.md`, onde o ritual pulava o arquivo em torno do qual o nicho é construído. `custom` declara `anchorDoc:null` («sem âncora» explícito). Corrige também o **choque `CONTEXT`**: duas linhas do modo ASU e o `CLAUDE.md` do kit-Code deixam de cravar o literal `CONTEXT`/`CONTEXT.md` (arquivo inexistente em nichos como a narrativa) — viraram genéricas («o doc de contexto estável do projeto»). `KIT_VERSION 1.70.1`. Novo check **G25** (ritual cita o âncora de todo nicho; Instruções nunca citam um `.md` inexistente — testado com ASU on/off).
+- IDEAS: i-N53 nascida e FECHADA.
+- Harness **18/18, 53/53, 0 erros**.
 
 ## v1.70.0 — Prompts C/D mode+entrega-aware, `_MANIFEST` na retomada e `KIT_VERSION` exposto (spec0046, D-078/D-079)
 - **i-N42 (D-078):** os prompts universais de setup deixam de ser cegos a modo e a formato de entrega. **Títulos** explícitos (a confusão que a ideia corrige): **C** «Começar um projeto do zero com o KCM» e **D** «Adotar o KCM num projeto já em andamento» — o eixo (projeto novo × projeto que já existe) fica no próprio rótulo. Os corpos ganham ramos `codeModeOn()` (repo é a verdade: árvore + commit em C; acrescenta, não reescreve, em D) e `asuModeOn()` (adoção sai como instrução `.yaml`; arquivos novos, inteiros). O **D** detecta `_MANIFEST.md` (pacote estruturado — download ↓ do KCM ou FlatDrop): lê pelo mapa, **não regenera o que já existe**; o **F** (retomada) começa pelo `_MANIFEST.md` antes de deduzir caminhos. Texto-guia da view Prompts reescrito (explica A–F). Nenhuma lógica de detecção nova — reusa a consciência que já vivia no CEREBRO. Novo check **G23**.

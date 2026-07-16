@@ -1,4 +1,5 @@
 NICHES.rpg = {
+  anchorDoc:"MUNDO.md",
   id:"rpg", label:"RPG (Mestres)", icon:"🎲", group:"literary", category:"creative",
   cardColor:"#ef4444", cardTags:["mesa","campanha","one-shot"],
   cardDesc:"Mundo, NPCs, prep leve e improviso coerente — campanha que lembra de tudo",
