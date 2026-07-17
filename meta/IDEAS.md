@@ -530,6 +530,9 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-07-16 — Refino narrativo de 4 projetos reais, §B (B1–B5) INCORPORADAS (D-081, v1.71.0)
+B1–B5 da análise 260716 §B (`meta/analises/260716-ANALISE-REFINO-NARRATIVE.md`) aplicados no nicho narrativa (spec0048): B1 = 5 erros nomeados novos em `checagem-continuidade` (hedge de POV, familiaridade cedo demais, transição ausente, eco não verificado, craft sem verificação); B2 = passo PRÉ «a cena já existe?» em `escrita-serial`; B3 = bloco «processando notas de revisão do autor» em `escrita-serial`; B4 = gatilho «concluída OU revisada»; B5 = «eco físico vs. eco comportamental» em `textura-mundo`. Check C10; teto inalterado (skills/CEREBRO). **Seguem ABERTOS** para as próximas levas: itens **B6/B7/C/D/E** da mesma análise. Base §A já fechada na spec0047 (i-N53).
+
 ### 2026-07-03 — Feedback consolidado dos projetos Novel 1/2/3, fase A aplicada — INCORPORADO (D-050, v1.48.0)
 Feedback consolidado dos projetos Novel 1/2/3 extraído e aplicado na fase A do nicho narrativa (ver ANALISE-REFINO-NICHO-NARRATIVO.md); pendentes: fase B (switch skills-pack de escrita) e fase C (universais: sync instrução-curta/CEREBRO, aviso de persistência do mount, fases para pedidos compostos, modo extração de acervo).
 

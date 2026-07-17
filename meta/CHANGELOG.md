@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.70.1**.
+> Histórico de versões. Versão atual: **v1.71.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.71.0 — Refino do nicho Narrativa a partir de feedback de 4 projetos reais (spec0048, D-081)
+- **B1 — `checagem-continuidade`, 5 erros nomeados novos:** (1) **narração que hedgeia o próprio POV** (o personagem-foco sempre sabe o que ELE fez/disse/quis; incerteza só sobre o OUTRO); (2) **vazamento de familiaridade cedo demais** (capítulo-ponte pós-marco com linguagem de intimidade insustentável no tempo curto — variante temporal do capability bleeding); (3) **transição ausente disfarçada de economia** (cena nova sem a frase mínima de ambientação); (4) **eco não verificado** (mudar um fato canônico sem buscar as reafirmações parafraseadas nos outros arquivos; regra-mãe: fonte única, eco citado); (5) **craft afirmado sem verificação** (regra de ofício apresentada como consenso sem confrontar a prática — é o P13 dentro da escrita).
+- **B2 — `escrita-serial`, passo PRÉ «a cena já existe?»:** antes de escrever, checar se a cena não foi já escrita e aprovada em algum arquivo do Projeto (reler o capítulo anterior não substitui a busca).
+- **B3 — `escrita-serial`, bloco «processando notas de revisão do autor»:** interpretar antes de transcrever (não colar; separar cena × entendimento; nota longa = processar por inteiro; não dramatizar mecânica na ação).
+- **B4 — gatilho «concluída OU revisada»:** a revisão de capítulo existente dispara o mesmo gatilho triplo (linha do `triggersExtra`, que vive no CEREBRO, + heading na `checagem-continuidade`).
+- **B5 — `textura-mundo`, «eco físico vs. eco comportamental»:** para o reconhecimento tardio de parentesco/identidade, plantar os dois canais e deixar o comportamental (invisível) fazer o trabalho.
+- Cada item vem de um FIX real de projeto em produção (análise 260716 §B): My Little Lady FIX-005/006/007/008, My mother FIX-001/DEC-007, I will die (princípios 21-23), P13. Teto **inalterado** (skills/CEREBRO); `N[narrative]` segue em 6702/6900. `KIT_VERSION 1.71.0`. Novo check **C10** (`triggersExtra` conferido no CEREBRO, não nas Instruções).
+- IDEAS: §B (B1–B5) INCORPORADAS; B6/B7/C/D/E seguem abertos.
+- Harness **18/18, 54/54, 0 erros**.
 
 ## v1.70.1 — Doc-âncora por nicho (`anchorDoc`) + fim do choque `CONTEXT` + G25 (spec0047, D-080)
 - **i-N53 (D-080):** o resolvedor do «doc de contexto» deixa de adivinhar o arquivo-âncora por **regex de nome** (`/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i`). Cada nicho **declara** `anchorDoc`; `buildInstr` e `buildClaudeMd` preferem a declaração e só caem na regex como retaguarda. Corrige a omissão do âncora no ritual (Instruções E CEREBRO) de **4 nichos** que a regex não casava — narrative/`BIBLIA.md`, marketing/`MARCA.md`, pixel/`ESTILO.md`, rpg/`MUNDO.md`, onde o ritual pulava o arquivo em torno do qual o nicho é construído. `custom` declara `anchorDoc:null` («sem âncora» explícito). Corrige também o **choque `CONTEXT`**: duas linhas do modo ASU e o `CLAUDE.md` do kit-Code deixam de cravar o literal `CONTEXT`/`CONTEXT.md` (arquivo inexistente em nichos como a narrativa) — viraram genéricas («o doc de contexto estável do projeto»). `KIT_VERSION 1.70.1`. Novo check **G25** (ritual cita o âncora de todo nicho; Instruções nunca citam um `.md` inexistente — testado com ASU on/off).

@@ -501,6 +501,21 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C10 narrative refino spec0048: 5 erros nomeados + cena-existe + notas-revisao + eco fisico + gatilho revisada", () => {
+  const narr=T.normNiche(T.NICHES.narrative);
+  const sk=name=>narr.skillsPack.skills.find(s=>s.name===name);
+  const cont=T.buildSkillMd(sk("checagem-continuidade"));
+  ["hedgeia o próprio POV","familiaridade cedo demais","Transição ausente","Eco não verificado","Craft afirmado sem"].forEach(k=>assert(cont.includes(k),"checagem-continuidade sem: "+k));
+  const serial=T.buildSkillMd(sk("escrita-serial"));
+  assert(/A cena já existe\?/.test(serial),"escrita-serial sem passo 'a cena ja existe'");
+  assert(/Processando notas de revisão do autor/.test(serial),"escrita-serial sem bloco de notas de revisao");
+  const textura=T.buildSkillMd(sk("textura-mundo"));
+  assert(/Eco físico vs\. eco comportamental/.test(textura),"textura-mundo sem eco fisico/comportamental");
+  const cmd=T.buildClaudeMd(narr);
+  assert(/concluída OU revisada/.test(cmd),"gatilho nao virou 'concluida OU revisada' no CEREBRO (triggersExtra vive no CEREBRO, nao nas Instrucoes)");
+  return "ok";
+});
+
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {
   const RE=/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i;
   const semAncora=[], choque=[];

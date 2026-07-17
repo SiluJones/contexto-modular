@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.70.1";
+const KIT_VERSION = "1.71.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2362,7 +2362,7 @@ NICHES.narrative = {
     ["Fato novo do mundo/personagem estabelecido", "Entrega BIBLIA.md ou PERSONAGENS.md completo com o cânone atualizado."],
     ["Decisão de enredo (morte, reviravolta, mudança de arco)", "Entrega ENREDO.md completo (a decisão + impacto no que vem)."],
     ["Inconsistência encontrada/resolvida ou grafia definida", "Entrega CONTINUIDADE.md completo (a nota de continuidade / grafia canônica)."],
-    ["Capítulo ou cena concluída", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
+    ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
     ["Erro mecânico apontado pelo autor na prosa", "Vira linha PERMANENTE na «Lista de invariantes» de CONTINUIDADE.md (a lista só cresce — o mesmo erro nunca se corrige duas vezes); se for erro de voz, ganha espelho também em VOZ.md → «O que EVITAR»."],
     ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada. A cada ARCO concluído, propõe 1–2 exemplos novos substituindo os mais antigos — a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar a voz atual."],
   ],
@@ -2381,6 +2381,7 @@ NICHES.narrative = {
           "## 1. PRÉ (antes de escrever)",
           "- Duas fases: primeiro o ESQUELETO (beats + perguntas de continuidade + 2–3 variações com trade-offs) para o autor aprovar; só então a prosa. Evita reescrever a linha inteira.",
           "- Reler: a ficha do POV (PERSONAGENS.md), os 2–3 parágrafos finais do capítulo anterior (âncora de voz — o novo continua a mesma frase, mesmo ritmo), e — se a cena mostra evento já escrito de outro POV — o capítulo desse evento, listando os fatos fixos (percepção pode divergir; fato, nunca).",
+          "- **A cena já existe?** Antes de escrever, cheque se ela não foi escrita e aprovada em algum arquivo do Projeto — reler o capítulo anterior (âncora de voz) NÃO substitui essa busca. Reescrever do zero uma cena já aprovada é retrabalho e perda de versão.",
           "- Levantar em CONTINUIDADE.md o «Estado atual» do personagem e a LISTA NEGATIVA: o que ele AINDA NÃO tem (skills, informações, relações não estabelecidas).",
           "- Princípio que rege tudo: escrever A PARTIR do estado atual, NUNCA EM DIREÇÃO ao estado planejado. O plano vive no ENREDO; o que o personagem pode fazer AGORA vive na CONTINUIDADE, e é ela que governa a cena.",
           "",
@@ -2394,6 +2395,12 @@ NICHES.narrative = {
           "- **Teste de imersão:** se remover o diálogo e nada se perde além do que o narrador já resumiria, o diálogo é redundante — corte ou reescreva. E vice-versa: se o narrador resume o que deveria ser vivido em cena, converta em diálogo/ação.",
           "- **Ratio de diálogo:** cena com interação/autoridade/grupo pede diálogo real, não parágrafos de narração com uma fala solta. Mire ~40% de diálogo nessas cenas (calibrável por obra) — abaixo disso, provavelmente virou palestra.",
           "- **POV paralelo, regra de ouro:** cada POV deve revelar algo que o outro não podia. Se o segundo POV só recobre o mesmo terreno com outras palavras, ele não se justifica — e reusar a mesma metáfora/imagem denuncia o autor único por trás dos dois.",
+          "",
+          "### Processando notas de revisão do autor (interpretar antes de transcrever)",
+          "- **Interpretar, não colar.** A nota pode vir fora de ordem cronológica ou conter contexto destinado só ao seu raciocínio, não à prosa. Decida ONDE (e SE) cada ponto entra na cena — não cole a informação no ponto exato em que foi mencionada.",
+          "- **Separe o que é para a cena do que é para o seu entendimento.** Parte da nota vira texto; parte só orienta você — classifique antes de escrever.",
+          "- **Nota longa = processar por inteiro.** Nota com muitos pontos numerados corre risco de ser absorvida pela metade: enumere, aplique um a um e confira ao fim que nenhum ficou de fora.",
+          "- **Nunca dramatizar mecânica em momento de ação** (cruza com «vocabulário de mecânica na diegese»).",
           "",
           "## 3. PÓS (antes de entregar — obrigatório)",
           "- Reler o texto gerado contra a «Lista de invariantes» de CONTINUIDADE.md. Achou violação? Corrige antes de mostrar — nunca entregar sabendo de inconsistência, por menor que seja.",
@@ -2415,13 +2422,18 @@ NICHES.narrative = {
           "- **Metáfora repetida em POV paralelo:** foco diferente pede imagem diferente — reusar denuncia o autor único.",
           "- **Drift cognitivo:** nomear o processo mental («inventariou», «calculou», «arquivou») em vez de mostrar o gesto físico que comunica o mesmo.",
           "- **Beat silencioso sem fechamento:** eco de risco anterior sem uma linha de fechamento antes do corte de cena lê como fio abandonado.",
+          "- **Narração que hedgeia o próprio POV:** o personagem-foco sempre sabe o que ELE fez, disse ou quis — «provavelmente», «não sabia bem o que tinha dito» sobre si mesmo é falso. Incerteza só é legítima sobre a reação ou a intenção do OUTRO. (3ª limitada e 1ª pessoa.)",
+          "- **Vazamento de familiaridade cedo demais:** capítulo-ponte logo após um marco (primeiro encontro, primeiro dia) que importa linguagem de rotina/intimidade («como sempre», «ele já tinha me mostrado») insustentável no tempo curto decorrido — em geral por reaproveitar frases do capítulo SEGUINTE, que cobre a relação madura. Variante temporal do capability bleeding: cheque o tempo decorrido, não só a habilidade.",
+          "- **Transição ausente disfarçada de economia:** cena nova (sobretudo abrupta ou chocante) sem a frase mínima de ambientação — onde, quando, o que estava acontecendo. Prosa econômica corta adjetivo e explicação de emoção; nunca a orientação básica da cena.",
+          "- **Eco não verificado:** corrigir um fato canônico num arquivo sem buscar ativamente as reafirmações do mesmo fato — parafraseadas, não citadas — nos outros arquivos. Regra-mãe: fonte única, eco citado (o fato mora num lugar mestre; os outros citam, não reparafraseiam). Ao mudar um fato, faça a busca ativa pelos ecos.",
+          "- **Craft afirmado sem verificação:** apresentar uma «regra de ofício» (ritmo, estrutura, o que «funciona») como consenso estabelecido sem confrontar com a prática real. É o P13 dentro da escrita — pesquise para refutar antes de afirmar com confiança.",
           "",
           "## Lista de invariantes (a memória viva)",
           "Vive no topo de CONTINUIDADE.md e SÓ CRESCE. Todo erro mecânico apontado pelo autor vira linha permanente — o mesmo erro nunca se corrige duas vezes. Toda prosa nova é relida contra ela.",
           "",
           "## Pergunta-oráculo (o teste operacional do «a partir do estado»)",
           "Antes de dar a um personagem uma capacidade, informação ou reação: «se eu apagasse meu conhecimento do arco planejado e lesse SÓ os capítulos anteriores, este personagem teria acesso a isso agora?» Se a resposta depende de algo que só o autor/plano sabe, é capability bleeding — recue ao que a página já estabeleceu.",
-          "## Gatilho triplo — capítulo concluído (não é um passo só)",
+          "## Gatilho triplo — capítulo concluído OU REVISADO (revisão de capítulo existente dispara o mesmo) (não é um passo só)",
           "1. STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada.",
           "2. Busca ATIVA por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito. O doc que «parece atualizado» porque a checklist bate é o bug clássico.",
           "3. Fatos novos da cena para CONTINUIDADE.md (incluindo novas invariantes)."
@@ -2462,6 +2474,7 @@ NICHES.narrative = {
           "",
           "## Fazer o mundo respirar (técnicas de textura)",
           "- **Retecer fora de cena:** mencione de passagem um secundário/lugar/rotina numa cena onde ele NÃO está — sugere vida contínua. Ex.: entre capítulos, o restaurante ganha «uma nona mesa»; ninguém narra a reforma, mas o mundo se moveu. Barato e poderoso.",
+          "- **Eco físico vs. eco comportamental (reconhecimento tardio de parentesco/identidade):** a herança se revela por dois canais — o físico (traço visível: cor de olho, um gesto herdado) e o comportamental (invisível: um tique, um valor, uma reação sob pressão). Para a revelação tardia, plante os dois antes e deixe o comportamental fazer o trabalho — mais forte e menos óbvio que o físico.",
           "- **Revelar por atrito, não por palestra:** dois secundários discordando sobre algo pequeno na frente do protagonista ensinam a cultura/regra sem infodump. O leitor aprende vendo a fricção, não ouvindo a explicação. Antídoto direto ao maior risco do nicho (exposição empilhada).",
           "- **Checklist «pelo menos 1 dos 3 por capítulo»** (torna a textura auditável, não só aspiracional): (a) um secundário com vida própria demonstrada; (b) um lugar que existe independente da trama; (c) um evento nos bastidores que o protagonista não causou. Um por capítulo já mantém o mundo vivo."
         ],
