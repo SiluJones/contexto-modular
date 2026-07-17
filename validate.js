@@ -501,6 +501,17 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C12 nomes com opcoes nos nichos de ficcao (spec0050): narrativa ambos os modos + game/rpg/comics", () => {
+  const nn=T.buildClaudeMd(T.normNiche(T.NICHES.narrative));
+  assert(/Em AMBOS os modos: nomear/.test(nn),"narrativa: naming nao esta em ambos os modos");
+  assert(!/nomes nunca são pedidos sem/.test(nn),"narrativa: fragmento antigo de naming ainda no modo DC (duplicado)");
+  ["game","rpg","comics"].forEach(id=>{
+    const md=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/Nomes vêm com opções fundamentadas/.test(md),id+": sem behavior de naming");
+  });
+  return "ok";
+});
+
 check("C11 universais leva C (spec0049): pedido composto + genero em rename + sincronia Instr<->CEREBRO", () => {
   const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
   assert(/Pedido composto/.test(md),"cadence sem 'pedido composto'");

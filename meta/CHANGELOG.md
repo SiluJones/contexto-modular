@@ -1,8 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.72.0**.
+> Histórico de versões. Versão atual: **v1.73.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.73.0 — Nomes com opções fundamentadas na ficção (spec0050, D-083)
+- **C2 resolvido como comportamento de ficção, não universal** (análise 260716 §C, decisão do usuário 260717-1313.txt): dev/produto já resolvem com nome temporário e naming universal conflitaria com P2; o alvo é a ficção (muitos personagens/lugares, nomes temporários ruins que o autor quer trocar).
+- **Narrativa:** a regra «nomear vem com 2–4 opções fundamentadas» sai do bloco Direção Criativa e passa a valer em **ambos os modos**, enriquecida — uma recomendação por opção, não precisa ser menu formal, nome temporário que valha manter é sinalizado (com alternativas mesmo assim).
+- **game/rpg/comics:** novo behavior `naming` (mesmo caso: elenco e mundo com muitos elementos nomeáveis) — 2–4 opções fundamentadas, recomendação curta por opção, honra nome temporário.
+- Extensão a **music/design/animation descartada** (naming lá é raro/próximo do dev); **§C da análise fechada por completo**. Novo check **C12**. `KIT_VERSION 1.73.0`.
+- **Teto:** narrativa **inalterada** (6702 — o enriquecimento cresce só o CEREBRO); game 6798 (folga 102, o mais apertado — vigiar), rpg 6032, comics 5692 (todos < 6900).
+- Harness **18/18, 56/56, 0 erros**.
 
 ## v1.72.0 — Universais da base: leva C (spec0049, D-082)
 - **C1 — `cadence` ganha «pedido composto»:** quando vários pedidos vêm numa mensagem, enumerar as partes, executar o que não bloqueia e parar só na decisão que de fato trava (não deixar um pedido soterrar os outros nem transformar tudo em pergunta).
