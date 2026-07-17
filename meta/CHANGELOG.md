@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.71.0**.
+> Histórico de versões. Versão atual: **v1.72.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.72.0 — Universais da base: leva C (spec0049, D-082)
+- **C1 — `cadence` ganha «pedido composto»:** quando vários pedidos vêm numa mensagem, enumerar as partes, executar o que não bloqueia e parar só na decisão que de fato trava (não deixar um pedido soterrar os outros nem transformar tudo em pergunta).
+- **C4 — `consistency` ganha a armadilha de gênero em rename:** ao renomear um termo por busca-e-troca, conferir a concordância (gênero/número) no entorno (FIX-003 do projeto Rascunho: «o Assentamento» → «a Consolidação» sem ajustar artigos/adjetivos quebra o texto).
+- **C5 — bloco «Refino das Instruções» (G19) ganha a sincronia Instr↔CEREBRO:** ao mexer no CEREBRO, checar se as Instruções curtas ainda batem e propor alinhar/regenerar a versão curta se divergirem.
+- Todos crescem **só o CEREBRO** — teto dos 18 **inalterado** (a linha comprimida dos universais nas Instruções usa só o `label`, não a descrição). Nenhum princípio novo: **G2 segue 13**. `KIT_VERSION 1.72.0`. Novo check **C11**.
+- **C3 (ideias do autor como conselho) já era coberto por P1 «Analisa antes de aceitar»** — não entra. **C2 (2–4 opções para nome) NÃO promovido a universal** (não se aplica a nichos não-criativos; conflita com P2) — fica para eventual passada nos criativos.
+- IDEAS: §C (C1/C4/C5) INCORPORADA; C2 parqueada; C3 coberta por P1; B6/B7/D/E seguem abertos.
+- Harness **18/18, 55/55, 0 erros**.
 
 ## v1.71.0 — Refino do nicho Narrativa a partir de feedback de 4 projetos reais (spec0048, D-081)
 - **B1 — `checagem-continuidade`, 5 erros nomeados novos:** (1) **narração que hedgeia o próprio POV** (o personagem-foco sempre sabe o que ELE fez/disse/quis; incerteza só sobre o OUTRO); (2) **vazamento de familiaridade cedo demais** (capítulo-ponte pós-marco com linguagem de intimidade insustentável no tempo curto — variante temporal do capability bleeding); (3) **transição ausente disfarçada de economia** (cena nova sem a frase mínima de ambientação); (4) **eco não verificado** (mudar um fato canônico sem buscar as reafirmações parafraseadas nos outros arquivos; regra-mãe: fonte única, eco citado); (5) **craft afirmado sem verificação** (regra de ofício apresentada como consenso sem confrontar a prática — é o P13 dentro da escrita).

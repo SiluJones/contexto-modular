@@ -501,6 +501,15 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C11 universais leva C (spec0049): pedido composto + genero em rename + sincronia Instr<->CEREBRO", () => {
+  const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
+  assert(/Pedido composto/.test(md),"cadence sem 'pedido composto'");
+  assert(/concordância \(gênero\/número\)/.test(md),"consistency sem regra de genero no rename");
+  assert(/Sincronia com o CEREBRO/.test(md),"refino sem regra de sincronia Instr<->CEREBRO");
+  assert(T.NICHES && Object.keys(T.NICHES).length===18,"nichos != 18");
+  return "ok";
+});
+
 check("C10 narrative refino spec0048: 5 erros nomeados + cena-existe + notas-revisao + eco fisico + gatilho revisada", () => {
   const narr=T.normNiche(T.NICHES.narrative);
   const sk=name=>narr.skillsPack.skills.find(s=>s.name===name);

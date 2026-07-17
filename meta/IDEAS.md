@@ -530,6 +530,9 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-07-17 — Refino narrativo de 4 projetos reais, §C: C1/C4/C5 INCORPORADA na base (D-082, v1.72.0)
+Terceira e última leva do refino (`meta/analises/260716-ANALISE-REFINO-NARRATIVE.md` §C). **§C (C1/C4/C5) → INCORPORADA** na base (só CEREBRO, teto dos 18 inalterado): C1 = `cadence` ganha «pedido composto» (enumera, executa o não-bloqueante, para só na decisão que trava); C4 = `consistency` ganha a armadilha de concordância de gênero/número em rename por busca-e-troca (FIX-003); C5 = bloco «Refino das Instruções» ganha a regra de sincronia Instruções-curtas ↔ CEREBRO. Check C11. **C2 (nunca pedir nome sem 2–4 opções) → PARQUEADA** — decisão: é comportamento de trabalho criativo, não vai à base (não se aplica a dev/finanças/pesquisa; conflita com P2); fica para eventual passada nos nichos criativos. **C3 (ideias do autor como conselho, não comando) → COBERTA por P1 «Analisa antes de aceitar»** (fechar; era restatement de domínio). **Seguem ABERTOS:** itens **B6/B7/D/E** da mesma análise.
+
 ### 2026-07-16 — Refino narrativo de 4 projetos reais, §B (B1–B5) INCORPORADAS (D-081, v1.71.0)
 B1–B5 da análise 260716 §B (`meta/analises/260716-ANALISE-REFINO-NARRATIVE.md`) aplicados no nicho narrativa (spec0048): B1 = 5 erros nomeados novos em `checagem-continuidade` (hedge de POV, familiaridade cedo demais, transição ausente, eco não verificado, craft sem verificação); B2 = passo PRÉ «a cena já existe?» em `escrita-serial`; B3 = bloco «processando notas de revisão do autor» em `escrita-serial`; B4 = gatilho «concluída OU revisada»; B5 = «eco físico vs. eco comportamental» em `textura-mundo`. Check C10; teto inalterado (skills/CEREBRO). **Seguem ABERTOS** para as próximas levas: itens **B6/B7/C/D/E** da mesma análise. Base §A já fechada na spec0047 (i-N53).
 
