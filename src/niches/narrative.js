@@ -333,6 +333,9 @@ NICHES.narrative = {
 > Decisões de consistência (cruza com VOZ).
 - [Ex: "e-mail" com hífen; números até dez por extenso; pensamento em itálico; títulos de livros em itálico.]
 
+## Retcon — quando o cânone muda (opcional)
+> Se uma reescrita MUDA um fato já canônico, este arquivo passa a guardar só a **verdade atual** — não empilhe versões contraditórias aqui. O histórico da mudança (o que era antes, por que mudou) vai para ENREDO.md (decisão de trama) ou DECISIONS.md (decisão de craft). A memória factual segue sendo fonte única; o «porquê» fica rastreável sem poluir o «o quê».
+
 ## Inconsistências encontradas e resolvidas
 > Histórico de furos pegos e como foram corrigidos — para não reabrir.
 ### [Data] — [o furo]

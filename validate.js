@@ -501,6 +501,16 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C13 E-ASU (.docx) + B6 retcon no template CONTINUIDADE (spec0051)", () => {
+  T.STATE.workmode={asuMode:"yes"};
+  const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
+  assert(/não cobre `.docx`/.test(md),"CEREBRO ASU nao avisa que nao cobre .docx");
+  T.STATE.workmode={};
+  const cont=(T.NICHES.narrative.contextFiles||[]).find(f=>f.name==="CONTINUIDADE.md");
+  assert(cont && /## Retcon — quando o cânone muda/.test(cont.content),"CONTINUIDADE sem secao Retcon");
+  return "ok";
+});
+
 check("C12 nomes com opcoes nos nichos de ficcao (spec0050): narrativa ambos os modos + game/rpg/comics", () => {
   const nn=T.buildClaudeMd(T.normNiche(T.NICHES.narrative));
   assert(/Em AMBOS os modos: nomear/.test(nn),"narrativa: naming nao esta em ambos os modos");

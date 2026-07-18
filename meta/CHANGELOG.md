@@ -1,8 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.73.0**.
+> Histórico de versões. Versão atual: **v1.74.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.74.0 — E-ASU (ASU não cobre binários) + B6 (Retcon no CONTINUIDADE) (spec0051, D-084)
+- **E-ASU:** a seção «Saída de código via ASU» do CEREBRO passa a ensinar que o ASU opera **só em arquivos de texto** (patch por âncora) e **não cobre `.docx`/`.xlsx` nem outros binários** — um documento Word ou planilha sai inteiro para baixar, nunca como instrução ASU. Vale para qualquer nicho que use ASU. Origem: o KCM é quem ensina a usar o ASU (análise 260716 §E, decisão do usuário 260717-1313.txt).
+- **B6:** o template do `CONTINUIDADE.md` da narrativa ganha a seção **opcional «Retcon»** (antes de «Inconsistências encontradas e resolvidas»): quando uma reescrita muda um fato canônico, a memória factual guarda só a **verdade atual**; o histórico da mudança (o que era antes, por que mudou) vai para ENREDO.md (trama) ou DECISIONS.md (craft). Enxuta de propósito — sem a tabela de «fontes brutas».
+- **§D (modo de migração/extração) descartado:** não precisa de modo — era organização + script Python mal-implementado + leitura incompleta de caminhos, não uma lacuna de comportamento do kit.
+- Novo check **C13**. `KIT_VERSION 1.74.0`. Bump **minor** (comportamento novo no CEREBRO/template + check novo).
+- **Teto:** narrativa **inalterada** (6702 — ambas as mudanças são CEREBRO/template, fora das Instruções).
+- Harness **18/18, 57/57, 0 erros**.
 
 ## v1.73.0 — Nomes com opções fundamentadas na ficção (spec0050, D-083)
 - **C2 resolvido como comportamento de ficção, não universal** (análise 260716 §C, decisão do usuário 260717-1313.txt): dev/produto já resolvem com nome temporário e naming universal conflitaria com P2; o alvo é a ficção (muitos personagens/lugares, nomes temporários ruins que o autor quer trocar).

@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.73.0";
+const KIT_VERSION = "1.74.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2643,6 +2643,9 @@ NICHES.narrative = {
 ## Convenções de estilo/grafia da obra
 > Decisões de consistência (cruza com VOZ).
 - [Ex: "e-mail" com hífen; números até dez por extenso; pensamento em itálico; títulos de livros em itálico.]
+
+## Retcon — quando o cânone muda (opcional)
+> Se uma reescrita MUDA um fato já canônico, este arquivo passa a guardar só a **verdade atual** — não empilhe versões contraditórias aqui. O histórico da mudança (o que era antes, por que mudou) vai para ENREDO.md (decisão de trama) ou DECISIONS.md (decisão de craft). A memória factual segue sendo fonte única; o «porquê» fica rastreável sem poluir o «o quê».
 
 ## Inconsistências encontradas e resolvidas
 > Histórico de furos pegos e como foram corrigidos — para não reabrir.
@@ -8553,7 +8556,7 @@ if(asuModeOn()){
   L.push("");
   L.push("## Saída de código via ASU (patch)");
   L.push("");
-  L.push("Este projeto usa o **Atualizador Automático de Scripts (ASU)** para **alterar arquivos existentes** — entregue UMA instrução `yaml` (patch cirúrgico) **para baixar**, não arquivos inteiros. Para **arquivos NOVOS**, entregue o arquivo **pronto para baixar** (não embuta o arquivo inteiro num bloco YAML — arrisca corromper no escape), **exceto** quando a criação faz parte de uma instrução que também edita existentes (operação atômica) — aí use `create_file` na mesma instrução. Pré-requisito: `INSTRUCTION_GUIDE.md` e `PROMPT_IA.md` estão no conhecimento do Projeto e o ASU está instalado.");
+  L.push("Este projeto usa o **Atualizador Automático de Scripts (ASU)** para **alterar arquivos existentes** — entregue UMA instrução `yaml` (patch cirúrgico) **para baixar**, não arquivos inteiros. Para **arquivos NOVOS**, entregue o arquivo **pronto para baixar** (não embuta o arquivo inteiro num bloco YAML — arrisca corromper no escape), **exceto** quando a criação faz parte de uma instrução que também edita existentes (operação atômica) — aí use `create_file` na mesma instrução. Pré-requisito: `INSTRUCTION_GUIDE.md` e `PROMPT_IA.md` estão no conhecimento do Projeto e o ASU está instalado. O ASU opera só em arquivos de **texto** (patch por âncora): **não cobre `.docx`, `.xlsx` nem outros binários** — um documento Word ou planilha sai inteiro para baixar, nunca como instrução ASU.");
   L.push("");
   L.push("1. Ao pedir uma \"instrução ASU\" (ou ao **editar** arquivos existentes), entregue a instrução **como arquivo `.yaml` para baixar** — não colada no chat: o download preserva os bytes UTF-8 exatos e evita corromper âncoras não-ASCII no copia-e-cola. Nome `AAMMDD-asuNNNN.yaml` (ex.: `260628-asu0001.yaml`), com `format_version` igual ao declarado no `INSTRUCTION_GUIDE.md` (não fixe número — o guia é o contrato). Acompanhe de UMA linha: `python -m src apply <arquivo>.yaml --root <RAIZ> --dry-run`. Nunca XML.");
   L.push("2. **Arquivo NOVO:** entregue-o pronto para baixar — não o reescreva como instrução ASU. Exceção: criação junto de edições a existentes na MESMA instrução → aí `create_file`. (Mesmo numa edição, o usuário pode preferir o arquivo inteiro para baixar — se pedir, respeite.)");
