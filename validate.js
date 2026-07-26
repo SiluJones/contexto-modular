@@ -501,6 +501,32 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C18 motor do enxugamento (wo0056-A): campo 'short' curado nas Instr, definicao completa no CEREBRO", () => {
+  const raw=fs.readFileSync(path,"utf8");
+  // (1) motor instalado
+  assert(/short:b\[3\]/.test(raw),"normBehaviors nao aceita o 4o elemento (short)");
+  assert(/b\.short \|\| shortDef\(b\.def\)/.test(raw),"buildInstr nao prefere o short curado");
+  // (2) contrato, para todo nicho que ja tenha short curado
+  let curados=0, perdidos=[];
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const instr=T.buildInstr(n), cer=T.buildClaudeMd(n);
+    (n.behaviors||[]).filter(b=>b.def).forEach(b => {
+      // nenhum comportamento pode sumir das Instrucoes
+      if(!instr.includes(b.label)) perdidos.push(id+"/"+b.id);
+      if(b.short){
+        curados++;
+        // a definicao completa PRECISA continuar no CEREBRO
+        if(!cer.includes(b.def)) perdidos.push(id+"/"+b.id+" def completa fora do CEREBRO");
+        // o short precisa realmente comprimir
+        if(b.short.length >= b.def.length) perdidos.push(id+"/"+b.id+" short nao comprime");
+      }
+    });
+  });
+  assert(perdidos.length===0,"contrato violado -> "+perdidos.slice(0,4).join(" | "));
+  return "ok ("+curados+" curados)";
+});
+
 check("C17 auto-refino obrigatorio (wo0055): dever proativo, liberdade de promover regra, feedback ao kit", () => {
   const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
   assert(/É dever seu, não meu pedido/.test(md),"CEREBRO sem o dever proativo de refino");

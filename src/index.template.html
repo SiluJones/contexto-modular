@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.78.0";
+const KIT_VERSION = "1.79.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1339,7 +1339,7 @@ const NICHES = {};
 function normBehaviors(arr){
   // Aceita arrays ["id","label","def"] ou objetos {id,label,def}
   return (arr||[]).map(b => {
-    if(Array.isArray(b)) return { id:b[0], label:b[1], def:b[2] };
+    if(Array.isArray(b)) return { id:b[0], label:b[1], def:b[2], short:b[3] };
     return b;
   });
 }
@@ -2272,7 +2272,7 @@ function buildInstr(niche){
     const uni = bhOn.filter(b => baseIds.has(b.id));
     const own = bhOn.filter(b => !baseIds.has(b.id));
     if(uni.length) lines.push(`Princípios universais (definição completa no CEREBRO.md): ${uni.map(b => b.label.toLowerCase()).join(" · ")}.`);
-    own.forEach(b => lines.push(`- **${b.label}.** ${shortDef(b.def)}`));
+    own.forEach(b => lines.push(`- **${b.label}.** ${b.short || shortDef(b.def)}`));
   }
 
   // Builder (stack/tom/etc) — escolhas concretas

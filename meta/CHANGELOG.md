@@ -1,8 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.78.0**.
+> Histórico de versões. Versão atual: **v1.79.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.79.0 — Enxugamento etapa A: motor do campo `short` curado (wo0056, D-090)
+- **Mecânica, sem mudança de conteúdo:** instala o motor do enxugamento das Instruções — nenhum nicho tem `short` preenchido nesta etapa; saída dos 18 nichos byte-idêntica.
+- **Comportamento de nicho ganha campo opcional `short`** (4º elemento do array, ou chave do objeto), com **precedência nas Instruções** sobre o corte automático (`shortDef`, 1ª frase, teto 180 chars).
+- **`buildClaudeMd` (CEREBRO) inalterado:** segue emitindo a definição completa — a curadoria nunca perde informação, só decide o que fica sempre à vista.
+- **Regra de exceção embutida na mecânica:** comportamento sem `short` mantém o corte automático — não preencher é a forma de dizer «este fica como está».
+- **Achado que corrigiu a análise de origem:** as Instruções já cortavam pela `shortDef()` — o ganho não vem de *cortar*, vem de **curar** a frase que sobra (isso é a etapa B, parqueada).
+- Novo check **C18** (motor instalado + contrato: nada some das Instruções, definição completa no CEREBRO, `short` comprime de fato) — reporta **0 curados** nesta etapa.
+- `KIT_VERSION 1.79.0`. Bump **minor** (mecânica nova + check novo).
+- **Teto:** custo zero — `game` inalterado (6879/6900, folga 21); nenhum nicho muda de tamanho.
+- Harness **18/18, 62/62, 0 erros**.
 
 ## v1.78.0 — Auto-refino das Instruções vira dever proativo (wo0055, D-088/D-089)
 - **Bloco «Refino das Instruções do Projeto» (G19) ganha dever proativo com gatilho:** o projeto deve propor o refino por conta própria — no fim da primeira sessão de trabalho real e, depois, a cada sinal de atrito (regra repetidamente descumprida, instrução que nunca se aplicou, atrito recorrente). Não mais conhecimento passivo à espera de pedido.
