@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.79.0**.
+> Histórico de versões. Versão atual: **v1.80.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.80.0 — Enxugamento etapa B, 1ª leva: curadoria de game/narrative/career/rpg (wo0057, D-091)
+- **28 frases curadas no campo `short`:** `game` (9), `narrative` (6), `career` (6), `rpg` (7); definições integrais preservadas no CEREBRO.
+- **Correção de expectativa:** a análise de origem projetava ~2000–2775 chars/nicho de economia; o real foi **330–518**, porque a projeção comparava com a definição integral e não com o `shortDef` (1ª frase) que já estava em uso desde antes da wo0056.
+- **Teto medido:** `game` 6879→**6361** (folga 21→**539**, 25× mais espaço — a parede que bloqueava novas frentes caiu); `narrative` 6783→**6453** (folga 447); `career` 6260→**5803** (folga 1097); `rpg` 6113→**5654** (folga 1246).
+- **Regra de exceção aplicada:** `narrative/no_overdoc` e `rpg/pc_center` seguem sem `short` (já mínimos; não preencher é a exceção declarada, mecânica da D-090).
+- **Curadoria também corrigiu linhas que eram afirmação, não regra** (ex.: `scope_killer` dizia «scope creep é a maior causa de jogos indie não terminados»; agora diz o que fazer).
+- Nenhum check novo — **C18 passa a reportar `ok (28 curados)`**.
+- `KIT_VERSION 1.80.0`. Bump **minor** (curadoria de conteúdo em 4 nichos).
+- Harness **18/18, 62/62, 0 erros**.
 
 ## v1.79.0 — Enxugamento etapa A: motor do campo `short` curado (wo0056, D-090)
 - **Mecânica, sem mudança de conteúdo:** instala o motor do enxugamento das Instruções — nenhum nicho tem `short` preenchido nesta etapa; saída dos 18 nichos byte-idêntica.

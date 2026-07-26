@@ -576,3 +576,6 @@ O template diz "depois de criar, pode apagar este apêndice", mas até lá o CER
 
 ### 2026-07-04 — Q3 (refino das skills) aplicada — encerra o ciclo do refino narrativo — INCORPORADO (D-054, v1.52.0)
 Aplicadas as 10 técnicas de campo (Novel 2/3) aos `body` das 4 skills de escrita (spec0025). Com isso encerra o ciclo do refino narrativo: fases A/B (D-050/D-051) + Q1/Q2/Q3 (D-052/D-053/D-054). Restam: spec0026 (Modo Code espelha o princípio «CEREBRO só com regra fixa» de D-052, i-N37) e a fase futura (reforma dos 3 toggles universais + feedback ambiental, junto de i-N36).
+
+### 2026-07-26 — Enxugamento etapa B, 1ª leva concluída — INCORPORADO (D-091, v1.80.0) — 2ª leva e WO-C parqueadas
+A wo0057 curou o campo `short` de `game`/`narrative`/`career`/`rpg` (28 frases; folgas saíram de 21–1246 para 447–1246; `game` foi o maior beneficiado, 21→539). **Parqueado:** a **2ª leva** da etapa B — os 14 nichos restantes — segue a mesma mecânica (curar frase, sem tocar definição); e a **WO-C** (papéis dos arquivos + poda de markdown), cujo escopo cresce porque a curadoria de frase rendeu menos que a análise original previa (330–518 chars/nicho, não ~2000–2775).
