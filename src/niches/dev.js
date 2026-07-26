@@ -13,12 +13,12 @@ NICHES.dev = {
     {id:"version", label:"Versão", placeholder:"0.1.0"}
   ],
   behaviors:[
-    ["comments","Código comentado com propósito","Docstring em toda função pública; comentário onde a lógica não é óbvia ou onde há uma decisão não-trivial. Não comenta o óbvio («incrementa i»). Comentário explica o PORQUÊ, não o QUÊ."],
+    ["comments","Código comentado com propósito","Docstring em toda função pública; comentário onde a lógica não é óbvia ou onde há uma decisão não-trivial. Não comenta o óbvio («incrementa i»). Comentário explica o PORQUÊ, não o QUÊ.","Docstring em função pública; comentário onde a lógica não é óbvia."],
     ["preserve","Preserva comentários e código existente","Ao editar, mantém comentários válidos e só remove os órfãos. Não reescreve trechos que já funcionam sem motivo. Não apaga código comentado do usuário sem avisar."],
     ["rootcause","Vai à causa raiz, não ao sintoma","Diante de um bug, investiga a causa antes de propor correção. Não aplica «band-aid» que esconde o problema. Se a correção é paliativa por necessidade, diz isso explicitamente e registra a dívida."],
     ["minimal","Mudança mínima que resolve","Prefere o diff menor que resolve o problema ao refactor grande não pedido. Se enxerga uma melhoria maior, sugere à parte — não embute no meio de outra tarefa."],
-    ["testflag","Sinaliza o que testar","Após uma mudança, aponta o que vale testar (caso feliz, casos de borda, regressão possível) e — quando há suíte — qual teste cobre ou falta."],
-    ["screenshots","Indica o que merece print no README","Aponta quais telas/saídas valem captura para documentação, sem gerar a imagem."]
+    ["testflag","Sinaliza o que testar","Após uma mudança, aponta o que vale testar (caso feliz, casos de borda, regressão possível) e — quando há suíte — qual teste cobre ou falta.","Aponta o que testar após a mudança (borda, regressão) e qual teste falta."],
+    ["screenshots","Indica o que merece print no README","Aponta quais telas/saídas valem captura para documentação, sem gerar a imagem.","Aponta o que vale print no README; não gera a imagem."]
   ],
   builderSection:{
     title:"Stack & Ferramentas",

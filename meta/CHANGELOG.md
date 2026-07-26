@@ -1,8 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.81.0**.
+> Histórico de versões. Versão atual: **v1.82.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.82.0 — Enxugamento etapa B, 2ª e última leva: curadoria dos 13 nichos restantes (wo0059, D-093)
+- **68 frases curadas no campo `short`** dos 13 nichos restantes: dev (3), design (5), client (5), marketing (5), research (6), product (4), business (3), pixel (5), brainstorm (6), music (6), cuisine (7), animation (7), comics (6); `custom` não tem comportamentos próprios. Definições integrais preservadas no CEREBRO.
+- **WO-B concluída:** com os 28 da wo0057, totaliza **96 frases curadas nos 18 nichos**.
+- **Teto medido:** dev 6170→6038; design 6151→**5714**; client 6069→5753; marketing 5620→5439; research 6151→**5732**; product 5564→5253; business 5398→5268; pixel 5844→5453; brainstorm 5908→**5411**; music 5769→5468; cuisine 5869→**5338**; animation 5962→5617; comics 5932→5563. Nenhum nicho estoura.
+- **Regra de exceção aplicada:** 19 comportamentos ficaram sem `short` por já serem mínimos (≤80 chars), mecânica da D-090.
+- Os dois mais apertados seguem `narrative` (6612, folga 288) e `game` (6520, folga 380) — inalterados nesta WO.
+- Registrada em IDEAS a correção pendente do bloco de fecho de turno da wo0058 (ordem e rótulos).
+- Nenhum check novo — **C18 passa a reportar `ok (96 curados)`**.
+- `KIT_VERSION 1.82.0`. Bump **minor** (curadoria de conteúdo em 13 nichos).
+- Harness **18/18, 63/63, 0 erros**.
 
 ## v1.81.0 — Bloco de fecho de turno padronizado e condicional (wo0058, D-092)
 - **Formato fixo de encerramento de turno:** Estado · Próximo passo · Notas (arquivar/manter) · Config recomendada por raia · Handoff — emitindo só as linhas com conteúdo real (linha sem conteúdo não aparece; nunca escrever «nada a arquivar» nem inventar handoff).
