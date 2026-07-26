@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.74.0**.
+> Histórico de versões. Versão atual: **v1.75.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.75.0 — Adesão ao ritual: mount-check por turno + memória×mount + fix vazamento ASU (spec0052, D-085)
+- **C-a (P8 `check_before_ask`, só CEREBRO — sem teto):** o princípio universal ganha a lógica **mount-por-turno incondicional** — revisar o mount a CADA turno (novos `.txt`, `_MANIFEST`, arquivos mudados) antes de responder, **sem** depender de sinal do usuário (um «continuar», uma correção ou uma reclamação também pode vir com o mount atualizado) — mais a **comparação memória × mount**: nem tratar o mount como verdade absoluta nem confiar só na memória; se divergem, é provável atualização (estuda); se o mount bate com a memória mas o usuário afirma ter aplicado algo ausente, faz o que dá e AVISA («o mount não parece atualizado com X»), em vez de inferir cegamente ou regenerar. Origem: relatório 260722 (projetos ao vivo ignorando o ritual).
+- **C-b (+81 chars em todos os nichos):** gatilho curto no ritual das Instruções (a superfície lida todo turno): «reveja o mount a cada turno».
+- **C-c:** fim do **vazamento da nomeação ASU no modo Code** — a linha «Nomes padronizados» só cita `AAMMDD-asuNNNN.yaml` quando o modo ASU está ligado.
+- **Dogfood:** as mesmas correções nos arquivos próprios do KCM (`INSTRUCOES-DO-PROJETO.md` item 4 + `CEREBRO.md` item 8).
+- Novo check **C14**. `KIT_VERSION 1.75.0`. Bump **minor** (comportamento novo no CEREBRO/Instruções + check novo). **NÃO inclui** o «padrão de nome de spec nas Instruções» (o nome «spec» muda na spec0053).
+- **Teto:** nenhum nicho estoura; **`game` em 6879/6900 (folga 21) — o mais apertado, a vigiar**.
+- Harness **18/18, 58/58, 0 erros**.
 
 ## v1.74.0 — E-ASU (ASU não cobre binários) + B6 (Retcon no CONTINUIDADE) (spec0051, D-084)
 - **E-ASU:** a seção «Saída de código via ASU» do CEREBRO passa a ensinar que o ASU opera **só em arquivos de texto** (patch por âncora) e **não cobre `.docx`/`.xlsx` nem outros binários** — um documento Word ou planilha sai inteiro para baixar, nunca como instrução ASU. Vale para qualquer nicho que use ASU. Origem: o KCM é quem ensina a usar o ASU (análise 260716 §E, decisão do usuário 260717-1313.txt).

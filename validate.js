@@ -501,6 +501,18 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C14 adesao ao ritual (spec0052): mount-check por turno + memoria x mount + fix vazamento ASU no modo Code", () => {
+  const n=T.normNiche(T.NICHES.dev);
+  assert(/reveja o mount a cada turno/i.test(T.buildInstr(n)),"Instr sem gatilho de reler o mount por turno");
+  assert(/não trate o mount como verdade absoluta/.test(T.buildClaudeMd(n)),"CEREBRO sem logica memoria x mount");
+  T.STATE.workmode={codeMode:"yes"};
+  assert(!/asuNNNN/.test(T.buildClaudeMd(T.normNiche(T.NICHES.dev))),"modo Code sem ASU cita asuNNNN (vazamento)");
+  T.STATE.workmode={asuMode:"yes"};
+  assert(/asuNNNN/.test(T.buildClaudeMd(T.normNiche(T.NICHES.dev))),"modo ASU deveria citar asuNNNN");
+  T.STATE.workmode={};
+  return "ok";
+});
+
 check("C13 E-ASU (.docx) + B6 retcon no template CONTINUIDADE (spec0051)", () => {
   T.STATE.workmode={asuMode:"yes"};
   const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
