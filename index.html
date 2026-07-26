@@ -1061,7 +1061,7 @@ const PROMPTS_BASE = [
    BEHAVIORS UNIVERSAIS — disponíveis em todos os nichos
    ============================================================ */
 const BEHAVIORS_BASE = [
-  ["analyze","Analisa antes de aceitar","Não segue cegamente o que eu proponho. Avalia viabilidade, utilidade e eficiência de cada sugestão minha — sou humano e posso propor coisas subótimas. Se for boa, confirma e segue; se for parcial, propõe refinamento; se for ruim ou redundante, diz claramente «isso não vale a pena porque X» e oferece alternativa. Concordância automática gera dívida e bagunça; discordar com fundamento é serviço prestado. Nunca se limita às minhas palavras: pega o que eu disse, verifica a real possibilidade, e apresenta a posição — a favor, aprimorando ou contra — sempre explicada e sinalizada."],
+  ["analyze","Analisa antes de aceitar","Não segue cegamente o que eu proponho. Avalia viabilidade, utilidade e eficiência de cada sugestão minha — sou humano e posso propor coisas subótimas. Se for boa, confirma e segue; se for parcial, propõe refinamento; se for ruim ou redundante, diz claramente «isso não vale a pena porque X» e oferece alternativa. Concordância automática gera dívida e bagunça; discordar com fundamento é serviço prestado. Nunca se limita às minhas palavras: pega o que eu disse, verifica a real possibilidade, e apresenta a posição — a favor, aprimorando ou contra — sempre explicada e sinalizada. Quando o pedido for ambíguo ou de escala de feature, exponha as lacunas e o que assumiu ANTES de construir; em tarefa pequena a regra continua sendo fazer, não levantar bandeira."],
   ["notokens","Não desperdiça meus tokens","Cada turno consome quota da conversa. Não pergunta o que eu já decidi; não pede confirmação de plano já aprovado (plano confirmado = executa); não abre menu de opções para decisões pequenas ou óbvias. Em dúvida entre fazer ou perguntar, faz e relata — é mais barato corrigir depois do que gastar turno perguntando. Consolida perguntas inevitáveis num único momento, não pinga uma por mensagem. Mas economizar token NUNCA significa evitar pedir um arquivo de fato necessário, nem inferir/adivinhar para «poupar um turno»: token gasto em trabalho deliberado e verificável (abrir um arquivo, validar uma saída) é investimento; inferir um arquivo falso é o desperdício maior, porque custa mais para desfazer."],
   ["direct","Direto e objetivo","Prefere respostas funcionais a explicações longas. Sem floreio, sem bajulação («ótima pergunta», «excelente ideia»). Vai direto ao ponto, sem rodeios: dá a resposta, ou o bloqueio claro («não tenho X completo, me envie»), em vez de enrolar em volta."],
   ["uncertain","Admite incerteza","Diz explicitamente quando não tem certeza («não verifiquei», «supondo que», «preciso confirmar»). Nunca afirma como fato algo que está chutando. Quando o assunto tem versão/data que muda, verifica antes de afirmar em vez de confiar na memória."],
@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.76.0";
+const KIT_VERSION = "1.77.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1282,6 +1282,28 @@ NICHES.dev = {
     ["Termo técnico próprio do projeto usado", "Entrega o GLOSSARY.md completo com o termo definido."],
   ],
   contextFiles:[
+    {name:"SPEC.md", cat:"opcional", role:"Modelo de spec de feature: o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. Copie para `specs/AAMMDD-nome.md`, uma por feature.", content:`# SPEC — [nome da feature]
+
+> Modelo. Copie para \`specs/AAMMDD-nome-da-feature.md\` e preencha ANTES de codar.
+> A spec diz **o que** construir e **quando está pronto**; o passo a passo da edição é outra coisa.
+
+## Problema
+[Que dor real isto resolve? Para quem? O que acontece hoje sem isto?]
+
+## Critérios de aceite (verificáveis)
+> Cada linha precisa ser conferível — se não dá para dizer «passou/não passou», reescreva.
+- [ ] [ex.: usuário sem sessão que abre /painel cai no login]
+- [ ] [ex.: a lista carrega em < 1s com 10k registros]
+
+## Decisões de design
+[O que foi escolhido e por quê; o que foi descartado. Decisão estrutural → registre também em DECISIONS.md.]
+
+## Fora de escopo
+[O que esta feature NÃO vai fazer — o limite que impede o escopo de crescer sozinho.]
+
+## Passos
+[Quebra em passos pequenos, ordenados, cada um entregável e testável.]
+`},
     {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
 
 > Arquivo **estável**. O assistente lê no início de cada sessão para se ambientar.
@@ -1589,7 +1611,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
     },
     { id:"J", title:"Planejar uma feature ou fase", when:"Vou começar algo maior e quero quebrar em passos antes de codar.",
       fill:"feature", fillLabel:"A feature/fase + o que ela precisa entregar + restrições",
-      body:(p,n)=>`Plano de implementação.\n\nFEATURE/FASE:\n${p.feature||"[O que construir + o que precisa entregar + restrições de tempo/stack]"}\n\nProduza:\n- Objetivo em uma frase e critério de «pronto»\n- Decisões de design que precisam ser tomadas antes de codar (e quais já estão em DECISIONS.md)\n- Quebra em passos pequenos e ordenados, cada um entregável e testável\n- Arquivos que cada passo toca (cheque Arquivos Críticos em CONTEXT)\n- Riscos e onde provavelmente vai dar trabalho\n- O que fica fora de escopo nesta rodada\n\nSe o projeto usa ROADMAP, diga onde esta feature encaixa (qual fase) e prepare o ROADMAP atualizado. Não comece a codar até eu confirmar o plano.`
+      body:(p,n)=>`Plano de implementação.\n\nFEATURE/FASE:\n${p.feature||"[O que construir + o que precisa entregar + restrições de tempo/stack]"}\n\nProduza:\n- Objetivo em uma frase e **critérios de aceite verificáveis** (lista curta, cada linha conferível como passou/não passou)\n- Decisões de design que precisam ser tomadas antes de codar (e quais já estão em DECISIONS.md)\n- Quebra em passos pequenos e ordenados, cada um entregável e testável\n- Arquivos que cada passo toca (cheque Arquivos Críticos em CONTEXT)\n- Riscos e onde provavelmente vai dar trabalho\n- O que fica fora de escopo nesta rodada\n\nSe o projeto usa ROADMAP, diga onde esta feature encaixa (qual fase) e prepare o ROADMAP atualizado. Não comece a codar até eu confirmar o plano.`
     },
     { id:"K", title:"Auditar antes de mexer numa peça crítica", when:"Vou tocar num arquivo/sistema sensível e não quero quebrar o que funciona.",
       fill:"area", fillLabel:"O que vou mexer + o que pretendo mudar",
@@ -4889,7 +4911,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
     },
     { id:"H", title:"Projetar / revisar uma mecânica", when:"Quero desenhar uma mecânica ou sistema, ou revisar um que já tenho.",
       fill:"mech", fillLabel:"A mecânica/sistema + o que ela deve fazer pela experiência",
-      body:(p,n)=>`Design de mecânica.\n\nMECÂNICA:\n${p.mech||"[A mecânica/sistema + que sensação ou função ela deve ter no jogo]"}\n\nConsultando JOGO.md (experiência, core loop, pilares) e MECANICAS.md:\n- Que SENSAÇÃO esta mecânica cria? Serve à experiência alvo e ao core loop, ou é peso?\n- Como ela INTERAGE com os sistemas que já existem? Que comportamento emergente pode surgir? (pensamento sistêmico)\n- Entradas/saídas: ela afeta a economia? como?\n- Onde pode quebrar ou virar exploit?\n- Versão mínima viável da mecânica (para protótipo) vs. versão completa\n\nSe envolver números, registre a INTENÇÃO (a sensação/curva pretendida), não só o valor. Entregue MECANICAS.md completo. Marque o que é hipótese a testar em playtest.`
+      body:(p,n)=>`Design de mecânica.\n\nMECÂNICA:\n${p.mech||"[A mecânica/sistema + que sensação ou função ela deve ter no jogo]"}\n\nConsultando JOGO.md (experiência, core loop, pilares) e MECANICAS.md:\n- Que SENSAÇÃO esta mecânica cria? Serve à experiência alvo e ao core loop, ou é peso?\n- **Critérios de aceite verificáveis:** o que dá para observar no jogo quando a mecânica estiver pronta (cada linha conferível como passou/não passou) — acorde isso ANTES de implementar e registre em MECANICAS.md\n- Como ela INTERAGE com os sistemas que já existem? Que comportamento emergente pode surgir? (pensamento sistêmico)\n- Entradas/saídas: ela afeta a economia? como?\n- Onde pode quebrar ou virar exploit?\n- Versão mínima viável da mecânica (para protótipo) vs. versão completa\n\nSe envolver números, registre a INTENÇÃO (a sensação/curva pretendida), não só o valor. Entregue MECANICAS.md completo. Marque o que é hipótese a testar em playtest.`
     },
     { id:"I", title:"Balancear um sistema", when:"Tenho números (dano, custo, XP, drop) e quero equilibrar com intenção.",
       fill:"system", fillLabel:"O sistema + os números atuais + a sensação que eu quero",

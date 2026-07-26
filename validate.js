@@ -501,6 +501,21 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C16 SDD leve (wo0054): SPEC.md no dev, criterios de aceite nos prompts, clausula de ambiguidade no analyze", () => {
+  const dev=T.normNiche(T.NICHES.dev);
+  const spec=(dev.contextFiles||[]).find(f=>f.name==="SPEC.md");
+  assert(spec,"dev sem o modelo SPEC.md");
+  assert(/Critérios de aceite \(verificáveis\)/.test(spec.content),"SPEC.md sem secao de criterios de aceite");
+  assert(/Fora de escopo/.test(spec.content),"SPEC.md sem fora-de-escopo");
+  const pj=(dev.promptsExtra||[]).find(p=>p.id==="J");
+  assert(pj && /critérios de aceite verificáveis/.test(pj.body({},dev)),"prompt J sem criterios de aceite");
+  const gm=T.normNiche(T.NICHES.game);
+  const ph=(gm.promptsExtra||[]).find(p=>p.id==="H");
+  assert(ph && /Critérios de aceite verificáveis/.test(ph.body({},gm)),"prompt H (game) sem criterios de aceite");
+  assert(/ambíguo ou de escala de feature/.test(T.buildClaudeMd(dev)),"analyze sem clausula de ambiguidade");
+  return "ok";
+});
+
 check("C15 rename spec->WO (spec0053): caminhos, comando e prosa; sem quebrar palavras pt-BR nem CSS", () => {
   const raw=fs.readFileSync(path,"utf8");
   assert(!/meta\/specs\//.test(raw),"ainda ha meta/specs/ (deveria ser meta/workorders/)");

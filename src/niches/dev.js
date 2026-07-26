@@ -44,6 +44,28 @@ NICHES.dev = {
     ["Termo técnico próprio do projeto usado", "Entrega o GLOSSARY.md completo com o termo definido."],
   ],
   contextFiles:[
+    {name:"SPEC.md", cat:"opcional", role:"Modelo de spec de feature: o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. Copie para `specs/AAMMDD-nome.md`, uma por feature.", content:`# SPEC — [nome da feature]
+
+> Modelo. Copie para \`specs/AAMMDD-nome-da-feature.md\` e preencha ANTES de codar.
+> A spec diz **o que** construir e **quando está pronto**; o passo a passo da edição é outra coisa.
+
+## Problema
+[Que dor real isto resolve? Para quem? O que acontece hoje sem isto?]
+
+## Critérios de aceite (verificáveis)
+> Cada linha precisa ser conferível — se não dá para dizer «passou/não passou», reescreva.
+- [ ] [ex.: usuário sem sessão que abre /painel cai no login]
+- [ ] [ex.: a lista carrega em < 1s com 10k registros]
+
+## Decisões de design
+[O que foi escolhido e por quê; o que foi descartado. Decisão estrutural → registre também em DECISIONS.md.]
+
+## Fora de escopo
+[O que esta feature NÃO vai fazer — o limite que impede o escopo de crescer sozinho.]
+
+## Passos
+[Quebra em passos pequenos, ordenados, cada um entregável e testável.]
+`},
     {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
 
 > Arquivo **estável**. O assistente lê no início de cada sessão para se ambientar.
@@ -351,7 +373,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
     },
     { id:"J", title:"Planejar uma feature ou fase", when:"Vou começar algo maior e quero quebrar em passos antes de codar.",
       fill:"feature", fillLabel:"A feature/fase + o que ela precisa entregar + restrições",
-      body:(p,n)=>`Plano de implementação.\n\nFEATURE/FASE:\n${p.feature||"[O que construir + o que precisa entregar + restrições de tempo/stack]"}\n\nProduza:\n- Objetivo em uma frase e critério de «pronto»\n- Decisões de design que precisam ser tomadas antes de codar (e quais já estão em DECISIONS.md)\n- Quebra em passos pequenos e ordenados, cada um entregável e testável\n- Arquivos que cada passo toca (cheque Arquivos Críticos em CONTEXT)\n- Riscos e onde provavelmente vai dar trabalho\n- O que fica fora de escopo nesta rodada\n\nSe o projeto usa ROADMAP, diga onde esta feature encaixa (qual fase) e prepare o ROADMAP atualizado. Não comece a codar até eu confirmar o plano.`
+      body:(p,n)=>`Plano de implementação.\n\nFEATURE/FASE:\n${p.feature||"[O que construir + o que precisa entregar + restrições de tempo/stack]"}\n\nProduza:\n- Objetivo em uma frase e **critérios de aceite verificáveis** (lista curta, cada linha conferível como passou/não passou)\n- Decisões de design que precisam ser tomadas antes de codar (e quais já estão em DECISIONS.md)\n- Quebra em passos pequenos e ordenados, cada um entregável e testável\n- Arquivos que cada passo toca (cheque Arquivos Críticos em CONTEXT)\n- Riscos e onde provavelmente vai dar trabalho\n- O que fica fora de escopo nesta rodada\n\nSe o projeto usa ROADMAP, diga onde esta feature encaixa (qual fase) e prepare o ROADMAP atualizado. Não comece a codar até eu confirmar o plano.`
     },
     { id:"K", title:"Auditar antes de mexer numa peça crítica", when:"Vou tocar num arquivo/sistema sensível e não quero quebrar o que funciona.",
       fill:"area", fillLabel:"O que vou mexer + o que pretendo mudar",

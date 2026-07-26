@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.76.0**.
+> Histórico de versões. Versão atual: **v1.77.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.77.0 — SDD leve nos nichos dev e game (spec0054, D-087)
+- **`dev` ganha o modelo `SPEC.md`** (opcional): problema, critérios de aceite (verificáveis), decisões de design, fora de escopo, passos — copiar para `specs/AAMMDD-nome.md`, uma por feature.
+- **Prompt J (dev) e prompt H (game) exigem critérios de aceite:** «Planejar uma feature ou fase» e «Projetar / revisar uma mecânica» passam a pedir critérios de aceite verificáveis/observáveis antes de codar/implementar.
+- **`game` NÃO ganha arquivo novo:** o teto medido não comporta (6976 > 6900, folga de só 21 chars); o reforço vai no prompt (custo zero no teto) — o nicho já tem `MECANICAS.md` como spec de mecânica.
+- **Princípio `analyze` ganha cláusula de ambiguidade:** pedido ambíguo ou de escala de feature expõe lacunas e o que foi assumido ANTES de construir; tarefa pequena continua sendo fazer, não levantar bandeira. Cresce só o CEREBRO (custo zero nas Instruções).
+- Importada a **espinha** do SDD (Spec-Driven Development), não a cerimônia: sem `constitution.md` separada, sem CLI, sem 6 arquivos por feature.
+- Novo check **C16**. `KIT_VERSION 1.77.0`. Bump **minor** (comportamento novo em 2 nichos + princípio universal + check novo).
+- **Teto:** `dev` 6011/6900 (era 5835, folga 889); **`game` 6879/6900 inalterado (folga 21) — nada novo cabe até enxugar as Instruções**.
+- Harness **18/18, 60/60, 0 erros**.
 
 ## v1.76.0 — `spec` vira **Work Order (WO)** — vocabulário (spec0053, D-086)
 - **⚠️ Mudança de vocabulário — os projetos-filhos vão precisar adotar.** O artefato de aplicação Chat→Code deixa de se chamar «spec» e passa a ser **Work Order (WO)**: nome `AAMMDD-woNNNN-desc.md`, pasta `meta/workorders/`, comandos `/check-wo` e `/apply-wo`, skill `apply-wo`. «Spec» fica reservado para a **spec-de-feature do SDD** (spec0054). Motivo: o que chamávamos «spec» é uma **instrução de aplicação** (edições exatas para um agente), não uma spec.

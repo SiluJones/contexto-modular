@@ -221,6 +221,8 @@ Quando tiver mais feedback de uso dos nichos dev e game, o usuário pedirá uma 
 
 **Fechamento (2026-07-04):** analisada — o KCM já pratica SDD adaptado (CEREBRO=constitution, spec=specify+plan, apply-spec=implement); empréstimo pontual (`/check-spec`) registrado como i-N39.
 
+**Incorporada (2026-07-26, wo0054, D-087, análise `meta/analises/260718-ANALISE-i-N7-SDD-NICHOS-CODIGO.md`):** P1/P2/L3 aplicados — `dev` ganha o modelo `SPEC.md` (spec de feature: problema, critérios de aceite verificáveis, decisões, fora de escopo); prompt J (dev) e prompt H (game) passam a exigir critérios de aceite conferíveis antes de codar/implementar; princípio `analyze` ganha cláusula de ambiguidade (pedido ambíguo ou de escala de feature). **P3 dispensado** — o enquadramento «constituição» ficou no cabeçalho do próprio SPEC.md, sem precisar de `constitution.md` separada. **Parqueados:** handoff + bloco de config padronizado (próxima WO) e a análise de enxugamento das Instruções — agora com evidência dura: `game` não aceita mais nada (6879/6900, folga 21).
+
 ## i-N8 — Exemplos prontos no Custom (instanciar nichos candidatos) — IDEIA do usuário, condicional
 Após o Custom Inteligente, avaliar oferecer "exemplos" prontos para criar instantaneamente os nichos que ficaram de fora (ver NICHOS-CANDIDATOS.md) — ou instruir como criá-los. O usuário disse "se for problemático, esqueça". A reavaliar depois do Custom Inteligente.
 
