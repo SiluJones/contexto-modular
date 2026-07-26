@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.77.0**.
+> Histórico de versões. Versão atual: **v1.78.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.78.0 — Auto-refino das Instruções vira dever proativo (wo0055, D-088/D-089)
+- **Bloco «Refino das Instruções do Projeto» (G19) ganha dever proativo com gatilho:** o projeto deve propor o refino por conta própria — no fim da primeira sessão de trabalho real e, depois, a cada sinal de atrito (regra repetidamente descumprida, instrução que nunca se aplicou, atrito recorrente). Não mais conhecimento passivo à espera de pedido.
+- **Liberdade de promover regra a texto integral:** o projeto decide o que é crítico o bastante para sair da forma curta e voltar ao texto completo nas Instruções — orçamento administrado por ele; encolher não é a meta.
+- **Feedback ao kit como desfecho legítimo:** atrito sem solução local vira registro em `IDEAS.md`, não desculpa para não refinar.
+- **`meta/analises/` confirmado (D-089)** como padrão RFC/design doc — campo **Status** e elos cruzados (análise → WO/spec → D-0XX); modelo novo em `meta/analises/_TEMPLATE.md`. Regra de proporção: só para mudança não-trivial.
+- **Pré-condição do enxugamento das Instruções:** sem este dever, entregar Instruções mais curtas seria só perda; com ele, é troca de peso genérico por peso relevante.
+- Novo check **C17**. `KIT_VERSION 1.78.0`. Bump **minor** (dever proativo novo no G19 + check novo).
+- **Teto:** custo zero — `game` inalterado (6879/6900, folga 21); nenhum nicho muda (mudança 100% CEREBRO).
+- Harness **18/18, 61/61, 0 erros**.
 
 ## v1.77.0 — SDD leve nos nichos dev e game (spec0054, D-087)
 - **`dev` ganha o modelo `SPEC.md`** (opcional): problema, critérios de aceite (verificáveis), decisões de design, fora de escopo, passos — copiar para `specs/AAMMDD-nome.md`, uma por feature.

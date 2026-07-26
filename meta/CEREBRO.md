@@ -4,6 +4,8 @@
 > O QUE o projeto é fica no `README.md`/`PLANNING.md`; o estado atual no `meta/STATUS.md`.
 > Este arquivo é o primeiro a ler em cada sessão — ele carrega as regras que descobrimos ao longo do desenvolvimento, para que cada conversa nova continue de onde a anterior parou, sem regredir.
 
+> **Mudanças nesta revisão (v1.78.0):** o refino das Instruções (G19, gerado para os projetos-usuário) vira **dever proativo com gatilho** (fim da primeira sessão real; depois, a cada sinal de atrito) — não mais conhecimento passivo à espera de pedido. Acompanha a liberdade de promover regra crítica a texto integral e o feedback ao kit (IDEAS) como desfecho legítimo. Dogfooding aqui: nova subseção «Refino deste CEREBRO.md» em «Como manter os documentos deste projeto». Nada removido. (wo0055, D-088)
+>
 > **Mudanças nesta revisão (v1.76.0):** o artefato de aplicação Chat→Code passa a se chamar **Work Order (WO)** — `AAMMDD-woNNNN-desc.md` em `meta/workorders/`; comandos `/check-wo` e `/apply-wo` (skill `apply-wo`). «Spec» fica reservado para a **spec-de-feature (SDD)**. História preservada: as WOs antigas mantêm o nome e os comentários `(specNNNN)` no código são registro histórico. Nada removido. (spec0053, D-086)
 
 > **Mudanças nesta revisão (v1.75.0):** o item 8 (P8) ganhou a lógica **mount-por-turno + memória×mount** (spec0052) — revisar o mount a cada turno sem esperar sinal do usuário, e comparar memória × mount sem tratar nenhum como verdade absoluta. Nada removido.
@@ -97,6 +99,7 @@ Quando o desenvolvimento roda no **Claude Code** (terminal/desktop), o chat (est
 - **Specs (sem prompt gigante):** colar instrução enorme no Code **não funciona**. Cada tarefa de código vira uma **spec curta em `meta/workorders/<arquivo>.md`** (eu escrevo), e no Code o prompt é de **uma linha** — «leia `meta/workorders/<arquivo>.md` e execute» (ou «…e implemente a parte X»). **Entrego a spec e a linha exata juntas** — não deixo o prompt do CLI faltando.
 - **Curadoria-delta por spec (D-030):** quando a mudança num doc de curadoria (ROADMAP/CONTEXT/IDEAS/CHANGELOG) for um **delta estruturado** (marcar fase, abrir fase, inserir nota de revisão, acrescentar item) — e **não** uma reescrita de fundo/voz — o chat pode entregar o **texto exato** numa spec de `meta/workorders/`, com **âncora semântica** (seção/título, nunca número de linha), e o Code aplica no repo. O chat **autora a prosa**; o Code só **posiciona**. Continua valendo: reescrita de fundo vai como **arquivo inteiro** (regra dura «Como ENTREGAR as atualizações»), e **um canal por doc por ciclo** (se foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Por que não fere a regra "arquivo COMPLETO": aquela é anti-erro-**humano** (o usuário colando à mão); aqui quem aplica é um agente cuidadoso e o `git diff` é a rede.
 - **Glossário — WO vs Spec (D-086):** **WO (Work Order)** = instrução de aplicação Chat→Code (`AAMMDD-woNNNN-desc.md` em `meta/workorders/`; comandos `/check-wo` e `/apply-wo`). «Spec» fica reservado para a **spec-de-feature (SDD)**.
+- **`meta/analises/` (D-089):** equivale ao padrão RFC/design doc — precede o compromisso, define problema/restrições/opções/riscos (modelo em `meta/analises/_TEMPLATE.md`, com campo Status e elos cruzados análise→WO/spec→D-0XX). **Só para mudança não-trivial**; mudança pequena vai direto a WO, sem cerimônia.
 - **Handoff:** depois de cada sessão do Code, o usuário **sobe o repo atualizado** (ou cola os docs mudados) para eu voltar a ficar sobre a verdade.
 
 **Ambiente (Windows):** o Code roda nativo; abrir pelo **PowerShell** (não CMD, não Git Bash — o Git Bash quebra a UI interativa do CLI). Por dentro, a execução de comandos do Code usa **Git Bash**, então caminhos com `/` funcionam para ele. Mensagens de commit seguem **sem acento** (igual à seção de commit).
@@ -140,6 +143,11 @@ Os arquivos do projeto vivem em `meta/` (mais `README.md`, `PLANNING.md`, `DEPLO
 - **STATUS é só o agora**: versão concluída sai do STATUS e vira entrada no CHANGELOG.
 - **DECISIONS cresce devagar**: cada decisão grande vira D-NNN; não reescrever as antigas.
 - **CHANGELOG por versão**: cada sessão que entrega algo ganha um vX.Y.Z no topo.
+
+### Refino deste CEREBRO.md (dogfooding do G19 — wo0055)
+- **É dever nosso, não só do usuário pedir.** Este arquivo cresce por decisões concretas (D-NNN), mas se uma regra vira atrito repetido — descumprida, nunca aplicada, gatilho que não dispara — propor o ajuste é nosso; não esperar o usuário reclamar.
+- **Decidimos o que vira texto integral aqui vs. o que fica só na ferramenta.** Regra crítica para ESTE projeto entra completa no CEREBRO.md; regra genérica do kit já vive no G19 gerado para os projetos-usuário — não duplicar.
+- **Atrito sem solução local (na ferramenta/gerador) vira item em `meta/IDEAS.md`** — desfecho legítimo do refino, não desculpa para não refinar.
 
 ### Como ENTREGAR as atualizações (regra dura)
 - As mudanças que decorrem do trabalho do assistente são registradas pelo **próprio assistente** — mexeu em STATUS/CHANGELOG/etc., entrega esses arquivos atualizados sem esperar pedido.

@@ -501,6 +501,15 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C17 auto-refino obrigatorio (wo0055): dever proativo, liberdade de promover regra, feedback ao kit", () => {
+  const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
+  assert(/É dever seu, não meu pedido/.test(md),"CEREBRO sem o dever proativo de refino");
+  assert(/Você decide o que merece texto integral/.test(md),"CEREBRO sem a liberdade de promover regra a integral");
+  assert(/vira feedback ao kit/.test(md),"CEREBRO sem o caminho de feedback ao KCM");
+  assert(/Refino das Instruções do Projeto/.test(md),"bloco de refino (G19) sumiu");
+  return "ok";
+});
+
 check("C16 SDD leve (wo0054): SPEC.md no dev, criterios de aceite nos prompts, clausula de ambiguidade no analyze", () => {
   const dev=T.normNiche(T.NICHES.dev);
   const spec=(dev.contextFiles||[]).find(f=>f.name==="SPEC.md");
