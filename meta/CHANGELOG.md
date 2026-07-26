@@ -1,8 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.80.0**.
+> Histórico de versões. Versão atual: **v1.81.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.81.0 — Bloco de fecho de turno padronizado e condicional (wo0058, D-092)
+- **Formato fixo de encerramento de turno:** Estado · Próximo passo · Notas (arquivar/manter) · Config recomendada por raia · Handoff — emitindo só as linhas com conteúdo real (linha sem conteúdo não aparece; nunca escrever «nada a arquivar» nem inventar handoff).
+- **Resolve duas dores observadas:** o usuário tinha de perguntar o que arquivar; e a config recomendada vinha sem dizer para qual raia.
+- **Absorve i-N44/i-N45** e o nome `AAMMDD-HANDOFF-BRIEF.md` (nota 260720) — o nome vive no protocolo de fecho, não como arquivo obrigatório no CEREBRO.
+- **Custo de teto:** gatilho de 159 chars nas Instruções («Feche o turno com o bloco padrão…»); a estrutura completa fica no CEREBRO, grátis.
+- **Teto medido:** `narrative` 6453→**6612** (folga 288); `game` 6361→**6520** (folga 380); `career` **5962**; `rpg` **5813** — nenhum nicho estoura.
+- **Dogfood:** `INSTRUCOES-DO-PROJETO.md` e `meta/CEREBRO.md` do próprio KCM adotam o bloco, com as raias **Chat** (planejamento) e **Code** (execução).
+- Novo check **C19**.
+- `KIT_VERSION 1.81.0`. Bump **minor** (comportamento novo + check novo).
+- Harness **18/18, 63/63, 0 erros**.
 
 ## v1.80.0 — Enxugamento etapa B, 1ª leva: curadoria de game/narrative/career/rpg (wo0057, D-091)
 - **28 frases curadas no campo `short`:** `game` (9), `narrative` (6), `career` (6), `rpg` (7); definições integrais preservadas no CEREBRO.

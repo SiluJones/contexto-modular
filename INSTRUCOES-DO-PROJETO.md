@@ -26,8 +26,7 @@ KCM = gerador (um `index.html` vanilla, montado de `src/` via `build.js`) que pr
 ## Ao final da sessão (obrigatório, mode-aware, sem travar)
 - **Validação:** nada que toca `index.html`/`src/` sai sem `node build.js` + `node validate.js` **17/17, 0 erros**. Doc-only não precisa (a rede é o `git diff`).
 - **Commit:** entregue o `git commit` pronto, em **bloco separado** para copiar isolado, mensagem **sem acento**. Não pule o commit.
-- **Config:** se a PRÓXIMA etapa pedir config diferente, recomende-a explícita — modelo + esforço (Baixo→Máximo) + pensamento (lig/desl). Nunca afirme saber a config atual; recomende pela tarefa. Tarefa pesada com config fraca → peça aumento antes; folga → diga que pode baixar.
-- **Handoff:** diga, arquivo por arquivo, onde cada um vai na próxima sessão.
+- **Feche com o bloco padrão** (só o que se aplica — linha sem conteúdo real não aparece, não invente handoff nem escreva "nada a arquivar"): **Estado** (versão/fase + harness + commit) · **Próximo passo** (sempre) · **Notas** (arquivar/manter, só se houver no mount) · **Config recomendada** por raia — **Chat** (planejamento) e **Code** (execução), nunca afirmando saber a config atual · **Handoff** (arquivo por arquivo; sessão completa = `AAMMDD-HANDOFF-BRIEF.md`). Formato completo no CEREBRO.
 
 ## Princípios (13 universais — definição completa no CEREBRO)
 Analisa antes de aceitar · não desperdiça token (nem inventa arquivo falso) · direto · admite incerteza (pesquisa o que muda) · explica trade-offs · instruções cuidadosas · estuda o domínio · verifica antes de pedir arquivo (P8) · captura ideias (P9) · cadência sem fragmentar o trivial · usa a versão mais recente que tem · higiene ao encolher (P12) · pesquisa para refinar E refutar (P13).

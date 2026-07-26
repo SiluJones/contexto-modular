@@ -4,6 +4,8 @@
 > O QUE o projeto é fica no `README.md`/`PLANNING.md`; o estado atual no `meta/STATUS.md`.
 > Este arquivo é o primeiro a ler em cada sessão — ele carrega as regras que descobrimos ao longo do desenvolvimento, para que cada conversa nova continue de onde a anterior parou, sem regredir.
 
+> **Mudanças nesta revisão (v1.81.0):** nasce o **bloco de fecho de turno padronizado e condicional** — Estado · Próximo passo · Notas (arquivar/manter) · Config recomendada por raia · Handoff —, emitindo só as linhas com conteúdo real (linha sem conteúdo não aparece; nunca invente handoff nem escreva "nada a arquivar"). Nova seção **«🧾 Bloco de fecho de turno»**, logo após «Commit pronto ao final», com as raias que o KCM usa de fato: **Chat** (planejamento) e **Code** (execução). Absorve i-N44/i-N45 e o nome `AAMMDD-HANDOFF-BRIEF.md` (nota 260720). Nada removido. (wo0058, D-092)
+>
 > **Mudanças nesta revisão (v1.78.0):** o refino das Instruções (G19, gerado para os projetos-usuário) vira **dever proativo com gatilho** (fim da primeira sessão real; depois, a cada sinal de atrito) — não mais conhecimento passivo à espera de pedido. Acompanha a liberdade de promover regra crítica a texto integral e o feedback ao kit (IDEAS) como desfecho legítimo. Dogfooding aqui: nova subseção «Refino deste CEREBRO.md» em «Como manter os documentos deste projeto». Nada removido. (wo0055, D-088)
 >
 > **Mudanças nesta revisão (v1.76.0):** o artefato de aplicação Chat→Code passa a se chamar **Work Order (WO)** — `AAMMDD-woNNNN-desc.md` em `meta/workorders/`; comandos `/check-wo` e `/apply-wo` (skill `apply-wo`). «Spec» fica reservado para a **spec-de-feature (SDD)**. História preservada: as WOs antigas mantêm o nome e os comentários `(specNNNN)` no código são registro histórico. Nada removido. (spec0053, D-086)
@@ -225,6 +227,17 @@ Regras práticas:
 - **Uma linha só, sem `\`.** Sem quebras de linha dentro do comando.
 - Aspas duplas em cada `-m`. Evitar aspas duplas DENTRO do texto. Se precisar destacar, usar aspas simples ou nada.
 - Corpo opcional: para mudanças triviais, basta o título num único `-m`.
+
+## 🧾 Bloco de fecho de turno (formato fixo — dogfood do wo0058)
+
+Todo turno de trabalho termina com este bloco, nesta ordem, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff):
+- **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir.
+- **Próximo passo** — sempre presente: a próxima ação concreta, não uma lista de possibilidades.
+- **Notas** — só se houver notas avulsas no mount: diga, nome por nome, o que já pode ser **arquivado** (absorvido) e o que **manter** (item ainda aberto), com o motivo em poucas palavras. Não espere que o usuário pergunte.
+- **Config recomendada** — o que usar no próximo passo, **identificando a raia**: **Chat** (planejamento — modelo + nível de esforço) e **Code** (execução — modelo + esforço + terminal). Nunca afirme saber a config atual — recomende pela tarefa que vem.
+- **Handoff** — só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Se o pedido for um handoff de sessão completo, o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.
+
+Vale para todo turno de trabalho, não só ao encerrar a sessão: é o que permite retomar sem reconstruir contexto. Absorve i-N44/i-N45 e a nota 260720 (nome do handoff).
 
 ## Prática: adiantar entrega ao pedir permissão (eficiência de turno)
 

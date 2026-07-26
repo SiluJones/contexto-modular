@@ -486,11 +486,11 @@ Hoje `genreSel`/`engineSel`/`phase` são preenchidos mas não entram no CEREBRO/
 ## i-N43 — Auto-refino registrado: «problema diagnosticado → grava a armadilha» — A ESPECIFICAR
 Projetos diagnosticam a causa de um problema e **não registram** o aprendizado: fica na memória da conversa, some ao truncar/transferir, e o erro se repete. Falta um **gatilho universal**: «problema diagnosticado → grava a armadilha no DECISIONS/CEREBRO do projeto e reporta ao KCM». (Origem: nota `260709-0808`. **Verificar antes de especificar** se já existe algo truncado/corrompido no CEREBRO nessa direção.)
 
-## i-N44 — Handoff enxuto + log do Code — A ESPECIFICAR
-Handoff **não se versiona** (é atalho efêmero; o repo é a verdade), nome padronizado `_HANDOFF-AAAA-MM-DD.md`, arquivado fora do repo. O brief deve carregar **só o fio vivo** (o que não está em arquivo nenhum) e **nunca** repetir STATUS/DECISIONS. No modo **Code** ele é quase dispensável (tudo já foi para append); no **vanilla** é o único portador. Avaliar também o Code emitir um **log de sessão** (hoje o usuário copia a última mensagem à mão).
+## i-N44 — Handoff enxuto + log do Code — ✅ FECHADA (wo0058, D-092)
+Handoff **não se versiona** (é atalho efêmero; o repo é a verdade), nome padronizado `_HANDOFF-AAAA-MM-DD.md`, arquivado fora do repo. O brief deve carregar **só o fio vivo** (o que não está em arquivo nenhum) e **nunca** repetir STATUS/DECISIONS. No modo **Code** ele é quase dispensável (tudo já foi para append); no **vanilla** é o único portador. Avaliar também o Code emitir um **log de sessão** (hoje o usuário copia a última mensagem à mão). Absorvida pelo bloco de fecho de turno: a linha **Handoff** só aparece quando há arquivo trocando de mão; nome final do artefato de handoff completo virou `AAMMDD-HANDOFF-BRIEF.md` (nota 260720), não o `_HANDOFF-AAAA-MM-DD.md` cogitado aqui.
 
-## i-N45 — Prompt de retomada fixo (separar do brief datado) — A ESPECIFICAR
-Separar o **prompt de retomada permanente** (não datado, vive no CEREBRO: "leia os meta/ nesta ordem, confirme em uma frase, execute o próximo passo") do **brief datado e efêmero**. Refino natural do prompt F pós-spec0040.
+## i-N45 — Prompt de retomada fixo (separar do brief datado) — ✅ FECHADA (wo0058, D-092)
+Separar o **prompt de retomada permanente** (não datado, vive no CEREBRO: "leia os meta/ nesta ordem, confirme em uma frase, execute o próximo passo") do **brief datado e efêmero**. Refino natural do prompt F pós-spec0040. Absorvida pelo bloco de fecho de turno: **Próximo passo** e **Config recomendada por raia** cobrem a retomada permanente; o efêmero fica nas linhas condicionais (**Notas**, **Handoff**).
 
 ## i-N46 — Contador de caracteres da instrução na UI — ✅ FECHADA (spec0045, D-076)
 O usuário marca chips e a instrução cresce — mas ele não vê isso: o estouro do teto só aparecia no harness (e só depois de a spec0042 medir o pior caso; ver D-070). Ideia: exibir na UI o tamanho da instrução gerada (e talvez a distância até o teto), atualizando conforme o usuário marca opções. Torna o orçamento visível para quem realmente monta o contexto, em vez de deixá-lo escondido no `validate.js`.
@@ -579,3 +579,6 @@ Aplicadas as 10 técnicas de campo (Novel 2/3) aos `body` das 4 skills de escrit
 
 ### 2026-07-26 — Enxugamento etapa B, 1ª leva concluída — INCORPORADO (D-091, v1.80.0) — 2ª leva e WO-C parqueadas
 A wo0057 curou o campo `short` de `game`/`narrative`/`career`/`rpg` (28 frases; folgas saíram de 21–1246 para 447–1246; `game` foi o maior beneficiado, 21→539). **Parqueado:** a **2ª leva** da etapa B — os 14 nichos restantes — segue a mesma mecânica (curar frase, sem tocar definição); e a **WO-C** (papéis dos arquivos + poda de markdown), cujo escopo cresce porque a curadoria de frase rendeu menos que a análise original previa (330–518 chars/nicho, não ~2000–2775).
+
+### 2026-07-26 — Bloco de fecho de turno + nome do handoff — INCORPORADOS (D-092, wo0058, v1.81.0)
+Protocolo de fecho de turno padronizado e condicional (Estado · Próximo passo · Notas · Config por raia · Handoff) instalado nas Instruções (gatilho) e no CEREBRO (formato completo) de todos os 18 nichos, com dogfood no próprio KCM. **Fecha i-N44** (handoff enxuto + log do Code), **i-N45** (prompt de retomada fixo) e a nota 260720 (nome `AAMMDD-HANDOFF-BRIEF.md`). Seguem parqueadas: **WO-B 2ª leva** (14 nichos restantes), **WO-C** (papéis de arquivo + migração para os `meta/` + poda de markdown), e **padronizar a pasta de análises** no kit.

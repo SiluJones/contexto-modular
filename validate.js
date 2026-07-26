@@ -501,6 +501,18 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + formato condicional no CEREBRO", () => {
+  const n=T.normNiche(T.NICHES.dev);
+  assert(/Feche o turno com o bloco padrão/.test(T.buildInstr(n)),"Instr sem o gatilho do bloco de fecho");
+  const c=T.buildClaudeMd(n);
+  assert(/## Bloco de fecho de turno/.test(c),"CEREBRO sem a secao do bloco de fecho");
+  ["Estado","Próximo passo","Notas","Config recomendada","Handoff"].forEach(k=>
+    assert(new RegExp("\\*\\*"+k+"\\*\\*").test(c),"CEREBRO sem a linha: "+k));
+  assert(/só as linhas que se aplicam/.test(c),"CEREBRO nao manda condicionar as linhas");
+  assert(/AAMMDD-HANDOFF-BRIEF\.md/.test(c),"CEREBRO nao nomeia o artefato de handoff");
+  return "ok";
+});
+
 check("C18 motor do enxugamento (wo0056-A): campo 'short' curado nas Instr, definicao completa no CEREBRO", () => {
   const raw=fs.readFileSync(path,"utf8");
   // (1) motor instalado
