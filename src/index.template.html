@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.75.0";
+const KIT_VERSION = "1.76.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2601,11 +2601,11 @@ if(asuModeOn()){
     L.push("");
     L.push("Este projeto é desenvolvido com o **Claude Code** (CLI/desktop), além do chat de planejamento. Há duas raias:");
     L.push("");
-    L.push('- **Chat (planejamento):** cura e ENTREGA arquivos de doc. Para reescrita de fundo/voz ou arquivo **novo/pequeno**, entrega o **arquivo inteiro**. Para um **delta estruturado** num doc **grande** (marcar fase, abrir fase, inserir nota, acrescentar item), entrega uma **spec curta** em `meta/specs/` com o **texto exato** e **âncora semântica** (seção/título, nunca nº de linha) — e o Code posiciona.');
-    L.push('- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISIONS, marcar estado de fase). Aplica as specs de doc. Roda build/validação. Commita.');
-    L.push('- **Nomes padronizados:** specs em `meta/specs/` seguem `AAMMDD-specNNNN-desc.md` (ex.: `260630-spec0007-asu-entrega-e-escopo.md`)'+(asuModeOn()?'; instruções ASU seguem `AAMMDD-asuNNNN.yaml`':'')+'. Numeração sequencial e estável; a data é a de criação. O chat nomeia; o Code aplica.');
+    L.push('- **Chat (planejamento):** cura e ENTREGA arquivos de doc. Para reescrita de fundo/voz ou arquivo **novo/pequeno**, entrega o **arquivo inteiro**. Para um **delta estruturado** num doc **grande** (marcar fase, abrir fase, inserir nota, acrescentar item), entrega uma **WO curta** em `meta/workorders/` com o **texto exato** e **âncora semântica** (seção/título, nunca nº de linha) — e o Code posiciona.');
+    L.push('- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISIONS, marcar estado de fase). Aplica as WOs de doc. Roda build/validação. Commita.');
+    L.push('- **Nomes padronizados:** WOs (work orders) em `meta/workorders/` seguem `AAMMDD-woNNNN-desc.md` (ex.: `260630-wo0007-asu-entrega-e-escopo.md`)'+(asuModeOn()?'; instruções ASU seguem `AAMMDD-asuNNNN.yaml`':'')+'. Numeração sequencial e estável; a data é a de criação. O chat nomeia; o Code aplica.');
     L.push("");
-    L.push('**Método "doc por spec":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por spec, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Specs **só de doc não tocam o produto** → não precisam de build; a rede é o `git diff`.');
+    L.push('**Método "doc por spec":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por WO, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Specs **só de doc não tocam o produto** → não precisam de build; a rede é o `git diff`.');
     L.push("");
     L.push('**Ao APLICAR uma spec (Code):** localize cada âncora EXATAMENTE; se não achar uma, **PARE e reporte** — nunca chute um lugar próximo. Não toque em nada fora das edições nomeadas. Rode `git diff` e confira a forma esperada antes de commitar.');
     L.push("");
@@ -2623,7 +2623,7 @@ if(asuModeOn()){
     L.push("|---|---|");
     L.push("| `CLAUDE.md` (raiz) | guia curto lido pelo Code em todo turno (ritual + build + convenções) — mantenha < 200 linhas; o detalhado fica no CEREBRO |");
     L.push("| `.claude/settings.json` | permissões (allow/deny) — adicione seu comando de build/teste ao `allow` |");
-    L.push("| `.claude/skills/apply-spec/SKILL.md` | comando `/apply-spec`: aplica uma spec de `meta/specs/` (âncora exata ou PARA e reporta) |");
+    L.push("| `.claude/skills/apply-wo/SKILL.md` | comando `/apply-wo`: aplica uma WO de `meta/workorders/` (âncora exata ou PARA e reporta) |");
     L.push("| `.claude/skills/wrap/SKILL.md` | comando `/wrap`: fecha a tarefa (append em STATUS/DECISIONS + `git diff` + commit) |");
     L.push("");
     L.push("Instalação: descompacte `claude-code-kit.zip` e mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. O `README.md` do zip repete os passos e traz a cláusula anti-`.gitignore` de `.claude/`. Formato atual (2026): os comandos são **Skills** em `.claude/skills/<nome>/SKILL.md` (o `.claude/commands/*.md` legado também funcionaria, mas Skills é o recomendado e tem precedência).");
@@ -2940,11 +2940,11 @@ function buildCodeKitFiles(){
     "## Convenções",
     "- Mensagens de commit **sem acento**.",
     "- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU spec).",
-    "- Ao aplicar uma spec de `meta/specs/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.",
+    "- Ao aplicar uma spec de `meta/workorders/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.",
     "",
     "## Config (modelo × esforço)",
     "- Spec com diff exato já validado → **Sonnet**, esforço proporcional (mecânico = baixo/médio).",
-    "- Tarefa com julgamento sem rede (refator multi-arquivo, spec que delega decisão) → **Opus**, esforço alto.",
+    "- Tarefa com julgamento sem rede (refator multi-arquivo, WO que delega decisão) → **Opus**, esforço alto.",
     "- Esforço proporcional à ambiguidade; `/effort low` para o trivial.",
     ""
   ].join("\n");
@@ -2961,13 +2961,13 @@ function buildCodeKitFiles(){
     "",
     "// Adicione seu comando de build/teste ao allow — ex.: \"Bash(npm run build:*)\", \"Bash(npm test:*)\"."
   ].join("\n");
-  const applySpec = [
+  const applyWo = [
     "---",
-    "name: apply-spec",
-    "description: Aplica uma spec de meta/specs/ ao repo — localiza cada âncora exatamente, substitui, e para se não achar. Use quando o usuário pedir /apply-spec ou para aplicar uma spec nomeada.",
+    "name: apply-wo",
+    "description: Aplica uma spec de meta/workorders/ ao repo — localiza cada âncora exatamente, substitui, e para se não achar. Use quando o usuário pedir /apply-wo ou para aplicar uma spec nomeada.",
     "disable-model-invocation: true",
     "---",
-    "Leia o arquivo de spec indicado em `meta/specs/` e execute-o.",
+    "Leia o arquivo de spec indicado em `meta/workorders/` e execute-o.",
     "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.",
     "Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.",
     "Spec: $ARGUMENTS",
@@ -2983,7 +2983,7 @@ function buildCodeKitFiles(){
     "e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).",
     ""
   ].join("\n");
-  return { claudeMd, settings, applySpec, wrap };
+  return { claudeMd, settings, applyWo, wrap };
 }
 async function downloadCodeKitZIP(){
   if(typeof JSZip === "undefined"){
@@ -2994,7 +2994,7 @@ async function downloadCodeKitZIP(){
   const root = "claude-code-kit";
   zip.file(`${root}/CLAUDE.md`, f.claudeMd);
   zip.file(`${root}/.claude/settings.json`, f.settings);
-  zip.file(`${root}/.claude/skills/apply-spec/SKILL.md`, f.applySpec);
+  zip.file(`${root}/.claude/skills/apply-wo/SKILL.md`, f.applyWo);
   zip.file(`${root}/.claude/skills/wrap/SKILL.md`, f.wrap);
   const readme = [
     "# Kit de arranque do Claude Code",
@@ -3006,7 +3006,7 @@ async function downloadCodeKitZIP(){
     "Mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. Ajuste o comando de build no `CLAUDE.md` e no `allow` de `.claude/settings.json`.",
     "",
     "## Formato dos comandos",
-    "Os comandos vêm como **Skills** (`.claude/skills/<nome>/SKILL.md`) — o formato atual (2026). Invoque com `/apply-spec` e `/wrap`. O `disable-model-invocation: true` faz cada um rodar só quando você chama, nunca sozinho. (O formato legado `.claude/commands/*.md` também funcionaria, mas Skills é o recomendado e tem precedência.)",
+    "Os comandos vêm como **Skills** (`.claude/skills/<nome>/SKILL.md`) — o formato atual (2026). Invoque com `/apply-wo` e `/wrap`. O `disable-model-invocation: true` faz cada um rodar só quando você chama, nunca sozinho. (O formato legado `.claude/commands/*.md` também funcionaria, mas Skills é o recomendado e tem precedência.)",
     "",
     "## Atenção ao versionar",
     "Se o repo tiver `.gitignore`, garanta que ele **não** ignore a pasta `.claude/` inteira — o CLAUDE.md, as permissões e os comandos devem ser versionados com o projeto. Ignore só artefatos locais, nunca `.claude/skills/` nem `.claude/settings.json`.",
@@ -3044,8 +3044,8 @@ function structuredFlatdropignore(codeOn){
   ];
   if(codeOn){
     L.push("# Specs aplicadas: o desfecho vive em meta/DECISIONS.md e meta/CHANGELOG.md; o corpo pesa.");
-    L.push("# (Para estudar uma spec no Projeto, reinclua com !meta/specs/<arquivo>.)");
-    L.push("meta/specs/", "");
+    L.push("# (Para estudar uma spec no Projeto, reinclua com !meta/workorders/<arquivo>.)");
+    L.push("meta/workorders/", "");
   }
   return L.join("\n");
 }
@@ -3059,8 +3059,8 @@ function structuredReadme(niche, root, codeOn, skillsOn){
     "- `logs/` — um arquivo por sessao (vazia por enquanto)."
   ];
   if(codeOn){
-    L.push("- `CLAUDE.md` + `.claude/` — arranque do Claude Code (settings + skills apply-spec/wrap). Ajuste o comando de build no CLAUDE.md e no allow do settings.");
-    L.push("- `meta/specs/` — specs de mudanca (vazia por enquanto).");
+    L.push("- `CLAUDE.md` + `.claude/` — arranque do Claude Code (settings + skills apply-wo/wrap). Ajuste o comando de build no CLAUDE.md e no allow do settings.");
+    L.push("- `meta/workorders/` — specs de mudanca (vazia por enquanto).");
   }
   if(skillsOn){
     L.push(`- \`${codeOn ? ".claude/skills" : "skills"}/\` — Agent Skills do nicho; cada uma tem «Aplicacao neste projeto» para preencher.`);
@@ -3097,9 +3097,9 @@ async function downloadStructuredZIP(){
     const k = buildCodeKitFiles();
     zip.file(`${root}/CLAUDE.md`, k.claudeMd);
     zip.file(`${root}/.claude/settings.json`, k.settings);
-    zip.file(`${root}/.claude/skills/apply-spec/SKILL.md`, k.applySpec);
+    zip.file(`${root}/.claude/skills/apply-wo/SKILL.md`, k.applyWo);
     zip.file(`${root}/.claude/skills/wrap/SKILL.md`, k.wrap);
-    zip.file(`${root}/meta/specs/.gitkeep`, "");
+    zip.file(`${root}/meta/workorders/.gitkeep`, "");
   }
   // Skills do nicho (se ligado): dentro de .claude/ se Code, senao na raiz
   if(skillsOn){
@@ -3183,8 +3183,8 @@ function buildUpdatePack(niche){
       role: "Guia raiz do Claude Code.", content: k.claudeMd });
     files.push({ flat: updateFlat("claude-settings.json"), real: ".claude/settings.json", nature: "template",
       role: "Permissoes do Claude Code.", content: k.settings });
-    files.push({ flat: updateFlat("apply-spec.SKILL.md"), real: ".claude/skills/apply-spec/SKILL.md",
-      nature: "template", role: "Comando /apply-spec.", content: k.applySpec });
+    files.push({ flat: updateFlat("apply-wo.SKILL.md"), real: ".claude/skills/apply-wo/SKILL.md",
+      nature: "template", role: "Comando /apply-wo.", content: k.applyWo });
     files.push({ flat: updateFlat("wrap.SKILL.md"), real: ".claude/skills/wrap/SKILL.md",
       nature: "template", role: "Comando /wrap.", content: k.wrap });
   }
@@ -3192,7 +3192,7 @@ function buildUpdatePack(niche){
   files.push({ flat: updateFlat("gitignore"), real: ".gitignore", nature: "template",
     role: "Ignora lixo de SO/editor.", content: structuredGitignore() });
   files.push({ flat: updateFlat("flatdropignore"), real: ".flatdropignore", nature: "template",
-    role: "Enxuga o que sobe ao Projeto do Claude (logs/, specs no modo Code).", content: structuredFlatdropignore(codeOn) });
+    role: "Enxuga o que sobe ao Projeto do Claude (logs/, workorders no modo Code).", content: structuredFlatdropignore(codeOn) });
   const manifest = buildUpdateManifest(niche, files, codeOn, skillsOn);
   return { files, manifest, codeOn, skillsOn, affix: UPDATE_AFFIX };
 }

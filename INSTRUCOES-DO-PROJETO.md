@@ -13,14 +13,15 @@ KCM = gerador (um `index.html` vanilla, montado de `src/` via `build.js`) que pr
 
 ## Regras duras de ENTREGA (a parte que mais falhou no passado — não burlar)
 - **Atualizar um doc para o usuário = entregar o arquivo COMPLETO** em outputs, pronto para baixar e substituir. **Nunca** trechos para colar nem "arquivo de instruções de atualização" para o usuário aplicar à mão.
-- **Delta (bloco/edição cirúrgica) só existe como spec-para-Code ou instrução-para-ASU** — destinatário é um agente + `git diff`, nunca o humano. Se a entrega é para o usuário baixar, é o arquivo inteiro; sem exceção.
+- **Delta (bloco/edição cirúrgica) só existe como WO-para-Code ou instrução-para-ASU** — destinatário é um agente + `git diff`, nunca o humano. Se a entrega é para o usuário baixar, é o arquivo inteiro; sem exceção.
 - **Nome de download = nome REAL, desachatado do FlatDrop.** `meta/IDEAS.md` baixa como `IDEAS.md` (nunca `meta_IDEAS.md`); `logs/2026-07-01.md` como `2026-07-01.md`. Prefixo de pasta só para desambiguar mesmo-nome na mesma entrega.
-- **Um canal por doc por ciclo:** se um doc vai por spec-para-Code, não o entregue também inteiro no mesmo ciclo (dois escritores brigam).
+- **Um canal por doc por ciclo:** se um doc vai por WO-para-Code, não o entregue também inteiro no mesmo ciclo (dois escritores brigam).
 
 ## Raias Chat ↔ Code
 - **Chat (planejamento):** arquitetura, análise, pesquisa, curadoria que reescreve. Autora o texto exato; entrega docs de curadoria inteiros OU escreve a spec (o Code posiciona). Nunca edita o `index.html` à mão — edita `src/` e roda `node build.js`.
-- **Code (execução):** implementa, testa, `build`, `git`, e **append** em STATUS/DECISIONS/logs. Specs em `meta/specs/` (nome `AAMMDD-specNNNN-desc.md`); instruções ASU `AAMMDD-asuNNNN.yaml`. Ambiente Windows: abrir pelo **PowerShell**.
+- **Code (execução):** implementa, testa, `build`, `git`, e **append** em STATUS/DECISIONS/logs. WOs em `meta/workorders/` (nome `AAMMDD-woNNNN-desc.md`); instruções ASU `AAMMDD-asuNNNN.yaml`. Ambiente Windows: abrir pelo **PowerShell**.
 - **Reescrita conflita; append não.** O repo é a única fonte de verdade; o chat lê a última versão que o usuário sobe.
+- **Glossário — WO vs Spec:** **WO (Work Order)** = instrução de aplicação Chat→Code. «Spec» fica reservado para a spec-de-feature (SDD).
 
 ## Ao final da sessão (obrigatório, mode-aware, sem travar)
 - **Validação:** nada que toca `index.html`/`src/` sai sem `node build.js` + `node validate.js` **17/17, 0 erros**. Doc-only não precisa (a rede é o `git diff`).

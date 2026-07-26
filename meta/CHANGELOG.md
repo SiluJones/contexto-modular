@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.75.0**.
+> Histórico de versões. Versão atual: **v1.76.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.76.0 — `spec` vira **Work Order (WO)** — vocabulário (spec0053, D-086)
+- **⚠️ Mudança de vocabulário — os projetos-filhos vão precisar adotar.** O artefato de aplicação Chat→Code deixa de se chamar «spec» e passa a ser **Work Order (WO)**: nome `AAMMDD-woNNNN-desc.md`, pasta `meta/workorders/`, comandos `/check-wo` e `/apply-wo`, skill `apply-wo`. «Spec» fica reservado para a **spec-de-feature do SDD** (spec0054). Motivo: o que chamávamos «spec» é uma **instrução de aplicação** (edições exatas para um agente), não uma spec.
+- **Gerador (`src/index.template.html`):** caminho `meta/workorders/`, comando `apply-wo`, identificador JS interno `applyWo`, padrão `AAMMDD-woNNNN-desc.md` e a prosa do fluxo («o chat entrega uma WO; o Code aplica»).
+- **Sem find-replace cego:** preservados palavras pt-BR com «spec» (`específico`, `especial`… = 20), CSS `aspect-ratio` (3) e os comentários históricos `(specNNNN)` (14).
+- **Dogfood:** o próprio KCM adota o WO — pasta `meta/specs/` → `meta/workorders/` (git mv, histórico preservado), comandos `.claude/commands/{check,apply}-wo.md`, `CEREBRO.md` e `INSTRUCOES-DO-PROJETO.md` com glossário «WO vs Spec». WOs antigas mantêm o nome; a numeração segue (próxima `wo0054`).
+- Novo check **C15** (trava o rename **e** as três armadilhas); **G7** acompanhou o rename. `KIT_VERSION 1.76.0`. Bump **minor** (vocabulário + check novo).
+- **Teto:** nenhum nicho estoura; **`game` segue em 6879/6900 (folga 21) — a vigiar**.
+- Harness **18/18, 59/59, 0 erros**.
 
 ## v1.75.0 — Adesão ao ritual: mount-check por turno + memória×mount + fix vazamento ASU (spec0052, D-085)
 - **C-a (P8 `check_before_ask`, só CEREBRO — sem teto):** o princípio universal ganha a lógica **mount-por-turno incondicional** — revisar o mount a CADA turno (novos `.txt`, `_MANIFEST`, arquivos mudados) antes de responder, **sem** depender de sinal do usuário (um «continuar», uma correção ou uma reclamação também pode vir com o mount atualizado) — mais a **comparação memória × mount**: nem tratar o mount como verdade absoluta nem confiar só na memória; se divergem, é provável atualização (estuda); se o mount bate com a memória mas o usuário afirma ter aplicado algo ausente, faz o que dá e AVISA («o mount não parece atualizado com X»), em vez de inferir cegamente ou regenerar. Origem: relatório 260722 (projetos ao vivo ignorando o ritual).

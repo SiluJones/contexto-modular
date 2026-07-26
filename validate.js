@@ -155,7 +155,7 @@ check("G7 modo Code (dev: kit vira download separado, ponteiro no CEREBRO, sem i
   const f = T.buildCodeKitFiles();
   assert(/^# <NOME DO PROJETO>/.test(f.claudeMd) && /< 200 linhas/.test(f.claudeMd), "CLAUDE.md starter invalido");
   assert(/"permissions"/.test(f.settings) && /"deny"/.test(f.settings), "settings.json starter invalido");
-  assert(/^---\nname: apply-spec\ndescription: /.test(f.applySpec) && /disable-model-invocation: true/.test(f.applySpec), "apply-spec nao esta no formato Skill atual");
+  assert(/^---\nname: apply-wo\ndescription: /.test(f.applyWo) && /disable-model-invocation: true/.test(f.applyWo), "apply-wo nao esta no formato Skill atual");
   assert(/^---\nname: wrap\ndescription: /.test(f.wrap) && /disable-model-invocation: true/.test(f.wrap), "wrap nao esta no formato Skill atual");
   return "ok";
 });
@@ -498,6 +498,17 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   assert(/\$\{KIT_VERSION\}`;/.test(html), "rodape nao usa KIT_VERSION");
   assert(/function kitStamp/.test(html), "helper kitStamp ausente");
   assert(/Kit de Contexto Universal v\$\{KIT_VERSION\}/.test(html), "downloads nao carimbam a versao");
+  return "ok";
+});
+
+check("C15 rename spec->WO (spec0053): caminhos, comando e prosa; sem quebrar palavras pt-BR nem CSS", () => {
+  const raw=fs.readFileSync(path,"utf8");
+  assert(!/meta\/specs\//.test(raw),"ainda ha meta/specs/ (deveria ser meta/workorders/)");
+  assert(/meta\/workorders\//.test(raw),"meta/workorders/ ausente");
+  assert(!/apply-spec/.test(raw),"ainda ha apply-spec (deveria ser apply-wo)");
+  assert(/AAMMDD-woNNNN-desc\.md/.test(raw),"padrao AAMMDD-woNNNN-desc.md ausente");
+  assert(/aspect-ratio/.test(raw),"CSS aspect-ratio sumiu (replace cego quebrou o layout)");
+  assert(/específico|especial/.test(raw),"palavras pt-BR com 'spec' foram corrompidas");
   return "ok";
 });
 

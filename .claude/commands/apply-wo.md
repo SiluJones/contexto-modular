@@ -1,4 +1,4 @@
-Leia o arquivo de spec em `meta/specs/$ARGUMENTS` e execute-o.
+Leia o arquivo de spec em `meta/workorders/$ARGUMENTS` e execute-o.
 
 Regras de aplicação:
 - Localize cada âncora EXATAMENTE. Se não achar uma, PARE e reporte — nunca chute um lugar próximo.
