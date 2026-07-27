@@ -6,20 +6,23 @@
 
 ## O que é
 Um `index.html` único (vanilla JS, sem build no lado do usuário) que gera arquivos de
-contexto para Projetos do Claude.ai. 16 nichos de conteúdo + 1 construtor (`custom`).
+contexto para Projetos do Claude.ai. 17 nichos de conteúdo + 1 construtor (`custom`) = **18**.
 O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html` à mão.**
 
 ## Estrutura
 - `src/index.template.html` — casco (UI + lógica, sem os dados dos nichos)
-- `src/niches/<id>.js` — os 17 módulos de nicho (os dados)
+- `src/niches/<id>.js` — os 18 módulos de nicho (os dados)
 - `build.js` + `build-manifest.json` — remontam o `index.html` na raiz
-- `validate.js` — harness (17 nichos + checagens transversais)
+- `validate.js` — harness (18 nichos + checagens transversais)
 - `meta/` — docs: `CEREBRO.md` (cérebro), `STATUS`, `DECISIONS`, `CHANGELOG`, `ROADMAP`, `IDEAS`, `CONTEXT`…
+- `meta/workorders/` — WOs (instrução de aplicação Chat→Code), `AAMMDD-woNNNN-desc.md`
+- `meta/analises/` — análise antes do compromisso, `AAMMDD-ANALISE-<assunto>.md` (só mudança não-trivial)
 
 ## Comandos
 - **Montar:** `node build.js`  → gera o `index.html` na raiz
 - **Validar:** `node validate.js index.html`  (precisa de jsdom: `npm install jsdom` uma vez)
-- **Nunca** commitar sem o harness em **17/17 nichos + checagens, 0 erros.**
+- **Conferir uma WO antes de aplicar:** `/check-wo <arquivo>` (read-only) · **aplicar:** `/apply-wo <arquivo>` · **fechar:** `/wrap`
+- **Nunca** commitar sem o harness em **18/18 nichos, 0 erros** (o total de checagens sobe a cada check novo).
 
 ## Convenções
 - Editar um nicho = editar `src/niches/<id>.js` e rodar `node build.js`. Nunca editar o `index.html` direto.
@@ -27,6 +30,9 @@ O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html`
 - Respostas e código em **pt-BR**.
 - **Commits:** uma linha, `-m` repetido, **sem acento**. Conventional Commits (`feat`/`fix`/`docs`/`refactor`/`chore`).
 - Ambiente: **PowerShell** (não Git Bash pra abrir o `claude`).
+- **Vocabulário:** **WO** = instrução de aplicação Chat→Code. **spec** = spec de feature (SDD).
+  **análise** = documento que precede o compromisso. Funil: análise → WO → `DECISIONS.md`.
+  WOs antigas mantêm o nome `specNNNN` — história não se reescreve.
 
 ## Fluxo com o chat (planejamento)
 O chat (Claude web) cuida de design/curadoria e entrega os `meta/` **inteiros**; o Code
@@ -38,3 +44,4 @@ reescreve). Protocolo completo em `meta/CEREBRO.md` › «🤝 Fluxo Chat ↔ Cl
 - Não **reescrever** os docs de curadoria (`CONTEXT`/`IDEAS`/`GLOSSARY`) — isso é raia do chat;
   aqui só **append** em `STATUS`/`DECISIONS`/`logs`.
 - Não adicionar dependências ao produto.
+- Não criar pasta vazia "para depois" (`meta/analises/`, `meta/specs/` nascem no primeiro uso).

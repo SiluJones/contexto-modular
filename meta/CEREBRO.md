@@ -4,6 +4,8 @@
 > O QUE o projeto é fica no `README.md`/`PLANNING.md`; o estado atual no `meta/STATUS.md`.
 > Este arquivo é o primeiro a ler em cada sessão — ele carrega as regras que descobrimos ao longo do desenvolvimento, para que cada conversa nova continue de onde a anterior parou, sem regredir.
 
+> **Mudanças nesta revisão (wo0064):** bloco de fecho v2 — **Próximo** ganha a segunda parte («peça no próximo turno») e **Arquivar / Manter** vira lista; o dogfood do KCM, que tinha ficado na versão pré-wo0060 (ordem e rótulo antigos), foi alinhado ao produto. Higiene: `CLAUDE.md`, `BUILD.md` e `CONTEXT.md` corrigidos de 17→18 nichos e do vocabulário `spec`→WO. Nada removido. `KIT_VERSION 1.86.0`.
+>
 > **Mudanças nesta revisão (wo0063, D-097):** o **produto** passa a ensinar a análise antes do compromisso (seção nova no CEREBRO gerado dos 18 nichos + gatilho de 145 chars nas Instruções + linha na tabela de documentos), com pasta preguiçosa (`analises/` e `specs/` nascem no primeiro uso) e cláusula de adoção. Regra nova de higiene do FlatDrop: modelo/guia de pasta ignorada sempre reincluídos com `!`. Comandos `/check-wo`, `/apply-wo` e `/wrap` atualizados (vocabulário WO, caminho `src/`, 18/18). Nada removido. `KIT_VERSION 1.85.0`.
 >
 > **Mudanças nesta revisão (doc-only, sem bump de `KIT_VERSION`):** a entrada de `meta/analises/` ganha a convenção de nome (`AAMMDD-ANALISE-<assunto>.md`) e o funil explícito — **análise → WO (`meta/workorders/`) → `DECISIONS.md`**, com a spec de feature (`meta/specs/`) reservada ao trabalho de produto. Modelo em `meta/analises/_TEMPLATE.md` ganha o texto-guia de cada seção (antes só os títulos). Nada removido. (wo0062, D-096)
@@ -233,14 +235,14 @@ Regras práticas:
 - Aspas duplas em cada `-m`. Evitar aspas duplas DENTRO do texto. Se precisar destacar, usar aspas simples ou nada.
 - Corpo opcional: para mudanças triviais, basta o título num único `-m`.
 
-## 🧾 Bloco de fecho de turno (formato fixo — dogfood do wo0058)
+## 🧾 Bloco de fecho de turno (formato fixo — dogfood do wo0058/wo0060/wo0064)
 
-Todo turno de trabalho termina com este bloco, nesta ordem, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff):
-- **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir.
-- **Próximo passo** — sempre presente: a próxima ação concreta, não uma lista de possibilidades.
-- **Notas** — só se houver notas avulsas no mount: diga, nome por nome, o que já pode ser **arquivado** (absorvido) e o que **manter** (item ainda aberto), com o motivo em poucas palavras. Não espere que o usuário pergunte.
-- **Config recomendada** — o que usar no próximo passo, **identificando a raia**: **Chat** (planejamento — modelo + nível de esforço) e **Code** (execução — modelo + esforço + terminal). Nunca afirme saber a config atual — recomende pela tarefa que vem.
-- **Handoff** — só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Se o pedido for um handoff de sessão completo, o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.
+Todo turno de trabalho termina com este bloco, nesta ordem, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem ANTES de um divisor; o resto vem depois dele:
+- **Próximo** — sempre presente, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido.
+- **Estado** — uma linha: onde o projeto está agora (versão/fase e o resultado do harness) e o commit, quando existir.
+- **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Não espere que o usuário pergunte.
+- **Config recomendada** — em lista, uma linha por raia: **Chat** (planejamento — modelo + nível de esforço) e **Code** (execução — modelo + esforço + terminal). Nunca afirme saber a config atual — recomende pela tarefa que vem.
+- **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.
 
 Vale para todo turno de trabalho, não só ao encerrar a sessão: é o que permite retomar sem reconstruir contexto. Absorve i-N44/i-N45 e a nota 260720 (nome do handoff).
 

@@ -532,6 +532,12 @@ A wo0052/D-085 corrigiu o mount-por-turno incondicional (P8) porque projetos ao 
 ### 2026-07-27 — Avaliar entregar o `/check-wo` aos projetos-usuário — A AVALIAR (segue pendente de mais quilometragem, wo0063)
 Hoje `/check-wo` e `/apply-wo` são ferramentas do KCM para aplicar WOs no próprio kit. Depois de mais quilometragem, avaliar se vale entregar o mesmo par de comandos (como o "analyze" do SDD) aos projetos gerados, para que também apliquem mudanças de código com a mesma verificação prévia.
 
+### 2026-07-27 — Curadoria do `meta/CONTEXT.md` (raia Chat, arquivo inteiro) — ABERTA (wo0064)
+A wo0064 corrigiu números (17→18) e vocabulário (`spec`→WO) em nove pontos do `CONTEXT.md`, mas só higiene pontual — o doc ainda carrega cabeçalhos de arqueologia («Mudanças desde v1.42.0») e descreve o método do kit em termos de v1.34–v1.46, desatualizados frente ao estado atual do projeto. Merece uma passada de curadoria de verdade (raia Chat), não só correção de número.
+
+### 2026-07-27 — Varredura de defasagem nos docs-âncora — ABERTA (wo0064)
+Virou dívida recorrente: `CLAUDE.md` e `BUILD.md` ficaram **4 versões maiores** desatualizados (citando 17/17 quando o produto já estava em 18/18) sem ninguém notar, porque nenhum check olha para esses arquivos — só `meta/CONTEXT.md` tem cobertura parcial via revisão manual. Avaliar um check que compare o número de nichos citado nos docs-âncora com `Object.keys(NICHES).length`, para pegar a defasagem automaticamente na próxima vez que o produto crescer.
+
 ## 💡 Ativas — do usuário
 
 ### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR

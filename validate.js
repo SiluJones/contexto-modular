@@ -549,6 +549,11 @@ check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + for
   assert(/AAMMDD-HANDOFF-BRIEF\.md/.test(c),"CEREBRO nao nomeia o artefato de handoff");
   assert(/\*\*Próximo\*\* vem antes de um divisor/.test(c),"CEREBRO nao fixa a ordem (Proximo antes do divisor)");
   assert(/não uma jaula/.test(c),"CEREBRO nao autoriza o projeto a personalizar o bloco");
+  // wo0064: Proximo em duas partes (acao + pedido de volta) e Arquivar/Manter em lista
+  assert(/Peça no próximo turno/.test(c),"CEREBRO nao pede a sugestao de pedido no item Proximo");
+  assert(/\*\*\(a\) Ação\*\*/.test(c),"CEREBRO nao separa a acao no item Proximo");
+  assert(/\*\*Em lista\*\*, como a Config e o Handoff/.test(c),"Arquivar \/ Manter nao esta em formato de lista");
+  assert(/uma linha \*\*Arquivar:\*\* .*e uma linha \*\*Manter:\*\*/.test(c),"Arquivar \/ Manter sem as duas linhas nomeadas");
   assert(/Personalização genérica migra para os meta/.test(c),"CEREBRO sem a regra de migracao para os meta/");
   assert(!/Estas instruções trazem só o essencial, lido em toda mensagem/.test(T.buildInstr(n)),"cabecalho auto-referencial nao foi podado");
   return "ok";

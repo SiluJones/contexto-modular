@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.85.0**.
+> Histórico de versões. Versão atual: **v1.86.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.86.0 — Bloco de fecho v2 + higiene dos docs-âncora (wo0064, D-098)
+- **Próximo** ganha a segunda parte: **(a) Ação** (a próxima coisa concreta) + **(b) Peça no próximo turno** (a frase já redigida que o usuário devolve para retomar sem reconstruir contexto).
+- **Arquivar / Manter** vira **lista** (uma linha **Arquivar:**, uma linha **Manter:**), como Config recomendada e Handoff.
+- Check **C19** ganha **4 asserções novas**; nenhum check novo — segue **65/65**. **Custo de teto zero** (`narrative` segue 6612/folga 288, `game` segue 6520/folga 380).
+- **Dogfood corrigido:** `meta/CEREBRO.md` do próprio KCM estava na versão **pré-wo0060** (ordem Estado→Próximo→Notas e o rótulo antigo «Notas») — alinhado ao formato atual do produto.
+- **Higiene dos docs-âncora:** `CLAUDE.md` (raiz, lido pelo Claude Code em toda sessão) corrigido de **17/17** para **18/18 nichos**; `BUILD.md` corrigido de 17→18 em quatro pontos e `/check-spec` (comando inexistente desde a wo0053) trocado por `/check-wo`; `meta/CONTEXT.md` corrigido de 17→18 e do vocabulário `spec`→WO em nove pontos, preservando as linhas históricas que descrevem versões passadas.
+- `INSTRUCOES-DO-PROJETO.md`: ordem do bloco de fecho corrigida para **Próximo → Estado → Arquivar/Manter → Config recomendada**.
+- `KIT_VERSION 1.86.0`. Bump **patch** (texto de 2 itens do bloco de fecho + 4 asserções num check existente + higiene de docs, sem seção nova nem check novo).
+- Harness **18/18, 65/65, 0 erros**.
 
 ## v1.85.0 — Análise antes do compromisso no produto (wo0063, D-097)
 - Seção nova **«Análise antes do compromisso»** no CEREBRO gerado dos **18 nichos**: onde (`analises/AAMMDD-ANALISE-<assunto>.md`), o que tem dentro (Status/Problema/Restrições/Opções/Recomendação/Riscos/Ponto de decisão), medir antes de propor, a análise não decide sozinha, funil e cláusula de adoção (projeto que já usa `design/`/`estudos/`/`rfc/` não é renomeado por conta própria).
