@@ -10,8 +10,9 @@
 # Nota: usamos "meta/specs/*" (e nao "meta/specs/") de proposito — o git/pathspec NAO reinclui
 # um arquivo sob uma pasta excluida por inteiro, entao excluimos o conteudo e reincluimos o guia.
 meta/specs/*
+meta/workorders/*
 meta/analises/*
-!meta/specs/_GUIA-doc-por-spec.md
+!meta/workorders/_GUIA-doc-por-spec.md
 
 # Para estudar UMA spec especifica no Projeto, reinclua pontualmente (o "!" vence o ignore acima), ex.:
 # !meta/specs/260707-spec0033-campos-nicho-na-saida.md

@@ -1,5 +1,7 @@
 # ANÁLISE — Refino do nicho Narrativa (a partir de feedback de campo)
 
+> **Status:** Implementada
+> **Vira:** wo0047–wo0051 · **Decisão:** D-080/D-081/D-084
 > **Destino:** `meta/analises/260716-ANALISE-REFINO-NARRATIVE.md`
 > **Raia:** Chat (análise; ainda **não** é spec). **Data:** 2026-07-16. **Base:** v1.70.0.
 > **Método:** estudo dos 4 projetos reais que usaram o nicho (`Feedback novel`, 70 arquivos, ~244k tokens) + `feedback_novel.txt` (síntese do usuário). Fonte de maior sinal: as seções «Feedback para o Kit» dos quatro `IDEAS.md`. Achados de código conferidos no `index_template.html`/`narrative.js` do mount — nada aqui é suposição sem lastro (P13).

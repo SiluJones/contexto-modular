@@ -1,5 +1,7 @@
 # ANÁLISE — Enxugamento das Instruções do Projeto
 
+> **Status:** Implementada
+> **Vira:** wo0056/wo0057/wo0059/wo0060 · **Decisão:** D-090/D-091/D-093/D-094
 > **Destino:** `meta/analises/260726-ANALISE-ENXUGAMENTO-INSTRUCOES.md`
 > **Raia:** Chat (análise; **não** é WO). **Base:** v1.77.0 (pós-wo0054), 18/18 · 60/60 · 0 erros.
 > **Método:** medição empírica nos 18 nichos, no `index.html` construído do mount — nenhum número aqui é
