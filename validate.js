@@ -501,6 +501,35 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C21 analise antes do compromisso (wo0063): secao no CEREBRO dos 18, gatilho nas Instrucoes, funil, pasta preguicosa", () => {
+  const raw=fs.readFileSync(path,"utf8");
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const cmd=T.buildClaudeMd(n);
+    const instr=T.buildInstr(n);
+    assert(/## Análise antes do compromisso/.test(cmd), id+": CEREBRO sem a secao de analise");
+    assert(/nasce no primeiro uso/.test(cmd), id+": CEREBRO nao ensina a pasta preguicosa");
+    assert(/Ponto de decisão/.test(cmd), id+": CEREBRO sem o ponto de decisao (analise nao decide sozinha)");
+    assert(/renomeie nada por conta própria/.test(cmd), id+": CEREBRO sem a clausula de adocao (outro nome ja em uso)");
+    assert(/analises\/AAMMDD-ANALISE-/.test(instr), id+": Instrucoes sem o gatilho da analise");
+    const temSpec=(n.contextFiles||[]).some(f=>/^SPEC\.md$/i.test(f.name||""));
+    assert(temSpec === /specs\/AAMMDD-/.test(cmd), id+": funil de spec incoerente com a existencia do modelo SPEC.md");
+  });
+  // modo Code: o funil aponta para a WO
+  T.STATE.workmode = T.STATE.workmode || {}; const prev=T.STATE.workmode.codeMode;
+  T.STATE.workmode.codeMode = "yes";
+  const cmdCode=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
+  assert(/\*\*Funil:\*\* análise → \*\*WO\*\*/.test(cmdCode), "modo Code: funil nao aponta para a WO");
+  T.STATE.workmode.codeMode = prev;
+  // .flatdropignore gerado: conteudo da pasta (/*), nunca a pasta inteira — senao o "!" nao reinclui
+  assert(/meta\/workorders\/\*/.test(raw), "flatdropignore gerado nao usa meta/workorders/* (o ! nao reincluiria)");
+  assert(!/L\.push\("meta\/workorders\/", ""\)/.test(raw), "flatdropignore gerado ainda exclui a pasta inteira");
+  assert(/# !meta\/analises\/_TEMPLATE\.md/.test(raw), "flatdropignore gerado nao ensina a reinclusao do modelo");
+  assert(/uma analise por decisao nao-trivial/.test(raw), "README estruturado nao menciona meta/analises/");
+  assert(!/analises\/\.gitkeep/.test(raw), "o zip esta criando a pasta analises vazia (deveria nascer no primeiro uso)");
+  return "ok";
+});
+
 check("C20 nome padrao do handoff nos prompts de transferencia e retomada (wo0061)", () => {
   const raw=fs.readFileSync(path,"utf8");
   const n=(raw.match(/AAMMDD-HANDOFF-BRIEF\.md/g)||[]).length;

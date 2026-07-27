@@ -516,13 +516,20 @@ Check de harness confirmando que todo prompt que pede entrada declara `fill`/`fi
 ## i-N53 — Doc-âncora por nicho (`anchorDoc`)
 **2026-07-16 — FECHADA (spec0047, D-080):** o resolvedor do doc de contexto deixa de adivinhar o arquivo-âncora por regex de nome; cada nicho declara `anchorDoc` (retaguarda: regex). Corrige a omissão do âncora no ritual de narrative/BIBLIA, marketing/MARCA, pixel/ESTILO, rpg/MUNDO e o choque `CONTEXT` (ASU + kit-Code) em nichos sem `CONTEXT.md`. `custom` declara `anchorDoc:null`. Trava por G25 (asu on/off). Origem: análise 260716 §A.
 
-### 2026-07-27 — Ensinar o produto sobre `meta/analises/` — NÃO DECIDIDA (wo0062)
+### 2026-07-27 — Ensinar o produto sobre `meta/analises/` — ✅ DECIDIDA (D-097, wo0063)
 Hoje a convenção `meta/analises/` (D-089/D-096) é só do próprio KCM (dogfood). Avaliar se os kits **gerados** para os projetos-usuário também deveriam receber a pasta/menção — é decisão de escopo (o padrão RFC/design doc vale para qualquer projeto não-trivial, mas pode inchar o que hoje é enxuto). Parqueada para a próxima fase.
+**Fechamento (2026-07-27, wo0063, D-097):** decidido ensinar como **convenção universal, com pasta preguiçosa** — os 18 nichos ganham a seção «Análise antes do compromisso» no CEREBRO gerado + gatilho nas Instruções; a pasta (`analises/`, e `specs/` pela mesma regra) só nasce quando o primeiro arquivo for escrito, nunca pré-criada no zip. Ver D-097 para as opções descartadas e o racional.
+
+### 2026-07-27 — Renomear `design/` → `analises/` no projeto-filho que usa aquele nome — A DIALOGAR (wo0063)
+Um projeto-filho já usa `design/` para o equivalente do documento de análise. A cláusula de adoção da D-097 (o CEREBRO gerado agora ensina) permite conviver com o nome próprio sem rename forçado — mas migrar para `analises/` também é uma opção, a propor e decidir **com aquele projeto**, não a executar por conta própria.
+
+### 2026-07-27 — Validar em campo se a seção «Análise antes do compromisso» faz os projetos escreverem análise antes de mudança grande — A VALIDAR (wo0063)
+É o teste real da D-097: a seção nova no CEREBRO gerado + o gatilho nas Instruções ensinam a convenção, mas só o uso em campo confirma se os projetos-usuário passam a escrever a análise antes do compromisso, como a wo0052 validou o mount-check.
 
 ### 2026-07-27 — Validar em campo se a wo0052 resolveu os projetos que não liam os `.txt` — A VALIDAR
 A wo0052/D-085 corrigiu o mount-por-turno incondicional (P8) porque projetos ao vivo respondiam de memória a mounts já atualizados, ignorando `.txt`/`_MANIFEST` novos. Falta confirmar em uso real se a correção resolveu o sintoma original, não só a lógica no CEREBRO.
 
-### 2026-07-27 — Avaliar entregar o `/check-wo` aos projetos-usuário — A AVALIAR
+### 2026-07-27 — Avaliar entregar o `/check-wo` aos projetos-usuário — A AVALIAR (segue pendente de mais quilometragem, wo0063)
 Hoje `/check-wo` e `/apply-wo` são ferramentas do KCM para aplicar WOs no próprio kit. Depois de mais quilometragem, avaliar se vale entregar o mesmo par de comandos (como o "analyze" do SDD) aos projetos gerados, para que também apliquem mudanças de código com a mesma verificação prévia.
 
 ## 💡 Ativas — do usuário

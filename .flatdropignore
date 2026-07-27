@@ -13,6 +13,12 @@ meta/specs/*
 meta/workorders/*
 meta/analises/*
 !meta/workorders/_GUIA-doc-por-spec.md
+!meta/analises/_TEMPLATE.md
+
+# REGRA (wo0063): modelo e guia de pasta ignorada SEMPRE voltam com "!" — o corpo fica fora, o
+# modelo sobe. Criou um _TEMPLATE/_GUIA numa pasta ignorada? Reinclua na MESMA leva em que criou.
+# E use "pasta/*" (o conteudo), nunca "pasta/" (a pasta): sob pasta excluida por inteiro o "!"
+# nao reinclui nada.
 
 # Para estudar UMA spec especifica no Projeto, reinclua pontualmente (o "!" vence o ignore acima), ex.:
 # !meta/specs/260707-spec0033-campos-nicho-na-saida.md

@@ -1,8 +1,20 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.84.0**.
+> Histórico de versões. Versão atual: **v1.85.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.85.0 — Análise antes do compromisso no produto (wo0063, D-097)
+- Seção nova **«Análise antes do compromisso»** no CEREBRO gerado dos **18 nichos**: onde (`analises/AAMMDD-ANALISE-<assunto>.md`), o que tem dentro (Status/Problema/Restrições/Opções/Recomendação/Riscos/Ponto de decisão), medir antes de propor, a análise não decide sozinha, funil e cláusula de adoção (projeto que já usa `design/`/`estudos/`/`rfc/` não é renomeado por conta própria).
+- Gatilho de **145 chars** nas Instruções + linha nova na tabela «Como manter os documentos».
+- `analiseFunil()`: modo Code → aponta para a **WO** (`meta/workorders/`); nicho com modelo `SPEC.md` → também aponta para a **spec de feature** (`specs/AAMMDD-<nome>.md`) quando o trabalho é de produto.
+- `.flatdropignore` gerado corrigido: `meta/workorders/*` (a receita antiga excluía a pasta inteira e o `!` não reincluía nada) + bloco comentado novo para `analises/`, com a regra «modelo e guia sempre sobem».
+- README estruturado ganha a linha de `meta/analises/`. Zip **não** cria `meta/analises/.gitkeep` — a pasta nasce só no primeiro uso, e o check C21 trava essa ausência.
+- Novo check **C21**.
+- Teto medido (nenhum nicho estoura): `narrative` 6467→**6612** (folga 288); `game` 6375→**6520** (folga 380); `dev` 5893→**6038** (folga 862); `career` 5817→**5962** (folga 938).
+- **Dogfood no próprio KCM:** `.flatdropignore` da raiz libera `meta/analises/_TEMPLATE.md`; `meta/CEREBRO.md` registra as duas regras (produto ensina a análise + higiene do FlatDrop); comandos `.claude/commands/{check-wo,apply-wo,wrap}.md` atualizados (vocabulário WO, caminho `src/`, 18/18, status das análises).
+- `KIT_VERSION 1.85.0`. Bump **minor** (seção nova + gatilho + check novo + correção de comportamento gerado).
+- Harness **18/18, 64/64 → 65/65, 0 erros**.
 
 ## v1.84.0 — Nome do handoff nos prompts de transferência e retomada (wo0061, D-095)
 - O nome `AAMMDD-HANDOFF-BRIEF.md` — antes só no CEREBRO (bloco de fecho, wo0058/wo0060) — passa a constar nos **prompts E (transferir agora) e F (retomar após transferência)**: é o prompt que manda gerar o arquivo, então é ali que a convenção evita cada projeto inventar o próprio nome.
