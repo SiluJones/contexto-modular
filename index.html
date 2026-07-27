@@ -1016,7 +1016,7 @@ const PROMPTS_BASE = [
       const L = [];
       L.push("Esta conversa está ficando pesada. Vamos preparar a transferência para uma conversa nova.");
       L.push("");
-      L.push("**1) Gere um HANDOFF-BRIEF** (arquivo NOVO, para eu colar como primeira mensagem da próxima conversa). Ele é um ATALHO de arranque, não a memória — a memória continua nos arquivos de contexto. Inclua, com detalhe:");
+      L.push("**1) Gere um **`AAMMDD-HANDOFF-BRIEF.md`** (arquivo NOVO, para eu colar como primeira mensagem da próxima conversa). Ele é um ATALHO de arranque, não a memória — a memória continua nos arquivos de contexto. Inclua, com detalhe:");
       L.push("- Onde estamos: estado atual e o que já está fechado.");
       L.push("- O que foi feito nesta sessão — e POR QUÊ (o motivo, não só o quê).");
       L.push("- Pendências concretas: o que fazer primeiro, com o passo exato.");
@@ -1050,7 +1050,7 @@ const PROMPTS_BASE = [
       if(codeModeOn()) steps.push("O repositório é a fonte de verdade: leia a versão atual dos arquivos (puxe antes de começar), nunca a memória.");
       steps.push("Se houver um `_MANIFEST.md` no material (pacote estruturado — download ↓ do KCM ou FlatDrop), use-o como mapa de nomes e estrutura antes de deduzir qualquer caminho.");
       steps.push("Leia os arquivos de contexto: primeiro o que define seu comportamento, depois o estado atual, as decisões e o que ficou pendente.");
-      steps.push("Leia o HANDOFF-BRIEF da conversa anterior — ele é um ATALHO de arranque, **não a verdade**. Se o brief divergir dos arquivos, os ARQUIVOS vencem.");
+      steps.push("Leia o `AAMMDD-HANDOFF-BRIEF.md` da conversa anterior — ele é um ATALHO de arranque, **não a verdade**. Se o brief divergir dos arquivos, os ARQUIVOS vencem.");
       steps.push("Confirme em UMA frase o que entendeu do estado e do próximo passo. Em ambiguidade real, pergunte antes de executar.");
       const ritual = steps.map((s,i) => `${i+1}. ${s}`).join("\n");
       return `Estou retomando o trabalho numa conversa nova. Antes de responder:\n\n${ritual}\n\n---\n${p.task||"[O QUE QUER FAZER HOJE]"}`;
@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.83.0";
+const KIT_VERSION = "1.84.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};

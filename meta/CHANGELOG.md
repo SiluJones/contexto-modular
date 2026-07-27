@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.83.0**.
+> Histórico de versões. Versão atual: **v1.84.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.84.0 — Nome do handoff nos prompts de transferência e retomada (wo0061, D-095)
+- O nome `AAMMDD-HANDOFF-BRIEF.md` — antes só no CEREBRO (bloco de fecho, wo0058/wo0060) — passa a constar nos **prompts E (transferir agora) e F (retomar após transferência)**: é o prompt que manda gerar o arquivo, então é ali que a convenção evita cada projeto inventar o próprio nome.
+- **Prompt E:** «Gere um **`AAMMDD-HANDOFF-BRIEF.md`** (arquivo NOVO, ...)».
+- **Prompt F:** «Leia o `AAMMDD-HANDOFF-BRIEF.md` da conversa anterior».
+- Fecha a nota `260720-2129` e as ideias **i-N44/i-N45**.
+- `UPDATE_PROTOCOL` revisado nesta passada e mantido como está — entrega arquivo inteiro, conjunto consistente na mesma leva, higiene aplicada na montagem.
+- Novo check **C20** (nome presente ≥3× no CEREBRO + prompts E/F; prompt E sem o nome antigo sem convenção de data).
+- `KIT_VERSION 1.84.0`. Bump **minor** (texto de 2 prompts + check novo, custo zero de teto).
+- Harness **18/18, 64/64, 0 erros**.
 
 ## v1.83.0 — WO-C: correção do bloco de fecho + poda + migração para os `meta/` (wo0060, D-094)
 - **Escopo reduzido por decisão do usuário:** papéis dos arquivos ficam como estão (folgas de 862–1647 tornavam a compressão desnecessária, e custaria clareza sem ganho necessário).

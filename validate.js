@@ -501,6 +501,14 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C20 nome padrao do handoff nos prompts de transferencia e retomada (wo0061)", () => {
+  const raw=fs.readFileSync(path,"utf8");
+  const n=(raw.match(/AAMMDD-HANDOFF-BRIEF\.md/g)||[]).length;
+  assert(n>=3,"nome AAMMDD-HANDOFF-BRIEF.md deveria estar no CEREBRO + prompts E e F (achei "+n+")");
+  assert(!/um HANDOFF-BRIEF\*\*/.test(raw),"prompt de transferencia ainda usa o nome sem convencao de data");
+  return "ok ("+n+" ocorrencias)";
+});
+
 check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + formato condicional no CEREBRO", () => {
   const n=T.normNiche(T.NICHES.dev);
   assert(/Fecho do turno/.test(T.buildInstr(n)),"Instr sem o gatilho do bloco de fecho");
