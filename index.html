@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.82.0";
+const KIT_VERSION = "1.83.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8237,7 +8237,7 @@ function buildInstr(niche){
   }).filter(Boolean);
   if(ctxBits.length) lines.push(`Contexto do projeto: ${ctxBits.join(" · ")}.`);
   lines.push("");
-  lines.push("> Comportamento detalhado, regras de higiene e tabela de gatilhos estão no **CEREBRO.md** (subido como arquivo). Estas instruções trazem só o essencial, lido em toda mensagem.");
+  lines.push("> Comportamento detalhado, higiene e gatilhos: **CEREBRO.md**.");
 
   // Ritual de início — load-bearing, precisa estar em todo turno
   lines.push("");
@@ -8326,7 +8326,7 @@ function buildInstr(niche){
     lines.push("Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
     outOn.forEach(o => lines.push(`- ${o.label}`));
     lines.push("- Higiene no CEREBRO.md (resumo: STATUS só o agora; IDEAS nunca perde; uma fonte de verdade por dado).");
-    lines.push("- **Feche o turno com o bloco padrão** (só o que se aplica): Estado · Próximo passo · Notas (arquivar/manter) · Config por raia · Handoff. Formato no CEREBRO.");
+    lines.push("- **Fecho do turno** (só o que se aplica): Próximo · Estado · Arquivar/Manter · Config por raia · Handoff. Formato no CEREBRO.");
   }
 
   lines.push("");
@@ -8497,18 +8497,20 @@ function buildClaudeMd(niche){
   L.push("- **É dever seu, não meu pedido.** Estas Instruções nascem genéricas: são um ponto de partida a especializar, como todo template do kit. Você **deve** propor o refino por conta própria — no fim da primeira sessão de trabalho real e, depois, sempre que perceber sinal (regra que você repetidamente descumpre, instrução que nunca se aplicou, atrito recorrente). Não espere eu pedir; se eu tiver de pedir, o refino já atrasou.");
   L.push("- **Você decide o que merece texto integral.** As Instruções trazem a regra em forma curta e o CEREBRO guarda a definição completa. Se uma regra específica é crítica **neste** projeto — ou é justamente a que você mais erra — promova-a de volta ao texto integral nas Instruções, dizendo por quê. O orçamento é seu para administrar: encolher não é a meta, acertar o que fica sempre à vista é.");
   L.push("- **Atrito sem solução local vira feedback ao kit.** Se o problema não é deste projeto e sim do KCM (regra confusa, gatilho que não dispara, lacuna de comportamento), registre em IDEAS.md na seção de feedback ao kit — é um desfecho legítimo do refino, não uma desculpa para não refinar.");
+  L.push("- **Personalização genérica migra para os meta/.** O que veio do formulário de montagem serve para **preencher** os arquivos de contexto; depois de aplicado, não precisa continuar ocupando as Instruções. Proponha mover, deixando nas Instruções a identidade do projeto, o ritual, os gatilhos e a disciplina de entrega.");
   L.push("- **Corte o que não se aplica.** Princípio, gatilho ou regra que este projeto nunca usou em N sessões é peso morto — proponha remover, dizendo o que sai.");
   L.push("- **Especialize o que se aplica.** Troque o exemplo genérico pelo caso real deste projeto: instrução concreta economiza mais token do que instrução curta e vaga.");
   L.push("- **Não confunda encurtar com esquecer.** Regra que já evitou um erro real (está no DECISIONS) NÃO sai. Se algo sai, some ao CEREBRO — o CEREBRO é lido sob demanda, as Instruções em toda mensagem: mover é barato, apagar é caro.");
   L.push("- **Não inche.** Antes de acrescentar uma regra, pergunte se ela cabe no CEREBRO. Só vai para as Instruções o que precisa ser lembrado em TODO turno.");
   L.push("");
   L.push("## Bloco de fecho de turno (formato fixo)");
-  L.push("Todo turno de trabalho termina com este bloco, nesta ordem, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff):");
-  L.push("- **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir.");
-  L.push("- **Próximo passo** — sempre presente: a próxima ação concreta, não uma lista de possibilidades.");
-  L.push("- **Notas** — só se houver notas avulsas no mount: diga, nome por nome, o que já pode ser **arquivado** (absorvido) e o que **manter** (item ainda aberto), com o motivo em poucas palavras. Não espere que eu pergunte.");
-  L.push("- **Config recomendada** — o que usar no próximo passo, **identificando a raia**: para a conversa de planejamento, tipo de modelo + nível de esforço; e uma linha por raia adicional que este projeto realmente use. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
-  L.push("- **Handoff** — só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Se o pedido for um handoff de sessão completo, o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
+  L.push("Todo turno de trabalho fecha assim, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem antes de um divisor; o resto vem depois dele:");
+  L.push("1. **Próximo** — sempre presente, ANTES do divisor: a próxima ação concreta, não uma lista de possibilidades.");
+  L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir.");
+  L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount: nome por nome, o que já pode ser **arquivado** (absorvido) e o que **manter** (item ainda aberto), com o motivo em poucas palavras. Não espere que eu pergunte.");
+  L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
+  L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
+  L.push("**Este formato é o ponto de partida, não uma jaula.** Se este projeto tem um dado recorrente que merece linha própria (prazo, custo, publicação, estoque, o que for), acrescente — e se uma linha nunca se aplica aqui, proponha removê-la no refino.");
   L.push("Vale para todo turno de trabalho, não só ao encerrar a sessão: é o que me deixa retomar sem reconstruir contexto.");
   L.push("");
   L.push("- **Sincronia com o CEREBRO.** Quando uma customização estrutural entra no CEREBRO (novo modo, novo arquivo, mudança de processo), a versão curta das Instruções pode ficar para trás e até contradizê-lo. Ao mexer no CEREBRO, cheque se as Instruções ainda batem; se divergirem, proponha alinhar/regenerar a versão curta.");

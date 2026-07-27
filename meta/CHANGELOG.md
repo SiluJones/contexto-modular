@@ -1,8 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.82.0**.
+> Histórico de versões. Versão atual: **v1.83.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.83.0 — WO-C: correção do bloco de fecho + poda + migração para os `meta/` (wo0060, D-094)
+- **Escopo reduzido por decisão do usuário:** papéis dos arquivos ficam como estão (folgas de 862–1647 tornavam a compressão desnecessária, e custaria clareza sem ganho necessário).
+- **(a) Correção do bloco de fecho da wo0058:** ordem e rótulos corretos — **Próximo** (item 1, antes do divisor) → **Estado** → **Arquivar / Manter** → **Config recomendada** (lista, uma linha por raia) → **Handoff** (por último). Bloco declarado **personalizável**: o projeto pode acrescentar linha própria para dado recorrente ou propor remover a que nunca se aplica.
+- **(b) Poda do cabeçalho auto-referencial** das Instruções (explicava o documento para quem já estava lendo o documento) — **−110 chars nos 18 nichos**.
+- **(c) Regra nova de migração para os `meta/`:** personalização genérica vinda do formulário de montagem preenche os arquivos de contexto e, depois de aplicada, sai das Instruções — que guardam identidade do projeto, ritual, gatilhos e disciplina de entrega.
+- **Check C19 atualizado:** rótulos do array + 4 asserções novas (ordem de «Próximo», frase «não uma jaula», regra de migração, poda do cabeçalho).
+- **Teto medido:** `narrative` 6612→**6467** (folga 433); `game` 6520→**6375** (folga 525); `dev` 6038→5893 (folga 1007); `career` 6049→5817 (folga 1083). Nenhum nicho estoura.
+- **Enxugamento A→B→C concluído** (D-090 motor, D-091/D-093 curadoria, D-094 papéis+migração).
+- `KIT_VERSION 1.83.0`. Bump **minor** (correção de comportamento + regra nova + check atualizado).
+- Harness **18/18, 63/63, 0 erros**.
 
 ## v1.82.0 — Enxugamento etapa B, 2ª e última leva: curadoria dos 13 nichos restantes (wo0059, D-093)
 - **68 frases curadas no campo `short`** dos 13 nichos restantes: dev (3), design (5), client (5), marketing (5), research (6), product (4), business (3), pixel (5), brainstorm (6), music (6), cuisine (7), animation (7), comics (6); `custom` não tem comportamentos próprios. Definições integrais preservadas no CEREBRO.

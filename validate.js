@@ -503,13 +503,17 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
 
 check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + formato condicional no CEREBRO", () => {
   const n=T.normNiche(T.NICHES.dev);
-  assert(/Feche o turno com o bloco padrão/.test(T.buildInstr(n)),"Instr sem o gatilho do bloco de fecho");
+  assert(/Fecho do turno/.test(T.buildInstr(n)),"Instr sem o gatilho do bloco de fecho");
   const c=T.buildClaudeMd(n);
   assert(/## Bloco de fecho de turno/.test(c),"CEREBRO sem a secao do bloco de fecho");
-  ["Estado","Próximo passo","Notas","Config recomendada","Handoff"].forEach(k=>
+  ["Próximo","Estado","Arquivar / Manter","Config recomendada","Handoff"].forEach(k=>
     assert(new RegExp("\\*\\*"+k+"\\*\\*").test(c),"CEREBRO sem a linha: "+k));
   assert(/só as linhas que se aplicam/.test(c),"CEREBRO nao manda condicionar as linhas");
   assert(/AAMMDD-HANDOFF-BRIEF\.md/.test(c),"CEREBRO nao nomeia o artefato de handoff");
+  assert(/\*\*Próximo\*\* vem antes de um divisor/.test(c),"CEREBRO nao fixa a ordem (Proximo antes do divisor)");
+  assert(/não uma jaula/.test(c),"CEREBRO nao autoriza o projeto a personalizar o bloco");
+  assert(/Personalização genérica migra para os meta/.test(c),"CEREBRO sem a regra de migracao para os meta/");
+  assert(!/Estas instruções trazem só o essencial, lido em toda mensagem/.test(T.buildInstr(n)),"cabecalho auto-referencial nao foi podado");
   return "ok";
 });
 
