@@ -33,3 +33,5 @@ logs/
 # reconstruido pelo Code via "node build.js". No mount ele so duplica o template e custa tokens.
 # (Se algum dia quiser inspecionar o build DENTRO do Projeto, reinclua com: !index.html)
 index.html
+
+INSTRUCOES-DO-PROJETO.md
