@@ -1,8 +1,14 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.87.0**.
+> Histórico de versões. Versão atual: **v1.88.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.88.0 — A copia nao e a fonte da verdade (wo0066, D-100)
+- **Regra de higiene nova nos 18 CEREBROs gerados:** «A sua cópia não é a fonte da verdade» — vale o arquivo do repo/mount AGORA, não o que foi lido/gerado/reconstruído antes na conversa; reentregar trabalho já aplicado custa mais caro que perguntar. Vive **só no CEREBRO** — check **C23** prova que não vazou para as Instruções (custo de teto zero: `narrative` 6612, `game` 6520, `dev` 6117, todos inalterados).
+- **Dogfood — duas armadilhas novas no `meta/CONTEXT.md` §7** (15: tratar a própria cópia/sandbox como o estado do projeto; 16: comparar contra a cópia versionada das Instruções em vez do painel) e duas regras no `meta/CEREBRO.md` («a cópia não é a fonte da verdade» + «a instrução viva é a do painel», consequência de `437fd39`).
+- **`meta/analises/*` volta a subir ao mount** (`.flatdropignore`): análise «Em discussão» que o chat não vê no turno seguinte não é discutida, é reescrita do zero.
+- `KIT_VERSION 1.88.0`. Harness **18/18, 66/66 → 67/67, 0 erros**.
 
 ## v1.87.0 — Raia do bloco de fecho + disciplina de entrega + fim dos resíduos spec (wo0065, D-099)
 - **O bloco de fecho de turno ganha dono:** é da raia de **planejamento** (chat) — o `meta/CEREBRO.md` e o `CLAUDE.md`/`INSTRUCOES-DO-PROJETO.md` do próprio KCM passam a dizer isso explicitamente. Quem **executa** no Claude Code fecha com **relatório de trabalho** (o que fez, achados/desvios do texto da WO, arquivos tocados, build/validação, commit) — o `CLAUDE.md` gerado e a skill `apply-wo` do kit-Code passam a mandar relatar; `.claude/commands/wrap.md` do próprio KCM idem.

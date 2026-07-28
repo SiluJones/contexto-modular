@@ -124,6 +124,8 @@ Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `op
 12. **Âncoras de `str_replace`/ASU reconstruídas de memória falham** — VER o texto exato antes (várias edições falharam por 1 caractere).
 13. **Editar o `index.html` à mão** → ERRADO agora: editar `src/` e rodar `node build.js` (senão a próxima build sobrescreve).
 14. **Nomes do mount mudam por sessão** (achatado FlatDrop: `dev__src__niches.js` ou colisões `dev.js`) — conferir `_MANIFEST.md` / listar antes de mapear.
+15. **Tratar a própria cópia como o estado do projeto** (sandbox reconstruído, artefato gerado, resumo de dois turnos atrás) → reentrega de trabalho já aplicado. O sandbox congela quando é criado; o repo anda. **Cópia byte-idêntica não protege** — o que envelhece primeiro não é o código, é o *estado do trabalho*. Releia o mount ANTES de responder, sempre, e com mais rigor quando existir um sandbox (wo0066).
+16. **Comparar contra a cópia versionada das Instruções** em vez do texto de **Projeto → Instruções** → conclusão errada sobre o que o assistente lê de fato. Desde `437fd39` o `INSTRUCOES-DO-PROJETO.md` nem sobe ao mount: o painel é a única referência (wo0066).
 
 ## 8. Produto / posicionamento
 - Compete e complementa a feature nativa "Pesquisar e referenciar conversas". Diferencial: portabilidade (arquivos no Git), estrutura deliberada (decisão/ideia/estado separados), controle do que entra no contexto.

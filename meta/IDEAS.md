@@ -541,6 +541,9 @@ Virou dívida recorrente: `CLAUDE.md` e `BUILD.md` ficaram **4 versões maiores*
 ### 2026-07-27 — O teto (`N[]`/`G16`) não cobre os modos — A ANALISAR (prioridade) (wo0065)
 Medido nesta WO: `N[]` mede a configuração **padrão** (todos os modos desligados) e `G16` varia só chips/multi — **nenhum dos dois liga Modo Code ou ASU**. Com **Code+ASU ligados**, `narrative` vai a **8081** e `game` a **7989** — mais de 1.000 chars **acima** do teto de 6.900, sem que nada no harness fique vermelho. Ou o teto precisa ser medido **por configuração** (não só padrão + pior-caso-de-chips), ou as linhas dos modos precisam da mesma curadoria de frase que os comportamentos receberam nas wo0057/wo0059. **É análise, não WO** — mexer no `G16` hoje deixaria o harness vermelho na hora.
 
+### 2026-07-27 — Medir a defasagem entre o painel (Projeto → Instruções) e o repo — ABERTA (wo0066)
+Desde `437fd39` o `INSTRUCOES-DO-PROJETO.md` do repo é backup versionado, não sobe ao mount — quem vale é o texto colado em Projeto → Instruções. O harness não tem como ver esse texto colado, então hoje a única defesa contra o painel ficar desatualizado é o pedido explícito de recolar ao entregar WO que muda as Instruções. Avaliar se o `INSTRUCOES-DO-PROJETO.md` deveria carregar um carimbo de versão (`<!-- v1.88.0 -->`) que o assistente possa conferir contra o `KIT_VERSION` ao abrir a sessão — se divergir, ele avisa em vez de assumir que o painel está atualizado.
+
 ## 💡 Ativas — do usuário
 
 ### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR

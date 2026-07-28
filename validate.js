@@ -501,6 +501,18 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C23 a copia nao e a fonte da verdade (wo0066): regra de higiene nos 18 CEREBROs, sem custo nas Instrucoes", () => {
+  let base=null;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const cmd=T.buildClaudeMd(n);
+    assert(/A sua cópia não é a fonte da verdade/.test(cmd), id+": CEREBRO sem a regra de releitura antes de afirmar pendencia");
+    assert(/releia o arquivo vivo/.test(cmd), id+": CEREBRO nao manda reler o arquivo vivo");
+    assert(!/A sua cópia não é a fonte da verdade/.test(T.buildInstr(n)), id+": a regra vazou para as Instrucoes (deve viver so no CEREBRO)");
+  });
+  return "ok";
+});
+
 check("C22 disciplina de entrega no modo Code (wo0065): WO com comando junto, bloco git inteiro, relatorio na raia de execucao", () => {
   const n=T.normNiche(T.NICHES.dev);
   T.STATE.workmode = T.STATE.workmode || {};

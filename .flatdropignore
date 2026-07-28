@@ -11,7 +11,10 @@
 # um arquivo sob uma pasta excluida por inteiro, entao excluimos o conteudo e reincluimos o guia.
 meta/specs/*
 meta/workorders/*
-meta/analises/*
+# Analises: enquanto forem POUCAS, sobem. O chat precisa reler a analise "Em discussao" no turno
+# seguinte — analise que o chat nao ve nao e discutida, e reescrita do zero. Quando pesarem, religue
+# a linha abaixo e reinclua pontualmente a que estiver aberta (!meta/analises/<arquivo>.md).
+# meta/analises/*
 !meta/workorders/_GUIA-doc-por-wo.md
 !meta/analises/_TEMPLATE.md
 

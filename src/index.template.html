@@ -1130,6 +1130,7 @@ const HYGIENE_RULES = [
   "STATUS é só o agora: item resolvido sai do STATUS e vai para o CHANGELOG (e para o log da sessão). Médio/longo prazo vive no ROADMAP, não no STATUS.",
   "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida.",
   "DECISIONS cresce devagar: quando passar de ~700 linhas ou uma decisão for substituída, mova as antigas para um arquivo de arquivo morto.",
+  "A sua cópia não é a fonte da verdade: vale o arquivo que está no repo/mount AGORA, não o que você leu, gerou ou reconstruiu antes nesta conversa. Qualquer artefato que você produziu (um pacote, uma reconstrução, um resumo do estado) envelhece no instante em que alguém aplica alguma coisa. Antes de dizer que algo continua pendente — ou de reentregar trabalho — releia o arquivo vivo. Reentregar o que já foi aplicado custa mais caro que perguntar.",
   "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre."
 ];
 
@@ -1226,7 +1227,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.87.0";
+const KIT_VERSION = "1.88.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
