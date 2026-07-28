@@ -1,8 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.86.0**.
+> Histórico de versões. Versão atual: **v1.87.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.87.0 — Raia do bloco de fecho + disciplina de entrega + fim dos resíduos spec (wo0065, D-099)
+- **O bloco de fecho de turno ganha dono:** é da raia de **planejamento** (chat) — o `meta/CEREBRO.md` e o `CLAUDE.md`/`INSTRUCOES-DO-PROJETO.md` do próprio KCM passam a dizer isso explicitamente. Quem **executa** no Claude Code fecha com **relatório de trabalho** (o que fez, achados/desvios do texto da WO, arquivos tocados, build/validação, commit) — o `CLAUDE.md` gerado e a skill `apply-wo` do kit-Code passam a mandar relatar; `.claude/commands/wrap.md` do próprio KCM idem.
+- **Duas disciplinas de entrega reforçadas nas Instruções** (lidas em toda mensagem, não só no CEREBRO): **WO nunca vai sozinha** (linha `/apply-wo <arquivo>` junto, no modo Code) e **bloco `git` parcial (só `add`) não serve** — ou os três em ordem, ou só o `commit`.
+- **9 resíduos do rename `spec`→WO (wo0053)** corrigidos na prosa do template e no kit do Claude Code (o check C15 vigiava caminhos e nome de comando, não a prosa): «doc por spec», «Specs só de doc», «Ao APLICAR uma spec», rótulo `Spec: $ARGUMENTS`, etc.
+- Check **C22** novo. `KIT_VERSION 1.87.0`. Teto: padrão inalterado (`narrative` 6612, `game` 6520); `dev` 6038 → **6117** (folga 783).
+- **Dogfood:** guia renomeado `_GUIA-doc-por-spec.md` → `_GUIA-doc-por-wo.md`; referências corrigidas em `.flatdropignore` e `meta/CEREBRO.md`.
+- Harness **18/18, 65/65 → 66/66, 0 erros**.
 
 ## v1.86.0 — Bloco de fecho v2 + higiene dos docs-âncora (wo0064, D-098)
 - **Próximo** ganha a segunda parte: **(a) Ação** (a próxima coisa concreta) + **(b) Peça no próximo turno** (a frase já redigida que o usuário devolve para retomar sem reconstruir contexto).

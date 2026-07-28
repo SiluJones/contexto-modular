@@ -1226,7 +1226,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.86.0";
+const KIT_VERSION = "1.87.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8261,8 +8261,9 @@ function buildInstr(niche){
   lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir config diferente, recomende-a explícita — no chat: modelo + esforço (Baixo→Máximo) + pensamento (lig/desl); no Claude Code: modelo + `/effort` (ou `ultrathink`/`ultracode`), SEM toggle de pensamento. Nunca afirme saber a atual; recomende pela tarefa. Pesada com config fraca → peça aumento; folga → diga que pode baixar.");
   lines.push("**Log:** nomeie `logs/AAAA-MM-DD.md` (data ISO, sem a palavra \"log\" no nome).");
   lines.push("**Análise antes do compromisso:** mudança não-trivial → análise escrita antes (`analises/AAMMDD-ANALISE-<tema>.md`). Formato e funil no CEREBRO.");
+  if(codeModeOn()) lines.push("**WO nunca vai sozinha:** entregue junto a linha `/apply-wo <arquivo>` para eu colar no Code.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
-    lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO para copiar isolado, mensagem sem acento. Não pule o commit.");
+    lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO para copiar isolado, mensagem sem acento. Não pule o commit. Bloco git parcial (só `add`) não serve: ou os três em ordem, ou só o `commit`.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
     lines.push("**`.gitignore`:** em projeto com repo, entregue um `.gitignore` adequado ao stack na PRIMEIRA leva que crie estrutura (ex.: node_modules, dist, .env, outputs, backups). Não espere o usuario pedir; entregue junto com os primeiros arquivos.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
@@ -8538,6 +8539,7 @@ function buildClaudeMd(niche){
   L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**, como a Config e o Handoff: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Nome por nome — e não espere que eu pergunte.");
   L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
   L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
+  L.push("**De quem é este bloco:** da raia de **planejamento** (o assistente no chat). Quem **executa** no Claude Code não fecha assim — fecha com o **relatório de trabalho**: o que fez, o que encontrou que foge do que a tarefa pedia, os arquivos tocados, o resultado do build/validação e o commit. Trocar o relatório por este formulário perde a informação que só quem executou tem.");
   L.push("**Este formato é o ponto de partida, não uma jaula.** Se este projeto tem um dado recorrente que merece linha própria (prazo, custo, publicação, estoque, o que for), acrescente — e se uma linha nunca se aplica aqui, proponha removê-la no refino.");
   L.push("Vale para todo turno de trabalho, não só ao encerrar a sessão: é o que me deixa retomar sem reconstruir contexto.");
   L.push("");
@@ -8654,9 +8656,9 @@ if(asuModeOn()){
     L.push('- **Claude Code (execução):** implementa código e faz edições **append-only** nos meta/ (linha no STATUS, `DEC-`/`FIX-` em DECISIONS, marcar estado de fase). Aplica as WOs de doc. Roda build/validação. Commita.');
     L.push('- **Nomes padronizados:** WOs (work orders) em `meta/workorders/` seguem `AAMMDD-woNNNN-desc.md` (ex.: `260630-wo0007-asu-entrega-e-escopo.md`)'+(asuModeOn()?'; instruções ASU seguem `AAMMDD-asuNNNN.yaml`':'')+'. Numeração sequencial e estável; a data é a de criação. O chat nomeia; o Code aplica.');
     L.push("");
-    L.push('**Método "doc por spec":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por WO, o chat não entrega o mesmo doc inteiro no mesmo ciclo). Specs **só de doc não tocam o produto** → não precisam de build; a rede é o `git diff`.');
+    L.push('**Método "doc por WO":** o chat AUTORA o texto; o Code só POSICIONA — não inventa prosa de curadoria. **Um canal por doc por ciclo** (se um doc foi por WO, o chat não entrega o mesmo doc inteiro no mesmo ciclo). WO **só de doc não toca o produto** → não precisa de build; a rede é o `git diff`.');
     L.push("");
-    L.push('**Ao APLICAR uma spec (Code):** localize cada âncora EXATAMENTE; se não achar uma, **PARE e reporte** — nunca chute um lugar próximo. Não toque em nada fora das edições nomeadas. Rode `git diff` e confira a forma esperada antes de commitar.');
+    L.push('**Ao APLICAR uma WO (Code):** localize cada âncora EXATAMENTE; se não achar uma, **PARE e reporte** — nunca chute um lugar próximo. Não toque em nada fora das edições nomeadas. Rode `git diff` e confira a forma esperada antes de commitar.');
     L.push("");
     L.push('**Ambiente:** os comandos do Code rodam por um Git Bash interno (caminhos com `/` funcionam). Mensagens de commit **sem acento**. O arquivo-raiz `CLAUDE.md` (convenções + build) e a pasta `.claude/` (permissões + comandos `/`) ficam na raiz do repo — veja-os ao iniciar.');
   }
@@ -8988,11 +8990,12 @@ function buildCodeKitFiles(){
     "",
     "## Convenções",
     "- Mensagens de commit **sem acento**.",
-    "- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU spec).",
-    "- Ao aplicar uma spec de `meta/workorders/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.",
+    "- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU WO).",
+    "- Ao aplicar uma WO de `meta/workorders/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.",
+    "- **Ao fechar a tarefa, RELATE o trabalho** — o que fez, achados e desvios do que a tarefa pedia, arquivos tocados, resultado do build/validação e o commit. **Não** copie o bloco de fecho do `meta/CEREBRO.md`: aquele é da raia de planejamento, e trocar relatório por formulário perde o que só você viu.",
     "",
     "## Config (modelo × esforço)",
-    "- Spec com diff exato já validado → **Sonnet**, esforço proporcional (mecânico = baixo/médio).",
+    "- WO com diff exato já validado → **Sonnet**, esforço proporcional (mecânico = baixo/médio).",
     "- Tarefa com julgamento sem rede (refator multi-arquivo, WO que delega decisão) → **Opus**, esforço alto.",
     "- Esforço proporcional à ambiguidade; `/effort low` para o trivial.",
     ""
@@ -9013,13 +9016,14 @@ function buildCodeKitFiles(){
   const applyWo = [
     "---",
     "name: apply-wo",
-    "description: Aplica uma spec de meta/workorders/ ao repo — localiza cada âncora exatamente, substitui, e para se não achar. Use quando o usuário pedir /apply-wo ou para aplicar uma spec nomeada.",
+    "description: Aplica uma WO de meta/workorders/ ao repo — localiza cada âncora exatamente, substitui, e para se não achar. Use quando o usuário pedir /apply-wo ou para aplicar uma WO nomeada.",
     "disable-model-invocation: true",
     "---",
-    "Leia o arquivo de spec indicado em `meta/workorders/` e execute-o.",
+    "Leia o arquivo de WO indicado em `meta/workorders/` e execute-o.",
     "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.",
     "Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.",
-    "Spec: $ARGUMENTS",
+    "Ao terminar, RELATE: o que foi feito, achados/desvios do texto da WO, arquivos tocados, build/validação e o commit.",
+    "WO: $ARGUMENTS",
     ""
   ].join("\n");
   const wrap = [
@@ -9117,7 +9121,7 @@ function structuredReadme(niche, root, codeOn, skillsOn){
   ];
   if(codeOn){
     L.push("- `CLAUDE.md` + `.claude/` — arranque do Claude Code (settings + skills apply-wo/wrap). Ajuste o comando de build no CLAUDE.md e no allow do settings.");
-    L.push("- `meta/workorders/` — specs de mudanca (vazia por enquanto).");
+    L.push("- `meta/workorders/` — WOs: instrucoes de aplicacao do chat para o Code (vazia por enquanto).");
   }
   if(skillsOn){
     L.push(`- \`${codeOn ? ".claude/skills" : "skills"}/\` — Agent Skills do nicho; cada uma tem «Aplicacao neste projeto» para preencher.`);

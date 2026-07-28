@@ -12,7 +12,7 @@
 meta/specs/*
 meta/workorders/*
 meta/analises/*
-!meta/workorders/_GUIA-doc-por-spec.md
+!meta/workorders/_GUIA-doc-por-wo.md
 !meta/analises/_TEMPLATE.md
 
 # REGRA (wo0063): modelo e guia de pasta ignorada SEMPRE voltam com "!" — o corpo fica fora, o

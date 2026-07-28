@@ -501,6 +501,28 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C22 disciplina de entrega no modo Code (wo0065): WO com comando junto, bloco git inteiro, relatorio na raia de execucao", () => {
+  const n=T.normNiche(T.NICHES.dev);
+  T.STATE.workmode = T.STATE.workmode || {};
+  const prevC=T.STATE.workmode.codeMode;
+  T.STATE.workmode.codeMode="yes";
+  const instrCode=T.buildInstr(n);
+  const kit=T.buildCodeKitFiles();
+  const cmd=T.buildClaudeMd(n);
+  T.STATE.workmode.codeMode=prevC;
+  assert(/\/apply-wo <arquivo>/.test(instrCode),"Instr do modo Code nao manda entregar a linha /apply-wo junto da WO");
+  assert(/Bloco git parcial/.test(instrCode),"Instr nao proibe o bloco git parcial (so add)");
+  assert(/relatório de trabalho/.test(cmd),"CEREBRO nao separa a raia: bloco de fecho e do planejamento, relatorio e da execucao");
+  assert(/RELATE o trabalho/.test(kit.claudeMd),"CLAUDE.md do kit nao manda a raia de execucao relatar");
+  assert(/RELATE/.test(kit.applyWo),"skill apply-wo nao pede o relato ao terminar");
+  // residuos do rename spec->WO (wo0053) que sobraram no kit do Code
+  const kitTxt=[kit.claudeMd,kit.applyWo,kit.wrap,kit.settings].join("\n");
+  assert(!/uma spec/i.test(kitTxt),"kit do Code ainda fala em 'uma spec' (vocabulario pre-wo0053)");
+  assert(!/arquivo de spec/i.test(kitTxt),"kit do Code ainda fala em 'arquivo de spec'");
+  assert(!/Spec: \$ARGUMENTS/.test(kitTxt),"skill apply-wo ainda rotula o argumento como Spec");
+  return "ok";
+});
+
 check("C21 analise antes do compromisso (wo0063): secao no CEREBRO dos 18, gatilho nas Instrucoes, funil, pasta preguicosa", () => {
   const raw=fs.readFileSync(path,"utf8");
   Object.keys(T.NICHES).forEach(id => {

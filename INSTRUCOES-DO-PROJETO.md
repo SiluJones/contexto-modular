@@ -26,7 +26,8 @@ KCM = gerador (um `index.html` vanilla, montado de `src/` via `build.js`) que pr
 
 ## Ao final da sessão (obrigatório, mode-aware, sem travar)
 - **Validação:** nada que toca `index.html`/`src/` sai sem `node build.js` + `node validate.js` — regra de ouro **18/18 nichos, 0 erros** (o total de checagens sobe a cada check novo). Doc-only não precisa (a rede é o `git diff`).
-- **Commit:** entregue o `git commit` pronto, em **bloco separado** para copiar isolado, mensagem **sem acento**. Não pule o commit.
+- **Commit:** entregue o `git commit` pronto, em **bloco separado** para copiar isolado, mensagem **sem acento**. Não pule o commit. **Bloco `git` parcial (só `add`) não serve:** ou os três em ordem (`add`/`commit`/`push`), ou só o `commit` — que é o que importa.
+- **WO nunca vai sozinha:** toda WO entregue vem acompanhada da linha `/apply-wo <arquivo>` para colar no Code. Sem a linha, a entrega está incompleta.
 - **Feche com o bloco padrão** (só o que se aplica — linha sem conteúdo real não aparece, não invente handoff nem escreva "nada a arquivar"): **Próximo** (sempre — a ação + o que pedir no próximo turno) · **Estado** (versão/fase + harness + commit) · **Arquivar / Manter** (em lista, só se houver nota no mount) · **Config recomendada** por raia — **Chat** (planejamento) e **Code** (execução), nunca afirmando saber a config atual · **Handoff** (arquivo por arquivo; sessão completa = `AAMMDD-HANDOFF-BRIEF.md`). Formato completo no CEREBRO.
 
 ## Princípios (13 universais — definição completa no CEREBRO)
