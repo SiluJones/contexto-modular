@@ -44,7 +44,7 @@ NICHES.dev = {
     ["Termo técnico próprio do projeto usado", "Entrega o GLOSSARY.md completo com o termo definido."],
   ],
   contextFiles:[
-    {name:"SPEC.md", cat:"opcional", role:"Modelo de spec de feature: o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. Copie para `specs/AAMMDD-nome.md`, uma por feature.", content:`# SPEC — [nome da feature]
+    {name:"SPEC.md", cat:"opcional", role:"Modelo de **spec de feature** (Spec-Driven Development): o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. **Sob demanda** — copie para `specs/AAMMDD-nome.md`, uma por feature, e a pasta nasce aí. **Não é o modelo das WOs** (instrução de aplicação Chat→Code, em `meta/workorders/`): spec diz o QUE construir, WO diz COMO aplicar.", content:`# SPEC — [nome da feature]
 
 > Modelo. Copie para \`specs/AAMMDD-nome-da-feature.md\` e preencha ANTES de codar.
 > A spec diz **o que** construir e **quando está pronto**; o passo a passo da edição é outra coisa.

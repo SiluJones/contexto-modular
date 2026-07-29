@@ -1131,6 +1131,7 @@ const HYGIENE_RULES = [
   "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida.",
   "DECISIONS cresce devagar: quando passar de ~700 linhas ou uma decisão for substituída, mova as antigas para um arquivo de arquivo morto.",
   "Artefato gerado que convive com edição humana precisa de três coisas: (i) **enxergar o que existe fora dele** — senão duplica em silêncio o que a pessoa já escreveu; (ii) **precedência definida por posição** — quem vence quando os dois falam do mesmo; (iii) **nunca apagar nem desfazer o que não é seu**. Bloco gerado dentro de arquivo editável: delimite com marcadores, mantenha-o no FIM do arquivo, escreva só dentro deles, e diga na primeira linha que ali dentro é território da ferramenta (o que a pessoa escrever ali será reescrito). Se o gerado não enxerga o manual, ele desfaz gestos sem avisar — e o sintoma aparece longe da causa.",
+  "A releitura do mount não tem gatilho próprio — e é por isso que ela falha. Quatro modos, todos observados em projetos reais: (1) **trabalho pedido expulsa ritual não-pedido** — mensagem cheia de perguntas explícitas empurra a releitura para fora, e é justamente aí que ela mais importa, porque quem pede muito costuma ter subido algo antes de pedir; (2) **previsão vestida de observação** — relatar o estado que o seu próprio turno anterior previa («ele vai aplicar isso depois»), que por dentro é indistinguível de ter verificado; (3) **campo obrigatório preenchido de memória**, quando falta dado fresco; (4) **regra escrita longe do ponto onde ela quebra**. O antídoto é sempre o mesmo: o gatilho mora no gesto, não no apêndice — se você está prestes a afirmar estado, essa é a hora de ler.",
   "A sua cópia não é a fonte da verdade: vale o arquivo que está no repo/mount AGORA, não o que você leu, gerou ou reconstruiu antes nesta conversa. Qualquer artefato que você produziu (um pacote, uma reconstrução, um resumo do estado) envelhece no instante em que alguém aplica alguma coisa. Antes de dizer que algo continua pendente — ou de reentregar trabalho — releia o arquivo vivo. Reentregar o que já foi aplicado custa mais caro que perguntar.",
   "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre."
 ];
@@ -1228,7 +1229,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.89.0";
+const KIT_VERSION = "1.90.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1284,7 +1285,7 @@ NICHES.dev = {
     ["Termo técnico próprio do projeto usado", "Entrega o GLOSSARY.md completo com o termo definido."],
   ],
   contextFiles:[
-    {name:"SPEC.md", cat:"opcional", role:"Modelo de spec de feature: o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. Copie para `specs/AAMMDD-nome.md`, uma por feature.", content:`# SPEC — [nome da feature]
+    {name:"SPEC.md", cat:"opcional", role:"Modelo de **spec de feature** (Spec-Driven Development): o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. **Sob demanda** — copie para `specs/AAMMDD-nome.md`, uma por feature, e a pasta nasce aí. **Não é o modelo das WOs** (instrução de aplicação Chat→Code, em `meta/workorders/`): spec diz o QUE construir, WO diz COMO aplicar.", content:`# SPEC — [nome da feature]
 
 > Modelo. Copie para \`specs/AAMMDD-nome-da-feature.md\` e preencha ANTES de codar.
 > A spec diz **o que** construir e **quando está pronto**; o passo a passo da edição é outra coisa.
@@ -8254,7 +8255,7 @@ function buildInstr(niche){
     coreFiles.find(n=>/STATUS/i.test(n)),
   ].filter(Boolean);
   lines.push(`Antes de qualquer ação, leia nesta ordem: ${readOrder.map(f=>`\`${f}\``).join(" → ")}${coreFiles.some(n=>/CHANGELOG/i.test(n))?" → última entrada do `CHANGELOG.md`":""}. E reveja o mount a cada turno (novos \`.txt\`/arquivos), sem esperar eu sinalizar.`);
-  lines.push("No início e sempre que o usuário sinalizar upload (mesmo sem nomear o arquivo — \"já subi\", \"veja o txt\", \"atualizei o mount\"), releia o mount (notas `.txt` + `_MANIFEST.md`) ANTES de responder, nunca de memória. São entrada transitória (a fundir nos meta/), não fonte canônica; se não houver, siga.");
+  lines.push("Releia o mount (notas `.txt` + `_MANIFEST.md`) ANTES de responder, nunca de memória — inclusive, e principalmente, quando eu não sinalizo upload. Mensagem cheia de pedidos é onde essa releitura mais falha — e onde mais importa. São entrada transitória (a fundir nos meta/), não fonte canônica; se não houver, siga.");
   lines.push("Confirme em uma frase o que entendeu da tarefa antes de executar. Se houver ambiguidade real, pergunte antes.");
   if(groupModeOn()) lines.push("Projeto em grupo: existe um `HUB.md` compartilhado (gerado na página HUB do kit). Leia-o logo após o STATUS — sua caixa de entrada e o status das outras frentes. Nunca altere arquivos de outra frente; sugestões vão para a caixa dela.");
   if(asuModeOn()) lines.push("ASU: **editar** código, doc de heading estável (DECISIONS + o doc de contexto estável do projeto) ou trecho localizado de capítulo → instrução `yaml` **para baixar** (nome `AAMMDD-asuNNNN.yaml`, bytes exatos, âncora copiada do arquivo real). **Escrita nova**, **reescrita profunda** e **docs rolantes** (STATUS/CHANGELOG/IDEAS/HISTORY e equivalentes que acumulam por higiene) → arquivo inteiro para baixar. Apliquei ASU? Confira no disco cada arquivo tocado antes de seguir, mesmo sem eu pedir. Detalhe no CEREBRO.");
@@ -8458,7 +8459,7 @@ function buildClaudeMd(niche){
   // Higiene
   L.push("");
   L.push("## Ao receber um template-update do KCM");
-  L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio.** Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído: propõe o merge, o usuário decide — nunca substituição cega.");
+  L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio** — e mais: **template genérico não é candidato a substituir arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados caem por padrão em (c) — o genérico ensina estrutura, o vivo já evoluiu; não é escolha a ser oferecida ao usuário a cada update. A **única** exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). Antes de comparar, o assistente lista o mount e diz em que versão/commit o projeto está: comparar sem saber o estado atual é comparar com memória. Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído: propõe o merge, o usuário decide — nunca substituição cega.");
   L.push("");
   L.push("## Regras de higiene (impedem inchaço e duplicação)");
   L.push("");
@@ -9286,6 +9287,10 @@ function buildUpdatePrompt(niche){
   if(!pack) return "";
   const L = [];
   L.push(`Subi um **template-update** do KCM para este projeto (nicho: ${niche.label}). No mount ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo.`);
+  L.push("");
+  L.push("**Antes de comparar qualquer coisa:** liste o mount e me diga em que versao/commit este projeto esta. O pacote descreve o KIT, nao o seu repo — comparar sem saber o estado atual e comparar com memoria.");
+  L.push("");
+  L.push("**Template generico NUNCA substitui arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` que este projeto ja especializou entram por padrao em **(c)**: o generico ensina estrutura, o vivo ja evoluiu. A UNICA excecao e formato descontinuado, que sempre migra — hoje: `.claude/commands/` foi substituido por `.claude/skills/<nome>/SKILL.md` (com front-matter). Se este projeto ainda usa `commands/`, isso e migracao, nao escolha.");
   L.push("");
   L.push("Estes arquivos sao **genericos/estruturais** — propositalmente vazios do especifico desta obra; nao estranhe a falta de conteudo. Para cada um:");
   L.push("- **Compare** com o arquivo vivo equivalente do projeto (o destino real esta no manifesto).");

@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.89.0**.
+> Histórico de versões. Versão atual: **v1.90.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.90.0 — Protocolo de update + gatilho da releitura (wo0068, D-102)
+- **A causa 1 do erro de releitura ganha antídoto:** o gatilho de releitura do mount nas Instruções perde a lista de exemplos de sinal («já subi», «veja o txt»...) — que ensinava a esperar o sinal — e ganha «inclusive, e principalmente, quando eu não sinalizo upload» + «mensagem cheia de pedidos é onde essa releitura mais falha». Os 66 chars economizados na troca pagam a maior parte dos 82 do gatilho novo (saldo universal **+16**).
+- **Os quatro modos de falha da releitura** (trabalho pedido expulsa ritual não-pedido; previsão vestida de observação; campo obrigatório preenchido de memória; regra longe do ponto onde quebra) viram item novo nas `HYGIENE_RULES` do CEREBRO gerado.
+- **`_UPDATE-PROMPT` passa a pedir o estado do repo** (versão/commit) antes de comparar qualquer arquivo. **Template genérico deixa de ser candidato a substituir arquivo vivo refinado** — `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados caem por padrão em (c); única exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). A mesma regra entra no CEREBRO gerado, na seção «Ao receber um template-update do KCM».
+- **Manifesto do `SPEC.md`** (nicho `dev`) passa a dizer que é modelo de spec-de-feature (Spec-Driven Development), sob demanda, e **não** o modelo das WOs.
+- **Campo Estado e bloco de fecho MANTIDOS** por decisão registrada (D-102): campo autodeclaratório («não verificado nesta rodada») torna a resposta honesta mais barata que a inventada.
+- Check **C25** novo. `KIT_VERSION 1.90.0`. Teto: `narrative` 6612 → **6628** (folga 272), `game` 6520 → **6536** (folga 364), `dev` 6117 → **6334** (folga 566) — a Tarefa A pagou 66 dos 82 chars do gatilho.
+- Harness **18/18, 68/68 → 69/69, 0 erros**.
 
 ## v1.89.0 — Convivencia gerado x manual + fim do HUB (wo0067, D-101)
 - **`.flatdropignore` gerado ganha o bloco do editor:** marcadores `# >>> flatdrop-editor` / `# <<<` — regra dentro (some no próximo salvamento do editor do FlatDrop, que reescreve o bloco inteiro), comentário fora (sobrevive), nada depois do fim (vale a última regra que casa). Corrige `logs/` → `logs/*` e entrega o par completo `meta/analises/*` + `!meta/analises/_TEMPLATE.md` (bug apontado pelo FlatDrop 0.14.0). Explica o motivo real do `pasta/*`: a poda de diretório na varredura, além da regra normativa do git puro — as duas coisas, não uma no lugar da outra.

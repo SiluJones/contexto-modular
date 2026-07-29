@@ -560,11 +560,14 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-07-29 — Protocolo de update (4 itens do FlatDrop) ATENDIDO; gatilho da releitura fecha a causa 1 (D-102, wo0068, v1.90.0)
+Os quatro itens de **protocolo de update** parqueados na leva anterior (wo0067) foram **atendidos**: `_UPDATE-PROMPT` agora pede versão/commit do repo antes de comparar; afirma que template genérico **nunca** substitui arquivo vivo refinado (default vai para (c)); marca `.claude/commands/` como formato legado; e o manifesto do `SPEC.md` diz que é spec-de-feature (SDD), sob demanda, e **não** o modelo das WOs. Junto, a causa 1 do erro de releitura da nota `260728-2029.txt` (trabalho pedido expulsa ritual não-pedido) ganhou gatilho nas Instruções. Ver D-102. Abertos:
+- **Folga da narrativa em 272 chars.** A configuração padrão está no limite: a próxima linha universal vai precisar da decisão da análise `260727-ANALISE-teto-por-configuracao.md` (curar as linhas de modo) antes de caber. **Isto é um bloqueio prático, não um aviso.**
+- **Migrar o KCM de `.claude/commands/` para `.claude/skills/`** — o kit agora marca `commands/` como legado no protocolo de update, e a casa continua no formato legado. Dogfood pendente.
+
 ### 2026-07-29 — FlatDrop (0.14.0) fonte da leva wo0067; protocolo de update e HUB abrem itens (D-101, wo0067, v1.89.0)
-O **FlatDrop** foi a fonte dos cinco itens aplicados na wo0067 (convivência gerado×manual no `.flatdropignore`, verificação no ponto de uso do campo Estado, gatilho concreto de análise, princípio do artefato gerado, HUB de infraestrutura aposentado — ver D-101). Dos doze itens que o FlatDrop devolveu, os do **protocolo de update** ficam para a próxima leva; e a aposentadoria do `HUB.md` (toolchain) abre um item que era dele. Abertos:
-- **Protocolo de update (próxima leva):** o `_UPDATE-PROMPT` deve pedir o estado do repo **antes** de comparar; afirmar que template genérico **nunca** substitui arquivo vivo refinado; marcar `.claude/commands/` como legado; e a linha do `SPEC.md` no manifesto precisa dizer que é spec-de-feature (SDD), sob demanda, e **não** o modelo das WOs.
+O **FlatDrop** foi a fonte dos cinco itens aplicados na wo0067 (convivência gerado×manual no `.flatdropignore`, verificação no ponto de uso do campo Estado, gatilho concreto de análise, princípio do artefato gerado, HUB de infraestrutura aposentado — ver D-101). Dos doze itens que o FlatDrop devolveu, os do **protocolo de update** ficaram para a próxima leva (wo0068, ver acima); e a aposentadoria do `HUB.md` (toolchain) abre um item que era dele. Seguem abertos:
 - **Sinalizar os modos ativos na tela antes de exportar** o template-update — item que vinha na caixa de entrada do `HUB.md` aposentado (o `_UPDATE-MANIFEST.md` já grava `ASU sim/não · Code sim/não`; falta sinalizar **antes** de exportar, na tela).
-- **Migrar o próprio KCM de `.claude/commands/` para `.claude/skills/`** — o produto já emite skills para os projetos gerados; a casa do KCM ficou no formato antigo.
 - **Nota (ASU nos próprios docs):** recomendação híbrida (viável via `markdown`+`replace_section` em docs de heading único, não recomendada para STATUS/CHANGELOG/IDEAS), sem mudança de contrato — já registrada antes na caixa do HUB; só reafirmando aqui pós-aposentadoria.
 
 ### 2026-07-26 — Enxugamento das Instruções, etapa A concluída (D-090, wo0056, v1.79.0)

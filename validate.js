@@ -501,6 +501,28 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C25 protocolo de update e gatilho da releitura (wo0068): estado do repo, template nao substitui vivo, commands legado, SPEC e SDD", () => {
+  const dev=T.normNiche(T.NICHES.dev);
+  const prompt=T.buildUpdatePrompt(dev);
+  assert(/liste o mount e me diga em que versao\/commit/.test(prompt),"_UPDATE-PROMPT nao pede o estado do repo antes de comparar");
+  assert(/Template generico NUNCA substitui arquivo vivo refinado/.test(prompt),"_UPDATE-PROMPT nao afirma que template nao substitui vivo");
+  assert(/commands\/`? foi substituido por/.test(prompt),"_UPDATE-PROMPT nao marca .claude/commands/ como legado");
+  const specFile=(dev.contextFiles||[]).find(f=>/^SPEC\.md$/i.test(f.name||""));
+  assert(specFile,"dev perdeu o SPEC.md");
+  assert(/Spec-Driven Development/.test(specFile.role||""),"o manifesto do SPEC.md nao diz a origem (SDD)");
+  assert(/Não é o modelo das WOs/.test(specFile.role||""),"o manifesto do SPEC.md nao avisa que nao e o modelo das WOs");
+  assert(/Sob demanda/i.test(specFile.role||""),"o manifesto do SPEC.md nao diz que e sob demanda");
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const instr=T.buildInstr(n), cmd=T.buildClaudeMd(n);
+    assert(/Mensagem cheia de pedidos é onde essa releitura mais falha/.test(instr), id+": Instrucoes sem o gatilho da causa 1 (trabalho pedido expulsa ritual)");
+    assert(/nunca de memória/.test(instr), id+": Instrucoes perderam a regra de nao responder de memoria");
+    assert(/previsão vestida de observação/.test(cmd), id+": CEREBRO sem os modos de falha da releitura");
+    assert(/template genérico não é candidato a substituir arquivo vivo refinado/i.test(cmd), id+": CEREBRO nao afirma a regra do template x vivo no protocolo de update");
+  });
+  return "ok";
+});
+
 check("C24 convivencia gerado x manual (wo0067): bloco marcado no .flatdropignore, Estado verificado no turno, gatilho de analise por formato", () => {
   // 1) .flatdropignore gerado: comentario so FORA, regra so DENTRO, bloco por ULTIMO
   [true,false].forEach(codeOn => {
