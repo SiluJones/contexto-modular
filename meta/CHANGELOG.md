@@ -1,8 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.93.0**.
+> Histórico de versões. Versão atual: **v1.94.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.94.0 — Fecho da leva sand-land (wo0072, D-106)
+- **Gaveta «Adiadas» com gatilho de volta:** o template universal de IDEAS (`narrative`) e o IDEAS próprio do `dev` ganham a seção; o `brainstorm` já tinha «Em banho-maria» e recebe só a exigência do gatilho — cada nicho no seu vocabulário, a regra cobrada é a mesma (ideia adiada sem gatilho é ideia perdida).
+- **`HISTORY.md` do `dev` e do `research` ganham dois tipos de seção:** pesquisa de convenções (o que já foi investigado antes de adotar um padrão externo) e autópsia (sintoma → causa raiz → correção → como evitar).
+- **Protocolo de update:** o pacote de template-update fica no mount até o merge fechar (não sai antes); se já saiu, o assistente declara a cobertura de leitura (o que leu verbatim, o que não).
+- **Correção de fato:** a wo0071 errou ao dizer que `validate.js` é CRLF — são LF (`validate.js`, `build.js`, `src/niches/*.js`); só `src/index.template.html` é CRLF. Registrado no `CONTEXT.md` §7.
+- Check **C29** novo, `ok (18 IDEAS · 2 HISTORY)`. `KIT_VERSION 1.94.0`. **Custo de teto: zero** — C28 com os mesmos números do padrão (`padrao 6628/6900 · +Code 529/550 · +ASU 372/400 · compart 435/450 · combo 7529/7600`).
+- Harness **18/18, 72/72 → 73/73, 0 erros**. **A leva sand-land fecha aqui.**
 
 ## v1.93.0 — Teto por configuracao (wo0071, D-105)
 - **O 6900 passa a valer explicitamente para a configuração PADRÃO.** Ligar um modo de trabalho tem orçamento próprio: **Code +550** sobre o padrão, **ASU +400** marginal sobre o que o Code já custa, **compartilhado 450** para as linhas que qualquer modo de trabalho liga (achado da medição: elas ficavam sem dono no modelo de dois números), **total 7.600** nos combos. Trava o **incremento**, não o total — o `G16` não muda, segue medindo só o pior caso de conteúdo.

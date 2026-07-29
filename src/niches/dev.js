@@ -245,6 +245,12 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 
 ---
 
+## 🛌 Adiadas
+> Decisão consciente de não fazer agora. Cada item com **o gatilho que a traz de volta** («quando o terceiro caso aparecer», «se o build passar de X»): ideia adiada sem gatilho é ideia perdida.
+- **[Ideia]** — adiada porque [motivo] — **volta quando** [gatilho concreto].
+
+---
+
 ## ✅ Concluídas
 > Ideia que virou realidade. Mantida aqui para histórico (com referência à versão/decisão).
 - **[Ideia]** — implementada em [versão] / ver DEC-N.
@@ -347,6 +353,12 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 
 ## 3. [Procedimento herdado]
 [Passo a passo que raramente muda.]
+
+## 4. [Pesquisa de convenções]
+[O que foi investigado antes de adotar um padrão externo (nome, formato, biblioteca) e o que se decidiu a partir dela. Registra o que JÁ foi pesquisado — é o que impede alguém pesquisar de novo em seis meses.]
+
+## 5. [Autópsia de um problema resolvido]
+[Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `}
   ],
   outputs:[

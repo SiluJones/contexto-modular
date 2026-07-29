@@ -265,6 +265,12 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 
 ## 3. [Decisão metodológica histórica]
 [Por que tal método/recorte foi adotado numa fase anterior.]
+
+## 4. [Pesquisa de convenções]
+[O que foi investigado antes de adotar um padrão externo (norma de citação, taxonomia, ferramenta) e o que se decidiu a partir dela. Registra o que JÁ foi pesquisado — é o que impede pesquisar de novo em seis meses.]
+
+## 5. [Autópsia de um problema resolvido]
+[Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão

@@ -501,6 +501,44 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C29 fecho da leva sand-land (wo0072): gaveta Adiadas com gatilho, tipos de secao no HISTORY, pacote de update transitorio", () => {
+  // 1) IDEAS: gaveta de adiadas, com o gatilho de volta
+  let vistos=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const ideas=(T.effectiveFiles(n)||[]).find(f=>/^IDEAS\.md$/i.test(f.name||""));
+    if(!ideas) return;
+    vistos++;
+    const c=ideas.content||"";
+    // a gaveta existe em cada nicho com o VOCABULARIO dele (Adiadas, banho-maria...);
+    // o que o kit cobra em todos e a exigencia do gatilho de volta
+    assert(/gatilho que a traz de volta/.test(c), id+": IDEAS nao exige o gatilho que traz a ideia adiada de volta");
+    if(id === "narrative"){
+      assert(/## Adiadas/.test(c), "o template universal de IDEAS perdeu a gaveta Adiadas");
+      assert(c.indexOf("## Adiadas") < c.indexOf("## Concluídas"), "Adiadas fora de ordem no template universal (deve vir antes de Concluidas)");
+    }
+  });
+  assert(vistos>=15, "IDEAS nao foi encontrado na maioria dos nichos (achei "+vistos+")");
+  // 2) HISTORY: os dois tipos de secao novos, onde o arquivo existe
+  let comHistory=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const h=(T.effectiveFiles(n)||[]).find(f=>/^HISTORY\.md$/i.test(f.name||""));
+    if(!h) return;
+    comHistory++;
+    assert(/Pesquisa de convenções/.test(h.content||""), id+": HISTORY sem o tipo pesquisa de convencoes");
+    assert(/Autópsia de um problema resolvido/.test(h.content||""), id+": HISTORY sem o tipo autopsia");
+  });
+  assert(comHistory>=2, "HISTORY deveria existir em pelo menos 2 nichos (achei "+comHistory+")");
+  // 3) CEREBRO: pacote de update e transitorio, mas fica ate o merge fechar + cobertura de leitura
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/continuar no mount até o merge fechar/.test(cmd), id+": CEREBRO nao manda manter o pacote no mount ate o merge fechar");
+    assert(/declara a cobertura de leitura/.test(cmd), id+": CEREBRO nao exige declarar o que foi lido verbatim");
+  });
+  return "ok (" + vistos + " IDEAS · " + comHistory + " HISTORY)";
+});
+
 check("C28 teto por configuracao (wo0071): 6900 no padrao, orcamento por modo, total nos combos <= INSTR_TETO_MODOS", () => {
   const S=T.STATE; S.workmode = S.workmode || {};
   const pc=S.workmode.codeMode, pa=S.workmode.asuMode;

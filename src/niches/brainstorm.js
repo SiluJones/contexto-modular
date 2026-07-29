@@ -101,8 +101,8 @@ NICHES.brainstorm = {
 ---
 
 ## Em banho-maria (boas, mas não agora)
-> Ideias válidas que não cabem nesta rodada — guardadas de propósito.
-- **i-[N]** — [a ideia] — adiada porque [não é o foco agora / depende de X].
+> Ideias válidas que não cabem nesta rodada — guardadas de propósito. Cada uma com **o gatilho que a traz de volta**: ideia adiada sem gatilho é ideia perdida, porque ninguém relê esta lista por esporte.
+- **i-[N]** — [a ideia] — adiada porque [não é o foco agora / depende de X] — **volta quando** [o gatilho concreto].
 
 ---
 

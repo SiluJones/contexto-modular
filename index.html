@@ -1105,6 +1105,9 @@ const UNIVERSAL_IDEAS_TPL = { name:"IDEAS.md", cat:"ctx",
 ## Em avaliação
 (precisa de pesquisa/decisão antes de virar trabalho — diga O QUE falta decidir)
 
+## Adiadas
+(decisão consciente de não fazer AGORA — cada item com **o gatilho que a traz de volta**: «quando o terceiro caso aparecer», «se o arquivo passar de X». Ideia adiada sem gatilho é ideia perdida: ninguém relê uma lista de adiadas por esporte.)
+
 ## Concluídas
 (implementadas — com a referência: versão, decisão, entrega)
 
@@ -1235,7 +1238,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.93.0";
+const KIT_VERSION = "1.94.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1492,6 +1495,12 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 
 ---
 
+## 🛌 Adiadas
+> Decisão consciente de não fazer agora. Cada item com **o gatilho que a traz de volta** («quando o terceiro caso aparecer», «se o build passar de X»): ideia adiada sem gatilho é ideia perdida.
+- **[Ideia]** — adiada porque [motivo] — **volta quando** [gatilho concreto].
+
+---
+
 ## ✅ Concluídas
 > Ideia que virou realidade. Mantida aqui para histórico (com referência à versão/decisão).
 - **[Ideia]** — implementada em [versão] / ver DEC-N.
@@ -1594,6 +1603,12 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 
 ## 3. [Procedimento herdado]
 [Passo a passo que raramente muda.]
+
+## 4. [Pesquisa de convenções]
+[O que foi investigado antes de adotar um padrão externo (nome, formato, biblioteca) e o que se decidiu a partir dela. Registra o que JÁ foi pesquisado — é o que impede alguém pesquisar de novo em seis meses.]
+
+## 5. [Autópsia de um problema resolvido]
+[Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `}
   ],
   outputs:[
@@ -3460,6 +3475,12 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 
 ## 3. [Decisão metodológica histórica]
 [Por que tal método/recorte foi adotado numa fase anterior.]
+
+## 4. [Pesquisa de convenções]
+[O que foi investigado antes de adotar um padrão externo (norma de citação, taxonomia, ferramenta) e o que se decidiu a partir dela. Registra o que JÁ foi pesquisado — é o que impede pesquisar de novo em seis meses.]
+
+## 5. [Autópsia de um problema resolvido]
+[Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
@@ -5381,8 +5402,8 @@ NICHES.brainstorm = {
 ---
 
 ## Em banho-maria (boas, mas não agora)
-> Ideias válidas que não cabem nesta rodada — guardadas de propósito.
-- **i-[N]** — [a ideia] — adiada porque [não é o foco agora / depende de X].
+> Ideias válidas que não cabem nesta rodada — guardadas de propósito. Cada uma com **o gatilho que a traz de volta**: ideia adiada sem gatilho é ideia perdida, porque ninguém relê esta lista por esporte.
+- **i-[N]** — [a ideia] — adiada porque [não é o foco agora / depende de X] — **volta quando** [o gatilho concreto].
 
 ---
 
@@ -8472,7 +8493,7 @@ function buildClaudeMd(niche){
   // Higiene
   L.push("");
   L.push("## Ao receber um template-update do KCM");
-  L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio** — e mais: **template genérico não é candidato a substituir arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados caem por padrão em (c) — o genérico ensina estrutura, o vivo já evoluiu; não é escolha a ser oferecida ao usuário a cada update. A **única** exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). Antes de comparar, o assistente lista o mount e diz em que versão/commit o projeto está: comparar sem saber o estado atual é comparar com memória. Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído: propõe o merge, o usuário decide — nunca substituição cega.");
+  L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio** — e mais: **template genérico não é candidato a substituir arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados caem por padrão em (c) — o genérico ensina estrutura, o vivo já evoluiu; não é escolha a ser oferecida ao usuário a cada update. A **única** exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). Antes de comparar, o assistente lista o mount e diz em que versão/commit o projeto está: comparar sem saber o estado atual é comparar com memória. **O pacote é entrada transitória, mas não descartável no meio do caminho:** enquanto um merge estiver em curso, ele precisa continuar no mount até o merge fechar — pacote que sai antes do fim leva embora o original de comparação, e o que ficou de fora só aparece depois. Se ele já saiu, o assistente **declara a cobertura de leitura**: quais faixas leu **verbatim** e quais não. É essa declaração que permite fechar a lacuna com um diff dirigido em vez de refazer o merge inteiro. Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído: propõe o merge, o usuário decide — nunca substituição cega.");
   L.push("");
   L.push("## Regras de higiene (impedem inchaço e duplicação)");
   L.push("");
