@@ -1132,7 +1132,7 @@ const HYGIENE_RULES = [
   "DECISIONS cresce devagar: quando passar de ~700 linhas ou uma decisão for substituída, mova as antigas para um arquivo de arquivo morto.",
   "Artefato gerado que convive com edição humana precisa de três coisas: (i) **enxergar o que existe fora dele** — senão duplica em silêncio o que a pessoa já escreveu; (ii) **precedência definida por posição** — quem vence quando os dois falam do mesmo; (iii) **nunca apagar nem desfazer o que não é seu**. Bloco gerado dentro de arquivo editável: delimite com marcadores, mantenha-o no FIM do arquivo, escreva só dentro deles, e diga na primeira linha que ali dentro é território da ferramenta (o que a pessoa escrever ali será reescrito). Se o gerado não enxerga o manual, ele desfaz gestos sem avisar — e o sintoma aparece longe da causa.",
   "A releitura do mount não tem gatilho próprio — e é por isso que ela falha. Quatro modos, todos observados em projetos reais: (1) **trabalho pedido expulsa ritual não-pedido** — mensagem cheia de perguntas explícitas empurra a releitura para fora, e é justamente aí que ela mais importa, porque quem pede muito costuma ter subido algo antes de pedir; (2) **previsão vestida de observação** — relatar o estado que o seu próprio turno anterior previa («ele vai aplicar isso depois»), que por dentro é indistinguível de ter verificado; (3) **campo obrigatório preenchido de memória**, quando falta dado fresco; (4) **regra escrita longe do ponto onde ela quebra**. O antídoto é sempre o mesmo: o gatilho mora no gesto, não no apêndice — se você está prestes a afirmar estado, essa é a hora de ler.",
-  "A sua cópia não é a fonte da verdade: vale o arquivo que está no repo/mount AGORA, não o que você leu, gerou ou reconstruiu antes nesta conversa. Qualquer artefato que você produziu (um pacote, uma reconstrução, um resumo do estado) envelhece no instante em que alguém aplica alguma coisa. Antes de dizer que algo continua pendente — ou de reentregar trabalho — releia o arquivo vivo. Reentregar o que já foi aplicado custa mais caro que perguntar.",
+  "A sua cópia não é a fonte da verdade: vale o arquivo que está no repo/mount AGORA, não o que você leu, gerou ou reconstruiu antes nesta conversa. Qualquer artefato que você produziu (um pacote, uma reconstrução, um resumo do estado) envelhece no instante em que alguém aplica alguma coisa. Antes de dizer que algo continua pendente — ou de reentregar trabalho — releia o arquivo vivo. Reentregar o que já foi aplicado custa mais caro que perguntar. **A contrapartida, que evita o excesso oposto:** o que envelhece é o **estado do repo e as âncoras** — não o **carimbo de emissão** de um artefato. Documento escrito e datado no dia 27 continua correto se for aplicado no dia 29; a data diz quando foi emitido, não quando foi aplicado. Não «corrija» data de arquivo entregue, nem renomeie WO/análise por causa de atraso.",
   "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre."
 ];
 
@@ -1229,7 +1229,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.91.0";
+const KIT_VERSION = "1.92.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2399,6 +2399,15 @@ function buildClaudeMd(niche){
   L.push(`${order.length+1}. **Não lê por padrão:** IDEAS inteiro, logs antigos, arquivos de arquivo morto. Lê sob demanda quando a tarefa exigir.`);
   L.push(`${order.length+2}. Antes de executar: confirma em uma frase o que entendeu. Se houver ambiguidade real, pergunta antes.`);
 
+  // Tecnicas especificas do projeto (sand-land FK/DEC-018): o unico conteudo que sobrevive a um rebase do kit
+  L.push("");
+  L.push("## Técnicas específicas deste projeto");
+  L.push("");
+  L.push("> **Esta seção é sua.** Tudo o mais neste arquivo é genérico e é substituído quando o kit evolui; aqui é onde mora o conhecimento operacional que só este projeto tem — a coordenada que não se mexe, a armadilha da ferramenta que já custou uma sessão, o jeito certo de nomear uma coisa daqui. **Um template-update nunca sobrescreve esta seção**: ele traz a moldura, você mantém o recheio.");
+  L.push("");
+  L.push("Comece vazia e escreva quando doer duas vezes: técnica que você precisou explicar de novo é candidata. Formato livre — uma linha por item, com o nome do lugar onde ela vale. Se um item virar regra geral do projeto, promova-o para o corpo do CEREBRO e deixe aqui só o caso particular.");
+  L.push("");
+  L.push("- _(vazio — o primeiro item entra na primeira vez que uma técnica precisar ser repetida)_");
   // Princípios (versão COMPLETA — definição longa)
   L.push("");
   L.push("## Princípios de trabalho");
@@ -2532,7 +2541,7 @@ function buildClaudeMd(niche){
   L.push("## Bloco de fecho de turno (formato fixo)");
   L.push("Todo turno de trabalho fecha assim, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem antes de um divisor; o resto vem depois dele:");
   L.push("1. **Próximo** — sempre presente, ANTES do divisor, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido.");
-  L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
+  L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. E distinga do caso em que o dado **não é legível por este canal**: num Projeto alimentado por cópia achatada não há `.git`, então nenhum `git log` existe para ler — aí escreva «commit não legível pelo mount» e **peça uma vez** (`git log -1 --oneline`), em vez de repetir a ressalva todo turno. «Não verifiquei» é desleixo; «não dá para ler daqui» é fato, e o remédio de cada um é diferente. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
   L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**, como a Config e o Handoff: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Nome por nome — e não espere que eu pergunte.");
   L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
   L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
@@ -2621,7 +2630,7 @@ if(asuModeOn()){
   L.push("");
   L.push("## Saída de código via ASU (patch)");
   L.push("");
-  L.push("Este projeto usa o **Atualizador Automático de Scripts (ASU)** para **alterar arquivos existentes** — entregue UMA instrução `yaml` (patch cirúrgico) **para baixar**, não arquivos inteiros. Para **arquivos NOVOS**, entregue o arquivo **pronto para baixar** (não embuta o arquivo inteiro num bloco YAML — arrisca corromper no escape), **exceto** quando a criação faz parte de uma instrução que também edita existentes (operação atômica) — aí use `create_file` na mesma instrução. Pré-requisito: `INSTRUCTION_GUIDE.md` e `PROMPT_IA.md` estão no conhecimento do Projeto e o ASU está instalado. O ASU opera só em arquivos de **texto** (patch por âncora): **não cobre `.docx`, `.xlsx` nem outros binários** — um documento Word ou planilha sai inteiro para baixar, nunca como instrução ASU.");
+  L.push("Este projeto usa o **Atualizador Automático de Scripts (ASU)** para **alterar arquivos existentes** — entregue UMA instrução `yaml` (patch cirúrgico) **para baixar**, não arquivos inteiros. Para **arquivos NOVOS**, entregue o arquivo **pronto para baixar** (não embuta o arquivo inteiro num bloco YAML — arrisca corromper no escape), **exceto** quando a criação faz parte de uma instrução que também edita existentes (operação atômica) — aí use `create_file` na mesma instrução. Pré-requisito: o **`INSTRUCTION_GUIDE.md`** está no conhecimento do Projeto (é o contrato: esqueleto, estratégias, tabela de erros) e o ASU está instalado. **Não suba o `PROMPT_IA.md`:** ele é o bloco que semeia esta diretriz em projetos **sem** o kit — aqui a diretriz já está curada neste CEREBRO, e as duas versões divergem (a dele manda colar o YAML no chat com uma linha de comando; a daqui manda entregar o arquivo para baixar e não emitir instrução de execução). Duas instruções concorrentes no mesmo Projeto é sorteio. O `demo.yaml` também não precisa subir — o guia já traz exemplo completo. O ASU opera só em arquivos de **texto** (patch por âncora): **não cobre `.docx`, `.xlsx` nem outros binários** — um documento Word ou planilha sai inteiro para baixar, nunca como instrução ASU.");
   L.push("");
   L.push("1. Ao pedir uma \"instrução ASU\" (ou ao **editar** arquivos existentes), entregue a instrução **como arquivo `.yaml` para baixar** — não colada no chat: o download preserva os bytes UTF-8 exatos e evita corromper âncoras não-ASCII no copia-e-cola. Nome `AAMMDD-asuNNNN.yaml` (ex.: `260628-asu0001.yaml`), com `format_version` igual ao declarado no `INSTRUCTION_GUIDE.md` (não fixe número — o guia é o contrato). O seu trabalho termina no `.yaml` **válido** — âncoras copiadas do arquivo vivo, estratégia existente no guia, caminhos conferidos. **Como o usuário aplica (interface do ASU ou linha de comando) e onde ele guarda o arquivo não é assunto seu:** não emita instruções de execução nem invente pasta de destino, a menos que ele peça. Se ele pedir a linha: `python -m src apply <arquivo>.yaml --root <RAIZ> --dry-run`. Nunca XML.");
   L.push("2. **Arquivo NOVO:** entregue-o pronto para baixar — não o reescreva como instrução ASU. Exceção: criação junto de edições a existentes na MESMA instrução → aí `create_file`. (Mesmo numa edição, o usuário pode preferir o arquivo inteiro para baixar — se pedir, respeite.)");
@@ -2968,6 +2977,126 @@ async function downloadSkillsZIP(){
 }
 // Monta os arquivos de arranque do Claude Code (fonte unica: mesma estrutura real do repo).
 // Comandos no formato ATUAL (2026): .claude/skills/<nome>/SKILL.md, nao o legado .claude/commands/*.md.
+/* Modelo de WO (FK-C do sand-land): o artefato que a raia chat->Code mais produz nao tinha molde.
+   Sobe sempre ao Projeto pelo par meta/workorders/* + !meta/workorders/_TEMPLATE.md. */
+function buildWoTemplate(){
+  return [
+    "# WO NNNN — [titulo curto e concreto, no que a WO ENTREGA]",
+    "",
+    "> **Este arquivo e o MODELO — nao o preencha aqui.** Copie para `meta/workorders/AAMMDD-woNNNN-desc.md`",
+    "> e preencha a copia. Ele sobe sempre ao Projeto (o `.flatdropignore` ignora `meta/workorders/*` mas",
+    "> reinclui `!meta/workorders/_TEMPLATE.md`), para que a primeira sessao depois de uma transferencia",
+    "> tenha o formato a mao sem precisar das WOs antigas.",
+    ">",
+    "> **O que e uma WO:** instrucao de APLICACAO — ancora + texto exato — que o chat autora e o Code posiciona.",
+    "> **O que NAO e:** a spec de feature diz **o que** construir e quando esta pronto; a WO diz **como aplicar**.",
+    "> Se voce ainda nao sabe o que construir, nao e hora de escrever WO — e hora de analise ou spec.",
+    "",
+    "---",
+    "",
+    "## Cabecalho — preencha as linhas que se aplicam e apague as que nao",
+    "",
+    "> **Tipo:** WO de CODIGO · WO de DOC (registro) · mista.",
+    "> **Config sugerida:** modelo e esforco para quem for aplicar.",
+    "> **Pre-requisito:** versao/commit em que esta WO foi escrita, e o estado esperado (testes verdes, arvore limpa).",
+    "> **Base:** a decisao, a analise ou a conversa que originou.",
+    "> **Depende de:** WOs que precisam estar aplicadas antes — ou apague a linha.",
+    "> **Ancora semantica:** se um trecho-ancora nao bater EXATAMENTE, **PARE e reporte** — nunca chute um",
+    "> lugar proximo. Os arquivos podem ter mudado entre a escrita desta WO e a aplicacao.",
+    "> **Idempotencia:** antes de cada insercao, procure a frase-chave do texto NOVO. Se ja existir, **PULE**",
+    "> o item e diga no relatorio — nao duplique.",
+    "",
+    "> **Canal dos meta neste ciclo = CHAT** *(ou **CODE** — escolha um e apague o outro)*.",
+    "> Se **CHAT**: esta WO toca so codigo/config — nao faca append nos `meta/`; o chat entrega os",
+    "> documentos depois da validacao. Se **CODE**: esta WO E o registro — aplique os appends previstos",
+    "> e nao espere doc do chat. *Uma fonte por doc por ciclo; escolher errado aqui duplica conteudo.*",
+    "",
+    "---",
+    "",
+    "## 1. Por que",
+    "",
+    "[Uma a tres frases: a dor concreta, ou a causa raiz se for correcao. Quem aplica precisa saber o que",
+    "esta consertando para reconhecer quando o resultado sai errado. Se for correcao de defeito introduzido",
+    "por WO anterior, diga qual e assuma — historico honesto e o que impede repetir.]",
+    "",
+    "## 2. Contexto factual *(so em WO de registro — apague em WO de codigo)*",
+    "",
+    "[Os fatos que os textos das edicoes afirmam, na ordem em que aconteceram. Esta secao e a FONTE dos",
+    "blocos abaixo: fato que nao esta aqui nao deveria aparecer la. Marque o que foi **medido** e o que e",
+    "**deduzido** — inferencia sem rotulo vira fato na leitura seguinte.]",
+    "",
+    "---",
+    "",
+    "## Edicao 1 — `caminho/real/do/arquivo.ext` · [o que muda, em cinco palavras]",
+    "",
+    "**Ancora** *(diga ONDE fica: secao, funcao, item — nunca numero de linha)*:",
+    "",
+    "```",
+    "[trecho literal e unico do arquivo vivo, copiado sem reformatar]",
+    "```",
+    "",
+    "**Substituir por:**",
+    "",
+    "```",
+    "[texto exato que entra]",
+    "```",
+    "",
+    "> Variantes — use a que couber, sempre com a ancora acima: **Inserir IMEDIATAMENTE APOS** ·",
+    "> **Inserir IMEDIATAMENTE ANTES** · **Remover o bloco inteiro** · **Criar arquivo novo** (sem ancora;",
+    "> diga o que fazer se ele ja existir).",
+    "",
+    "## Edicao 2 — `caminho/real/do/arquivo.ext` · [...]",
+    "",
+    "[Repita. Uma edicao por bloco. Se um arquivo recebe mudancas distantes entre si, numere 2a/2b/2c em",
+    "vez de empilhar num bloco so — cada uma com a propria ancora.]",
+    "",
+    "---",
+    "",
+    "## Fora de escopo",
+    "",
+    "[O que esta WO deliberadamente NAO faz, para que quem aplica nao \"aproveite a viagem\". Melhoria que",
+    "voce enxergou no caminho vira ideia no IDEAS ou outra WO — nao entra aqui.]",
+    "",
+    "## Armadilhas desta WO",
+    "",
+    "[So quando houver. O que ja deu errado antes neste mesmo lugar e o que quem aplica pode quebrar sem",
+    "perceber: ancora que aparece duas vezes, arquivo com fim de linha CRLF (ancora multi-linha colada com",
+    "\\\\n nao casa), bloco gerado que sera reescrito, numero de check ja usado.]",
+    "",
+    "---",
+    "",
+    "## Depois de aplicar — conferencia antes do commit",
+    "",
+    "- [ ] `git diff` mostra **exatamente** os arquivos previstos, e nada alem.",
+    "- [ ] [Conferencia de forma especifica desta WO — ex.: \"a entrada nova ficou dentro da secao certa\".]",
+    "- [ ] **WO de codigo:** o comando de validacao do projeto passa com **0 erros**. Se acusar erro,",
+    "      **PARE e reporte antes de commitar**.",
+    "- [ ] **WO so de doc:** nao precisa de build — a rede e o `git diff`.",
+    "- [ ] **Teste manual que a validacao NAO cobre** (obrigatorio quando a WO toca dado carregado ou UI):",
+    "      [caso feliz · caso de borda · regressao possivel].",
+    "",
+    "## Relatorio de aplicacao *(quem aplica preenche ao terminar)*",
+    "",
+    "O que foi feito · o que fugiu do texto literal da WO · arquivos tocados · resultado da validacao · o commit.",
+    "**Nao** substitua este relatorio pelo bloco de fecho do chat: aquele e da raia de planejamento, e trocar",
+    "relatorio por formulario perde justamente o que so quem aplicou viu.",
+    "",
+    "## Commit — blocos separados, mensagem SEM acento",
+    "",
+    "```",
+    "git add [caminhos]",
+    "```",
+    "",
+    "```",
+    "git commit -m \"tipo(escopo): descricao no imperativo curto\" -m \"Corpo explicando o porque, sem acento.\"",
+    "```",
+    "",
+    "```",
+    "git push",
+    "```"
+  ].join("\n");
+}
+
 function buildCodeKitFiles(){
   const claudeMd = [
     "# <NOME DO PROJETO> — guia para o Claude Code",
@@ -3033,7 +3162,7 @@ function buildCodeKitFiles(){
     "e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).",
     ""
   ].join("\n");
-  return { claudeMd, settings, applyWo, wrap };
+  return { claudeMd, settings, applyWo, wrap, woTemplate: buildWoTemplate() };
 }
 async function downloadCodeKitZIP(){
   if(typeof JSZip === "undefined"){
@@ -3046,6 +3175,7 @@ async function downloadCodeKitZIP(){
   zip.file(`${root}/.claude/settings.json`, f.settings);
   zip.file(`${root}/.claude/skills/apply-wo/SKILL.md`, f.applyWo);
   zip.file(`${root}/.claude/skills/wrap/SKILL.md`, f.wrap);
+  zip.file(`${root}/meta/workorders/_TEMPLATE.md`, f.woTemplate);
   const readme = [
     "# Kit de arranque do Claude Code",
     "",
@@ -3122,7 +3252,7 @@ function structuredFlatdropignore(codeOn){
   L.push("");
   L.push("# >>> flatdrop-editor");
   L.push("logs/*");
-  if(codeOn) L.push("meta/workorders/*");
+  if(codeOn){ L.push("meta/workorders/*"); L.push("!meta/workorders/_TEMPLATE.md"); }
   L.push("# <<<");
   return L.join("\n");
 }
@@ -3177,7 +3307,7 @@ async function downloadStructuredZIP(){
     zip.file(`${root}/.claude/settings.json`, k.settings);
     zip.file(`${root}/.claude/skills/apply-wo/SKILL.md`, k.applyWo);
     zip.file(`${root}/.claude/skills/wrap/SKILL.md`, k.wrap);
-    zip.file(`${root}/meta/workorders/.gitkeep`, "");
+    zip.file(`${root}/meta/workorders/_TEMPLATE.md`, k.woTemplate);
   }
   // Skills do nicho (se ligado): dentro de .claude/ se Code, senao na raiz
   if(skillsOn){
@@ -3265,6 +3395,8 @@ function buildUpdatePack(niche){
       nature: "template", role: "Comando /apply-wo.", content: k.applyWo });
     files.push({ flat: updateFlat("wrap.SKILL.md"), real: ".claude/skills/wrap/SKILL.md",
       nature: "template", role: "Comando /wrap.", content: k.wrap });
+    files.push({ flat: updateFlat("workorders._TEMPLATE.md"), real: "meta/workorders/_TEMPLATE.md",
+      nature: "template", role: "Modelo de WO (o proprio modelo, nao uma WO preenchida).", content: k.woTemplate });
   }
   // Ignores recomendados (sempre) — sem eles o pacote de atualizacao vinha incompleto (reusa os helpers do estruturado)
   files.push({ flat: updateFlat("gitignore"), real: ".gitignore", nature: "template",

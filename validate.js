@@ -501,6 +501,31 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
+  const k=T.buildCodeKitFiles();
+  const wo=k.woTemplate||"";
+  assert(/Este arquivo e o MODELO/.test(wo), "modelo de WO ausente do kit do Code");
+  assert(/Idempotencia:/.test(wo), "modelo de WO sem a clausula de idempotencia");
+  assert(/Canal dos meta neste ciclo/.test(wo), "modelo de WO sem o banner de canal dos meta");
+  assert(/Fora de escopo/.test(wo), "modelo de WO sem a secao fora de escopo");
+  assert(/Armadilhas desta WO/.test(wo), "modelo de WO sem a secao de armadilhas");
+  assert(/Relatorio de aplicacao/.test(wo), "modelo de WO sem o relatorio de aplicacao");
+  assert(!/npm run|svelte/i.test(wo), "modelo de WO amarrado a um stack especifico");
+  const fd=T.structuredFlatdropignore(true);
+  assert(/!meta\/workorders\/_TEMPLATE\.md/.test(fd), "flatdropignore nao reinclui o modelo de WO");
+  const idx=fd.split("\n");
+  assert(idx.indexOf("meta/workorders/*") < idx.indexOf("!meta/workorders/_TEMPLATE.md"), "a reinclusao vem antes da exclusao (ordem invertida)");
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/## Técnicas específicas deste projeto/.test(cmd), id+": CEREBRO sem a secao Tecnicas especificas");
+    assert(/template-update nunca sobrescreve esta seção/.test(cmd), id+": a secao Tecnicas especificas nao esta protegida do template-update");
+    assert(/não é legível por este canal/.test(cmd), id+": Estado nao distingue nao-verificado de nao-legivel pelo canal");
+    assert(/carimbo de emissão/.test(cmd), id+": falta a contrapartida (data de artefato nao envelhece)");
+    assert(/Não suba o `PROMPT_IA.md`/.test(cmd) || !/Saída de código via ASU/.test(cmd), id+": a secao ASU nao avisa para nao subir o PROMPT_IA");
+  });
+  return "ok (" + wo.length + " chars no modelo)";
+});
+
 check("C26 curadoria das linhas de modo (wo0069): versao curta nas Instrucoes, definicao completa no CEREBRO", () => {
   const n=T.normNiche(T.NICHES.narrative);
   T.STATE.workmode = T.STATE.workmode || {};

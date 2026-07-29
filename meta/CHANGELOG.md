@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.91.0**.
+> Histórico de versões. Versão atual: **v1.92.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.92.0 — Leva sand-land (wo0070, D-104)
+- **Molde de WO novo (FK-C do sand-land):** `buildWoTemplate()` gera `meta/workorders/_TEMPLATE.md` — sobe no zip estruturado, no kit do Code e no pacote de atualização, reincluído no `.flatdropignore` gerado (`meta/workorders/*` + `!meta/workorders/_TEMPLATE.md`, nessa ordem). O `.gitkeep` da pasta some, substituído pelo modelo.
+- **Seção «Técnicas específicas deste projeto» oficial no CEREBRO gerado:** começa vazia, protegida do template-update, é onde vai o conhecimento operacional que só o projeto tem — o único conteúdo que sobrevive a um rebase do kit (DEC-018 do sand-land, confirmado 2×).
+- **Campo Estado distingue não-verificado de não-legível pelo canal (FK-A):** mount sem `.git` não tem `git log` para ler — «commit não legível pelo mount» + pedir uma vez, em vez de repetir a ressalva todo turno.
+- **Regra da cópia ganha a contrapartida (FK-B):** o que envelhece é o estado do repo e as âncoras, não o carimbo de emissão de um artefato — documento datado no dia 27 aplicado no dia 29 continua correto.
+- **Pré-requisito do ASU corrigido:** só o `INSTRUCTION_GUIDE.md` — o `PROMPT_IA.md` semeia a diretriz em projetos sem o kit e diverge da diretriz curada no CEREBRO; duas instruções concorrentes no mesmo Projeto é sorteio.
+- **Recusado com argumento:** tipo de artefato novo «proposta de fase» (análise + ROADMAP já cobrem); taxonomia estendida de IDEAS (fica só a gaveta «Adiadas com gatilho de volta», leva seguinte).
+- Check **C27** novo. `KIT_VERSION 1.92.0`. **Custo de teto: zero** — `narrative` 6628, `game` 6536, `dev` 6084, todos inalterados.
+- Harness **18/18, 70/70 → 71/71, 0 erros**.
 
 ## v1.91.0 — Curadoria das linhas de modo (wo0069, D-103)
 - **Opção (D) da análise do teto aplicada:** a linha do ASU nas Instruções, a linha de feedback do ASU e as duas linhas de `.gitignore`+README perdem a duplicação com o que o CEREBRO gerado já detalhava por completo — versão curta na Instrução, definição completa no CEREBRO, mesma arquitetura da wo0056-A. A linha do commit perde «Não pule o commit» (redundante com «ENTREGUE»).

@@ -34,6 +34,7 @@
 # >>> flatdrop-editor
 meta/specs/*
 meta/workorders/*
+!meta/workorders/_TEMPLATE.md
 !meta/workorders/_GUIA-doc-por-wo.md
 !meta/analises/_TEMPLATE.md
 logs/*
