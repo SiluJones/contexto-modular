@@ -37,7 +37,7 @@ O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega —
 - `build-manifest.json` — lista os módulos na ordem do build.
 - Saída byte-idêntica à v1.33.0 com tudo desligado — o produto continua 1 arquivo único.
 
-**Repo e estrutura:** diretório de trabalho `Contexto/contexto-modular/` (download do GitHub vira `contexto-modular-main`). Push para `origin/main`. Estrutura: `index.html` na raiz, `src/` (casco + módulos), `meta/` (os `.md` de contexto, incl. `meta/specs/`), `logs/`, `.claude/settings.json` (permissões do Claude Code), `CLAUDE.md` na raiz (arquivo-raiz do Code — ≠ do `CEREBRO.md`), `HUB.md` na raiz, `validate.js`, `build.js`, `build-manifest.json`, `package.json`. `.gitignore` ignora `rascunhos/ backups/ dist/ node_modules/` (e NÃO `instrucoes/`). **Hospedagem:** GitHub Pages servindo o `index.html` da raiz — **site de página única → precisa de `.nojekyll` na raiz** (sem ele o Jekyll quebra; FIX-005). (Repo/diretório canônico: `contexto-modular` (`SiluJones/contexto-modular`); o nome antigo `kit-contexto` está aposentado.)
+**Repo e estrutura:** diretório de trabalho `Contexto/contexto-modular/` (download do GitHub vira `contexto-modular-main`). Push para `origin/main`. Estrutura: `index.html` na raiz, `src/` (casco + módulos), `meta/` (os `.md` de contexto, incl. `meta/specs/`), `logs/`, `.claude/settings.json` (permissões do Claude Code), `CLAUDE.md` na raiz (arquivo-raiz do Code — ≠ do `CEREBRO.md`), `validate.js`, `build.js`, `build-manifest.json`, `package.json`. `.gitignore` ignora `rascunhos/ backups/ dist/ node_modules/` (e NÃO `instrucoes/`). **Hospedagem:** GitHub Pages servindo o `index.html` da raiz — **site de página única → precisa de `.nojekyll` na raiz** (sem ele o Jekyll quebra; FIX-005). (Repo/diretório canônico: `contexto-modular` (`SiluJones/contexto-modular`); o nome antigo `kit-contexto` está aposentado.)
 
 - **Bibliotecas externas (CDN):** JSZip (botão "baixar pacote ZIP"). Resto é vanilla.
 - **Persistência no browser:** `localStorage` para presets do custom, estado (STATE) e o HUB. Proibido em *artifacts* do claude.ai, mas funciona aqui porque roda no Pages do usuário (site real). **localStorage é por origem:** presets do site publicado NÃO aparecem no arquivo local (`file://`) e vice-versa (já confundiu — não é bug).
@@ -133,6 +133,22 @@ Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `op
 - Inspiração distante: GitHub spec-kit ("composição assistida > fusão automática"; "doctor/lint" para conflitos).
 - **Enquadramento profissional** (Anthropic "Effective context engineering" + literatura 2025/26): janela = recurso finito; "context rot"; offload/retrieve/isolate/compress; Git para estado entre sessões.
 - **Expansões / em avaliação** (IDEAS/ROADMAP): **i18n com idioma misto** (i-N13/i-N26 — o refator modular que destravava já saiu); **função "modo Code"** (switch que gera o kit de arranque do Claude Code: `CLAUDE.md` raiz starter + `.claude/settings.json` + comandos + protocolo de raias + macetes Windows, desktop e CLI — i-N29, spec a escrever); **HUB enxuto** (o aparato pesado é over-engineered para toolchain solo; manter só o registro de contratos / Cânone, com dono + versão derivada — i-N27, a validar/testar); **ciclo de vida do feedback** nas seções «Feedback para o Kit/ASU» (status + rotação para `logs/`, sem arquivo novo — i-N28). "Kit desenvolve" a estender a HQ/RPG/animação/música quando os pilotos pedirem (i-N25 música). O **ASU** e o **FlatDrop** seguem como ferramentas vivas do toolchain (não mudar fluxo deles).
+
+### Dependências externas (herdadas do HUB, aposentado na wo0067)
+
+O KCM depende de dois formatos que **não são dele**. O HUB de toolchain foi aposentado, mas os
+contratos continuam:
+
+| Contrato | Forma travada | Dono |
+|---|---|---|
+| **Manifesto FlatDrop** | cabeçalho `<!-- flatdrop-manifest v1 -->`, tabela `caminho original ↔ nome na pasta` | FlatDrop |
+| **Instrução ASU** | `format_version: "1.0"`, `path_mode: relative` + `--root` | ASU |
+
+O KCM é dono de **um**: a diretriz ASU condensada que o switch `asuMode` injeta no CEREBRO — ela
+depende do `format_version "1.0"` e **aponta** para o `INSTRUCTION_GUIDE.md` do ASU em vez de
+congelá-lo. Se algum dos dois formatos mudar, o sintoma aparece aqui: o assistente emite YAML que o
+aplicador recusa, ou traduz nome-plano para caminho errado. Coordenação agora é bilateral, pelo
+«Feedback para o Kit» de cada projeto.
 
 ## 9. Localização dos arquivos (ambiente de trabalho do Claude)
 - **Deliverables:** `/mnt/user-data/outputs/`. O usuário coloca: `index.html` na raiz (ou o Code gera via build), os meta em `meta/`, specs em `meta/specs/`, `settings.json` em `.claude/`.

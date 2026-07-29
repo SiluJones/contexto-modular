@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.88.0**.
+> Histórico de versões. Versão atual: **v1.89.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.89.0 — Convivencia gerado x manual + fim do HUB (wo0067, D-101)
+- **`.flatdropignore` gerado ganha o bloco do editor:** marcadores `# >>> flatdrop-editor` / `# <<<` — regra dentro (some no próximo salvamento do editor do FlatDrop, que reescreve o bloco inteiro), comentário fora (sobrevive), nada depois do fim (vale a última regra que casa). Corrige `logs/` → `logs/*` e entrega o par completo `meta/analises/*` + `!meta/analises/_TEMPLATE.md` (bug apontado pelo FlatDrop 0.14.0). Explica o motivo real do `pasta/*`: a poda de diretório na varredura, além da regra normativa do git puro — as duas coisas, não uma no lugar da outra.
+- **Campo Estado do bloco de fecho** exige leitura feita **neste turno** e admite «não verificado nesta rodada» como resposta de primeira classe, em vez de puxar a memória (que, logo após um trabalho, é a *expectativa* de que ele foi aplicado).
+- **Gatilho concreto de análise:** mudar o **formato de um artefato que outra pessoa — ou o você do futuro — vai ler ou editar** pede análise, mesmo com diff pequeno.
+- **Princípio novo nas `HYGIENE_RULES`:** artefato gerado que convive com edição humana precisa enxergar o que existe fora dele, ter precedência por posição, e nunca desfazer o que não é seu.
+- **`HUB.md` de infraestrutura (toolchain KCM·ASU·FlatDrop) aposentado** — parado desde 2026-07-03; as três frentes coordenam bilateralmente pelo mount e pelo «Feedback para o Kit». Contratos preservados numa subseção nova ao final da §8 do `meta/CONTEXT.md`. `buildHub()` do produto (HUB para grupos de projetos de conteúdo) **inalterado**.
+- Check **C24** novo. `KIT_VERSION 1.89.0`. Teto inalterado: `narrative` 6612, `game` 6520, `dev` 6117.
+- Harness **18/18, 67/67 → 68/68, 0 erros**.
 
 ## v1.88.0 — A copia nao e a fonte da verdade (wo0066, D-100)
 - **Regra de higiene nova nos 18 CEREBROs gerados:** «A sua cópia não é a fonte da verdade» — vale o arquivo do repo/mount AGORA, não o que foi lido/gerado/reconstruído antes na conversa; reentregar trabalho já aplicado custa mais caro que perguntar. Vive **só no CEREBRO** — check **C23** prova que não vazou para as Instruções (custo de teto zero: `narrative` 6612, `game` 6520, `dev` 6117, todos inalterados).

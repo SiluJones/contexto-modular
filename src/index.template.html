@@ -1130,6 +1130,7 @@ const HYGIENE_RULES = [
   "STATUS é só o agora: item resolvido sai do STATUS e vai para o CHANGELOG (e para o log da sessão). Médio/longo prazo vive no ROADMAP, não no STATUS.",
   "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida.",
   "DECISIONS cresce devagar: quando passar de ~700 linhas ou uma decisão for substituída, mova as antigas para um arquivo de arquivo morto.",
+  "Artefato gerado que convive com edição humana precisa de três coisas: (i) **enxergar o que existe fora dele** — senão duplica em silêncio o que a pessoa já escreveu; (ii) **precedência definida por posição** — quem vence quando os dois falam do mesmo; (iii) **nunca apagar nem desfazer o que não é seu**. Bloco gerado dentro de arquivo editável: delimite com marcadores, mantenha-o no FIM do arquivo, escreva só dentro deles, e diga na primeira linha que ali dentro é território da ferramenta (o que a pessoa escrever ali será reescrito). Se o gerado não enxerga o manual, ele desfaz gestos sem avisar — e o sintoma aparece longe da causa.",
   "A sua cópia não é a fonte da verdade: vale o arquivo que está no repo/mount AGORA, não o que você leu, gerou ou reconstruiu antes nesta conversa. Qualquer artefato que você produziu (um pacote, uma reconstrução, um resumo do estado) envelhece no instante em que alguém aplica alguma coisa. Antes de dizer que algo continua pendente — ou de reentregar trabalho — releia o arquivo vivo. Reentregar o que já foi aplicado custa mais caro que perguntar.",
   "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre."
 ];
@@ -1227,7 +1228,7 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.88.0";
+const KIT_VERSION = "1.89.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2444,6 +2445,7 @@ function buildClaudeMd(niche){
   L.push("- **Meça antes de propor.** O que dá para medir, meça; o resto entra rotulado como estimativa. Análise que projeta ganho sem medir vira erro de planejamento.");
   L.push("- **A análise não decide nem abre trabalho sozinha.** Ela para no ponto de decisão e espera o usuário. Depois de decidida, o desfecho vai para o `DECISIONS.md` (a análise guarda o raciocínio; o DECISIONS guarda a decisão) e a análise só muda de `Status` — análise vencida não se apaga: o «por que não» é o que evita refazer o mesmo debate daqui a seis meses.");
   L.push(analiseFunil(niche));
+  L.push("- **Gatilho concreto, além do «não-trivial»:** mudar o **formato de um artefato que outra pessoa — ou o você do futuro — vai ler ou editar** pede análise, mesmo quando o diff é pequeno. Nome de arquivo, estrutura de pasta, layout de bloco gerado, campo de formulário, vocabulário de um termo em uso: o custo não está no diff, está em quem vai conviver com ele.");
   L.push("- **Mudança pequena não pede análise.** Cerimônia em cima de trivialidade é desperdício — vá direto ao trabalho. Na dúvida, meia página resolve.");
   L.push("- **Se este projeto já escreve documentos desse tipo com outro nome** (`design/`, `estudos/`, `rfc/`, `.md` avulso na raiz): não renomeie nada por conta própria. Adote a convenção onde ela cai — o documento que já existe ganha o cabeçalho de `Status` e os elos (o que nasceu dele, qual decisão registrou), e as análises novas nascem no formato acima. Renomear pasta ou arquivo é decisão do usuário: proponha, não execute.");
   L.push("- **Modelo:** ao escrever a primeira, deixe também um `analises/_TEMPLATE.md` com esse esqueleto — o modelo é o que faz a convenção pegar. Se a pasta estiver ignorada no `.flatdropignore`, **reinclua o modelo** (`!analises/_TEMPLATE.md`): modelo e guia sempre sobem ao Projeto; corpo de análise, não.");
@@ -2531,7 +2533,7 @@ function buildClaudeMd(niche){
   L.push("## Bloco de fecho de turno (formato fixo)");
   L.push("Todo turno de trabalho fecha assim, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem antes de um divisor; o resto vem depois dele:");
   L.push("1. **Próximo** — sempre presente, ANTES do divisor, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido.");
-  L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir.");
+  L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
   L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**, como a Config e o Handoff: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Nome por nome — e não espere que eu pergunte.");
   L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
   L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
@@ -3084,25 +3086,45 @@ function structuredGitignore(){
   ].join("\n");
 }
 function structuredFlatdropignore(codeOn){
+  // Convencao KCM (wo0067): comentario SO fora do bloco (dentro, o editor do FlatDrop apaga
+  // no proximo salvamento, porque reescreve o bloco inteiro); REGRA so dentro; nada depois
+  // do marcador de fim, porque vale a ultima regra que casa.
   const L = [
     "# .flatdropignore — enxuga o que sobe ao Projeto do Claude (tudo segue versionado no git).",
     "# Sintaxe .gitignore; salvo na raiz; tem a palavra final sobre o .gitignore.",
-    "",
+    "#",
+    "# COMO ESTE ARQUIVO E ORGANIZADO:",
+    "# - Explicacao e comentario ficam AQUI EM CIMA, fora do bloco. Dentro do bloco eles somem:",
+    "#   o editor do FlatDrop reescreve o bloco inteiro a cada salvamento.",
+    "# - REGRA (o que some do mount) vai DENTRO do bloco \"# >>> flatdrop-editor\".",
+    "# - NADA depois do \"# <<<\": vale a ULTIMA regra que casa, entao o que vier depois vence o bloco.",
+    "#",
+    "# FORMA: use \"pasta/*\" (o CONTEUDO), nunca \"pasta/\" (a PASTA). Motivo real: a ferramenta que le",
+    "# este arquivo costuma PODAR o diretorio casado antes de descer, e um \"!\" la dentro nunca chega",
+    "# a ser avaliado (no git puro a limitacao e documentada: nao se reinclui arquivo sob pasta",
+    "# excluida). Com \"pasta/*\" a varredura desce e o \"!arquivo\" volta a valer.",
+    "# Corolario: modelo/guia de pasta ignorada precisa do PAR completo — a linha \"pasta/*\" e a",
+    "# linha \"!pasta/_TEMPLATE.md\" logo depois dela, dentro do bloco.",
+    "#",
     "# Logs de sessao: o \"agora\" fica no meta/STATUS.md; o diario nao precisa ir ao mount.",
-    "logs/", "",
     "# Analises (meta/analises/, uma por decisao nao-trivial; a pasta nasce no primeiro uso):",
-    "# enquanto forem poucas, deixe subir — sao o \"por que\" das decisoes. Quando pesarem, ligue as",
-    "# duas linhas abaixo. REGRA: modelo e guia SEMPRE sobem; corpo de analise, nao.",
-    "# meta/analises/*",
-    "# !meta/analises/_TEMPLATE.md", ""
+    "# enquanto forem POUCAS, deixe subir — a analise \"Em discussao\" precisa ser relida no turno",
+    "# seguinte, e analise que o assistente nao ve nao e discutida, e reescrita do zero. Quando",
+    "# pesarem, acrescente ESTE PAR dentro do bloco (modelo sempre sobe; corpo, nao):",
+    "#   meta/analises/*",
+    "#   !meta/analises/_TEMPLATE.md"
   ];
   if(codeOn){
+    L.push("#");
     L.push("# WOs aplicadas: o desfecho vive em meta/DECISIONS.md e meta/CHANGELOG.md; o corpo pesa.");
-    L.push("# Use \"/*\" (o conteudo), nao \"/\" (a pasta): sob pasta excluida por inteiro o \"!\" NAO reinclui.");
-    L.push("meta/workorders/*");
-    L.push("# Modelo/guia da pasta, se houver, volta com \"!\" — ex.: !meta/workorders/_GUIA.md");
-    L.push("# Para estudar UMA WO no Projeto: !meta/workorders/<arquivo>.md", "");
+    L.push("# Para estudar UMA WO no Projeto, reinclua nominalmente: !meta/workorders/<arquivo>.md");
+    L.push("# (a linha do \"!\" vai dentro do bloco, logo depois de meta/workorders/*)");
   }
+  L.push("");
+  L.push("# >>> flatdrop-editor");
+  L.push("logs/*");
+  if(codeOn) L.push("meta/workorders/*");
+  L.push("# <<<");
   return L.join("\n");
 }
 function structuredReadme(niche, root, codeOn, skillsOn){

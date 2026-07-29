@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
+const SHIM = 'window.__T = {structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -501,6 +501,36 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C24 convivencia gerado x manual (wo0067): bloco marcado no .flatdropignore, Estado verificado no turno, gatilho de analise por formato", () => {
+  // 1) .flatdropignore gerado: comentario so FORA, regra so DENTRO, bloco por ULTIMO
+  [true,false].forEach(codeOn => {
+    const txt=T.structuredFlatdropignore(codeOn);
+    const lines=txt.split("\n");
+    const i=lines.indexOf("# >>> flatdrop-editor");
+    const j=lines.indexOf("# <<<");
+    assert(i>=0 && j>i, "codeOn="+codeOn+": bloco gerenciado ausente ou invertido");
+    assert(j===lines.length-1, "codeOn="+codeOn+": ha conteudo depois do fim do bloco (vence o bloco em silencio)");
+    const fora=lines.slice(0,i);
+    fora.forEach(l => { if(l.trim()) assert(l.trim().startsWith("#"), "codeOn="+codeOn+": regra fora do bloco -> "+l); });
+    const dentro=lines.slice(i+1,j).filter(l=>l.trim());
+    assert(dentro.length>0, "codeOn="+codeOn+": bloco vazio");
+    dentro.forEach(l => assert(!l.trim().startsWith("#"), "codeOn="+codeOn+": comentario dentro do bloco (o editor apaga) -> "+l));
+    assert(dentro.includes("logs/*"), "codeOn="+codeOn+": logs continua na forma antiga (pasta/ em vez de pasta/*)");
+    assert(!/^logs\/$/m.test(txt), "codeOn="+codeOn+": ainda emite logs/ puro");
+    if(codeOn) assert(dentro.includes("meta/workorders/*"), "codeOn: falta meta/workorders/* dentro do bloco");
+  });
+  assert(/PODAR o diretorio/.test(T.structuredFlatdropignore(true)), "o arquivo nao explica o motivo real (poda), so o sintoma");
+  // 2) CEREBRO: verificacao no ponto de uso + gatilho de analise + regra do artefato gerado
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/vem de leitura feita NESTE turno/.test(cmd), id+": campo Estado sem a exigencia de leitura no turno");
+    assert(/não verificado nesta rodada/.test(cmd), id+": Estado nao admite 'nao verificado' como resposta");
+    assert(/vai ler ou editar\*\* pede análise/.test(cmd), id+": falta o gatilho concreto de analise por mudanca de formato");
+    assert(/precedência definida por posição/.test(cmd), id+": falta a regra do artefato gerado que convive com edicao humana");
+  });
+  return "ok";
+});
+
 check("C23 a copia nao e a fonte da verdade (wo0066): regra de higiene nos 18 CEREBROs, sem custo nas Instrucoes", () => {
   let base=null;
   Object.keys(T.NICHES).forEach(id => {
@@ -558,7 +588,7 @@ check("C21 analise antes do compromisso (wo0063): secao no CEREBRO dos 18, gatil
   // .flatdropignore gerado: conteudo da pasta (/*), nunca a pasta inteira — senao o "!" nao reinclui
   assert(/meta\/workorders\/\*/.test(raw), "flatdropignore gerado nao usa meta/workorders/* (o ! nao reincluiria)");
   assert(!/L\.push\("meta\/workorders\/", ""\)/.test(raw), "flatdropignore gerado ainda exclui a pasta inteira");
-  assert(/# !meta\/analises\/_TEMPLATE\.md/.test(raw), "flatdropignore gerado nao ensina a reinclusao do modelo");
+  assert(/!meta\/analises\/_TEMPLATE\.md/.test(raw), "flatdropignore gerado nao ensina a reinclusao do modelo");
   assert(/uma analise por decisao nao-trivial/.test(raw), "README estruturado nao menciona meta/analises/");
   assert(!/analises\/\.gitkeep/.test(raw), "o zip esta criando a pasta analises vazia (deveria nascer no primeiro uso)");
   return "ok";

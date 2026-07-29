@@ -2,39 +2,41 @@
 # Sintaxe .gitignore. Salvo na RAIZ do repo, versionado, tem a palavra final sobre o .gitignore.
 # Objetivo: enxugar o que sobe ao mount do Projeto do Claude SEM tirar o que o desenvolvimento precisa.
 # Tudo listado aqui CONTINUA versionado no git — so nao e ENVIADO ao Projeto (FlatDrop != deploy != git).
-# (Sao padroes POSITIVOS = excluir a mais o que a allowlist do FlatDrop deixaria passar.)
+#
+# COMO ESTE ARQUIVO E ORGANIZADO (convencao KCM, wo0067):
+# - Explicacao e comentario ficam AQUI EM CIMA, fora do bloco. Dentro do bloco eles somem: o editor
+#   do FlatDrop reescreve o bloco inteiro a cada salvamento (core.build_flatdropignore = pre + bloco + pos).
+# - REGRA (o que some do mount) vai DENTRO do bloco "# >>> flatdrop-editor".
+# - NADA depois do "# <<<": vale a ULTIMA regra que casa, entao o que vier depois vence o bloco.
+# - Limite conhecido: regra sobre caminho que ainda NAO existe nao sobrevive dentro do bloco (o editor
+#   so re-deriva o que enxerga na arvore). Se precisar de uma, deixe-a fora e nao use o editor aqui.
+#
+# FORMA: use "pasta/*" (o CONTEUDO), nunca "pasta/" (a PASTA). Motivo real: a ferramenta que le este
+# arquivo costuma PODAR o diretorio casado antes de descer, e o "!" la dentro nunca chega a ser
+# avaliado (no git puro a limitacao e documentada: nao se reinclui arquivo sob pasta excluida). Com
+# "pasta/*" a varredura desce e o "!" volta a valer. Medido pelo FlatDrop (FIX-011/DEC-025): com
+# PathSpec a negacao funciona — quem a matava era a poda.
+# Corolario (wo0063): modelo e guia de pasta ignorada SEMPRE voltam com "!", no PAR completo e na
+# MESMA leva em que nascem.
+#
+# WOs/specs aplicadas: o desfecho vive em meta/DECISIONS.md, meta/CHANGELOG.md e meta/STATUS.md; o
+# corpo bruto e historico e pesa no mount. Para estudar UMA no Projeto, reinclua nominalmente dentro
+# do bloco, ex.: !meta/workorders/260727-wo0063-analise-no-produto.md
+# Analises: enquanto forem POUCAS, sobem — a analise "Em discussao" precisa ser relida no turno
+# seguinte. Quando pesarem, acrescente o par dentro do bloco:
+#   meta/analises/*
+#   !meta/analises/_TEMPLATE.md
+# Logs diarios: o "agora" esta no meta/STATUS.md; o consolidado no meta/CHANGELOG.md.
+# index.html: e gerado (~230 KB) e o planejamento sempre ancora em src/index.template.html.
+#   (Para inspecionar o build DENTRO do Projeto, reinclua com !index.html dentro do bloco.)
+# INSTRUCOES-DO-PROJETO.md: ja e lido em todo turno pelo painel do Projeto (437fd39).
 
-# --- Specs aplicadas (38 e crescendo) ---
-# O desfecho de cada spec ja vive em meta/DECISIONS.md (D-0xx), meta/CHANGELOG.md e meta/STATUS.md.
-# O corpo bruto e so historico e pesa muito no mount. Mantemos apenas o guia do metodo.
-# Nota: usamos "meta/specs/*" (e nao "meta/specs/") de proposito — o git/pathspec NAO reinclui
-# um arquivo sob uma pasta excluida por inteiro, entao excluimos o conteudo e reincluimos o guia.
+# >>> flatdrop-editor
 meta/specs/*
 meta/workorders/*
-# Analises: enquanto forem POUCAS, sobem. O chat precisa reler a analise "Em discussao" no turno
-# seguinte — analise que o chat nao ve nao e discutida, e reescrita do zero. Quando pesarem, religue
-# a linha abaixo e reinclua pontualmente a que estiver aberta (!meta/analises/<arquivo>.md).
-# meta/analises/*
 !meta/workorders/_GUIA-doc-por-wo.md
 !meta/analises/_TEMPLATE.md
-
-# REGRA (wo0063): modelo e guia de pasta ignorada SEMPRE voltam com "!" — o corpo fica fora, o
-# modelo sobe. Criou um _TEMPLATE/_GUIA numa pasta ignorada? Reinclua na MESMA leva em que criou.
-# E use "pasta/*" (o conteudo), nunca "pasta/" (a pasta): sob pasta excluida por inteiro o "!"
-# nao reinclui nada.
-
-# Para estudar UMA spec especifica no Projeto, reinclua pontualmente (o "!" vence o ignore acima), ex.:
-# !meta/specs/260707-spec0033-campos-nicho-na-saida.md
-
-# --- Logs diarios de sessao ---
-# O "agora" esta em meta/STATUS.md; o consolidado em meta/CHANGELOG.md. O diario nao precisa
-# ir ao mount (o git guarda o historico).
-logs/
-
-# --- Build gerado (o maior arquivo do repo, ~230 KB) ---
-# O planejamento (raia Chat) sempre ancora em src/index.template.html; o index.html e
-# reconstruido pelo Code via "node build.js". No mount ele so duplica o template e custa tokens.
-# (Se algum dia quiser inspecionar o build DENTRO do Projeto, reinclua com: !index.html)
+logs/*
 index.html
-
 INSTRUCOES-DO-PROJETO.md
+# <<<

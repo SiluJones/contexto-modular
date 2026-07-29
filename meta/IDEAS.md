@@ -560,6 +560,13 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-07-29 — FlatDrop (0.14.0) fonte da leva wo0067; protocolo de update e HUB abrem itens (D-101, wo0067, v1.89.0)
+O **FlatDrop** foi a fonte dos cinco itens aplicados na wo0067 (convivência gerado×manual no `.flatdropignore`, verificação no ponto de uso do campo Estado, gatilho concreto de análise, princípio do artefato gerado, HUB de infraestrutura aposentado — ver D-101). Dos doze itens que o FlatDrop devolveu, os do **protocolo de update** ficam para a próxima leva; e a aposentadoria do `HUB.md` (toolchain) abre um item que era dele. Abertos:
+- **Protocolo de update (próxima leva):** o `_UPDATE-PROMPT` deve pedir o estado do repo **antes** de comparar; afirmar que template genérico **nunca** substitui arquivo vivo refinado; marcar `.claude/commands/` como legado; e a linha do `SPEC.md` no manifesto precisa dizer que é spec-de-feature (SDD), sob demanda, e **não** o modelo das WOs.
+- **Sinalizar os modos ativos na tela antes de exportar** o template-update — item que vinha na caixa de entrada do `HUB.md` aposentado (o `_UPDATE-MANIFEST.md` já grava `ASU sim/não · Code sim/não`; falta sinalizar **antes** de exportar, na tela).
+- **Migrar o próprio KCM de `.claude/commands/` para `.claude/skills/`** — o produto já emite skills para os projetos gerados; a casa do KCM ficou no formato antigo.
+- **Nota (ASU nos próprios docs):** recomendação híbrida (viável via `markdown`+`replace_section` em docs de heading único, não recomendada para STATUS/CHANGELOG/IDEAS), sem mudança de contrato — já registrada antes na caixa do HUB; só reafirmando aqui pós-aposentadoria.
+
 ### 2026-07-26 — Enxugamento das Instruções, etapa A concluída (D-090, wo0056, v1.79.0)
 **Etapa A → CONCLUÍDA:** motor instalado — comportamento de nicho ganha campo opcional `short` (4º elemento) com precedência sobre o corte automático (`shortDef`) nas Instruções; o CEREBRO segue com a definição integral. Regra de exceção embutida: sem `short`, mantém o corte automático. Check C18. `KIT_VERSION 1.79.0`. **Esta etapa não mudou uma palavra de conteúdo** — nenhum nicho tem `short` preenchido ainda; saída dos 18 nichos byte-idêntica. **Parqueadas:** **etapa B** (curadoria por levas: `game`, `narrative`, `career`, `rpg` → demais) e **etapa C** (papéis de arquivo + migração para `meta/` + poda de markdown). **Anotar também:** padronizar a pasta de análises no kit (nome e template — hoje cada projeto inventa: `analises/`, `design/`…), a decidir junto com o handoff.
 
