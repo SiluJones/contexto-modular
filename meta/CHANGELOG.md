@@ -1,8 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.92.0**.
+> Histórico de versões. Versão atual: **v1.93.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.93.0 — Teto por configuracao (wo0071, D-105)
+- **O 6900 passa a valer explicitamente para a configuração PADRÃO.** Ligar um modo de trabalho tem orçamento próprio: **Code +550** sobre o padrão, **ASU +400** marginal sobre o que o Code já custa, **compartilhado 450** para as linhas que qualquer modo de trabalho liga (achado da medição: elas ficavam sem dono no modelo de dois números), **total 7.600** nos combos. Trava o **incremento**, não o total — o `G16` não muda, segue medindo só o pior caso de conteúdo.
+- **Check C28 novo:** mede os 18 nichos em quatro configurações (padrão/+Code/+ASU/+Code+ASU) e imprime os cinco números a cada rodada. `C26` passa a derivar o limite de vigilância do orçamento em vez do 950 fixo.
+- **O CEREBRO gerado publica os três orçamentos e o total**, lendo das mesmas constantes que o harness cobra.
+- `ok (padrao 6628/6900 · +Code 529/550 · +ASU 372/400 · compart 435/450 · combo 7529/7600)`.
+- `KIT_VERSION 1.93.0`. **Custo de teto: zero** — `narrative` 6628, `game` 6536, `dev` 6084, todos inalterados.
+- Harness **18/18, 71/71 → 72/72, 0 erros**.
 
 ## v1.92.0 — Leva sand-land (wo0070, D-104)
 - **Molde de WO novo (FK-C do sand-land):** `buildWoTemplate()` gera `meta/workorders/_TEMPLATE.md` — sobe no zip estruturado, no kit do Code e no pacote de atualização, reincluído no `.flatdropignore` gerado (`meta/workorders/*` + `!meta/workorders/_TEMPLATE.md`, nessa ordem). O `.gitkeep` da pasta some, substituído pelo modelo.

@@ -1,6 +1,6 @@
 # ANÁLISE — Teto das Instruções por configuração (Modo Code / ASU estourando os 6.900)
 
-> **Status:** Decidida (parcial — (D) aplicada na wo0069; (C) na fila)
+> **Status:** Decidida e implementada (D + C)
 > **Data:** 260727 · **Base:** v1.87.0 (medido no sandbox, pós-wo0065; o repo está em v1.86.0)
 > **Vira:** wo0069 (curadoria, opção D) → WO da trava por configuração (opção C) · **Decisão:** D-103
 
@@ -194,3 +194,13 @@ que `narrative` (7.529) e `game` (7.437) agora cumprem, em vez de um número nov
 **4. Publicar a folga no STATUS a cada versão:** aceito, com a ordem de prioridade pedida —
 **`dev` primeiro** (é o nicho com mais projetos e o que trouxe o feedback do sand-land), depois
 `narrative` e `game`, que são os que chegam antes no teto.
+
+## Implementação (wo0071, D-105)
+
+A opção **(C)** foi implementada na wo0071 com **três** baldes em vez de dois, porque a medição do
+check revelou o balde **compartilhado** (linhas liberadas por `asuModeOn() || codeModeOn() || CHANGELOG`,
+que qualquer modo de trabalho liga e que o modelo de dois números — Code, ASU — deixava sem dono). Os
+números aprovados pelo autor **não mudaram**: Code ≤ 550, ASU ≤ 400, total ≤ 7.600 nos combos; o balde
+novo (compartilhado ≤ 450) só cobre o que já existia e não era vigiado por ninguém. Medido: compartilhado
+435/450, Code 529/550, ASU 372/400, combo 7529/7600, padrão 6628/6900 — todos dentro do orçamento. Check
+**C28** novo. Harness 18/18, 71/71 → 72/72, 0 erros.

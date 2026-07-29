@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
+const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -501,6 +501,38 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C28 teto por configuracao (wo0071): 6900 no padrao, orcamento por modo, total nos combos <= INSTR_TETO_MODOS", () => {
+  const S=T.STATE; S.workmode = S.workmode || {};
+  const pc=S.workmode.codeMode, pa=S.workmode.asuMode;
+  function len(niche, code, asu){
+    S.workmode.codeMode = code ? "yes" : "";
+    S.workmode.asuMode  = asu  ? "yes" : "";
+    return T.buildInstr(niche).length;
+  }
+  const fora=[]; let maxCode=0, maxAsu=0, maxTotal=0, maxPadrao=0, maxCompart=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const padrao=len(n,0,0), comCode=len(n,1,0), comAsu=len(n,0,1), combo=len(n,1,1);
+    const incCode=comCode-padrao, incAsu=combo-comCode, compart=comCode+comAsu-combo-padrao, total=Math.max(comCode,comAsu,combo);
+    maxCode=Math.max(maxCode,incCode); maxAsu=Math.max(maxAsu,incAsu); maxCompart=Math.max(maxCompart,compart);
+    maxTotal=Math.max(maxTotal,total); maxPadrao=Math.max(maxPadrao,padrao);
+    if(padrao > T.INSTR_TETO) fora.push(id+" padrao "+padrao+">"+T.INSTR_TETO);
+    if(incCode > T.MODO_ORCAMENTO.code) fora.push(id+" +Code +"+incCode+">"+T.MODO_ORCAMENTO.code);
+    if(incAsu  > T.MODO_ORCAMENTO.asu)  fora.push(id+" +ASU(marginal) +"+incAsu+">"+T.MODO_ORCAMENTO.asu);
+    if(compart > T.MODO_ORCAMENTO.compartilhado) fora.push(id+" compartilhado +"+compart+">"+T.MODO_ORCAMENTO.compartilhado);
+    if(total   > T.INSTR_TETO_MODOS)    fora.push(id+" combo "+total+">"+T.INSTR_TETO_MODOS);
+  });
+  S.workmode.codeMode=pc; S.workmode.asuMode=pa;
+  assert(fora.length===0, "fora do orcamento -> " + fora.join(", "));
+  // o produto ENSINA os numeros que o harness cobra (senao o projeto nao consegue reproduzir a conta)
+  const cmd=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
+  assert(/Teto por configuração/.test(cmd), "CEREBRO nao ensina o teto por configuracao");
+  assert(cmd.indexOf("+"+T.MODO_ORCAMENTO.code)>=0 && cmd.indexOf("+"+T.MODO_ORCAMENTO.asu)>=0 && cmd.indexOf(String(T.MODO_ORCAMENTO.compartilhado))>=0, "CEREBRO nao publica os tres orcamentos (Code, ASU, compartilhado)");
+  assert(cmd.indexOf(String(T.INSTR_TETO_MODOS))>=0, "CEREBRO nao publica o total maximo com modos ligados");
+  assert(/O que se trava é o \*\*incremento\*\*/.test(cmd), "CEREBRO nao explica que a trava e do incremento, nao do total");
+  return "ok (padrao " + maxPadrao + "/" + T.INSTR_TETO + " · +Code " + maxCode + "/" + T.MODO_ORCAMENTO.code + " · +ASU " + maxAsu + "/" + T.MODO_ORCAMENTO.asu + " · compart " + maxCompart + "/" + T.MODO_ORCAMENTO.compartilhado + " · combo " + maxTotal + "/" + T.INSTR_TETO_MODOS + ")";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";
@@ -548,7 +580,8 @@ check("C26 curadoria das linhas de modo (wo0069): versao curta nas Instrucoes, d
   assert(/Artefatos de repo \(\.gitignore, README\)/.test(cmd), "CEREBRO perdeu o detalhe dos artefatos de repo");
   // o incremento dos modos, medido (a trava por configuracao e a proxima frente)
   const inc = instr.length - padrao;
-  assert(inc <= 950, "os modos voltaram a inchar: incremento de " + inc + " chars (limite de vigilancia: 950)");
+  const orc=T.MODO_ORCAMENTO.code + T.MODO_ORCAMENTO.asu;
+  assert(inc <= orc, "os modos voltaram a inchar: incremento de " + inc + " chars (orcamento: " + orc + ")");
   return "ok (incremento dos modos: " + inc + ")";
 });
 

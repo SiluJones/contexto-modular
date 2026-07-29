@@ -1228,8 +1228,14 @@ const LANG_TXT = {pt:"pt-BR",en:"inglês",es:"espanhol"};
 
 // Teto das Instrucoes do Projeto (lidas em toda mensagem). Fonte unica: UI + harness leem daqui.
 const INSTR_TETO = 6900;
+/* Teto por configuracao (wo0071, opcao C da analise 260727): o 6900 vale na configuracao PADRAO.
+   Ligar um modo tem orcamento proprio, e o que se trava e o INCREMENTO (o que o kit controla),
+   nao o total (que varia com a riqueza do nicho). O total nos combos tem a tolerancia do pior
+   caso ja usado pelo G16. */
+const INSTR_TETO_MODOS = 7600;
+const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.92.0";
+const KIT_VERSION = "1.93.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8556,7 +8562,8 @@ function buildClaudeMd(niche){
   L.push("");
   L.push("- **Sincronia com o CEREBRO.** Quando uma customização estrutural entra no CEREBRO (novo modo, novo arquivo, mudança de processo), a versão curta das Instruções pode ficar para trás e até contradizê-lo. Ao mexer no CEREBRO, cheque se as Instruções ainda batem; se divergirem, proponha alinhar/regenerar a versão curta.");
   L.push("- **Uma regra por linha, verbo no imperativo, sem preâmbulo.** Prosa explicativa vive no CEREBRO.");
-  L.push("- **Teto:** as Instruções não devem passar de ~6.900 caracteres. Ao propor uma mudança, diga o tamanho antes e depois.");
+  L.push(`- **Teto:** na configuração **padrão**, as Instruções não devem passar de ~**6.900** caracteres. Ao propor uma mudança, diga o tamanho antes e depois.`);
+  L.push(`- **Teto por configuração.** Ligar um modo de trabalho tem orçamento próprio, porque o custo é real e recorrente: **+${MODO_ORCAMENTO.code}** para o Modo Code sobre o padrão, **+${MODO_ORCAMENTO.asu}** para o ASU sobre o que o Code já custa, e **${MODO_ORCAMENTO.compartilhado}** para as linhas que *qualquer* modo de trabalho liga (elas têm limite próprio, senão crescem sem dono). O **total** com modos ligados não passa de **${INSTR_TETO_MODOS}**. O que se trava é o **incremento**, não o total: o total depende de quanta coisa este projeto tem, e isso é seu; o incremento é o que a regra nova custa, e é o que precisa caber. Não caber é sinal de que outra linha precisa ser curada primeiro — mandar detalhe para este CEREBRO é de graça, e a versão curta fica na Instrução.`);
   L.push("- **Registre:** toda mudança de instrução vira uma linha no DECISIONS (o que mudou e por quê) e um item em «Feedback para o Kit» no IDEAS — é assim que o kit aprende com este projeto.");
 
   L.push("");
