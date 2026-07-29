@@ -1,8 +1,8 @@
 # ANÁLISE — Teto das Instruções por configuração (Modo Code / ASU estourando os 6.900)
 
-> **Status:** Em discussão
+> **Status:** Decidida (parcial — (D) aplicada na wo0069; (C) na fila)
 > **Data:** 260727 · **Base:** v1.87.0 (medido no sandbox, pós-wo0065; o repo está em v1.86.0)
-> **Vira:** [a decidir] · **Decisão:** [a registrar]
+> **Vira:** wo0069 (curadoria, opção D) → WO da trava por configuração (opção C) · **Decisão:** D-103
 
 ## Problema
 
@@ -157,3 +157,40 @@ aqui.
    só pode entrar depois da curadoria.
 4. Vale a pena, na mesma leva, **medir e publicar a folga da configuração padrão** de `narrative` e
    `game` no `STATUS.md` a cada versão, já que são os dois que sempre chegam primeiro no teto?
+
+---
+
+## Respostas do autor (2026-07-29) e o que foi medido depois
+
+**(A) Documentar e aceitar** — adotada como **complemento**, não como resposta isolada, conforme a
+análise recomendava.
+**(B) Subir o teto** — **recusada.** Racional do autor: daria margem para os projetos engordarem as
+Instruções; o teto só sobe quando as recomendações e o custo real de token/caractere avançarem —
+não para acomodar o que já cresceu.
+**(C) Teto por configuração** — **aceita, depois de (D)**.
+**(D) Curar as linhas de modo** — **aceita e aplicada na wo0069.**
+**(E) Escopar por nicho** — **descartada**, como a análise recomendava.
+
+**1. Ordem curar → travar, em duas WOs:** confirmada.
+
+**2. Orçamento por modo — apertado ou folgado?** A curadoria respondeu com número. Depois da wo0069
+o incremento máximo medido é **+529 (Code)** e **+372 (ASU)**, contra 779 e 690 antes. A recomendação
+é fixar o orçamento **logo acima do que já cumprimos**: **Code ≤ 550 · ASU ≤ 400**. Isso é «apertado»
+na definição útil do termo — um orçamento que já é cumprido hoje, de modo que a próxima linha de modo
+só entra se outra for curada. O «folgado» (800/600) legitimaria de volta exatamente o que acabou de
+ser cortado. **Sobre o medo de perder regra:** a curadoria da wo0069 não cortou nenhuma — cortou
+duplicação, e o C26 exige as duas pontas (versão curta na Instrução **e** definição completa no
+CEREBRO). Esse é o mecanismo que torna a curadoria agressiva segura: o que sai da Instrução tem de
+estar provado no CEREBRO, senão o build fica vermelho.
+
+**3. O `G16` deve incluir os modos?** Recomendação: **não** transformar o G16 no check de tudo.
+Ele mede o pior caso de **conteúdo** (chips/multi) e deve continuar assim. Os modos ganham um check
+próprio, e a diferença é conceitual: **trave o incremento, não o total.** O total varia com a riqueza
+do nicho (a `narrative` é grande porque a narrativa é grande) e o kit não controla isso; o incremento
+é exatamente o que as linhas de modo custam, e é o que cada WO nova empurra para cima. O total no
+combo cheio ganha uma tolerância documentada — o mesmo **7.600** que o G16 já usa como pior caso, e
+que `narrative` (7.529) e `game` (7.437) agora cumprem, em vez de um número novo inventado.
+
+**4. Publicar a folga no STATUS a cada versão:** aceito, com a ordem de prioridade pedida —
+**`dev` primeiro** (é o nicho com mais projetos e o que trouxe o feedback do sand-land), depois
+`narrative` e `game`, que são os que chegam antes no teto.

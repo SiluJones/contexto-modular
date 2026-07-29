@@ -501,6 +501,32 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C26 curadoria das linhas de modo (wo0069): versao curta nas Instrucoes, definicao completa no CEREBRO", () => {
+  const n=T.normNiche(T.NICHES.narrative);
+  T.STATE.workmode = T.STATE.workmode || {};
+  const pc=T.STATE.workmode.codeMode, pa=T.STATE.workmode.asuMode;
+  T.STATE.workmode.codeMode="yes"; T.STATE.workmode.asuMode="yes";
+  const instr=T.buildInstr(n), cmd=T.buildClaudeMd(n);
+  const base=T.buildInstr(T.normNiche(T.NICHES.narrative));
+  T.STATE.workmode.codeMode=pc; T.STATE.workmode.asuMode=pa;
+  const padrao=T.buildInstr(T.normNiche(T.NICHES.narrative)).length;
+  // as duas pontas: curto na Instrucao, completo no CEREBRO
+  assert(/ASU: \*\*editar\*\* o que já existe/.test(instr), "linha ASU nao esta na versao curada");
+  assert(!/docs rolantes\*\* \(STATUS\/CHANGELOG/.test(instr), "a enumeracao dos docs rolantes voltou para as Instrucoes");
+  assert(/Escopo do ASU \(por tipo de arquivo\)/.test(cmd), "CEREBRO perdeu o escopo do ASU por tipo de arquivo");
+  assert(/Docs rolantes/.test(cmd), "CEREBRO perdeu a regra dos docs rolantes");
+  assert(/Verificação obrigatória/.test(cmd), "CEREBRO perdeu a verificacao pos-aplicacao do ASU");
+  assert(/O seu trabalho termina no `\.yaml` \*\*válido\*\*/.test(cmd), "CEREBRO nao delimita onde o trabalho do assistente termina (o usuario aplica pela interface)");
+  assert(/não é assunto seu/.test(cmd), "CEREBRO nao proibe inventar instrucao de execucao/pasta de destino do yaml");
+  assert(/\*\*Entregáveis de repo \(sem eu pedir\):\*\*/.test(instr), "gitignore+README nao foram fundidos numa linha so");
+  assert(!/\*\*README:\*\* entregue\/atualize/.test(instr), "a linha antiga do README continua nas Instrucoes");
+  assert(/Artefatos de repo \(\.gitignore, README\)/.test(cmd), "CEREBRO perdeu o detalhe dos artefatos de repo");
+  // o incremento dos modos, medido (a trava por configuracao e a proxima frente)
+  const inc = instr.length - padrao;
+  assert(inc <= 950, "os modos voltaram a inchar: incremento de " + inc + " chars (limite de vigilancia: 950)");
+  return "ok (incremento dos modos: " + inc + ")";
+});
+
 check("C25 protocolo de update e gatilho da releitura (wo0068): estado do repo, template nao substitui vivo, commands legado, SPEC e SDD", () => {
   const dev=T.normNiche(T.NICHES.dev);
   const prompt=T.buildUpdatePrompt(dev);

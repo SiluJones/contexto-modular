@@ -1,8 +1,15 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.90.0**.
+> Histórico de versões. Versão atual: **v1.91.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.91.0 — Curadoria das linhas de modo (wo0069, D-103)
+- **Opção (D) da análise do teto aplicada:** a linha do ASU nas Instruções, a linha de feedback do ASU e as duas linhas de `.gitignore`+README perdem a duplicação com o que o CEREBRO gerado já detalhava por completo — versão curta na Instrução, definição completa no CEREBRO, mesma arquitetura da wo0056-A. A linha do commit perde «Não pule o commit» (redundante com «ENTREGUE»).
+- **Informação nova do autor muda o texto do ASU no CEREBRO:** ele aplica pela **interface** do ASU e guarda o `.yaml` fora da raiz — o trabalho do assistente termina no `.yaml` **válido**; como o usuário aplica e onde guarda não é assunto da conversa, e o CEREBRO passa a proibir inventar instrução de execução ou pasta de destino.
+- Nichos acima do teto no combo Code+ASU caem de **13 para 2**; incremento dos modos cai de **1469 para 901** (Code: 779→529, ASU: 690→372). Configuração padrão: `narrative`/`game` inalterados; `dev` cai para **6084** (folga 816).
+- Check **C26** novo, provando as duas pontas (curto na Instrução, completo no CEREBRO) e vigiando o incremento (limite 950).
+- `KIT_VERSION 1.91.0`. Harness **18/18, 69/69 → 70/70, 0 erros**.
 
 ## v1.90.0 — Protocolo de update + gatilho da releitura (wo0068, D-102)
 - **A causa 1 do erro de releitura ganha antídoto:** o gatilho de releitura do mount nas Instruções perde a lista de exemplos de sinal («já subi», «veja o txt»...) — que ensinava a esperar o sinal — e ganha «inclusive, e principalmente, quando eu não sinalizo upload» + «mensagem cheia de pedidos é onde essa releitura mais falha». Os 66 chars economizados na troca pagam a maior parte dos 82 do gatilho novo (saldo universal **+16**).
