@@ -566,6 +566,9 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-07-29 — Migrar o KCM para `.claude/skills/` ATENDIDO (D-107, wo0073, repo) — dogfood fecha a pendência da wo0068
+O item aberto na wo0068 (abaixo, "Migrar o KCM de `.claude/commands/` para `.claude/skills/`") está **atendido**: os três comandos (`apply-wo`, `check-wo`, `wrap`) viram `.claude/skills/<nome>/SKILL.md` com `name`/`description` e `disable-model-invocation: true` — a invocação não muda. Ver D-107. **Continua aberto** (não é o mesmo item): «avaliar entregar o `/check-wo` aos projetos-usuário» — segue aguardando mais quilometragem.
+
 ### 2026-07-29 — Leva sand-land: os dois itens abertos + a nota 260729-1252 ATENDIDOS (D-106, wo0072, v1.94.0) — LEVA FECHADA
 Os dois itens deixados abertos pela wo0070 (abaixo) e a lição da nota `260729-1252.txt` (o pacote de template-update é entrada transitória, mas não descartável no meio do merge) estão **atendidos**: gaveta **«Adiadas»** com gatilho de volta no template universal de IDEAS e no IDEAS do `dev` (o `brainstorm` já tinha «Em banho-maria», recebe só a exigência do gatilho); `HISTORY.md` do `dev`/`research` ganha os tipos **pesquisa de convenções** e **autópsia**; o protocolo de update passa a dizer que o pacote fica no mount até o merge fechar, e que o assistente declara a cobertura de leitura quando ele sai antes. Ver D-106. **Recusado (reafirmado):** a taxonomia estendida do IDEAS — mesmo motivo da wo0070. **A leva sand-land fecha aqui — não sobra item aberto dela.**
 

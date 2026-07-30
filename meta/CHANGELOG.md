@@ -4,6 +4,11 @@
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
 
+## (repo) Migracao de commands para skills (wo0073, D-107)
+- Os tres comandos do KCM (`apply-wo`, `check-wo`, `wrap`) migram de `.claude/commands/*.md` para `.claude/skills/<nome>/SKILL.md`, cada um ganhando `name`/`description` no front-matter e `disable-model-invocation: true` — o que faz a skill se comportar como comando explicito, sem mudar a invocacao (`/apply-wo`, `/check-wo`, `/wrap` continuam iguais).
+- O kit marca `commands/` como legado desde a wo0068/D-102; esta WO fecha o dogfood pendente no proprio KCM.
+- **Sem bump de versao** — nada em `src/` foi tocado, produto inalterado. `KIT_VERSION` segue **v1.94.0**. Harness **18/18, 73/73, 0 erros** (conferencia, nao requisito).
+
 ## v1.94.0 — Fecho da leva sand-land (wo0072, D-106)
 - **Gaveta «Adiadas» com gatilho de volta:** o template universal de IDEAS (`narrative`) e o IDEAS próprio do `dev` ganham a seção; o `brainstorm` já tinha «Em banho-maria» e recebe só a exigência do gatilho — cada nicho no seu vocabulário, a regra cobrada é a mesma (ideia adiada sem gatilho é ideia perdida).
 - **`HISTORY.md` do `dev` e do `research` ganham dois tipos de seção:** pesquisa de convenções (o que já foi investigado antes de adotar um padrão externo) e autópsia (sintoma → causa raiz → correção → como evitar).

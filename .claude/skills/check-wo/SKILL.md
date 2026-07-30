@@ -1,10 +1,12 @@
 ---
-description: Confere uma WO contra o repo ANTES de aplicar. Read-only — nao edita nada.
+name: check-wo
+description: Confere uma WO contra o repo ANTES de aplicar — portao read-only que nao edita nada. Use quando o usuario pedir /check-wo ou quiser saber se uma WO ainda e aplicavel.
+disable-model-invocation: true
 ---
 
 Voce vai CONFERIR a WO `$ARGUMENTS` (em `meta/workorders/`) contra o estado atual do repo. **Nao
-edite, nao crie, nao rode build/commit.** Este comando e um portao de leitura: ele existe para
-descobrir, ANTES de mexer, se a WO e aplicavel como esta escrita.
+edite, nao crie, nao rode build/commit.** Isto e um portao de leitura: existe para descobrir, ANTES
+de mexer, se a WO e aplicavel como esta escrita.
 
 Passos:
 
@@ -15,8 +17,8 @@ Passos:
    - **0 ocorrencias** → ANCORA MORTA (a WO envelheceu ou o texto foi alterado). Mostre o trecho
      atual mais parecido, para o autor corrigir a WO.
    - **2+ ocorrencias** → ANCORA AMBIGUA. Diga quantas e onde.
-   O `src/index.template.html` usa **CRLF**: ancora de mais de uma linha colada com `\n` nao casa.
-   Confira linha a linha antes de declarar ancora morta por esse motivo.
+   **Fim de linha por arquivo:** `src/index.template.html` e **CRLF**; `validate.js`, `build.js` e os
+   `src/niches/*.js` sao **LF**. Confira linha a linha antes de declarar ancora morta por isso.
 3. Confira os pre-requisitos declarados: versao/commit citados na WO batem com `git log -1` e com o
    `meta/STATUS.md`? A arvore esta limpa (`git status --short`)? Se a WO pede arquivo NOVO, ele ja
    existe (colisao)? Se ela cria um check novo, o numero ja esta em uso?
