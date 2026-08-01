@@ -26,3 +26,5 @@ Regras de aplicação:
 - Feche com o **relatório de trabalho** — o que fez, achados e desvios do texto literal da WO,
   arquivos tocados, resultado de build/validate, o commit. **Não** use o bloco de fecho do chat:
   aquele é da raia de planejamento.
+- **Grave o mesmo relatório em `../AAMMDD-HHMM-code-kcm.txt`** (pasta-pai do repo). Sempre, sem
+  pedido. Se a escrita for negada, diga e siga — o relatório no chat é que vale.

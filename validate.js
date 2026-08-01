@@ -501,6 +501,30 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C30 contrapeso do gatilho de analise + relatorio em arquivo (wo0074): teste barato antes do gatilho, clausula de abandono, kit do Code grava o relatorio", () => {
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const cmd=T.buildClaudeMd(n);
+    const instr=T.buildInstr(n);
+    const iTeste=cmd.indexOf("Antes de escrever, dois testes baratos");
+    const iGatilho=cmd.indexOf("Gatilho concreto, além do");
+    assert(iTeste>=0, id+": CEREBRO sem os testes baratos que estreitam o gatilho");
+    assert(iGatilho>=0, id+": CEREBRO perdeu o gatilho concreto");
+    assert(iTeste<iGatilho, id+": o lado que estreita ficou DEPOIS do que alarga (a ordem e o remedio)");
+    assert(/Então isto é execução, não análise/.test(cmd), id+": CEREBRO sem o teste do QUE ja decidido");
+    assert(/Abandonar no meio é desfecho legítimo/.test(cmd), id+": CEREBRO sem a clausula de abandono");
+    assert(/já é extensível\*\* não é mudar o formato/.test(cmd), id+": CEREBRO sem o limite do formato ja extensivel");
+    assert(/pergunta a refazer DEPOIS de ler a fonte/.test(cmd), id+": gatilho nao virou pergunta a refazer apos ler a fonte");
+    assert(/QUÊ já decidido = execução/.test(instr), id+": Instrucoes levam so o lado que alarga, sem o contrapeso");
+  });
+  const kit=T.buildCodeKitFiles();
+  assert(/## Relatório em arquivo/.test(kit.claudeMd), "CLAUDE.md do kit nao manda gravar o relatorio em arquivo");
+  assert(/Para desligar:\*\* apague esta seção/.test(kit.claudeMd), "o relatorio em arquivo nao tem interruptor local");
+  assert(/additionalDirectories/.test(kit.settings), "settings.json do kit nao libera a pasta-pai (a escrita seria negada)");
+  ["applyWo","wrap"].forEach(k => assert(/AAMMDD-HHMM-code-<slug>\.txt/.test(kit[k]), "skill "+k+" nao grava o relatorio no arquivo (regra so no CLAUDE.md evapora)"));
+  return "ok";
+});
+
 check("C29 fecho da leva sand-land (wo0072): gaveta Adiadas com gatilho, tipos de secao no HISTORY, pacote de update transitorio", () => {
   // 1) IDEAS: gaveta de adiadas, com o gatilho de volta
   let vistos=0;

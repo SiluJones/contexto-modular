@@ -22,10 +22,13 @@
 # WOs/specs aplicadas: o desfecho vive em meta/DECISIONS.md, meta/CHANGELOG.md e meta/STATUS.md; o
 # corpo bruto e historico e pesa no mount. Para estudar UMA no Projeto, reinclua nominalmente dentro
 # do bloco, ex.: !meta/workorders/260727-wo0063-analise-no-produto.md
-# Analises: enquanto forem POUCAS, sobem — a analise "Em discussao" precisa ser relida no turno
-# seguinte. Quando pesarem, acrescente o par dentro do bloco:
-#   meta/analises/*
-#   !meta/analises/_TEMPLATE.md
+# Analises: sobe so a que esta ABERTA (Rascunho / Em discussao) — ela precisa ser relida no turno
+# seguinte, e analise que o assistente nao ve nao e discutida, e reescrita do zero. Decidida,
+# Implementada, Abandonada ou Substituida NAO sobe: o desfecho ja esta em DECISIONS/CHANGELOG, e
+# cabecalho de Status velho no mount le como pendencia aberta (o P8 ao contrario). Reinclua a
+# aberta NOMINALMENTE dentro do bloco, na MESMA leva em que ela nasce — regra sobre caminho que
+# ainda nao existe nao sobrevive la dentro. Ex.:
+#   !meta/analises/260801-ANALISE-<assunto>.md
 # Logs diarios: o "agora" esta no meta/STATUS.md; o consolidado no meta/CHANGELOG.md.
 # index.html: e gerado (~230 KB) e o planejamento sempre ancora em src/index.template.html.
 #   (Para inspecionar o build DENTRO do Projeto, reinclua com !index.html dentro do bloco.)
@@ -36,6 +39,7 @@ meta/specs/*
 meta/workorders/*
 !meta/workorders/_TEMPLATE.md
 !meta/workorders/_GUIA-doc-por-wo.md
+meta/analises/*
 !meta/analises/_TEMPLATE.md
 logs/*
 index.html

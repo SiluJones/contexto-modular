@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.94.0**.
+> Histórico de versões. Versão atual: **v1.95.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.95.0 — Contrapeso do gatilho de análise + relatório do Code em arquivo (wo0074, D-108)
+- **Ordem invertida na seção «Análise antes do compromisso»:** os dois testes baratos (o QUÊ já está decidido? cabe em meia página?) agora vêm ANTES do gatilho que alarga — o remédio é a posição, não o texto (achado de campo do ASU, 2026-07-30: o gatilho disparou, a leitura derrubou a premissa, e o assistente continuou escrevendo mesmo assim).
+- **Gatilho concreto ganha o fecho** «é uma pergunta a refazer DEPOIS de ler a fonte, não uma senha para começar a escrever» + o limite «acrescentar a um formato já extensível não é mudar o formato».
+- **Cláusula de abandono nova:** abandonar no meio é desfecho legítimo — o valor está em ler a fonte, não em escrever o documento; se a leitura derrubar a premissa, o assistente para, diz o que viu e vai trabalhar.
+- **Kit do Code passa a gravar o relatório de trabalho em arquivo** (`../AAMMDD-HHMM-code-<slug>.txt`, pasta-pai do repo) a cada `/apply-wo`/`/wrap`, sem precisar pedir — `CLAUDE.md`, `settings.json` (`additionalDirectories`) e as duas skills do kit. Interruptor local («apague a seção para desligar»); se a escrita for negada, avisa e segue (o relatório no chat continua sendo a entrega).
+- **Dogfood:** o próprio KCM adota a regra (slug `kcm`) — testado nesta sessão, gravação funcionou de primeira.
+- **`.flatdropignore`:** análises Decidida/Implementada/Abandonada/Substituída deixam de subir ao mount — só a ABERTA sobe, reincluída nominalmente na leva em que nasce.
+- Check **C30** novo. `KIT_VERSION 1.95.0`. **Custo de teto:** padrão sobe 10 chars pela Edição 1 (`padrao 6638/6900 · +Code 529/550 · +ASU 372/400 · compart 435/450 · combo 7539/7600`).
+- Harness **18/18, 73/73 → 74/74, 0 erros**.
 
 ## (repo) Migracao de commands para skills (wo0073, D-107)
 - Os tres comandos do KCM (`apply-wo`, `check-wo`, `wrap`) migram de `.claude/commands/*.md` para `.claude/skills/<nome>/SKILL.md`, cada um ganhando `name`/`description` no front-matter e `disable-model-invocation: true` — o que faz a skill se comportar como comando explicito, sem mudar a invocacao (`/apply-wo`, `/check-wo`, `/wrap` continuam iguais).

@@ -550,6 +550,9 @@ A wo0069 aplicou a opção **(D)** (curar as linhas de modo) e mediu o resultado
 ### 2026-07-29 — Revisar o orçamento por modo quando o custo real de token/caractere mudar — ABERTA (wo0071, D-105)
 Única condição, registrada pelo autor na análise do teto, em que o teto por configuração deveria subir — a opção (B) foi recusada justamente para não acomodar crescimento («o teto só sobe quando as recomendações e o custo real de token/caractere avançarem, não para acomodar o que já cresceu»). Se/quando isso acontecer, revisar `INSTR_TETO`, `INSTR_TETO_MODOS` e `MODO_ORCAMENTO` juntos — não só um dos três.
 
+### 2026-08-01 — Avaliar se «Análise antes do compromisso» deve seguir universal ou ganhar condição/vocabulário por nicho — A AVALIAR, com gatilho de retorno (wo0074, D-108)
+A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulário («análise», `analises/`) em todo lugar — inclusive nichos onde «análise antes do compromisso» soa mais a jargão de dev/produto do que ao domínio do nicho (ex.: `cuisine` continua lendo «layout de bloco gerado»). Esta WO reforçou a seção (testes baratos + cláusula de abandono) sem tocar essa questão — não há campo ainda para decidir, porque nenhum projeto de nicho não-dev com Modo Code ligado devolveu feedback de uso da seção. **Gatilho:** quando o primeiro projeto assim devolver feedback, reabrir esta ideia e decidir se a seção continua universal, vira condicional, ou ganha vocabulário adaptado por nicho.
+
 ## 💡 Ativas — do usuário
 
 ### 2026-07-01 — Teto 6500 x texto de diretriz (game) — A DECIDIR
@@ -565,6 +568,9 @@ O usuário quer que, ao fim de cada sessão, junto do resumo/dúvidas, o chat **
 Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev); commit às vezes não sai e o `git commit` deve vir **separado** no copia-e-cola. O usuário aceita esperar (não quer o chat perguntando "quer que eu gere agora?"); quer **previsão e cuidado** na geração. Estender ao possível a outros nichos. (D-040 mira o commit; confirmar.)
 
 ## 📮 Feedback para o Kit
+
+### 2026-08-01 — Item 5 (ASU, 2026-07-30): gatilho de análise que não sabe parar — ACEITO E IMPLEMENTADO (D-108, wo0074)
+O item 5 do «Feedback para o Kit» do ASU (260730, ocorrência real: pedido pequeno → gatilho de análise disparado → a leitura da fonte derrubou a premissa → o assistente continuou escrevendo mesmo assim) está **aceito e implementado** nesta WO: dois testes baratos sobem para antes do gatilho que alarga, o gatilho ganha o fecho «pergunta a refazer depois de ler a fonte», e nasce a cláusula de abandono. Ver D-108. **Resta responder à frente do ASU** confirmando a implementação — é raia do chat, não desta WO.
 
 ### 2026-07-29 — Migrar o KCM para `.claude/skills/` ATENDIDO (D-107, wo0073, repo) — dogfood fecha a pendência da wo0068
 O item aberto na wo0068 (abaixo, "Migrar o KCM de `.claude/commands/` para `.claude/skills/`") está **atendido**: os três comandos (`apply-wo`, `check-wo`, `wrap`) viram `.claude/skills/<nome>/SKILL.md` com `name`/`description` e `disable-model-invocation: true` — a invocação não muda. Ver D-107. **Continua aberto** (não é o mesmo item): «avaliar entregar o `/check-wo` aos projetos-usuário» — segue aguardando mais quilometragem.

@@ -27,6 +27,8 @@ O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html`
 ## Como fechar uma tarefa
 **Relate o trabalho** — o que fez, os achados e desvios do texto literal da WO, os arquivos tocados, o resultado de `build`/`validate` e o commit. **Não** use o bloco de fecho de turno do `meta/CEREBRO.md` (Próximo/Estado/Arquivar/Config/Handoff): aquele é da raia de **planejamento**. Relatório > formulário — o que importa aqui é o que só você viu ao executar.
 
+Grave o MESMO relatório também em `../AAMMDD-HHMM-code-kcm.txt` (pasta-PAI do repo, fora do versionamento) — sempre, sem eu pedir, tanto em `/apply-wo` quanto em `/wrap`. Se a escrita for negada, DIGA e siga: o relatório no chat continua sendo a entrega. **Para desligar:** apague este parágrafo.
+
 ## Convenções
 - Editar um nicho = editar `src/niches/<id>.js` e rodar `node build.js`. Nunca editar o `index.html` direto.
 - Produto = **1 arquivo único, sem framework/bundler/npm** (só JSZip via CDN). Decisão D-001.

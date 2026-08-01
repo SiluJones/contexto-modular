@@ -15,3 +15,5 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
 - Me mostre o `git diff` e o comando de commit pronto: um bloco por comando (`git add` /
   `git commit` / `git push`), mensagem SEM acento, e o `git commit` em bloco separado para eu copiar
   isolado.
+- **Grave o relatório de trabalho em `../AAMMDD-HHMM-code-kcm.txt`** (pasta-pai do repo). Sempre, sem
+  pedido. Se a escrita for negada, diga e siga.
