@@ -15,5 +15,8 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
 - Me mostre o `git diff` e o comando de commit pronto: um bloco por comando (`git add` /
   `git commit` / `git push`), mensagem SEM acento, e o `git commit` em bloco separado para eu copiar
   isolado.
+- **Ao mudar um número ou um estado no `meta/STATUS.md`** (contagem de checagens, versão, «harness
+  NN/NN»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não
+  é o único lugar onde ele aparece.
 - **Grave o relatório de trabalho em `../AAMMDD-HHMM-code-kcm.txt`** (pasta-pai do repo). Sempre, sem
   pedido. Se a escrita for negada, diga e siga.

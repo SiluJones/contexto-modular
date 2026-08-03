@@ -1137,7 +1137,7 @@ const HYGIENE_RULES = [
   "**Abertura de turno, antes de QUALQUER outra ferramenta:** liste o mount, leia o cabeçalho da cópia achatada se houver (data de geração + estado do repo), e confira a versão viva do artefato principal contra a que você acha que sabe. Um passo, quatro fatos, e só então o trabalho. **Sem cópia achatada nem manifesto** o passo continua valendo com o que houver — a listagem sozinha já mostra nota nova —; o que muda é o carimbo do fecho, que declara a base pobre em vez de fingir precisão. Não é cerimônia de início de SESSÃO: é de TURNO, e o turno pesado é justamente o que a dispensa por conta própria.",
   "A releitura do mount não tem gatilho próprio — e é por isso que ela falha. Quatro modos, todos observados em projetos reais: (1) **trabalho pedido expulsa ritual não-pedido** — mensagem cheia de perguntas explícitas empurra a releitura para fora, e é justamente aí que ela mais importa, porque quem pede muito costuma ter subido algo antes de pedir; (2) **previsão vestida de observação** — relatar o estado que o seu próprio turno anterior previa («ele vai aplicar isso depois»), que por dentro é indistinguível de ter verificado; (3) **campo obrigatório preenchido de memória**, quando falta dado fresco; (4) **regra escrita longe do ponto onde ela quebra**. O antídoto é sempre o mesmo: o gatilho mora no gesto, não no apêndice — se você está prestes a afirmar estado, essa é a hora de ler. **E os canais não chegam juntos:** relatório que a execução grava em arquivo nasce no instante da aplicação, enquanto a cópia achatada exige um passo manual de quem a gera. O relatório lidera, sempre. Quando os dois discordam, **o relatório vence e a cópia está atrasada** — e a listagem do mount é o único lugar onde essa discordância aparece.",
   "A sua cópia não é a fonte da verdade: vale o arquivo que está no repo/mount AGORA, não o que você leu, gerou ou reconstruiu antes nesta conversa. Qualquer artefato que você produziu (um pacote, uma reconstrução, um resumo do estado) envelhece no instante em que alguém aplica alguma coisa. Antes de dizer que algo continua pendente — ou de reentregar trabalho — releia o arquivo vivo. Reentregar o que já foi aplicado custa mais caro que perguntar. **A contrapartida, que evita o excesso oposto:** o que envelhece é o **estado do repo e as âncoras** — não o **carimbo de emissão** de um artefato. Documento escrito e datado no dia 27 continua correto se for aplicado no dia 29; a data diz quando foi emitido, não quando foi aplicado. Não «corrija» data de arquivo entregue, nem renomeie WO/análise por causa de atraso. **E cuidado com a falsa confirmação:** reconstruir o projeto em sandbox a partir da cópia que você tem NÃO é verificação de estado. Âncora que ainda casa prova que a sua cópia é velha, não que o trabalho está pendente — se o trabalho tivesse sido aplicado, a âncora estaria morta, e é o silêncio dela que engana. Antes de reconstruir, compare a versão do artefato copiado com o estado declarado no cabeçalho da cópia; divergiram, a cópia está atrasada e nenhuma conclusão sobre pendência vale.",
-  "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre."
+  "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre. **Exemplo já visto e legítimo:** projeto cujo roadmap e registro de decisões referenciam ideias por **ID estável** organiza o IDEAS por status + ID, não pela divisão por autor do template — adotar o template ali seria regressão, e o desvio é o certo."
 ];
 
 /* Tabela de gatilhos universal — evento → arquivo a atualizar.
@@ -1239,7 +1239,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.100.0";
+const KIT_VERSION = "1.101.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2468,7 +2468,7 @@ function buildClaudeMd(niche){
   L.push("- **Gatilho concreto, além do «não-trivial»:** mudar o **formato de um artefato que outra pessoa — ou o você do futuro — vai ler ou editar** pede análise, mesmo quando o diff é pequeno. Nome de arquivo, estrutura de pasta, layout de bloco gerado, campo de formulário, vocabulário de um termo em uso: o custo não está no diff, está em quem vai conviver com ele. **É uma pergunta a refazer DEPOIS de ler a fonte, não uma senha para começar a escrever** — e tem limite: acrescentar um campo, uma linha ou uma seção a um formato que **já é extensível** não é mudar o formato. Se quem lê hoje continua lendo sem ajuste, não há convivência nova a negociar.");
   L.push("- **Abandonar no meio é desfecho legítimo.** O que tem valor é ler a fonte, não escrever o documento. Se a leitura derrubar a premissa que disparou o gatilho — o formato já era extensível, o problema não existia, a decisão já estava tomada —, **pare, diga o que a leitura mostrou e vá trabalhar**. Análise que continua depois da premissa cair devolve como «ponto de decisão» o que era escolha técnica sua, e custa um turno. **E o que a leitura achou de bom não se perde: vai para as armadilhas da ordem de trabalho, como risco a tratar — não volta como pergunta.** Achado sem endereço vira pergunta: é assim que uma análise abandonada ressuscita disfarçada, propondo ao dono «não fazer» aquilo que ele acabou de decidir fazer.");
   L.push("- **Se este projeto já escreve documentos desse tipo com outro nome** (`design/`, `estudos/`, `rfc/`, `.md` avulso na raiz): não renomeie nada por conta própria. Adote a convenção onde ela cai — o documento que já existe ganha o cabeçalho de `Status` e os elos (o que nasceu dele, qual decisão registrou), e as análises novas nascem no formato acima. Renomear pasta ou arquivo é decisão do usuário: proponha, não execute.");
-  L.push("- **Modelo:** ao escrever a primeira, deixe também um `analises/_TEMPLATE.md` com esse esqueleto — o modelo é o que faz a convenção pegar. Se a pasta estiver ignorada no `.flatdropignore`, **reinclua o modelo** (`!analises/_TEMPLATE.md`): modelo e guia sempre sobem ao Projeto; corpo de análise, não.");
+  L.push("- **Modelo:** o pacote de atualização do kit já traz um `analises/_TEMPLATE.md` pronto, com natureza «modelo-em-espera» — coloque-o quando a pasta nascer, e não antes. Sem o pacote, escreva o modelo junto com a primeira análise: o modelo é o que faz a convenção pegar. Se a pasta estiver ignorada no `.flatdropignore`, **reinclua o modelo** (`!analises/_TEMPLATE.md`): modelo e guia sempre sobem ao Projeto; corpo de análise, não.");
 
   // Higiene
   L.push("");
@@ -3002,6 +3002,46 @@ async function downloadSkillsZIP(){
 // Comandos no formato ATUAL (2026): .claude/skills/<nome>/SKILL.md, nao o legado .claude/commands/*.md.
 /* Modelo de WO (FK-C do sand-land): o artefato que a raia chat->Code mais produz nao tinha molde.
    Sobe sempre ao Projeto pelo par meta/workorders/* + !meta/workorders/_TEMPLATE.md. */
+function buildAnaliseTemplate(){
+  return [
+    "# ANALISE — <assunto>",
+    "",
+    "> **Status:** Rascunho | Em discussao | Decidida | Implementada | Abandonada | Substituida",
+    "> **Data:** AAAA-MM-DD (data de criacao; nao muda depois)",
+    "",
+    "> Analise e para quando a pergunta ainda e do dono. Se ele ja decidiu o QUE, isto nao e analise:",
+    "> e decisao registrada + ordem de trabalho. E se a leitura derrubar a premissa que disparou tudo,",
+    "> PARE — o achado tecnico vai para as armadilhas da ordem de trabalho, nao volta como pergunta.",
+    "",
+    "## Problema",
+    "",
+    "[O que doi, para quem, e o que acontece se nada for feito.]",
+    "",
+    "## Restricoes / o que foi medido",
+    "",
+    "[Numeros, limites e fatos conferidos — com o comando ou a fonte que os produziu. Opiniao aqui",
+    "contamina tudo o que vem depois.]",
+    "",
+    "## Opcoes consideradas",
+    "",
+    "[Uma por bloco, INCLUSIVE as descartadas, cada uma com o motivo do descarte.]",
+    "",
+    "## Recomendacao",
+    "",
+    "[UMA, explicita, com o porque. Analise que devolve duas opcoes equivalentes empurra a decisao",
+    "de volta sem ter reduzido nada.]",
+    "",
+    "## Riscos",
+    "",
+    "[O que pode dar errado se a recomendacao for seguida — e o sinal que mostraria isso cedo.]",
+    "",
+    "## Ponto de decisao",
+    "",
+    "[A pergunta unica que o dono precisa responder para isto virar trabalho.]",
+    ""
+  ].join("\n");
+}
+
 function buildWoTemplate(){
   return [
     "# WO NNNN — [titulo curto e concreto, no que a WO ENTREGA]",
@@ -3203,6 +3243,7 @@ function buildCodeKitFiles(){
     "---",
     "Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,",
     "e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).",
+    "Ao mudar um número ou um estado no `STATUS.md` (contagem de testes/checagens, versão, «funciona até X»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não é o único lugar onde ele aparece, e a cópia esquecida no meio do texto passa a mentir.",
     "Grave o relatório de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
     ""
   ].join("\n");
@@ -3397,7 +3438,9 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push("> Isto e um **template-update** do KCM: arquivos genericos/estruturais, propositalmente vazios do");
   L.push("> especifico desta obra. NAO substitua conteudo vivo por template vazio. Natureza `template` =");
   L.push("> comparar e adotar novidade e seguro; natureza `fusao` (CEREBRO, INSTRUCOES) = comparar com o vivo");
-  L.push("> e propor merge, o usuario decide — nunca substituicao cega.");
+  L.push("> e propor merge, o usuario decide — nunca substituicao cega. Natureza `modelo-em-espera` =");
+  L.push("> guarde: so coloque no destino se a pasta JA existir neste projeto. Pasta nasce no primeiro uso,");
+  L.push("> nunca para receber um modelo — se ela nao existe aqui, o arquivo nao entra e isso NAO e pendencia.");
   L.push("");
   L.push("| Nome no upload | Destino real | Natureza | Papel |");
   L.push("|---|---|---|---|");
@@ -3446,6 +3489,8 @@ function buildUpdatePack(niche){
       nature: "template", role: "Modelo de WO (o proprio modelo, nao uma WO preenchida).", content: k.woTemplate });
   }
   // Ignores recomendados (sempre) — sem eles o pacote de atualizacao vinha incompleto (reusa os helpers do estruturado)
+  files.push({ flat: updateFlat("analises._TEMPLATE.md"), real: "meta/analises/_TEMPLATE.md", nature: "modelo-em-espera",
+    role: "Modelo de analise. So coloque quando a pasta NASCER — nao crie a pasta para receber o modelo.", content: buildAnaliseTemplate() });
   files.push({ flat: updateFlat("gitignore"), real: ".gitignore", nature: "template",
     role: "Ignora lixo de SO/editor.", content: structuredGitignore() });
   files.push({ flat: updateFlat("flatdropignore"), real: ".flatdropignore", nature: "template",

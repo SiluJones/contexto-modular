@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.100.0**.
+> Histórico de versões. Versão atual: **v1.101.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.101.0 — Modelo de análise no pacote, contagem repetida no STATUS e IDEAS por ID (wo0080, D-114)
+- **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», levas C e D — as duas últimas do lote de quatro).
+- **Natureza nova `modelo-em-espera` no pacote de update:** guarde o arquivo; só coloque no destino se a pasta já existir ali; se não existe, o arquivo não entra e isso NÃO é pendência. Preserva a regra de que `analises/` nasce no primeiro uso.
+- **`buildUpdatePack` passa a levar `meta/analises/_TEMPLATE.md`** com essa natureza, fora do `if(codeOn)` (a convenção de análise é universal aos 18 nichos).
+- **Skill `/wrap`** (kit gerado e deste próprio repo) passa a mandar procurar o valor ANTIGO no `STATUS.md` INTEIRO antes de atualizar uma contagem ou um estado — não só no cabeçalho.
+- **Válvula de desvio registrado** ganha o exemplo nomeado: projeto que organiza o IDEAS por status + ID estável (porque roadmap/decisões referenciam por ID) está desviando legitimamente, não regredindo.
+- Check **C36** novo.
+- `KIT_VERSION 1.101.0`. **Custo de teto: zero** — C28 imprime os mesmos números da v1.100.0. Harness **18/18, 79/79 → 80/80, 0 erros**. **As quatro levas do feedback do Mapsmith estão fechadas.**
 
 ## v1.100.0 — Medição delegada: quem tem o disco mede, quem tem o contexto decide (wo0079, D-113)
 - **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», item 5) + evidência de campo da frente irmã (três instruções erradas em dois dias por afirmar estado de arquivo em vez de mandar medir).

@@ -501,6 +501,34 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C36 modelo de analise no pacote + contagem repetida no STATUS (wo0080): natureza modelo-em-espera, pasta preguicosa preservada, wrap confere valor antigo, valvula cita IDEAS por ID", () => {
+  const n=T.normNiche(T.NICHES.dev);
+  T.STATE.workmode = T.STATE.workmode || {};
+  const prev=T.STATE.workmode.codeMode;
+  [true,false].forEach(on => {
+    T.STATE.workmode.codeMode = on ? "yes" : "no";
+    const pack=T.buildUpdatePack(n);
+    assert(pack, "pacote de update nao foi gerado (codeOn="+on+")");
+    const mod=pack.files.filter(f => f.real==="meta/analises/_TEMPLATE.md");
+    assert(mod.length===1, "pacote deveria levar exatamente 1 modelo de analise (codeOn="+on+"), levou "+mod.length);
+    assert(mod[0].nature==="modelo-em-espera", "modelo de analise com natureza '"+mod[0].nature+"' — deveria ser modelo-em-espera, senao o protocolo cria a pasta");
+    assert(/NASCER/.test(mod[0].role||""), "o papel do modelo nao avisa que a pasta tem de nascer antes");
+    assert(/## Recomendacao/.test(mod[0].content||""), "modelo de analise sem a secao de recomendacao");
+    assert(/Analise e para quando a pergunta ainda e do dono/.test(mod[0].content||""), "modelo de analise nao carrega o degrau de saida do funil (D-112)");
+    assert(/modelo-em-espera/.test(pack.manifest||""), "manifesto do pacote nao explica a natureza modelo-em-espera");
+    assert(/Pasta nasce no primeiro uso/.test(pack.manifest||""), "manifesto nao protege a pasta preguicosa");
+  });
+  T.STATE.workmode.codeMode=prev;
+  const kit=T.buildCodeKitFiles();
+  assert(/procure o valor ANTIGO no arquivo INTEIRO/.test(kit.wrap), "skill wrap nao manda conferir a contagem repetida fora do cabecalho");
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/organiza o IDEAS por status \+ ID/.test(cmd), id+": valvula de desvio sem o exemplo legitimo do IDEAS por ID");
+    assert(/natureza «modelo-em-espera»/.test(cmd), id+": CEREBRO ainda manda escrever o modelo de analise do zero, ignorando o pacote");
+  });
+  return "ok";
+});
+
 check("C35 medicao delegada (wo0079): secao no CEREBRO dos 18, gatilho SO no modo Code, secao sem ancora no modelo de WO, formato de retorno no kit do Code", () => {
   Object.keys(T.NICHES).forEach(id => {
     const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
