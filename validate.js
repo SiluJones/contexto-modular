@@ -501,6 +501,27 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C31 paridade dos templates de nicho (wo0075): IDEAS de todo nicho tem os dois enderecos de feedback, formato legado nao e alternativa, log por DIA acumula sessoes", () => {
+  let overrides=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const ideas=(T.effectiveFiles(n)||[]).find(f => f.name==="IDEAS.md");
+    assert(ideas, id+": nicho sem IDEAS.md nos arquivos efetivos");
+    const c=ideas.content||"";
+    assert(/Feedback para o Kit/.test(c), id+": IDEAS.md sem a secao «Feedback para o Kit» que o CEREBRO manda usar");
+    assert(/Feedback para o ASU/.test(c), id+": IDEAS.md sem a secao «Feedback para o ASU»");
+    if(!/Segundo cérebro do projeto: captura toda ideia/.test(ideas.role||"")) overrides++;
+    const cmd=T.buildClaudeMd(n);
+    assert(/Duas sessões no mesmo dia = o MESMO arquivo/.test(cmd), id+": tabela de docs nao resolve duas sessoes no mesmo dia");
+    assert(/manifesto da cópia achatada já trouxer o estado do repo/.test(cmd), id+": Estado nao usa o estado do repo quando o manifesto o traz");
+  });
+  assert(overrides>=2, "esperado ao menos 2 nichos com IDEAS.md proprio (dev, brainstorm) — se caiu, o check perdeu o alvo");
+  const raw=fs.readFileSync(path,"utf8");
+  assert(!/também funcionaria/.test(raw), "o kit ainda apresenta .claude/commands como alternativa valida em algum lugar");
+  assert((raw.match(/formato descontinuado/g)||[]).length>=3, "o .claude/commands nao esta marcado como descontinuado nos tres pontos (instalacao, README do zip, protocolo de update)");
+  return "ok ("+overrides+" nichos com IDEAS proprio)";
+});
+
 check("C30 contrapeso do gatilho de analise + relatorio em arquivo (wo0074): teste barato antes do gatilho, clausula de abandono, kit do Code grava o relatorio", () => {
   Object.keys(T.NICHES).forEach(id => {
     const n=T.normNiche(T.NICHES[id]);

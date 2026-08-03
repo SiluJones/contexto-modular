@@ -260,6 +260,18 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 🚫 Descartadas
 > Ideia avaliada e recusada. O motivo evita reabrir a discussão depois.
 - **[Ideia]** — descartada porque [motivo].
+
+---
+
+## 📮 Feedback para o Kit
+> Observações E desvios estruturais sobre a própria estrutura do projeto/kit — ver o gatilho no CEREBRO.md. É o que volta para evoluir o kit; sem registro, o aprendizado deste projeto se perde.
+- **[AAAA-MM-DD]** [o que foi observado ou mudado, e por quê].
+
+---
+
+## 📮 Feedback para o ASU
+> Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
+- **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
     {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 

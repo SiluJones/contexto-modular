@@ -115,6 +115,18 @@ NICHES.brainstorm = {
 ## Sementes soltas / fragmentos
 > Meio-ideias, perguntas, imagens — capturadas antes de escapar, para desenvolver depois.
 - [fragmento.]
+
+---
+
+## 📮 Feedback para o Kit
+> Observações E desvios estruturais sobre a própria estrutura do projeto/kit — ver o gatilho no CEREBRO.md. É o que volta para evoluir o kit; sem registro, o aprendizado deste projeto se perde.
+- **[AAAA-MM-DD]** [o que foi observado ou mudado, e por quê].
+
+---
+
+## 📮 Feedback para o ASU
+> Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
+- **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
     { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.",
       content:`# MAPA.md — Clusters e Eixos

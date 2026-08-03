@@ -1,8 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.95.0**.
+> Histórico de versões. Versão atual: **v1.96.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.96.0 — Paridade dos templates de nicho, formato legado e estado do repo pelo manifesto (wo0075, D-109)
+- **IDEAS.md de `dev` e `brainstorm` ganham as seções «📮 Feedback para o Kit» e «📮 Feedback para o ASU»:** os dois nichos redefinem o `IDEAS.md` universal e o override não herdava o refinamento feito depois — o CEREBRO gerado manda escrever nessas seções em três lugares diferentes, mas os overrides não as tinham.
+- **`.claude/commands/*.md` deixa de ser apresentado como alternativa válida:** instalação do kit do Code e README do zip diziam «também funcionaria, mas Skills é o recomendado»; agora dizem **«formato descontinuado»**, igual ao protocolo de update já dizia — sem contradição interna.
+- **Log por dia passa a acumular sessões:** a tabela de documentos do CEREBRO gerado agora explica que duas sessões no mesmo dia são o MESMO arquivo `logs/AAAA-MM-DD.md`, com `## Sessão N` para cada uma.
+- **Estado usa o repo quando o manifesto o traz:** o item «Estado» do bloco de fecho passa a usar commit/branch/limpo-sujo do manifesto da cópia achatada (contrato novo do FlatDrop), quando presente, em vez de pedir — acréscimo, não substituição; mounts de versões anteriores continuam pedindo uma vez.
+- Check **C31** novo, `ok (2 nichos com IDEAS proprio)`. `KIT_VERSION 1.96.0`. **Custo de teto: zero** — C28 com os mesmos números de v1.95.0 (`padrao 6638/6900 · +Code 529/550 · +ASU 372/400 · compart 435/450 · combo 7539/7600`).
+- Harness **18/18, 74/74 → 75/75, 0 erros**.
 
 ## v1.95.0 — Contrapeso do gatilho de análise + relatório do Code em arquivo (wo0074, D-108)
 - **Ordem invertida na seção «Análise antes do compromisso»:** os dois testes baratos (o QUÊ já está decidido? cabe em meia página?) agora vêm ANTES do gatilho que alarga — o remédio é a posição, não o texto (achado de campo do ASU, 2026-07-30: o gatilho disparou, a leitura derrubou a premissa, e o assistente continuou escrevendo mesmo assim).

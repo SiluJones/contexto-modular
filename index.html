@@ -1238,7 +1238,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.95.0";
+const KIT_VERSION = "1.96.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1510,6 +1510,18 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 🚫 Descartadas
 > Ideia avaliada e recusada. O motivo evita reabrir a discussão depois.
 - **[Ideia]** — descartada porque [motivo].
+
+---
+
+## 📮 Feedback para o Kit
+> Observações E desvios estruturais sobre a própria estrutura do projeto/kit — ver o gatilho no CEREBRO.md. É o que volta para evoluir o kit; sem registro, o aprendizado deste projeto se perde.
+- **[AAAA-MM-DD]** [o que foi observado ou mudado, e por quê].
+
+---
+
+## 📮 Feedback para o ASU
+> Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
+- **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
     {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
@@ -5416,6 +5428,18 @@ NICHES.brainstorm = {
 ## Sementes soltas / fragmentos
 > Meio-ideias, perguntas, imagens — capturadas antes de escapar, para desenvolver depois.
 - [fragmento.]
+
+---
+
+## 📮 Feedback para o Kit
+> Observações E desvios estruturais sobre a própria estrutura do projeto/kit — ver o gatilho no CEREBRO.md. É o que volta para evoluir o kit; sem registro, o aprendizado deste projeto se perde.
+- **[AAAA-MM-DD]** [o que foi observado ou mudado, e por quê].
+
+---
+
+## 📮 Feedback para o ASU
+> Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
+- **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
     { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.",
       content:`# MAPA.md — Clusters e Eixos
@@ -8471,7 +8495,7 @@ function buildClaudeMd(niche){
     const beh = fileBehaviorLabel(f);
     L.push(`| \`${f.name}\` | ${beh} | ${f.role} |`);
   });
-  L.push(`| \`logs/AAAA-MM-DD.md\` | Histórico | Ao final de cada sessão (formato em LOG-TEMPLATE). |`);
+  L.push(`| \`logs/AAAA-MM-DD.md\` | Histórico | Ao final de cada sessão (formato em LOG-TEMPLATE). **Duas sessões no mesmo dia = o MESMO arquivo**, com \`## Sessão N\` para cada uma — o nome é da data, não da sessão; arquivo novo por sessão quebra o nome. |`);
   L.push("| `analises/AAMMDD-ANALISE-<tema>.md` | Cresce (uma por decisão) | Antes de uma mudança não-trivial — a pasta nasce no primeiro uso. |");
 
   // Análise antes do compromisso (wo0063) — universal: vale com ou sem repo, nos dois modos
@@ -8574,7 +8598,7 @@ function buildClaudeMd(niche){
   L.push("## Bloco de fecho de turno (formato fixo)");
   L.push("Todo turno de trabalho fecha assim, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem antes de um divisor; o resto vem depois dele:");
   L.push("1. **Próximo** — sempre presente, ANTES do divisor, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido.");
-  L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. E distinga do caso em que o dado **não é legível por este canal**: num Projeto alimentado por cópia achatada não há `.git`, então nenhum `git log` existe para ler — aí escreva «commit não legível pelo mount» e **peça uma vez** (`git log -1 --oneline`), em vez de repetir a ressalva todo turno. «Não verifiquei» é desleixo; «não dá para ler daqui» é fato, e o remédio de cada um é diferente. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
+  L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. E distinga do caso em que o dado **não é legível por este canal**: num Projeto alimentado por cópia achatada não há `.git`, então nenhum `git log` existe para ler — aí escreva «commit não legível pelo mount» e **peça uma vez** (`git log -1 --oneline`), em vez de repetir a ressalva todo turno. «Não verifiquei» é desleixo; «não dá para ler daqui» é fato, e o remédio de cada um é diferente. **Se o manifesto da cópia achatada já trouxer o estado do repo** (último commit, branch, limpo/sujo), use-o e não peça — registrando que é foto da hora da geração, não do turno. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
   L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**, como a Config e o Handoff: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Nome por nome — e não espere que eu pergunte.");
   L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
   L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
@@ -8717,7 +8741,7 @@ if(asuModeOn()){
     L.push("| `.claude/skills/apply-wo/SKILL.md` | comando `/apply-wo`: aplica uma WO de `meta/workorders/` (âncora exata ou PARA e reporta) |");
     L.push("| `.claude/skills/wrap/SKILL.md` | comando `/wrap`: fecha a tarefa (append em STATUS/DECISIONS + `git diff` + commit) |");
     L.push("");
-    L.push("Instalação: descompacte `claude-code-kit.zip` e mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. O `README.md` do zip repete os passos e traz a cláusula anti-`.gitignore` de `.claude/`. Formato atual (2026): os comandos são **Skills** em `.claude/skills/<nome>/SKILL.md` (o `.claude/commands/*.md` legado também funcionaria, mas Skills é o recomendado e tem precedência).");
+    L.push("Instalação: descompacte `claude-code-kit.zip` e mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. O `README.md` do zip repete os passos e traz a cláusula anti-`.gitignore` de `.claude/`. Formato atual (2026): os comandos são **Skills** em `.claude/skills/<nome>/SKILL.md`. O `.claude/commands/*.md` é **formato descontinuado**: projeto que ainda o tenha migra na próxima atualização — não é alternativa a escolher.");
   }
   if(skillsPackOn() && niche.skillsPack){
     const sp = niche.skillsPack;
@@ -9228,7 +9252,7 @@ async function downloadCodeKitZIP(){
     "Mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. Ajuste o comando de build no `CLAUDE.md` e no `allow` de `.claude/settings.json`.",
     "",
     "## Formato dos comandos",
-    "Os comandos vêm como **Skills** (`.claude/skills/<nome>/SKILL.md`) — o formato atual (2026). Invoque com `/apply-wo` e `/wrap`. O `disable-model-invocation: true` faz cada um rodar só quando você chama, nunca sozinho. (O formato legado `.claude/commands/*.md` também funcionaria, mas Skills é o recomendado e tem precedência.)",
+    "Os comandos vêm como **Skills** (`.claude/skills/<nome>/SKILL.md`) — o formato atual (2026). Invoque com `/apply-wo` e `/wrap`. O `disable-model-invocation: true` faz cada um rodar só quando você chama, nunca sozinho. O `.claude/commands/*.md` é **formato descontinuado** — se este projeto ainda o tiver, migre; não é alternativa a escolher.",
     "",
     "## Atenção ao versionar",
     "Se o repo tiver `.gitignore`, garanta que ele **não** ignore a pasta `.claude/` inteira — o CLAUDE.md, as permissões e os comandos devem ser versionados com o projeto. Ignore só artefatos locais, nunca `.claude/skills/` nem `.claude/settings.json`.",
