@@ -1239,7 +1239,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.99.0";
+const KIT_VERSION = "1.100.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8317,11 +8317,12 @@ function buildInstr(niche){
   lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir config diferente, recomende-a explícita — no chat: modelo + esforço (Baixo→Máximo) + pensamento (lig/desl); no Claude Code: modelo + `/effort` (ou `ultrathink`/`ultracode`), SEM toggle de pensamento. Nunca afirme saber a atual; recomende pela tarefa. Pesada com config fraca → peça aumento; folga → diga que pode baixar.");
   lines.push("**Log:** nomeie `logs/AAAA-MM-DD.md` (data ISO, sem a palavra \"log\" no nome).");
   lines.push("**Análise antes do compromisso:** não-trivial → `analises/AAMMDD-ANALISE-<tema>.md`; QUÊ já decidido = execução, vá direto. Gatilho e abandono no CEREBRO.");
+  if(codeModeOn()) lines.push("**Arquivo não lido não se deduz — mande o Code medir.**");
   if(codeModeOn()) lines.push("**WO nunca vai sozinha:** entregue junto a linha `/apply-wo <arquivo>` para eu colar no Code.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
-    lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO para copiar isolado, mensagem sem acento. Bloco git parcial (só `add`) não serve: ou os três em ordem, ou só o `commit`.");
+    lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO, mensagem sem acento. Bloco git parcial (só `add`) não serve: os três em ordem, ou só o `commit`.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
-    lines.push("**Entregáveis de repo (sem eu pedir):** `.gitignore` adequado ao stack na PRIMEIRA leva que criar estrutura; `README.md` quando a estrutura estabilizar — se for cedo, DIGA que está adiando e por quê. Detalhe no CEREBRO.");
+    lines.push("**Entregáveis de repo (sem eu pedir):** `.gitignore` do stack na PRIMEIRA leva com estrutura; `README.md` quando ela estabilizar — se for cedo, DIGA e por quê. Detalhe no CEREBRO.");
 
   // Princípios essenciais (curtos — versão densa, não a definição longa)
   const bhAll = [...normBehaviors(BEHAVIORS_BASE), ...(niche.behaviors||[])];
@@ -8596,6 +8597,16 @@ function buildClaudeMd(niche){
   L.push("- **Especialize o que se aplica.** Troque o exemplo genérico pelo caso real deste projeto: instrução concreta economiza mais token do que instrução curta e vaga.");
   L.push("- **Não confunda encurtar com esquecer.** Regra que já evitou um erro real (está no DECISIONS) NÃO sai. Se algo sai, some ao CEREBRO — o CEREBRO é lido sob demanda, as Instruções em toda mensagem: mover é barato, apagar é caro.");
   L.push("- **Não inche.** Antes de acrescentar uma regra, pergunte se ela cabe no CEREBRO. Só vai para as Instruções o que precisa ser lembrado em TODO turno.");
+  L.push("");
+  L.push("## Medição delegada (quem tem o disco mede, quem tem o contexto decide)");
+  L.push("");
+  L.push("A raia de planejamento tem teto de contexto e lê só o que chega pelo mount; a raia de execução lê o disco inteiro e não tem nenhum dos dois limites. Quando o dado que falta é **estado de arquivo** — quantas linhas, quais chaves, que dimensão, se existe —, a saída não é pedir upload de um arquivo grande nem escrever um script para o dono rodar: é **mandar medir**.");
+  L.push("");
+  L.push("- **A regra:** quem tem acesso ao disco mede, quem tem contexto decide. Nunca afirme estado de arquivo que você não leu — nem para justificar uma escolha, nem para escrever caminho «mais ou menos certo». Caminho com `...` no meio é o sintoma clássico de estado deduzido.");
+  L.push("- **O pedido de medição não é ordem de trabalho.** Não tem âncora, não tem edição, não tem commit e não muda arquivo nenhum. É bloco colável, entregue como qualquer instrução ao executor — não crie arquivo nem pasta para ele. Se virar ordem de trabalho, você já estará escrevendo a ordem sem os números que ela precisava, que é exatamente o erro que a medição evita.");
+  L.push("- **Peça número cru, não interpretação.** Diga o comando ou o que contar, e peça de volta o valor e o comando que o produziu. Executor que interpreta devolve opinião no lugar de dado — e opinião de quem mediu é a mais difícil de contestar depois, porque parece medida.");
+  L.push("- **Dados fora da raiz exigem permissão.** Se o material a medir vive ao lado do repositório e não dentro dele, o executor precisa de `permissions.additionalDirectories` no `.claude/settings.json` — a mesma chave que libera gravar o relatório na pasta-pai, agora para ler.");
+  L.push("- **Onde o número pousa.** No relatório da execução, sempre. Se ele mudar uma decisão, também no registro de decisões; se ele revelar um risco, nas armadilhas da ordem de trabalho. Número medido e não registrado volta a ser deduzido no turno seguinte.");
   L.push("");
   L.push("## Bloco de fecho de turno (formato fixo)");
   L.push("Todo turno de trabalho fecha assim, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem antes de um divisor; o resto vem depois dele:");
@@ -9117,6 +9128,12 @@ function buildWoTemplate(){
     "[O que esta WO deliberadamente NAO faz, para que quem aplica nao \"aproveite a viagem\". Melhoria que",
     "voce enxergou no caminho vira ideia no IDEAS ou outra WO — nao entra aqui.]",
     "",
+    "## Medicao previa *(so quando houver; nao e edicao)*",
+    "",
+    "[So quando esta WO depender de um numero que a raia de planejamento nao pode ler. Diga O QUE contar e o",
+    "comando sugerido; peca de volta o valor e o comando que o produziu, sem interpretacao. Isto NAO tem ancora,",
+    "NAO tem commit e NAO muda arquivo — se a medicao contrariar o que a WO assume, PARE antes de editar e relate.]",
+    "",
     "## Armadilhas desta WO",
     "",
     "[So quando houver. O que ja deu errado antes neste mesmo lugar e o que quem aplica pode quebrar sem",
@@ -9181,6 +9198,11 @@ function buildCodeKitFiles(){
     "- Edições nos meta/ são **append-only** pelo Code (STATUS, DECISIONS); curadoria que reescreve vem do chat (arquivo inteiro OU WO).",
     "- Ao aplicar uma WO de `meta/workorders/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.",
     "- **Ao fechar a tarefa, RELATE o trabalho** — o que fez, achados e desvios do que a tarefa pedia, arquivos tocados, resultado do build/validação e o commit. **Não** copie o bloco de fecho do `meta/CEREBRO.md`: aquele é da raia de planejamento, e trocar relatório por formulário perde o que só você viu.",
+    "",
+    "## Quando eu pedir medição",
+    "- Eu leio só o que chega pelo mount; você lê o disco. Se eu pedir para **medir**, o pedido não tem âncora nem commit: não edite nada, não conserte nada, não sugira nada.",
+    "- Responda com o **número cru e o comando que o produziu**. Sem interpretação, sem recomendação — se você achar que o número indica um problema, diga o número primeiro e a suspeita depois, separada.",
+    "- Se o alvo estiver fora da raiz do repositório, isso depende de `permissions.additionalDirectories` no `.claude/settings.json` (a mesma chave do relatório em arquivo). Se a leitura for negada, DIGA — não estime.",
     "",
     "## Relatório em arquivo (sempre, sem pedir)",
     "- Ao fechar QUALQUER tarefa (`/apply-wo` ou `/wrap`), grave o MESMO relatório também em `../AAMMDD-HHMM-code-<slug>.txt` — pasta-PAI do repo, fora do versionamento (troque `<slug>` pelo nome curto do projeto; a pasta-pai costuma ser compartilhada por vários repos).",

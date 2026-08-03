@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.99.0**.
+> Histórico de versões. Versão atual: **v1.100.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.100.0 — Medição delegada: quem tem o disco mede, quem tem o contexto decide (wo0079, D-113)
+- **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», item 5) + evidência de campo da frente irmã (três instruções erradas em dois dias por afirmar estado de arquivo em vez de mandar medir).
+- **Seção «Medição delegada» no CEREBRO dos 18:** a regra (quem tem acesso ao disco mede, quem tem contexto decide — nunca afirme estado de arquivo não lido), o formato de retorno (número cru + comando que o produziu, sem interpretação), a permissão para ler fora da raiz (`permissions.additionalDirectories`) e onde o número pousa (relatório, registro de decisões, armadilhas da WO).
+- **Gatilho nas Instruções**, condicionado ao Modo Code (sem executor não há a quem delegar): `Arquivo não lido não se deduz — mande o Code medir.`
+- **Modelo de WO** ganha a seção opcional `## Medicao previa` — sem âncora, sem commit, sem arquivo — só para medir na hora de aplicar.
+- **Kit do Code** aprende a responder um pedido de medição: não editar, não consertar, devolver número cru + comando.
+- Parentesco com a D-111: mesma doença (estado deduzido apresentado como observado), superfícies diferentes (arquivo não lido vs. arquivo que não cabe no canal).
+- Check **C35** novo.
+- `KIT_VERSION 1.100.0`. **Custo de teto: negativo** — `+Code` 529→**522**/550, `compart` 435→**372**/450, combo 7519→**7512**/7600 (duas linhas enxugadas pagam o gatilho novo). Harness **18/18, 78/78 → 79/79, 0 erros**.
 
 ## v1.99.0 — Degrau de saída do funil de análise, saída do CRLF e mensagem entre frentes (wo0078, D-112)
 - **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», itens 4 e 5-parcial) + decisão do usuário de 2026-08-03 sobre material trocado entre frentes. Evidência de campo: Mapsmith 2026-08-02.

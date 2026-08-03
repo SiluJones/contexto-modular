@@ -501,6 +501,33 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C35 medicao delegada (wo0079): secao no CEREBRO dos 18, gatilho SO no modo Code, secao sem ancora no modelo de WO, formato de retorno no kit do Code", () => {
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/## Medição delegada/.test(cmd), id+": CEREBRO sem a secao de medicao delegada");
+    assert(/quem tem acesso ao disco mede, quem tem contexto decide/.test(cmd), id+": CEREBRO sem a regra de quem mede e quem decide");
+    assert(/O pedido de medição não é ordem de trabalho/.test(cmd), id+": CEREBRO nao separa medicao de ordem de trabalho");
+    assert(/Peça número cru, não interpretação/.test(cmd), id+": CEREBRO nao exige numero cru no retorno");
+    assert(/permissions\.additionalDirectories/.test(cmd), id+": CEREBRO nao cita a permissao para medir fora da raiz");
+    assert(/Número medido e não registrado volta a ser deduzido/.test(cmd), id+": CEREBRO nao diz onde o numero pousa");
+  });
+  const n=T.normNiche(T.NICHES.dev);
+  T.STATE.workmode = T.STATE.workmode || {};
+  const prev=T.STATE.workmode.codeMode;
+  T.STATE.workmode.codeMode="yes"; const insC=T.buildInstr(n);
+  T.STATE.workmode.codeMode="no";  const insN=T.buildInstr(n);
+  T.STATE.workmode.codeMode=prev;
+  assert(/Arquivo não lido não se deduz/.test(insC), "Instr do modo Code sem o gatilho da medicao delegada");
+  assert(!/Arquivo não lido não se deduz/.test(insN), "gatilho da medicao vazou para fora do modo Code (sem executor nao ha a quem delegar)");
+  const raw=fs.readFileSync(path,"utf8");
+  assert(/## Medicao previa/.test(raw), "modelo de WO sem a secao de medicao previa");
+  assert(/NAO tem ancora/.test(raw), "modelo de WO nao diz que medicao nao tem ancora nem commit");
+  const kit=T.buildCodeKitFiles();
+  assert(/## Quando eu pedir medição/.test(kit.claudeMd), "CLAUDE.md do kit nao ensina a responder um pedido de medicao");
+  assert(/número cru e o comando que o produziu/.test(kit.claudeMd), "kit do Code nao exige numero cru + comando");
+  return "ok";
+});
+
 check("C34 degrau de saida do funil de analise (wo0078): teste de quem decide, achado vira armadilha da WO, saida do CRLF, mensagem entre frentes nao vira pasta", () => {
   Object.keys(T.NICHES).forEach(id => {
     const n=T.normNiche(T.NICHES[id]);
