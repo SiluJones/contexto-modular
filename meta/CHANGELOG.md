@@ -1,8 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.97.0**.
+> Histórico de versões. Versão atual: **v1.98.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.98.0 — Leitura antes do trabalho: abertura de turno, carimbo Base, falsa confirmação e canal rápido (wo0077, D-111)
+- **Base:** falha real de 2026-08-02 — o assistente afirmou «a wo0076 você ainda não aplicou» quatro horas depois de ela ter sido aplicada (commit `d423747`, 22:39), sem ter listado o mount uma única vez naquele turno. As Instruções já mandavam reler o mount em dois lugares; mais exortação não resolve.
+- **Releitura enxuta e antes das ferramentas:** o texto nas Instruções cai de 314 para 235 caracteres, preserva a frase do C25 (`Mensagem cheia de pedidos é onde essa releitura mais falha`) e passa a valer **antes de qualquer ferramenta**, não só «antes de responder».
+- **Carimbo `Base:` no item Estado:** a linha abre com o arquivo lido NESTE turno, a data que ELE declara e o commit/versão que ELE traz — porque campo de verificação genérico é inauditável (quem lê não sabe se o assistente leu ou lembrou) e uma data gerada pelo usuário ele confere num olhar.
+- **Nova regra de higiene — abertura de turno:** liste o mount, leia o cabeçalho da cópia achatada se houver, confira a versão viva do artefato — um passo, antes de QUALQUER outra ferramenta, com degradação explícita para projeto sem cópia achatada. Não é cerimônia de sessão; é de turno.
+- **Aviso da falsa confirmação do sandbox:** reconstruir o projeto a partir da cópia que se tem NÃO é verificação de estado — âncora que ainda casa prova que a cópia é velha, não que o trabalho está pendente; se o trabalho tivesse sido aplicado a âncora estaria morta.
+- **Canal rápido:** o relatório que a execução grava em arquivo nasce no instante da aplicação; a cópia achatada exige passo manual. O relatório lidera sempre — a listagem do mount é o único lugar onde a discordância aparece.
+- Check **C33** novo: carimbo `Base:` e `NESTE turno` nas Instruções dos 18 nichos; abertura de turno, degradação sem cópia achatada, distinção sessão/turno, falsa confirmação, canal vencedor e razão do carimbo no CEREBRO dos 18.
+- `KIT_VERSION 1.98.0`. **Custo de teto: negativo** — C28 cai de `padrao 6638/6900 · combo 7539/7600` para `padrao 6618/6900 · combo 7519/7600` (−20 líquido).
+- Harness **18/18, 76/76 → 77/77, 0 erros**.
 
 ## v1.97.0 — Anatomia do bloco gerado, metade estrutural do P11 e Arquivos Críticos no CONTEXT (wo0076, D-110)
 - **`HYGIENE_RULES` ganha a anatomia declarada do bloco gerado:** cinco regras (comentário FORA do bloco; regra DENTRO; UM bloco só; bloco é o ÚLTIMO conteúdo do arquivo; os marcadores **não se citam em comentário** — a quinta decorre da terceira, mas precisava ser dita em voz alta) + duas obrigações do lado da ferramenta (recusar diante de ambiguidade em vez de adivinhar; normalizar só o próprio bloco).

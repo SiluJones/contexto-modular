@@ -501,6 +501,25 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C33 leitura antes do trabalho (wo0077): abertura de turno antes de qualquer ferramenta, carimbo Base no Estado, falsa confirmacao do sandbox, canal rapido do relatorio", () => {
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const ins=T.buildInstr(n), cmd=T.buildClaudeMd(n);
+    assert(/abre com `Base:`/.test(ins), id+": Instrucoes nao exigem o carimbo Base no Estado (exortacao sem valor produzido nao pega)");
+    assert(/NESTE turno/.test(ins), id+": o carimbo nao amarra a leitura ao turno corrente");
+    assert(/ANTES de responder e de qualquer ferramenta/.test(ins), id+": Instrucoes nao poem a releitura ANTES das ferramentas");
+    assert(/Abertura de turno, antes de QUALQUER outra ferramenta/.test(cmd), id+": CEREBRO sem o passo de abertura de turno");
+    assert(/Sem cópia achatada nem manifesto/.test(cmd), id+": o passo de abertura nao degrada para projeto sem copia achatada");
+    assert(/é de TURNO/.test(cmd), id+": CEREBRO nao distingue cerimonia de sessao de gatilho de turno");
+    assert(/falsa confirmação/.test(cmd), id+": CEREBRO sem a regra da falsa confirmacao do sandbox");
+    assert(/Âncora que ainda casa prova que a sua cópia é velha/.test(cmd), id+": CEREBRO nao explica por que a ancora que casa engana");
+    assert(/o relatório vence e a cópia está atrasada/.test(cmd), id+": CEREBRO nao diz qual canal vence quando discordam");
+    assert(/A linha abre com o carimbo/.test(cmd), id+": CEREBRO nao descreve o carimbo Base");
+    assert(/confere num olhar/.test(cmd), id+": CEREBRO nao diz POR QUE o carimbo e auditavel (razao de existir)");
+  });
+  return "ok";
+});
+
 check("C32 anatomia do bloco gerado (wo0076): cinco regras + duas obrigacoes no CEREBRO, marcadores nao citados em comentario, Arquivos Criticos no CONTEXT, P11 com a metade estrutural", () => {
   [true,false].forEach(codeOn => {
     const ig=T.structuredFlatdropignore(codeOn);
