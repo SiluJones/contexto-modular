@@ -1,8 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.98.0**.
+> Histórico de versões. Versão atual: **v1.99.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.99.0 — Degrau de saída do funil de análise, saída do CRLF e mensagem entre frentes (wo0078, D-112)
+- **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», itens 4 e 5-parcial) + decisão do usuário de 2026-08-03 sobre material trocado entre frentes. Evidência de campo: Mapsmith 2026-08-02.
+- **Teste (1) do funil pergunta QUEM decide:** «Quem ainda decide? O dono já decidiu o QUÊ? Então isto é execução, não análise: o par de artefatos é decisão registrada + ordem de trabalho... Análise é para quando a pergunta ainda é dele.» Preserva a frase asserida pelo C30.
+- **O achado ganha endereço:** o que a leitura de uma análise abandonada descobriu de bom não se perde — vai para as armadilhas da ordem de trabalho, como risco a tratar, e não volta como pergunta ao dono. Achado sem endereço vira pergunta.
+- **Modelo de WO dá a saída do CRLF:** contra o fim de linha que não casa, a saída é sempre a mesma — âncora de uma linha não tem quebra dentro; para várias linhas, ancorar em uma só e dizer se o texto novo entra antes ou depois dela.
+- **Mensagem entre frentes é nota, não artefato:** vive fora do repositório enquanto serve e vai para o arquivo morto depois — sem pasta versionada.
+- **Convergência independente:** a frente irmã (Mapsmith, v1.94.0, sem a wo0074) chegou ao teste «quem decide» pelo próprio caminho.
+- Check **C34** novo.
+- `KIT_VERSION 1.99.0`. Harness **18/18, 77/77 → 78/78, 0 erros**. Teto (C28) inalterado da v1.98.0.
 
 ## v1.98.0 — Leitura antes do trabalho: abertura de turno, carimbo Base, falsa confirmação e canal rápido (wo0077, D-111)
 - **Base:** falha real de 2026-08-02 — o assistente afirmou «a wo0076 você ainda não aplicou» quatro horas depois de ela ter sido aplicada (commit `d423747`, 22:39), sem ter listado o mount uma única vez naquele turno. As Instruções já mandavam reler o mount em dois lugares; mais exortação não resolve.

@@ -501,6 +501,22 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C34 degrau de saida do funil de analise (wo0078): teste de quem decide, achado vira armadilha da WO, saida do CRLF, mensagem entre frentes nao vira pasta", () => {
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const cmd=T.buildClaudeMd(n);
+    assert(/Quem ainda decide\?/.test(cmd), id+": CEREBRO nao faz do teste (1) uma pergunta sobre QUEM decide");
+    assert(/decisão registrada \+ ordem de trabalho/.test(cmd), id+": CEREBRO nao nomeia o par de artefatos que substitui a analise");
+    assert(/Análise é para quando a pergunta ainda é dele/.test(cmd), id+": CEREBRO sem a definicao de uma linha do que e analise");
+    assert(/vai para as armadilhas da ordem de trabalho/.test(cmd), id+": o achado da analise abandonada continua sem endereco");
+    assert(/Achado sem endereço vira pergunta/.test(cmd), id+": CEREBRO nao explica POR QUE o achado precisa de destino");
+    assert(/não crie pasta versionada para ela/.test(cmd), id+": CEREBRO nao impede a pasta versionada para mensagem entre frentes");
+  });
+  const raw=fs.readFileSync(path,"utf8");
+  assert(/ancora de UMA linha nao tem quebra dentro/.test(raw), "modelo de WO avisa do CRLF e nao da a saida");
+  return "ok";
+});
+
 check("C33 leitura antes do trabalho (wo0077): abertura de turno antes de qualquer ferramenta, carimbo Base no Estado, falsa confirmacao do sandbox, canal rapido do relatorio", () => {
   Object.keys(T.NICHES).forEach(id => {
     const n=T.normNiche(T.NICHES[id]);
