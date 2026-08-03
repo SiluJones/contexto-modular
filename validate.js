@@ -501,6 +501,31 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C32 anatomia do bloco gerado (wo0076): cinco regras + duas obrigacoes no CEREBRO, marcadores nao citados em comentario, Arquivos Criticos no CONTEXT, P11 com a metade estrutural", () => {
+  [true,false].forEach(codeOn => {
+    const ig=T.structuredFlatdropignore(codeOn);
+    const abre=(ig.match(/>>> flatdrop-editor/g)||[]).length;
+    const fecha=(ig.match(/# <<</g)||[]).length;
+    assert(abre===1, "flatdropignore gerado (codeOn="+codeOn+") tem "+abre+" ocorrencias do marcador de abertura — deve ter exatamente 1 (citar em comentario cria bloco fantasma)");
+    assert(fecha===1, "flatdropignore gerado (codeOn="+codeOn+") tem "+fecha+" ocorrencias do marcador de fechamento — deve ter exatamente 1");
+  });
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const cmd=T.buildClaudeMd(n);
+    assert(/Anatomia do bloco gerado/.test(cmd), id+": CEREBRO sem a anatomia do bloco gerado");
+    assert(/os marcadores não se citam em comentário/.test(cmd), id+": CEREBRO sem a quinta regra (a que se viola ao documentar a convencao)");
+    assert(/recusar, não adivinhar/.test(cmd), id+": CEREBRO sem a obrigacao de recusar diante de ambiguidade");
+    assert(/normalizar só o que é seu/.test(cmd), id+": CEREBRO sem a obrigacao de normalizar so o proprio bloco");
+    assert(/precisa ficar como está/.test(cmd), id+": P11 sem a metade estrutural do rename (caminho, comando, identificador)");
+  });
+  const dev=T.normNiche(T.NICHES.dev);
+  const arq=T.effectiveFiles(dev)||[];
+  const ctx=arq.find(f => f.name==="CONTEXT.md"), st=arq.find(f => f.name==="STATUS.md");
+  assert(ctx && /Arquivos Críticos/.test(ctx.content||""), "dev: Arquivos Criticos nao esta no CONTEXT.md, onde os prompts o procuram");
+  assert(st && !/Arquivos Críticos/.test(st.content||""), "dev: Arquivos Criticos ainda no STATUS.md (dado estavel em documento volatil)");
+  return "ok";
+});
+
 check("C31 paridade dos templates de nicho (wo0075): IDEAS de todo nicho tem os dois enderecos de feedback, formato legado nao e alternativa, log por DIA acumula sessoes", () => {
   let overrides=0;
   Object.keys(T.NICHES).forEach(id => {

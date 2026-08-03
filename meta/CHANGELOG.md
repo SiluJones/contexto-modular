@@ -1,8 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.96.0**.
+> Histórico de versões. Versão atual: **v1.97.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+
+## v1.97.0 — Anatomia do bloco gerado, metade estrutural do P11 e Arquivos Críticos no CONTEXT (wo0076, D-110)
+- **`HYGIENE_RULES` ganha a anatomia declarada do bloco gerado:** cinco regras (comentário FORA do bloco; regra DENTRO; UM bloco só; bloco é o ÚLTIMO conteúdo do arquivo; os marcadores **não se citam em comentário** — a quinta decorre da terceira, mas precisava ser dita em voz alta) + duas obrigações do lado da ferramenta (recusar diante de ambiguidade em vez de adivinhar; normalizar só o próprio bloco).
+- **O `.flatdropignore` gerado e o `.flatdropignore` deste próprio repo param de citar os marcadores em comentário** — descrevem a convenção em vez de reproduzi-la. **Achado:** o defeito estava vivo no `.flatdropignore` da raiz — o cabeçalho que ensinava a convenção citava os dois marcadores dentro de um comentário, o mesmo erro que a anatomia agora proíbe.
+- **Princípio 11 (`consistency`) ganha a metade estrutural do rename:** já ensinava concordância de gênero/número na prosa; passa a cobrir também caminho de pasta, nome de comando e identificador, com o rename real `meta/CLAUDE.md` → `meta/CEREBRO.md` como exemplo (o exemplo «spec → WO» é impossível aqui — o C15 bane as duas strings do `index.html` inteiro, por ter nascido daquele rename).
+- **`📁 Arquivos Críticos` muda de endereço:** sai do `STATUS.md` (volátil) e vai para o `CONTEXT.md` (estável) do nicho `dev` — os três prompts (Debug, Plano, Auditoria) já mandavam procurá-lo «em CONTEXT», onde a seção não existia.
+- Check **C32** novo: contagem de marcadores (exatamente 1 de cada, com e sem modo Code) + presença da anatomia/quinta regra/duas obrigações/metade estrutural do P11 nos 18 CEREBROs + `Arquivos Críticos` no CONTEXT e fora do STATUS do `dev`.
+- `KIT_VERSION 1.97.0`. **Custo de teto: zero** — C28 com os mesmos números de v1.96.0 (`padrao 6638/6900 · +Code 529/550 · +ASU 372/400 · compart 435/450 · combo 7539/7600`).
+- Harness **18/18, 75/75 → 76/76, 0 erros**.
 
 ## v1.96.0 — Paridade dos templates de nicho, formato legado e estado do repo pelo manifesto (wo0075, D-109)
 - **IDEAS.md de `dev` e `brainstorm` ganham as seções «📮 Feedback para o Kit» e «📮 Feedback para o ASU»:** os dois nichos redefinem o `IDEAS.md` universal e o override não herdava o refinamento feito depois — o CEREBRO gerado manda escrever nessas seções em três lugares diferentes, mas os overrides não as tinham.

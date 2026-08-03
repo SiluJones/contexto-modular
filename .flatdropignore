@@ -6,8 +6,11 @@
 # COMO ESTE ARQUIVO E ORGANIZADO (convencao KCM, wo0067):
 # - Explicacao e comentario ficam AQUI EM CIMA, fora do bloco. Dentro do bloco eles somem: o editor
 #   do FlatDrop reescreve o bloco inteiro a cada salvamento (core.build_flatdropignore = pre + bloco + pos).
-# - REGRA (o que some do mount) vai DENTRO do bloco "# >>> flatdrop-editor".
-# - NADA depois do "# <<<": vale a ULTIMA regra que casa, entao o que vier depois vence o bloco.
+# - REGRA (o que some do mount) vai DENTRO do bloco do editor, delimitado no fim deste arquivo.
+# - NADA depois da linha que FECHA o bloco: vale a ULTIMA regra que casa, entao o que vier depois
+#   vence o bloco.
+# - NAO reproduza as linhas marcadoras aqui em cima: o editor do FlatDrop as procura por substring, e
+#   um exemplo em comentario e indistinguivel de um segundo bloco. Descreva, nao cite.
 # - Limite conhecido: regra sobre caminho que ainda NAO existe nao sobrevive dentro do bloco (o editor
 #   so re-deriva o que enxerga na arvore). Se precisar de uma, deixe-a fora e nao use o editor aqui.
 #

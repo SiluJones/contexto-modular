@@ -125,6 +125,10 @@ projeto/
 1. **[Armadilha]** — [por que morde] → [o certo].
 2. **[Armadilha]** — [por que morde] → [o certo].
 
+## 📁 Arquivos Críticos (não mexer sem contexto)
+> Conhecimento **estável**, não estado do agora — por isso vive aqui, e não no STATUS, que é reescrito a cada sessão. Os prompts de debug, plano e auditoria procuram esta seção NESTE arquivo.
+- \`[caminho/arquivo]\` — [por que é sensível; o que ler antes de tocar.]
+
 ## Contexto de Produto
 > Por que o projeto existe e para onde aponta. Evita decisões tecnicamente corretas mas erradas para o produto.
 - **Usuário-alvo:** [quem usa]
@@ -157,9 +161,6 @@ projeto/
 > Só o que dá para pegar nas próximas sessões. Ideia vaga vai pro IDEAS; plano em fases vai pro ROADMAP.
 - [ ] [Item concreto e pequeno.]
 - [ ] [...]
-
-## 📁 Arquivos Críticos (não mexer sem contexto)
-- \`[caminho/arquivo]\` — [por que é sensível; o que ler antes de tocar.]
 
 ## 💬 Última Sessão
 **[data]** — [2-4 linhas: o que foi feito, onde parou, qual o próximo passo óbvio. É a primeira coisa que o assistente lê para retomar o fio.]
