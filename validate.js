@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, fileBehaviorLabel, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
+const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -499,6 +499,46 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   assert(/function kitStamp/.test(html), "helper kitStamp ausente");
   assert(/Kit de Contexto Universal v\$\{KIT_VERSION\}/.test(html), "downloads nao carimbam a versao");
   return "ok";
+});
+
+check("C38 higiene universal + o update que sabe subtrair (wo0082): quatro regras nos 18 CEREBROs, gatilho do fecho na tabela, revogacoes e carimbo de modos no pacote", () => {
+  const marcas = [
+    [/Varra pelo fato, não pela frase/, "sem a regra de varredura por fato (as skills sao a superficie esquecida)"],
+    [/são lidas ANTES de trabalhar/, "a regra de varredura nao nomeia as skills como superficie perigosa"],
+    [/Documento derivado nunca é fonte/, "sem a regra do documento derivado"],
+    [/a derivação aparece no nome do arquivo/, "a regra do derivado nao exige marca no nome"],
+    [/Cite a frase-gatilho antes de perguntar/, "sem a regra de citar o gatilho antes da pergunta"],
+    [/Mudança de método não se adota no meio do trabalho/, "sem a regra de troca de trilho"],
+    [/otimizar o processo em vez de executá-lo/, "a regra de metodo perdeu o modo de falha que a motivou"],
+    [/Fim de QUALQUER turno de trabalho/, "tabela de gatilhos sem a linha do bloco de fecho"],
+    [/O merge sabe somar, não sabe subtrair/, "protocolo de update nao explica que o merge nao subtrai"],
+    [/reporta como choque com a seção citada e não remove sozinho/, "sobra de modo desligado sem a regra de reportar-e-nao-remover"],
+  ];
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    marcas.forEach(([re, msg]) => assert(re.test(cmd), id+": "+msg));
+  });
+  // o registro de revogacoes existe, tem forma, e so carrega comportamento apagado
+  assert(Array.isArray(T.REVOCATIONS) && T.REVOCATIONS.length >= 1, "registro REVOCATIONS vazio — o pacote nao tem o que avisar");
+  T.REVOCATIONS.forEach(r => {
+    assert(/^\d+\.\d+\.\d+$/.test(r.desde||""), "revogacao sem versao semver de origem");
+    assert((r.texto||"").length >= 12, "revogacao sem texto citavel — o merge nao acha o que nao consegue procurar");
+    assert((r.porque||"").length >= 40, "revogacao sem motivo — sem o porque, quem le nao consegue registrar desvio consciente");
+    assert(!/meta\/specs|commands\//.test(r.texto), "migracao de formato nao entra no registro de revogacoes (ja e coberta pela clausula de formato descontinuado, e reintroduz termo proibido no produto)");
+  });
+  // manifesto do pacote: revogacoes + carimbo completo dos quatro modos
+  T.STATE.workmode = T.STATE.workmode || {};
+  const prev = { c: T.STATE.workmode.codeMode, a: T.STATE.workmode.asuMode, g: T.STATE.workmode.groupMode };
+  T.STATE.workmode.codeMode = "yes"; T.STATE.workmode.asuMode = "no"; T.STATE.workmode.groupMode = "no";
+  const pack = T.buildUpdatePack(T.normNiche(T.NICHES.narrative));
+  T.STATE.workmode.codeMode = prev.c; T.STATE.workmode.asuMode = prev.a; T.STATE.workmode.groupMode = prev.g;
+  const man = (pack && pack.manifest) || "";
+  assert(/Linhas revogadas/.test(man), "manifesto do pacote sem a secao de linhas revogadas");
+  assert(/ASU nao/.test(man), "carimbo de modos do manifesto nao declara o ASU — modo nao declarado e sobra que ninguem detecta");
+  assert(/compartilhado /.test(man), "carimbo de modos do manifesto nao declara o modo compartilhado");
+  assert(/nunca remova sozinho/.test(man), "manifesto nao proibe remover sobra de modo por conta propria");
+  T.REVOCATIONS.forEach(r => assert(man.indexOf(r.texto) > -1, "revogacao '"+r.texto.slice(0,24)+"...' nao chegou ao manifesto do pacote"));
+  return "ok ("+T.REVOCATIONS.length+" revogacao(oes) publicada(s))";
 });
 
 check("C37 artefato do kit abre no parser do proprio formato (wo0081): settings.json valido, Write no allow, push antes do relatorio, CONTINUIDADE nao e snapshot", () => {

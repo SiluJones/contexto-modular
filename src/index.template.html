@@ -1127,6 +1127,20 @@ const UNIVERSAL_HUB_TPL = { name:"HUB.md", cat:"ctx",
   role:"Arquivo COMPARTILHADO do grupo: diretrizes do grupo, caixa de entrada por frente e status relâmpago. Cópia idêntica em cada projeto; o usuário sincroniza.",
   content:'# HUB.md — [Nome do grupo/produto]\n\n> Arquivo COMPARTILHADO do grupo de projetos (cópia idêntica em cada Projeto/frente). O usuário sincroniza as cópias. Cada frente LÊ tudo, mas só ESCREVE onde as diretrizes permitem. Mais novo vence: confira a data abaixo.\n> Última sincronização: AAAA-MM-DD · atualizado por: [frente]\n\n## 1 · Diretrizes do grupo (estável — só o usuário muda)\n- D1 — Ninguém mexe na casa do outro: nenhuma frente altera ou entrega arquivos de OUTRA frente. Sugestão, crítica ou pedido vai para a Caixa de entrada da frente dona (seção 2), assinada [frente MM-DD]; ela estuda e decide.\n- D2 — Mudança que afeta outra frente vira item na caixa dela (inclui marcar/desmarcar estados de sincronia como "aguardando <frente>", ex.: AGUARDANDO DESIGN em catálogos de arte/roteiro).\n- D3 — Cada verdade tem UM dono (referência cruzada, não cópia). Na dúvida de quem é o dono de um dado, pergunte ao usuário; não decida nem duplique.\n- D4 — Status relâmpago é ultra-curto (máx. 3 linhas por frente, seção 3); a própria frente o atualiza ao fim de toda sessão que tocar o HUB. NÃO substitui o STATUS.md da frente — é só para as outras saberem o essencial sem abrir os arquivos dela.\n- D5 — Tudo assinado e datado. Item processado sai da caixa e vai para Decididos com o veredito (aceito / recusado / em análise) + o motivo em 1 linha. A caixa é rolante; nada some sem registro.\n\n## 2 · Frentes — visão e caixa de entrada\n(repita o bloco abaixo para cada frente do seu grupo)\n\n### [Frente A]\n- Visão: [o que esta frente constrói + o norte atual]\n- Caixa de entrada (as OUTRAS frentes escrevem aqui; a dona faz a triagem):\n  - [ ] [frente MM-DD] [pedido / sugestão / crítica em 1-3 linhas]\n- Decididos:\n  - [veredito] [frente MM-DD] [item] — por quê (1 linha)\n\n### [Frente B]\n- Visão:\n- Caixa de entrada:\n- Decididos:\n\n## 3 · Status relâmpago (máx. 3 linhas por frente — ver D4)\n- [Frente A]: fazendo [...] · entregou [...] · bloqueado por [frente: o quê]\n- [Frente B]: fazendo [...] · entregou [...]\n'};
 
+/* Linhas que o kit APAGOU de proposito. O protocolo de update so sabe somar:
+   o merge compara o que e NOVO no template, e uma correcao que remove nunca
+   atravessa. Cada entrada e citada com o texto antigo para o merge encontrar.
+   Sai daqui quando nenhuma versao ainda em uso puder ter a linha.
+   SO entra linha de COMPORTAMENTO que o kit apagou. Migracao de formato
+   (commands/ -> skills, spec -> WO) nao entra: ja e tratada pela clausula
+   de formato descontinuado, e citar o nome velho aqui reintroduz no produto
+   justamente o termo que outros checks proibem. */
+const REVOCATIONS = [
+  { desde: "1.90.0",
+    texto: "Sempre que o autor sinalizar upload — mesmo sem nomear o arquivo",
+    porque: "A lista de exemplos de sinal ensinava a ESPERAR o sinal. A releitura do mount e por turno, sem gatilho do usuario. Substituida por: reveja o mount a cada turno, sem esperar eu sinalizar." },
+];
+
 /* Regras de higiene anti-inchaço — entram nas instruções e no CLAUDE.md */
 const HYGIENE_RULES = [
   "Referência cruzada, não duplicação: um dado tem UMA fonte de verdade. Quando uma ideia vira trabalho, ela aparece também no STATUS — mas continua no IDEAS, só mudando de status. Não copie o conteúdo para dois lugares. **Mensagem trocada com outro projeto ou frente irmã é nota, não artefato:** vive fora do repositório enquanto serve e vai para o arquivo morto depois — **não crie pasta versionada para ela**. O que precisa sobreviver é o que você extraiu dela para os documentos, não o texto da mensagem; guardar os dois é duplicar, e o texto envelhece enquanto o registro fica.",
@@ -1137,6 +1151,10 @@ const HYGIENE_RULES = [
   "**Abertura de turno, antes de QUALQUER outra ferramenta:** liste o mount, leia o cabeçalho da cópia achatada se houver (data de geração + estado do repo), e confira a versão viva do artefato principal contra a que você acha que sabe. Um passo, quatro fatos, e só então o trabalho. **Sem cópia achatada nem manifesto** o passo continua valendo com o que houver — a listagem sozinha já mostra nota nova —; o que muda é o carimbo do fecho, que declara a base pobre em vez de fingir precisão. Não é cerimônia de início de SESSÃO: é de TURNO, e o turno pesado é justamente o que a dispensa por conta própria.",
   "A releitura do mount não tem gatilho próprio — e é por isso que ela falha. Quatro modos, todos observados em projetos reais: (1) **trabalho pedido expulsa ritual não-pedido** — mensagem cheia de perguntas explícitas empurra a releitura para fora, e é justamente aí que ela mais importa, porque quem pede muito costuma ter subido algo antes de pedir; (2) **previsão vestida de observação** — relatar o estado que o seu próprio turno anterior previa («ele vai aplicar isso depois»), que por dentro é indistinguível de ter verificado; (3) **campo obrigatório preenchido de memória**, quando falta dado fresco; (4) **regra escrita longe do ponto onde ela quebra**. O antídoto é sempre o mesmo: o gatilho mora no gesto, não no apêndice — se você está prestes a afirmar estado, essa é a hora de ler. **E os canais não chegam juntos:** relatório que a execução grava em arquivo nasce no instante da aplicação, enquanto a cópia achatada exige um passo manual de quem a gera. O relatório lidera, sempre. Quando os dois discordam, **o relatório vence e a cópia está atrasada** — e a listagem do mount é o único lugar onde essa discordância aparece.",
   "A sua cópia não é a fonte da verdade: vale o arquivo que está no repo/mount AGORA, não o que você leu, gerou ou reconstruiu antes nesta conversa. Qualquer artefato que você produziu (um pacote, uma reconstrução, um resumo do estado) envelhece no instante em que alguém aplica alguma coisa. Antes de dizer que algo continua pendente — ou de reentregar trabalho — releia o arquivo vivo. Reentregar o que já foi aplicado custa mais caro que perguntar. **A contrapartida, que evita o excesso oposto:** o que envelhece é o **estado do repo e as âncoras** — não o **carimbo de emissão** de um artefato. Documento escrito e datado no dia 27 continua correto se for aplicado no dia 29; a data diz quando foi emitido, não quando foi aplicado. Não «corrija» data de arquivo entregue, nem renomeie WO/análise por causa de atraso. **E cuidado com a falsa confirmação:** reconstruir o projeto em sandbox a partir da cópia que você tem NÃO é verificação de estado. Âncora que ainda casa prova que a sua cópia é velha, não que o trabalho está pendente — se o trabalho tivesse sido aplicado, a âncora estaria morta, e é o silêncio dela que engana. Antes de reconstruir, compare a versão do artefato copiado com o estado declarado no cabeçalho da cópia; divergiram, a cópia está atrasada e nenhuma conclusão sobre pendência vale.",
+  "**Varra pelo fato, não pela frase.** Fechar um item, trocar um nome ou registrar uma refutação não termina no arquivo onde a decisão nasceu. Procure três coisas, sempre: (a) o termo antigo literal; (b) o mesmo conceito em paráfrase, que o `grep` não acha; (c) as listas de pendência — STATUS, IDEAS, checklists. E **as skills por último e com mais atenção**: são a superfície mais esquecida e a mais perigosa, porque são lidas ANTES de trabalhar, então uma linha morta ali dirige o trabalho seguinte em vez de só informar mal.",
+  "**Documento derivado nunca é fonte.** Handoff, brief, resumo, reconstrução, checklist, relatório — inclusive os que você mesmo escreveu — são saída de assistente, não cânone. Eles congelam quando nascem enquanto o repo anda, e o modo de falha é sempre o mesmo: o derivado é lido como fato por um turno inteiro antes de alguém conferir. Duas defesas: **a derivação aparece no nome do arquivo** (prefixo/sufixo que se lê de relance), e **antes de usar um dado dele, confira no arquivo vivo**. Divergência entre derivado e fonte: a fonte vence, e o derivado é reescrito lendo a fonte, nunca ajustado de memória.",
+  "**Cite a frase-gatilho antes de perguntar.** Quando a dúvida nasce de algo que o usuário escreveu — uma nota, um pedido, uma linha de arquivo —, a frase inteira entra citada ANTES da pergunta. Referência cruzada nua (`arquivo:linha`, «ver DEC-0XX») pode acompanhar o texto literal, nunca substituí-lo: quem escreveu não decora o que escreveu. E nunca pergunte usando um rótulo que você inventou para o assunto — o usuário não reconhece o nome que você deu à dúvida dele.",
+  "**Mudança de método não se adota no meio do trabalho.** Refinar o conteúdo é dever contínuo; mudar COMO o trabalho é feito — ordem, sequência, formato do ciclo, o que entra em cada leva — é troca de trilho, e troca de trilho para e vira análise, com o dono decidindo. O modo de falha é específico e já custou caro: um único dado ruim numa etapa vira proposta de reprojeto, a proposta é aceita no impulso, e o custo só aparece na etapa seguinte. Propor continua permitido e é esperado; o que não é permitido é otimizar o processo em vez de executá-lo.",
   "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre. **Exemplo já visto e legítimo:** projeto cujo roadmap e registro de decisões referenciam ideias por **ID estável** organiza o IDEAS por status + ID, não pela divisão por autor do template — adotar o template ali seria regressão, e o desvio é o certo."
 ];
 
@@ -1148,6 +1166,7 @@ const TRIGGERS_BASE = [
   ["Bug grave resolvido", "Entrega o DECISIONS.md completo (nova entrada: sintoma, causa raiz, solução, lição)."],
   ["Ideia mencionada (sua ou minha)", "Entrega o IDEAS.md completo com a ideia capturada (na hora, sem pedir)."],
   ["Feedback sobre o kit — dito OU feito (desvio estrutural: diretriz nova neste CEREBRO.md, template alterado/dispensado, arquivo novo criado)", "Registra na hora no IDEAS.md, seção «Feedback para o Kit»: o que foi observado/mudado e por quê. É o material que volta para evoluir o kit — sem o registro, o aprendizado deste projeto se perde."],
+  ["Fim de QUALQUER turno de trabalho", "Emite o Bloco de fecho (formato fixo, secao propria). Nao espera fim de conversa: a maior parte do trabalho acontece em turnos que nao fecham nada."],
   ["Fim de sessão", "Entrega os arquivos completos afetados: STATUS.md + CHANGELOG.md (se fechou algo) + log da sessão."],
 ];
 
@@ -1239,7 +1258,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.102.0";
+const KIT_VERSION = "1.103.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2475,6 +2494,8 @@ function buildClaudeMd(niche){
   L.push("## Ao receber um template-update do KCM");
   L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio** — e mais: **template genérico não é candidato a substituir arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados caem por padrão em (c) — o genérico ensina estrutura, o vivo já evoluiu; não é escolha a ser oferecida ao usuário a cada update. A **única** exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). Antes de comparar, o assistente lista o mount e diz em que versão/commit o projeto está: comparar sem saber o estado atual é comparar com memória. **O pacote é entrada transitória, mas não descartável no meio do caminho:** enquanto um merge estiver em curso, ele precisa continuar no mount até o merge fechar — pacote que sai antes do fim leva embora o original de comparação, e o que ficou de fora só aparece depois. Se ele já saiu, o assistente **declara a cobertura de leitura**: quais faixas leu **verbatim** e quais não. É essa declaração que permite fechar a lacuna com um diff dirigido em vez de refazer o merge inteiro. Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído: propõe o merge, o usuário decide — nunca substituição cega.");
   L.push("");
+  L.push("**O merge sabe somar, não sabe subtrair — e por isso o manifesto traz duas seções que a comparação não produz.** (1) **Linhas revogadas:** o kit às vezes APAGA uma linha de propósito, e comparar arquivos só revela o que é novo — o texto antigo continua vivo no seu, invisível ao merge, dirigindo comportamento que já foi corrigido. Procure cada texto listado; se achar, remova, ou registre o desvio se este projeto tiver motivo para manter. (2) **Carimbo de modos:** o manifesto declara com quais modos o pacote foi gerado. Seção de um modo declarado como `nao` que ainda exista no seu arquivo é sobra de configuração antiga — **ou** o pacote foi gerado com o modo esquecido. O assistente **não tem como distinguir os dois casos**, então **reporta como choque com a seção citada e não remove sozinho**. Migrar de modo (ASU→Code, por exemplo) não limpa o CEREBRO já gerado: um CEREBRO gerado é arquivo, não função.");
+  L.push("");
   L.push("## Regras de higiene (impedem inchaço e duplicação)");
   L.push("");
   const hasChangelog = (niche.contextFiles||[]).some(f=>/CHANGELOG/i.test(f.name));
@@ -3435,7 +3456,8 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push("");
   L.push(`- Nicho: ${niche.label}`);
   L.push(`- Kit: v${KIT_VERSION}`);
-  L.push(`- Modos ligados: skills ${skillsOn ? "sim" : "nao"} · Code ${codeOn ? "sim" : "nao"}`);
+  L.push(`- Modos ligados: skills ${skillsOn ? "sim" : "nao"} · Code ${codeOn ? "sim" : "nao"} · ASU ${asuModeOn() ? "sim" : "nao"} · compartilhado ${groupModeOn() ? "sim" : "nao"}`);
+  L.push("- **Este carimbo e declaracao, nao ordem.** Se o seu arquivo vivo tem secao de um modo que este pacote declara como `nao`, ela e sobra de uma configuracao antiga (ou este pacote foi gerado com o modo esquecido). Reporte como choque, com a secao citada, e deixe o usuario decidir — **nunca remova sozinho**: o kit nao tem como saber qual dos dois casos e.");
   L.push(`- Data: ${today}`);
   L.push(`- Afixo: ${UPDATE_AFFIX}`);
   L.push("");
@@ -3446,6 +3468,20 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push("> guarde: so coloque no destino se a pasta JA existir neste projeto. Pasta nasce no primeiro uso,");
   L.push("> nunca para receber um modelo — se ela nao existe aqui, o arquivo nao entra e isso NAO e pendencia.");
   L.push("");
+  if(REVOCATIONS.length){
+    L.push("## Linhas revogadas (o merge nao acha sozinho)");
+    L.push("");
+    L.push("O merge compara o que e **novo** no template. Estas linhas foram **apagadas de proposito** pelo kit —");
+    L.push("um arquivo vivo pode ainda te-las, e nenhuma comparacao vai apontar isso. Procure cada uma no seu");
+    L.push("arquivo e, se achar, **remova**; se o seu projeto tiver motivo para manter, registre o desvio.");
+    L.push("");
+    L.push("| Apagada desde | Texto a procurar | Por que saiu |");
+    L.push("|---|---|---|");
+    REVOCATIONS.forEach(r => {
+      L.push(`| v${r.desde} | \`${r.texto}\` | ${r.porque} |`);
+    });
+    L.push("");
+  }
   L.push("| Nome no upload | Destino real | Natureza | Papel |");
   L.push("|---|---|---|---|");
   files.forEach(f => {
