@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
+const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, fileBehaviorLabel, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -499,6 +499,48 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   assert(/function kitStamp/.test(html), "helper kitStamp ausente");
   assert(/Kit de Contexto Universal v\$\{KIT_VERSION\}/.test(html), "downloads nao carimbam a versao");
   return "ok";
+});
+
+check("C37 artefato do kit abre no parser do proprio formato (wo0081): settings.json valido, Write no allow, push antes do relatorio, CONTINUIDADE nao e snapshot", () => {
+  const kit = T.buildCodeKitFiles();
+  // (1) todo artefato emitido com extensao .json abre no JSON.parse — nunca por substring
+  const jsonArtifacts = [[".claude/settings.json (kit-Code)", kit.settings]];
+  T.STATE.workmode = T.STATE.workmode || {};
+  const prevMode = T.STATE.workmode.codeMode;
+  T.STATE.workmode.codeMode = "yes";
+  const pack = T.buildUpdatePack(T.normNiche(T.NICHES.dev));
+  T.STATE.workmode.codeMode = prevMode;
+  (pack && pack.files ? pack.files : []).forEach(f => {
+    if(/\.json$/.test(f.real||"")) jsonArtifacts.push([f.real+" (pacote de update)", f.content]);
+  });
+  assert(jsonArtifacts.length >= 2, "o check perdeu o alvo: esperava o settings.json do kit-Code E o do pacote de update");
+  jsonArtifacts.forEach(([nome, txt]) => {
+    assert(typeof txt === "string" && txt.trim(), nome+": artefato .json vazio");
+    try { JSON.parse(txt); }
+    catch(e){ assert(false, nome+" nao e JSON valido ("+e.message+") — um comentario // ou virgula sobrando quebra o arquivo inteiro e derruba TODAS as permissoes em silencio"); }
+  });
+  // (2) o conteudo de que as frentes recentes dependem
+  const st = JSON.parse(kit.settings);
+  const allow = (st.permissions||{}).allow||[];
+  assert(allow.includes("Write"), "settings.json sem Write no allow — o Code nao consegue criar logs/ nem arquivo novo, e a skill wrap manda criar");
+  assert(allow.includes("Read") && allow.includes("Edit"), "settings.json perdeu Read/Edit do allow");
+  assert(Array.isArray((st.permissions||{}).additionalDirectories), "settings.json sem additionalDirectories — relatorio em arquivo (D-108) e medicao fora da raiz (D-113) morrem em silencio");
+  const setEntry = (pack && pack.files ? pack.files : []).find(f => f.real === ".claude/settings.json");
+  assert(setEntry && /CORRECAO OBRIGATORIA/.test(setEntry.role||""), "pacote de update nao avisa os projetos JA instalados — consertar o gerador nao conserta quem ja baixou");
+  // (3) push resolvido antes do relatorio, e menu numerado em vez de pergunta em prosa
+  assert(/## Push e relat/.test(kit.claudeMd), "CLAUDE.md do kit-Code sem a secao de push");
+  assert(/menu\*\* numerado|menu numerado|MENU NUMERADO/i.test(kit.claudeMd), "CLAUDE.md nao manda usar menu numerado no caso vermelho");
+  assert(/relat[oó]rio [eé] o ÚLTIMO passo/i.test(kit.claudeMd), "CLAUDE.md nao poe o relatorio depois do push");
+  [["apply-wo",kit.applyWo],["wrap",kit.wrap]].forEach(([nome,txt]) => {
+    assert(/MENU NUMERADO/.test(txt), "skill "+nome+" nao manda fechar com menu numerado no caso vermelho");
+    assert(/push ANTES de escrever o relatorio/.test(txt), "skill "+nome+" nao ordena push antes do relatorio");
+  });
+  assert(/DEPOIS de resolver o push/.test(kit.woTemplate), "modelo de WO nao ordena relatorio depois do push");
+  // (4) CONTINUIDADE cresce; BRIEF continua snapshot
+  const lab = T.fileBehaviorLabel({name:"CONTINUIDADE.md", cat:"hist"});
+  assert(/Cresce/.test(lab), "CONTINUIDADE.md rotulada como '"+lab+"' — o proprio nicho declara que CRESCE (append-only)");
+  assert(/Snapshot/.test(T.fileBehaviorLabel({name:"BRIEF.md", cat:"hist"})), "BRIEF perdeu o rotulo de snapshot ao separar de CONTINUIDADE");
+  return "ok ("+jsonArtifacts.length+" artefato(s) .json parseado(s))";
 });
 
 check("C36 modelo de analise no pacote + contagem repetida no STATUS (wo0080): natureza modelo-em-espera, pasta preguicosa preservada, wrap confere valor antigo, valvula cita IDEAS por ID", () => {

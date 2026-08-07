@@ -1239,7 +1239,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.101.0";
+const KIT_VERSION = "1.102.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8793,7 +8793,7 @@ function fileBehaviorLabel(f){
   if(/IDEA|IDEIA/.test(n)) return "Segundo cérebro (nunca perde)";
   if(/ROADMAP/.test(n)) return "Plano em fases";
   if(/CHANGEL|HISTOR|REVIS|REVISÕES|REVISOES|SESS|APARI/.test(n)) return "Cresce (histórico)";
-  if(/BRIEF|CONTINU/.test(n)) return "Snapshot (atualiza antes de migrar)";
+  if(/CONTINU/.test(n)) return "Cresce (memória factual, append-only)"; if(/BRIEF/.test(n)) return "Snapshot (atualiza antes de migrar)";
   // estáveis: descrição do projeto / mundo / estilo / referências
   if(/CONTEXT|PROJETO|PROJECT|CLAUDE|GLOSS|CONCEITO|JOGO|OBRA|PRODUTO|SÉRIE|SERIE|MUNDO|UNIVERSO|ESTILO|PERSONAGENS|PERSONA|CLIENTE|REFERENC|REFERÊNC|RECURSOS|TEMA|MENU|HIPOTESES|HIPÓTESES|SINTESE|SÍNTESE|FONTES|MECANICAS|MECÂNICAS|ARTE|HARMONIA|FAIXAS|LETRAS|PJS|NPCS|CAMPANHA|MAPA|FILTROS|RECEITAS/.test(n)) return "Estável";
   // fallback por categoria
@@ -9196,7 +9196,7 @@ function buildWoTemplate(){
     "",
     "## Relatorio de aplicacao *(quem aplica preenche ao terminar)*",
     "",
-    "O que foi feito · o que fugiu do texto literal da WO · arquivos tocados · resultado da validacao · o commit.",
+    "O que foi feito · o que fugiu do texto literal da WO · arquivos tocados · resultado da validacao · o commit e o push. Escreva-o DEPOIS de resolver o push: relatorio anterior a decisao conta so parte da historia.",
     "**Nao** substitua este relatorio pelo bloco de fecho do chat: aquele e da raia de planejamento, e trocar",
     "relatorio por formulario perde justamente o que so quem aplicou viu.",
     "",
@@ -9244,6 +9244,11 @@ function buildCodeKitFiles(){
     "- Responda com o **número cru e o comando que o produziu**. Sem interpretação, sem recomendação — se você achar que o número indica um problema, diga o número primeiro e a suspeita depois, separada.",
     "- Se o alvo estiver fora da raiz do repositório, isso depende de `permissions.additionalDirectories` no `.claude/settings.json` (a mesma chave do relatório em arquivo). Se a leitura for negada, DIGA — não estime.",
     "",
+    "## Push e relatório — nesta ordem, sempre",
+    "- **Verde** (validação passou, ou WO só de doc com o `git diff` conferido) → `add`, `commit` e **`push`, sem perguntar.** Não peça permissão para o que já está decidido.",
+    "- **Vermelho** (validação falhou, âncora não encontrada, `git diff` com arquivo fora do previsto) → **não commite e não empurre.** E **não pergunte em prosa** («posso dar push?») — pergunta escrita no meio do texto passa despercebida. Feche com um **menu numerado** de saídas reais, a recomendada em **1** — ex.: `1) corrigir <o quê> e revalidar (recomendado)  2) reverter as edições  3) commitar local, sem push  4) empurrar assim mesmo`.",
+    "- **O relatório é o ÚLTIMO passo** — só depois de resolvido o push. Ele diz o que de fato aconteceu: empurrado (com o hash), não empurrado (com o motivo), ou aguardando a escolha do menu. **Relatório escrito antes da decisão conta metade da história** e vira mentira assim que o push sai; se a escolha chegar depois, **reescreva o relatório**, não deixe a versão velha valendo.",
+    "",
     "## Relatório em arquivo (sempre, sem pedir)",
     "- Ao fechar QUALQUER tarefa (`/apply-wo` ou `/wrap`), grave o MESMO relatório também em `../AAMMDD-HHMM-code-<slug>.txt` — pasta-PAI do repo, fora do versionamento (troque `<slug>` pelo nome curto do projeto; a pasta-pai costuma ser compartilhada por vários repos).",
     "- Exige `permissions.additionalDirectories` no `.claude/settings.json`. Se a escrita for negada, DIGA e siga — o relatório no chat continua sendo a entrega.",
@@ -9259,7 +9264,7 @@ function buildCodeKitFiles(){
     "{",
     '  "permissions": {',
     '    "allow": [',
-    '      "Read", "Edit", "Grep", "Glob",',
+    '      "Read", "Write", "Edit", "Grep", "Glob",',
     '      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git add:*)", "Bash(git commit:*)", "Bash(git push:*)"',
     "    ],",
     '    "deny": ["Bash(rm -rf:*)"],',
@@ -9267,7 +9272,6 @@ function buildCodeKitFiles(){
     "  }",
     "}",
     "",
-    "// Adicione seu comando de build/teste ao allow — ex.: \"Bash(npm run build:*)\", \"Bash(npm test:*)\"."
   ].join("\n");
   const applyWo = [
     "---",
@@ -9279,7 +9283,7 @@ function buildCodeKitFiles(){
     "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.",
     "Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.",
     "Ao terminar, RELATE: o que foi feito, achados/desvios do texto da WO, arquivos tocados, build/validação e o commit.",
-    "Grave o MESMO relatório em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
+    "Verde: `add`, `commit` e `push` sem perguntar. Vermelho: nao commite nem empurre — feche com MENU NUMERADO (a recomendada em 1), nunca com pergunta em prosa. Resolva o push ANTES de escrever o relatorio. Grave o MESMO relatório em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
     "WO: $ARGUMENTS",
     ""
   ].join("\n");
@@ -9292,7 +9296,7 @@ function buildCodeKitFiles(){
     "Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,",
     "e me mostre o `git diff` e o comando de commit (uma linha por comando, mensagem SEM acento).",
     "Ao mudar um número ou um estado no `STATUS.md` (contagem de testes/checagens, versão, «funciona até X»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não é o único lugar onde ele aparece, e a cópia esquecida no meio do texto passa a mentir.",
-    "Grave o relatório de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
+    "Verde: `add`, `commit` e `push` sem perguntar. Vermelho: nao commite nem empurre — feche com MENU NUMERADO (a recomendada em 1), nunca com pergunta em prosa. Resolva o push ANTES de escrever o relatorio. Grave o relatório de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
     ""
   ].join("\n");
   return { claudeMd, settings, applyWo, wrap, woTemplate: buildWoTemplate() };
@@ -9528,7 +9532,7 @@ function buildUpdatePack(niche){
     files.push({ flat: updateFlat("CLAUDE.md"), real: "CLAUDE.md", nature: "template",
       role: "Guia raiz do Claude Code.", content: k.claudeMd });
     files.push({ flat: updateFlat("claude-settings.json"), real: ".claude/settings.json", nature: "template",
-      role: "Permissoes do Claude Code.", content: k.settings });
+      role: "Permissoes do Claude Code. CORRECAO OBRIGATORIA no arquivo que voce ja tem: se houver uma linha comecando com // depois do } final, APAGUE-A — o JSON fica invalido e TODAS as permissoes param de valer em silencio, inclusive additionalDirectories (relatorio em arquivo e medicao fora da raiz). Confira tambem que Write esta no allow.", content: k.settings });
     files.push({ flat: updateFlat("apply-wo.SKILL.md"), real: ".claude/skills/apply-wo/SKILL.md",
       nature: "template", role: "Comando /apply-wo.", content: k.applyWo });
     files.push({ flat: updateFlat("wrap.SKILL.md"), real: ".claude/skills/wrap/SKILL.md",
