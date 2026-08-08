@@ -1258,7 +1258,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.103.0";
+const KIT_VERSION = "1.104.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2443,10 +2443,11 @@ NICHES.narrative = {
     ["Inconsistência encontrada/resolvida ou grafia definida", "Entrega CONTINUIDADE.md completo (a nota de continuidade / grafia canônica)."],
     ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
     ["Erro mecânico apontado pelo autor na prosa", "Vira linha PERMANENTE na «Lista de invariantes» de CONTINUIDADE.md (a lista só cresce — o mesmo erro nunca se corrige duas vezes); se for erro de voz, ganha espelho também em VOZ.md → «O que EVITAR»."],
+    ["Nota/arquivo antigo do acervo entra em extração, ou uma nota contradiz o que já está escrito", "Apresenta em FICHA (skill `ficha-de-choque`): quatro campos com citação literal dos dois lados, marca de confiança e status. Nunca pergunta solta nem referência cruzada nua — o autor não decora o que escreveu. A leva sai em ticket `AAMMDD-HHMM-leva-<assunto>.md`, só com o que está em aberto."],
     ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada. A cada ARCO concluído, propõe 1–2 exemplos novos substituindo os mais antigos — a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar a voz atual."],
   ],
   skillsPack:{
-    intro:"Quatro skills opcionais que empacotam o protocolo de escrita como Agent Skills nativas — carregadas sob demanda no gatilho certo, em vez de inchar as Instruções lidas em todo turno. Derivam de skills provadas em campo (projetos de novel reais); cada erro que elas previnem já aconteceu. Ligue este pacote quando a obra entra em produção de capítulos.",
+    intro:"Cinco skills opcionais que empacotam o protocolo de escrita como Agent Skills nativas — carregadas sob demanda no gatilho certo, em vez de inchar as Instruções lidas em todo turno. Derivam de skills provadas em campo (projetos de novel reais); cada erro que elas previnem já aconteceu. Ligue este pacote quando a obra entra em produção de capítulos.",
     skills:[
       {
         name:"escrita-serial",
@@ -2558,6 +2559,83 @@ NICHES.narrative = {
           "- **Checklist «pelo menos 1 dos 3 por capítulo»** (torna a textura auditável, não só aspiracional): (a) um secundário com vida própria demonstrada; (b) um lugar que existe independente da trama; (c) um evento nos bastidores que o protagonista não causou. Um por capítulo já mantém o mundo vivo."
         ],
         applyStub:["- Sistema de poder/mundo desta obra em uma frase: [...]","- Teto de poder (grandeza inicial ↔ máxima): [...]","- Personagens que ainda estão rasos e precisam de interior: [...]"]
+      },
+      {
+        name:"ficha-de-choque",
+        gatilho:"ao extrair worldbuilding de acervo antigo, ou ao encontrar contradição entre o que está escrito e uma nota do autor",
+        description:"Apresentação de extração e de choque de continuidade em ficha de quatro campos com citação literal, mais o ciclo de leva com ticket. USE ao processar notas/arquivos antigos do autor rumo ao cânone, ao achar contradição entre nota e meta/ ou entre nota e capítulo escrito, e ao retomar itens que ficaram sem decisão na leva anterior. NÃO use em obra sem acervo pré-existente — ver o teste de entrada.",
+        body:[
+          "# Ficha de choque — como um item é apresentado para o autor decidir",
+          "",
+          "> **Teste de entrada (primeira coisa, sempre).** Esta skill serve para obra que **herda um acervo**: notas antigas, planilhas, arquivos soltos, worldbuilding escrito antes do primeiro capítulo. Se a obra está sendo fundada agora e o mundo nasce na conversa, **não use** — pergunte em prosa e siga. Marreta em noz custa mais que a noz. Sinal de que serve: existe uma pasta de notas que ninguém releu inteira, ou o autor diz «isso já está definido em algum lugar».",
+          "",
+          "## O problema que ela resolve",
+          "",
+          "O autor **não decora o que escreveu** — e disse isso com todas as letras em mais de um projeto. Pergunta solta em prosa («o que é o cartão fundido?», «e a mecânica de nomeação?») obriga ele a adivinhar a que você se refere, sobre um assunto que ele definiu meses atrás. Referência cruzada nua — `CONTINUIDADE:93`, «ver DEC-025» — tem o mesmo defeito: aponta para um lugar em vez de mostrar o texto. Num projeto real isso chegou perto de custar a obra.",
+          "",
+          "## Os quatro campos (ordem fixa, nenhum opcional)",
+          "",
+          "1. **O QUE ESTÁ ESCRITO HOJE** — arquivo + o **texto literal**, citado por inteiro.",
+          "2. **O QUE ISSO SIGNIFICA** — português simples, sem jargão do projeto.",
+          "3. **DE ONDE VEM O CHOQUE** — a nota ou decisão que contradiz, também com texto literal.",
+          "4. **O QUE EU PROPONHO** — **o texto exato** que entraria no lugar, pronto para copiar. Não a descrição da mudança: a linha.",
+          "",
+          "**Variante lacuna** — quando não há «escrito hoje» para chocar (o acervo levanta algo que o cânone nunca cobriu), os dois primeiros campos viram **um**: «O QUE ESTÁ EM ABERTO». Os campos 3 e 4 seguem iguais.",
+          "",
+          "**A regra que vale sozinha, fora de qualquer ficha:** se a dúvida nasceu de uma nota do autor, **a frase da nota entra citada, inteira, antes da pergunta**. E nunca use um rótulo que você inventou para o assunto — ele não reconhece o nome que você deu à dúvida dele.",
+          "",
+          "## Marca de confiança (obrigatória, um item nunca sai sem ela)",
+          "",
+          "- **literal** — a nota diz assim, e a frase-fonte está citada.",
+          "- **síntese** — você combinou, deduziu ou generalizou. **Sempre destacada**, nunca misturada com as literais.",
+          "- **conflito** — contradiz o cânone atual, com a linha citada.",
+          "- **aberto** — a nota pergunta algo ou deixa por decidir.",
+          "",
+          "**Regra da frase-fonte:** se não existe frase citável, o item **não pode** ser literal — é síntese. E síntese só vira cânone com aprovação explícita. Você **não** decide sozinho que uma síntese «é claramente o que o autor quis dizer».",
+          "",
+          "## Status por item (a leitura de cinco segundos)",
+          "",
+          "🟡 pendente · 🟢 aplicado · 🔴 descartado · 🔧 **resolvido sozinho**.",
+          "",
+          "**🔧 só quando as DUAS condições valem:** (a) nenhuma prosa já escrita depende do resultado, **e** (b) existe uma reconciliação que aproveita todas as fontes sem descartar nenhuma como errada. Aí você aplica e **lista** — para transparência, não para aprovação. Fora disso, pergunta. Numa auditoria real esse critério resolveu 6 de 8 pendências sem gastar o tempo do autor; as 2 que sobraram eram sabor autoral (nome, flavor), e sabor não tem critério mecânico.",
+          "",
+          "Feche o bloco com uma **tabela-rodapé**: quantos itens em cada estado, e quais esperam resposta.",
+          "",
+          "## Extração não é transcrição",
+          "",
+          "Devolver a ideia do autor reescrita, e só isso, é entrega incompleta — foi apontado sete vezes na mesma nota, num projeto. Cada item vem com **o que a ideia destrava · o que ela atropela · ao menos uma alternativa ou ampliação**. A ideia dele **nunca** é descartada nem substituída: a sua entra **ao lado**, rotulada como proposta sua, para ele escolher. Silêncio propositivo é omissão, não respeito.",
+          "",
+          "**E refine o rascunho dele por padrão.** Quando o autor escreve o texto de uma descrição, nome, título ou frase de mundo, responda com **2–4 variações** refinadas (variando registro: mais vago/poético ↔ mais claro/mecânico), com o trade-off de cada uma. Ele escolhe, ajusta, ou confirma o original — a oferta não é obrigação de trocar.",
+          "",
+          "## O que o choque pode atingir",
+          "",
+          "**Capítulo escrito não é fonte protegida.** Choque contra prosa já publicada é reportado com o **mesmo peso e o mesmo formato** que choque contra `meta/` — nunca filtrado por contradizer o que já está escrito. Foi esse filtro silencioso que fez um capítulo inteiro fugir de regras já registradas no acervo, sem o autor saber que houve choque.",
+          "",
+          "**Canonizar não obriga aplicar.** Uma regra de mundo pode entrar no cânone sem ser aplicada retroativamente a nenhum capítulo — coexistência é aceitável, e quando/onde aplicar é decisão separada. Na ausência de preferência explícita do autor, **não assuma que o capítulo escrito vence**.",
+          "",
+          "**Resumo de capítulo é derivado.** Divergiu da prosa? A prosa vence, e o resumo é reescrito **lendo o capítulo** — nunca ajustado de memória.",
+          "",
+          "## Antes de abrir pendência",
+          "",
+          "- **Confira o cânone primeiro.** Já aconteceu de virar «questão em aberto» algo que a CONTINUIDADE já resolvia.",
+          "- **Nota antiga é suspeita por padrão:** contradição entre nota velha e cânone atual sinaliza *possivelmente superada* — nunca escala como pendência do projeto, nunca se resolve pela nota velha sozinha.",
+          "- **A leitura padrão é «isto provavelmente já foi definido numa nota que ainda não li»**, não «isto está perdido». Enquanto houver acervo por ler, termo sem lastro não vira pendência.",
+          "",
+          "## O ciclo de leva, e o ticket",
+          "",
+          "Cada leva sai num arquivo próprio — `AAMMDD-HHMM-leva-<assunto>.md`, fora do versionamento — em vez de virar parede de texto na conversa.",
+          "",
+          "- **Só o que está em aberto entra.** Decidido sai na hora para o cânone e **não reaparece**. Foi acumular verde e vermelho fechados que inutilizou a primeira tentativa disso: achar o item reaberto exigia garimpar entre defuntos.",
+          "- **O não respondido volta refinado**, nunca repetido igual.",
+          "- **O ticket novo se deriva do cânone e das respostas do autor — nunca do ticket velho.** O anterior serve para saber *o que perguntar de novo*; o texto de cada item é reconferido contra os `meta/` antes de reaparecer. Sem isso, o ticket vira uma segunda fonte desatualizada, que é exatamente o defeito que ele existe para evitar.",
+          "- **Cabeçalho declara o que ele é:** saída de assistente, não cânone. O cânone é o `meta/`.",
+          "- **Assunto grande demais pede sessão própria.** Reconhecer isso e propor a sessão dedicada é parte do trabalho — empurrar o nó inteiro para dentro de uma leva é o que faz a resposta virar parede.",
+          "",
+          "## O que esta skill NÃO decide",
+          "",
+          "Ordem de leitura das notas, tamanho da leva, por onde começar e quando parar: **é do autor**, sempre. Você pode apontar um problema no método — não redesenhá-lo no meio do trabalho. Trocar o funcionamento da extração enquanto ela roda já custou três reprojetos seguidos num projeto real, e os três falharam pelo mesmo motivo: otimizar o processo em vez de executá-lo. Se enxergar algo melhor, **pare e proponha** como análise, com o autor decidindo."
+        ],
+        applyStub:["- Onde vive o acervo desta obra (pasta/arquivos): [...]","- Ordem de leitura definida pelo autor: [...]","- Tamanho de leva combinado: [...]","- Onde os tickets são arquivados depois de respondidos: [...]"]
       }
     ]
   },

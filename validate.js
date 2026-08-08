@@ -501,6 +501,57 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C39 skill ficha-de-choque no narrative (wo0083): teste de entrada, quatro campos, marca de confianca, 🔧 com criterio duplo, ciclo de ticket e fronteira do metodo", () => {
+  const narr = T.normNiche(T.NICHES.narrative);
+  const sk = (narr.skillsPack.skills||[]).find(x => x.name === "ficha-de-choque");
+  assert(sk, "skill ficha-de-choque nao existe no pacote do narrative");
+  const body = (sk.body||[]).join("\n");
+  const marcas = [
+    [/Teste de entrada/, "sem teste de entrada — a skill dispara em obra que nasce agora, e vira marreta em noz"],
+    [/O QUE ESTÁ ESCRITO HOJE[\s\S]*O QUE ISSO SIGNIFICA[\s\S]*DE ONDE VEM O CHOQUE[\s\S]*O QUE EU PROPONHO/, "os quatro campos nao estao na ordem fixa"],
+    [/O QUE ESTÁ EM ABERTO/, "sem a variante lacuna (item que nao tem 'escrito hoje' para chocar)"],
+    [/citada, inteira, antes da pergunta/, "sem a regra de citar a frase-fonte antes de perguntar"],
+    [/rótulo que você inventou/, "nao proibe perguntar por rotulo inventado pelo assistente"],
+    [/\bliteral\b[\s\S]*\bsíntese\b[\s\S]*\bconflito\b[\s\S]*\baberto\b/, "sem as quatro marcas de confianca"],
+    [/não pode\*{0,2} ser literal/, "sem a regra da frase-fonte (sem frase citavel, o item nao e literal)"],
+    [/🔧/, "sem o status 'resolvido sozinho'"],
+    [/nenhuma prosa já escrita depende[\s\S]{0,400}sem descartar nenhuma como errada/, "o criterio do 🔧 perdeu uma das duas condicoes — 🔧 com uma condicao so decide o que era do autor"],
+    [/Extração não é transcrição/, "sem a regra de devolver opiniao, variacao e alternativa"],
+    [/nunca\*{0,2} é descartada nem substituída/, "a alternativa do assistente pode acabar substituindo a ideia do autor"],
+    [/2–4\*{0,2} variações/, "sem a extensao da DEC-12 (refinar o rascunho do autor por padrao)"],
+    [/Capítulo escrito não é fonte protegida/, "capitulo escrito continua filtrando choque em silencio"],
+    [/não assuma que o capítulo escrito vence/, "sem a regra de nao assumir precedencia da prosa ja escrita"],
+    [/Resumo de capítulo é derivado/, "sem a regra do resumo derivado contra a prosa"],
+    [/possivelmente superada/, "sem o tratamento de nota antiga como suspeita"],
+    [/já foi definido numa nota que ainda não li/, "sem a leitura padrao que evita abrir pendencia por termo sem lastro"],
+    [/AAMMDD-HHMM-leva-/, "sem o nome do ticket de leva"],
+    [/Só o que está em aberto entra/, "o ticket nao encolhe — foi acumular decidido que inutilizou a primeira tentativa"],
+    [/nunca do ticket velho/, "o ticket pode se derivar de si mesmo e virar segunda fonte desatualizada"],
+    [/saída de assistente, não cânone/, "o ticket nao se declara derivado no cabecalho"],
+    [/O que esta skill NÃO decide/, "sem a fronteira do metodo"],
+    [/otimizar o processo em vez de executá-lo/, "a fronteira do metodo perdeu o modo de falha que a motivou"],
+  ];
+  marcas.forEach(([re,msg]) => assert(re.test(body), msg));
+  // frontmatter valido e description que ensina quando NAO usar
+  const md = T.buildSkillMd(sk);
+  assert(/^---\nname: ficha-de-choque\ndescription: /.test(md), "buildSkillMd nao rende frontmatter valido para a skill nova");
+  assert(/NÃO use/.test(sk.description), "a description nao ensina quando NAO usar — skill sem limite dispara onde nao serve");
+  assert((sk.applyStub||[]).length >= 3, "applyStub raso: sem acervo, ordem e destino do ticket, a skill roda generica");
+  // o ponteiro no CEREBRO cita a skill nova, e o corpo nao vaza
+  T.STATE.builder = T.STATE.builder || {};
+  T.STATE.builder.skillsMode = "yes";
+  const cmd = T.buildClaudeMd(narr);
+  delete T.STATE.builder.skillsMode;
+  assert(/ficha-de-choque/.test(cmd), "ponteiro do CEREBRO nao cita a skill ficha-de-choque");
+  assert(!/name: ficha-de-choque/.test(cmd), "corpo da skill vazou pro CEREBRO — deveria ficar so no zip");
+  assert(/Cinco skills/.test(cmd), "a intro do pacote ainda diz 'Quatro skills' — a contagem repetida mente");
+  // gatilho do nicho aponta a skill
+  const trig = (narr.triggersExtra||[]).find(t => /ficha-de-choque/.test(t[1]||""));
+  assert(trig, "tabela de gatilhos do narrative nao manda apresentar em ficha");
+  assert(/extração|contradi/i.test(trig[0]), "o gatilho da ficha nao nomeia o evento (extracao/contradicao)");
+  return "ok (" + (narr.skillsPack.skills||[]).length + " skills no pacote)";
+});
+
 check("C38 higiene universal + o update que sabe subtrair (wo0082): quatro regras nos 18 CEREBROs, gatilho do fecho na tabela, revogacoes e carimbo de modos no pacote", () => {
   const marcas = [
     [/Varra pelo fato, não pela frase/, "sem a regra de varredura por fato (as skills sao a superficie esquecida)"],
