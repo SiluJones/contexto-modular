@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
+const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -498,6 +498,43 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   assert(/\$\{KIT_VERSION\}`;/.test(html), "rodape nao usa KIT_VERSION");
   assert(/function kitStamp/.test(html), "helper kitStamp ausente");
   assert(/Kit de Contexto Universal v\$\{KIT_VERSION\}/.test(html), "downloads nao carimbam a versao");
+  return "ok";
+});
+
+check("C40 vocabulario turno x conversa + o prompt de update alcanca projeto desatualizado + a WO entra no proprio git add (wo0084)", () => {
+  // (1) o que acontece a cada troca chama-se TURNO; o que acontece uma vez por fio chama-se CONVERSA
+  Object.keys(T.NICHES).forEach(id => {
+    const n = T.normNiche(T.NICHES[id]);
+    const instr = T.buildInstr(n), cmd = T.buildClaudeMd(n);
+    [["Instrucoes",instr],["CEREBRO",cmd]].forEach(([onde,txt]) => {
+      assert(/## Ritual de início de turno/.test(txt), id+" ("+onde+"): ritual ainda se chama 'de sessao' — ele roda a CADA turno (D-111), e o nome contradiz a regra");
+      assert(!/Ritual de início de sessão/.test(txt), id+" ("+onde+"): sobrou 'Ritual de início de sessão'");
+      assert(!/lido toda sessão/.test(txt), id+" ("+onde+"): 'lido toda sessão' — contexto e lido em todo turno");
+    });
+    assert(/Ao final da conversa/.test(instr) && /Ao final da conversa/.test(cmd), id+": a entrega de arquivos completos e da CONVERSA, e o titulo nao diz isso");
+    assert(/Início de turno/.test(cmd), id+": tabela de gatilhos sem a linha 'Inicio de turno'");
+    assert(/\*\*Todo turno\*\*, não só ao abrir a conversa/.test(cmd), id+": o gatilho de inicio nao diz que vale todo turno");
+    assert(/Fim da conversa/.test(cmd), id+": tabela de gatilhos ainda diz 'Fim de sessao' ao lado de 'Fim de QUALQUER turno' — os dois eventos ficam indistinguiveis");
+    assert(/Fim de QUALQUER turno/.test(cmd), id+": perdeu o gatilho do bloco de fecho por turno (wo0082)");
+    assert(/fim de turno\)/.test(cmd), id+": a recomendacao de configuracao ainda se declara 'fim de sessao' — ela sai no bloco de fecho, que e por turno");
+  });
+  // (2) o prompt de update — unica superficie garantida a chegar num projeto desatualizado
+  T.STATE.workmode = T.STATE.workmode || {};
+  const prev = T.STATE.workmode.codeMode;
+  T.STATE.workmode.codeMode = "yes";
+  const prompt = T.buildUpdatePrompt(T.normNiche(T.NICHES.narrative));
+  T.STATE.workmode.codeMode = prev;
+  assert(/Linhas revogadas/.test(prompt), "o prompt de update nao manda ler as linhas revogadas — a regra mora no CEREBRO, que e justamente o arquivo velho que o update vem consertar");
+  assert(/[Cc]arimbo de modos/.test(prompt), "o prompt de update nao manda conferir o carimbo de modos");
+  assert(/nao remova sozinho/.test(prompt), "o prompt nao proibe remover sobra de modo por conta propria");
+  assert(/nao fale de revogacao nem de carimbo/.test(prompt), "o prompt nao cobre o caso do projeto cujo CEREBRO e antigo demais para conhecer o mecanismo");
+  const ondeRevog = prompt.indexOf("Linhas revogadas"), ondeArquivos = prompt.indexOf("Arquivos no pacote:");
+  assert(ondeRevog > -1 && ondeArquivos > -1 && ondeRevog < ondeArquivos, "as duas secoes aparecem DEPOIS da lista de arquivos — quem le de cima para baixo ja comecou a comparar antes de saber delas");
+  // (3) a WO entra no proprio git add
+  const wo = T.buildWoTemplate();
+  assert(/git add \[caminhos\] \[o caminho DESTA WO\]/.test(wo), "o modelo de WO nao inclui a propria WO no git add");
+  assert(/A propria WO entra no `git add`/.test(wo), "o modelo de WO nao explica por que ela entra no proprio add");
+  assert(/NAO e erro/.test(wo), "sem a clausula de idempotencia: quem aplica vai reportar o add vazio como problema");
   return "ok";
 });
 

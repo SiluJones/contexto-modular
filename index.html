@@ -712,7 +712,7 @@
           </div>
 
           <div class="group">
-            <div class="glabel">Saídas obrigatórias <span class="gn">· ao fim de cada sessão</span></div>
+            <div class="glabel">Saídas obrigatórias <span class="gn">· ao fim da conversa</span></div>
             <div id="g-outputs"></div>
           </div>
 
@@ -764,7 +764,7 @@
 
       <div id="tpl-list"></div>
       <div class="callout" style="margin-top:24px">
-        <span class="tag ctx" style="display:inline-block">contexto</span> = fica no Projeto (lido toda sessão · pequeno) ·
+        <span class="tag ctx" style="display:inline-block">contexto</span> = fica no Projeto (lido em todo turno · pequeno) ·
         <span class="tag hist" style="display:inline-block">histórico</span> = cresce; logs vão pro Git (lidos sob demanda) ·
         <span class="tag ref" style="display:inline-block">referência</span> = modelo fixo, nunca substituído ·
         <span class="tag opt" style="display:inline-block">opcional</span> = entra conforme a complexidade do projeto.
@@ -1161,13 +1161,13 @@ const HYGIENE_RULES = [
 /* Tabela de gatilhos universal — evento → arquivo a atualizar.
    Cada nicho pode estender com gatilhos próprios. */
 const TRIGGERS_BASE = [
-  ["Início de sessão", "Lê CEREBRO.md → CONTEXT.md → STATUS.md → última entrada do CHANGELOG."],
+  ["Início de turno", "Lê CEREBRO.md → CONTEXT.md → STATUS.md → última entrada do CHANGELOG. **Todo turno**, não só ao abrir a conversa."],
   ["Decisão importante tomada", "Entrega o DECISIONS.md completo e atualizado (nova entrada em formato ADR: contexto, decisão, alternativas, consequências)."],
   ["Bug grave resolvido", "Entrega o DECISIONS.md completo (nova entrada: sintoma, causa raiz, solução, lição)."],
   ["Ideia mencionada (sua ou minha)", "Entrega o IDEAS.md completo com a ideia capturada (na hora, sem pedir)."],
   ["Feedback sobre o kit — dito OU feito (desvio estrutural: diretriz nova neste CEREBRO.md, template alterado/dispensado, arquivo novo criado)", "Registra na hora no IDEAS.md, seção «Feedback para o Kit»: o que foi observado/mudado e por quê. É o material que volta para evoluir o kit — sem o registro, o aprendizado deste projeto se perde."],
   ["Fim de QUALQUER turno de trabalho", "Emite o Bloco de fecho (formato fixo, secao propria). Nao espera fim de conversa: a maior parte do trabalho acontece em turnos que nao fecham nada."],
-  ["Fim de sessão", "Entrega os arquivos completos afetados: STATUS.md + CHANGELOG.md (se fechou algo) + log da sessão."],
+  ["Fim da conversa", "Entrega os arquivos completos afetados: STATUS.md + CHANGELOG.md (se fechou algo) + log do dia."],
 ];
 
 /* Protocolo de atualização dos documentos — como o assistente entrega.
@@ -1258,7 +1258,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.104.0";
+const KIT_VERSION = "1.105.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -7683,7 +7683,7 @@ function escapeHTML(s){
 }
 
 /* Tag visual de um arquivo de contexto, por categoria normalizada.
-   contexto = vive no Projeto (lido toda sessão) · histórico = cresce/Git ·
+   contexto = vive no Projeto (lido em todo turno) · histórico = cresce/Git ·
    referência = modelo fixo · opcional = entra conforme o projeto. */
 function fileTag(f){
   const cat = (f.cat||"").toLowerCase();
@@ -7691,7 +7691,7 @@ function fileTag(f){
   if(cat === "referencia" || /LOG-TEMPLATE/i.test(name)) return `<span class="tag ref">referência</span>`;
   if(cat === "cresce") return `<span class="tag hist">histórico</span>`;
   if(cat === "opcional") return `<span class="tag opt">opcional</span>`;
-  // essencial, rolante e qualquer outro → contexto (fica no Projeto, lido toda sessão)
+  // essencial, rolante e qualquer outro → contexto (fica no Projeto, lido em todo turno)
   return `<span class="tag ctx">contexto</span>`;
 }
 
@@ -8394,7 +8394,7 @@ function buildInstr(niche){
 
   // Ritual de início — load-bearing, precisa estar em todo turno
   lines.push("");
-  lines.push("## Ritual de início de sessão");
+  lines.push("## Ritual de início de turno");
   const coreFiles = (niche.contextFiles||[]).map(f=>f.name);
   const ctxName = ("anchorDoc" in niche)
     ? niche.anchorDoc
@@ -8470,13 +8470,13 @@ function buildInstr(niche){
     lines.push("## Arquivos de contexto (no Projeto)");
     lines.push("- **CEREBRO.md** — comportamento do assistente (este conjunto de regras, em versão completa).");
     _instrFiles.forEach(f => lines.push(`- **${f.name}** — ${f.role}`));
-    lines.push("- Logs detalhados de sessão NÃO ficam no Projeto: vivem em `logs/` no Git e são lidos sob demanda.");
+    lines.push("- Logs detalhados do dia NÃO ficam no Projeto: vivem em `logs/` no Git e são lidos sob demanda.");
   }
 
   const outOn = (niche.outputs||[]).filter(o => STATE.outputs[o.id] !== false);
   if(outOn.length){
     lines.push("");
-    lines.push("## Ao final de cada sessão, entregue arquivos completos");
+    lines.push("## Ao final da conversa, entregue arquivos completos");
     lines.push("Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
     outOn.forEach(o => lines.push(`- ${o.label}`));
     lines.push("- Higiene no CEREBRO.md (resumo: STATUS só o agora; IDEAS nunca perde; uma fonte de verdade por dado).");
@@ -8539,7 +8539,7 @@ function buildClaudeMd(niche){
 
   // Ritual
   L.push("");
-  L.push("## Ritual de início de sessão");
+  L.push("## Ritual de início de turno");
   L.push("");
   const cf = niche.contextFiles || [];
   const order = [];
@@ -8550,7 +8550,7 @@ function buildClaudeMd(niche){
   if(ctxF) order.push(`\`${ctxF.name}\` — entende o projeto (panorama estável)`);
   const stF = cf.find(f=>/STATUS/i.test(f.name));
   if(stF) order.push(`\`${stF.name}\` — descobre o estado atual e o próximo passo`);
-  if(cf.some(f=>/CHANGELOG/i.test(f.name))) order.push("última entrada do `CHANGELOG.md` — vê o que mudou desde a sessão anterior");
+  if(cf.some(f=>/CHANGELOG/i.test(f.name))) order.push("última entrada do `CHANGELOG.md` — vê o que mudou desde a conversa anterior");
   order.forEach((o,i)=>L.push(`${i+1}. Lê ${o}.`));
   L.push(`${order.length+1}. **Não lê por padrão:** IDEAS inteiro, logs antigos, arquivos de arquivo morto. Lê sob demanda quando a tarefa exigir.`);
   L.push(`${order.length+2}. Antes de executar: confirma em uma frase o que entendeu. Se houver ambiguidade real, pergunta antes.`);
@@ -8744,7 +8744,7 @@ function buildClaudeMd(niche){
   const outOn = (niche.outputs||[]).filter(o => STATE.outputs[o.id] !== false);
   if(outOn.length){
     L.push("");
-    L.push("## Ao final de cada sessão, o assistente entrega (como arquivos completos)");
+    L.push("## Ao final da conversa, o assistente entrega (como arquivos completos)");
     L.push("");
     L.push("Cada arquivo abaixo vem INTEIRO e atualizado, pronto para você baixar e substituir o antigo. Aplicá-los é decisão sua:");
     L.push("");
@@ -8786,9 +8786,9 @@ function buildClaudeMd(niche){
   L.push(`Respostas em ${langTxt}, incluindo comentários quando houver código.`);
 
   L.push("");
-  L.push("## Recomendação de configuração (fim de sessão)");
+  L.push("## Recomendação de configuração (fim de turno)");
   L.push("");
-  L.push("No fim de cada sessão, junto do resumo e de qualquer dúvida, avalie o que a **próxima etapa** exige e recomende a configuração de forma **completa e explícita**. Os controles dependem de ONDE se trabalha:");
+  L.push("No fim de cada turno, junto do resumo e de qualquer dúvida, avalie o que a **próxima etapa** exige e recomende a configuração de forma **completa e explícita**. Os controles dependem de ONDE se trabalha:");
   L.push("- **No chat (claude.ai):** **modelo** (recomende pela capacidade — o mais capaz vs. um mais leve —, não pelo nome/versão, que muda), **esforço** (Baixo→Máximo) e **pensamento** (ligado/desligado): três controles independentes.");
   L.push("- **No Claude Code (CLI/desktop):** **modelo** + **nível de esforço** (`/effort` baixo→máximo, ou `xhigh`/`ultracode` onde houver). **Não há toggle de pensamento** no Code — ele é acoplado ao esforço; para um turno difícil pontual, use `ultrathink` no prompt. Nunca recomende \"ligar o pensamento\" no Code.");
   L.push("- **Nunca afirme saber a configuração atual** — ela não é legível de forma confiável. Recomende pela TAREFA e pela config que o usuário declarou.");
@@ -9301,8 +9301,10 @@ function buildWoTemplate(){
     "",
     "## Commit — blocos separados, mensagem SEM acento",
     "",
+    "**A propria WO entra no `git add`.** Ela e o registro do que foi feito; se cada WO versionar so a anterior, a ultima fica sempre nao rastreada — ja aconteceu tres vezes seguidas. Se ela ja estiver versionada, o `add` nao faz nada e isso NAO e erro.",
+    "",
     "```",
-    "git add [caminhos]",
+    "git add [caminhos] [o caminho DESTA WO]",
     "```",
     "",
     "```",
@@ -9675,6 +9677,13 @@ function buildUpdatePrompt(niche){
   L.push("");
   L.push("**Template generico NUNCA substitui arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` que este projeto ja especializou entram por padrao em **(c)**: o generico ensina estrutura, o vivo ja evoluiu. A UNICA excecao e formato descontinuado, que sempre migra — hoje: `.claude/commands/` foi substituido por `.claude/skills/<nome>/SKILL.md` (com front-matter). Se este projeto ainda usa `commands/`, isso e migracao, nao escolha.");
   L.push("");
+  L.push("**Duas coisas que a comparacao de arquivos NAO produz — leia no `_UPDATE-MANIFEST.md` ANTES de comecar:**");
+  L.push("");
+  L.push("1. **Secao «Linhas revogadas».** O merge so enxerga o que e NOVO no template. Algumas linhas foram **apagadas de proposito** pelo kit, e o texto antigo pode continuar vivo aqui, invisivel a comparacao, dirigindo comportamento que ja foi corrigido. Procure cada texto listado — no CEREBRO, nas Instrucoes e nas skills — e me mostre o que achar antes de mexer.");
+  L.push("2. **Carimbo de modos.** O manifesto declara com quais modos este pacote foi gerado. Secao de um modo declarado como `nao` que ainda exista no seu arquivo e sobra de configuracao antiga — **ou** este pacote foi gerado com o modo esquecido. Voce nao tem como distinguir os dois casos: **reporte como choque com a secao citada e nao remova sozinho.**");
+  L.push("");
+  L.push("Isto vale mesmo que o CEREBRO deste projeto nao fale de revogacao nem de carimbo: se ele e antigo, e justamente ele que este pacote vem consertar.");
+  L.push("");
   L.push("Estes arquivos sao **genericos/estruturais** — propositalmente vazios do especifico desta obra; nao estranhe a falta de conteudo. Para cada um:");
   L.push("- **Compare** com o arquivo vivo equivalente do projeto (o destino real esta no manifesto).");
   L.push("- **Reporte-me, sem aplicar nada sozinho:** (a) novidade util que meu projeto ainda nao tem; (b) choque com o que ja existe — apresente lado a lado, eu decido; (c) algo que meu projeto tem e o template nao cobre.");
@@ -9687,7 +9696,7 @@ function buildUpdatePrompt(niche){
     L.push(`- \`${f.flat}\` -> \`${f.real}\` (${f.nature})${role ? " — " + role : ""}`);
   });
   L.push("");
-  L.push("Comece listando o que encontrou em (a), (b) e (c). Eu decido os merges.");
+  L.push("Comece pelas duas secoes do manifesto (linhas revogadas e carimbo de modos), e so entao liste o que encontrou em (a), (b) e (c). Eu decido os merges.");
   return L.join("\n");
 }
 async function downloadUpdatePack(){
