@@ -501,6 +501,62 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C41 o fecho em modo Code registra em vez de listar (wo0085): canal por doc, log do dia com gatilho de evento, regenerar x criar, origem do fato", () => {
+  const S = T.STATE; S.workmode = S.workmode || {};
+  const prevCode = S.workmode.codeMode;
+  // (1) a regra de fecho ramifica por modo — em modo Code, WO cirurgica; sem executor, arquivo inteiro
+  Object.keys(T.NICHES).forEach(id => {
+    const n = T.normNiche(T.NICHES[id]);
+    S.workmode.codeMode = "";
+    const instrN = T.buildInstr(n), cmdN = T.buildClaudeMd(n);
+    S.workmode.codeMode = "yes";
+    const instrC = T.buildInstr(n), cmdC = T.buildClaudeMd(n);
+    if(!/Ao final da conversa/.test(instrN)) return;   // nicho sem saidas ativas nao emite a secao
+    assert(/entregue arquivos completos/.test(instrN), id+" (sem Code): o fecho universal perdeu a entrega de arquivos inteiros — sem executor, regenerar e a unica saida");
+    assert(/REGISTRE o que falta/.test(instrC), id+" (Code): o fecho ainda manda entregar tudo inteiro — com executor no repo, o registro e WO cirurgica");
+    assert(!/nunca blocos soltos para colar à mão/.test(instrC), id+" (Code): sobrou 'nunca blocos soltos' — em modo Code o bloco com ancora E o artefato certo, e chama-se WO");
+    assert(/log do dia SEMPRE/.test(instrC), id+" (Code): o fecho nao nomeia o log do dia — e o unico modo em que ele nao era citado, e o unico em que sumiu em campo");
+    assert(/`\/apply-wo`/.test(instrC), id+" (Code): o fecho nao diz que a WO vai com a linha /apply-wo junto");
+    assert(/lista termina vazia/i.test(instrC), id+" (Code): o criterio de aceite continua sendo o inventario da divida, nao o pagamento dela");
+    assert(/Regenerar ≠ criar/.test(cmdC), id+" (Code): o CEREBRO nao distingue regenerar de criar — foi assim que o log de dia inexistente virou 'nao regenere'");
+    assert(/lista do que ficou por registrar|termina com essa lista \*\*vazia\*\*/.test(cmdC), id+" (Code): o CEREBRO nao exige que a lista do fecho termine vazia");
+    assert(/caixa de mensagem/.test(cmdC), id+" (Code): o CEREBRO nao proibe empurrar bloco para o usuario colar no executor");
+    assert(/vem INTEIRO e atualizado/.test(cmdN), id+" (sem Code): o CEREBRO universal perdeu a entrega inteira");
+    assert(!/Regenerar ≠ criar/.test(cmdN), id+" (sem Code): a regra de canal do modo Code vazou para projeto sem executor");
+  });
+  // (2) o log do dia ganhou gatilho de EVENTO — nao pende so do fim da conversa
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/Evento que MERECE log/.test(cmd), id+": a tabela de gatilhos amarra o log so ao fim da conversa — numa conversa longa o fim nunca chega");
+    assert(/cortar versao/.test(cmd) && /virar o dia/.test(cmd), id+": o gatilho do log nao nomeia eventos que ACONTECEM");
+  });
+  // (3) o prompt de transferencia manda REGISTRAR, e distingue regenerar de criar
+  S.workmode.codeMode = "yes";
+  const pe = T.PROMPTS_BASE.find(p => p.id === "E");
+  const corpoC = pe.body({}, T.normNiche(T.NICHES.dev));
+  S.workmode.codeMode = "";
+  const corpoN = pe.body({}, T.normNiche(T.NICHES.dev));
+  S.workmode.codeMode = prevCode;
+  assert(!/liste o que ainda falta registrar/.test(corpoC), "o prompt de transferencia ainda pede a LISTA do que falta — listar produz bloco colavel, e um fecho bom termina com a lista vazia");
+  assert(/REGISTRE/.test(corpoC), "o prompt de transferencia nao manda registrar");
+  assert(/regenerar é diferente de criar|regenerar e diferente de criar/.test(corpoC), "o prompt nao distingue regenerar de criar — a causa (a) do fecho falho de campo");
+  assert(/log do dia/.test(corpoC), "o prompt de transferencia em modo Code nao nomeia o log do dia (o ramo sem executor sempre nomeou)");
+  assert(/`\/apply-wo`/.test(corpoC), "o prompt nao pede a linha /apply-wo junto da WO");
+  assert(/deve estar vazia/.test(corpoC), "o prompt nao inverte o criterio de aceite");
+  assert(/relatado pelo dono/.test(corpoC), "o prompt nao manda registrar com a origem o fato que so existe no chat");
+  assert(/logs\//.test(corpoN), "o ramo sem executor perdeu a mencao ao log do dia");
+  // (4) origem do fato: relatado x medido, na Medicao delegada
+  Object.keys(T.NICHES).forEach(id => {
+    S.workmode.codeMode = "yes";
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    S.workmode.codeMode = prevCode;
+    assert(/não existe até estar num arquivo/.test(cmd), id+": o CEREBRO nao diz que fato relatado no chat nao existe ate estar em arquivo");
+    assert(/relatado pelo dono/.test(cmd) && /medido por instrumento/.test(cmd), id+": faltam as duas marcas de origem, que e o que a transferencia apaga");
+  });
+  S.workmode.codeMode = prevCode;
+  return "ok";
+});
+
 check("C40 vocabulario turno x conversa + o prompt de update alcanca projeto desatualizado + a WO entra no proprio git add (wo0084)", () => {
   // (1) o que acontece a cada troca chama-se TURNO; o que acontece uma vez por fio chama-se CONVERSA
   Object.keys(T.NICHES).forEach(id => {
