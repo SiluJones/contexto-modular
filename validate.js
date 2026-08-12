@@ -501,6 +501,38 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C46 as revogacoes alcancam o instalado (wo0090): as tres decisoes que MUDARAM comportamento estao na lista, e a varredura e por fato e comeca pelas skills", () => {
+  const rev = T.REVOCATIONS;
+  assert(Array.isArray(rev) && rev.length >= 4, "lista de revogacoes com menos entradas do que as decisoes que apagaram comportamento — o merge so sabe somar, e o que nao esta aqui sobrevive invisivel no projeto instalado");
+  const todas = rev.map(r => (r.texto||"") + " || " + (r.porque||"")).join("\n");
+  // (1) as tres decisoes que apagaram comportamento e nao tinham entrada
+  assert(/MENU NUMERADO/.test(todas), "revogacao da entrega de bloco de git ausente (D-115): projeto instalado continua devolvendo add/commit/push para o dono colar");
+  assert(/ANTES de escrever o relatorio/.test(todas), "a revogacao do bloco de git nao diz o que entra no lugar — revogacao sem substituto vira remocao sem conserto");
+  assert(/turno para o que acontece a cada troca/.test(todas), "revogacao do vocabulario sessao->turno ausente (D-118)");
+  assert(/modo Code/.test(todas), "revogacao do 'nunca blocos soltos' em modo Code ausente (D-119)");
+  // (2) cada entrada declara desde quando e por que — sem isso nao da para varrer pelo fato
+  rev.forEach((r, i) => {
+    assert(/^\d+\.\d+\.\d+$/.test(r.desde||""), "revogacao "+i+" sem versao de origem");
+    assert((r.texto||"").length > 10, "revogacao "+i+" sem o texto antigo para procurar");
+    assert((r.porque||"").length > 60, "revogacao "+i+" com 'porque' curto demais para varrer pelo fato — e a coluna que descreve o COMPORTAMENTO, nao a string");
+  });
+  // (3) o manifesto e o prompt mandam varrer pelo FATO e comecar pelas skills
+  const n = T.normNiche(T.NICHES.dev);
+  T.STATE.workmode = T.STATE.workmode || {};
+  const prev = T.STATE.workmode.codeMode;
+  T.STATE.workmode.codeMode = "yes";
+  const man = T.buildUpdatePack(n).manifest;
+  const prompt = T.buildUpdatePrompt(n);
+  T.STATE.workmode.codeMode = prev;
+  assert(/Varra pelo FATO, nao pela frase/.test(man), "manifesto manda procurar a string revogada, nao o comportamento — projeto refinado escreveu com as proprias palavras e a busca literal nao acha");
+  assert(/Varra pelo FATO, nao pela frase/.test(prompt), "o prompt de update — unica superficie garantida a chegar num projeto desatualizado — nao manda varrer pelo fato");
+  assert(/varra as SKILLS/i.test(man), "manifesto nao prioriza as skills, que sao lidas ANTES de trabalhar");
+  assert(/Varra as \*\*skills\*\* primeiro/.test(prompt), "o prompt nao manda comecar pelas skills");
+  assert(/NUNCA para uma\n?linha revogada|NUNCA para uma linha revogada/.test(man.replace(/\n/g," ")), "manifesto nao abre a excecao: 'nao substituir o vivo' esta protegendo demais e mantendo a linha revogada dentro da skill viva");
+  assert(/linha revogada sai mesmo de arquivo vivo refinado/.test(prompt), "o prompt nao abre a excecao da linha revogada dentro de arquivo vivo");
+  return "ok (" + rev.length + " revogacoes)";
+});
+
 check("C45 correspondencia entre projetos como tipo nomeado (wo0089): contador compartilhado, transitoriedade, espera com gatilho; e instantaneo de dado derivavel", () => {
   Object.keys(T.NICHES).forEach(id => {
     const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));

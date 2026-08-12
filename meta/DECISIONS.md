@@ -1451,3 +1451,25 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Dez provas negativas rodadas:** contador por remetente · contador como valor em vez de regra · carta declarada durável · transitoriedade sem o custo · espera sem gatilho · sem a marca de lado · sem o gatilho de evento · sem a regra do instantâneo · instantâneo sem a saída («escreva a regra») · seção de carta vazia.
 
 `KIT_VERSION 1.109.0`. **Custo de teto ZERO nas sete edições** — nada foi para as Instruções: C28 imprime `padrao 6611/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7497/7600`, idêntico à v1.108.0; folga do `narrative` em **289**. `index.html` de **798.111 → 801.792** bytes. Harness **18/18, 88/88 → 89/89, 0 erros**.
+
+---
+
+## D-124 — As revogações alcançam o instalado: três decisões entram na lista, e a varredura do update passa a ser pelo fato, começando pelas skills (wo0090)
+
+**Base.** Pré-voo dos pacotes de update para Mapsmith e Sand-Land-Map, pedido pelo autor em 2026-08-12 — «se tiver certeza que não temos nada a corrigir antes de eu fazer update nesses dois projetos». A varredura achou um defeito que **bloqueava a entrega**.
+
+**O que foi medido nos arquivos vivos dos dois projetos.** A skill `wrap` do Mapsmith manda *«Mostre o `git diff` e o bloco de commit»*; a do Sand-Land-Map manda *«Entregue o commit em TRÊS blocos separados»*. Os dois `CEREBRO.md` trazem *«a entrega é por ARQUIVO COMPLETO, nunca por blocos soltos»*, *«o assistente fecha a resposta com o bloco de commit pronto para copiar e colar»*, e o vocabulário «Fim de sessão / Ao final de cada sessão». **É exatamente o defeito que o autor sofreu nesta casa em 12/08** — o `/wrap` devolvendo blocos de `git` e o relatório escrito antes do push. A wo0087 consertou aqui; **nos dois projetos ele está vivo.**
+
+**E o pacote de update, como estava, não consertaria.** O prompt diz — corretamente — que *«template genérico NUNCA substitui arquivo vivo refinado»* e põe `.claude/*` e skills em (c). Skill viva é preservada, **e a linha revogada fica dentro dela**. A regra que protege o refinamento estava protegendo o defeito.
+
+**A causa: a lista de revogações estava três decisões atrasada.** `REVOCATIONS` existe justamente porque *o merge sabe somar e não sabe subtrair*, e tinha **uma** entrada (v1.90.0). **D-115, D-118 e D-119 apagaram comportamento e nenhuma foi registrada.** É a forma da D-121 — «consertar o gerador não conserta o instalado» — reaparecendo **dentro do próprio mecanismo que existe para alcançar o instalado**. A lição geral que a D-121 registrou (todo update do gerador tem um passo de auto-aplicação) ganha aqui a metade que faltava: **toda decisão que APAGA comportamento tem um passo de revogação registrada**, senão ela conserta o kit e não conserta ninguém.
+
+**Segundo defeito, e sem ele as entradas novas não morderiam: a tabela mandava procurar a STRING.** «Entregue o commit em TRÊS blocos separados» não tem uma palavra em comum com a frase do kit. Busca literal só acha quem copiou ao pé da letra — **e quanto mais refinado o projeto, menos ele copiou**. A D-116 já resolvera isso para as varreduras internas; faltava aplicar ao update. O manifesto e o prompt passam a mandar **varrer pelo fato**, lendo a coluna «Por que saiu» para caçar o comportamento, e a **começar pelas skills** — a superfície mais esquecida e a mais perigosa, porque é lida ANTES de trabalhar. Fica explícita a exceção: *«não substituir o vivo» protege o conteúdo que o projeto criou, NUNCA uma linha revogada*.
+
+**Cada entrada nova traz o substituto, não só a remoção.** Revogação que diz apenas «isto saiu» produz um arquivo com um buraco; as três dizem o que entra no lugar — daí o `assert` próprio no C46 para a que descreve o caso verde/vermelho.
+
+**Fecha também o pedido nº 1 do Mapsmith** («testar o pacote com `meta/analises/` inexistente»), respondido por inspeção do pacote gerado: o modelo sai com natureza `modelo-em-espera` e o manifesto diz *«se ela não existe aqui, o arquivo não entra e isso NÃO é pendência»*. **Comportamento correto** — era o último dos três pedidos de volta ainda sem evento.
+
+**Check C46 novo**, com **sete provas negativas**: revogação do bloco de git ausente · revogação sem substituto · revogação do vocabulário ausente · revogação do modo Code ausente · manifesto varrendo por string · prompt não priorizando as skills · entrada com «porque» curto demais para permitir a varredura por fato.
+
+`KIT_VERSION 1.110.0`. **Custo de teto ZERO nas seis edições** — quarta leva seguida: C28 imprime `padrao 6611/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7497/7600`, idêntico à v1.109.0; folga do `narrative` em **289**. `index.html` de **801.792 → 805.160** bytes. Harness **18/18, 89/89 → 90/90, 0 erros**.

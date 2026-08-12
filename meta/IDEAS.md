@@ -585,6 +585,17 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-12 — Pré-voo dos pacotes de update: as revogações estavam três decisões atrasadas (D-124, wo0090)
+O autor pediu certeza antes de atualizar os dois projetos. A varredura dos arquivos vivos deles achou o **mesmo defeito que ele sofreu aqui em 12/08** — as duas skills `wrap` ainda entregam os blocos de `git` para o dono colar, e os dois `CEREBRO.md` carregam «blocos soltos», «bloco de commit pronto para copiar» e o vocabulário «sessão». **E o pacote de update, como estava, não consertaria:** a regra «template genérico nunca substitui arquivo vivo refinado» preserva a skill viva com a linha revogada dentro. `REVOCATIONS` tinha uma entrada, de v1.90.0; D-115, D-118 e D-119 nunca foram registradas.
+
+**A lição geral, que completa a D-121:** aquela dizia que todo update do gerador tem um passo de **auto-aplicação**. Esta acrescenta a metade simétrica — **toda decisão que APAGA comportamento tem um passo de revogação registrada**, senão conserta o kit e não conserta ninguém. Vale como pergunta de fecho de qualquer leva: *esta decisão removeu alguma coisa? então ela tem entrada na lista de revogações?*
+
+**E a varredura do update passa a ser pelo fato, não pela string** (D-116 aplicada ao merge), começando pelas skills. O gatilho disso foi concreto: «Entregue o commit em TRÊS blocos separados» não tem uma palavra em comum com a frase do kit, e a busca literal não acharia.
+
+**Fecha o pedido nº 1 do Mapsmith** («testar o pacote com `meta/analises/` inexistente»): o modelo sai como `modelo-em-espera` e o manifesto declara que a ausência da pasta **não é pendência**. Comportamento correto, verificado no pacote gerado. **Os três pedidos de volta do Mapsmith estão respondidos** — o nº 2 (a regra do `/wrap` pegar a contagem repetida na terceira vez) foi confirmado em 12/08, o nº 3 (o que a medição delegada poupou) foi respondido parcialmente com as wo0085–wo0089, e agora o nº 1.
+
+**Nota de método:** o defeito só apareceu porque a varredura foi aos **arquivos vivos dos projetos**, não à lista de feedback deles. Nenhum dos dois tinha reclamado disto — eles não sabiam. **Feedback recebido cobre o que o projeto percebeu; varrer o instalado cobre o que ele não percebeu.**
+
 ### 2026-08-12 — FK-H (correspondência entre projetos) e a generalização de FK-G — ACEITOS E IMPLEMENTADOS (D-123, wo0089)
 O kit já sabia dizer que correspondência **não se versiona**; passou a saber dizer **o que ela é**. Entram as quatro cláusulas de forma (nome com os dois lados · contador `NN` único e compartilhado · uma carta um assunto · a marca de qual lado afirma o quê), a transitoriedade com o custo que a sustenta (três lacunas numa pasta de cartas versionadas, uma delas um estado desatualizado lido como fato), e a metade que a FK-H não pedia: **carta enviada e não respondida é de quem enviou** — vira item com gatilho, porque espera sem prazo trava o projeto sem ninguém perceber.
 

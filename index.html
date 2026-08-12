@@ -1143,6 +1143,15 @@ const REVOCATIONS = [
   { desde: "1.90.0",
     texto: "Sempre que o autor sinalizar upload — mesmo sem nomear o arquivo",
     porque: "A lista de exemplos de sinal ensinava a ESPERAR o sinal. A releitura do mount e por turno, sem gatilho do usuario. Substituida por: reveja o mount a cada turno, sem esperar eu sinalizar." },
+  { desde: "1.104.0",
+    texto: "Mostre o git diff e o bloco de commit (uma linha por comando)",
+    porque: "Diz ao EXECUTOR para entregar bloco de git ao dono — quem tem terminal roda. Vale para qualquer forma de pedir o commit «pronto para copiar» numa skill de fecho ou de aplicacao. Substituida por: caso VERDE, o executor roda add/commit/push sem perguntar; caso VERMELHO, nao commita e fecha com MENU NUMERADO; e o push se resolve ANTES de escrever o relatorio, que e o ultimo passo." },
+  { desde: "1.106.0",
+    texto: "Ritual de início de sessão",
+    porque: "O ritual roda a CADA turno, nao uma vez por fio. O nome antigo contradizia a propria regra e ensinava a rodar so ao abrir. Vale para todo par «sessao/turno» no texto vivo — «ao final de cada sessao», «fim de sessao», «lido toda sessao». Substituida por: turno para o que acontece a cada troca, conversa para o que acontece uma vez por fio." },
+  { desde: "1.106.0",
+    texto: "nunca blocos soltos para colar à mão",
+    porque: "Escrita para projeto SEM executor, onde regenerar e a unica saida. Num projeto COM executor no repositorio ela se inverte: o bloco cirurgico com ancora E o artefato certo, e chama-se ordem de trabalho. Substituida, no modo Code, por: registre AQUI o que falta — doc grande por WO com a linha de aplicacao, arquivo novo ou pequeno inteiro, e o log do dia sempre." },
 ];
 
 /* Regras de higiene anti-inchaço — entram nas instruções e no CLAUDE.md */
@@ -1268,7 +1277,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.109.0";
+const KIT_VERSION = "1.110.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9694,6 +9703,19 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
     L.push("um arquivo vivo pode ainda te-las, e nenhuma comparacao vai apontar isso. Procure cada uma no seu");
     L.push("arquivo e, se achar, **remova**; se o seu projeto tiver motivo para manter, registre o desvio.");
     L.push("");
+    L.push("**Varra pelo FATO, nao pela frase.** O texto da tabela e como o KIT dizia — o seu arquivo pode dizer");
+    L.push("a mesma coisa com outras palavras, e foi voce quem escreveu essas palavras. Leia a coluna «Por que");
+    L.push("saiu», entenda o COMPORTAMENTO revogado, e procure por ele: o termo literal, a parafrase, a tabela");
+    L.push("de gatilhos, e o texto que manda fazer aquilo sem nomear. Busca por string so acha quem copiou o kit");
+    L.push("ao pe da letra — e quanto mais refinado o seu projeto, menos ele copiou.");
+    L.push("");
+    L.push("**E varra as SKILLS, `.claude/` e o CEREBRO — nesta ordem de prioridade.** Skill e a superficie mais");
+    L.push("esquecida e a mais perigosa: ela e lida ANTES de trabalhar, entao uma linha revogada ali dirige o");
+    L.push("trabalho seguinte em vez de so informar mal. E e justamente onde a regra «template generico nao");
+    L.push("substitui arquivo vivo refinado» protege demais: sua skill viva fica intacta, com a linha revogada");
+    L.push("dentro. **A regra de nao substituir vale para o conteudo especifico do seu projeto, NUNCA para uma");
+    L.push("linha revogada** — essa sai, e o resto da sua skill fica.");
+    L.push("");
     L.push("| Apagada desde | Texto a procurar | Por que saiu |");
     L.push("|---|---|---|");
     REVOCATIONS.forEach(r => {
@@ -9768,9 +9790,11 @@ function buildUpdatePrompt(niche){
   L.push("");
   L.push("**Template generico NUNCA substitui arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` que este projeto ja especializou entram por padrao em **(c)**: o generico ensina estrutura, o vivo ja evoluiu. A UNICA excecao e formato descontinuado, que sempre migra — hoje: `.claude/commands/` foi substituido por `.claude/skills/<nome>/SKILL.md` (com front-matter). Se este projeto ainda usa `commands/`, isso e migracao, nao escolha.");
   L.push("");
+  L.push("**A excecao que a regra acima NAO cobre: linha revogada sai mesmo de arquivo vivo refinado.** «Nao substituir o vivo» protege o conteudo que este projeto criou — nao protege uma linha que o kit apagou por estar errada. Varra as **skills** primeiro (`.claude/skills/*`): sao lidas ANTES de trabalhar, entao linha revogada ali dirige o trabalho seguinte em vez de so informar mal, e sao exatamente o lugar onde a regra de nao substituir protege demais.");
+  L.push("");
   L.push("**Duas coisas que a comparacao de arquivos NAO produz — leia no `_UPDATE-MANIFEST.md` ANTES de comecar:**");
   L.push("");
-  L.push("1. **Secao «Linhas revogadas».** O merge so enxerga o que e NOVO no template. Algumas linhas foram **apagadas de proposito** pelo kit, e o texto antigo pode continuar vivo aqui, invisivel a comparacao, dirigindo comportamento que ja foi corrigido. Procure cada texto listado — no CEREBRO, nas Instrucoes e nas skills — e me mostre o que achar antes de mexer.");
+  L.push("1. **Secao «Linhas revogadas».** O merge so enxerga o que e NOVO no template. Algumas linhas foram **apagadas de proposito** pelo kit, e o texto antigo pode continuar vivo aqui, invisivel a comparacao, dirigindo comportamento que ja foi corrigido. Procure cada uma — no CEREBRO, nas Instrucoes e nas skills — e me mostre o que achar antes de mexer. **Varra pelo FATO, nao pela frase:** o texto da tabela e como o KIT dizia; este projeto pode dizer a mesma coisa com outras palavras. Leia a coluna «Por que saiu» e cace o COMPORTAMENTO — busca por string so acha quem copiou o kit ao pe da letra.");
   L.push("2. **Carimbo de modos.** O manifesto declara com quais modos este pacote foi gerado. Secao de um modo declarado como `nao` que ainda exista no seu arquivo e sobra de configuracao antiga — **ou** este pacote foi gerado com o modo esquecido. Voce nao tem como distinguir os dois casos: **reporte como choque com a secao citada e nao remova sozinho.**");
   L.push("");
   L.push("Isto vale mesmo que o CEREBRO deste projeto nao fale de revogacao nem de carimbo: se ele e antigo, e justamente ele que este pacote vem consertar.");
