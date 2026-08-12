@@ -1159,6 +1159,7 @@ const HYGIENE_RULES = [
   "**Documento derivado nunca é fonte.** Handoff, brief, resumo, reconstrução, checklist, relatório — inclusive os que você mesmo escreveu — são saída de assistente, não cânone. Eles congelam quando nascem enquanto o repo anda, e o modo de falha é sempre o mesmo: o derivado é lido como fato por um turno inteiro antes de alguém conferir. Duas defesas: **a derivação aparece no nome do arquivo** (prefixo/sufixo que se lê de relance), e **antes de usar um dado dele, confira no arquivo vivo**. Divergência entre derivado e fonte: a fonte vence, e o derivado é reescrito lendo a fonte, nunca ajustado de memória.",
   "**Cite a frase-gatilho antes de perguntar.** Quando a dúvida nasce de algo que o usuário escreveu — uma nota, um pedido, uma linha de arquivo —, a frase inteira entra citada ANTES da pergunta. Referência cruzada nua (`arquivo:linha`, «ver DEC-0XX») pode acompanhar o texto literal, nunca substituí-lo: quem escreveu não decora o que escreveu. E nunca pergunte usando um rótulo que você inventou para o assunto — o usuário não reconhece o nome que você deu à dúvida dele.",
   "**Mudança de método não se adota no meio do trabalho.** Refinar o conteúdo é dever contínuo; mudar COMO o trabalho é feito — ordem, sequência, formato do ciclo, o que entra em cada leva — é troca de trilho, e troca de trilho para e vira análise, com o dono decidindo. O modo de falha é específico e já custou caro: um único dado ruim numa etapa vira proposta de reprojeto, a proposta é aceita no impulso, e o custo só aparece na etapa seguinte. Propor continua permitido e é esperado; o que não é permitido é otimizar o processo em vez de executá-lo.",
+  "**Quem abre, fecha — e o que não fechar, declara.** Toda tarefa cria coisas **fora** do repositório: processo, porta, servidor de desenvolvimento, arquivo temporário, download de teste. Elas são de quem as criou, e a tarefa termina com a máquina como a encontrou. O que não puder ser fechado entra no relatório **com o caminho**, não como nota vaga — é exatamente o que ninguém lembra de limpar, e o custo aparece longe: servidor esquecido entre sessões chega a travar a pasta e impedir o teste seguinte; arquivo de teste largado numa pasta pessoal vira pergunta («isto aqui é seu?») numa conversa que já tinha fechado. E vale o par: **entrega bloco para outro rodar quem NÃO pode rodá-lo.** Quem tem o terminal executa e relata; devolver bloco para o dono colar, tendo como rodar, é trocar de raia.",
   "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre. **Exemplo já visto e legítimo:** projeto cujo roadmap e registro de decisões referenciam ideias por **ID estável** organiza o IDEAS por status + ID, não pela divisão por autor do template — adotar o template ali seria regressão, e o desvio é o certo."
 ];
 
@@ -1173,6 +1174,8 @@ const TRIGGERS_BASE = [
   ["Fim de QUALQUER turno de trabalho", "Emite o Bloco de fecho (formato fixo, secao propria). Nao espera fim de conversa: a maior parte do trabalho acontece em turnos que nao fecham nada."],
   ["Fim da conversa", "Entrega os arquivos completos afetados: STATUS.md + CHANGELOG.md (se fechou algo) + log do dia."],
   ["Evento que MERECE log: cortar versao, registrar uma decisao ou um bug grave, virar o dia de trabalho", "Escreve `logs/AAAA-MM-DD.md` na hora. O log nao espera o fim da conversa — numa conversa longa o fim nunca chega, e e assim que dias inteiros ficam sem registro."],
+  ["Precisa de um numero sobre material grande demais para a conversa", "Manda MEDIR (sonda) em vez de deduzir ou pedir upload. Se ninguem sabe ainda qual e a pergunta, manda EXPLORAR primeiro: exploracao produz hipotese, sonda produz evidencia."],
+  ["A tarefa criou algo FORA do repositorio (processo, porta, servidor de dev, arquivo temporario, download)", "Quem abriu, fecha — a tarefa termina com a maquina como a encontrou. O que nao puder ser fechado e DECLARADO no relatorio, com o caminho: e o que ninguem lembra de limpar."],
 ];
 
 /* Protocolo de atualização dos documentos — como o assistente entrega.
@@ -1263,7 +1266,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.107.1";
+const KIT_VERSION = "1.108.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8520,7 +8523,7 @@ function shortDef(def){
 function analiseFunil(niche){
   const temSpec = (niche.contextFiles||[]).some(f => /^SPEC\.md$/i.test(f.name||""));
   let s = codeModeOn()
-    ? "- **Funil:** análise → **WO** (`meta/workorders/`, nome `AAMMDD-woNNNN-desc.md`) → `DECISIONS.md`."
+    ? "- **Funil:** exploração/sonda (medem, não decidem) → análise → **WO** (`meta/workorders/`, nome `AAMMDD-woNNNN-desc.md`) → `DECISIONS.md`."
     : "- **Funil:** análise → decisão registrada no `DECISIONS.md` → trabalho.";
   if(temSpec) s += " Quando o trabalho é de produto, a análise vira **spec de feature** (`specs/AAMMDD-<nome>.md`, uma por feature) — a spec diz **o que** construir e quando está pronto" + (codeModeOn() ? "; a WO diz **como aplicar**" : "") + ". Mesma regra: a pasta `specs/` só nasce quando a primeira spec for escrita.";
   return s;
@@ -8703,6 +8706,7 @@ function buildClaudeMd(niche){
   L.push("- **Especialize o que se aplica.** Troque o exemplo genérico pelo caso real deste projeto: instrução concreta economiza mais token do que instrução curta e vaga.");
   L.push("- **Não confunda encurtar com esquecer.** Regra que já evitou um erro real (está no DECISIONS) NÃO sai. Se algo sai, some ao CEREBRO — o CEREBRO é lido sob demanda, as Instruções em toda mensagem: mover é barato, apagar é caro.");
   L.push("- **Não inche.** Antes de acrescentar uma regra, pergunte se ela cabe no CEREBRO. Só vai para as Instruções o que precisa ser lembrado em TODO turno.");
+  L.push("- **Princípio sem gatilho não dispara — e o remédio é oportunista, não uma auditoria.** Virtude é escrita no infinitivo («analisa antes de aceitar», «explica trade-offs») e não tem hora; gatilho é escrito com o **evento na frente** («quando o dono impõe uma restrição para evitar perda, proponha a forma mais barata de obter a mesma proteção») e dispara sozinho. Percorrer todos os princípios inventando gatilhos gera tabela longa que ninguém lê. **A política é outra: toda vez que um princípio falhar em campo, aquele princípio ganha o gatilho — com o evento real que o teria disparado, colhido do caso.** O caso é o que torna o gatilho específico; sem ele, você escreve outra virtude e acha que escreveu um gatilho.");
   L.push("");
   L.push("## Medição delegada (quem tem o disco mede, quem tem o contexto decide)");
   L.push("");
@@ -8714,6 +8718,27 @@ function buildClaudeMd(niche){
   L.push("- **Dados fora da raiz exigem permissão.** Se o material a medir vive ao lado do repositório e não dentro dele, o executor precisa de `permissions.additionalDirectories` no `.claude/settings.json` — a mesma chave que libera gravar o relatório na pasta-pai, agora para ler.");
   L.push("- **Onde o número pousa.** No relatório da execução, sempre. Se ele mudar uma decisão, também no registro de decisões; se ele revelar um risco, nas armadilhas da ordem de trabalho. Número medido e não registrado volta a ser deduzido no turno seguinte.");
   L.push("- **Fato que o usuário relata no chat não existe até estar num arquivo — e a origem vai junto.** `[relatado pelo dono]` e `[medido por instrumento]` têm forças diferentes, e a diferença é o que permite decidir se vale remedir. Apagar essa marca é pior que não registrar: cria um fato de primeira classe a partir de uma lembrança. É a metade simétrica da regra acima — a de cima protege o número que a execução mediu, esta protege o que o usuário contou, e as duas se perdem no mesmo lugar: a transferência entre conversas, onde só sobrevive o que está escrito.");
+  L.push("");
+  L.push("## Sonda e exploração — o par que produz evidência");
+  L.push("");
+  L.push("A medição delegada acima responde a pergunta que alguém já soube fazer. Quando o material é grande demais para caber numa conversa, ou quando ninguém sabe ainda qual é a pergunta, ela não basta — e o que falta são **dois** artefatos, não um:");
+  L.push("");
+  L.push("- **Sonda** — script **determinístico** que a raia de planejamento escreve, a de execução roda sobre os dados, e que devolve um relatório pequeno. Responde perguntas que alguém já sabia fazer. **Produz evidência.** É reexecutável: rodar duas vezes (antes/depois de uma mudança) e comparar os dois relatórios é o que prova que a mudança fez o que prometia.");
+  L.push("- **Exploração** — passada de leitura **sem hipótese prévia**, feita pela raia de execução, que devolve **candidatos a checagem**. Descobre as perguntas que ninguém fez. **Produz hipótese.**");
+  L.push("");
+  L.push("**Funil:** `exploração` (levanta a pergunta) → `sonda` (mede) → `análise` (raciocina) → ordem de trabalho (muda). **Nenhuma das duas é ordem de trabalho:** não têm âncora, não têm commit, não mudam o repositório. O relatório é a única saída.");
+  L.push("");
+  L.push("**Três propriedades do relatório — as três juntas, ou o relatório vira lixo:**");
+  L.push("1. **Tabela e contagens, nunca prosa.** Número solto é contestável; número ao lado do comando que o produziu, não.");
+  L.push("2. **O que NÃO foi olhado é declarado.** Sem isso, ausência vira zero na leitura seguinte — e zero é um fato, ausência não. Seção que não pôde ser medida sai marcada como não conferida, **nunca omitida**.");
+  L.push("3. **Nada truncado em silêncio.** Lista cortada mostra o TOTAL. Inventário paginado é inventário errado, e o item que ficou de fora é o que ninguém vai procurar depois.");
+  L.push("");
+  L.push("**Nenhuma das duas dá veredito, e a razão é a que importa: teste de conformidade não detecta que a especificação está errada.** A sonda relata o fato e **não nomeia a causa** — ausências de origens diferentes produzem o mesmo sintoma. Decidir é da raia de planejamento, com o dono.");
+  L.push("- **Existência não é aptidão.** «Está no disco?» e «o que está no disco presta?» são perguntas diferentes, e instrumento que só sabe contar responde sempre a primeira. Caso real: um relatório verde em tudo — arquivos existem, extensão certa, índice bate — sobre imagens destruídas por dentro, porque **nenhum instrumento abriu uma imagem**. Ao escrever uma sonda, pergunte o que ela NÃO abre.");
+  L.push("- **A exploração não parte da lista de checagens da sonda.** Se ela só olhar onde a sonda já olha, ela só acha o que a sonda já acharia. É a mesma regra do inventário — a lista sai do artefato, não de quem já a escreveu — vista uma camada acima.");
+  L.push("- **Todo achado vem com o comando que o reproduz.** Achado sem forma de reproduzir não entra: vai para «observações descartadas», com o motivo. Número contado de cabeça não vale.");
+  L.push("");
+  L.push("**Onde mora.** Script e relatórios ficam **fora** do que sobe ao Projeto (workspace ao lado do repositório, ou pasta ignorada) — são grandes e reexecutáveis. Nome com **carimbo de tempo primeiro** e o tipo depois (`AAMMDD-HHMM-EXPLORACAO.md`, `AAMMDD-HHMM-CONFERENCIA.md`), para a pasta se ordenar sozinha. O que sobe ao registro é o que foi **extraído** deles: um número no `DECISIONS`, um candidato no `IDEAS`. O relatório é insumo, não memória.");
   L.push("");
   L.push("## Bloco de fecho de turno (formato fixo)");
   L.push("Todo turno de trabalho fecha assim, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem antes de um divisor; o resto vem depois dele:");
@@ -9324,6 +9349,9 @@ function buildWoTemplate(){
     "- [ ] [Conferencia de forma especifica desta WO — ex.: \"a entrada nova ficou dentro da secao certa\".]",
     "- [ ] **Se a WO declarou um inventario** (\"onze lugares\"), refaca a contagem no repo. Numero diferente:",
     "      **PARE e reporte antes de editar** — a divergencia e o achado, nao um detalhe a acomodar.",
+    "- [ ] **O que esta tarefa criou FORA do repositorio ja foi fechado?** Processo, porta, servidor de",
+    "      desenvolvimento, arquivo temporario, download de teste. O que nao deu para fechar entra no",
+    "      relatorio **com o caminho** — nao como nota vaga.",
     "- [ ] **WO de codigo:** o comando de validacao do projeto passa com **0 erros**. Se acusar erro,",
     "      **PARE e reporte antes de commitar**.",
     "- [ ] **WO so de doc:** nao precisa de build — a rede e o `git diff`.",

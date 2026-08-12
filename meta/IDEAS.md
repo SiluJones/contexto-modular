@@ -585,6 +585,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-12 — FK-F/FK-I (sonda), FK-L(a) (quem abre, fecha) e feedback (7) do Mapsmith (gatilho) — ACEITOS E IMPLEMENTADOS (D-122, wo0088)
+**A sonda entrou como PAR, e essa é a correção mais importante da leva.** A sugestão original descrevia só a metade determinística; estudando os artefatos reais dos dois projetos ficou claro que existem dois artefatos com propósitos opostos — *exploração produz hipótese, sonda produz evidência* —, e que fundi-los destrói a propriedade que justifica a segunda (a exploração que parte da lista de checagens da sonda só acha o que a sonda já acharia). **A lição de maior valor do pacote inteiro veio do `scan-games.mjs` do sand-land:** «a pergunta que faltava não era “está no disco?”, era “o que está no disco presta?”» — existência não é aptidão, e instrumento que só conta responde sempre à primeira. Check **C44**, nove provas negativas, custo de teto zero.
+
+**Fecha o FK-L do sand-land por inteiro** — a metade (b) («entrega blocos quem não pode executá-los») já tinha sido fechada pela wo0087/D-121; a metade (a) («quem abre, fecha») entra agora como regra de higiene, gatilho de evento e item do checklist da WO, com as duas ocorrências medidas: o servidor de desenvolvimento que travou a pasta lá, e o `.zip` de teste largado na pasta pessoal do autor aqui.
+
+**Do feedback (7) do Mapsmith, a política e não a auditoria.** «Princípio sem gatilho não dispara» está certo, mas percorrer os 13 princípios inventando gatilhos gera tabela longa que ninguém lê. Fica registrado o método oportunista: princípio que falha em campo ganha o gatilho, com o evento real colhido do caso. É o que a D-120 já tinha feito uma vez sem dar nome.
+
+**Ainda aberto do inventário, por decisão de sequência:** **B2** (correspondência entre projetos — nome, contador `NN` compartilhado e regra de descarte; sand-land FK-H) e **B3** (`meta/refs/` — o autor esclareceu em 2026-08-12 que é pasta de «arquivos sem lugar», irmã de `meta/docs/` no sand-land, e que a organização é questão dos próprios projetos). Os dois entram na leva seguinte, antes dos pacotes de update.
+
 ### 2026-08-12 — FK-L(b) do Sand-Land-Map, «entrega blocos quem não pode executá-los» — ACEITO E IMPLEMENTADO em casa primeiro (D-121, wo0087)
 O sand-land escreveu em 2026-08-09: *«o chat entrega porque não tem disco; o executor roda, e só pergunta uma vez, quando tudo está verde»*. Em 2026-08-12 o `/wrap` do **próprio KCM** fez exatamente o contrário, e o autor apontou. **A skill que o kit publica já estava certa desde a D-115 — quem estava errado era o arquivo instalado dentro do KCM**, três versões atrás do gerado. Corrigido, e com um check novo (**C43**) que abre os arquivos de `.claude/` do repositório e os confere contra `buildCodeKitFiles()`: é o primeiro check do harness a olhar o que o KCM **usa** em vez do que ele **emite**.
 

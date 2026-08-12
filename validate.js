@@ -501,6 +501,52 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C44 sonda e exploracao como par (wo0088): tres propriedades, sem veredito, existencia nao e aptidao; quem abre fecha; gatilho oportunista", () => {
+  const wo = T.buildWoTemplate();
+  const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+  Object.keys(T.NICHES).forEach(id => {
+    const n = T.normNiche(T.NICHES[id]);
+    const cmd = T.buildClaudeMd(n);
+    // (1) o par existe e esta separado: uma produz hipotese, a outra evidencia
+    assert(/## Sonda e exploração/.test(cmd), id+": CEREBRO sem a secao da sonda");
+    assert(/Produz evidência/.test(cmd) && /Produz hipótese/.test(cmd), id+": sonda e exploracao nao estao separadas pelo que cada uma produz — sem isso viram sinonimos e a exploracao vira sonda mal feita");
+    assert(/determinístico/.test(cmd), id+": a sonda nao e declarada deterministica — o que a torna reexecutavel e comparavel antes/depois");
+    // (2) as tres propriedades do relatorio, as tres
+    assert(/Tabela e contagens, nunca prosa/.test(cmd), id+": falta a propriedade 1 do relatorio");
+    assert(/ausência vira zero|não foi olhado é declarado/i.test(cmd), id+": falta a propriedade 2 — sem ela, o que nao foi medido vira zero na leitura seguinte");
+    assert(/Nada truncado em silêncio/.test(cmd), id+": falta a propriedade 3 (truncamento)");
+    // (3) a proibicao de veredito COM a razao, que e o que a torna aplicavel
+    assert(/teste de conformidade não detecta que a especificação está errada/i.test(cmd), id+": a proibicao de veredito veio sem a razao — regra sem razao nao sobrevive a primeira pressa");
+    assert(/não nomeia a causa/.test(cmd), id+": a sonda ainda pode nomear a causa do que mediu");
+    // (4) existencia nao e aptidao — a licao do relatorio verde sobre arquivos destruidos
+    assert(/Existência não é aptidão/.test(cmd), id+": falta a distincao entre existir e prestar");
+    assert(/nenhum instrumento abriu uma imagem/.test(cmd), id+": a licao veio sem o caso que a produziu");
+    // (5) a exploracao nao herda o recorte da sonda (a regra do inventario uma camada acima)
+    assert(/não parte da lista de checagens da sonda/.test(cmd), id+": a exploracao pode herdar o recorte da sonda e so achar o que ela ja acharia");
+    assert(/comando que o reproduz/.test(cmd), id+": achado sem forma de reproduzir ainda entra no relatorio");
+    // (6) o funil ganhou o degrau que MEDE, antes do que raciocina
+    S.workmode.codeMode = "yes";
+    const cmdC = T.buildClaudeMd(n);
+    S.workmode.codeMode = prev;
+    assert(/exploração\/sonda \(medem, não decidem\)/.test(cmdC), id+" (Code): o funil nao traz o degrau que mede antes de raciocinar");
+    // (7) gatilhos de evento novos
+    assert(/Manda MEDIR \(sonda\)/.test(cmd), id+": tabela de gatilhos sem o gatilho da medicao/sonda");
+    assert(/Quem abriu, fecha/.test(cmd), id+": tabela de gatilhos sem o gatilho de limpar o que ficou fora do repo");
+    // (8) higiene: quem abre fecha + entrega bloco quem nao pode rodar
+    assert(/\*\*Quem abre, fecha — e o que não fechar, declara\.\*\*/.test(cmd), id+": higiene sem a regra de fechar o que a tarefa abriu");
+    assert(/entrega bloco para outro rodar quem NÃO pode rodá-lo/i.test(cmd), id+": falta o par — quem tem terminal executa, nao devolve bloco (FK-L do sand-land)");
+    // (9) politica do gatilho oportunista, com a recusa explicita da auditoria
+    assert(/Princípio sem gatilho não dispara/.test(cmd), id+": falta a politica de gatilho");
+    assert(/oportunista, não uma auditoria/.test(cmd), id+": a politica nao recusa a auditoria de todos os principios — sem isso ela vira tabela longa que ninguem le");
+    assert(/evento na frente/.test(cmd), id+": a politica nao diz COMO se escreve um gatilho (evento na frente), so que ele falta");
+  });
+  // (10) o modelo de WO cobra o que ficou aberto fora do repositorio
+  assert(/criou FORA do repositorio/.test(wo), "modelo de WO nao cobra o que a tarefa deixou aberto fora do repo");
+  assert(/com o caminho/.test(wo), "o modelo aceita nota vaga em vez do caminho do que nao foi fechado");
+  S.workmode.codeMode = prev;
+  return "ok";
+});
+
 /* C43 (wo0087) — O KCM e usuario do proprio kit. Este e o UNICO check que abre arquivo
    de `.claude/` DO REPOSITORIO: todos os outros testam o que o kit EMITE, e foi por isso
    que as skills instaladas ficaram tres versoes atras do gerado sem ninguem notar. */
@@ -1195,7 +1241,8 @@ check("C21 analise antes do compromisso (wo0063): secao no CEREBRO dos 18, gatil
   T.STATE.workmode = T.STATE.workmode || {}; const prev=T.STATE.workmode.codeMode;
   T.STATE.workmode.codeMode = "yes";
   const cmdCode=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
-  assert(/\*\*Funil:\*\* análise → \*\*WO\*\*/.test(cmdCode), "modo Code: funil nao aponta para a WO");
+  assert(/\*\*Funil:\*\*[^\n]*análise → \*\*WO\*\*/.test(cmdCode), "modo Code: funil nao aponta para a WO");
+  assert(/exploração\/sonda[^\n]*análise → \*\*WO\*\*/.test(cmdCode), "modo Code: o funil perdeu o degrau que MEDE antes de raciocinar (wo0088)");
   T.STATE.workmode.codeMode = prev;
   // .flatdropignore gerado: conteudo da pasta (/*), nunca a pasta inteira — senao o "!" nao reinclui
   assert(/meta\/workorders\/\*/.test(raw), "flatdropignore gerado nao usa meta/workorders/* (o ! nao reincluiria)");
