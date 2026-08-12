@@ -1,6 +1,6 @@
 # ANÁLISE — O que sobrou do feedback dos dois projetos depois das duas levas
 
-**Status:** `Parcialmente decidida` — §A decidida e implementada (wo0087/D-121); §B: B1/B4/B5 decididas e implementadas (wo0088/D-122), B2/B3 aguardando o autor; §C: pedidos 2 e 3 respondidos por evento nesta sessão, pedido 1 sem evento ainda
+**Status:** `Parcialmente decidida` — §A decidida e implementada (wo0087/D-121); §B fecha por inteiro: B1/B4/B5 decididas e implementadas (wo0088/D-122), B2 decidida e implementada (wo0089/D-123), B3 sai do escopo do kit (questão de organização de cada projeto, não do kit); §C: pedidos 2 e 3 respondidos por evento nesta sessão, pedido 1 sem evento ainda
 **Data:** 2026-08-12 · **Versão do kit na época:** v1.107.0 (commit `3677718`)
 **Origem:** varredura completa de `IDEAS.md` §«Feedback para o Kit» dos dois projetos (Mapsmith, 14.426 caracteres; Sand-Land-Map, seção inteira), mais `FEEDBACK-kit-09-lista-de-conferencias.md`, `260804-1444.txt` e os três transcritos `mapsmith_8/9/10.md`.
 **Elos:** D-112, D-113, D-114, D-115, D-116, D-119, D-120
@@ -73,15 +73,15 @@ O que ficou de fora, e que o sand-land especificou em detalhe:
 
 **Lastro:** o Mapsmith tem uma skill `/sondar` própria e cinco relatórios de sonda no repositório; o sand-land tem duas execuções reais e as duas primeiras lacunas do método já corrigidas. **É o item com mais evidência acumulada e menos absorção.**
 
-### B2 — Correspondência entre projetos como tipo nomeado *(sand-land FK-H)*
+### B2 — Correspondência entre projetos como tipo nomeado *(sand-land FK-H)* — **implementada (wo0089/D-123)**
 
 Quando dois projetos com kits separados negociam um contrato de dados, o que trocam não é spec, não é WO, não é análise e não é nota. A convenção que funcionou: `AAMMDD-<quem>-para-<quem>-NN-<assunto>.md`, com **contador `NN` único e compartilhado pelos dois lados** — não um por remetente, senão as séries divergem e ninguém sabe o que responde o quê. E são **transitórios**: entram como upload solto e nunca em `meta/`.
 
 **Estado no kit: parcialmente coberto, e a parte que falta é a que custou caro.** A higiene já diz que mensagem entre projetos é nota e não deve virar pasta versionada (C34). **Não diz o nome, nem o contador compartilhado, nem a regra de descarte.** O custo relatado — correspondência versionada acumulando e virando segunda fonte de verdade, com a wo0021 achando três lacunas ao auditá-la — vem justamente da falta da regra de descarte, não da falta do nome.
 
-### B3 — Um lugar para «contrato com outro projeto» e «política do projeto» *(Mapsmith, template-update v1.94.0, lacuna 1)*
+### B3 — Um lugar para «contrato com outro projeto» e «política do projeto» *(Mapsmith, template-update v1.94.0, lacuna 1)* — **fora do escopo do kit**
 
-O Mapsmith resolveu com `meta/refs/`, que o kit não prevê — verificado: `meta/refs` não aparece no fonte. **É irmão do B2 e provavelmente se resolve junto:** o durável da correspondência precisa pousar em algum lugar, e `refs/` é o candidato que já foi testado em campo.
+O Mapsmith resolveu com `meta/refs/`, que o kit não prevê — verificado: `meta/refs` não aparece no fonte. **Decidido pelo autor (wo0089):** ao contrário do que esta análise supunha, B3 não se resolve junto com o B2 — é questão de organização de cada projeto (`meta/refs/` é pasta de «arquivos sem lugar», irmã de `meta/docs/` no sand-land), não falta do kit. Vira sugestão aos dois projetos, fora de WO.
 
 ### B4 — Quem abre, fecha *(sand-land FK-L, metade (a))* — **implementada (wo0088/D-122)**
 
