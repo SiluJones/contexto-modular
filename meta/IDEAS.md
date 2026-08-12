@@ -585,6 +585,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-12 — FK-H (correspondência entre projetos) e a generalização de FK-G — ACEITOS E IMPLEMENTADOS (D-123, wo0089)
+O kit já sabia dizer que correspondência **não se versiona**; passou a saber dizer **o que ela é**. Entram as quatro cláusulas de forma (nome com os dois lados · contador `NN` único e compartilhado · uma carta um assunto · a marca de qual lado afirma o quê), a transitoriedade com o custo que a sustenta (três lacunas numa pasta de cartas versionadas, uma delas um estado desatualizado lido como fato), e a metade que a FK-H não pedia: **carta enviada e não respondida é de quem enviou** — vira item com gatilho, porque espera sem prazo trava o projeto sem ninguém perceber.
+
+**A generalização da FK-G entrou na mesma WO de propósito:** «não congele em documento estável o que um artefato vivo já responde» é o antídoto do contador `NN` que esta WO institui — separá-las instalaria o problema junto com a solução.
+
+**Nota de método, e é a mais útil desta leva:** a primeira versão do C45 afirmava as cláusulas contra o CEREBRO inteiro e **ficou verde com a cláusula do contador removida**, porque a frase também vivia na regra de higiene irmã. As provas negativas pegaram, e o check passou a recortar a seção antes de afirmar. **Primeiro caso registrado de prova negativa consertando o instrumento em vez do código** — vale como argumento sempre que alguém achar que dez provas por check é exagero.
+
+**Fecha o inventário de feedback dos dois projetos.** Restam **B3** (`meta/refs/` — o autor esclareceu que é pasta de «arquivos sem lugar», irmã de `meta/docs/` no sand-land; **é questão de organização dos próprios projetos, não do kit**, e vira sugestão a eles) e o **pedido 1** do Mapsmith (testar o pacote com `meta/analises/` inexistente), que segue sem evento. Próxima frente: os **pacotes de update** para Mapsmith e Sand-Land-Map.
+
 ### 2026-08-12 — FK-F/FK-I (sonda), FK-L(a) (quem abre, fecha) e feedback (7) do Mapsmith (gatilho) — ACEITOS E IMPLEMENTADOS (D-122, wo0088)
 **A sonda entrou como PAR, e essa é a correção mais importante da leva.** A sugestão original descrevia só a metade determinística; estudando os artefatos reais dos dois projetos ficou claro que existem dois artefatos com propósitos opostos — *exploração produz hipótese, sonda produz evidência* —, e que fundi-los destrói a propriedade que justifica a segunda (a exploração que parte da lista de checagens da sonda só acha o que a sonda já acharia). **A lição de maior valor do pacote inteiro veio do `scan-games.mjs` do sand-land:** «a pergunta que faltava não era “está no disco?”, era “o que está no disco presta?”» — existência não é aptidão, e instrumento que só conta responde sempre à primeira. Check **C44**, nove provas negativas, custo de teto zero.
 

@@ -501,6 +501,40 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C45 correspondencia entre projetos como tipo nomeado (wo0089): contador compartilhado, transitoriedade, espera com gatilho; e instantaneo de dado derivavel", () => {
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    // (1) o tipo existe e esta separado dos que ja existiam
+    assert(/## Correspondência entre projetos/.test(cmd), id+": CEREBRO sem a secao de correspondencia");
+    // A partir daqui os asserts do tipo «carta» olham SO a secao dela. Sem recortar, uma frase
+    // que exista em qualquer outro ponto do CEREBRO satisfaz o assert e o check fica verde com a
+    // secao vazia — foi o que a prova negativa 2 mostrou («maior existente + 1» vive tambem na
+    // regra de higiene do instantaneo derivavel).
+    const iSec = cmd.indexOf("## Correspondência entre projetos");
+    const fSec = cmd.indexOf("\n## ", iSec + 10);
+    const sec = cmd.slice(iSec, fSec > -1 ? fSec : cmd.length);
+    assert(/não é spec, não é análise, não é ordem de trabalho e não é bilhete/.test(sec), id+": a carta nao e distinguida dos tipos que ja existem — sem isso ela vira 'mais uma nota' e perde as regras proprias");
+    assert(/AAMMDD-<quem>-para-<quem>-NN-<assunto>\.md/.test(sec), id+": falta a forma do nome da carta");
+    // (2) o contador compartilhado — a clausula que evita as duas series divergindo
+    assert(/ÚNICO e COMPARTILHADO pelos dois lados/.test(sec), id+": o contador da carta nao e declarado compartilhado; com um por remetente, 'respondendo a sua 7' vira ambiguo");
+    assert(/maior existente \+ 1/.test(sec), id+": o contador nao vem como REGRA (maior existente + 1) — numero anotado envelhece sozinho");
+    // (3) transitoriedade, com o custo nomeado
+    assert(/TRANSITÓRIA/.test(sec), id+": a carta nao e declarada transitoria");
+    assert(/segunda fonte de verdade que envelhece sozinha/.test(sec), id+": falta o custo de versionar correspondencia, que e o que sustenta a regra");
+    assert(/extraído/.test(sec) && /arquivo morto/.test(sec), id+": falta o destino da carta depois de extraida");
+    // (4) espera sem gatilho e a marca de lado
+    assert(/Esperar resposta sem gatilho/.test(sec), id+": carta enviada e nao respondida ainda pode virar memoria em vez de item com prazo");
+    assert(/lê pedido como fato/.test(sec), id+": falta a marca de qual lado afirma o que — sem ela o destinatario implementa contra premissa falsa");
+    // (5) gatilho de evento
+    assert(/Chega ou sai carta de outro projeto/.test(cmd), id+": tabela de gatilhos sem o evento da carta");
+    // (6) instantaneo de dado derivavel (FK-G generalizado)
+    assert(/Não congele em documento estável o que um artefato vivo já responde/.test(cmd), id+": higiene sem a regra do instantaneo derivavel");
+    assert(/Escreva a REGRA, não o valor/.test(cmd), id+": a regra do instantaneo nao diz o que fazer no lugar");
+    assert(/datado e com a origem/.test(cmd), id+": falta a excecao — valor pode aparecer, desde que datado e com origem");
+  });
+  return "ok";
+});
+
 check("C44 sonda e exploracao como par (wo0088): tres propriedades, sem veredito, existencia nao e aptidao; quem abre fecha; gatilho oportunista", () => {
   const wo = T.buildWoTemplate();
   const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
