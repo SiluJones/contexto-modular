@@ -1,6 +1,6 @@
 # ANÁLISE — O que sobrou do feedback dos dois projetos depois das duas levas
 
-**Status:** `Parcialmente decidida` — §A decidida e implementada (wo0087/D-121); §B e §C aguardando o autor
+**Status:** `Parcialmente decidida` — §A decidida e implementada (wo0087/D-121); §B: B1/B4/B5 decididas e implementadas (wo0088/D-122), B2/B3 aguardando o autor; §C: pedidos 2 e 3 respondidos por evento nesta sessão, pedido 1 sem evento ainda
 **Data:** 2026-08-12 · **Versão do kit na época:** v1.107.0 (commit `3677718`)
 **Origem:** varredura completa de `IDEAS.md` §«Feedback para o Kit» dos dois projetos (Mapsmith, 14.426 caracteres; Sand-Land-Map, seção inteira), mais `FEEDBACK-kit-09-lista-de-conferencias.md`, `260804-1444.txt` e os três transcritos `mapsmith_8/9/10.md`.
 **Elos:** D-112, D-113, D-114, D-115, D-116, D-119, D-120
@@ -60,7 +60,7 @@ O `/wrap` do KCM entregou os três blocos de `git` para o autor colar. O autor a
 
 Nenhum é defeito. Todos são «falta uma coisa», e é por isso que atravessaram cinco levas sem serem pegos: **não doem, só custam.**
 
-### B1 — A sonda como artefato de primeira classe *(sand-land FK-F + FK-I; Mapsmith IDEA-073)*
+### B1 — A sonda como artefato de primeira classe *(sand-land FK-F + FK-I; Mapsmith IDEA-073)* — **implementada (wo0088/D-122)**
 
 **O mais forte dos cinco, e o mais mal resolvido até agora.** A D-113 pegou o **princípio** («quem tem acesso ao disco mede, quem tem contexto decide») e o instalou como seção do CEREBRO e do modelo de WO. Não pegou o **molde**, e a palavra «sonda» **não aparece uma vez** no fonte do kit — verificado.
 
@@ -83,13 +83,13 @@ Quando dois projetos com kits separados negociam um contrato de dados, o que tro
 
 O Mapsmith resolveu com `meta/refs/`, que o kit não prevê — verificado: `meta/refs` não aparece no fonte. **É irmão do B2 e provavelmente se resolve junto:** o durável da correspondência precisa pousar em algum lugar, e `refs/` é o candidato que já foi testado em campo.
 
-### B4 — Quem abre, fecha *(sand-land FK-L, metade (a))*
+### B4 — Quem abre, fecha *(sand-land FK-L, metade (a))* — **implementada (wo0088/D-122)**
 
 *Processo, porta e arquivo temporário são de quem os criou, e a tarefa termina com a máquina como a encontrou.* Custo relatado: servidores de dev acumulando entre sessões, a ponto de **um deles travar a pasta e impedir o teste que definia uma WO**.
 
 **E temos uma segunda ocorrência, de hoje, nesta casa:** o relatório da wo0086 registra que o teste manual baixou um `claude-code-kit.zip` para a pasta de Downloads do autor, tentou limpar e a ferramenta negou. Nada grave — mas é a generalização da FK-L acontecendo de novo: *toda tarefa deveria declarar o que **cria fora do repositório**, porque é isso que ninguém lembra de limpar*. Duas ocorrências, dois projetos.
 
-### B5 — Princípio sem gatilho, em forma geral *(Mapsmith item 7)*
+### B5 — Princípio sem gatilho, em forma geral *(Mapsmith item 7)* — **implementada (wo0088/D-122)**
 
 A D-120 aplicou o padrão **uma vez**, ao caso do «Próximo (b)». A sugestão original é maior: *os princípios que dependem de o assistente lembrar de aplicar deveriam vir em pares — a virtude no corpo e o gatilho na tabela de gatilhos, com o evento nomeado.*
 
