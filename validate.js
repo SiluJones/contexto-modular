@@ -501,6 +501,37 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C42 a conferencia sai do artefato (wo0086): tres campos por passo, inventario declarado e nao truncado, e a frase pedida so cobra o que o dono sabe produzir", () => {
+  const wo = T.buildWoTemplate();
+  // (1) tres campos por passo de verificacao
+  assert(/\*\*Quem roda:\*\*/.test(wo), "modelo de WO sem o campo 'Quem roda' — o passo nao diz de quem e");
+  assert(/\*\*Chega no ramo\?\*\*/.test(wo), "modelo de WO sem o campo 'Chega no ramo?' — sem ele o passo verifica que o programa roda, nao que a WO funcionou");
+  assert(/\*\*Prova de vida:\*\*/.test(wo), "modelo de WO sem o campo 'Prova de vida' — 'passou' indistinguivel de 'nada aconteceu'");
+  assert(/rede de terceiro/.test(wo) && /destroi algo fora do repositorio/.test(wo), "o criterio de 'Quem roda' nao esta positivo e curto — sem ele, tudo vira pedido ao dono");
+  assert(/nunca peca um resultado que voce nao ensinou a produzir/.test(wo), "o modelo nao proibe cobrar do dono um resultado que ele nao sabe produzir");
+  assert(/nao cada item deste checklist/.test(wo), "o modelo nao limita os tres campos aos PASSOS DE VERIFICACAO — aplicados a cada item do checklist viram cerimonia");
+  // (2) inventario: sai do artefato, nao trunca, declara a contagem
+  assert(/## Inventario/.test(wo), "modelo de WO sem a secao de inventario");
+  assert(/que lugares declaram esta grandeza/.test(wo), "o inventario nao manda perguntar ao artefato");
+  assert(/Grepe o \*\*fato\*\*, nao a frase/.test(wo), "o inventario nao distingue varrer pelo fato de varrer pela frase");
+  assert(/Nao truncar/.test(wo) && /head/.test(wo), "o inventario nao proibe truncamento — foi um head que escondeu o ponto que faltava");
+  assert(/Declare quantos/.test(wo), "o inventario nao exige a contagem declarada, que e a unica rede que ja pegou o erro");
+  assert(/contestar a contagem antes de agir/.test(wo), "a contagem declarada nao serve para quem aplica contestar");
+  const ondeInv = wo.indexOf("## Inventario"), ondeEd1 = wo.indexOf("## Edicao 1");
+  assert(ondeInv > -1 && ondeEd1 > -1 && ondeInv < ondeEd1, "a secao de inventario vem DEPOIS das edicoes — quem escreve ja montou a lista antes de ler a regra");
+  assert(/refaca a contagem no repo/.test(wo), "o checklist de conferencia nao manda refazer a contagem declarada");
+  // (3) a frase pedida de volta so cobra o que o dono sabe produzir
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/Peça no próximo turno/.test(cmd), id+": o bloco de fecho perdeu a parte (b) do item Proximo");
+    assert(/só pode conter resultado que o usuário saiba produzir/.test(cmd), id+": a parte (b) nao tem o gatilho — a virtude de instruir com cuidado ja existia e nao disparava, porque nao tinha hora");
+    assert(/peça o \*\*relatório\*\*/.test(cmd), id+": nao diz que resultado do executor se cobra como relatorio");
+    assert(/no MESMO turno/.test(cmd), id+": nao exige que o comando e o esperado cheguem junto do pedido");
+    assert(/o teste manual deu X/.test(cmd), id+": falta o exemplo concreto que o autor nomeou como confuso");
+  });
+  return "ok (" + wo.length + " chars no modelo)";
+});
+
 check("C41 o fecho em modo Code registra em vez de listar (wo0085): canal por doc, log do dia com gatilho de evento, regenerar x criar, origem do fato", () => {
   const S = T.STATE; S.workmode = S.workmode || {};
   const prevCode = S.workmode.codeMode;

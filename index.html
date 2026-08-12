@@ -1263,7 +1263,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.106.0";
+const KIT_VERSION = "1.107.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8718,6 +8718,7 @@ function buildClaudeMd(niche){
   L.push("## Bloco de fecho de turno (formato fixo)");
   L.push("Todo turno de trabalho fecha assim, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem antes de um divisor; o resto vem depois dele:");
   L.push("1. **Próximo** — sempre presente, ANTES do divisor, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido.");
+  L.push("   **A frase só pode conter resultado que o usuário saiba produzir.** É aqui que a regra de instruções cuidadosas costuma falhar — não por má vontade, mas porque a linha é redigida rápido, no fim do turno, e ninguém a lê como um pedido de trabalho. Antes de escrevê-la, pergunte de quem é cada resultado que ela menciona: se é do executor, peça o **relatório** («aplicada, aqui o relatório»); se é de fato do usuário, o **comando exato, quem roda e o que esperar ver** vêm no MESMO turno, não na resposta seguinte. Pedir «o teste manual deu X» sem nunca ter dito que teste é esse, quem o roda e como se roda transfere ao usuário um trabalho que ele não sabe que tem — e ele descobre isso escrevendo de volta para perguntar.");
   L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. E distinga do caso em que o dado **não é legível por este canal**: num Projeto alimentado por cópia achatada não há `.git`, então nenhum `git log` existe para ler — aí escreva «commit não legível pelo mount» e **peça uma vez** (`git log -1 --oneline`), em vez de repetir a ressalva todo turno. **A linha abre com o carimbo `Base:`** — qual arquivo foi lido NESTE turno para saber o estado, com a data que ELE declara e o commit/versão que ELE traz (`Base: _MANIFEST 02/08 23:40 · d423747 · 3 .txt`). Sem cópia achatada, use o que houver: o doc de estado do projeto e a data dele. O carimbo existe porque campo de verificação genérico é inauditável — quem lê não sabe se você leu ou lembrou —, enquanto uma data que o próprio usuário gerou ele confere num olhar. Carimbo inventado é mentira detectável; campo vago não é. «Não verifiquei» é desleixo; «não dá para ler daqui» é fato, e o remédio de cada um é diferente. **Se o manifesto da cópia achatada já trouxer o estado do repo** (último commit, branch, limpo/sujo), use-o e não peça — registrando que é foto da hora da geração, não do turno. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
   L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**, como a Config e o Handoff: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Nome por nome — e não espere que eu pergunte.");
   L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
@@ -9254,6 +9255,21 @@ function buildWoTemplate(){
     "blocos abaixo: fato que nao esta aqui nao deveria aparecer la. Marque o que foi **medido** e o que e",
     "**deduzido** — inferencia sem rotulo vira fato na leitura seguinte.]",
     "",
+    "## Inventario — de onde saiu a lista de edicoes *(apague se a WO tem uma edicao so)*",
+    "",
+    "[Quando as edicoes abaixo sao **todos os lugares** que precisam mudar, diga como voce achou esses lugares.",
+    "Lista feita de cabeca, ou herdada do texto de quem apontou o problema, ja custou caro: o que ficou de fora",
+    "fica invisivel dos dois lados, porque a correcao e a conferencia saem do mesmo inventario incompleto.]",
+    "",
+    "- **Saiu do artefato, nao da memoria.** A pergunta e sempre \"que lugares declaram esta grandeza?\", feita ao",
+    "  codigo. Grepe o **fato**, nao a frase: o mesmo campo aparece com outro nome de variavel, e a mesma regra",
+    "  aparece parafraseada. Procure o termo literal, a parafrase, e as listas de pendencia.",
+    "- **Nao truncar.** Nada de `head`, nada de \"os principais\". Inventario paginado e inventario errado, e o",
+    "  item que ficou de fora e justamente o que ninguem vai procurar depois.",
+    "- **Declare quantos.** Escreva o numero de pontos encontrados — \"onze lugares montam este caminho\" — para",
+    "  que quem aplica possa **contestar a contagem antes de agir**. Ja foi assim que um inventario truncado foi",
+    "  pego: a WO dizia onze, o executor achou doze. A contagem e a rede; a proibicao do `head` sozinha nao pega.",
+    "",
     "---",
     "",
     "## Edicao 1 — `caminho/real/do/arquivo.ext` · [o que muda, em cinco palavras]",
@@ -9306,11 +9322,25 @@ function buildWoTemplate(){
     "",
     "- [ ] `git diff` mostra **exatamente** os arquivos previstos, e nada alem.",
     "- [ ] [Conferencia de forma especifica desta WO — ex.: \"a entrada nova ficou dentro da secao certa\".]",
+    "- [ ] **Se a WO declarou um inventario** (\"onze lugares\"), refaca a contagem no repo. Numero diferente:",
+    "      **PARE e reporte antes de editar** — a divergencia e o achado, nao um detalhe a acomodar.",
     "- [ ] **WO de codigo:** o comando de validacao do projeto passa com **0 erros**. Se acusar erro,",
     "      **PARE e reporte antes de commitar**.",
     "- [ ] **WO so de doc:** nao precisa de build — a rede e o `git diff`.",
-    "- [ ] **Teste manual que a validacao NAO cobre** (obrigatorio quando a WO toca dado carregado ou UI):",
-    "      [caso feliz · caso de borda · regressao possivel].",
+    "- [ ] **Teste manual que a validacao NAO cobre** (obrigatorio quando a WO toca dado carregado ou UI).",
+    "      Cada passo de verificacao — nao cada item deste checklist — traz os tres campos abaixo. Passo",
+    "      sem os tres nao esta pronto para ser escrito:",
+    "      - **Quem roda:** por padrao, **quem aplica**. So vai ao dono o passo que toca **rede de terceiro**",
+    "        ou **destroi algo fora do repositorio**; leitura e operacao reversivel na mesma maquina nunca sao",
+    "        dele. E quando for dele, o passo chega com o comando exato, o que esperar ver, e o que fazer se",
+    "        vier diferente — **nunca peca um resultado que voce nao ensinou a produzir.**",
+    "      - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo",
+    "        que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica",
+    "        que o programa continua rodando. E o unico campo que da trabalho, e e o que separa conferir de",
+    "        parecer conferir.",
+    "      - **Prova de vida:** quando \"passou\" se parece com \"nada aconteceu\", o passo precisa do par negativo",
+    "        que forca o sinal. Lista vazia so significa alguma coisa depois de voce ter visto a mesma checagem",
+    "        devolver um item.",
     "",
     "## Relatorio de aplicacao *(quem aplica preenche ao terminar)*",
     "",

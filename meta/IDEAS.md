@@ -585,6 +585,13 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-12 — Feedback do Mapsmith (item 9 + IDEA-073) e do sand-land (FK-J, FK-K), «a conferência sai do artefato» — ACEITOS E IMPLEMENTADOS (D-120, wo0086)
+Três projetos chegaram à mesma pergunta — *de onde saiu a lista?* — em três alturas diferentes: a lista de conferências de um instrumento, a lista de lugares a mudar num grep global, e os passos de verificação de uma WO. As três superfícies do kit foram corrigidas, cada uma na altura em que o defeito age. **O achado que decidiu a forma:** o comportamento universal `careful_guides` já mandava explicar «o quê, onde, como e o que esperar» ao pedir algo ao usuário, e estava **ligado nos 18 nichos** enquanto o autor recebia «o teste manual deu X» — princípio escrito no infinitivo não tem hora, então a correção pôs o **gatilho** dentro do item «Próximo (b)» do bloco de fecho, em vez de repetir a virtude num segundo lugar. Custo de teto **zero**. Check **C42**, com sete provas negativas.
+
+**Genealogia, dita em voz alta:** FK-I adota textualmente a formulação do Mapsmith e FK-J cita a carta 12 dele — **os dois projetos se leem**. O que a repetição prova é *reprodução*, não convergência independente; o registro diz isso de propósito.
+
+**Parqueada, com gatilho de repetição — «ideia aprovada com gatilho vencido é dívida sem cobrança».** Já registrada na entrada de 2026-08-11 e mantida parqueada nesta leva: uma ocorrência medida, num projeto que organiza o IDEAS por status+ID (desvio registrado), e o kit já recusou duas vezes (D-104, D-106) aumentar o vocabulário obrigatório do IDEAS. *Gatilho de volta: um segundo projeto relatar o mesmo estado sem cobrança.*
+
 ### 2026-08-11 — Feedback do Mapsmith, itens (6) e (8) «o fecho de conversa em modo Code» — ACEITOS E IMPLEMENTADOS (D-119, wo0085)
 As quatro causas nomeadas pelo Mapsmith foram atacadas uma a uma, cada uma no lugar onde a causa age. Dois achados nossos entraram junto, os dois lidos no fonte e ausentes do feedback: **(1)** o ramo `codeModeOn()` do prompt E era o **único** que não nomeava o log do dia — o log sumiu na configuração que tinha duas mãos capazes de escrevê-lo; **(2)** a regra geral de fecho era cega ao modo, mandando «nunca blocos soltos para colar à mão» num projeto onde o bloco com âncora *é* o artefato certo e se chama WO. A correção saiu com **custo de teto negativo** (+Code 522 → 514) porque foi escrita como substituição do texto universal, não como acréscimo — a variante somada estourava o orçamento do modo Code em 8 caracteres, e essa medição é que definiu o desenho. Check **C41**.
 
