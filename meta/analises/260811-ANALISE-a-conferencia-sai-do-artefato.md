@@ -1,6 +1,6 @@
 # ANÁLISE — A conferência sai do artefato, inteira, e com a contagem declarada
 
-**Status:** `Em discussão`
+**Status:** `Decidida`
 **Data:** 2026-08-11 · **Versão do kit na época:** v1.105.0 (commit `6bc5c8f`)
 **Origem:** Mapsmith — `FEEDBACK-kit-09-lista-de-conferencias.md` (v2, 2026-08-10), IDEA-073,
 `meta/analises/260810-ANALISE-o-instrumento-mede-o-que-e-facil.md` e
@@ -214,3 +214,19 @@ afirmação diferente de convergência independente. A D-117 já fez isso uma ve
 2. **Se for (C): a dívida de gatilho vencido (D) fica mesmo parqueada no `IDEAS` com gatilho de
    repetição, ou você quer vê-la nesta leva?** Ela é o único item deste pacote que muda o formato de
    um doc que todo projeto mantém, e por isso o meu default é esperar o segundo caso.
+
+---
+
+## Desfecho
+
+**(C), nas três superfícies, com a dívida (D) parqueada — aprovado pelo autor em 2026-08-12.**
+Implementada e testada em sandbox na **wo0086** → **D-120**, `KIT_VERSION 1.107.0`, check **C42** novo
+com **sete provas negativas**. Custo de teto **zero**, como a medição previa: C28 imprime os mesmos
+números da v1.106.0.
+
+**Um desvio de posicionamento, contra o que esta análise recomendava.** A regra de inventário ia para
+a seção «Armadilhas» do modelo de WO. Ao escrever, ficou claro que **Armadilhas é lida por quem
+aplica, e a regra de inventário é para quem escreve** — ela nasceu numa seção própria, posicionada
+**antes da primeira edição**, que é onde a lista de fato se monta. A metade que interessa a quem
+aplica (contestar a contagem) foi para o checklist de conferência, onde ele já está. O C42 trava a
+posição, e a mensagem de falha diz por quê.
