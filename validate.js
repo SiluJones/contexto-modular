@@ -501,6 +501,57 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+/* C43 (wo0087) — O KCM e usuario do proprio kit. Este e o UNICO check que abre arquivo
+   de `.claude/` DO REPOSITORIO: todos os outros testam o que o kit EMITE, e foi por isso
+   que as skills instaladas ficaram tres versoes atras do gerado sem ninguem notar. */
+check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do proprio KCM carregam as clausulas que o kit publica", () => {
+  const pathmod = require("path");
+  const raiz = pathmod.dirname(pathmod.resolve(path));
+  const lerRepo = (rel) => {
+    const abs = pathmod.join(raiz, rel);
+    assert(fs.existsSync(abs), "arquivo do proprio repo ausente: " + rel + " — o KCM usa o kit que publica, e sem este arquivo nao ha o que conferir");
+    return fs.readFileSync(abs, "utf8");
+  };
+  const kit = T.buildCodeKitFiles();
+  const instWrap = lerRepo(".claude/skills/wrap/SKILL.md");
+  const instApply = lerRepo(".claude/skills/apply-wo/SKILL.md");
+  const instSet = lerRepo(".claude/settings.json");
+
+  // (1) clausulas portadoras: cada uma e conferida NOS DOIS LADOS.
+  //     Some do gerado -> falha aqui tambem (o kit deixou de publicar a regra).
+  //     Some do instalado -> falha aqui (a casa ficou para tras). Foi este o caso da wo0087.
+  const CLAUSULAS = [
+    ["ordem do push",      /push ANTES de escrever o relat/i, ["wrap","applyWo"]],
+    ["caso verde",         /Verde[\s\S]{0,400}?sem perguntar/i, ["wrap","applyWo"]],
+    ["caso vermelho",      /MENU NUMERADO/i,                  ["wrap","applyWo"]],
+    ["recomendada em 1",   /recomendada em 1/i,               ["wrap","applyWo"]],
+    ["relatorio em arquivo", /-code-/,                        ["wrap","applyWo"]],
+    ["ancora exata",       /PARE e reporte/i,                 ["applyWo"]],
+  ];
+  const gerado = { wrap: kit.wrap, applyWo: kit.applyWo };
+  const instalado = { wrap: instWrap, applyWo: instApply };
+  CLAUSULAS.forEach(([nome, re, alvos]) => {
+    alvos.forEach(alvo => {
+      assert(re.test(gerado[alvo]), "o kit GERADO perdeu a clausula '"+nome+"' na skill "+alvo+" — se ela sair daqui, o check para de proteger a casa tambem");
+      assert(re.test(instalado[alvo]), "a skill INSTALADA `.claude/skills/"+(alvo==="wrap"?"wrap":"apply-wo")+"/SKILL.md` nao tem a clausula '"+nome+"' que o kit publica: consertar o gerador nao conserta o instalado (D-115), e a casa e o primeiro instalado");
+    });
+  });
+
+  // (2) a regressao especifica que originou este check, nomeada para nao voltar disfarcada
+  assert(!/para eu copiar isolado/i.test(instWrap), "o `/wrap` instalado voltou a entregar bloco de git para o dono colar — quem tem terminal roda; entregar bloco e trocar de raia (FK-L do sand-land)");
+  assert(!/comando de commit pronto/i.test(instWrap), "o `/wrap` instalado voltou a prometer 'o comando de commit pronto' em vez de executar");
+
+  // (3) settings do proprio repo: JSON valido pelo PARSER (D-115/C37), Write no allow, pasta-pai liberada
+  let cfg;
+  try { cfg = JSON.parse(instSet); }
+  catch(e){ assert(false, ".claude/settings.json do proprio repo nao e JSON valido ("+e.message+") — o Claude Code descarta o arquivo INTEIRO em silencio e caem todas as permissoes juntas"); }
+  const allow = (cfg.permissions && cfg.permissions.allow) || [];
+  assert(allow.includes("Write"), ".claude/settings.json do repo sem `Write` no allow — as skills mandam criar log e relatorio, e a permissao nega o que a skill pede (D-115)");
+  assert(Array.isArray(cfg.permissions && cfg.permissions.additionalDirectories) && cfg.permissions.additionalDirectories.length > 0, ".claude/settings.json do repo sem `additionalDirectories` — sem ele o relatorio em arquivo na pasta-pai nao tem como ser gravado (D-108)");
+
+  return "ok (instalado confere com o gerado em " + CLAUSULAS.length + " clausulas)";
+});
+
 check("C42 a conferencia sai do artefato (wo0086): tres campos por passo, inventario declarado e nao truncado, e a frase pedida so cobra o que o dono sabe produzir", () => {
   const wo = T.buildWoTemplate();
   // (1) tres campos por passo de verificacao

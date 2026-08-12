@@ -585,6 +585,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-12 — FK-L(b) do Sand-Land-Map, «entrega blocos quem não pode executá-los» — ACEITO E IMPLEMENTADO em casa primeiro (D-121, wo0087)
+O sand-land escreveu em 2026-08-09: *«o chat entrega porque não tem disco; o executor roda, e só pergunta uma vez, quando tudo está verde»*. Em 2026-08-12 o `/wrap` do **próprio KCM** fez exatamente o contrário, e o autor apontou. **A skill que o kit publica já estava certa desde a D-115 — quem estava errado era o arquivo instalado dentro do KCM**, três versões atrás do gerado. Corrigido, e com um check novo (**C43**) que abre os arquivos de `.claude/` do repositório e os confere contra `buildCodeKitFiles()`: é o primeiro check do harness a olhar o que o KCM **usa** em vez do que ele **emite**.
+
+**Lição em forma geral, para não depender de lembrar:** *todo update do gerador tem um passo de auto-aplicação — a casa é o primeiro instalado.* A D-115(g) já dizia que consertar o gerador não conserta o instalado, e criou pacote de update para terceiros sem se incluir na lista.
+
+**Ainda aberto da FK-L, metade (a) — «quem abre, fecha».** Processo, porta e arquivo temporário são de quem os criou. **Segunda ocorrência medida, desta vez aqui:** o teste manual da wo0086 baixou um `claude-code-kit.zip` para a pasta de Downloads do autor, tentou limpar e a ferramenta negou — e o autor teve de perguntar o que era. Duas ocorrências, dois projetos. *Gatilho: entra na próxima leva que tocar o modelo de WO ou o bloco de fecho.*
+
+**Para o Mapsmith, resposta ao pedido de volta nº 2** («a regra do `/wrap` pegou a contagem repetida na terceira vez?»): **pegou.** No `/wrap` de 2026-08-12 a varredura achou uma segunda menção a `KIT_VERSION 1.106.0` na mesma linha do cabeçalho, longe do começo, corrigiu, e preservou corretamente as ocorrências históricas dentro de «Sessão anterior». Três ocorrências do esquecimento, a terceira pega pela regra.
+
 ### 2026-08-12 — Feedback do Mapsmith (item 9 + IDEA-073) e do sand-land (FK-J, FK-K), «a conferência sai do artefato» — ACEITOS E IMPLEMENTADOS (D-120, wo0086)
 Três projetos chegaram à mesma pergunta — *de onde saiu a lista?* — em três alturas diferentes: a lista de conferências de um instrumento, a lista de lugares a mudar num grep global, e os passos de verificação de uma WO. As três superfícies do kit foram corrigidas, cada uma na altura em que o defeito age. **O achado que decidiu a forma:** o comportamento universal `careful_guides` já mandava explicar «o quê, onde, como e o que esperar» ao pedir algo ao usuário, e estava **ligado nos 18 nichos** enquanto o autor recebia «o teste manual deu X» — princípio escrito no infinitivo não tem hora, então a correção pôs o **gatilho** dentro do item «Próximo (b)» do bloco de fecho, em vez de repetir a virtude num segundo lugar. Custo de teto **zero**. Check **C42**, com sete provas negativas.
 

@@ -1383,3 +1383,27 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Check C42 novo**, com **sete provas negativas** — uma por campo (Quem roda, Chega no ramo, Prova de vida), uma pela contagem declarada, uma pela proibição de truncar, uma pela posição da seção de inventário (movida para depois das edições) e uma pelo gatilho do «Próximo (b)». Todas reprovam o C42 sozinhas.
 
 `KIT_VERSION 1.107.0`. **Custo de teto ZERO** — as três superfícies vivem fora de `buildInstr`: C28 imprime os mesmos números da v1.106.0 (`padrao 6611/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7497/7600`), folga do `narrative` em **289**. O modelo de WO cresce de **5.921 para 8.406** caracteres (número que o C27 e o C42 reportam; não há teto sobre ele). Harness **18/18, 85/85 → 86/86, 0 erros**.
+
+---
+
+## D-121 — O KCM é usuário do próprio kit: o instalado deixa de ficar atrás do gerado, e um check passa a vigiar isso (wo0087)
+
+**Base.** `meta/analises/260812-ANALISE-o-que-sobrou-do-feedback.md` §A, aprovada pelo autor em 2026-08-12. Defeito observado no fecho da wo0086 e apontado pelo autor no mesmo dia. Item **FK-L(b)** do Sand-Land-Map, aberto desde 2026-08-09.
+
+**O que aconteceu.** O `/wrap` entregou os três blocos de `git` para o autor colar, e o relatório — escrito antes do push — não tinha como dizer se o push acontecera: `260812-0911-code-kcm.txt` termina em «COMMIT — Ainda NÃO executado». O autor apontou que o executor tem terminal e devia rodá-los, perguntando no máximo uma vez.
+
+**A causa, e ela é mais interessante que o sintoma.** A skill `wrap` que o kit **emite** está correta desde a D-115: verde empurra sem perguntar, vermelho fecha com menu numerado, e o push se resolve **antes** do relatório. O arquivo `.claude/skills/wrap/SKILL.md` **do próprio KCM** continuava com o texto pré-D-115 («me mostre o comando de commit pronto… para eu copiar isolado»). **A D-115(g) escreveu que «consertar o gerador não conserta o instalado» e criou um pacote de update para alcançar terceiros — sem incluir a própria casa entre os instalados.**
+
+**O mesmo defeito, e mais grave, no `/apply-wo`.** Também pré-D-115. Ele passou pelas wo0085 e wo0086 **por acidente**: as duas WOs traziam os blocos de `git` no corpo. Numa WO sem eles, o defeito apareceria na aplicação, não no fecho — o risco silencioso deste ciclo.
+
+**Terceiro achado, da mesma varredura.** O `.claude/settings.json` do KCM não tinha `Write` no `allow` (a D-115(b) o pôs no gerado). Funcionava porque o arquivo tem `defaultMode: "acceptEdits"`, que auto-aceita escrita: **um segundo mecanismo cobrindo uma permissão ausente** — funciona, mas por motivo diferente do que o kit documenta, e o dia em que o `defaultMode` mudar as skills passam a pedir o que a permissão nega.
+
+**Por que 86 checagens não pegaram.** Todas liam o `index.html` e as strings que o kit emite; **nenhuma abria um arquivo de `.claude/` do repositório**. O instrumento media o que era fácil de medir — a saída da função — e não o que estava instalado ao lado dela. É a doença que o Mapsmith nomeou em `260810-ANALISE-o-instrumento-mede-o-que-e-facil.md`, aplicada ao instrumento do próprio kit. E a regra que teria pego já existia: a higiene da D-116 termina em *«as skills por último e com mais atenção: são lidas ANTES de trabalhar, então uma linha morta ali dirige o trabalho seguinte em vez de só informar mal»* — descrição literal do ocorrido.
+
+**Decisão, em três partes.** (1) As duas skills e o `settings.json` do KCM recebem as cláusulas que o kit publica — **acrescentando, não substituindo**: as skills do KCM são legitimamente mais ricas (fim de linha por arquivo, regra de ouro 18/18, atualização de análise decidida), e trocá-las pelas genéricas apagaria personalização que a válvula de desvio registrado autoriza. (2) O **C43** passa a abrir os arquivos de `.claude/` **do repositório** e a conferir cláusula por cláusula contra o que `buildCodeKitFiles()` emite. (3) A lição fica registrada em forma geral: **todo update do gerador tem um passo de auto-aplicação, porque a casa é o primeiro instalado.**
+
+**Como o C43 é construído, e por que assim.** Ele confere **cláusulas portadoras**, nunca igualdade de texto — igualdade byte a byte proibiria a personalização. E confere **nos dois lados**: se a cláusula sumir do **gerado**, o check falha ali também, com mensagem própria (*«se ela sair daqui, o check para de proteger a casa tambem»*). Um check que só olhasse o instalado poderia ficar verde justamente quando o kit parasse de publicar a regra. Inclui ainda duas negativas nomeadas contra o texto exato da regressão («para eu copiar isolado», «comando de commit pronto»), para o defeito não voltar disfarçado, e parseia o `settings.json` do repo com `JSON.parse` — o princípio da D-115/C37 aplicado, agora, ao arquivo que o KCM usa.
+
+**Sete provas negativas rodadas**, uma por ponta: `/wrap` instalado voltando ao bloco colável · `/apply-wo` instalado sem a ordem do push · `settings` sem `Write` · `settings` com JSON quebrado (o defeito histórico da D-115) · `settings` sem `additionalDirectories` · skill instalada ausente de todo · e **o gerado perdendo a cláusula**, que é a ponta que um check ingênuo não cobriria.
+
+`KIT_VERSION 1.107.1` (correção, não feature). **Custo de teto ZERO** — nenhuma edição toca `buildInstr`: C28 imprime `padrao 6611/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7497/7600`, idêntico à v1.107.0. Harness **18/18, 86/86 → 87/87, 0 erros**.

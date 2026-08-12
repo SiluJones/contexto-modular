@@ -23,6 +23,13 @@ Regras de aplicação:
   previstas; sem remoção acidental) ANTES de commitar.
 - Faça o bloco «Ao terminar»/«Registros» da WO (append em STATUS/DECISIONS) e o commit indicado
   (mensagem SEM acento).
+- **Resolva o push ANTES de escrever o relatório** — o relatório é o ÚLTIMO passo, sempre.
+  **Verde** (âncoras todas achadas, `git diff` na forma prevista, harness verde ou WO só de doc): rode
+  `add`, `commit` e `push` você mesmo, SEM perguntar — não me devolva bloco para colar. **Vermelho**
+  (qualquer uma falhou): NÃO commite nem empurre — feche com **MENU NUMERADO** de saídas reais (a
+  recomendada em 1), nunca com pergunta em prosa. Se a minha escolha chegar depois, o relatório se
+  REESCREVE. Isto vale mesmo quando a WO traz os blocos de `git` no corpo: os blocos são o QUE rodar,
+  não um pedido para eu rodar.
 - Feche com o **relatório de trabalho** — o que fez, achados e desvios do texto literal da WO,
   arquivos tocados, resultado de build/validate, o commit. **Não** use o bloco de fecho do chat:
   aquele é da raia de planejamento.
