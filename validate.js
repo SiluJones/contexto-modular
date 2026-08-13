@@ -501,6 +501,57 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario que ele revoga, a sonda tem terceiro estado, e amostra nao e cobertura", () => {
+  // (1) D-125 aplicada a D-118: o proprio gerado nao pode carregar a cadencia revogada
+  const kit = T.buildCodeKitFiles();
+  const REVOGADO = /ao final de (cada|uma) sess|ritual de in[ií]cio de sess|fim de sess|em toda sess|lido toda sess|log da sess|ideias da sess|handoff de sess/i;
+  Object.keys(T.NICHES).forEach(id => {
+    const n = T.normNiche(T.NICHES[id]);
+    const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+    S.workmode.codeMode = "yes";
+    const cmd = T.buildClaudeMd(n), ins = T.buildInstr(n);
+    S.workmode.codeMode = prev;
+    [["CEREBRO", cmd], ["INSTRUCOES", ins]].forEach(([nome, txt]) => {
+      const linha = txt.split("\n").find(l => REVOGADO.test(l));
+      assert(!linha, id+": o "+nome+" GERADO ainda usa a cadencia revogada pela propria lista do kit — «"+String(linha).trim().slice(0,90)+"»");
+    });
+  });
+  assert(!REVOGADO.test(kit.claudeMd), "o CLAUDE.md gerado ainda diz «lido em toda sessao» — vocabulario que o proprio kit revogou na v1.106.0");
+  // (1b) e o texto dos MODELOS que cada nicho entrega tambem nao — o LOG-TEMPLATE de 15 nichos
+  //       mandava «ao final de uma sessao», que e a cadencia que a D-122 substituiu por evento.
+  //       O CEREBRO nao carrega esse texto, entao (1) sozinho nao o alcanca: a prova negativa 10
+  //       da wo0094 passou verde ate este bloco existir.
+  Object.keys(T.NICHES).forEach(id => {
+    const n = T.normNiche(T.NICHES[id]);
+    (n.contextFiles||[]).forEach(f => {
+      const c = String(f.content||"");
+      const linha = c.split("\n").find(l => REVOGADO.test(l));
+      assert(!linha, id+"/"+(f.name||"?")+": modelo entregue pelo nicho ainda usa a cadencia revogada — «"+String(linha).trim().slice(0,90)+"»");
+    });
+  });
+  // (2) o log na tabela de docs vem por gatilho de evento, nao por cadencia
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/gatilho de evento — cortar versão/.test(cmd), id+": a tabela de docs ainda amarra o log a uma cadencia");
+  });
+  // (3) terceiro estado do funil: instrumento, com o gatilho da promocao
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/\*\*`instrumento`\*\* \(mede sempre\)/.test(cmd), id+": o funil da sonda para em dois artefatos — falta o instrumento, onde o valor se acumula");
+    assert(/rodada uma SEGUNDA vez para comparar antes\/depois/.test(cmd), id+": falta o gatilho da promocao de sonda para instrumento");
+    assert(/a proibição de veredito \*\*deixa de valer\*\*/.test(cmd), id+": a proibicao de veredito continua generalizada — instrumento que nao reprova ninguem roda");
+    assert(/amostra nunca se apresenta como cobertura/.test(cmd), id+": o relatorio ainda so proibe truncar; amostrar esconde que a lista nem foi lida");
+    assert(/diga \*\*quantos de quantos\*\*/.test(cmd), id+": falta o que fazer quando se olha uma parte");
+    assert(/Versionar em vez de descartar é uma escolha legítima/.test(cmd), id+": 'fica fora do repositorio' esta como regra e impede a promocao a instrumento");
+    assert(/Quem versiona, registra a escolha/.test(cmd), id+": a escolha de versionar nao vem com a obrigacao de registrar o desvio");
+  });
+  // (4) quinta especie de passo de verificacao errado
+  const wo = T.buildWoTemplate();
+  assert(/`grep` casa por LINHA/.test(wo), "modelo de WO sem a especie do grep por linha — o passo acusa ausencia onde ha presenca, porque o texto inserido quebrou a frase");
+  assert(/ausencia relatada por instrumento e uma afirmacao/.test(wo), "falta a regra geral: ausencia precisa de prova igual a qualquer outra");
+  return "ok";
+});
+
 check("C48 o pacote nao confunde quem le (wo0093): carimbo de skills desambiguado, revogacao distingue mandar de relatar, e o efeito de Write e atrito e nao negacao", () => {
   const n = T.normNiche(T.NICHES.dev);
   const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
@@ -1120,7 +1171,8 @@ check("C31 paridade dos templates de nicho (wo0075): IDEAS de todo nicho tem os 
     assert(/Feedback para o ASU/.test(c), id+": IDEAS.md sem a secao «Feedback para o ASU»");
     if(!/Segundo cérebro do projeto: captura toda ideia/.test(ideas.role||"")) overrides++;
     const cmd=T.buildClaudeMd(n);
-    assert(/Duas sessões no mesmo dia = o MESMO arquivo/.test(cmd), id+": tabela de docs nao resolve duas sessoes no mesmo dia");
+    assert(/Duas conversas no mesmo dia = o MESMO arquivo/.test(cmd), id+": tabela de docs nao resolve duas conversas no mesmo dia");
+    assert(/gatilho de evento — cortar versão/.test(cmd), id+": a tabela de docs ainda amarra o log ao «final de cada sessao» — cadencia revogada (D-118) e substituida por gatilho de evento (D-122)");
     assert(/manifesto da cópia achatada já trouxer o estado do repo/.test(cmd), id+": Estado nao usa o estado do repo quando o manifesto o traz");
   });
   assert(overrides>=2, "esperado ao menos 2 nichos com IDEAS.md proprio (dev, brainstorm) — se caiu, o check perdeu o alvo");

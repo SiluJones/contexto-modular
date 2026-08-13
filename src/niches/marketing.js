@@ -258,10 +258,10 @@ NICHES.marketing = {
 > O que já sabemos que funciona com esta audiência — para não re-testar.
 - [Aprendizado — de onde veio.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -292,7 +292,7 @@ NICHES.marketing = {
     {key:"marca", name:"MARCA.md", role:"completo, se pilar/posicionamento mudou", active:false},
     {key:"tomvoz", name:"TOM-E-VOZ.md", role:"completo, se a voz foi calibrada", active:false},
     {key:"resultados", name:"RESULTADOS.md", role:"completo, se houve análise de desempenho (quando usa o arquivo)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Definir estratégia e pilares", when:"Começo de operação de conteúdo — estabelecer pilares e direção antes de produzir.",

@@ -242,7 +242,7 @@ NICHES.cuisine = {
       content:`# LOG-TEMPLATE.md — Formato do Log de Prova/Desenvolvimento
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -274,7 +274,7 @@ NICHES.cuisine = {
     { key:"menu", name:"MENU.md", role:"completo, se a carta mudou", active:false },
     { key:"conceito", name:"CONCEITO.md", role:"completo, se o conceito da cozinha mudou", active:false },
     { key:"custos", name:"CUSTOS.md", role:"completo, se houve análise de custo/precificação (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Desenvolver uma receita", when:"Quero criar/afinar uma receita partindo do ratio certo.",

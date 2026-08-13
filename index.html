@@ -1157,7 +1157,7 @@ const REVOCATIONS = [
 /* Regras de higiene anti-inchaço — entram nas instruções e no CLAUDE.md */
 const HYGIENE_RULES = [
   "Referência cruzada, não duplicação: um dado tem UMA fonte de verdade. Quando uma ideia vira trabalho, ela aparece também no STATUS — mas continua no IDEAS, só mudando de status. Não copie o conteúdo para dois lugares. **Mensagem trocada com outro projeto ou frente irmã é nota, não artefato:** vive fora do repositório enquanto serve e vai para o arquivo morto depois — **não crie pasta versionada para ela**. Quando a troca é uma negociação continuada, ela vira **carta** e ganha nome e contador próprios (CEREBRO, «Correspondência entre projetos»); continua fora do repositório. O que precisa sobreviver é o que você extraiu dela para os documentos, não o texto da mensagem; guardar os dois é duplicar, e o texto envelhece enquanto o registro fica.",
-  "STATUS é só o agora: item resolvido sai do STATUS e vai para o CHANGELOG (e para o log da sessão). Médio/longo prazo vive no ROADMAP, não no STATUS.",
+  "STATUS é só o agora: item resolvido sai do STATUS e vai para o CHANGELOG (e para o log do dia). Médio/longo prazo vive no ROADMAP, não no STATUS.",
   "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida.",
   "DECISIONS cresce devagar: quando passar de ~700 linhas ou uma decisão for substituída, mova as antigas para um arquivo de arquivo morto.",
   "Artefato gerado que convive com edição humana precisa de três coisas: (i) **enxergar o que existe fora dele** — senão duplica em silêncio o que a pessoa já escreveu; (ii) **precedência definida por posição** — quem vence quando os dois falam do mesmo; (iii) **nunca apagar nem desfazer o que não é seu**. Bloco gerado dentro de arquivo editável: delimite com marcadores, mantenha-o no FIM do arquivo, escreva só dentro deles, e diga na primeira linha que ali dentro é território da ferramenta (o que a pessoa escrever ali será reescrito). Se o gerado não enxerga o manual, ele desfaz gestos sem avisar — e o sintoma aparece longe da causa. **Anatomia do bloco gerado — cinco regras, e são as cinco juntas que compram a liberdade de editar o mesmo arquivo à mão:** (1) comentário fica FORA do bloco — dentro, o gerador reescreve tudo e ele some; (2) regra fica DENTRO — é o território da ferramenta; (3) existe UM bloco, e só um — dois são ambiguidade; (4) o bloco é o ÚLTIMO conteúdo do arquivo, nada depois dele; (5) **os marcadores não se citam em comentário** — o gerador costuma procurá-los por substring, e um exemplo é indistinguível de um segundo bloco. A quinta decorre da terceira, mas precisa ser dita em voz alta: é o erro que se comete justamente ao DOCUMENTAR a convenção, então descreva os marcadores em vez de reproduzi-los. **Duas obrigações do lado da ferramenta:** diante de ambiguidade, **recusar, não adivinhar** — reescrever é a única operação irreversível, e chutar ali destrói conteúdo; e **normalizar só o que é seu** — mover o próprio bloco para o fim é legítimo, mover o texto da pessoa não, e se a normalização mudar o efeito de alguma regra dela, avise antes.",
@@ -1200,7 +1200,7 @@ const UPDATE_PROTOCOL = {
   titulo: "Como o assistente entrega as atualizações dos documentos",
   intro: "As mudanças nos documentos que decorrem do trabalho do assistente são registradas pelo PRÓPRIO assistente — quando ele faz algo, ele mesmo atualiza os docs afetados. O que o usuário quer acrescentar por conta (ele sabe onde e o quê) é decisão dele. Em ambos os casos, a entrega é por ARQUIVO COMPLETO, nunca por blocos soltos para o usuário costurar à mão.",
   claudeFaz: [
-    "Registra o que decorre do próprio trabalho: se a sessão mexeu em STATUS, decisões, ideias, etc., o assistente entrega esses arquivos atualizados — não espera o usuário pedir.",
+    "Registra o que decorre do próprio trabalho: se o trabalho mexeu em STATUS, decisões, ideias, etc., o assistente entrega esses arquivos atualizados — não espera o usuário pedir.",
     "Entrega o arquivo INTEIRO já atualizado (não um trecho, não «adicione esta linha»). O usuário só substitui o antigo pelo novo.",
     "Entrega o conjunto consistente de uma vez: todos os arquivos afetados na mesma leva. Estado meio-atualizado (metade novo, metade antigo) é pior que não mexer.",
     "Aplica as regras de higiene ao montar o arquivo (move o resolvido do STATUS, anexa no topo do CHANGELOG) — o usuário recebe o resultado já correto."
@@ -1279,7 +1279,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.112.0";
+const KIT_VERSION = "1.113.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1430,7 +1430,7 @@ projeto/
     {name:"STATUS.md", cat:"ctx", role:"O agora: o que funciona, o que está em progresso, o que está quebrado, backlog curto. Rolante — o resolvido sai.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: descreve só o AGORA. O assistente lê no início para saber onde retomar.
-> Item resolvido SAI daqui — vai para o CHANGELOG (se foi entrega) e/ou para o log da sessão.
+> Item resolvido SAI daqui — vai para o CHANGELOG (se foi entrega) e/ou para o log do dia.
 > Médio e longo prazo NÃO ficam aqui — ficam no ROADMAP.
 
 ---
@@ -1565,10 +1565,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** Este arquivo é o MOLDE — não é substituído.
-> Ao final de cada sessão, o assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
 > Os logs vivem em \`logs/\` no Git (NÃO no Projeto) e são lidos só sob demanda — quando você precisar recuperar o detalhe de uma sessão antiga.
 
 ---
@@ -1669,10 +1669,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
     {key:"status", name:"STATUS.md", role:"completo e atualizado (rolante: o resolvido sai)", active:true},
     {key:"changelog", name:"CHANGELOG.md", role:"completo, com nova entrada se algo foi concluído", active:true},
     {key:"decisions", name:"DECISIONS.md", role:"completo, com nova DEC/FIX se houve decisão ou bug grave", active:true},
-    {key:"ideas", name:"IDEAS.md", role:"completo, com as ideias da sessão capturadas e reclassificadas", active:true},
+    {key:"ideas", name:"IDEAS.md", role:"completo, com as ideias da conversa capturadas e reclassificadas", active:true},
     {key:"roadmap", name:"ROADMAP.md", role:"completo, se alguma fase mudou de estado (quando o projeto usa roadmap)", active:false},
     {key:"glossary", name:"GLOSSARY.md", role:"completo, se surgiu termo novo (quando o projeto usa glossário)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Debugar com método", when:"Apareceu um bug e quero a causa raiz, não um band-aid.",
@@ -2001,10 +2001,10 @@ NICHES.design = {
 ## Notas da gráfica
 - [Especificidades que o impressor pediu; aprendizados de tiragens anteriores.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -2038,7 +2038,7 @@ NICHES.design = {
     {key:"decisoes", name:"DECISIONS.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
     {key:"marca", name:"MARCA.md", role:"completo, se o sistema visual mudou (cor, fonte, regra de logo)", active:false},
     {key:"producao", name:"PRODUCAO.md", role:"completo, se uma peça foi para impressão (quando usa o arquivo)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Brief / onboarding do projeto", when:"Começo de projeto — montar o brief e o sistema antes de criar.",
@@ -2333,10 +2333,10 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Notas
 - [Combinados sobre forma de pagamento, parcelamento, etc.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** Este é o MOLDE — não é substituído.
-> Ao final de uma sessão de trabalho sobre o cliente, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -2370,7 +2370,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
     {key:"entregas", name:"ENTREGAS.md", role:"completo, se houve entrega ou aprovação", active:false},
     {key:"comunicacoes", name:"COMUNICACOES.md", role:"completo, se uma mensagem-chave foi enviada (quando usa o arquivo)", active:false},
     {key:"financeiro", name:"FINANCEIRO.md", role:"completo, se houve cotação/fatura/pagamento (quando usa o arquivo)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Onboarding de cliente novo", when:"Primeiro contato — montar perfil do cliente e escopo claro.",
@@ -2933,10 +2933,10 @@ NICHES.narrative = {
 ## Línguas / expressões inventadas
 - **[Palavra/expressão]** — [tradução/sentido; quando se usa.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão de escrita/revisão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -2970,7 +2970,7 @@ NICHES.narrative = {
     {key:"continuidade", name:"CONTINUIDADE.md", role:"completo, se surgiu fato novo, grafia ou furo resolvido", active:true},
     {key:"personagens", name:"PERSONAGENS.md", role:"completo, se um arco avançou ou traço se firmou", active:false},
     {key:"voz", name:"VOZ.md", role:"completo, se um trecho de prosa aprovado virou referência", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"J", title:"Escrever capítulo/cena (sob direção)", when:"Quero que o assistente ESCREVA — um capítulo, uma cena, um diálogo — na direção que eu der, ancorado na bíblia.",
@@ -3271,10 +3271,10 @@ NICHES.marketing = {
 > O que já sabemos que funciona com esta audiência — para não re-testar.
 - [Aprendizado — de onde veio.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -3305,7 +3305,7 @@ NICHES.marketing = {
     {key:"marca", name:"MARCA.md", role:"completo, se pilar/posicionamento mudou", active:false},
     {key:"tomvoz", name:"TOM-E-VOZ.md", role:"completo, se a voz foi calibrada", active:false},
     {key:"resultados", name:"RESULTADOS.md", role:"completo, se houve análise de desempenho (quando usa o arquivo)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Definir estratégia e pilares", when:"Começo de operação de conteúdo — estabelecer pilares e direção antes de produzir.",
@@ -3614,11 +3614,11 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 5. [Autópsia de um problema resolvido]
 [Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -3649,7 +3649,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
     { key:"hipoteses", name:"HIPOTESES.md", role:"completo, se uma hipótese mudou de status", active:true },
     { key:"sintese", name:"SINTESE.md", role:"completo, se o argumento avançou", active:true },
     { key:"glossario", name:"GLOSSARY.md", role:"completo, se um conceito foi definido (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Mapear a literatura (a partir de uma fonte-semente)", when:"Começo da revisão — quero descobrir o terreno sem cair em citação inventada.",
@@ -3908,11 +3908,11 @@ NICHES.product = {
 > Verdades validadas sobre o usuário/produto — para não retestar.
 - [Aprendizado — de qual experimento veio.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -3946,7 +3946,7 @@ NICHES.product = {
     { key:"personas", name:"PERSONAS.md", role:"completo, se uma persona/job foi revisto", active:false },
     { key:"jornadas", name:"JORNADAS.md", role:"completo, se uma jornada/oportunidade mudou", active:false },
     { key:"experimentos", name:"EXPERIMENTOS.md", role:"completo, se um experimento rodou (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Discovery de um pedido (job antes de feature)", when:"Chegou um pedido de feature e quero entender o problema antes de construir.",
@@ -4227,11 +4227,11 @@ NICHES.business = {
 > Em 3-4 frases: o que estes números contam sobre a saúde e o futuro do negócio.
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -4265,7 +4265,7 @@ NICHES.business = {
     { key:"analise", name:"ANALISE.md", role:"completo, se uma análise avançou (com premissas e sensibilidade)", active:true },
     { key:"objetivos", name:"OBJETIVOS.md", role:"completo, se um objetivo/KR mudou", active:false },
     { key:"modelo", name:"MODELO-FINANCEIRO.md", role:"completo, se houve modelagem de números (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Diagnosticar uma situação", when:"Quero entender onde o negócio está antes de decidir o que fazer.",
@@ -4613,7 +4613,7 @@ Uma entrada por fato. Formato:
 [O que fazer na próxima sessão.]
 `
     },
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# logs/AAAA-MM-DD.md — log de sessão
 
 ## O que aconteceu
@@ -4642,7 +4642,7 @@ Uma entrada por fato. Formato:
     { key:"decisoes", name:"DECISIONS.md", role:"completo, se houve decisão (com contra-argumento e risco)", active:true },
     { key:"dossie", name:"DOSSIE.md", role:"completo, se o retrato mudou (só com lastro em EVIDENCIAS)", active:false },
     { key:"mercado", name:"MERCADO.md", role:"completo, se houve pesquisa de faixa/vaga ou movimento no pipeline", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Minerar um projeto em evidência", when:"Quero transformar um projeto meu (os meta/, o repo) em prova de competência.",
@@ -5019,11 +5019,11 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 ## Tutorial narrativo
 (que mecânica é ensinada por qual cena — ensinar JOGANDO, dentro da história, não por caixa de texto)
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -5064,7 +5064,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
     { key:"universo", name:"UNIVERSO.md", role:"completo, se surgiu fato novo de lore/mundo/personagem", active:false },
     { key:"roteiro", name:"ROTEIRO.md", role:"completo, se cena/missão/diálogo ramificado foi escrito ou alterado", active:false },
     { key:"arte", name:"ARTE-E-SOM.md", role:"completo, se a direção audiovisual mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Explorar conceito / core loop", when:"Tenho uma ideia de jogo e quero firmar a experiência e o loop antes de detalhar.",
@@ -5366,11 +5366,11 @@ NICHES.pixel = {
 ## Props e decoração
 - [Objetos que povoam o cenário — tamanho, paleta, densidade.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -5400,7 +5400,7 @@ NICHES.pixel = {
     { key:"sprites", name:"SPRITES.md", role:"completo, se um asset foi especificado/criado/atualizado", active:true },
     { key:"estilo", name:"ESTILO.md", role:"completo, se uma regra de estilo mudou (paleta, outline, resolução)", active:false },
     { key:"animacao", name:"ANIMACAO.md", role:"completo, se uma convenção de animação foi definida", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Definir estilo e paleta", when:"Começo de projeto — travar a estética antes de produzir assets.",
@@ -5680,11 +5680,11 @@ NICHES.brainstorm = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -5718,7 +5718,7 @@ NICHES.brainstorm = {
     { key:"mapa", name:"MAPA.md", role:"completo, se clusters/eixos mudaram", active:false },
     { key:"filtros", name:"FILTROS.md", role:"completo, se critérios foram definidos ou aplicados (convergência)", active:false },
     { key:"tema", name:"TEMA.md", role:"completo, se a pergunta/enquadramento mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Enquadrar o problema (a pergunta certa)", when:"Antes de gerar ideias, quero ter certeza de que estou perguntando a coisa certa.",
@@ -6004,11 +6004,11 @@ NICHES.music = {
 - **Letra/tema:** [letristas/faixas que inspiram a escrita.]
 - **Groove/ritmo:** [referências de levada.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -6042,7 +6042,7 @@ NICHES.music = {
     { key:"letras", name:"LETRAS.md", role:"completo, se a letra avançou", active:false },
     { key:"arranjo", name:"ARRANJO.md", role:"completo, se houve decisão de harmonia/arranjo/produção", active:false },
     { key:"projeto", name:"PROJETO.md", role:"completo, se o conceito/sonoridade mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Definir conceito e sonoridade", when:"Começo de projeto — firmar a identidade sonora antes de produzir.",
@@ -6681,7 +6681,7 @@ NICHES.cuisine = {
       content:`# LOG-TEMPLATE.md — Formato do Log de Prova/Desenvolvimento
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -6713,7 +6713,7 @@ NICHES.cuisine = {
     { key:"menu", name:"MENU.md", role:"completo, se a carta mudou", active:false },
     { key:"conceito", name:"CONCEITO.md", role:"completo, se o conceito da cozinha mudou", active:false },
     { key:"custos", name:"CUSTOS.md", role:"completo, se houve análise de custo/precificação (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Desenvolver uma receita", when:"Quero criar/afinar uma receita partindo do ratio certo.",
@@ -7030,11 +7030,11 @@ NICHES.animation = {
 ## [Próxima cena]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -7069,7 +7069,7 @@ NICHES.animation = {
     { key:"projeto", name:"PROJETO.md", role:"completo, se a premissa/mundo/arco mudou", active:false },
     { key:"estilo", name:"ESTILO.md", role:"completo, se a direção de arte/som/movimento mudou", active:false },
     { key:"producao", name:"PRODUCAO.md", role:"completo, se o escopo/pipeline mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Explorar conceito / história", when:"Tenho uma ideia e quero firmar premissa, tom e arco antes de roteirizar.",
@@ -7369,11 +7369,11 @@ QUADRO 2 — [...]
 > Se há páginas duplas, o que elas fazem (panorama, grande momento) e como L/R se combinam.
 - [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -7404,7 +7404,7 @@ QUADRO 2 — [...]
     { key:"personagens", name:"PERSONAGENS.md", role:"completo, se um personagem/design foi firmado ou evoluiu", active:false },
     { key:"obra", name:"OBRA.md", role:"completo, se a premissa/arco/tom mudou", active:false },
     { key:"mundo", name:"MUNDO.md", role:"completo, se um fato novo do mundo foi estabelecido", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Explorar conceito / história", when:"Tenho uma ideia e quero firmar premissa, tom e arco antes de roteirizar.",
@@ -8618,7 +8618,7 @@ function buildClaudeMd(niche){
     const beh = fileBehaviorLabel(f);
     L.push(`| \`${f.name}\` | ${beh} | ${f.role} |`);
   });
-  L.push(`| \`logs/AAAA-MM-DD.md\` | Histórico | Ao final de cada sessão (formato em LOG-TEMPLATE). **Duas sessões no mesmo dia = o MESMO arquivo**, com \`## Sessão N\` para cada uma — o nome é da data, não da sessão; arquivo novo por sessão quebra o nome. |`);
+  L.push(`| \`logs/AAAA-MM-DD.md\` | Histórico | Ao bater um gatilho de evento — cortar versão, registrar decisão ou bug grave, virar o dia (formato em LOG-TEMPLATE). **Duas conversas no mesmo dia = o MESMO arquivo**, com \`## Conversa N\` para cada uma — o nome é da data, não da conversa; arquivo novo por conversa quebra o nome. |`);
   L.push("| `analises/AAMMDD-ANALISE-<tema>.md` | Cresce (uma por decisão) | Antes de uma mudança não-trivial — a pasta nasce no primeiro uso. |");
 
   // Análise antes do compromisso (wo0063) — universal: vale com ou sem repo, nos dois modos
@@ -8650,7 +8650,7 @@ function buildClaudeMd(niche){
   const hasChangelog = (niche.contextFiles||[]).some(f=>/CHANGELOG/i.test(f.name));
   const hasRoadmap = (niche.contextFiles||[]).some(f=>/ROADMAP/i.test(f.name));
   HYGIENE_RULES.forEach(r => {
-    if(!hasChangelog) r = r.replace(" e vai para o CHANGELOG (e para o log da sessão)", " e vai para o log da sessão");
+    if(!hasChangelog) r = r.replace(" e vai para o CHANGELOG (e para o log do dia)", " e vai para o log do dia");
     if(!hasRoadmap)   r = r.replace(" Médio/longo prazo vive no ROADMAP, não no STATUS.", " Planos de médio/longo prazo não incham o STATUS.");
     L.push(`- ${r}`);
   });
@@ -8739,19 +8739,23 @@ function buildClaudeMd(niche){
   L.push("- **Sonda** — script **determinístico** que a raia de planejamento escreve, a de execução roda sobre os dados, e que devolve um relatório pequeno. Responde perguntas que alguém já sabia fazer. **Produz evidência.** É reexecutável: rodar duas vezes (antes/depois de uma mudança) e comparar os dois relatórios é o que prova que a mudança fez o que prometia.");
   L.push("- **Exploração** — passada de leitura **sem hipótese prévia**, feita pela raia de execução, que devolve **candidatos a checagem**. Descobre as perguntas que ninguém fez. **Produz hipótese.**");
   L.push("");
-  L.push("**Funil:** `exploração` (levanta a pergunta) → `sonda` (mede) → `análise` (raciocina) → ordem de trabalho (muda). **Nenhuma das duas é ordem de trabalho:** não têm âncora, não têm commit, não mudam o repositório. O relatório é a única saída.");
+  L.push("**Funil:** `exploração` (levanta a pergunta) → `sonda` (mede) → **`instrumento`** (mede sempre) → `análise` (raciocina) → ordem de trabalho (muda). **Exploração e sonda não são ordem de trabalho:** não têm âncora, não têm commit, não mudam o repositório. O relatório é a única saída.");
+  L.push("");
+  L.push("**O terceiro estado: sonda que amadurece vira instrumento — e aí passa a dar veredito, de propósito.** Script que ninguém roda sozinho, sem teste, tem vida curta. Quando a mesma medição vale para sempre, ela sai do descartável e entra no produto: **versionada, com teste, e devolvendo código de erro quando o que ela mede está errado.** Aí é comando entregue, não sonda — e a proibição de veredito **deixa de valer**, porque instrumento que não reprova ninguém roda.");
+  L.push("- **Gatilho da promoção: a sonda foi rodada uma SEGUNDA vez para comparar antes/depois.** A partir daí ela não é mais descartável — é instrumento sem teste, e o custo de deixá-la assim só cresce.");
+  L.push("- **A promoção exige o oposto do descarte.** A sonda vive fora do que sobe ao Projeto; o instrumento é versionado, testado e citado nas decisões. Confundir os dois nas duas direções custa: script frágil virando dependência, ou medição madura sendo reescrita do zero a cada vez.");
   L.push("");
   L.push("**Três propriedades do relatório — as três juntas, ou o relatório vira lixo:**");
   L.push("1. **Tabela e contagens, nunca prosa.** Número solto é contestável; número ao lado do comando que o produziu, não.");
   L.push("2. **O que NÃO foi olhado é declarado.** Sem isso, ausência vira zero na leitura seguinte — e zero é um fato, ausência não. Seção que não pôde ser medida sai marcada como não conferida, **nunca omitida**.");
-  L.push("3. **Nada truncado em silêncio.** Lista cortada mostra o TOTAL. Inventário paginado é inventário errado, e o item que ficou de fora é o que ninguém vai procurar depois.");
+  L.push("3. **Nada truncado em silêncio, e amostra nunca se apresenta como cobertura.** São dois defeitos diferentes: truncar esconde o FIM da lista (lista cortada mostra o TOTAL); amostrar esconde que a lista nem foi lida inteira. `os 3 primeiros` num relatório sem a palavra «amostra» vira, na leitura seguinte, «conferi tudo» — e ninguém volta para checar. Se olhou uma parte, diga **quantos de quantos**.");
   L.push("");
   L.push("**Nenhuma das duas dá veredito, e a razão é a que importa: teste de conformidade não detecta que a especificação está errada.** A sonda relata o fato e **não nomeia a causa** — ausências de origens diferentes produzem o mesmo sintoma. Decidir é da raia de planejamento, com o dono.");
   L.push("- **Existência não é aptidão.** «Está no disco?» e «o que está no disco presta?» são perguntas diferentes, e instrumento que só sabe contar responde sempre a primeira. Caso real: um relatório verde em tudo — arquivos existem, extensão certa, índice bate — sobre imagens destruídas por dentro, porque **nenhum instrumento abriu uma imagem**. Ao escrever uma sonda, pergunte o que ela NÃO abre.");
   L.push("- **A exploração não parte da lista de checagens da sonda.** Se ela só olhar onde a sonda já olha, ela só acha o que a sonda já acharia. É a mesma regra do inventário — a lista sai do artefato, não de quem já a escreveu — vista uma camada acima.");
   L.push("- **Todo achado vem com o comando que o reproduz.** Achado sem forma de reproduzir não entra: vai para «observações descartadas», com o motivo. Número contado de cabeça não vale.");
   L.push("");
-  L.push("**Onde mora.** Script e relatórios ficam **fora** do que sobe ao Projeto (workspace ao lado do repositório, ou pasta ignorada) — são grandes e reexecutáveis. Nome com **carimbo de tempo primeiro** e o tipo depois (`AAMMDD-HHMM-EXPLORACAO.md`, `AAMMDD-HHMM-CONFERENCIA.md`), para a pasta se ordenar sozinha. O que sobe ao registro é o que foi **extraído** deles: um número no `DECISIONS`, um candidato no `IDEAS`. O relatório é insumo, não memória.");
+  L.push("**Onde mora — e este é um padrão, não uma regra.** Por omissão, script e relatórios ficam **fora** do que sobe ao Projeto (workspace ao lado do repositório, ou pasta ignorada): são grandes, reexecutáveis, e o que importa deles é o que se extrai. Nome com **carimbo de tempo primeiro** (`AAMMDD-HHMM-EXPLORACAO.md`), para a pasta se ordenar sozinha. **Versionar em vez de descartar é uma escolha legítima, e tem um preço a pagar em voz alta:** ganha-se a comparação antes/depois (que só existe se os dois relatórios sobreviverem) e o tema no nome (`AAMMDD-SONDA-<tema>.md`, que se lê sem abrir); paga-se em repositório maior e no risco de o relatório velho ser lido como estado atual. Quem versiona, registra a escolha. O que sobe ao registro continua sendo o **extraído**: um número no `DECISIONS`, um candidato no `IDEAS`.");
   L.push("");
   L.push("## Correspondência entre projetos — quando o interlocutor é outro assistente");
   L.push("");
@@ -8772,10 +8776,10 @@ function buildClaudeMd(niche){
   L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. E distinga do caso em que o dado **não é legível por este canal**: num Projeto alimentado por cópia achatada não há `.git`, então nenhum `git log` existe para ler — aí escreva «commit não legível pelo mount» e **peça uma vez** (`git log -1 --oneline`), em vez de repetir a ressalva todo turno. **A linha abre com o carimbo `Base:`** — qual arquivo foi lido NESTE turno para saber o estado, com a data que ELE declara e o commit/versão que ELE traz (`Base: _MANIFEST 02/08 23:40 · d423747 · 3 .txt`). Sem cópia achatada, use o que houver: o doc de estado do projeto e a data dele. O carimbo existe porque campo de verificação genérico é inauditável — quem lê não sabe se você leu ou lembrou —, enquanto uma data que o próprio usuário gerou ele confere num olhar. Carimbo inventado é mentira detectável; campo vago não é. «Não verifiquei» é desleixo; «não dá para ler daqui» é fato, e o remédio de cada um é diferente. **Se o manifesto da cópia achatada já trouxer o estado do repo** (último commit, branch, limpo/sujo), use-o e não peça — registrando que é foto da hora da geração, não do turno. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
   L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**, como a Config e o Handoff: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Nome por nome — e não espere que eu pergunte.");
   L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
-  L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
+  L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de conversa completa: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.");
   L.push("**De quem é este bloco:** da raia de **planejamento** (o assistente no chat). Quem **executa** no Claude Code não fecha assim — fecha com o **relatório de trabalho**: o que fez, o que encontrou que foge do que a tarefa pedia, os arquivos tocados, o resultado do build/validação e o commit. Trocar o relatório por este formulário perde a informação que só quem executou tem.");
   L.push("**Este formato é o ponto de partida, não uma jaula.** Se este projeto tem um dado recorrente que merece linha própria (prazo, custo, publicação, estoque, o que for), acrescente — e se uma linha nunca se aplica aqui, proponha removê-la no refino.");
-  L.push("Vale para todo turno de trabalho, não só ao encerrar a sessão: é o que me deixa retomar sem reconstruir contexto.");
+  L.push("Vale para todo turno de trabalho, não só ao encerrar a conversa: é o que me deixa retomar sem reconstruir contexto.");
   L.push("");
   L.push("- **Sincronia com o CEREBRO.** Quando uma customização estrutural entra no CEREBRO (novo modo, novo arquivo, mudança de processo), a versão curta das Instruções pode ficar para trás e até contradizê-lo. Ao mexer no CEREBRO, cheque se as Instruções ainda batem; se divergirem, proponha alinhar/regenerar a versão curta.");
   L.push("- **Uma regra por linha, verbo no imperativo, sem preâmbulo.** Prosa explicativa vive no CEREBRO.");
@@ -9394,6 +9398,12 @@ function buildWoTemplate(){
     "      - **Prova de vida:** quando \"passou\" se parece com \"nada aconteceu\", o passo precisa do par negativo",
     "        que forca o sinal. Lista vazia so significa alguma coisa depois de voce ter visto a mesma checagem",
     "        devolver um item.",
+    "      - **`grep` casa por LINHA.** Se a frase que voce mandou conferir esta quebrada em duas linhas — e o",
+    "        proprio texto que a WO insere costuma quebra-la —, o `grep` devolve zero e o passo acusa ausencia",
+    "        onde ha presenca. Conferir frase que atravessa linha pede `grep -Pzo`, `rg -U` ou uma ancora curta",
+    "        que caiba numa linha so. Vale a regra geral: **ausencia relatada por instrumento e uma afirmacao",
+    "        e precisa de prova, igual a qualquer outra** — antes de reportar «nao achei», confirme que o",
+    "        instrumento saberia achar.",
     "",
     "## Relatorio de aplicacao *(quem aplica preenche ao terminar)*",
     "",
@@ -9423,7 +9433,7 @@ function buildCodeKitFiles(){
   const claudeMd = [
     "# <NOME DO PROJETO> — guia para o Claude Code",
     "",
-    "> Arquivo-raiz lido pelo Claude Code em toda sessão. Mantenha CURTO (< 200 linhas — custa token em todo turno).",
+    "> Arquivo-raiz lido pelo Claude Code em todo turno. Mantenha CURTO (< 200 linhas — custa token em todo turno).",
     "> Regra prática: se remover uma linha e o Claude ainda acerta, ela não pertence aqui. Procedural detalhado → vira skill em `.claude/skills/`.",
     "> O comportamento detalhado do assistente está em `meta/CEREBRO.md`.",
     "",

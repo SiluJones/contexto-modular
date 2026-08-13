@@ -338,11 +338,11 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 ## Tutorial narrativo
 (que mecânica é ensinada por qual cena — ensinar JOGANDO, dentro da história, não por caixa de texto)
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -383,7 +383,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
     { key:"universo", name:"UNIVERSO.md", role:"completo, se surgiu fato novo de lore/mundo/personagem", active:false },
     { key:"roteiro", name:"ROTEIRO.md", role:"completo, se cena/missão/diálogo ramificado foi escrito ou alterado", active:false },
     { key:"arte", name:"ARTE-E-SOM.md", role:"completo, se a direção audiovisual mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Explorar conceito / core loop", when:"Tenho uma ideia de jogo e quero firmar a experiência e o loop antes de detalhar.",

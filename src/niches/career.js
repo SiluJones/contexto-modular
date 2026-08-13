@@ -315,7 +315,7 @@ Uma entrada por fato. Formato:
 [O que fazer na próxima sessão.]
 `
     },
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# logs/AAAA-MM-DD.md — log de sessão
 
 ## O que aconteceu
@@ -344,7 +344,7 @@ Uma entrada por fato. Formato:
     { key:"decisoes", name:"DECISIONS.md", role:"completo, se houve decisão (com contra-argumento e risco)", active:true },
     { key:"dossie", name:"DOSSIE.md", role:"completo, se o retrato mudou (só com lastro em EVIDENCIAS)", active:false },
     { key:"mercado", name:"MERCADO.md", role:"completo, se houve pesquisa de faixa/vaga ou movimento no pipeline", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Minerar um projeto em evidência", when:"Quero transformar um projeto meu (os meta/, o repo) em prova de competência.",

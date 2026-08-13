@@ -139,7 +139,7 @@ projeto/
     {name:"STATUS.md", cat:"ctx", role:"O agora: o que funciona, o que está em progresso, o que está quebrado, backlog curto. Rolante — o resolvido sai.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: descreve só o AGORA. O assistente lê no início para saber onde retomar.
-> Item resolvido SAI daqui — vai para o CHANGELOG (se foi entrega) e/ou para o log da sessão.
+> Item resolvido SAI daqui — vai para o CHANGELOG (se foi entrega) e/ou para o log do dia.
 > Médio e longo prazo NÃO ficam aqui — ficam no ROADMAP.
 
 ---
@@ -274,10 +274,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** Este arquivo é o MOLDE — não é substituído.
-> Ao final de cada sessão, o assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
 > Os logs vivem em \`logs/\` no Git (NÃO no Projeto) e são lidos só sob demanda — quando você precisar recuperar o detalhe de uma sessão antiga.
 
 ---
@@ -378,10 +378,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
     {key:"status", name:"STATUS.md", role:"completo e atualizado (rolante: o resolvido sai)", active:true},
     {key:"changelog", name:"CHANGELOG.md", role:"completo, com nova entrada se algo foi concluído", active:true},
     {key:"decisions", name:"DECISIONS.md", role:"completo, com nova DEC/FIX se houve decisão ou bug grave", active:true},
-    {key:"ideas", name:"IDEAS.md", role:"completo, com as ideias da sessão capturadas e reclassificadas", active:true},
+    {key:"ideas", name:"IDEAS.md", role:"completo, com as ideias da conversa capturadas e reclassificadas", active:true},
     {key:"roadmap", name:"ROADMAP.md", role:"completo, se alguma fase mudou de estado (quando o projeto usa roadmap)", active:false},
     {key:"glossary", name:"GLOSSARY.md", role:"completo, se surgiu termo novo (quando o projeto usa glossário)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Debugar com método", when:"Apareceu um bug e quero a causa raiz, não um band-aid.",

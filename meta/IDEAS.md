@@ -585,6 +585,17 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-13 — O merge dos `fusao` do Mapsmith: quatro achados, e o kit publicava o que mandava varrer (D-128, wo0094)
+Eles leram o `CEREBRO__template-update.md` inteiro e devolveram o §6. **O achado mais constrangedor é o (a):** o kit mandava os projetos varrerem a cadência «ao final de cada sessão» e **continuava publicando-a em 15 linhas** — CEREBRO, Instruções, `CLAUDE.md` e os modelos de 16 nichos. É a D-125 uma camada acima.
+
+**O achado de maior valor é o terceiro estado do funil**, com decisão registrada por trás (a DEC-0033 deles): *sonda que amadurece vira **instrumento** — versionado, testado, com veredito.* A proibição de veredito estava certa para a sonda e errada ao generalizar; e a regra «fica fora do repositório» **impedia exatamente a promoção**. Gatilho, dado por eles: *a sonda foi rodada uma segunda vez para comparar antes/depois*.
+
+**E a refinaria que eles nos deram ontem (MANDA × RELATA, D-127) pagou-se hoje na nossa própria varredura:** as 33 ocorrências de «sessão» do nicho de RPG são vocabulário de mesa de jogo e ficaram todas.
+
+**Parqueado com gatilho — a exceção à D-119.** Eles propõem: *«registro que depende de validação pendente pode atravessar um turno, desde que a WO que o carrega já esteja escrita»*, com caso real (a wo0076 deles desfez um «resolvido» registrado antes da validação). É provavelmente certa e **muda o critério de aceite de um fecho** — precisa de decisão do autor, não de carona. *Gatilho: a decisão do autor, ou um segundo projeto relatando o mesmo aperto.*
+
+**Aberto de lá:** o merge do `INSTRUCOES-DO-PROJETO.md` (eles seguram até decidir o CEREBRO — corretamente, para não decidir duas vezes) e as quatro perguntas item a item que eles fizeram ao autor.
+
 ### 2026-08-13 — O primeiro merge real (Mapsmith): três defeitos nossos, e a confirmação de que a varredura por fato vale (D-127, wo0093)
 O pacote chegou e o merge fez o que o kit projetou: **leu, varreu pelo fato, não aplicou nada, reportou.** Voltaram três defeitos, todos nossos — carimbo de modos ambíguo (`skills nao` num pacote que envia duas skills), revogação sem escopo (trocar «sessão» num custo medido falsifica o registro), e **uma afirmação nossa sobre o repositório deles refutada com evidência** (sem `Write` o efeito é pedir aprovação, não negar; os logs e relatórios existem).
 

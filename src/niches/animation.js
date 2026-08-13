@@ -284,11 +284,11 @@ NICHES.animation = {
 ## [Próxima cena]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -323,7 +323,7 @@ NICHES.animation = {
     { key:"projeto", name:"PROJETO.md", role:"completo, se a premissa/mundo/arco mudou", active:false },
     { key:"estilo", name:"ESTILO.md", role:"completo, se a direção de arte/som/movimento mudou", active:false },
     { key:"producao", name:"PRODUCAO.md", role:"completo, se o escopo/pipeline mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Explorar conceito / história", when:"Tenho uma ideia e quero firmar premissa, tom e arco antes de roteirizar.",

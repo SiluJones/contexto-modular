@@ -294,10 +294,10 @@ NICHES.design = {
 ## Notas da gráfica
 - [Especificidades que o impressor pediu; aprendizados de tiragens anteriores.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -331,7 +331,7 @@ NICHES.design = {
     {key:"decisoes", name:"DECISIONS.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
     {key:"marca", name:"MARCA.md", role:"completo, se o sistema visual mudou (cor, fonte, regra de logo)", active:false},
     {key:"producao", name:"PRODUCAO.md", role:"completo, se uma peça foi para impressão (quando usa o arquivo)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Brief / onboarding do projeto", when:"Começo de projeto — montar o brief e o sistema antes de criar.",

@@ -267,11 +267,11 @@ QUADRO 2 — [...]
 > Se há páginas duplas, o que elas fazem (panorama, grande momento) e como L/R se combinam.
 - [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -302,7 +302,7 @@ QUADRO 2 — [...]
     { key:"personagens", name:"PERSONAGENS.md", role:"completo, se um personagem/design foi firmado ou evoluiu", active:false },
     { key:"obra", name:"OBRA.md", role:"completo, se a premissa/arco/tom mudou", active:false },
     { key:"mundo", name:"MUNDO.md", role:"completo, se um fato novo do mundo foi estabelecido", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Explorar conceito / história", when:"Tenho uma ideia e quero firmar premissa, tom e arco antes de roteirizar.",

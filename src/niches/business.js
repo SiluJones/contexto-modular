@@ -248,11 +248,11 @@ NICHES.business = {
 > Em 3-4 frases: o que estes números contam sobre a saúde e o futuro do negócio.
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -286,7 +286,7 @@ NICHES.business = {
     { key:"analise", name:"ANALISE.md", role:"completo, se uma análise avançou (com premissas e sensibilidade)", active:true },
     { key:"objetivos", name:"OBJETIVOS.md", role:"completo, se um objetivo/KR mudou", active:false },
     { key:"modelo", name:"MODELO-FINANCEIRO.md", role:"completo, se houve modelagem de números (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Diagnosticar uma situação", when:"Quero entender onde o negócio está antes de decidir o que fazer.",

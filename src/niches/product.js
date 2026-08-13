@@ -226,11 +226,11 @@ NICHES.product = {
 > Verdades validadas sobre o usuário/produto — para não retestar.
 - [Aprendizado — de qual experimento veio.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -264,7 +264,7 @@ NICHES.product = {
     { key:"personas", name:"PERSONAS.md", role:"completo, se uma persona/job foi revisto", active:false },
     { key:"jornadas", name:"JORNADAS.md", role:"completo, se uma jornada/oportunidade mudou", active:false },
     { key:"experimentos", name:"EXPERIMENTOS.md", role:"completo, se um experimento rodou (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Discovery de um pedido (job antes de feature)", when:"Chegou um pedido de feature e quero entender o problema antes de construir.",

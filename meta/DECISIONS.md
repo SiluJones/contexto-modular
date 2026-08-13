@@ -1539,3 +1539,27 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Check C48 novo**, com **cinco provas negativas** — e a primeira delas consertou o próprio check: ele afirmava contra o manifesto inteiro e ficava verde com o carimbo antigo, porque a nota explicativa também contém a palavra nova. Passou a recortar a linha do carimbo. **Segundo caso registrado de prova negativa consertando o instrumento** (o primeiro foi o C45, D-123).
 
 `KIT_VERSION 1.112.0`. **Custo de teto ZERO nas cinco edições** — sexta leva seguida: C28 imprime `padrao 6611/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7497/7600`, idêntico à v1.111.0; folga do `narrative` em **289**. `index.html` de **808.190 → 809.172** bytes. Harness **18/18, 91/91 → 92/92, 0 erros**.
+
+---
+
+## D-128 — O kit aplica a própria revogação ao próprio gerado; a sonda ganha o terceiro estado (instrumento); e amostra deixa de passar por cobertura (wo0094)
+
+**Base.** `mapsmith_10_-_Continuação.md` (2026-08-13) — o merge dos `fusao` do Mapsmith, que leu o `CEREBRO__template-update.md` inteiro e devolveu o §6 pedido. Quatro achados, todos nossos.
+
+**(a) O kit mandava varrer uma cadência que continuava publicando.** Eles apontaram dois casos e nomearam a doença: *«é a D-125 violada no gerado»*. A varredura confirmou **15 linhas** — no CEREBRO, nas Instruções, no `CLAUDE.md` e nos modelos de 16 nichos. **Uma lista de revogações desmentida pelo próprio pacote é a erosão do mecanismo**, e é a D-125 reaparecendo uma camada acima: lá era a skill `wrap`, aqui é todo o texto gerado. O C49 passa a varrer o gerado pela **expressão do comportamento** revogado, incluindo o `content` dos modelos que cada nicho entrega — que o CEREBRO não carrega e por isso o primeiro bloco do check não alcançava (a prova negativa 10 passou verde até esse bloco existir).
+
+**(b) O funil parava em dois artefatos, e o terceiro é onde o valor se acumula.** Formulação deles: *«a regra “não dá veredito” está certa para a sonda e erra ao generalizar; o instrumento maduro tem de dar, senão ninguém roda»*. Sonda que amadurece vira **instrumento**: versionada, com teste, devolvendo código de erro. **Gatilho da promoção, dado por eles: a sonda foi rodada uma SEGUNDA vez para comparar antes/depois** — a partir daí não é descartável, é instrumento sem teste. Vem com lastro: o `probe_pacote.py` deles é versionado, tem teste, e serviu de material para o `core/content_check.py`, que retorna `rc=1` quando o pacote está errado.
+
+**(c) «Nada truncado» não cobria amostragem.** *«O caso que nos mordeu não foi truncamento: foi `sorted()[:3]` — amostra que parece cobertura.»* Truncar esconde o **fim** da lista; amostrar esconde que a lista **nem foi lida**. A propriedade 3 passa a nomear os dois, com a saída: se olhou uma parte, diga **quantos de quantos**.
+
+**(d) O lugar da sonda era regra e virou padrão com trade-off nomeado.** Eles versionam em `meta/` com o tema no nome, e a razão é boa — *«o par antes/depois só existe porque estão versionados»*. Era **divergência consciente** e a nossa regra a proibia sem dizer o que se perde dos dois lados. Agora o padrão é descartar, versionar é escolha legítima, e quem versiona registra o desvio. Isto também **destrava a promoção da alínea (b)**: a regra antiga impedia exatamente o caminho que produz o instrumento.
+
+**Espécie nova de passo de verificação errado, da mesma conversa.** Um `grep -c` deu **0** com a frase presente — **quebrada em duas linhas pelo próprio texto que a WO inseria**. `grep` casa por linha. O modelo de WO ganha a espécie, com a regra geral que ela ilustra: *ausência relatada por instrumento é uma afirmação e precisa de prova, igual a qualquer outra* — a mesma que a D-126 registrou quando meu `grep … || echo "ausente"` inventou um arquivo faltando.
+
+**Recusado nesta leva, com gatilho:** a exceção que eles propõem à D-119 — *«registro que depende de validação pendente pode atravessar um turno, desde que a WO que o carrega já esteja escrita»*. Tem caso real por trás (a wo0076 deles, que existiu para desfazer um «resolvido» registrado antes da validação) e é provavelmente certa, mas **muda o critério de aceite de um fecho** e merece decisão do autor, não carona numa WO de varredura.
+
+**Aplicando a regra que eles nos deram — MANDA × RELATA (D-127) — o que ficou:** as 33 ocorrências de «sessão» do `rpg.js` são **vocabulário de domínio** (a mesa de jogo) e ficaram todas; os títulos `## Última sessão` e `## Foco da sessão` são cabeçalho de documento, não instrução de cadência, e ficaram. Saiu só o texto que **manda** fazer algo «ao final de cada/uma sessão». **A refinaria que eles propuseram ontem pagou-se hoje, na nossa própria varredura.**
+
+**Check C49 novo**, com **dez provas negativas** — duas das quais expuseram buracos no próprio check antes de ele entrar: «handoff de sessão» não estava na expressão, e o texto dos modelos de nicho não era alcançado pelo primeiro bloco.
+
+`KIT_VERSION 1.113.0`. **Custo de teto NEGATIVO** — «log do dia» é mais curto que «log da sessão»: C28 sai de `padrao 6611/6900 · combo 7497/7600` para **`padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`**, e a folga do `narrative` sobe de 289 para **295**. `index.html` cresce **+4.369** bytes. Harness **18/18, 92/92 → 93/93, 0 erros**.

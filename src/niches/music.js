@@ -253,11 +253,11 @@ NICHES.music = {
 - **Letra/tema:** [letristas/faixas que inspiram a escrita.]
 - **Groove/ritmo:** [referências de levada.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -291,7 +291,7 @@ NICHES.music = {
     { key:"letras", name:"LETRAS.md", role:"completo, se a letra avançou", active:false },
     { key:"arranjo", name:"ARRANJO.md", role:"completo, se houve decisão de harmonia/arranjo/produção", active:false },
     { key:"projeto", name:"PROJETO.md", role:"completo, se o conceito/sonoridade mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Definir conceito e sonoridade", when:"Começo de projeto — firmar a identidade sonora antes de produzir.",

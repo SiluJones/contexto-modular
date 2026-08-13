@@ -522,10 +522,10 @@ NICHES.narrative = {
 ## Línguas / expressões inventadas
 - **[Palavra/expressão]** — [tradução/sentido; quando se usa.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão de escrita/revisão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -559,7 +559,7 @@ NICHES.narrative = {
     {key:"continuidade", name:"CONTINUIDADE.md", role:"completo, se surgiu fato novo, grafia ou furo resolvido", active:true},
     {key:"personagens", name:"PERSONAGENS.md", role:"completo, se um arco avançou ou traço se firmou", active:false},
     {key:"voz", name:"VOZ.md", role:"completo, se um trecho de prosa aprovado virou referência", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"J", title:"Escrever capítulo/cena (sob direção)", when:"Quero que o assistente ESCREVA — um capítulo, uma cena, um diálogo — na direção que eu der, ancorado na bíblia.",

@@ -257,10 +257,10 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Notas
 - [Combinados sobre forma de pagamento, parcelamento, etc.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** Este é o MOLDE — não é substituído.
-> Ao final de uma sessão de trabalho sobre o cliente, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -294,7 +294,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
     {key:"entregas", name:"ENTREGAS.md", role:"completo, se houve entrega ou aprovação", active:false},
     {key:"comunicacoes", name:"COMUNICACOES.md", role:"completo, se uma mensagem-chave foi enviada (quando usa o arquivo)", active:false},
     {key:"financeiro", name:"FINANCEIRO.md", role:"completo, se houve cotação/fatura/pagamento (quando usa o arquivo)", active:false},
-    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true},
+    {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
     { id:"G", title:"Onboarding de cliente novo", when:"Primeiro contato — montar perfil do cliente e escopo claro.",

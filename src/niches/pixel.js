@@ -269,11 +269,11 @@ NICHES.pixel = {
 ## Props e decoração
 - [Objetos que povoam o cenário — tamanho, paleta, densidade.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -303,7 +303,7 @@ NICHES.pixel = {
     { key:"sprites", name:"SPRITES.md", role:"completo, se um asset foi especificado/criado/atualizado", active:true },
     { key:"estilo", name:"ESTILO.md", role:"completo, se uma regra de estilo mudou (paleta, outline, resolução)", active:false },
     { key:"animacao", name:"ANIMACAO.md", role:"completo, se uma convenção de animação foi definida", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Definir estilo e paleta", when:"Começo de projeto — travar a estética antes de produzir assets.",

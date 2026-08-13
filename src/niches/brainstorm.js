@@ -247,11 +247,11 @@ NICHES.brainstorm = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -285,7 +285,7 @@ NICHES.brainstorm = {
     { key:"mapa", name:"MAPA.md", role:"completo, se clusters/eixos mudaram", active:false },
     { key:"filtros", name:"FILTROS.md", role:"completo, se critérios foram definidos ou aplicados (convergência)", active:false },
     { key:"tema", name:"TEMA.md", role:"completo, se a pergunta/enquadramento mudou", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Enquadrar o problema (a pergunta certa)", when:"Antes de gerar ideias, quero ter certeza de que estou perguntando a coisa certa.",

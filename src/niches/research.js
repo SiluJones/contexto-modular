@@ -272,11 +272,11 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 5. [Autópsia de um problema resolvido]
 [Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
-> Ao final de uma sessão, o assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
+> O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
 
 ---
 
@@ -307,7 +307,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
     { key:"hipoteses", name:"HIPOTESES.md", role:"completo, se uma hipótese mudou de status", active:true },
     { key:"sintese", name:"SINTESE.md", role:"completo, se o argumento avançou", active:true },
     { key:"glossario", name:"GLOSSARY.md", role:"completo, se um conceito foi definido (quando usa o arquivo)", active:false },
-    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log da sessão preenchido (formato em LOG-TEMPLATE.md)", active:true },
+    { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
     { id:"G", title:"Mapear a literatura (a partir de uma fonte-semente)", when:"Começo da revisão — quero descobrir o terreno sem cair em citação inventada.",
