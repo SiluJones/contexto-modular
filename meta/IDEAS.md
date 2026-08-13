@@ -585,6 +585,13 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-12 — Conferência do pacote antes de entregá-lo: o gerado contradizia a própria revogação (D-125, wo0091)
+O pacote de update da v1.110.0 foi **gerado e lido arquivo por arquivo** antes de ir para os dois projetos. A skill `wrap` publicada pedia o comando de commit ao dono duas linhas acima de mandar o executor empurrar sozinho — a correção da D-115 tinha sido acrescentada sem remover a frase antiga, e o pacote entregaria a linha revogada junto do pedido de removê-la.
+
+**A lição de método, que vale mais que a correção:** o harness emitia aquela string havia seis versões. Todos os checks sobre skills perguntavam o que o gerado **tem**; nenhum perguntava o que ele **não pode ter**. Regra geral: *para cada linha que o kit revoga, o gerado precisa provar a ausência dela* — e a prova tem de ser dirigida pela lista de revogações, não por uma cópia da lista dentro do check.
+
+**E a segunda lição, mais velha e mais teimosa:** foi **abrir o artefato final** que pegou. É o FIX-0010 do Mapsmith num objeto de texto: existência não é aptidão, e nenhum instrumento estava abrindo o pacote. *Ao escrever um instrumento, pergunte o que ele NÃO abre.*
+
 ### 2026-08-12 — Pré-voo dos pacotes de update: as revogações estavam três decisões atrasadas (D-124, wo0090)
 O autor pediu certeza antes de atualizar os dois projetos. A varredura dos arquivos vivos deles achou o **mesmo defeito que ele sofreu aqui em 12/08** — as duas skills `wrap` ainda entregam os blocos de `git` para o dono colar, e os dois `CEREBRO.md` carregam «blocos soltos», «bloco de commit pronto para copiar» e o vocabulário «sessão». **E o pacote de update, como estava, não consertaria:** a regra «template genérico nunca substitui arquivo vivo refinado» preserva a skill viva com a linha revogada dentro. `REVOCATIONS` tinha uma entrada, de v1.90.0; D-115, D-118 e D-119 nunca foram registradas.
 

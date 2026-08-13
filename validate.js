@@ -649,6 +649,18 @@ check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do p
     });
   });
 
+  // (2b) o GERADO nao pode conter a propria linha que a lista de revogacoes manda remover.
+  //      Ficou contraditorio por seis versoes: a correcao da D-115 foi ACRESCENTADA e a frase
+  //      antiga continuou logo acima. Um pacote de update nessas condicoes entrega a linha
+  //      revogada e, no mesmo envio, manda o projeto remove-la.
+  [["wrap", kit.wrap], ["applyWo", kit.applyWo]].forEach(([nome, txt]) => {
+    T.REVOCATIONS.forEach(r => {
+      if(!/skill/i.test(r.porque||"")) return;
+      const chave = /comando de commit|bloco de commit/;
+      assert(!chave.test(txt), "a skill GERADA "+nome+" ainda pede o comando/bloco de commit ao dono — e a mesma linha que a revogacao v"+r.desde+" manda os projetos removerem; o pacote entregaria o defeito e o pedido de remove-lo no mesmo envio");
+    });
+  });
+
   // (2) a regressao especifica que originou este check, nomeada para nao voltar disfarcada
   assert(!/para eu copiar isolado/i.test(instWrap), "o `/wrap` instalado voltou a entregar bloco de git para o dono colar — quem tem terminal roda; entregar bloco e trocar de raia (FK-L do sand-land)");
   assert(!/comando de commit pronto/i.test(instWrap), "o `/wrap` instalado voltou a prometer 'o comando de commit pronto' em vez de executar");

@@ -1473,3 +1473,27 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Check C46 novo**, com **sete provas negativas**: revogação do bloco de git ausente · revogação sem substituto · revogação do vocabulário ausente · revogação do modo Code ausente · manifesto varrendo por string · prompt não priorizando as skills · entrada com «porque» curto demais para permitir a varredura por fato.
 
 `KIT_VERSION 1.110.0`. **Custo de teto ZERO nas seis edições** — quarta leva seguida: C28 imprime `padrao 6611/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7497/7600`, idêntico à v1.109.0; folga do `narrative` em **289**. `index.html` de **801.792 → 805.160** bytes. Harness **18/18, 89/89 → 90/90, 0 erros**.
+
+---
+
+## D-125 — O gerado não pode conter a linha que ele mesmo revoga: a skill `wrap` publicada parava de se contradizer, e o C43 passa a cobrar isso pela lista de revogações (wo0091)
+
+**Base.** Conferência do pacote de update da v1.110.0, feita **antes** de entregá-lo aos dois projetos irmãos. O defeito foi achado **lendo o pacote**, não o fonte.
+
+**O defeito.** A skill `wrap` que o kit publica dizia, em duas linhas consecutivas: *«e me mostre o `git diff` e o comando de commit (uma linha por comando…)»* e, logo abaixo, *«Verde: `add`, `commit` e `push` sem perguntar»*. A correção da D-115 foi **acrescentada** e a frase antiga **continuou**. O `description` do front-matter repetia o erro — e é o que o modelo lê primeiro para decidir se invoca a skill.
+
+**Por que era bloqueante.** A wo0090 acabara de registrar a revogação cujo texto é essa mesma frase, para que os projetos irmãos a removessem. **O pacote entregaria a linha revogada e, no mesmo envio, o pedido de removê-la.** Um assistente cuidadoso do outro lado pararia e perguntaria; um menos cuidadoso concluiria que a revogação está errada — e a próxima revogação valeria menos. Uma lista de revogações contradita pelo próprio pacote não é um erro de texto: é a erosão do mecanismo.
+
+**Por que sobreviveu a seis versões.** O C43 compara instalado × gerado por **cláusulas afirmativas** — «tem o caso verde?», «tem o menu?», «tem a ordem do push?» — e o gerado tinha todas. **Ninguém perguntava se o gerado tinha também o que a lista de revogações manda tirar.** Mesma família da D-124: a lista existia para o instalado e não era aplicada à própria saída do gerador.
+
+**E o achado só veio da leitura do artefato final.** O harness emitia aquela string havia seis versões sem reclamar; foi abrir os 21 arquivos do pacote que pegou. É o FIX-0010 do Mapsmith num objeto de texto — *existência não é aptidão*, e nenhum instrumento estava abrindo o pacote. Reforça a regra da D-122 na sua forma mais geral: **ao escrever um instrumento, pergunte o que ele NÃO abre.**
+
+**O que NÃO foi tocado, de propósito.** A regra da raia de planejamento no CEREBRO e nas Instruções — *o assistente fecha a resposta com o bloco de commit pronto para copiar* — está **certa**: o chat não tem disco, e é o par da FK-L(b), *entrega bloco quem NÃO pode rodá-lo*. A revogação da D-124 está corretamente escopada a **skills**, e o `porque` dela diz isso; o check novo lê esse escopo em vez de repeti-lo.
+
+**A verificação passou a ser dirigida pela lista, não por uma cópia dela.** O trecho novo do C43 percorre `REVOCATIONS`, seleciona as entradas cujo `porque` menciona skill, e afirma a **ausência** nos dois arquivos gerados. Quando uma revogação nova entrar com esse escopo, ela passa a ser cobrada sozinha, sem edição no check — o oposto do instantâneo copiado que a D-123 proibiu.
+
+**Corrigido de carona:** o `description` da skill dizia «fechar a sessão de trabalho», resíduo da D-118 que a varredura daquela WO não alcançou porque as skills não passam por `buildInstr`.
+
+**Duas provas negativas:** a frase contraditória de volta no corpo; e o `description` voltando a prometer o comando de commit. As duas reprovam o C43 sozinhas.
+
+`KIT_VERSION 1.110.1` (correção). **Custo de teto ZERO** — skills não passam por `buildInstr`: C28 idêntico à v1.110.0. `index.html` de **805.160 → 805.153** bytes: sete a menos, porque a correção **encolhe**. Harness **18/18, 90/90, 0 erros** (nenhum check novo — o C43 cresceu).
