@@ -1563,3 +1563,21 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Check C49 novo**, com **dez provas negativas** — duas das quais expuseram buracos no próprio check antes de ele entrar: «handoff de sessão» não estava na expressão, e o texto dos modelos de nicho não era alcançado pelo primeiro bloco.
 
 `KIT_VERSION 1.113.0`. **Custo de teto NEGATIVO** — «log do dia» é mais curto que «log da sessão»: C28 sai de `padrao 6611/6900 · combo 7497/7600` para **`padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`**, e a folga do `narrative` sobe de 289 para **295**. `index.html` cresce **+4.369** bytes. Harness **18/18, 92/92 → 93/93, 0 erros**.
+
+---
+
+## D-129 — A refinaria MANDA × RELATA tem um terceiro caso: título que define a UNIDADE do documento muda junto. E a exceção de domínio sai da disciplina e entra no instrumento (wo0095)
+
+**Base.** `mapsmith_10_-_v3.md`, bloco 8 (2026-08-13). Eles compararam o `LOG-TEMPLATE` do pacote linha a linha com o deles e **recusaram adotá-lo**: *«adotar seria regredir»*. Estavam certos.
+
+**O erro foi meu, por excesso de zelo com a regra que eles mesmos nos deram.** A D-127 diz que a revogação atinge o texto que **manda**, não o que **relata**. Apliquei na wo0094 e classifiquei `## Objetivo da sessão` e `Formato do Log de Sessão` como **título**, portanto rótulo, portanto fica. **Faltou o terceiro caso:** há título que **rotula** e título que **estrutura**. Este documento mudou de unidade — o log passou a ser por **dia**, com `## Conversa N` para cada conversa. Um arquivo por dia cujo corpo pergunta *«qual era o objetivo da sessão»* e cujo fim aponta para *«a próxima sessão»* **não tem rótulo desatualizado: tem a unidade errada**, e quem preenche escreve uma sessão por arquivo enquanto o nome do arquivo desmente.
+
+**A refinaria fica com três casos:** *manda* → sai; *relata* → fica (reescrever falsifica o registro); *estrutura* → **sai, porque define a unidade e a unidade mudou**.
+
+**E um quarto caso ganha lugar no instrumento, não na disciplina: o domínio.** No nicho de RPG, «sessão» é a mesa de jogo — `SESSAO.md`, `Log — Sessão [N]`, `Prep da próxima sessão` — e o log dele é mesmo por sessão. A wo0094 preservou as 33 ocorrências **à mão**, contando com quem varre lembrar. Agora o C49 traz `DOMINIO_SESSAO = new Set(["rpg"])`, com o motivo escrito ao lado: **exceção nomeada, não silenciosa**. A prova negativa 6 remove a exceção e confirma que sem ela o nicho reprova — isto é, que ela carrega peso.
+
+**Um caso que a wo0094 não tinha alcançado:** `career.js` trazia `# logs/AAAA-MM-DD.md — log de sessão`, o título do próprio arquivo de log, que é o mais estrutural de todos.
+
+**Nota de método.** É a segunda vez que o Mapsmith devolve uma regra melhor que a nossa e a terceira que o retorno do merge conserta o kit em vez do projeto. **A varredura por fato (D-124) já se pagou três vezes**, e desta vez o que ela achou foi a nossa própria aplicação errada da regra que eles nos deram no dia anterior.
+
+`KIT_VERSION 1.114.0`. **Custo de teto ZERO** — títulos vivem nos modelos de nicho, fora de `buildInstr`: C28 permanece `padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`, folga do `narrative` em **295**. `index.html` de **813.541 → 813.428** bytes: 113 a menos, a correção encolhe. Harness **18/18, 93/93, 0 erros** (nenhum check novo — o C49 cresceu).

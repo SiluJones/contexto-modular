@@ -179,7 +179,7 @@ NICHES.cuisine = {
 ## ⚠️ Atenção
 - [Algo destoando do conceito; custo estourando; alérgeno a revisar; receita que não está clara.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -248,7 +248,7 @@ NICHES.cuisine = {
 
 # Log — AAAA-MM-DD · [Projeto]
 
-## Foco da sessão
+## Foco do dia
 [Desenvolvimento de receita, ajuste de menu, técnica, custo.]
 
 ## Testes / provas

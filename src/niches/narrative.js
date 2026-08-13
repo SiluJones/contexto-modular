@@ -443,7 +443,7 @@ NICHES.narrative = {
 ## Em revisão (se aplicável)
 - [O que está sendo revisado e em que modo: estrutural / desenvolvimento / copy / line.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + a próxima escrita óbvia.]
 `},
     {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -522,7 +522,7 @@ NICHES.narrative = {
 ## Línguas / expressões inventadas
 - **[Palavra/expressão]** — [tradução/sentido; quando se usa.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -531,7 +531,7 @@ NICHES.narrative = {
 
 # Log — AAAA-MM-DD · [Obra]
 
-## Foco da sessão
+## Foco do dia
 [Escrita de cena nova, revisão (qual modo), planejamento de enredo, calibragem de voz.]
 
 ## Escrito / avançado

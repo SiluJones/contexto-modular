@@ -312,11 +312,11 @@ Uma entrada por fato. Formato:
 - [ ] [a decisão que está esperando informação — e QUAL informação falta.]
 
 ## Próximo passo (um só)
-[O que fazer na próxima sessão.]
+[O que fazer no próximo turno.]
 `
     },
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# logs/AAAA-MM-DD.md — log de sessão
+      content:`# logs/AAAA-MM-DD.md — log do dia
 
 ## O que aconteceu
 [Fatos do dia: entregas, pedidos, conversas.]

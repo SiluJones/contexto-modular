@@ -241,7 +241,7 @@ NICHES.rpg = {
 ## ⚠️ Atenção
 - [Spotlight desequilibrado (um PJ sumindo)? tom da mesa? algo de Session Zero a reforçar?]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [resumo de 2-4 linhas + onde parou + próximo passo óbvio. Detalhe completo em CAMPANHA.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê

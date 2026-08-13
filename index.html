@@ -1279,7 +1279,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.113.0";
+const KIT_VERSION = "1.114.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1453,7 +1453,7 @@ projeto/
 - [ ] [Item concreto e pequeno.]
 - [ ] [...]
 
-## 💬 Última Sessão
+## 💬 Última conversa
 **[data]** — [2-4 linhas: o que foi feito, onde parou, qual o próximo passo óbvio. É a primeira coisa que o assistente lê para retomar o fio.]
 `},
     {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões de arquitetura (DEC) e bugs graves resolvidos (FIX). Cresce devagar.", content:`# DECISIONS.md — Registro de Decisões
@@ -1565,17 +1565,17 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este arquivo é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
-> Os logs vivem em \`logs/\` no Git (NÃO no Projeto) e são lidos só sob demanda — quando você precisar recuperar o detalhe de uma sessão antiga.
+> Os logs vivem em \`logs/\` no Git (NÃO no Projeto) e são lidos só sob demanda — quando você precisar recuperar o detalhe de um dia antigo.
 
 ---
 
 # Log — AAAA-MM-DD
 
-## Objetivo da sessão
+## Objetivo do dia
 [O que se pretendia fazer ao começar.]
 
 ## Feito
@@ -1591,10 +1591,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 - [O que descobrimos que vale virar armadilha em CONTEXT.md.]
 
 ## Onde parei
-[Estado exato ao encerrar + próximo passo óbvio. Isto alimenta o «Última Sessão» do STATUS.]
+[Estado exato ao encerrar + próximo passo óbvio. Isto alimenta o «Última conversa» do STATUS.]
 
 ## Próximos passos
-- [Ações para a próxima sessão.]
+- [Ações para o próximo turno.]
 `},
     {name:"ROADMAP.md", cat:"opcional", role:"OPCIONAL — plano deliberado de evolução em fases. Use quando o projeto tem direção de médio/longo prazo.", content:`# ROADMAP.md — Plano Intencional de Evolução
 
@@ -1961,7 +1961,7 @@ NICHES.design = {
 ## Próxima ação + prazo
 - [O próximo passo concreto + data + de quem é.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que rolou + onde parou + próximo passo óbvio.]
 `},
     {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", content:`# PRODUCAO.md — Pré-impressão e Exportação
@@ -2001,7 +2001,7 @@ NICHES.design = {
 ## Notas da gráfica
 - [Especificidades que o impressor pediu; aprendizados de tiragens anteriores.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -2010,7 +2010,7 @@ NICHES.design = {
 
 # Log — AAAA-MM-DD · [Projeto]
 
-## Foco da sessão
+## Foco do dia
 [Conceito, criação de peça, revisão, pré-impressão, apresentação.]
 
 ## Feito
@@ -2333,7 +2333,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Notas
 - [Combinados sobre forma de pagamento, parcelamento, etc.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.
@@ -2342,7 +2342,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 
 # Log — AAAA-MM-DD · [Cliente]
 
-## Foco da sessão
+## Foco do dia
 [O que se trabalhou: revisão, comunicação, planejamento, etc.]
 
 ## Interações com o cliente
@@ -2854,7 +2854,7 @@ NICHES.narrative = {
 ## Em revisão (se aplicável)
 - [O que está sendo revisado e em que modo: estrutural / desenvolvimento / copy / line.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + a próxima escrita óbvia.]
 `},
     {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -2933,7 +2933,7 @@ NICHES.narrative = {
 ## Línguas / expressões inventadas
 - **[Palavra/expressão]** — [tradução/sentido; quando se usa.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -2942,7 +2942,7 @@ NICHES.narrative = {
 
 # Log — AAAA-MM-DD · [Obra]
 
-## Foco da sessão
+## Foco do dia
 [Escrita de cena nova, revisão (qual modo), planejamento de enredo, calibragem de voz.]
 
 ## Escrito / avançado
@@ -3217,7 +3217,7 @@ NICHES.marketing = {
 ## ⚠️ Riscos / atenção
 - [Cadência em risco; campanha sem performance; tema sensível.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -3271,7 +3271,7 @@ NICHES.marketing = {
 > O que já sabemos que funciona com esta audiência — para não re-testar.
 - [Aprendizado — de onde veio.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -3280,7 +3280,7 @@ NICHES.marketing = {
 
 # Log — AAAA-MM-DD · [Marca]
 
-## Foco da sessão
+## Foco do dia
 [Estratégia, produção de peças, planejamento de pauta, análise de métrica.]
 
 ## Produzido / planejado
@@ -3542,7 +3542,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Prazos / marcos
 - [Entrega — data — status.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -3615,7 +3615,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 [Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -3624,7 +3624,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 
 # Log — AAAA-MM-DD · [Pesquisa]
 
-## Foco da sessão
+## Foco do dia
 [Leitura/fichamento, teste de hipótese, escrita de síntese, revisão de argumento.]
 
 ## Fontes trabalhadas
@@ -3883,7 +3883,7 @@ NICHES.product = {
 ## ⚠️ Riscos / hipóteses a validar
 - [Suposição frágil que, se errada, derruba uma iniciativa.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     { name:"EXPERIMENTOS.md", cat:"opcional", role:"OPCIONAL — hipóteses testadas e resultados (A/B, entrevistas, protótipos). Use quando o produto valida por experimento.",
@@ -3909,7 +3909,7 @@ NICHES.product = {
 - [Aprendizado — de qual experimento veio.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -3918,7 +3918,7 @@ NICHES.product = {
 
 # Log — AAAA-MM-DD · [Produto]
 
-## Foco da sessão
+## Foco do dia
 [Discovery, escrita de spec/PRD, priorização, análise de métrica, decisão.]
 
 ## Discovery / aprendizados
@@ -4183,7 +4183,7 @@ NICHES.business = {
 ## ⚠️ Riscos / atenção
 - [O que pode dar errado e merece olho; premissa frágil que sustenta algo importante.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.",
@@ -4228,7 +4228,7 @@ NICHES.business = {
 [...]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -4237,7 +4237,7 @@ NICHES.business = {
 
 # Log — AAAA-MM-DD · [Empresa]
 
-## Foco da sessão
+## Foco do dia
 [Análise, decisão, modelagem financeira, planejamento, diagnóstico.]
 
 ## Análises feitas
@@ -4610,11 +4610,11 @@ Uma entrada por fato. Formato:
 - [ ] [a decisão que está esperando informação — e QUAL informação falta.]
 
 ## Próximo passo (um só)
-[O que fazer na próxima sessão.]
+[O que fazer no próximo turno.]
 `
     },
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# logs/AAAA-MM-DD.md — log de sessão
+      content:`# logs/AAAA-MM-DD.md — log do dia
 
 ## O que aconteceu
 [Fatos do dia: entregas, pedidos, conversas.]
@@ -4932,7 +4932,7 @@ NICHES.game = {
 ## ⚠️ Atenção / escopo
 - [Risco de scope creep rondando; prazo apertado; sistema que está crescendo demais.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -5020,7 +5020,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 (que mecânica é ensinada por qual cena — ensinar JOGANDO, dentro da história, não por caixa de texto)
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -5029,7 +5029,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 
 # Log — AAAA-MM-DD · [Jogo]
 
-## Foco da sessão
+## Foco do dia
 [Design de mecânica, balanceamento, lore, level design, produção, playtest.]
 
 ## Feito
@@ -5311,7 +5311,7 @@ NICHES.pixel = {
 ## ⚠️ Atenção / consistência
 - [Risco de drift: algo destoando do ESTILO; outline/escala fora do padrão; pivô inconsistente.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -5367,7 +5367,7 @@ NICHES.pixel = {
 - [Objetos que povoam o cenário — tamanho, paleta, densidade.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -5376,7 +5376,7 @@ NICHES.pixel = {
 
 # Log — AAAA-MM-DD · [Projeto]
 
-## Foco da sessão
+## Foco do dia
 [Definição de estilo/paleta, sprite estático, animação, tileset, polimento.]
 
 ## Feito
@@ -5646,7 +5646,7 @@ NICHES.brainstorm = {
 ## ⚠️ Atenção
 - [Convergindo cedo demais? a pergunta está bem colocada? falta divergência ousada?]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
@@ -5681,7 +5681,7 @@ NICHES.brainstorm = {
 [...]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -5690,7 +5690,7 @@ NICHES.brainstorm = {
 
 # Log — AAAA-MM-DD · [Tema]
 
-## Foco da sessão
+## Foco do dia
 [Divergir, mapear, convergir, aprofundar, reformular a pergunta.]
 
 ## Ideias geradas / trabalhadas
@@ -5954,7 +5954,7 @@ NICHES.music = {
 ## ⚠️ Atenção / coerência
 - [Algo destoando da sonoridade-alvo; faixa que não conversa com o resto do EP.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -6005,7 +6005,7 @@ NICHES.music = {
 - **Groove/ritmo:** [referências de levada.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -6014,7 +6014,7 @@ NICHES.music = {
 
 # Log — AAAA-MM-DD · [Projeto]
 
-## Foco da sessão
+## Foco do dia
 [Composição, letra, harmonia, arranjo, produção, mix.]
 
 ## Feito
@@ -6316,7 +6316,7 @@ NICHES.rpg = {
 ## ⚠️ Atenção
 - [Spotlight desequilibrado (um PJ sumindo)? tom da mesa? algo de Session Zero a reforçar?]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [resumo de 2-4 linhas + onde parou + próximo passo óbvio. Detalhe completo em CAMPANHA.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -6618,7 +6618,7 @@ NICHES.cuisine = {
 ## ⚠️ Atenção
 - [Algo destoando do conceito; custo estourando; alérgeno a revisar; receita que não está clara.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -6687,7 +6687,7 @@ NICHES.cuisine = {
 
 # Log — AAAA-MM-DD · [Projeto]
 
-## Foco da sessão
+## Foco do dia
 [Desenvolvimento de receita, ajuste de menu, técnica, custo.]
 
 ## Testes / provas
@@ -6980,7 +6980,7 @@ NICHES.animation = {
 ## ⚠️ Atenção / escopo
 - [Risco de prazo; uma cena crescendo demais; algo destoando do ESTILO/continuidade.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -7031,7 +7031,7 @@ NICHES.animation = {
 [...]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -7040,7 +7040,7 @@ NICHES.animation = {
 
 # Log — AAAA-MM-DD · [Projeto]
 
-## Foco da sessão
+## Foco do dia
 [Roteiro, storyboard/animatic, design, animação, som, produção.]
 
 ## Feito
@@ -7314,7 +7314,7 @@ QUADRO 2 — [...]
 ## ⚠️ Atenção / continuidade
 - [Algo destoando do estabelecido; design de personagem inconsistente; arco que não fecha.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -7370,7 +7370,7 @@ QUADRO 2 — [...]
 - [...]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -7379,7 +7379,7 @@ QUADRO 2 — [...]
 
 # Log — AAAA-MM-DD · [Obra]
 
-## Foco da sessão
+## Foco do dia
 [Roteiro, breakdown de páginas, design, lettering, revisão.]
 
 ## Feito

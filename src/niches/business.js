@@ -204,7 +204,7 @@ NICHES.business = {
 ## ⚠️ Riscos / atenção
 - [O que pode dar errado e merece olho; premissa frágil que sustenta algo importante.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.",
@@ -249,7 +249,7 @@ NICHES.business = {
 [...]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -258,7 +258,7 @@ NICHES.business = {
 
 # Log — AAAA-MM-DD · [Empresa]
 
-## Foco da sessão
+## Foco do dia
 [Análise, decisão, modelagem financeira, planejamento, diagnóstico.]
 
 ## Análises feitas

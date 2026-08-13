@@ -251,7 +251,7 @@ NICHES.game = {
 ## ⚠️ Atenção / escopo
 - [Risco de scope creep rondando; prazo apertado; sistema que está crescendo demais.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -339,7 +339,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 (que mecânica é ensinada por qual cena — ensinar JOGANDO, dentro da história, não por caixa de texto)
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -348,7 +348,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 
 # Log — AAAA-MM-DD · [Jogo]
 
-## Foco da sessão
+## Foco do dia
 [Design de mecânica, balanceamento, lore, level design, produção, playtest.]
 
 ## Feito

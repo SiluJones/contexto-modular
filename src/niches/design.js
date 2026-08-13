@@ -254,7 +254,7 @@ NICHES.design = {
 ## Próxima ação + prazo
 - [O próximo passo concreto + data + de quem é.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que rolou + onde parou + próximo passo óbvio.]
 `},
     {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", content:`# PRODUCAO.md — Pré-impressão e Exportação
@@ -294,7 +294,7 @@ NICHES.design = {
 ## Notas da gráfica
 - [Especificidades que o impressor pediu; aprendizados de tiragens anteriores.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -303,7 +303,7 @@ NICHES.design = {
 
 # Log — AAAA-MM-DD · [Projeto]
 
-## Foco da sessão
+## Foco do dia
 [Conceito, criação de peça, revisão, pré-impressão, apresentação.]
 
 ## Feito

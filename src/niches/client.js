@@ -257,7 +257,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Notas
 - [Combinados sobre forma de pagamento, parcelamento, etc.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.
@@ -266,7 +266,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 
 # Log — AAAA-MM-DD · [Cliente]
 
-## Foco da sessão
+## Foco do dia
 [O que se trabalhou: revisão, comunicação, planejamento, etc.]
 
 ## Interações com o cliente

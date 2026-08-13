@@ -585,6 +585,13 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-13 — O Mapsmith recusou adotar o nosso `LOG-TEMPLATE`, e estava certo (D-129, wo0095)
+*«Adotar seria regredir.»* O `LOG-TEMPLATE` do pacote ainda tinha «Formato do Log de Sessão», «Objetivo da sessão» e «Última Sessão» **depois** da varredura da wo0094 — porque eu classifiquei títulos como rótulo e deixei. **Faltava o terceiro caso da refinaria deles:** título que **estrutura** muda junto, porque define a unidade do documento, e a unidade virou o dia. Um arquivo por dia que pergunta «qual era o objetivo da sessão» não tem rótulo velho: tem a unidade errada.
+
+**E o quarto caso saiu da disciplina e entrou no instrumento:** «sessão» no nicho de RPG é a mesa de jogo. A wo0094 preservou as 33 ocorrências à mão, contando com memória; agora o C49 traz a exceção **nomeada**, com prova negativa que confirma que ela carrega peso.
+
+**Terceira vez que o retorno do merge conserta o kit em vez do projeto** — e desta vez o que ele achou foi a nossa aplicação errada da regra que eles nos deram no dia anterior.
+
 ### 2026-08-13 — O merge dos `fusao` do Mapsmith: quatro achados, e o kit publicava o que mandava varrer (D-128, wo0094)
 Eles leram o `CEREBRO__template-update.md` inteiro e devolveram o §6. **O achado mais constrangedor é o (a):** o kit mandava os projetos varrerem a cadência «ao final de cada sessão» e **continuava publicando-a em 15 linhas** — CEREBRO, Instruções, `CLAUDE.md` e os modelos de 16 nichos. É a D-125 uma camada acima.
 

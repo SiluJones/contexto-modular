@@ -162,7 +162,7 @@ projeto/
 - [ ] [Item concreto e pequeno.]
 - [ ] [...]
 
-## 💬 Última Sessão
+## 💬 Última conversa
 **[data]** — [2-4 linhas: o que foi feito, onde parou, qual o próximo passo óbvio. É a primeira coisa que o assistente lê para retomar o fio.]
 `},
     {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões de arquitetura (DEC) e bugs graves resolvidos (FIX). Cresce devagar.", content:`# DECISIONS.md — Registro de Decisões
@@ -274,17 +274,17 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este arquivo é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
-> Os logs vivem em \`logs/\` no Git (NÃO no Projeto) e são lidos só sob demanda — quando você precisar recuperar o detalhe de uma sessão antiga.
+> Os logs vivem em \`logs/\` no Git (NÃO no Projeto) e são lidos só sob demanda — quando você precisar recuperar o detalhe de um dia antigo.
 
 ---
 
 # Log — AAAA-MM-DD
 
-## Objetivo da sessão
+## Objetivo do dia
 [O que se pretendia fazer ao começar.]
 
 ## Feito
@@ -300,10 +300,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 - [O que descobrimos que vale virar armadilha em CONTEXT.md.]
 
 ## Onde parei
-[Estado exato ao encerrar + próximo passo óbvio. Isto alimenta o «Última Sessão» do STATUS.]
+[Estado exato ao encerrar + próximo passo óbvio. Isto alimenta o «Última conversa» do STATUS.]
 
 ## Próximos passos
-- [Ações para a próxima sessão.]
+- [Ações para o próximo turno.]
 `},
     {name:"ROADMAP.md", cat:"opcional", role:"OPCIONAL — plano deliberado de evolução em fases. Use quando o projeto tem direção de médio/longo prazo.", content:`# ROADMAP.md — Plano Intencional de Evolução
 

@@ -212,7 +212,7 @@ QUADRO 2 — [...]
 ## ⚠️ Atenção / continuidade
 - [Algo destoando do estabelecido; design de personagem inconsistente; arco que não fecha.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -268,7 +268,7 @@ QUADRO 2 — [...]
 - [...]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -277,7 +277,7 @@ QUADRO 2 — [...]
 
 # Log — AAAA-MM-DD · [Obra]
 
-## Foco da sessão
+## Foco do dia
 [Roteiro, breakdown de páginas, design, lettering, revisão.]
 
 ## Feito

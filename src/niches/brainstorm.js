@@ -213,7 +213,7 @@ NICHES.brainstorm = {
 ## ⚠️ Atenção
 - [Convergindo cedo demais? a pergunta está bem colocada? falta divergência ousada?]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
@@ -248,7 +248,7 @@ NICHES.brainstorm = {
 [...]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -257,7 +257,7 @@ NICHES.brainstorm = {
 
 # Log — AAAA-MM-DD · [Tema]
 
-## Foco da sessão
+## Foco do dia
 [Divergir, mapear, convergir, aprofundar, reformular a pergunta.]
 
 ## Ideias geradas / trabalhadas

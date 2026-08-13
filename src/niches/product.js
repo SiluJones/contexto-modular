@@ -201,7 +201,7 @@ NICHES.product = {
 ## ⚠️ Riscos / hipóteses a validar
 - [Suposição frágil que, se errada, derruba uma iniciativa.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     { name:"EXPERIMENTOS.md", cat:"opcional", role:"OPCIONAL — hipóteses testadas e resultados (A/B, entrevistas, protótipos). Use quando o produto valida por experimento.",
@@ -227,7 +227,7 @@ NICHES.product = {
 - [Aprendizado — de qual experimento veio.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -236,7 +236,7 @@ NICHES.product = {
 
 # Log — AAAA-MM-DD · [Produto]
 
-## Foco da sessão
+## Foco do dia
 [Discovery, escrita de spec/PRD, priorização, análise de métrica, decisão.]
 
 ## Discovery / aprendizados

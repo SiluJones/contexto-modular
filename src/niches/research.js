@@ -200,7 +200,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Prazos / marcos
 - [Entrega — data — status.]
 
-## 💬 Última sessão
+## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
     {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
@@ -273,7 +273,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 [Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
-      content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
+      content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -282,7 +282,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 
 # Log — AAAA-MM-DD · [Pesquisa]
 
-## Foco da sessão
+## Foco do dia
 [Leitura/fichamento, teste de hipótese, escrita de síntese, revisão de argumento.]
 
 ## Fontes trabalhadas

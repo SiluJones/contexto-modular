@@ -504,8 +504,16 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
 check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario que ele revoga, a sonda tem terceiro estado, e amostra nao e cobertura", () => {
   // (1) D-125 aplicada a D-118: o proprio gerado nao pode carregar a cadencia revogada
   const kit = T.buildCodeKitFiles();
-  const REVOGADO = /ao final de (cada|uma) sess|ritual de in[ií]cio de sess|fim de sess|em toda sess|lido toda sess|log da sess|ideias da sess|handoff de sess/i;
+  // A wo0095 acrescentou os TITULOS que definem a UNIDADE do documento. Rotulo que so nomeia
+  // fica (D-127, MANDA x RELATA); titulo que ESTRUTURA muda junto, porque o log passou a ser
+  // por DIA — «## Objetivo da sessao» num arquivo por dia nao e rotulo, e a unidade errada.
+  const REVOGADO = /ao final de (cada|uma) sess|ritual de in[ií]cio de sess|fim de sess|em toda sess|lido toda sess|log da sess|ideias da sess|handoff de sess|Formato do Log de Sess|## Objetivo da sess|## Foco da sess|Última Sess|próxima sess\.|log de sess/i;
+  // Nicho em que «sessao» e VOCABULARIO DE DOMINIO, nao cadencia de trabalho: no RPG a sessao e a
+  // mesa de jogo, e o log dela e mesmo por sessao. E a regra MANDA x RELATA (D-127) levada ao
+  // instrumento: varredura cega aqui quebraria o nicho. Excecao nomeada, nao silenciosa.
+  const DOMINIO_SESSAO = new Set(["rpg"]);
   Object.keys(T.NICHES).forEach(id => {
+    if(DOMINIO_SESSAO.has(id)) return;
     const n = T.normNiche(T.NICHES[id]);
     const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
     S.workmode.codeMode = "yes";
@@ -522,6 +530,7 @@ check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario 
   //       O CEREBRO nao carrega esse texto, entao (1) sozinho nao o alcanca: a prova negativa 10
   //       da wo0094 passou verde ate este bloco existir.
   Object.keys(T.NICHES).forEach(id => {
+    if(DOMINIO_SESSAO.has(id)) return;
     const n = T.normNiche(T.NICHES[id]);
     (n.contextFiles||[]).forEach(f => {
       const c = String(f.content||"");
