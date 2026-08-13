@@ -1279,7 +1279,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.111.0";
+const KIT_VERSION = "1.112.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9687,7 +9687,10 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push("");
   L.push(`- Nicho: ${niche.label}`);
   L.push(`- Kit: v${KIT_VERSION}`);
-  L.push(`- Modos ligados: skills ${skillsOn ? "sim" : "nao"} · Code ${codeOn ? "sim" : "nao"} · ASU ${asuModeOn() ? "sim" : "nao"} · compartilhado ${groupModeOn() ? "sim" : "nao"}`);
+  L.push(`- Modos ligados: skills-do-nicho ${skillsOn ? "sim" : "nao"} · Code ${codeOn ? "sim" : "nao"} · ASU ${asuModeOn() ? "sim" : "nao"} · compartilhado ${groupModeOn() ? "sim" : "nao"}`);
+  if(codeOn){
+    L.push("- **`skills-do-nicho` NAO e a pasta `.claude/skills/`.** Sao os comandos opcionais do NICHO (um pacote a parte). As skills do modo Code — `apply-wo` e `wrap` — viajam com `Code sim` e estao neste pacote, em `.claude/skills/`. Se voce tem outras skills ali (uma sonda, um lint), elas sao suas: o kit nao as envia e **nao as declara sobra**.");
+  }
   L.push("- **Este carimbo e declaracao, nao ordem.** Se o seu arquivo vivo tem secao de um modo que este pacote declara como `nao`, ela e sobra de uma configuracao antiga (ou este pacote foi gerado com o modo esquecido). Reporte como choque, com a secao citada, e deixe o usuario decidir — **nunca remova sozinho**: o kit nao tem como saber qual dos dois casos e.");
   L.push(`- Data: ${today}`);
   L.push(`- Afixo: ${UPDATE_AFFIX}`);
@@ -9705,6 +9708,11 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
     L.push("O merge compara o que e **novo** no template. Estas linhas foram **apagadas de proposito** pelo kit —");
     L.push("um arquivo vivo pode ainda te-las, e nenhuma comparacao vai apontar isso. Procure cada uma no seu");
     L.push("arquivo e, se achar, **remova**; se o seu projeto tiver motivo para manter, registre o desvio.");
+    L.push("");
+    L.push("**A revogacao atinge o texto que MANDA, nao o que RELATA.** «Ao final de cada sessao, entregue X» e");
+    L.push("instrucao e sai; «isso ja custou uma sessao inteira» e fato historico medido e FICA — reescrever o");
+    L.push("relato falsifica o registro para consertar a regra. Mesma palavra, papeis opostos: antes de trocar,");
+    L.push("pergunte se a frase manda fazer algo ou conta o que aconteceu.");
     L.push("");
     L.push("**Varra pelo FATO, nao pela frase.** O texto da tabela e como o KIT dizia — o seu arquivo pode dizer");
     L.push("a mesma coisa com outras palavras, e foi voce quem escreveu essas palavras. Leia a coluna «Por que");
@@ -9782,7 +9790,7 @@ function buildUpdatePack(niche){
       role: "Permissoes do Claude Code.",
       obrigatorio: [
         "Se houver uma linha comecando com `//` depois do `}` final, **APAGUE-A**. O Claude Code nao aceita comentario em JSON: o arquivo INTEIRO e descartado em silencio e TODAS as permissoes param de valer de uma vez — sem erro, sem aviso.",
-        "**`Write` no `allow`.** Sem ele, as skills mandam criar o log do dia e o relatorio de trabalho, e a permissao nega o que a skill pede. Se o seu arquivo tem `defaultMode: acceptEdits`, ele disfarca a falta — funciona, mas por outro motivo, e para de funcionar no dia em que o modo mudar.",
+        "**`Write` no `allow`.** As skills mandam CRIAR o log do dia e o relatorio de trabalho. Sem `Write` isso nao e negado em silencio — vira **pedido de aprovacao a cada arquivo novo**, e o custo e atrito: numa sequencia longa, o passo que pede permissao e o primeiro a ser pulado. Se o seu arquivo tem `defaultMode: acceptEdits`, ele disfarca a falta — funciona, mas por outro motivo, e para de funcionar no dia em que o modo mudar.",
         "**`additionalDirectories` com a pasta-pai (`\"../\"`).** Sem ele, o relatorio de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` nao tem onde ser gravado, e a medicao fora da raiz tambem nao.",
       ], content: k.settings });
     files.push({ flat: updateFlat("apply-wo.SKILL.md"), real: ".claude/skills/apply-wo/SKILL.md",

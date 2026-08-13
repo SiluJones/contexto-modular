@@ -585,6 +585,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-13 — O primeiro merge real (Mapsmith): três defeitos nossos, e a confirmação de que a varredura por fato vale (D-127, wo0093)
+O pacote chegou e o merge fez o que o kit projetou: **leu, varreu pelo fato, não aplicou nada, reportou.** Voltaram três defeitos, todos nossos — carimbo de modos ambíguo (`skills nao` num pacote que envia duas skills), revogação sem escopo (trocar «sessão» num custo medido falsifica o registro), e **uma afirmação nossa sobre o repositório deles refutada com evidência** (sem `Write` o efeito é pedir aprovação, não negar; os logs e relatórios existem).
+
+**A regra que sai disso:** *afirmação sobre o repositório de outro projeto é hipótese até ele medir.* O pacote deve enunciá-la como pergunta, não como diagnóstico — foi o guia que errou o modo, não a observação.
+
+**E a confirmação que valia o preço da leva inteira:** a varredura por fato achou uma **contradição interna** no CEREBRO deles que nenhuma comparação de template acharia — três linhas mandando «arquivo inteiro, nunca pedaços» contra uma quarta, mais nova, mandando delta com âncora; a prática seguia a nova e a velha estava morta sem ninguém notar. E «reporte, não remova» impediu três falsos positivos que uma busca literal teria apagado. **A D-124 pagou-se no primeiro uso.**
+
+**Ainda aberto de lá, para a leva seguinte:** o merge dos dois `fusao` (CEREBRO e INSTRUCOES) não foi feito — é onde moram as sete decisões D-119…D-126 —, e a pergunta do §6 sobre a seção da sonda descrever o que eles de fato fazem continua sem resposta, por depender desse merge.
+
 ### 2026-08-12 — Auditoria completa do Mapsmith antes do pacote: quatro achados (D-126, wo0092)
 Os 56 arquivos do projeto foram varridos **pelo fato**, e o pacote de update foi lido de novo. Quatro achados, três deles atingindo exatamente esse projeto: a skill `wrap` publicada **nunca escreveu o log** (a IDEA-056 deles, aberta desde 01/08, com sete sessões reconstituídas de memória como custo); o `settings.json` deles **não tem `Write` nem `additionalDirectories`** — a metade mecânica da mesma causa, porque a skill manda criar e a permissão nega; e **o aviso que existia para dizer isso chegava truncado em 120 caracteres** no manifesto, cortado no meio da frase.
 

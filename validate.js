@@ -501,6 +501,32 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C48 o pacote nao confunde quem le (wo0093): carimbo de skills desambiguado, revogacao distingue mandar de relatar, e o efeito de Write e atrito e nao negacao", () => {
+  const n = T.normNiche(T.NICHES.dev);
+  const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+  S.workmode.codeMode = "yes";
+  const pack = T.buildUpdatePack(n); const man = pack.manifest;
+  S.workmode.codeMode = prev;
+  // (1) o carimbo dizia "skills nao" e o pacote mandava duas skills — o leitor nao tinha como distinguir
+  // O assert olha a LINHA do carimbo, nao o manifesto inteiro: a nota explicativa logo abaixo tambem
+  // contem "skills-do-nicho", e sem o recorte o check ficava verde com o carimbo antigo (prova
+  // negativa 1 da wo0093 mostrou isso).
+  const linhaCarimbo = (man.split("\n").find(l => l.indexOf("- Modos ligados:") === 0) || "");
+  assert(/skills-do-nicho/.test(linhaCarimbo), "o carimbo ainda diz so 'skills', e o pacote envia `.claude/skills/` mesmo assim — o projeto que recebeu leu como choque e ficou parado, corretamente");
+  assert(/NAO e a pasta `\.claude\/skills\/`/.test(man), "o manifesto nao explica que skills-do-nicho e outra coisa da pasta de skills do modo Code");
+  assert(/nao as declara sobra/.test(man), "o manifesto nao protege as skills PROPRIAS do projeto (uma sonda, um lint) de serem lidas como sobra de configuracao");
+  // (2) revogacao: instrucao sai, relato historico fica
+  assert(/atinge o texto que MANDA, nao o que RELATA/.test(man), "a varredura de revogacoes nao distingue instrucao de relato — trocar a palavra num custo medido falsifica o registro para consertar a regra");
+  assert(/fato historico medido e FICA/.test(man), "falta o lado que preserva o relato");
+  // (3) o efeito de Write ausente e atrito, nao negacao silenciosa (refutado em campo pelo mapsmith)
+  const setEntry = pack.files.find(f => f.real === ".claude/settings.json");
+  const obrig = (setEntry.obrigatorio||[]).join(" ");
+  assert(/pedido de aprovacao a cada arquivo novo/.test(obrig), "a correcao obrigatoria ainda afirma que a falta de Write NEGA — em campo o efeito e pedir aprovacao, e o projeto refutou com os relatorios e logs que existem");
+  assert(!/a permissao nega o que a skill pede/.test(obrig), "sobrou a afirmacao refutada de que a permissao nega");
+  assert(/o primeiro a ser pulado/.test(obrig), "a correcao nao diz por que o atrito importa, entao vira detalhe cosmetico");
+  return "ok";
+});
+
 check("C47 o fecho escreve o log e a medicao tambem e arquivo (wo0092): a skill wrap cria logs/, e nenhum pedido ao executor vai colado na mensagem", () => {
   const kit = T.buildCodeKitFiles();
   // (1) a skill que fecha o trabalho e a unica que roda no fim — e ate agora nao criava o log
