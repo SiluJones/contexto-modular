@@ -585,6 +585,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-12 — Auditoria completa do Mapsmith antes do pacote: quatro achados (D-126, wo0092)
+Os 56 arquivos do projeto foram varridos **pelo fato**, e o pacote de update foi lido de novo. Quatro achados, três deles atingindo exatamente esse projeto: a skill `wrap` publicada **nunca escreveu o log** (a IDEA-056 deles, aberta desde 01/08, com sete sessões reconstituídas de memória como custo); o `settings.json` deles **não tem `Write` nem `additionalDirectories`** — a metade mecânica da mesma causa, porque a skill manda criar e a permissão nega; e **o aviso que existia para dizer isso chegava truncado em 120 caracteres** no manifesto, cortado no meio da frase.
+
+**O achado mais desconfortável é sobre o kit, não sobre eles.** A regra «nunca empurre bloco para o usuário colar no executor» tinha uma exceção — *«um pedido de medição, por exemplo»* — que **eu escrevi na wo0085 contra evidência de campo que já estava no mount**: em `mapsmith_7.md` o autor reclama literalmente de receber medição colada na mensagem e conta que teve de criar o arquivo à mão. «Não é WO» virou «vai colado», quando o certo é «é outro artefato».
+
+**E uma nota de instrumento que vale mais que os quatro achados.** Na wo0090 afirmei que uma skill do Mapsmith não estava no mount. Estava — meu comando era `grep … || echo "ausente"`, e o `||` dispara quando o grep **não acha nada**. **Ausência relatada por instrumento é uma afirmação e precisa de prova, igual a qualquer outra.** É o FIX-0010 deles invertido: lá o instrumento dizia que existia o que estava destruído; aqui disse que não existia o que estava inteiro.
+
+**Fecha a IDEA-056 do Mapsmith pelo lado do kit** — a skill agora escreve o log, com a distinção criar/regenerar explícita. Vale avisá-los ao entregar o pacote: a ideia deles sai de `em estudo` porque a ferramenta mudou, não porque foi descartada.
+
 ### 2026-08-12 — Conferência do pacote antes de entregá-lo: o gerado contradizia a própria revogação (D-125, wo0091)
 O pacote de update da v1.110.0 foi **gerado e lido arquivo por arquivo** antes de ir para os dois projetos. A skill `wrap` publicada pedia o comando de commit ao dono duas linhas acima de mandar o executor empurrar sozinho — a correção da D-115 tinha sido acrescentada sem remover a frase antiga, e o pacote entregaria a linha revogada junto do pedido de removê-la.
 

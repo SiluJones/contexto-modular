@@ -1169,6 +1169,7 @@ const HYGIENE_RULES = [
   "**Cite a frase-gatilho antes de perguntar.** Quando a dúvida nasce de algo que o usuário escreveu — uma nota, um pedido, uma linha de arquivo —, a frase inteira entra citada ANTES da pergunta. Referência cruzada nua (`arquivo:linha`, «ver DEC-0XX») pode acompanhar o texto literal, nunca substituí-lo: quem escreveu não decora o que escreveu. E nunca pergunte usando um rótulo que você inventou para o assunto — o usuário não reconhece o nome que você deu à dúvida dele.",
   "**Mudança de método não se adota no meio do trabalho.** Refinar o conteúdo é dever contínuo; mudar COMO o trabalho é feito — ordem, sequência, formato do ciclo, o que entra em cada leva — é troca de trilho, e troca de trilho para e vira análise, com o dono decidindo. O modo de falha é específico e já custou caro: um único dado ruim numa etapa vira proposta de reprojeto, a proposta é aceita no impulso, e o custo só aparece na etapa seguinte. Propor continua permitido e é esperado; o que não é permitido é otimizar o processo em vez de executá-lo.",
   "**Não congele em documento estável o que um artefato vivo já responde.** Contador escrito à mão («a próxima livre é a 118»), contagem de arquivos, versão instalada, estado de branch: tudo isso é derivável de algo que muda sozinho, e o documento que o copia não muda junto. O instantâneo nasce certo e envelhece em silêncio — e o pior é que ele parece autoridade, então a leitura seguinte confia nele em vez de conferir. **Escreva a REGRA, não o valor:** «a maior existente + 1, confira a pasta» em vez do número. Quando o valor precisa mesmo aparecer (um relatório, uma decisão), ele vem **datado e com a origem**, como registro do que era naquele momento — não como estado atual.",
+  "**Antes de destruir ou sobrescrever, leia o que está lá — e proponha a proteção mais barata.** Duas metades da mesma falta de cuidado. (1) **Ler antes de escrever por cima:** arquivo que já existe pode ter conteúdo que ninguém pediu para preservar porque ninguém lembrou dele. Abrir custa um comando; recuperar custa a conversa inteira, e às vezes não custa nada porque não dá. (2) **Restrição do dono não se cumpre ao pé da letra quando há forma mais barata de obter a mesma proteção:** «não apague os originais» é um MEDO, não uma especificação — a resposta certa é copiar para fora do espaço de trabalho e seguir, dizendo que fez. Cumprir a letra e deixar o problema de pé é obedecer contra o interesse de quem pediu. Custo real: uma pasta de trabalho que ficou impossível de limpar por dias, e um arquivo de configuração sobrescrito sem leitura prévia.",
   "**Quem abre, fecha — e o que não fechar, declara.** Toda tarefa cria coisas **fora** do repositório: processo, porta, servidor de desenvolvimento, arquivo temporário, download de teste. Elas são de quem as criou, e a tarefa termina com a máquina como a encontrou. O que não puder ser fechado entra no relatório **com o caminho**, não como nota vaga — é exatamente o que ninguém lembra de limpar, e o custo aparece longe: servidor esquecido entre sessões chega a travar a pasta e impedir o teste seguinte; arquivo de teste largado numa pasta pessoal vira pergunta («isto aqui é seu?») numa conversa que já tinha fechado. E vale o par: **entrega bloco para outro rodar quem NÃO pode rodá-lo.** Quem tem o terminal executa e relata; devolver bloco para o dono colar, tendo como rodar, é trocar de raia.",
   "Válvula de desvio registrado: os templates e a estrutura deste kit são PONTO DE PARTIDA, não contrato. Se a realidade do projeto não couber neles, adapte — dispense um arquivo que não serve, acrescente seção ou arquivo que falte — e REGISTRE o desvio (o que mudou e por quê) no DECISIONS, marcando-o também na seção «Feedback para o Kit» do IDEAS. Desviar SEM registrar é que é o erro; desviar registrando é como o kit aprende. E não duplique o que a estrutura já cobre. **Exemplo já visto e legítimo:** projeto cujo roadmap e registro de decisões referenciam ideias por **ID estável** organiza o IDEAS por status + ID, não pela divisão por autor do template — adotar o template ali seria regressão, e o desvio é o certo."
 ];
@@ -1186,6 +1187,7 @@ const TRIGGERS_BASE = [
   ["Evento que MERECE log: cortar versao, registrar uma decisao ou um bug grave, virar o dia de trabalho", "Escreve `logs/AAAA-MM-DD.md` na hora. O log nao espera o fim da conversa — numa conversa longa o fim nunca chega, e e assim que dias inteiros ficam sem registro."],
   ["Precisa de um numero sobre material grande demais para a conversa", "Manda MEDIR (sonda) em vez de deduzir ou pedir upload. Se ninguem sabe ainda qual e a pergunta, manda EXPLORAR primeiro: exploracao produz hipotese, sonda produz evidencia."],
   ["Chega ou sai carta de outro projeto (negociacao de contrato entre frentes)", "Extrai o durável AGORA — acordo vira decisao registrada, o que nao coube vira ideia com gatilho — e NAO versiona a carta. Se ela pede resposta do outro lado, cria o item de espera com prazo: espera sem gatilho trava o projeto sem ninguem perceber."],
+  ["Vai sobrescrever, mover ou apagar algo que ja existe (arquivo, pasta, config, artefato baixado)", "LE antes. E se o dono pediu para NAO apagar algo, pergunte do que ele tem medo: quase sempre a resposta e copiar para fora do espaco de trabalho e seguir — cumprir a letra e deixar o problema de pe e obedecer contra o interesse de quem pediu."],
   ["A tarefa criou algo FORA do repositorio (processo, porta, servidor de dev, arquivo temporario, download)", "Quem abriu, fecha — a tarefa termina com a maquina como a encontrou. O que nao puder ser fechado e DECLARADO no relatorio, com o caminho: e o que ninguem lembra de limpar."],
 ];
 
@@ -1277,7 +1279,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.110.1";
+const KIT_VERSION = "1.111.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2683,7 +2685,7 @@ function buildClaudeMd(niche){
       L.push("- **Registrar é o entregável; listar não é.** «O que ainda falta registrar» é o inventário da dívida, não o pagamento dela. Um fecho bom termina com essa lista **vazia** — e o que ficou de fora vira WO agora, nesta conversa, não recado para a próxima.");
       L.push("- **Regenerar ≠ criar.** «Não regenere os arquivos de contexto» existe para não haver dois escritores no mesmo documento. Um arquivo que **não existe** não tem escritor nenhum: escrevê-lo não é regenerar, é criar — e é obrigatório. O log do dia é o caso que mais se perde por essa confusão.");
       L.push("- **Qual canal para qual documento.** Documento grande e vivo → **WO** em `meta/workorders/`, com o texto exato de cada inserção e a linha `/apply-wo` junto. Arquivo **novo**, pequeno, ou que precise de curadoria que reescreve → **inteiro, para baixar**. Nunca os dois no mesmo ciclo para o mesmo documento.");
-      L.push("- **Nunca empurre bloco para o usuário colar no executor.** A caixa de mensagem dele tem limite de caracteres — é a razão de a WO existir. Bloco colável só para o que não tem âncora nem commit (um pedido de medição, por exemplo).");
+      L.push("- **Nunca empurre bloco para o usuário colar no executor.** A caixa de mensagem dele tem limite de caracteres — é a razão de a WO existir. **Isso inclui pedido de medição.** Medição não tem âncora nem commit, então não é ordem de trabalho — mas continua sendo um arquivo: um script de sonda, ou um `.md` curto com o que rodar e o formato do relatório. «Não é WO» quer dizer «outro artefato», nunca «vai colado na mensagem». Se o usuário precisou criar o arquivo à mão para caber, o pedido estava errado.");
       L.push("");
       L.push("Os arquivos abaixo continuam sendo os afetados por este trabalho — o que muda é o canal de cada um, não a obrigação de registrar:");
     } else {
@@ -3371,6 +3373,7 @@ function buildCodeKitFiles(){
     "Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,",
     "e confira o `git diff` — a forma esperada, nada além. Mensagem de commit SEM acento.",
     "Ao mudar um número ou um estado no `STATUS.md` (contagem de testes/checagens, versão, «funciona até X»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não é o único lugar onde ele aparece, e a cópia esquecida no meio do texto passa a mentir.",
+    "Escreva o log do dia em `logs/AAAA-MM-DD.md` (formato em `meta/LOG-TEMPLATE.md`). Se o arquivo do dia NÃO existe, CRIE — não regenerar é uma coisa, não criar é outra. Se já existe, acrescente. Cinco linhas escritas hoje valem mais que uma página reconstituída na semana que vem: só você viu o que aconteceu aqui.",
     "Verde: `add`, `commit` e `push` sem perguntar. Vermelho: nao commite nem empurre — feche com MENU NUMERADO (a recomendada em 1), nunca com pergunta em prosa. Resolva o push ANTES de escrever o relatorio. Grave o relatório de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
     ""
   ].join("\n");
@@ -3597,6 +3600,21 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
     });
     L.push("");
   }
+  const comObrig = files.filter(f => Array.isArray(f.obrigatorio) && f.obrigatorio.length);
+  if(comObrig.length){
+    L.push("## Correcoes obrigatorias (nao sao merge — sao conserto)");
+    L.push("");
+    L.push("Estas NAO passam pela regra de «template generico nao substitui arquivo vivo»: sao defeitos");
+    L.push("conhecidos no arquivo que voce ja tem, e o conserto vale mesmo que voce descarte o resto do");
+    L.push("template. Confira uma a uma e me diga o que achou.");
+    L.push("");
+    comObrig.forEach(f => {
+      L.push(`### \`${f.real}\``);
+      L.push("");
+      f.obrigatorio.forEach(item => L.push(`- ${item}`));
+      L.push("");
+    });
+  }
   L.push("| Nome no upload | Destino real | Natureza | Papel |");
   L.push("|---|---|---|---|");
   files.forEach(f => {
@@ -3635,7 +3653,12 @@ function buildUpdatePack(niche){
     files.push({ flat: updateFlat("CLAUDE.md"), real: "CLAUDE.md", nature: "template",
       role: "Guia raiz do Claude Code.", content: k.claudeMd });
     files.push({ flat: updateFlat("claude-settings.json"), real: ".claude/settings.json", nature: "template",
-      role: "Permissoes do Claude Code. CORRECAO OBRIGATORIA no arquivo que voce ja tem: se houver uma linha comecando com // depois do } final, APAGUE-A — o JSON fica invalido e TODAS as permissoes param de valer em silencio, inclusive additionalDirectories (relatorio em arquivo e medicao fora da raiz). Confira tambem que Write esta no allow.", content: k.settings });
+      role: "Permissoes do Claude Code.",
+      obrigatorio: [
+        "Se houver uma linha comecando com `//` depois do `}` final, **APAGUE-A**. O Claude Code nao aceita comentario em JSON: o arquivo INTEIRO e descartado em silencio e TODAS as permissoes param de valer de uma vez — sem erro, sem aviso.",
+        "**`Write` no `allow`.** Sem ele, as skills mandam criar o log do dia e o relatorio de trabalho, e a permissao nega o que a skill pede. Se o seu arquivo tem `defaultMode: acceptEdits`, ele disfarca a falta — funciona, mas por outro motivo, e para de funcionar no dia em que o modo mudar.",
+        "**`additionalDirectories` com a pasta-pai (`\"../\"`).** Sem ele, o relatorio de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` nao tem onde ser gravado, e a medicao fora da raiz tambem nao.",
+      ], content: k.settings });
     files.push({ flat: updateFlat("apply-wo.SKILL.md"), real: ".claude/skills/apply-wo/SKILL.md",
       nature: "template", role: "Comando /apply-wo.", content: k.applyWo });
     files.push({ flat: updateFlat("wrap.SKILL.md"), real: ".claude/skills/wrap/SKILL.md",

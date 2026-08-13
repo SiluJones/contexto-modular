@@ -501,6 +501,33 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C47 o fecho escreve o log e a medicao tambem e arquivo (wo0092): a skill wrap cria logs/, e nenhum pedido ao executor vai colado na mensagem", () => {
+  const kit = T.buildCodeKitFiles();
+  // (1) a skill que fecha o trabalho e a unica que roda no fim — e ate agora nao criava o log
+  assert(/logs\/AAAA-MM-DD\.md/.test(kit.wrap), "a skill wrap GERADA nao escreve o log do dia — o CEREBRO manda o log existir e a skill que fecha o trabalho nunca o cria (IDEA-056 do mapsmith, sete sessoes reconstituidas de memoria)");
+  assert(/Se o arquivo do dia NÃO existe, CRIE/.test(kit.wrap), "a skill wrap nao distingue criar de regenerar — foi assim que 'nao regenere' virou 'nao escreva' em campo");
+  assert(/LOG-TEMPLATE/.test(kit.wrap), "a skill wrap manda escrever o log sem dizer onde esta o formato");
+  // (2) medicao nao e WO, mas continua sendo arquivo
+  Object.keys(T.NICHES).forEach(id => {
+    const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+    S.workmode.codeMode = "yes";
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    S.workmode.codeMode = prev;
+    assert(/Isso inclui pedido de medição/.test(cmd), id+": o CEREBRO ainda abre excecao para pedido de medicao ir colado na mensagem — foi a reclamacao literal do dono, e a excecao contradizia a propria razao da regra");
+    assert(/nunca «vai colado na mensagem»/.test(cmd), id+": falta a formula que fecha a brecha — 'nao e WO' quer dizer 'outro artefato'");
+    assert(/criar o arquivo à mão para caber/.test(cmd), id+": falta o sinal de que o pedido estava errado (o dono teve de criar o arquivo por conta)");
+  });
+  // (3) ler antes de sobrescrever, e a restricao do dono como MEDO e nao especificacao
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/Antes de destruir ou sobrescrever, leia o que está lá/.test(cmd), id+": higiene sem a regra de ler antes de escrever por cima");
+    assert(/é um MEDO, não uma especificação/.test(cmd), id+": falta a metade que importa — restricao do dono se cumpre pelo objetivo, nao pela letra");
+    assert(/obedecer contra o interesse de quem pediu/.test(cmd), id+": a regra nao nomeia o que ela evita");
+    assert(/LE antes/.test(cmd), id+": tabela de gatilhos sem o evento de sobrescrever/apagar");
+  });
+  return "ok";
+});
+
 check("C46 as revogacoes alcancam o instalado (wo0090): as tres decisoes que MUDARAM comportamento estao na lista, e a varredura e por fato e comeca pelas skills", () => {
   const rev = T.REVOCATIONS;
   assert(Array.isArray(rev) && rev.length >= 4, "lista de revogacoes com menos entradas do que as decisoes que apagaram comportamento — o merge so sabe somar, e o que nao esta aqui sobrevive invisivel no projeto instalado");
@@ -916,7 +943,15 @@ check("C37 artefato do kit abre no parser do proprio formato (wo0081): settings.
   assert(allow.includes("Read") && allow.includes("Edit"), "settings.json perdeu Read/Edit do allow");
   assert(Array.isArray((st.permissions||{}).additionalDirectories), "settings.json sem additionalDirectories — relatorio em arquivo (D-108) e medicao fora da raiz (D-113) morrem em silencio");
   const setEntry = (pack && pack.files ? pack.files : []).find(f => f.real === ".claude/settings.json");
-  assert(setEntry && /CORRECAO OBRIGATORIA/.test(setEntry.role||""), "pacote de update nao avisa os projetos JA instalados — consertar o gerador nao conserta quem ja baixou");
+  // O aviso saiu do campo `role` (truncado em 120 chars na tabela do manifesto, o que cortava a
+  // frase no meio) e virou `obrigatorio`, com secao propria e sem corte. Ver D-126/wo0092.
+  assert(setEntry && Array.isArray(setEntry.obrigatorio) && setEntry.obrigatorio.length >= 3, "pacote de update nao avisa os projetos JA instalados — consertar o gerador nao conserta quem ja baixou");
+  const obrig = (setEntry.obrigatorio||[]).join(" ");
+  assert(/APAGUE-A/.test(obrig), "a correcao obrigatoria do settings perdeu o caso do comentario // que invalida o JSON inteiro");
+  assert(/`Write` no `allow`/.test(obrig), "a correcao obrigatoria nao cobra Write no allow do projeto instalado");
+  assert(/additionalDirectories/.test(obrig), "a correcao obrigatoria nao cobra additionalDirectories no projeto instalado");
+  assert(/Correcoes obrigatorias/.test(pack.manifest||""), "o manifesto nao emite a secao de correcoes obrigatorias — sem ela o aviso volta a viver so no campo truncado");
+  assert(/APAGUE-A/.test(pack.manifest||""), "a secao de correcoes obrigatorias chega truncada ao manifesto — foi exatamente assim que o aviso morreu por dez versoes, cortado em 120 caracteres");
   // (3) push resolvido antes do relatorio, e menu numerado em vez de pergunta em prosa
   assert(/## Push e relat/.test(kit.claudeMd), "CLAUDE.md do kit-Code sem a secao de push");
   assert(/menu\*\* numerado|menu numerado|MENU NUMERADO/i.test(kit.claudeMd), "CLAUDE.md nao manda usar menu numerado no caso vermelho");
