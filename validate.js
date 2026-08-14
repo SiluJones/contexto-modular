@@ -501,6 +501,31 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C50 varredura muda nao e varredura limpa (wo0098): o pacote confere se as superficies chegaram, e a higiene cobra o que o ignore esconde", () => {
+  const n = T.normNiche(T.NICHES.dev);
+  const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+  S.workmode.codeMode = "yes";
+  const prompt = T.buildUpdatePrompt(n);
+  S.workmode.codeMode = prev;
+  // (1) o prompt confere as superficies ANTES de mandar varrer — senao a instrucao vira no-op silencioso
+  assert(/confira se as superficies que eu vou mandar varrer estao AQUI/i.test(prompt), "o prompt manda varrer as skills primeiro sem conferir se elas chegaram — instrucao que executa e nao faz nada e pior que instrucao nenhuma");
+  assert(/`\.claude\/skills\/\*`/.test(prompt), "a lista de superficies a conferir nao nomeia as skills, que sao a mais perigosa");
+  assert(/Ausencia nao e «nada a fazer» — e cegueira/.test(prompt), "o prompt nao diz o que a ausencia significa, entao ela vira 'nada a fazer'");
+  assert(/gitignore|flatdropignore/i.test(prompt), "o prompt nao aponta a causa provavel da ausencia");
+  // o pre-flight precisa vir ANTES da instrucao de varrer as skills
+  const iPre = prompt.indexOf("confira se as superficies"), iVarra = prompt.indexOf("Varra as **skills** primeiro");
+  assert(iPre > -1 && iVarra > -1 && iPre < iVarra, "o pre-flight das superficies vem DEPOIS da ordem de varrer — quem le ja varreu no vazio antes de chegar nele");
+  // (2) higiene: o que o ignore esconde
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/o assistente não audita — e não sabe que não auditou/.test(cmd), id+": higiene sem a regra do que o ignore esconde");
+    assert(/Ausência de resultado não é resultado/.test(cmd), id+": falta a formula que impede ler silencio como limpeza");
+    assert(/versionado em algum lugar/.test(cmd), id+": a regra nao cobra que o ignorado tenha backup em algum lugar");
+    assert(/Uma varredura ou conferencia nao achou NADA/.test(cmd), id+": tabela de gatilhos sem o evento da varredura muda");
+  });
+  return "ok";
+});
+
 check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario que ele revoga, a sonda tem terceiro estado, e amostra nao e cobertura", () => {
   // (1) D-125 aplicada a D-118: o proprio gerado nao pode carregar a cadencia revogada
   const kit = T.buildCodeKitFiles();

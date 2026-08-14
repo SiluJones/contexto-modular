@@ -585,6 +585,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-14 — O `.claude/` do Sand-Land-Map nunca esteve no mount, e a auditoria não percebeu (D-132, wo0098)
+Um `.gitignore` com contradição interna escondeu a pasta; o FlatDrop obedeceu; e **a auditoria varreu o que chegou e chamou de completa**. Repostos hoje, os três arquivos estão pré-D-115: as duas skills mandam entregar o commit em três blocos ao dono, e o `settings.json` não tem `Write`. **São as superfícies que o pacote manda varrer primeiro** — o merge teria rodado a instrução sobre um mount sem elas e concluído «limpo».
+
+**Princípio geral que entra no kit:** *instrução que executa e não faz nada é pior que instrução nenhuma.* Ausente, a lacuna fica visível; rodando no vazio, produz silêncio — e silêncio é lido como limpeza. Daí o pré-voo no prompt de update, com a posição travada por check: antes da ordem de varrer, não depois.
+
+**Quarta ocorrência do mesmo padrão nesta negociação**, sempre do lado de cá: `grep … || echo "ausente"` inventando arquivo faltando; `/sess[aã]/i` não casando «sessões»; a auditoria que não abriu o pacote; e agora esta. **A D-126 continua sendo violada por quem a escreveu**, e nas quatro vezes foi o autor ou o projeto irmão que apontou — nunca o instrumento daqui.
+
+**Aberto, com gatilho:** vale perguntar se o `.flatdropignore` do próprio KCM esconde alguma superfície do nosso mount. *Gatilho: a próxima varredura que der zero num lugar onde deveria dar alguma coisa.*
+
 ### 2026-08-13 — Auditoria do Sand-Land-Map antes do pacote: a FK-M estava aberta (D-131, wo0097)
 Varri os 36 arquivos deles e cruzei o `IDEAS.md` com o texto gerado pelo kit. **Um item de feedback continuava aberto:** a **FK-M** (2026-08-10), que pede o que a D-122 não deu — não a regra «existência não é aptidão», que entrou, mas a sua **metade operacional**: *declarar qual das duas perguntas o instrumento não responde*, ao lado do que não foi olhado. Pergunta ao autor depende de memória; propriedade do relatório o leitor cobra.
 

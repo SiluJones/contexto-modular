@@ -1621,3 +1621,23 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Check C49 estendido**, com **quatro provas negativas**: sem a segunda declaração · sem o argumento de custo · modelo de WO sem a pergunta · modelo de WO sem a distinção invólucro × conteúdo. A quarta expôs uma asserção frouxa minha (`/propriedades\s*$|do INVOLUCRO/m`, que passava por outro motivo) e foi apertada antes de entrar.
 
 `KIT_VERSION 1.116.0`. **Custo de teto ZERO** — nada toca `buildInstr`: C28 permanece `padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`, folga do `narrative` em **295**. `index.html` de **813.436 → 814.394** bytes. Harness **18/18, 93/93, 0 erros** (nenhum check novo — o C49 cresceu pela quarta vez).
+
+---
+
+## D-132 — Varredura muda não é varredura limpa: o pacote confere se as superfícies chegaram antes de mandar varrê-las (wo0098)
+
+**Base.** Auditoria do `.claude/` do Sand-Land-Map, possível só em 2026-08-14 — a pasta esteve **ausente do mount durante toda a negociação** e ninguém percebeu.
+
+**O defeito não é do projeto: é do kit e de quem auditou.** O `.gitignore` deles tinha uma contradição interna (`# NAO ignore .claude/…` na linha 2, `.claude/` na linha 21), o FlatDrop obedeceu à regra e pulou a pasta, e a auditoria **varreu o que chegou e chamou de completa**.
+
+**A ausência valia mais que tudo o que foi varrido.** Repostos hoje, os três arquivos estão pré-D-108/D-115: a skill `wrap` manda *«Entregue o commit em TRÊS blocos separados»*, o `apply-wo` manda *«Só então proponha o commit em 3 blocos separados»* — a revogação **v1.104.0** literal, duas vezes — e o `settings.json` não tem `Write`, `additionalDirectories` nem `defaultMode`. **São exatamente as superfícies que o pacote manda varrer primeiro**, e o merge teria rodado a instrução sobre um mount sem elas, achado nada, e concluído «limpo».
+
+**O princípio geral: instrução que executa e não faz nada é pior que instrução nenhuma.** Instrução ausente deixa a lacuna visível; instrução que roda no vazio produz **silêncio, e silêncio é lido como limpeza**. Por isso o remédio é um **pré-voo**, e por isso a posição dele importa — o C50 afirma por índice que ele vem **antes** da ordem de varrer, porque um pré-voo tardio chega quando o leitor já varreu no vazio.
+
+**Segunda metade, do lado do projeto:** o que o `.gitignore` esconde **não tem backup nem histórico**. A higiene ganha as duas conferências baratas — *o comentário do arquivo bate com as regras dele?* e *o que está ignorado está versionado em algum lugar?* — mais a fórmula que fecha o buraco: **ausência de resultado não é resultado**.
+
+**Nota de honestidade, porque é o padrão que se repete.** Esta é a **quarta vez** nesta negociação em que uma ausência relatada por mim era do instrumento e não do arquivo: o `grep … || echo "ausente"` que inventou um arquivo faltando (D-126); a expressão `/sess[aã]/i` que não casava «sessões» (D-130); a auditoria do Mapsmith que não abriu o pacote (D-130); e agora uma auditoria «completa» sobre um mount sem a pasta mais perigosa. **A regra da D-126 continua certa e continua sendo violada por quem a escreveu** — daí o remédio ser check e gatilho, não promessa. E foi o autor quem apontou, de novo.
+
+**Check C50 novo**, com **cinco provas negativas**: sem o pré-voo · pré-voo sem dizer o que a ausência significa · higiene sem a regra do ignore · sem «ausência de resultado não é resultado» · sem o gatilho da varredura muda. A asserção da **ordem** (pré-voo antes da varredura) é a que carrega mais peso e não tem prova negativa própria — ela falharia junto com a primeira.
+
+`KIT_VERSION 1.117.0`. **Custo de teto ZERO** — nada toca `buildInstr`: C28 permanece `padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`, folga do `narrative` em **295**. `index.html` de **814.394 → 816.174** bytes. Harness **18/18, 93/93 → 94/94, 0 erros**.
