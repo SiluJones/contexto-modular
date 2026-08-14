@@ -1279,7 +1279,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.114.0";
+const KIT_VERSION = "1.115.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1359,7 +1359,7 @@ NICHES.dev = {
 `},
     {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
 
-> Arquivo **estável**. O assistente lê no início de cada sessão para se ambientar.
+> Arquivo **estável**. O assistente lê no início de cada conversa para se ambientar.
 > Muda pouco: só em alteração estrutural (stack, arquitetura, escopo, nova armadilha descoberta).
 > Mantenha enxuto — descreve o que o projeto É, não o que está acontecendo agora (isso é o STATUS).
 
@@ -1417,7 +1417,7 @@ projeto/
 2. **[Armadilha]** — [por que morde] → [o certo].
 
 ## 📁 Arquivos Críticos (não mexer sem contexto)
-> Conhecimento **estável**, não estado do agora — por isso vive aqui, e não no STATUS, que é reescrito a cada sessão. Os prompts de debug, plano e auditoria procuram esta seção NESTE arquivo.
+> Conhecimento **estável**, não estado do agora — por isso vive aqui, e não no STATUS, que é reescrito a cada conversa. Os prompts de debug, plano e auditoria procuram esta seção NESTE arquivo.
 - \`[caminho/arquivo]\` — [por que é sensível; o que ler antes de tocar.]
 
 ## Contexto de Produto
@@ -1449,7 +1449,7 @@ projeto/
 - [Bug ativo: sintoma observável + suspeita, se houver. Quando resolver, vira entrada em DECISIONS se foi grave.]
 
 ## 📋 Backlog (curto prazo — itens acionáveis)
-> Só o que dá para pegar nas próximas sessões. Ideia vaga vai pro IDEAS; plano em fases vai pro ROADMAP.
+> Só o que dá para pegar nos próximos turnos. Ideia vaga vai pro IDEAS; plano em fases vai pro ROADMAP.
 - [ ] [Item concreto e pequeno.]
 - [ ] [...]
 
@@ -1623,9 +1623,9 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 🚫 Itens descartados desta visão
 - **[Item]** — fora de escopo porque [motivo]. (Pode viver no IDEAS se ainda for ideia.)
 `},
-    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre sessões.", content:`# GLOSSARY.md — Termos do Projeto
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre conversas.", content:`# GLOSSARY.md — Termos do Projeto
 
-> **Opcional.** Use quando o projeto tem vocabulário próprio (nomes de módulos, conceitos, identificadores) que o assistente reexplicaria a cada sessão sem isto.
+> **Opcional.** Use quando o projeto tem vocabulário próprio (nomes de módulos, conceitos, identificadores) que o assistente reexplicaria a cada conversa sem isto.
 > Mantenha curto: só o que não é óbvio para alguém de fora.
 
 ---
@@ -1645,7 +1645,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
     {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para conhecimento denso que já foi aprendido e não muda mais — guias técnicos, análises de viabilidade, notas de migração — que tornariam o CONTEXT pesado demais.
-> Não é lido no início da sessão; o assistente consulta sob demanda quando o assunto aparece.
+> Não é lido no início da conversa; o assistente consulta sob demanda quando o assunto aparece.
 
 ---
 
@@ -2650,7 +2650,7 @@ NICHES.narrative = {
           "- **O não respondido volta refinado**, nunca repetido igual.",
           "- **O ticket novo se deriva do cânone e das respostas do autor — nunca do ticket velho.** O anterior serve para saber *o que perguntar de novo*; o texto de cada item é reconferido contra os `meta/` antes de reaparecer. Sem isso, o ticket vira uma segunda fonte desatualizada, que é exatamente o defeito que ele existe para evitar.",
           "- **Cabeçalho declara o que ele é:** saída de assistente, não cânone. O cânone é o `meta/`.",
-          "- **Assunto grande demais pede sessão própria.** Reconhecer isso e propor a sessão dedicada é parte do trabalho — empurrar o nó inteiro para dentro de uma leva é o que faz a resposta virar parede.",
+          "- **Assunto grande demais pede conversa própria.** Reconhecer isso e propor a conversa dedicada é parte do trabalho — empurrar o nó inteiro para dentro de uma leva é o que faz a resposta virar parede.",
           "",
           "## O que esta skill NÃO decide",
           "",
@@ -3595,7 +3595,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
       content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para material denso já estável que pesaria no contexto do dia a dia — uma revisão de literatura já fechada, um levantamento extenso, fichamentos antigos.
-> Não é lido no início da sessão; o assistente consulta sob demanda. Evita perder conhecimento quando um projeto/fase termina (o erro clássico de arquivar e esquecer 90% do que se leu).
+> Não é lido no início da conversa; o assistente consulta sob demanda. Evita perder conhecimento quando um projeto/fase termina (o erro clássico de arquivar e esquecer 90% do que se leu).
 
 ---
 
@@ -5480,7 +5480,7 @@ NICHES.brainstorm = {
     "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEAS.md; ao fim de uma fase, sintetizar e recomendar um caminho."
   ],
   triggersExtra:[
-    ["Ideias geradas numa sessão", "Entrega IDEAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
+    ["Ideias geradas numa conversa", "Entrega IDEAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
     ["Mapeamento/clusters definidos", "Entrega MAPA.md completo (clusters nomeados + eixos)."],
     ["Critérios de corte/priorização definidos ou aplicados", "Entrega FILTROS.md completo (critérios + o que passou/caiu e por quê)."],
     ["Tema/pergunta reformulado", "Entrega TEMA.md completo atualizado."],
@@ -8711,11 +8711,11 @@ function buildClaudeMd(niche){
   L.push("As Instruções do Projeto são lidas em **toda mensagem**: cada palavra é cobrada em todo turno. A versão que o kit gera é um **ponto de partida genérico**; este projeto deve convergir para uma versão **mais curta e mais específica** — sem perder processo.");
   L.push("");
   L.push("**Como refinar (proponha ao usuário, não edite sozinho):**");
-  L.push("- **É dever seu, não meu pedido.** Estas Instruções nascem genéricas: são um ponto de partida a especializar, como todo template do kit. Você **deve** propor o refino por conta própria — no fim da primeira sessão de trabalho real e, depois, sempre que perceber sinal (regra que você repetidamente descumpre, instrução que nunca se aplicou, atrito recorrente). Não espere eu pedir; se eu tiver de pedir, o refino já atrasou.");
+  L.push("- **É dever seu, não meu pedido.** Estas Instruções nascem genéricas: são um ponto de partida a especializar, como todo template do kit. Você **deve** propor o refino por conta própria — no fim da primeira conversa de trabalho real e, depois, sempre que perceber sinal (regra que você repetidamente descumpre, instrução que nunca se aplicou, atrito recorrente). Não espere eu pedir; se eu tiver de pedir, o refino já atrasou.");
   L.push("- **Você decide o que merece texto integral.** As Instruções trazem a regra em forma curta e o CEREBRO guarda a definição completa. Se uma regra específica é crítica **neste** projeto — ou é justamente a que você mais erra — promova-a de volta ao texto integral nas Instruções, dizendo por quê. O orçamento é seu para administrar: encolher não é a meta, acertar o que fica sempre à vista é.");
   L.push("- **Atrito sem solução local vira feedback ao kit.** Se o problema não é deste projeto e sim do KCM (regra confusa, gatilho que não dispara, lacuna de comportamento), registre em IDEAS.md na seção de feedback ao kit — é um desfecho legítimo do refino, não uma desculpa para não refinar.");
   L.push("- **Personalização genérica migra para os meta/.** O que veio do formulário de montagem serve para **preencher** os arquivos de contexto; depois de aplicado, não precisa continuar ocupando as Instruções. Proponha mover, deixando nas Instruções a identidade do projeto, o ritual, os gatilhos e a disciplina de entrega.");
-  L.push("- **Corte o que não se aplica.** Princípio, gatilho ou regra que este projeto nunca usou em N sessões é peso morto — proponha remover, dizendo o que sai.");
+  L.push("- **Corte o que não se aplica.** Princípio, gatilho ou regra que este projeto nunca usou em N conversas é peso morto — proponha remover, dizendo o que sai.");
   L.push("- **Especialize o que se aplica.** Troque o exemplo genérico pelo caso real deste projeto: instrução concreta economiza mais token do que instrução curta e vaga.");
   L.push("- **Não confunda encurtar com esquecer.** Regra que já evitou um erro real (está no DECISIONS) NÃO sai. Se algo sai, some ao CEREBRO — o CEREBRO é lido sob demanda, as Instruções em toda mensagem: mover é barato, apagar é caro.");
   L.push("- **Não inche.** Antes de acrescentar uma regra, pergunte se ela cabe no CEREBRO. Só vai para as Instruções o que precisa ser lembrado em TODO turno.");
@@ -9269,7 +9269,7 @@ function buildWoTemplate(){
     "",
     "> **Este arquivo e o MODELO — nao o preencha aqui.** Copie para `meta/workorders/AAMMDD-woNNNN-desc.md`",
     "> e preencha a copia. Ele sobe sempre ao Projeto (o `.flatdropignore` ignora `meta/workorders/*` mas",
-    "> reinclui `!meta/workorders/_TEMPLATE.md`), para que a primeira sessao depois de uma transferencia",
+    "> reinclui `!meta/workorders/_TEMPLATE.md`), para que a primeira conversa depois de uma transferencia",
     "> tenha o formato a mao sem precisar das WOs antigas.",
     ">",
     "> **O que e uma WO:** instrucao de APLICACAO — ancora + texto exato — que o chat autora e o Code posiciona.",
@@ -9589,7 +9589,7 @@ function structuredFlatdropignore(codeOn){
     "# Corolario: modelo/guia de pasta ignorada precisa do PAR completo — a linha \"pasta/*\" e a",
     "# linha \"!pasta/_TEMPLATE.md\" logo depois dela, dentro do bloco.",
     "#",
-    "# Logs de sessao: o \"agora\" fica no meta/STATUS.md; o diario nao precisa ir ao mount.",
+    "# Logs do dia: o \"agora\" fica no meta/STATUS.md; o diario nao precisa ir ao mount.",
     "# Analises (meta/analises/, uma por decisao nao-trivial; a pasta nasce no primeiro uso):",
     "# enquanto forem POUCAS, deixe subir — a analise \"Em discussao\" precisa ser relida no turno",
     "# seguinte, e analise que o assistente nao ve nao e discutida, e reescrita do zero. Quando",

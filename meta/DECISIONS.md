@@ -1581,3 +1581,23 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Nota de método.** É a segunda vez que o Mapsmith devolve uma regra melhor que a nossa e a terceira que o retorno do merge conserta o kit em vez do projeto. **A varredura por fato (D-124) já se pagou três vezes**, e desta vez o que ela achou foi a nossa própria aplicação errada da regra que eles nos deram no dia anterior.
 
 `KIT_VERSION 1.114.0`. **Custo de teto ZERO** — títulos vivem nos modelos de nicho, fora de `buildInstr`: C28 permanece `padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`, folga do `narrative` em **295**. `index.html` de **813.541 → 813.428** bytes: 113 a menos, a correção encolhe. Harness **18/18, 93/93, 0 erros** (nenhum check novo — o C49 cresceu).
+
+---
+
+## D-130 — O pacote de update era a camada que nenhuma varredura alcançava: cada projeto nascia com a cadência errada e depois recebia um pacote mandando corrigi-la (wo0096)
+
+**Base.** `mapsmith_10_-_v4.md`, bloco 4 (2026-08-13) — o fecho do update deles, 20/20 comparados, 7/7 decisões.
+
+**O achado, na formulação deles, é maior que os três arquivos que citaram:** *«as varreduras alcançaram o CEREBRO, as Instruções, o `CLAUDE.md` e os modelos de 16 nichos — e não alcançaram os templates de conteúdo do próprio pacote de update. É a camada que o kit entrega para virar o `meta/` de outro projeto. Cada projeto novo nasce com a cadência errada e depois recebe um pacote mandando corrigi-la.»*
+
+**Eles acharam três; a varredura completa achou onze.** Eles usaram `grep` nos oito templates de conteúdo do nicho `dev`; a varredura daqui abriu **os 20 arquivos do pacote nos 18 nichos** — 96 ocorrências, das quais **11 são cadência revogada** e 85 ficam.
+
+**E o instrumento daqui também errou por baixo, pela terceira vez nesta negociação.** A expressão da primeira varredura (`/sess[aã]/i`) **não casa «sessões»**, cujo plural tem `õ` — o `STATUS__template-update.md` que eles apontaram não apareceu na primeira lista e só entrou depois de ampliar para `/sess[aãoõáà]/i`. **A ausência que o instrumento reportou era do instrumento, não do arquivo.** É a D-126 valendo contra o próprio autor de novo, e a razão de o remédio desta WO ser um check e não onze substituições.
+
+**O que separa 11 de 96 é a refinaria de quatro casos** (D-127, D-129): *manda* sai (*«lê no início de cada sessão»*); *relata* fica (*«a armadilha que já custou uma sessão»*); *estrutura* sai (*«# Logs de sessao»* no `.flatdropignore`); *domínio* fica (a sessão HTTP do `SPEC`, e o nicho de RPG inteiro). **E um quinto caso apareceu aqui: o contraste deliberado** — o CEREBRO diz *«Não é cerimônia de início de SESSÃO: é de TURNO»*, e a frase existe para **opor** os dois termos. Trocar destruiria o argumento.
+
+**O remédio é o check, não a substituição.** Onze correções fecham o buraco de hoje; o C49 abrindo `buildUpdatePack()` nos 18 nichos fecha a camada. Três varreduras seguidas (wo0094 nos gerados, wo0095 nos modelos de nicho, esta no pacote) mostram que o problema nunca foi a lista de strings: era o **conjunto de superfícies que o instrumento conhecia**.
+
+**Nota sobre o merge do Mapsmith, que fecha aqui.** Eles encerraram em **20/20 comparados e 7/7 decisões**, com onze WOs, cinco das quais **não precisaram tocar o arquivo comparado** — e disseram isso em vez de contar como feito. Recusaram uma novidade nossa com motivo escrito (o `IDEAS` por autor: 91 ideias, reordenar seria reescrita destrutiva de 1.053 linhas, e a informação já existe em prosa mais rica). E deixaram registrada a lição de método que vale para o kit: **comparação estrutural não desce ao nível do item** — a regra «ler antes de sobrescrever» escapou do merge deles por ser item de lista dentro de uma seção que já existia dos dois lados, e foi preciso um alerta externo para achá-la num arquivo que eles tinham aberto, lido e dado por mergeado. É a irmã invertida do R4.
+
+`KIT_VERSION 1.115.0`. **Custo de teto ZERO** — nada toca `buildInstr`: C28 permanece `padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`, folga do `narrative` em **295**. `index.html` de **813.428 → 813.436** bytes. Harness **18/18, 93/93, 0 erros** (nenhum check novo — o C49 cresceu pela terceira vez).

@@ -239,7 +239,7 @@ NICHES.narrative = {
           "- **O não respondido volta refinado**, nunca repetido igual.",
           "- **O ticket novo se deriva do cânone e das respostas do autor — nunca do ticket velho.** O anterior serve para saber *o que perguntar de novo*; o texto de cada item é reconferido contra os `meta/` antes de reaparecer. Sem isso, o ticket vira uma segunda fonte desatualizada, que é exatamente o defeito que ele existe para evitar.",
           "- **Cabeçalho declara o que ele é:** saída de assistente, não cânone. O cânone é o `meta/`.",
-          "- **Assunto grande demais pede sessão própria.** Reconhecer isso e propor a sessão dedicada é parte do trabalho — empurrar o nó inteiro para dentro de uma leva é o que faz a resposta virar parede.",
+          "- **Assunto grande demais pede conversa própria.** Reconhecer isso e propor a conversa dedicada é parte do trabalho — empurrar o nó inteiro para dentro de uma leva é o que faz a resposta virar parede.",
           "",
           "## O que esta skill NÃO decide",
           "",

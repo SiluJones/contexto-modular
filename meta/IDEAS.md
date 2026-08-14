@@ -585,6 +585,17 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-13 — O update do Mapsmith fechou: 20/20, 7/7 — e o último achado foi a camada que nenhum check via (D-130, wo0096)
+*«Cada projeto novo nasce com a cadência errada e depois recebe um pacote mandando corrigi-la.»* O **pacote de update** — a camada que o kit entrega para virar o `meta/` de outro projeto — nunca tinha sido varrido por check nenhum. Eles acharam três ocorrências nos templates do nicho `dev`; a varredura completa dos 20 arquivos nos 18 nichos achou **onze**. O remédio é o C49 abrir o pacote, não a décima primeira substituição.
+
+**E o instrumento daqui errou por baixo pela terceira vez:** `/sess[aã]/i` não casa «sessões». O arquivo que eles apontaram não apareceu na minha primeira lista. **Ausência relatada por instrumento é uma afirmação** — a D-126 valendo contra quem a escreveu.
+
+**Um quinto caso na refinaria, que só apareceu aqui: o contraste deliberado.** *«Não é cerimônia de início de SESSÃO: é de TURNO»* existe para opor os dois termos; trocar destruiria o argumento. A refinaria fica com cinco: manda · relata · estrutura · domínio · contraste.
+
+**Balanço do primeiro ciclo completo de update com um projeto irmão.** Onze WOs do lado deles, cinco sem tocar o arquivo comparado; **oito decisões nossas** nasceram do retorno (D-127 a D-130 vieram só dos três últimos merges). A varredura por fato (D-124) achou o que nenhuma comparação de template acharia — inclusive contradições internas ao repositório deles. **O que o ciclo provou é que o retorno do merge conserta mais o kit do que o projeto**, e que o valor está no atrito, não na aceitação.
+
+**Lição de método que eles registraram e vale para nós:** *comparação estrutural não desce ao nível do item*. A regra «ler antes de sobrescrever» escapou do merge deles por ser **item de lista** dentro de uma seção que já existia dos dois lados — foi preciso um alerta externo para achá-la num arquivo já aberto, lido e dado por mergeado. Irmã invertida do R4: lá o conteúdo velho sobrevivia invisível à comparação; aqui o novo passou despercebido pelo mesmo motivo. **Vale como armadilha do próprio prompt de update.**
+
 ### 2026-08-13 — O Mapsmith recusou adotar o nosso `LOG-TEMPLATE`, e estava certo (D-129, wo0095)
 *«Adotar seria regredir.»* O `LOG-TEMPLATE` do pacote ainda tinha «Formato do Log de Sessão», «Objetivo da sessão» e «Última Sessão» **depois** da varredura da wo0094 — porque eu classifiquei títulos como rótulo e deixei. **Faltava o terceiro caso da refinaria deles:** título que **estrutura** muda junto, porque define a unidade do documento, e a unidade virou o dia. Um arquivo por dia que pergunta «qual era o objetivo da sessão» não tem rótulo velho: tem a unidade errada.
 

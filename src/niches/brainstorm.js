@@ -47,7 +47,7 @@ NICHES.brainstorm = {
     "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEAS.md; ao fim de uma fase, sintetizar e recomendar um caminho."
   ],
   triggersExtra:[
-    ["Ideias geradas numa sessão", "Entrega IDEAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
+    ["Ideias geradas numa conversa", "Entrega IDEAS.md completo (cada uma com ID; inclui as descartadas com a razão)."],
     ["Mapeamento/clusters definidos", "Entrega MAPA.md completo (clusters nomeados + eixos)."],
     ["Critérios de corte/priorização definidos ou aplicados", "Entrega FILTROS.md completo (critérios + o que passou/caiu e por quê)."],
     ["Tema/pergunta reformulado", "Entrega TEMA.md completo atualizado."],

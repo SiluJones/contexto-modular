@@ -1279,7 +1279,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.114.0";
+const KIT_VERSION = "1.115.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2585,11 +2585,11 @@ function buildClaudeMd(niche){
   L.push("As Instruções do Projeto são lidas em **toda mensagem**: cada palavra é cobrada em todo turno. A versão que o kit gera é um **ponto de partida genérico**; este projeto deve convergir para uma versão **mais curta e mais específica** — sem perder processo.");
   L.push("");
   L.push("**Como refinar (proponha ao usuário, não edite sozinho):**");
-  L.push("- **É dever seu, não meu pedido.** Estas Instruções nascem genéricas: são um ponto de partida a especializar, como todo template do kit. Você **deve** propor o refino por conta própria — no fim da primeira sessão de trabalho real e, depois, sempre que perceber sinal (regra que você repetidamente descumpre, instrução que nunca se aplicou, atrito recorrente). Não espere eu pedir; se eu tiver de pedir, o refino já atrasou.");
+  L.push("- **É dever seu, não meu pedido.** Estas Instruções nascem genéricas: são um ponto de partida a especializar, como todo template do kit. Você **deve** propor o refino por conta própria — no fim da primeira conversa de trabalho real e, depois, sempre que perceber sinal (regra que você repetidamente descumpre, instrução que nunca se aplicou, atrito recorrente). Não espere eu pedir; se eu tiver de pedir, o refino já atrasou.");
   L.push("- **Você decide o que merece texto integral.** As Instruções trazem a regra em forma curta e o CEREBRO guarda a definição completa. Se uma regra específica é crítica **neste** projeto — ou é justamente a que você mais erra — promova-a de volta ao texto integral nas Instruções, dizendo por quê. O orçamento é seu para administrar: encolher não é a meta, acertar o que fica sempre à vista é.");
   L.push("- **Atrito sem solução local vira feedback ao kit.** Se o problema não é deste projeto e sim do KCM (regra confusa, gatilho que não dispara, lacuna de comportamento), registre em IDEAS.md na seção de feedback ao kit — é um desfecho legítimo do refino, não uma desculpa para não refinar.");
   L.push("- **Personalização genérica migra para os meta/.** O que veio do formulário de montagem serve para **preencher** os arquivos de contexto; depois de aplicado, não precisa continuar ocupando as Instruções. Proponha mover, deixando nas Instruções a identidade do projeto, o ritual, os gatilhos e a disciplina de entrega.");
-  L.push("- **Corte o que não se aplica.** Princípio, gatilho ou regra que este projeto nunca usou em N sessões é peso morto — proponha remover, dizendo o que sai.");
+  L.push("- **Corte o que não se aplica.** Princípio, gatilho ou regra que este projeto nunca usou em N conversas é peso morto — proponha remover, dizendo o que sai.");
   L.push("- **Especialize o que se aplica.** Troque o exemplo genérico pelo caso real deste projeto: instrução concreta economiza mais token do que instrução curta e vaga.");
   L.push("- **Não confunda encurtar com esquecer.** Regra que já evitou um erro real (está no DECISIONS) NÃO sai. Se algo sai, some ao CEREBRO — o CEREBRO é lido sob demanda, as Instruções em toda mensagem: mover é barato, apagar é caro.");
   L.push("- **Não inche.** Antes de acrescentar uma regra, pergunte se ela cabe no CEREBRO. Só vai para as Instruções o que precisa ser lembrado em TODO turno.");
@@ -3143,7 +3143,7 @@ function buildWoTemplate(){
     "",
     "> **Este arquivo e o MODELO — nao o preencha aqui.** Copie para `meta/workorders/AAMMDD-woNNNN-desc.md`",
     "> e preencha a copia. Ele sobe sempre ao Projeto (o `.flatdropignore` ignora `meta/workorders/*` mas",
-    "> reinclui `!meta/workorders/_TEMPLATE.md`), para que a primeira sessao depois de uma transferencia",
+    "> reinclui `!meta/workorders/_TEMPLATE.md`), para que a primeira conversa depois de uma transferencia",
     "> tenha o formato a mao sem precisar das WOs antigas.",
     ">",
     "> **O que e uma WO:** instrucao de APLICACAO — ancora + texto exato — que o chat autora e o Code posiciona.",
@@ -3463,7 +3463,7 @@ function structuredFlatdropignore(codeOn){
     "# Corolario: modelo/guia de pasta ignorada precisa do PAR completo — a linha \"pasta/*\" e a",
     "# linha \"!pasta/_TEMPLATE.md\" logo depois dela, dentro do bloco.",
     "#",
-    "# Logs de sessao: o \"agora\" fica no meta/STATUS.md; o diario nao precisa ir ao mount.",
+    "# Logs do dia: o \"agora\" fica no meta/STATUS.md; o diario nao precisa ir ao mount.",
     "# Analises (meta/analises/, uma por decisao nao-trivial; a pasta nasce no primeiro uso):",
     "# enquanto forem POUCAS, deixe subir — a analise \"Em discussao\" precisa ser relida no turno",
     "# seguinte, e analise que o assistente nao ve nao e discutida, e reescrita do zero. Quando",

@@ -68,7 +68,7 @@ NICHES.dev = {
 `},
     {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
 
-> Arquivo **estável**. O assistente lê no início de cada sessão para se ambientar.
+> Arquivo **estável**. O assistente lê no início de cada conversa para se ambientar.
 > Muda pouco: só em alteração estrutural (stack, arquitetura, escopo, nova armadilha descoberta).
 > Mantenha enxuto — descreve o que o projeto É, não o que está acontecendo agora (isso é o STATUS).
 
@@ -126,7 +126,7 @@ projeto/
 2. **[Armadilha]** — [por que morde] → [o certo].
 
 ## 📁 Arquivos Críticos (não mexer sem contexto)
-> Conhecimento **estável**, não estado do agora — por isso vive aqui, e não no STATUS, que é reescrito a cada sessão. Os prompts de debug, plano e auditoria procuram esta seção NESTE arquivo.
+> Conhecimento **estável**, não estado do agora — por isso vive aqui, e não no STATUS, que é reescrito a cada conversa. Os prompts de debug, plano e auditoria procuram esta seção NESTE arquivo.
 - \`[caminho/arquivo]\` — [por que é sensível; o que ler antes de tocar.]
 
 ## Contexto de Produto
@@ -158,7 +158,7 @@ projeto/
 - [Bug ativo: sintoma observável + suspeita, se houver. Quando resolver, vira entrada em DECISIONS se foi grave.]
 
 ## 📋 Backlog (curto prazo — itens acionáveis)
-> Só o que dá para pegar nas próximas sessões. Ideia vaga vai pro IDEAS; plano em fases vai pro ROADMAP.
+> Só o que dá para pegar nos próximos turnos. Ideia vaga vai pro IDEAS; plano em fases vai pro ROADMAP.
 - [ ] [Item concreto e pequeno.]
 - [ ] [...]
 
@@ -332,9 +332,9 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 🚫 Itens descartados desta visão
 - **[Item]** — fora de escopo porque [motivo]. (Pode viver no IDEAS se ainda for ideia.)
 `},
-    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre sessões.", content:`# GLOSSARY.md — Termos do Projeto
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre conversas.", content:`# GLOSSARY.md — Termos do Projeto
 
-> **Opcional.** Use quando o projeto tem vocabulário próprio (nomes de módulos, conceitos, identificadores) que o assistente reexplicaria a cada sessão sem isto.
+> **Opcional.** Use quando o projeto tem vocabulário próprio (nomes de módulos, conceitos, identificadores) que o assistente reexplicaria a cada conversa sem isto.
 > Mantenha curto: só o que não é óbvio para alguém de fora.
 
 ---
@@ -354,7 +354,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
     {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para conhecimento denso que já foi aprendido e não muda mais — guias técnicos, análises de viabilidade, notas de migração — que tornariam o CONTEXT pesado demais.
-> Não é lido no início da sessão; o assistente consulta sob demanda quando o assunto aparece.
+> Não é lido no início da conversa; o assistente consulta sob demanda quando o assunto aparece.
 
 ---
 

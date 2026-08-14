@@ -253,7 +253,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
       content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para material denso já estável que pesaria no contexto do dia a dia — uma revisão de literatura já fechada, um levantamento extenso, fichamentos antigos.
-> Não é lido no início da sessão; o assistente consulta sob demanda. Evita perder conhecimento quando um projeto/fase termina (o erro clássico de arquivar e esquecer 90% do que se leu).
+> Não é lido no início da conversa; o assistente consulta sob demanda. Evita perder conhecimento quando um projeto/fase termina (o erro clássico de arquivar e esquecer 90% do que se leu).
 
 ---
 

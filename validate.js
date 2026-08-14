@@ -538,6 +538,23 @@ check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario 
       assert(!linha, id+"/"+(f.name||"?")+": modelo entregue pelo nicho ainda usa a cadencia revogada — «"+String(linha).trim().slice(0,90)+"»");
     });
   });
+  // (1c) e o PACOTE DE UPDATE inteiro — a camada que o kit entrega para virar o `meta/` de outro
+  //       projeto. As varreduras anteriores alcancaram o CEREBRO, as Instrucoes, o CLAUDE.md e os
+  //       modelos dos nichos, e NAO alcancaram os templates de conteudo do pacote: cada projeto
+  //       novo nascia com a cadencia errada e depois recebia um pacote mandando corrigi-la.
+  //       Achado do mapsmith ao fechar o update (mapsmith_10 - v4). Ver D-130.
+  const CADENCIA_NO_PACOTE = /lê no início de cada sess|no início da sess|reescrito a cada sess|próximas sess|reexplicaria a cada sess|Logs de sess|primeira sess(ão|ao) de trabalho|pede sess(ão|ao) própria|geradas numa sess|em N sess/i;
+  Object.keys(T.NICHES).forEach(id => {
+    if(DOMINIO_SESSAO.has(id)) return;
+    const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+    S.workmode.codeMode = "yes";
+    const pack = T.buildUpdatePack(T.normNiche(T.NICHES[id]));
+    S.workmode.codeMode = prev;
+    (pack.files||[]).forEach(f => {
+      const linha = String(f.content||"").split("\n").find(l => REVOGADO.test(l) || CADENCIA_NO_PACOTE.test(l));
+      assert(!linha, id+"/"+(f.flat||"?")+": o PACOTE DE UPDATE ainda entrega a cadencia revogada — «"+String(linha).trim().slice(0,90)+"»");
+    });
+  });
   // (2) o log na tabela de docs vem por gatilho de evento, nao por cadencia
   Object.keys(T.NICHES).forEach(id => {
     const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
