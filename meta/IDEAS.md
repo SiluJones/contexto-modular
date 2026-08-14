@@ -585,6 +585,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-13 — Auditoria do Sand-Land-Map antes do pacote: a FK-M estava aberta (D-131, wo0097)
+Varri os 36 arquivos deles e cruzei o `IDEAS.md` com o texto gerado pelo kit. **Um item de feedback continuava aberto:** a **FK-M** (2026-08-10), que pede o que a D-122 não deu — não a regra «existência não é aptidão», que entrou, mas a sua **metade operacional**: *declarar qual das duas perguntas o instrumento não responde*, ao lado do que não foi olhado. Pergunta ao autor depende de memória; propriedade do relatório o leitor cobra.
+
+**Simetria que vale registrar:** a FK-A deles pediu que o kit distinguisse «não verifiquei» de «não dá para ler daqui». A FK-M pede a distinção irmã, um nível acima: **«conferi» de «conferi o invólucro»**. Mesmo projeto, dez meses de prática entre as duas.
+
+**Estado do feedback dos dois projetos, agora:** **fechado**. Mapsmith — os nove itens e os três pedidos de volta, respondidos. Sand-Land-Map — FK-A a FK-M, todos com desfecho: A/B/C aceitos (v1.93.0), D recusado com argumento, E adiado com gatilho, F e I na D-122, G e H na D-123, J e K na D-120, L nas D-121 e D-122, **M nesta**.
+
+**Registrado como não olhado, para não virar zero:** o `.claude/` do Sand-Land-Map **não está no mount** — o `.gitignore` deles ignora a pasta inteira, contradizendo o comentário duas linhas acima no mesmo arquivo («NAO ignore .claude/ … sao versionados de proposito»). Não pude auditar as skills nem o `settings.json` deles, que foi exatamente onde estavam os dois defeitos mais caros do Mapsmith. **Vai como pergunta no pacote, não como diagnóstico** (D-127).
+
 ### 2026-08-13 — O update do Mapsmith fechou: 20/20, 7/7 — e o último achado foi a camada que nenhum check via (D-130, wo0096)
 *«Cada projeto novo nasce com a cadência errada e depois recebe um pacote mandando corrigi-la.»* O **pacote de update** — a camada que o kit entrega para virar o `meta/` de outro projeto — nunca tinha sido varrido por check nenhum. Eles acharam três ocorrências nos templates do nicho `dev`; a varredura completa dos 20 arquivos nos 18 nichos achou **onze**. O remédio é o C49 abrir o pacote, não a décima primeira substituição.
 

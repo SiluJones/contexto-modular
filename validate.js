@@ -571,10 +571,19 @@ check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario 
     assert(/Versionar em vez de descartar é uma escolha legítima/.test(cmd), id+": 'fica fora do repositorio' esta como regra e impede a promocao a instrumento");
     assert(/Quem versiona, registra a escolha/.test(cmd), id+": a escolha de versionar nao vem com a obrigacao de registrar o desvio");
   });
+  // (3b) FK-M do sand-land: existencia nao e aptidao, e o relatorio DECLARA qual das duas
+  //       perguntas o instrumento nao responde — do mesmo jeito que ja declara o que nao olhou.
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/qual das duas perguntas o instrumento não responde/.test(cmd), id+": a propriedade 2 do relatorio so declara o que nao foi olhado — falta declarar qual pergunta o instrumento nao responde, e o verde de «esta la?» passa a ser lido como verde de «presta?»");
+    assert(/30 bytes de cabeçalho/.test(cmd), id+": a regra veio sem o argumento de custo — sem ele, «declare a lacuna» perde para a pressa");
+  });
   // (4) quinta especie de passo de verificacao errado
   const wo = T.buildWoTemplate();
   assert(/`grep` casa por LINHA/.test(wo), "modelo de WO sem a especie do grep por linha — o passo acusa ausencia onde ha presenca, porque o texto inserido quebrou a frase");
   assert(/ausencia relatada por instrumento e uma afirmacao/.test(wo), "falta a regra geral: ausencia precisa de prova igual a qualquer outra");
+  assert(/«esta la\?» ou «presta\?»/.test(wo), "modelo de WO nao cobra do passo de verificacao qual das duas perguntas ele responde");
+  assert(/do INVOLUCRO; a aptidao esta no conteudo/.test(wo), "falta a distincao involucro x conteudo no modelo de WO — sem ela «qual pergunta?» vira etiqueta e nao criterio");
   return "ok";
 });
 

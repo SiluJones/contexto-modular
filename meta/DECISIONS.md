@@ -1601,3 +1601,23 @@ Check **C36** novo. `KIT_VERSION 1.101.0`. Harness **18/18, 79/79 → 80/80, 0 e
 **Nota sobre o merge do Mapsmith, que fecha aqui.** Eles encerraram em **20/20 comparados e 7/7 decisões**, com onze WOs, cinco das quais **não precisaram tocar o arquivo comparado** — e disseram isso em vez de contar como feito. Recusaram uma novidade nossa com motivo escrito (o `IDEAS` por autor: 91 ideias, reordenar seria reescrita destrutiva de 1.053 linhas, e a informação já existe em prosa mais rica). E deixaram registrada a lição de método que vale para o kit: **comparação estrutural não desce ao nível do item** — a regra «ler antes de sobrescrever» escapou do merge deles por ser item de lista dentro de uma seção que já existia dos dois lados, e foi preciso um alerta externo para achá-la num arquivo que eles tinham aberto, lido e dado por mergeado. É a irmã invertida do R4.
 
 `KIT_VERSION 1.115.0`. **Custo de teto ZERO** — nada toca `buildInstr`: C28 permanece `padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`, folga do `narrative` em **295**. `index.html` de **813.428 → 813.436** bytes. Harness **18/18, 93/93, 0 erros** (nenhum check novo — o C49 cresceu pela terceira vez).
+
+---
+
+## D-131 — Fecha a FK-M: «existência não é aptidão» ganha a metade operacional — o relatório declara qual das duas perguntas o instrumento NÃO responde (wo0097)
+
+**Base.** Auditoria do Sand-Land-Map antes de gerar o pacote dele (2026-08-13). Item **FK-M** do `IDEAS.md` deles, aberto em 2026-08-10 e sem linha de desfecho.
+
+**O kit pegou o princípio e deixou a metade operacional.** A D-122 instalou *«Existência não é aptidão (…) ao escrever uma sonda, pergunte o que ela NÃO abre»*. A FK-M pede outra coisa: que a resposta vire **propriedade declarada do relatório**, ao lado de «o que não foi olhado». **A diferença é a de sempre** — pergunta ao autor depende de o autor lembrar; propriedade do relatório o leitor cobra. É a mesma forma do item (7) do Mapsmith (virtude sem gatilho), aplicada a uma regra que já tínhamos.
+
+**E é o leitor que paga.** Sem a declaração, *«45/45 existem, extensões `{'.webp': 45}`, sprite_source existe: sim»* é um verde de **«está lá?»** que a leitura seguinte consome como verde de **«presta?»** — e os 45 ícones estavam destruídos por dentro. **Os dois projetos tinham o mesmo ponto cego**, cada um no seu instrumento.
+
+**Entra também o argumento de custo que a FK-M carrega e o kit não tinha:** *ler 30 bytes de cabeçalho respondeu «presta?» por 45 arquivos de uma vez, sem dependência nenhuma.* Regra sem custo declarado perde para o «depois eu vejo» — e esta custa quase nada.
+
+**Duas superfícies, porque o defeito aparece nas duas pontas:** a **propriedade 2** do relatório de sonda (quem mede declara a lacuna) e o **passo de verificação** do modelo de WO (quem escreve a conferência declara qual pergunta o passo não responde, com a distinção invólucro × conteúdo junto — sem ela, «qual pergunta?» vira etiqueta em vez de critério).
+
+**Nota de simetria com a FK-A.** Aquela pediu que o kit distinguisse *«não verifiquei»* de *«não dá para ler daqui»*, e virou a D de canal ilegível. Esta pede a distinção irmã, um nível acima: *«conferi»* de *«conferi o invólucro»*. **O mesmo projeto identificou as duas**, com dez meses de prática entre elas.
+
+**Check C49 estendido**, com **quatro provas negativas**: sem a segunda declaração · sem o argumento de custo · modelo de WO sem a pergunta · modelo de WO sem a distinção invólucro × conteúdo. A quarta expôs uma asserção frouxa minha (`/propriedades\s*$|do INVOLUCRO/m`, que passava por outro motivo) e foi apertada antes de entrar.
+
+`KIT_VERSION 1.116.0`. **Custo de teto ZERO** — nada toca `buildInstr`: C28 permanece `padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`, folga do `narrative` em **295**. `index.html` de **813.436 → 814.394** bytes. Harness **18/18, 93/93, 0 erros** (nenhum check novo — o C49 cresceu pela quarta vez).

@@ -1279,7 +1279,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.115.0";
+const KIT_VERSION = "1.116.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2621,7 +2621,7 @@ function buildClaudeMd(niche){
   L.push("");
   L.push("**Três propriedades do relatório — as três juntas, ou o relatório vira lixo:**");
   L.push("1. **Tabela e contagens, nunca prosa.** Número solto é contestável; número ao lado do comando que o produziu, não.");
-  L.push("2. **O que NÃO foi olhado é declarado.** Sem isso, ausência vira zero na leitura seguinte — e zero é um fato, ausência não. Seção que não pôde ser medida sai marcada como não conferida, **nunca omitida**.");
+  L.push("2. **O que NÃO foi olhado é declarado — e qual das duas perguntas o instrumento não responde, também.** Sem a primeira metade, ausência vira zero na leitura seguinte, e zero é um fato enquanto ausência não é: seção que não pôde ser medida sai marcada como não conferida, **nunca omitida**. A segunda metade é a que quase ninguém escreve: toda conferência responde a *«está lá?»* ou a *«presta?»*, e a que ela **não** responde precisa aparecer no relatório com o mesmo destaque do que não foi olhado — senão o verde de uma vira leitura de verde da outra. Costuma custar pouco fechar a lacuna: ler 30 bytes de cabeçalho respondeu «presta?» por 45 arquivos de uma vez, sem dependência nenhuma.");
   L.push("3. **Nada truncado em silêncio, e amostra nunca se apresenta como cobertura.** São dois defeitos diferentes: truncar esconde o FIM da lista (lista cortada mostra o TOTAL); amostrar esconde que a lista nem foi lida inteira. `os 3 primeiros` num relatório sem a palavra «amostra» vira, na leitura seguinte, «conferi tudo» — e ninguém volta para checar. Se olhou uma parte, diga **quantos de quantos**.");
   L.push("");
   L.push("**Nenhuma das duas dá veredito, e a razão é a que importa: teste de conformidade não detecta que a especificação está errada.** A sonda relata o fato e **não nomeia a causa** — ausências de origens diferentes produzem o mesmo sintoma. Decidir é da raia de planejamento, com o dono.");
@@ -3269,6 +3269,10 @@ function buildWoTemplate(){
     "        que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica",
     "        que o programa continua rodando. E o unico campo que da trabalho, e e o que separa conferir de",
     "        parecer conferir.",
+    "      - **Esta e qual pergunta: «esta la?» ou «presta?»** Contagem, existencia e extensao sao propriedades",
+    "        do INVOLUCRO; a aptidao esta no conteudo. Diga qual das duas este passo NAO responde — 45 arquivos",
+    "        existindo, com a extensao certa e o indice batendo, ja passaram verdes estando destruidos por dentro,",
+    "        porque nenhum instrumento abriu um deles. Fechar a lacuna costuma custar pouco.",
     "      - **Prova de vida:** quando \"passou\" se parece com \"nada aconteceu\", o passo precisa do par negativo",
     "        que forca o sinal. Lista vazia so significa alguma coisa depois de voce ter visto a mesma checagem",
     "        devolver um item.",
