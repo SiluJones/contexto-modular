@@ -16,8 +16,11 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
   **Verde** (`git diff` conferido e, se tocou `src/`, build + harness verdes): rode `add`, `commit` e
   `push` você mesmo, SEM perguntar. Você tem o terminal; entregar bloco para eu colar é trocar de raia.
   **Vermelho** (harness falhou, âncora não achada, `git diff` fora do previsto): NÃO commite nem
-  empurre — feche com **MENU NUMERADO** de saídas reais (a recomendada em 1), nunca com pergunta em
-  prosa. Se a minha escolha chegar depois, o relatório se REESCREVE — não fica valendo a versão velha.
+  empurre — ofereça as saídas reais pelo **menu de opções** da ferramenta `AskUserQuestion`, com a
+  recomendada em primeiro lugar e marcada `(Recomendado)`. **Nunca pergunte em prosa — e menu numerado
+  escrito no corpo da mensagem TAMBÉM é prosa**, porque me obriga a digitar a escolha em vez de clicar.
+  Sem a ferramenta, caia no menu numerado em texto e **diga que caiu no fallback**. Se a minha escolha
+  chegar depois, o relatório se REESCREVE — não fica valendo a versão velha.
   Mensagem de commit SEM acento.
 - **Ao mudar um número ou um estado no `meta/STATUS.md`** (contagem de checagens, versão, «harness
   NN/NN»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não

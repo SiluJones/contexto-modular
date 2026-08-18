@@ -501,6 +501,35 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C51 o numero declarado e piso, e as regras do merge vem na frente (wo0099): varredura com comando, prioridade curta, checklist simulado", () => {
+  const n = T.normNiche(T.NICHES.dev);
+  const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+  S.workmode.codeMode = "yes";
+  const pack = T.buildUpdatePack(n); const man = pack.manifest;
+  S.workmode.codeMode = prev;
+  // (1) FK-N: o manifesto entrega o COMANDO e diz que o numero e piso
+  assert(/o numero abaixo e PISO, nao medida/i.test(man), "o manifesto ainda apresenta a contagem de revogacoes como medida — quem a escreve olha SECOES e a revogacao mora no ITEM");
+  assert(/a linha revogada mora no ITEM/i.test(man), "falta a causa da divergencia (secao x item), sem a qual o piso vira numero arbitrario");
+  assert(/o desvio cresce com a distancia entre versoes/i.test(man), "falta o pior efeito: o projeto mais atrasado recebe o numero mais otimista");
+  assert(/grep -rn/.test(man), "o manifesto nao entrega o comando de varredura — «procure cada texto listado» so acha o que a lista ja sabia");
+  assert(/alvo depois e ZERO/i.test(man), "a varredura nao tem alvo declarado, entao qualquer numero passa por bom");
+  assert(/`grep -c` conta LINHAS, nao ocorrencias/.test(man), "o manifesto nao avisa que grep -c conta linhas — foi assim que uma contagem de 8 apareceu como 7");
+  // (2) FK-O: prioridade curta e justificada, ANTES do resto do manifesto
+  assert(/## Aplique PRIMEIRO/.test(man), "manifesto sem a marca de aplicar primeiro — as regras que governam o merge chegam depois do defeito que elas impedem");
+  assert(/Nao e ordenacao de tudo: sao quatro itens/.test(man), "a marca de prioridade nao se limita — ordenacao errada e pior que nenhuma");
+  const iPrio = man.indexOf("## Aplique PRIMEIRO"), iTab = man.indexOf("| Nome no upload");
+  assert(iPrio > -1 && iTab > -1 && iPrio < iTab, "a secao «Aplique PRIMEIRO» vem depois da tabela de arquivos — quem le ja escolheu a ordem antes de chegar nela");
+  ["item «Proximo»", "Medicao delegada", "Varredura pelo fato", "tres campos por passo"].forEach(t => {
+    assert(man.indexOf(t) > -1, "a lista de «aplique primeiro» nao cita «"+t+"»");
+  });
+  // (3) FK-P: o checklist da WO simula o texto final de TODAS as edicoes
+  const wo = T.buildWoTemplate();
+  assert(/simulado contra o texto FINAL/.test(wo), "o modelo de WO nao manda simular o numero esperado contra o texto final de todas as edicoes — checklist que olha edicao isolada produz VERMELHO falso");
+  assert(/citada por duas edicoes; esperado = 2/.test(wo), "falta a forma de declarar o termo citado por mais de uma edicao");
+  assert(/`grep -c` conta LINHAS/.test(wo), "o modelo de WO nao avisa que grep -c conta linhas");
+  return "ok";
+});
+
 check("C50 varredura muda nao e varredura limpa (wo0098): o pacote confere se as superficies chegaram, e a higiene cobra o que o ignore esconde", () => {
   const n = T.normNiche(T.NICHES.dev);
   const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
@@ -800,7 +829,10 @@ check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do p
     ["ordem do push",      /push ANTES de escrever o relat/i, ["wrap","applyWo"]],
     ["caso verde",         /Verde[\s\S]{0,400}?sem perguntar/i, ["wrap","applyWo"]],
     ["caso vermelho",      /MENU NUMERADO/i,                  ["wrap","applyWo"]],
-    ["recomendada em 1",   /recomendada em 1/i,               ["wrap","applyWo"]],
+    // A wo0099 trocou o menu numerado em texto pela ferramenta de botoes: menu escrito no corpo
+    // da mensagem ainda obriga o dono a DIGITAR a escolha, e por isso continua sendo prosa.
+    ["recomendada marcada",/recomendada em primeiro lugar e marcada/i, ["wrap","applyWo"]],
+    ["menu por ferramenta",/AskUserQuestion/,                 ["wrap","applyWo"]],
     ["relatorio em arquivo", /-code-/,                        ["wrap","applyWo"]],
     ["ancora exata",       /PARE e reporte/i,                 ["applyWo"]],
   ];
@@ -1094,7 +1126,8 @@ check("C37 artefato do kit abre no parser do proprio formato (wo0081): settings.
   assert(/menu\*\* numerado|menu numerado|MENU NUMERADO/i.test(kit.claudeMd), "CLAUDE.md nao manda usar menu numerado no caso vermelho");
   assert(/relat[oó]rio [eé] o ÚLTIMO passo/i.test(kit.claudeMd), "CLAUDE.md nao poe o relatorio depois do push");
   [["apply-wo",kit.applyWo],["wrap",kit.wrap]].forEach(([nome,txt]) => {
-    assert(/MENU NUMERADO/.test(txt), "skill "+nome+" nao manda fechar com menu numerado no caso vermelho");
+    assert(/AskUserQuestion/.test(txt), "skill "+nome+" nao manda fechar o caso vermelho pelo menu de BOTOES — menu numerado escrito na mensagem obriga o dono a digitar a escolha, e por isso ainda e prosa (wo0099)");
+    assert(/caia no menu numerado/i.test(txt), "skill "+nome+" nao tem o fallback para quando a ferramenta de menu nao existir");
     assert(/push ANTES de escrever o relatorio/.test(txt), "skill "+nome+" nao ordena push antes do relatorio");
   });
   assert(/DEPOIS de resolver o push/.test(kit.woTemplate), "modelo de WO nao ordena relatorio depois do push");

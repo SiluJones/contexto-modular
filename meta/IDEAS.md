@@ -585,6 +585,19 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-18 — O merge do Sand-Land-Map fechou (20/20) e devolveu três itens sobre o PROCESSO (D-133, wo0099)
+FK-N, FK-O e FK-P não falam do conteúdo do kit: falam de **como conduzir um merge**. Somados ao pedido do autor sobre o menu de botões, viram a mesma constatação — **o pacote descreve bem o que mudar e mal como conduzir a mudança**.
+
+**O achado mais forte é o da FK-N, e ele se provou no próprio merge que o gerou:** eles declararam 20/20 ENCERRADO e ainda restam ocorrências da cadência revogada em seis arquivos — `CONTEXT.md`, `HISTORY.md`, `GLOSSARY.md`, `STATUS.md`, `README.md` e o `_TEMPLATE.md` de WO. **A lista de 20 não os enumerava com o termo.** O comando de varredura teria pego os seis de uma vez, e é exatamente o que a FK-N pedia.
+
+**E a FK-O tem o custo medido em voz alta:** a regra que impede «o grep deu N» estava na fatia 3 do merge deles, e o defeito aconteceu na fatia 1 — e de novo na 3a. Duas vezes, com a regra dentro do pacote que estava sendo aplicado.
+
+**Nota de instrumento, e desta vez a favor:** o C43 e o C37 reprovaram sozinhos quando o texto do menu mudou, apontando que os `.claude/skills/*` do próprio KCM ficariam atrás. **Primeira vez nesta série em que o instrumento cobrou a auto-aplicação antes de o autor pensar nela** — a D-121 funcionando sem depender de memória.
+
+**Aberto, para levar ao Sand-Land-Map na próxima correspondência:** os seis arquivos com resto de cadência, e a pergunta de método que vem junto — *o «20/20» contava arquivos comparados ou arquivos varridos?* A resposta deles vale mais que a correção, porque é o teste da FK-N em campo.
+
+**Aberto, do autor:** o interesse em uma **skill de sonda** no kit e em aprimorar o script de sonda. O kit tem o verbete (D-122, D-128) e recusou o molde duas vezes por falta de pedido — **agora há pedido**. *Gatilho: a próxima leva, com o material dos dois projetos na mão.*
+
 ### 2026-08-14 — O `.claude/` do Sand-Land-Map nunca esteve no mount, e a auditoria não percebeu (D-132, wo0098)
 Um `.gitignore` com contradição interna escondeu a pasta; o FlatDrop obedeceu; e **a auditoria varreu o que chegou e chamou de completa**. Repostos hoje, os três arquivos estão pré-D-115: as duas skills mandam entregar o commit em três blocos ao dono, e o `settings.json` não tem `Write`. **São as superfícies que o pacote manda varrer primeiro** — o merge teria rodado a instrução sobre um mount sem elas e concluído «limpo».
 

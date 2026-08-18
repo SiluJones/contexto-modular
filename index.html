@@ -1281,7 +1281,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.117.0";
+const KIT_VERSION = "1.118.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9378,6 +9378,11 @@ function buildWoTemplate(){
     "",
     "- [ ] `git diff` mostra **exatamente** os arquivos previstos, e nada alem.",
     "- [ ] [Conferencia de forma especifica desta WO — ex.: \"a entrada nova ficou dentro da secao certa\".]",
+    "- [ ] **Se algum passo mede um termo com `grep -c`, o numero esperado foi simulado contra o texto FINAL",
+    "      de TODAS as edicoes desta WO?** Termo citado por duas edicoes conta 2, nao 1 — e o checklist que",
+    "      olha cada edicao isolada produz um VERMELHO falso, que para a aplicacao e gasta um ciclo. Quando um",
+    "      termo aparece em mais de uma edicao, declare: «esta frase e citada por duas edicoes; esperado = 2».",
+    "      E lembre que `grep -c` conta LINHAS: duas ocorrencias na mesma linha valem 1.",
     "- [ ] **Se a WO declarou um inventario** (\"onze lugares\"), refaca a contagem no repo. Numero diferente:",
     "      **PARE e reporte antes de editar** — a divergencia e o achado, nao um detalhe a acomodar.",
     "- [ ] **O que esta tarefa criou FORA do repositorio ja foi fechado?** Processo, porta, servidor de",
@@ -9502,7 +9507,7 @@ function buildCodeKitFiles(){
     "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.",
     "Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.",
     "Ao terminar, RELATE: o que foi feito, achados/desvios do texto da WO, arquivos tocados, build/validação e o commit.",
-    "Verde: `add`, `commit` e `push` sem perguntar. Vermelho: nao commite nem empurre — feche com MENU NUMERADO (a recomendada em 1), nunca com pergunta em prosa. Resolva o push ANTES de escrever o relatorio. Grave o MESMO relatório em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
+    "Verde: `add`, `commit` e `push` sem perguntar. Vermelho: nao commite nem empurre — feche com MENU DE OPCOES pela ferramenta `AskUserQuestion`, com a recomendada em primeiro lugar e marcada `(Recomendado)`. **Nunca pergunte em prosa — e menu numerado escrito no corpo da mensagem TAMBEM e prosa**, porque obriga o dono a digitar a resposta em vez de clicar. Sem a ferramenta, caia no menu numerado em texto e DIGA que caiu no fallback. Resolva o push ANTES de escrever o relatorio. Grave o MESMO relatório em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
     "WO: $ARGUMENTS",
     ""
   ].join("\n");
@@ -9516,7 +9521,7 @@ function buildCodeKitFiles(){
     "e confira o `git diff` — a forma esperada, nada além. Mensagem de commit SEM acento.",
     "Ao mudar um número ou um estado no `STATUS.md` (contagem de testes/checagens, versão, «funciona até X»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não é o único lugar onde ele aparece, e a cópia esquecida no meio do texto passa a mentir.",
     "Escreva o log do dia em `logs/AAAA-MM-DD.md` (formato em `meta/LOG-TEMPLATE.md`). Se o arquivo do dia NÃO existe, CRIE — não regenerar é uma coisa, não criar é outra. Se já existe, acrescente. Cinco linhas escritas hoje valem mais que uma página reconstituída na semana que vem: só você viu o que aconteceu aqui.",
-    "Verde: `add`, `commit` e `push` sem perguntar. Vermelho: nao commite nem empurre — feche com MENU NUMERADO (a recomendada em 1), nunca com pergunta em prosa. Resolva o push ANTES de escrever o relatorio. Grave o relatório de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
+    "Verde: `add`, `commit` e `push` sem perguntar. Vermelho: nao commite nem empurre — feche com MENU DE OPCOES pela ferramenta `AskUserQuestion`, com a recomendada em primeiro lugar e marcada `(Recomendado)`. **Nunca pergunte em prosa — e menu numerado escrito no corpo da mensagem TAMBEM e prosa**, porque obriga o dono a digitar a resposta em vez de clicar. Sem a ferramenta, caia no menu numerado em texto e DIGA que caiu no fallback. Resolva o push ANTES de escrever o relatorio. Grave o relatório de trabalho em `../AAMMDD-HHMM-code-<slug>.txt` (pasta-pai do repo). Se a escrita for negada, diga e siga.",
     ""
   ].join("\n");
   return { claudeMd, settings, applyWo, wrap, woTemplate: buildWoTemplate() };
@@ -9730,6 +9735,25 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
     L.push("relato falsifica o registro para consertar a regra. Mesma palavra, papeis opostos: antes de trocar,");
     L.push("pergunte se a frase manda fazer algo ou conta o que aconteceu.");
     L.push("");
+    L.push("**Rode a varredura, nao confie na lista — e o numero abaixo e PISO, nao medida.** Quem escreve esta");
+    L.push("tabela olha as SECOES que mudou; a linha revogada mora no ITEM — titulo, celula de tabela, item de");
+    L.push("lista — que a secao nao enumera. **E o desvio cresce com a distancia entre versoes:** o projeto mais");
+    L.push("atrasado, que e o que mais precisa do merge, recebe o numero mais otimista. Um caso real: o manifesto");
+    L.push("declarou 11 pontos num arquivo e a varredura achou 22.");
+    L.push("");
+    L.push("Para cada termo da tabela, rode em CADA arquivo do seu `meta/`, no `CLAUDE.md`, nas `.claude/skills/*`");
+    L.push("e nos seus modelos (`_TEMPLATE.md`, `LOG-TEMPLATE.md`) — nao so nos que voce acha que mudaram:");
+    L.push("");
+    L.push("```");
+    L.push("grep -rn \"<termo revogado>\" meta/ CLAUDE.md .claude/   # ANTES: anote o numero por arquivo");
+    L.push("grep -rn \"<termo revogado>\" meta/ CLAUDE.md .claude/   # DEPOIS: alvo = 0, menos o que voce justificar");
+    L.push("```");
+    L.push("");
+    L.push("**O alvo depois e ZERO, menos as ocorrencias que voce classificar como legitimas** (relato, dominio,");
+    L.push("contraste — ver abaixo) **e listar uma a uma, com arquivo e linha**. Fechar o merge sem essa lista e");
+    L.push("declarar limpo o que ninguem contou: `grep -c` conta LINHAS, nao ocorrencias, e uma linha com o termo");
+    L.push("duas vezes vale 1 — se voce usou `-c`, use tambem `grep -o ... | wc -l` antes de dizer que fechou.");
+    L.push("");
     L.push("**Varra pelo FATO, nao pela frase.** O texto da tabela e como o KIT dizia — o seu arquivo pode dizer");
     L.push("a mesma coisa com outras palavras, e foi voce quem escreveu essas palavras. Leia a coluna «Por que");
     L.push("saiu», entenda o COMPORTAMENTO revogado, e procure por ele: o termo literal, a parafrase, a tabela");
@@ -9750,6 +9774,26 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
     });
     L.push("");
   }
+  L.push("## Aplique PRIMEIRO — as regras que governam o proprio merge");
+  L.push("");
+  L.push("Um merge grande e aplicado na ordem em que o arquivo esta escrito, e as regras que protegem a");
+  L.push("**conduta durante o merge** ficam onde calharam de cair no documento. Quem esta muitas versoes");
+  L.push("atras passa o merge inteiro operando sob as regras velhas que este pacote veio corrigir — e o");
+  L.push("defeito que a regra impede acontece antes de a regra chegar. Estas quatro vem na frente:");
+  L.push("");
+  L.push("1. **Bloco de fecho, item «Proximo»** — a frase pedida de volta so pode conter resultado que o dono");
+  L.push("   saiba produzir. Sem ela, o merge pede «o grep deu N» sem nunca dizer que grep, e o dono descobre");
+  L.push("   escrevendo de volta para perguntar.");
+  L.push("2. **Medicao delegada** — quem tem o disco mede, quem tem o contexto decide; e numero medido vem com");
+  L.push("   o comando que o produziu. E o que impede o merge inteiro de correr sobre numeros deduzidos.");
+  L.push("3. **Varredura pelo fato** (secao «Linhas revogadas», acima) — sem ela, cada fatia varre so o que a");
+  L.push("   lista ja sabia, e o que sobra fica invisivel ate a fatia seguinte.");
+  L.push("4. **Os tres campos por passo de verificacao** (`_TEMPLATE.md` de WO) — quem roda, chega no ramo, e");
+  L.push("   qual pergunta o passo NAO responde. Sao os passos das WOs do proprio merge.");
+  L.push("");
+  L.push("Nao e ordenacao de tudo: sao quatro itens, e o resto do pacote pode ser aplicado na ordem que fizer");
+  L.push("sentido para este projeto. Ordenacao errada e pior que nenhuma — por isso a marca e curta.");
+  L.push("");
   const comObrig = files.filter(f => Array.isArray(f.obrigatorio) && f.obrigatorio.length);
   if(comObrig.length){
     L.push("## Correcoes obrigatorias (nao sao merge — sao conserto)");
