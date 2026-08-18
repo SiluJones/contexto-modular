@@ -1188,6 +1188,7 @@ const TRIGGERS_BASE = [
   ["Evento que MERECE log: cortar versao, registrar uma decisao ou um bug grave, virar o dia de trabalho", "Escreve `logs/AAAA-MM-DD.md` na hora. O log nao espera o fim da conversa — numa conversa longa o fim nunca chega, e e assim que dias inteiros ficam sem registro."],
   ["Precisa de um numero sobre material grande demais para a conversa", "Manda MEDIR (sonda) em vez de deduzir ou pedir upload. Se ninguem sabe ainda qual e a pergunta, manda EXPLORAR primeiro: exploracao produz hipotese, sonda produz evidencia."],
   ["Chega ou sai carta de outro projeto (negociacao de contrato entre frentes)", "Extrai o durável AGORA — acordo vira decisao registrada, o que nao coube vira ideia com gatilho — e NAO versiona a carta. Se ela pede resposta do outro lado, cria o item de espera com prazo: espera sem gatilho trava o projeto sem ninguem perceber."],
+  ["Uma conferencia deu VERDE — antes de relatar", "Pergunte qual das duas perguntas esse verde responde: «esta la?» ou «presta?». Verde de existencia lido como verde de aptidao ja passou por 45 arquivos destruidos por dentro. Se o instrumento nao abre o conteudo, diga isso na MESMA linha do verde, nao no rodape."],
   ["Uma varredura ou conferencia nao achou NADA no lugar onde deveria achar algo", "Confirme que o arquivo chegou ao mount antes de concluir que esta limpo. Cheque `.gitignore` e `.flatdropignore`: pasta excluida produz varredura muda, e silencio de ferramenta nao e ausencia de problema."],
   ["Vai sobrescrever, mover ou apagar algo que ja existe (arquivo, pasta, config, artefato baixado)", "LE antes. E se o dono pediu para NAO apagar algo, pergunte do que ele tem medo: quase sempre a resposta e copiar para fora do espaco de trabalho e seguir — cumprir a letra e deixar o problema de pe e obedecer contra o interesse de quem pediu."],
   ["A tarefa criou algo FORA do repositorio (processo, porta, servidor de dev, arquivo temporario, download)", "Quem abriu, fecha — a tarefa termina com a maquina como a encontrou. O que nao puder ser fechado e DECLARADO no relatorio, com o caminho: e o que ninguem lembra de limpar."],
@@ -1281,7 +1282,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.118.0";
+const KIT_VERSION = "1.119.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2631,6 +2632,29 @@ function buildClaudeMd(niche){
   L.push("- **A exploração não parte da lista de checagens da sonda.** Se ela só olhar onde a sonda já olha, ela só acha o que a sonda já acharia. É a mesma regra do inventário — a lista sai do artefato, não de quem já a escreveu — vista uma camada acima.");
   L.push("- **Todo achado vem com o comando que o reproduz.** Achado sem forma de reproduzir não entra: vai para «observações descartadas», com o motivo. Número contado de cabeça não vale.");
   L.push("");
+  L.push("**O esqueleto do relatório — o que sobreviveu a dezenas de execuções nos dois projetos que o escreveram:**");
+  L.push("");
+  L.push("```");
+  L.push("# SONDA — <assunto>                     <- o nome diz o QUE, não o quando");
+  L.push("- Gerado em: <data>  *(única linha não-determinística deste relatório)*");
+  L.push("- Insumo: <caminho> · <tamanho> · sha256 <hash> · mtime <data>");
+  L.push("- Referência: <caminho> | nenhuma — as seções comparativas saem NÃO CONFERIDAS");
+  L.push("> A sonda não dá veredito: ela conta, compara e imprime. Decidir é humano.");
+  L.push("");
+  L.push("## ALARMES (N)");
+  L.push("  N=0 -> «Nenhuma verificação falhou. ISSO NÃO QUER DIZER QUE ESTÁ CERTO —");
+  L.push("        quer dizer que é coerente nos pontos medidos. Leia O QUE NÃO FOI OLHADO.»");
+  L.push("");
+  L.push("## <seções do corpo>                    <- tabelas e contagens; lista longa mostra o TOTAL");
+  L.push("  seção sem insumo -> **NÃO CONFERIDA**, nunca omitida");
+  L.push("");
+  L.push("## O QUE NÃO FOI OLHADO");
+  L.push("  - o que faltou NESTA execução (dinâmico)");
+  L.push("  - o que esta sonda NUNCA olha (fixo, escrito uma vez e para sempre)");
+  L.push("```");
+  L.push("");
+  L.push("Três detalhes que só aparecem depois de usar: **(1)** marcar a data como a única linha não-determinística é o que torna dois relatórios diffáveis — sem isso, comparar antes/depois vira leitura à mão; **(2)** a lista fixa do «nunca olha» é mais valiosa que a dinâmica, porque é a que ninguém lembraria de escrever no dia; **(3)** o rodapé com contagem de alarmes em zero precisa negar a leitura fácil **na própria linha** — «zero alarmes» sem a negação ao lado vira «está certo» na conversa seguinte.");
+  L.push("");
   L.push("**Onde mora — e este é um padrão, não uma regra.** Por omissão, script e relatórios ficam **fora** do que sobe ao Projeto (workspace ao lado do repositório, ou pasta ignorada): são grandes, reexecutáveis, e o que importa deles é o que se extrai. Nome com **carimbo de tempo primeiro** (`AAMMDD-HHMM-EXPLORACAO.md`), para a pasta se ordenar sozinha. **Versionar em vez de descartar é uma escolha legítima, e tem um preço a pagar em voz alta:** ganha-se a comparação antes/depois (que só existe se os dois relatórios sobreviverem) e o tema no nome (`AAMMDD-SONDA-<tema>.md`, que se lê sem abrir); paga-se em repositório maior e no risco de o relatório velho ser lido como estado atual. Quem versiona, registra a escolha. O que sobe ao registro continua sendo o **extraído**: um número no `DECISIONS`, um candidato no `IDEAS`.");
   L.push("");
   L.push("## Correspondência entre projetos — quando o interlocutor é outro assistente");
@@ -3622,6 +3646,18 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
     L.push("grep -rn \"<termo revogado>\" meta/ CLAUDE.md .claude/   # ANTES: anote o numero por arquivo");
     L.push("grep -rn \"<termo revogado>\" meta/ CLAUDE.md .claude/   # DEPOIS: alvo = 0, menos o que voce justificar");
     L.push("```");
+    L.push("");
+    L.push("**Declare DUAS coberturas, separadas — um numero sozinho preenche o lugar dos dois.** «Arquivos do");
+    L.push("pacote comparados: N/N» e «ocorrencias varridas no repo: N, corrigidas: N, justificadas: N» medem");
+    L.push("coisas diferentes, e o merge que declara so a primeira soa encerrado sendo metade. **A segunda pode");
+    L.push("ficar declarada como PENDENTE sem invalidar o merge** — o que nao pode e ser confundida com a");
+    L.push("primeira. Caso real: um projeto fechou «20/20 comparados, ENCERRADO» com sete pontos de cadencia");
+    L.push("vivos em seis arquivos que a lista de 20 nao enumerava. **Encerramento e a afirmacao que ninguem");
+    L.push("reconfere** — e por isso a unidade precisa vir colada no numero.");
+    L.push("");
+    L.push("**E varra o proprio arquivo de exclusao.** O `.gitignore` e o `.flatdropignore` nunca sao lidos como");
+    L.push("conteudo — eles nao se escondem de si mesmos, mas ninguem pensa em varre-los. A regra que trata do");
+    L.push("que eles escondem nao alcanca o arquivo que esconde.");
     L.push("");
     L.push("**O alvo depois e ZERO, menos as ocorrencias que voce classificar como legitimas** (relato, dominio,");
     L.push("contraste — ver abaixo) **e listar uma a uma, com arquivo e linha**. Fechar o merge sem essa lista e");

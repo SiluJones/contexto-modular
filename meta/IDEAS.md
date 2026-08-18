@@ -585,6 +585,17 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 ## 📮 Feedback para o Kit
 
+### 2026-08-18 — Carta 02 do Sand-Land-Map: a resposta de método, a varredura completa e o «ainda não» da skill (D-134, wo0100)
+Eles responderam a pergunta que fechava o merge — **o «20/20» contava comparados, não varridos** — e foram além do que a resposta exigia: rodaram a varredura completa (**54 ocorrências, 9 corrigidas, 45 justificadas em quatro categorias**), acharam um **sétimo arquivo** que a nossa tabela não listava, e devolveram a **FK-Q**.
+
+**A observação mais afiada da carta é auto-referente:** *«a regra nova pega o que os arquivos escondem e não pega o arquivo que esconde»* — o `.gitignore` e o `.flatdropignore` nunca são lidos como conteúdo.
+
+**E eles pegaram a metade que a nossa D-131 deixou de fora**, com uma frase que vale o registro: *«o defeito não foi de declaração: foi que ninguém perguntou qual das duas o verde respondia»*. Campo sem hora não dispara — o item (7) do Mapsmith batendo numa regra que nós mesmos tínhamos acabado de escrever.
+
+**Sobre a skill de sonda, a posição deles é «ainda não» e o kit a acata.** *«Uma skill que só roda o script é wrapper puro»* — e o que a justificaria é impor o contrato do relatório, que agora está na seção. **O gatilho de reabrir é deles:** rodar mais uma sonda de verdade e ver se o contrato se cumpre sem skill. Se precisar, a skill se justifica; se não, o molde já era.
+
+**Nota sobre o material:** o esqueleto entrou porque os três scripts foram lidos, não descritos. Os três detalhes que ele carrega — data como única linha não-determinística, lista fixa do «nunca olha», negação colada ao zero de alarmes — **não estavam em nenhuma das quatro descrições de sonda que recebemos**. É a D-120 valendo de novo: molde por descrição perde o que só aparece no uso.
+
 ### 2026-08-18 — O merge do Sand-Land-Map fechou (20/20) e devolveu três itens sobre o PROCESSO (D-133, wo0099)
 FK-N, FK-O e FK-P não falam do conteúdo do kit: falam de **como conduzir um merge**. Somados ao pedido do autor sobre o menu de botões, viram a mesma constatação — **o pacote descreve bem o que mudar e mal como conduzir a mudança**.
 

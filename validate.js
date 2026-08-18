@@ -501,6 +501,40 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C52 duas coberturas, o esqueleto do relatorio e o gatilho do verde (wo0100): o merge declara o que varreu, e verde declara qual pergunta responde", () => {
+  const n = T.normNiche(T.NICHES.dev);
+  const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
+  S.workmode.codeMode = "yes";
+  const man = T.buildUpdatePack(n).manifest;
+  S.workmode.codeMode = prev;
+  // (1) FK-Q: duas coberturas separadas, com a segunda podendo ficar pendente
+  assert(/Declare DUAS coberturas, separadas/.test(man), "o manifesto aceita um numero de cobertura so — «comparados» e «varridos» medem coisas diferentes e um preenche o lugar do outro");
+  assert(/ocorrencias varridas no repo/.test(man), "falta a segunda cobertura, que e a que some");
+  assert(/ficar declarada como PENDENTE sem invalidar o merge/.test(man), "sem a valvula, a segunda cobertura vira pressao para declarar fechado o que nao esta");
+  assert(/Encerramento e a afirmacao que ninguem/.test(man), "falta a razao de a unidade importar justamente no encerramento");
+  // (2) o proprio arquivo de exclusao entra na varredura
+  assert(/varra o proprio arquivo de exclusao/i.test(man), "o manifesto nao manda varrer o .gitignore/.flatdropignore — eles nunca sao lidos como conteudo");
+  assert(/nao alcanca o arquivo que esconde/.test(man), "falta a razao: a regra trata do que eles escondem, nao deles mesmos");
+  // (3) o esqueleto do relatorio de sonda, com os tres detalhes que so aparecem depois de usar
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/# SONDA — <assunto>/.test(cmd), id+": a secao da sonda descreve as propriedades e nao mostra a FORMA — molde por descricao e o que a D-120 proibe");
+    // O assert olha o BLOCO de codigo, nao a secao: a frase tambem aparece no paragrafo de prosa
+    // logo abaixo, e sem o recorte o check ficava verde com o esqueleto sem a marca (prova
+    // negativa 5 da wo0100 mostrou isso — terceira vez que uma prova negativa conserta o check).
+    const iCod = cmd.indexOf("# SONDA — <assunto>"), fCod = cmd.indexOf("```", iCod);
+    const esqueleto = iCod > -1 ? cmd.slice(iCod, fCod > -1 ? fCod : iCod) : "";
+    assert(/única linha não-determinística/.test(esqueleto), id+": o esqueleto nao marca a data como unica linha nao-deterministica, e sem isso dois relatorios nao sao diffaveis");
+    assert(/NÃO CONFERIDA\*\*, nunca omitida/.test(cmd), id+": o esqueleto nao mostra o que fazer com secao sem insumo");
+    assert(/o que esta sonda NUNCA olha \(fixo/.test(cmd), id+": falta a lista FIXA do que a sonda nunca olha — e a mais valiosa e a que ninguem lembraria de escrever");
+    assert(/ISSO NÃO QUER DIZER QUE ESTÁ CERTO/.test(cmd), id+": zero alarmes sem a negacao ao lado vira «esta certo» na conversa seguinte");
+    // (4) o gatilho que faltava a FK-M: campo sem hora nao dispara
+    assert(/Uma conferencia deu VERDE — antes de relatar/.test(cmd), id+": a regra de declarar qual pergunta o instrumento responde continua sendo campo sem gatilho");
+    assert(/na MESMA linha do verde, nao no rodape/.test(cmd), id+": o gatilho nao diz ONDE a declaracao aparece, e no rodape ela chega depois da leitura");
+  });
+  return "ok";
+});
+
 check("C51 o numero declarado e piso, e as regras do merge vem na frente (wo0099): varredura com comando, prioridade curta, checklist simulado", () => {
   const n = T.normNiche(T.NICHES.dev);
   const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
