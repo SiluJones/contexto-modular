@@ -1,8 +1,11 @@
 # ANÁLISE — A afirmação verificável: por que a regra existe, é escrita por quem a viola, e falha na quinta série seguida
 
-> **Status:** Em discussão
+> **Status:** Decidida e implementada — B1, B2 e E aceitas pelo dono (2026-08-21) e aplicadas pela
+> wo0102. A descartada (mais texto na mesma forma). C (mtime no `_MANIFEST`) não é implementável pelo
+> kit — vai como pedido na carta ao FlatDrop, fora deste repositório. D inaplicável (harness não
+> observa leitura que não aconteceu — ponto cego estrutural, não corrigível por check).
 > **Data:** 260820 · **Base:** v1.119.0, commit `bb8ebee` (foto do `_MANIFEST` de 2026-08-20 21:20)
-> **Vira:** — · **Decisão:** —
+> **Vira:** wo0102 · **Decisão:** D-135
 >
 > **Origem:** transcrito `mapsmith_11.md` (44 blocos, 22 turnos, 17–20/08) lido bloco a bloco, mais o
 > `IDEAS.md` e o `CEREBRO.md` do Mapsmith no mount desta data. Pedido explícito do dono do Mapsmith no
