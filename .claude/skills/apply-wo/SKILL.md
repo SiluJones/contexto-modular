@@ -8,6 +8,9 @@ Leia o arquivo de WO em `meta/workorders/$ARGUMENTS` e execute-o. Se o nome não
 PEÇA — não escolha uma WO por conta própria.
 
 Regras de aplicação:
+- **ANTES de editar:** se a WO edita arquivo existente e o cabeçalho dela NÃO traz o campo «Âncoras
+  lidas em» preenchido, **RECUSE** — não aplique, e diga que falta. Quem escreveu a WO é quem tem o
+  viés; esta conferência é sua justamente por isso.
 - Localize cada âncora EXATAMENTE. Se não achar uma, PARE e reporte — nunca chute um lugar próximo.
 - **Fim de linha por arquivo:** `src/index.template.html` é **CRLF**; `validate.js`, `build.js` e os
   `src/niches/*.js` são **LF**. Âncora de mais de uma linha colada com o separador errado não casa —
@@ -29,11 +32,15 @@ Regras de aplicação:
   (qualquer uma falhou): NÃO commite nem empurre — ofereça as saídas reais pelo **menu de opções** da
   ferramenta `AskUserQuestion`, com a recomendada em primeiro lugar e marcada `(Recomendado)`. **Nunca
   pergunte em prosa — e menu numerado escrito no corpo da mensagem TAMBÉM é prosa.** Sem a ferramenta,
-  caia no menu numerado em texto e **diga que caiu no fallback**. Se a minha escolha chegar depois, o relatório se
+  caia no menu numerado em texto e **diga que caiu no fallback**. **O cartão
+  serve para ESCOLHER, não para DISPARAR:** ele não contorna `disable-model-invocation`, então não o use para oferecer «rodar a
+  skill agora» — medido duas vezes, isso acrescenta um passo sem tirar nenhum. Se a minha escolha chegar depois, o relatório se
   REESCREVE. Isto vale mesmo quando a WO traz os blocos de `git` no corpo: os blocos são o QUE rodar,
   não um pedido para eu rodar.
 - Feche com o **relatório de trabalho** — o que fez, achados e desvios do texto literal da WO,
   arquivos tocados, resultado de build/validate, o commit. **Não** use o bloco de fecho do chat:
   aquele é da raia de planejamento.
+- **Se a WO declarar um «Próximo comando»**, termine o relatório com ele **CRU e SOZINHO na última
+  linha**, sem frase de apresentação — texto em volta esconde o comando em vez de destacá-lo.
 - **Grave o mesmo relatório em `../AAMMDD-HHMM-code-kcm.txt`** (pasta-pai do repo). Sempre, sem
   pedido. Se a escrita for negada, diga e siga — o relatório no chat é que vale.

@@ -5,6 +5,10 @@ disable-model-invocation: true
 ---
 
 Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o bloco de fecho do chat):
+- **ANTES de escrever qualquer coisa:** abra o **relatório mais recente** em `../AAMMDD-HHMM-code-*.txt`
+  e confira o que ele AFIRMA contra `git status` e `git log`. O relatório é escrito antes da última
+  ação, então um push que saiu depois dele fica registrado como não feito. Divergência vira uma linha
+  de correção no log do dia; **conferência que passa não vira linha**.
 - **Relate:** o que foi feito, os achados e desvios do texto literal da WO (âncora já aplicada,
   arquivo ausente, tarefa que já existia), os arquivos tocados e o resultado de `build`/`validate`.
 - Atualize `meta/STATUS.md` (append na «Última sessão»; ajuste a versão se mudou — NÃO reescreva o
@@ -19,8 +23,12 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
   empurre — ofereça as saídas reais pelo **menu de opções** da ferramenta `AskUserQuestion`, com a
   recomendada em primeiro lugar e marcada `(Recomendado)`. **Nunca pergunte em prosa — e menu numerado
   escrito no corpo da mensagem TAMBÉM é prosa**, porque me obriga a digitar a escolha em vez de clicar.
-  Sem a ferramenta, caia no menu numerado em texto e **diga que caiu no fallback**. Se a minha escolha
+  Sem a ferramenta, caia no menu numerado em texto e **diga que caiu no fallback**. **O cartão serve
+  para ESCOLHER, não para DISPARAR:** ele não contorna `disable-model-invocation`, então não o use para
+  oferecer «rodar a skill agora» — medido duas vezes, isso acrescenta um passo sem tirar nenhum. Se a minha escolha
   chegar depois, o relatório se REESCREVE — não fica valendo a versão velha.
+  **Se a tarefa declarar um «Próximo comando»**, termine o relatório com ele **CRU e SOZINHO na última
+  linha**, sem frase de apresentação — texto em volta esconde o comando.
   Mensagem de commit SEM acento.
 - **Ao mudar um número ou um estado no `meta/STATUS.md`** (contagem de checagens, versão, «harness
   NN/NN»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não

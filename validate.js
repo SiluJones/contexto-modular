@@ -501,6 +501,45 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C53 a conferencia sai de quem tem o vies (wo0102): ancoras lidas na WO, comando inteiro e quem executa, Arquivar exaustivo, 1b no fecho, cartao escolhe e nao dispara", () => {
+  const kit = T.buildCodeKitFiles();
+  // (1) B1 — o campo de ancoras lidas existe E e recusavel por quem aplica
+  assert(/Ancoras lidas em:/.test(kit.woTemplate), "modelo de WO sem o campo «Ancoras lidas em» — sem ele a leitura da ancora continua sendo promessa de quem escreve");
+  assert(/RECUSA a WO se vier vazio/.test(kit.woTemplate), "o campo de ancoras existe mas ninguem o cobra: campo sem recusa e campo opcional");
+  assert(/RECUSE/.test(kit.applyWo), "a skill apply-wo nao recusa WO sem ancoras lidas — a conferencia continua com quem tem o vies");
+  assert(/pede o TRECHO, nao uma marca de conferido/.test(kit.woTemplate), "o campo aceita marca de conferido: e assim que campo obrigatorio vira ritual (D-102)");
+  // (2) E — afirmacao sobre artefato legivel, por especie
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/afirmação sobre artefato legível não é opinião, é leitura/.test(cmd), id+": o P8 nao tipa a afirmacao — «confira antes de afirmar» e autoenderecado e falhou dez vezes em duas series");
+    assert(/declarar não lida não autoriza entregar em cima/.test(cmd), id+": falta a metade que doeu — declarar «nao li» e entregar assim mesmo e pior que nao declarar");
+    // (3) comando inteiro e quem executa
+    assert(/vai INTEIRO e diz QUEM executa/.test(cmd), id+": nada obriga o comando a chegar inteiro — reticencias no lugar de valor que se tem devolve trabalho ao dono");
+    assert(/o que este comando faz que o executor nao consegue\?/.test(cmd), id+": «e do dono» segue sendo rotulo sem impedimento nomeado");
+    assert(/nao se herda para o passo vizinho/.test(cmd), id+": falta a parte que custou cinco tarefas — impedimento de um passo herdado para o vizinho");
+    // (4) B2 — Arquivar exaustivo, leitura forte, prazo
+    assert(/A lista é EXAUSTIVA/.test(cmd), id+": Arquivar/Manter sem exaustividade — omissao continua ambigua entre «li tudo» e «nunca abri»");
+    assert(/«Arquivar» é afirmação forte/.test(cmd), id+": Arquivar sem leitura forte vira despacho");
+    assert(/«Manter: não li» tem prazo/.test(cmd), id+": «Manter: nao li» sem prazo e fila indefinida — foi assim que um relatorio ficou quatro turnos fechado");
+    // (5) a ordem da excecao no item Estado, e o mount sem idade por arquivo
+    const iEst = cmd.indexOf("2. **Estado**"), fEst = cmd.indexOf("3. **Arquivar", iEst);
+    const est = iEst > -1 ? cmd.slice(iEst, fEst > -1 ? fEst : iEst) : "";
+    assert(est.length > 0, id+": o item Estado do bloco de fecho sumiu");
+    assert(est.indexOf("manifesto da cópia achatada já trouxer o estado do repo") < est.indexOf("peça uma vez"), id+": a excecao do manifesto vem DEPOIS do «peca uma vez» — quem le de cima para baixo ja pediu (mesma familia da FK-O)");
+    assert(/mount não carrega idade por arquivo/.test(est), id+": o item Estado nao diz que o mount zera a data por arquivo — sem isso a regra manda medir o que nao existe");
+  });
+  // (6) o cartao escolhe, nao dispara; e o verde enuncia o proximo comando
+  [["apply-wo",kit.applyWo],["wrap",kit.wrap]].forEach(([nome,txt]) => {
+    assert(/serve para ESCOLHER, nao para DISPARAR/.test(txt), "skill "+nome+": o cartao entrou sem o limite medido — usa-lo para disparar acrescenta um passo sem tirar nenhum");
+    assert(/CRU e SOZINHO na ultima linha/.test(txt), "skill "+nome+": o caminho verde nao enuncia o proximo comando — o buraco nunca foi de execucao, e de enunciacao");
+  });
+  assert(/Proximo comando:/.test(kit.woTemplate), "modelo de WO sem o campo «Proximo comando» — sem ele a skill nao tem o que enunciar no verde");
+  // (7) 1b no fecho: o relatorio anterior e conferido contra o repo
+  assert(/relat[oó]rio mais recente/.test(kit.wrap), "a skill wrap nao confere o relatorio anterior contra o repo — relatorio escrito antes da ultima acao afirma o contrario do que houve");
+  assert(/conferência que passa não vira linha/.test(kit.wrap), "sem essa clausula a conferencia vira ruido no log todo dia");
+  return "ok";
+});
+
 check("C52 duas coberturas, o esqueleto do relatorio e o gatilho do verde (wo0100): o merge declara o que varreu, e verde declara qual pergunta responde", () => {
   const n = T.normNiche(T.NICHES.dev);
   const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
@@ -869,6 +908,12 @@ check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do p
     ["menu por ferramenta",/AskUserQuestion/,                 ["wrap","applyWo"]],
     ["relatorio em arquivo", /-code-/,                        ["wrap","applyWo"]],
     ["ancora exata",       /PARE e reporte/i,                 ["applyWo"]],
+    // wo0102: as quatro clausulas da leva do Mapsmith 11. Entram AQUI, e nao so no C53, porque
+    // e esta tabela que confere o GERADO e o INSTALADO lado a lado — a casa e o primeiro instalado.
+    ["cartao escolhe",     /para ESCOLHER, n[ãa]o para DISPARAR/, ["wrap","applyWo"]],
+    ["proximo comando no verde", /CRU e SOZINHO na [uú]ltima\s+linha/, ["wrap","applyWo"]],
+    ["recusa sem ancoras lidas", /RECUSE/,                           ["applyWo"]],
+    ["1b confere o relatorio anterior", /relat[oó]rio mais recente/, ["wrap"]],
   ];
   const gerado = { wrap: kit.wrap, applyWo: kit.applyWo };
   const instalado = { wrap: instWrap, applyWo: instApply };

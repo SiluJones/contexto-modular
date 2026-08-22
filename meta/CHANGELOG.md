@@ -1,8 +1,24 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.101.0**.
+> Histórico de versões. Versão atual: **v1.120.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
-> **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.)
+> **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
+> **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
+> o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.120.0 — A conferência sai de quem tem o viés (wo0102, D-135)
+- **Base:** `meta/analises/260820-ANALISE-a-afirmacao-verificavel.md` (opções B1, B2, E) + os nove itens do `meta/IDEAS.md` (wo0101) + `260820-2247.txt` do Mapsmith.
+- **Modelo de WO** ganha o campo obrigatório **«Âncoras lidas em»**, com **recusa por quem aplica** se vier vazio — mesmo desenho do «PARE e reporte» (zero falhas medidas neste projeto): a conferência sai de quem escreveu a WO (que tem o viés) e vai para quem aplica.
+- **P8** passa a tipar a afirmação verificável em três espécies — o que uma FERRAMENTA faz, o que um SÍMBOLO/arquivo contém, em que ESTADO está o mount — e a dizer que **declarar «não li» não autoriza entregar em cima**.
+- **`HYGIENE_RULES`** ganha a regra do comando entregue **INTEIRO**, com o **executor NOMEADO** (o kit não tinha regra nenhuma sobre isso — só a proibição de caminho ambíguo em comando destrutivo).
+- **Item Estado** do bloco de fecho passa a **começar pelo manifesto** (a exceção do «commit não legível pelo mount» chegava tarde, escrita depois da instrução) e registra que **o mount zera a data por arquivo** — conferir mudança é conferência de conteúdo, nunca de data.
+- **Arquivar/Manter** vira **exaustivo**, com «Arquivar» só para o lido inteiro no turno e **prazo** para «Manter: não li».
+- **Próximo comando** enunciado **cru e sozinho** na última linha do caminho verde (modelo de WO + as duas skills geradas).
+- **`AskUserQuestion`** ganha o limite medido: serve para ESCOLHER, não para DISPARAR — não contorna `disable-model-invocation`.
+- **Passo `1b`** na skill `wrap`: confere o relatório mais recente contra `git status`/`git log` antes de escrever qualquer coisa.
+- A casa (`.claude/skills/apply-wo/SKILL.md`, `.claude/skills/wrap/SKILL.md`) recebe as mesmas cláusulas — sem isso o **C43** fica vermelho.
+- Check **C53** novo (duas provas negativas), e quatro cláusulas novas no **C43**.
+- `KIT_VERSION 1.120.0`. **Custo de teto: zero** — C28 idêntico (`padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`). `index.html` de **823.845 → 828.852** bytes. Harness **18/18, 96/96 → 97/97, 0 erros**.
 
 ## v1.101.0 — Modelo de análise no pacote, contagem repetida no STATUS e IDEAS por ID (wo0080, D-114)
 - **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», levas C e D — as duas últimas do lote de quatro).
