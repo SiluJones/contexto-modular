@@ -501,6 +501,29 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C54 o carimbo de versao nao mente (wo0103): KIT_VERSION casa com o topo do CHANGELOG e com o cabecalho do STATUS do proprio repo", () => {
+  // Segundo check (depois do C43) que abre arquivo do REPOSITORIO, e pelo mesmo motivo: o numero
+  // que o kit estampa em TODO artefato gerado vive no gerador, e o numero que o projeto declara
+  // vive nos meta/. Ate a wo0102 nada os amarrava — a leva subiu a versao nos docs e deixou a
+  // constante em 1.119.0, entao todo pacote de update sairia carimbado com a versao anterior.
+  const pathmod = require("path"), raiz = pathmod.dirname(pathmod.resolve(path));
+  const ler = (rel) => {
+    const abs = pathmod.join(raiz, rel);
+    assert(fs.existsSync(abs), "arquivo do proprio repo ausente: " + rel);
+    return fs.readFileSync(abs, "utf8");
+  };
+  const v = T.KIT_VERSION;
+  const chg = ler("meta/CHANGELOG.md");
+  const mChg = chg.match(/^## v(\d+\.\d+\.\d+)/m);
+  assert(mChg, "CHANGELOG.md sem entrada de versao no formato `## vX.Y.Z` — sem ela nao ha com o que comparar o carimbo");
+  assert(mChg[1] === v, "KIT_VERSION e "+v+" mas o topo do CHANGELOG e v"+mChg[1]+": todo artefato gerado (pacote de update, kit do Code, templates) sairia carimbado com a versao errada, e quem recebe nao tem como saber");
+  const st = ler("meta/STATUS.md");
+  const mSt = st.match(/Vers[aã]o atual:\s*\*\*v(\d+\.\d+\.\d+)\*\*/);
+  assert(mSt, "STATUS.md sem a linha `Versao atual: **vX.Y.Z**`");
+  assert(mSt[1] === v, "KIT_VERSION e "+v+" mas o STATUS declara v"+mSt[1]+" — doc e gerador em desacordo sobre o mesmo fato");
+  return "ok (v"+v+" nos tres lugares)";
+});
+
 check("C53 a conferencia sai de quem tem o vies (wo0102): ancoras lidas na WO, comando inteiro e quem executa, Arquivar exaustivo, 1b no fecho, cartao escolhe e nao dispara", () => {
   const kit = T.buildCodeKitFiles();
   // (1) B1 — o campo de ancoras lidas existe E e recusavel por quem aplica

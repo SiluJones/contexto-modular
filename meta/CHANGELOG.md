@@ -19,6 +19,7 @@
 - A casa (`.claude/skills/apply-wo/SKILL.md`, `.claude/skills/wrap/SKILL.md`) recebe as mesmas cláusulas — sem isso o **C43** fica vermelho.
 - Check **C53** novo (duas provas negativas), e quatro cláusulas novas no **C43**.
 - `KIT_VERSION 1.120.0`. **Custo de teto: zero** — C28 idêntico (`padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`). `index.html` de **823.845 → 828.852** bytes. Harness **18/18, 96/96 → 97/97, 0 erros**.
+- **Correção do carimbo (wo0103):** a constante `KIT_VERSION` tinha ficado em `1.119.0` enquanto os documentos já declaravam v1.120.0 — todo artefato gerado sairia com a versão errada. Constante corrigida e amarrada por check: o **C54** confere `KIT_VERSION` contra o topo do `CHANGELOG.md` e o cabeçalho do `STATUS.md`, nos três lugares.
 
 ## v1.101.0 — Modelo de análise no pacote, contagem repetida no STATUS e IDEAS por ID (wo0080, D-114)
 - **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», levas C e D — as duas últimas do lote de quatro).
