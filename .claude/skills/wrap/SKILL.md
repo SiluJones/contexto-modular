@@ -5,10 +5,18 @@ disable-model-invocation: true
 ---
 
 Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o bloco de fecho do chat):
-- **ANTES de escrever qualquer coisa:** abra o **relatório mais recente** em `../AAMMDD-HHMM-code-*.txt`
-  e confira o que ele AFIRMA contra `git status` e `git log`. O relatório é escrito antes da última
-  ação, então um push que saiu depois dele fica registrado como não feito. Divergência vira uma linha
-  de correção no log do dia; **conferência que passa não vira linha**.
+- **ANTES de escrever qualquer coisa:** abra o relatório que carrega o **COMMIT MAIS NOVO** em
+  `../AAMMDD-HHMM-code-*.txt` — ordene por commit, **não** por nome nem por data do arquivo, porque
+  relatório antigo que foi **reaberto** tem data nova — e confira o que ele AFIRMA contra `git status`
+  e `git log`. Confira também **qualquer relatório anterior que tenha declarado PENDÊNCIA**: ele é o
+  que uma sessão futura vai ler. O relatório é escrito antes da última ação, então um push que saiu
+  depois dele fica registrado como não feito. Divergência vira uma linha de correção no log do dia;
+  **conferência que passa não vira linha**.
+- **O campo do push se escreve com o RESULTADO REAL**, nunca «pendente» por antecipação. Se ficar
+  mesmo pendente, **REABRA o relatório** e corrija quando resolver — o arquivo que afirma o falso é o
+  que a próxima sessão lê. E confira que nenhum relatório `.txt` ficou **DENTRO do repo**
+  (`git status` o mostraria como não rastreado): o lugar dele é a pasta-pai, e relatório na raiz vira
+  um `??` que ninguém identifica.
 - **Relate:** o que foi feito, os achados e desvios do texto literal da WO (âncora já aplicada,
   arquivo ausente, tarefa que já existia), os arquivos tocados e o resultado de `build`/`validate`.
 - Atualize `meta/STATUS.md` (append na «Última sessão»; ajuste a versão se mudou — NÃO reescreva o

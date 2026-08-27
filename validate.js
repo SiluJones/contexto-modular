@@ -501,6 +501,34 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C55 a lista nao perde item e o relatorio nao mente (wo0105): terceiro estado no Arquivar, especie temporal no P8, carimbos comparados, .claude entregue inteiro, push com resultado real", () => {
+  const kit = T.buildCodeKitFiles();
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    // (1) Arquivar/Manter: terceiro estado + derivada de listagem. Sem os dois a lista "exaustiva"
+    // perde item em silencio — medido: sumiu um arquivo do mount cinco turnos depois da wo0102.
+    assert(/Monte a lista a partir de uma LISTAGEM do mount/.test(cmd), id+": a lista de Arquivar ainda sai da memoria do que chegou — memoria so devolve o que e novo");
+    assert(/Já arquivado:/.test(cmd), id+": falta o terceiro estado — sem saida, ou a lista cresce para sempre ou os itens caem em silencio");
+    // (2) P8: a quarta especie, a evidencia com a data errada
+    assert(/evidência com a DATA errada/.test(cmd), id+": o P8 nao cobre a medicao real sobre o instante errado — e a especie que se disfarca de leitura");
+    assert(/o mount não é prova/.test(cmd), id+": falta dizer que o mount responde o AGORA, nao o ENTAO");
+    // (3) desempate entre os dois canais, por medicao e nao por suposicao
+    assert(/mais recente vence/.test(cmd), id+": sem criterio de desempate, «o relatorio lidera sempre» erra quando o dono commita entre relatorios");
+    // (4) e (5) as duas regras de higiene novas
+    assert(/Arquivo sob `\.claude\/` o chat entrega INTEIRO/.test(cmd), id+": nada diz que configuracao do executor nao e aplicavel pelo executor — o classificador barra e o ciclo se perde");
+    assert(/o bloco de commit e de quem APLICA/.test(cmd), id+": dois blocos de commit no mesmo turno = passo manual para o dono ou registro que fica para tras");
+  });
+  // (6) o relatorio: resultado real, reabertura, e nao ficar dentro do repo
+  assert(/RESULTADO REAL/.test(kit.wrap), "a skill wrap nao exige o campo do push com resultado real — «pendente» por antecipacao vira mentira no disco");
+  assert(/REABRA o relatorio/.test(kit.wrap), "sem reabertura, o relatorio que afirma o falso fica no disco e e o que a proxima sessao le");
+  assert(/nenhum relatorio `\.txt` ficou DENTRO do repo/.test(kit.wrap), "nada manda conferir onde o relatorio foi gravado — relatorio na raiz vira nao rastreado que ninguem identifica");
+  assert(/COMMIT MAIS NOVO/.test(kit.wrap), "o 1b ainda ordena por data — relatorio REABERTO tem data nova e passa a mascarar o que interessa");
+  assert(/declarado PEND[ÊE]NCIA/.test(kit.wrap), "o 1b so olha um relatorio: o que declarou pendencia fica mentindo no disco (medido em campo)");
+  // (7) o numero do checklist e derivado do texto da propria WO
+  assert(/DERIVADO, nunca estimado/.test(kit.woTemplate), "o modelo de WO nao exige derivar as contagens do texto final — numero de memoria vira desvio de quem aplica, que estava certo");
+  return "ok";
+});
+
 check("C54 o carimbo de versao nao mente (wo0103): KIT_VERSION casa com o topo do CHANGELOG e com o cabecalho do STATUS do proprio repo", () => {
   // Segundo check (depois do C43) que abre arquivo do REPOSITORIO, e pelo mesmo motivo: o numero
   // que o kit estampa em TODO artefato gerado vive no gerador, e o numero que o projeto declara
@@ -558,7 +586,12 @@ check("C53 a conferencia sai de quem tem o vies (wo0102): ancoras lidas na WO, c
   });
   assert(/Proximo comando:/.test(kit.woTemplate), "modelo de WO sem o campo «Proximo comando» — sem ele a skill nao tem o que enunciar no verde");
   // (7) 1b no fecho: o relatorio anterior e conferido contra o repo
-  assert(/relat[oó]rio mais recente/.test(kit.wrap), "a skill wrap nao confere o relatorio anterior contra o repo — relatorio escrito antes da ultima acao afirma o contrario do que houve");
+  // wo0105 / i-N56 (2a ocorrencia): a assercao mira o EFEITO — «o fecho abre um relatorio anterior e o
+  // confronta com o git ANTES de escrever» — em vez da frase «relatorio mais recente», que a wo0105
+  // precisou trocar por «o que carrega o commit mais novo». Frase literal engessa o refino; efeito nao.
+  assert(/ANTES de escrever qualquer coisa/.test(kit.wrap) && /relat[oó]rio/i.test(kit.wrap)
+      && /git status/.test(kit.wrap) && /git log/.test(kit.wrap),
+    "a skill wrap nao confere um relatorio anterior contra o repo ANTES de escrever — relatorio escrito antes da ultima acao afirma o contrario do que houve");
   assert(/conferência que passa não vira linha/.test(kit.wrap), "sem essa clausula a conferencia vira ruido no log todo dia");
   return "ok";
 });
@@ -936,7 +969,11 @@ check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do p
     ["cartao escolhe",     /para ESCOLHER, n[ãa]o para DISPARAR/, ["wrap","applyWo"]],
     ["proximo comando no verde", /CRU e SOZINHO na [uú]ltima\s+linha/, ["wrap","applyWo"]],
     ["recusa sem ancoras lidas", /RECUSE/,                           ["applyWo"]],
-    ["1b confere o relatorio anterior", /relat[oó]rio mais recente/, ["wrap"]],
+    ["1b confere o relatorio anterior", /ANTES de escrever qualquer coisa/, ["wrap"]],
+    // wo0105: as tres clausulas do relatorio que a casa tambem tem de carregar.
+    ["push com resultado real",  /RESULTADO REAL/,                        ["wrap"]],
+    ["relatorio se reabre",      /REABRA o relat[oó]rio/,            ["wrap"]],
+    ["relatorio fora do repo",   /DENTRO do repo/,                        ["wrap"]],
   ];
   const gerado = { wrap: kit.wrap, applyWo: kit.applyWo };
   const instalado = { wrap: instWrap, applyWo: instApply };
@@ -1323,7 +1360,11 @@ check("C33 leitura antes do trabalho (wo0077): abertura de turno antes de qualqu
     assert(/é de TURNO/.test(cmd), id+": CEREBRO nao distingue cerimonia de sessao de gatilho de turno");
     assert(/falsa confirmação/.test(cmd), id+": CEREBRO sem a regra da falsa confirmacao do sandbox");
     assert(/Âncora que ainda casa prova que a sua cópia é velha/.test(cmd), id+": CEREBRO nao explica por que a ancora que casa engana");
-    assert(/o relatório vence e a cópia está atrasada/.test(cmd), id+": CEREBRO nao diz qual canal vence quando discordam");
+    // wo0105 / i-N56 (3a ocorrencia na mesma leva): a regra deixou de SUPOR direcao e passou a MEDIR
+    // (carta 04 do FlatDrop: o dono commita entre relatorios, e ai o manifesto e que lidera). A assercao
+    // mira o efeito — «ha um criterio explicito de desempate entre os dois canais» — nao a frase antiga.
+    assert(/mais recente vence/.test(cmd) && /manifesto/.test(cmd) && /relat[oó]rio lidera \*\*por padrão\*\*/.test(cmd),
+      id+": CEREBRO nao da criterio de desempate entre manifesto e relatorio — supor direcao erra quando o dono commita entre relatorios");
     assert(/A linha abre com o carimbo/.test(cmd), id+": CEREBRO nao descreve o carimbo Base");
     assert(/confere num olhar/.test(cmd), id+": CEREBRO nao diz POR QUE o carimbo e auditavel (razao de existir)");
   });

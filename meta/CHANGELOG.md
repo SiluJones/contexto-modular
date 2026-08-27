@@ -1,10 +1,24 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.120.0**.
+> Histórico de versões. Versão atual: **v1.121.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.121.0 — A lista não perde item e o relatório não mente (wo0105, D-136)
+- **Base:** achado do dono em 27/08 (a lista «exaustiva» perdeu um arquivo), a carta 04 do FlatDrop (§2, §4, §5), os achados do `FlatDrop_7.md`, e o erro de método do próprio chat neste turno.
+- **Arquivar/Manter** passa a se montar a partir de uma **LISTAGEM do mount**, nunca da memória do turno, e ganha o terceiro estado obrigatório **«Já arquivado:»** — sem ele a lista não tem saída: ou cresce para sempre, ou os itens caem em silêncio.
+- **P8** ganha a **quarta espécie** de afirmação verificável: a evidência com a **DATA errada**, que se disfarça de leitura porque a medição é real — o mount responde o AGORA, não o ENTÃO.
+- **«O relatório lidera, sempre»** vira **«compare os dois carimbos de commit — manifesto e relatório — e o mais recente vence»**, com tabela de cinco diagnósticos (devolução da carta 04 do FlatDrop).
+- **Passo `1b`** da skill `wrap`: ordena o relatório a abrir pelo **COMMIT MAIS NOVO**, não por data de arquivo (relatório reaberto tem data nova), e confere também qualquer relatório anterior que tenha declarado **PENDÊNCIA**.
+- **O campo do push** se escreve com **RESULTADO REAL**, nunca «pendente» por antecipação; se ficar pendente, o relatório se **REABRE**; e o fecho confere que nenhum `.txt` ficou **DENTRO do repo**.
+- **`HYGIENE_RULES`** ganha duas regras novas: arquivo sob `.claude/` o chat entrega **INTEIRO**, para download (configuração do executor não é aplicável pelo executor); e, havendo WO no turno, **o bloco de commit é de quem aplica** e cobre tudo.
+- **Modelo de WO** ganha a cláusula **«Número de checklist é DERIVADO, nunca estimado»** — as contagens previstas saem de simular o texto final da própria WO.
+- A casa (`.claude/skills/wrap/SKILL.md`) recebe as mesmas cláusulas do `1b`, do resultado real, da reabertura e do fora-do-repo — sem isso o **C43** fica vermelho.
+- Check **C55** novo (com prova negativa), e três cláusulas novas no **C43**.
+- *Nota de método:* a i-N56 disparou três vezes nesta leva (`C33`, `C53`, `C43` reprovando por frase literal); as três asserções foram remiradas ao **efeito**, não à frase — o oposto do que a wo0102 fez. A ideia segue ABERTA.
+- `KIT_VERSION 1.121.0`. **Custo de teto: zero** (C28 idêntico). `index.html` de **828.852 → 833.401** bytes. Harness **18/18, 98/98 → 99/99, 0 erros**.
 
 ## v1.120.0 — A conferência sai de quem tem o viés (wo0102, D-135)
 - **Base:** `meta/analises/260820-ANALISE-a-afirmacao-verificavel.md` (opções B1, B2, E) + os nove itens do `meta/IDEAS.md` (wo0101) + `260820-2247.txt` do Mapsmith.
