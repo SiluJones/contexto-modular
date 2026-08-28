@@ -501,6 +501,37 @@ check("G24 KIT_VERSION exposto, no rodape e carimbado nos downloads (i-N10)", ()
   return "ok";
 });
 
+check("C56 os dois carimbos respondem sozinhos (wo0106): marcador por modo no manifesto e no prompt, versao em quatro artefatos, leitura no turno em que o arquivo chega", () => {
+  const kit = T.buildCodeKitFiles();
+  const prev = T.STATE.workmode.codeMode;
+  T.STATE.workmode.codeMode = "yes";
+  const pack = T.buildUpdatePack(T.normNiche(T.NICHES.dev));
+  const prompt = T.buildUpdatePrompt(T.normNiche(T.NICHES.dev));
+  T.STATE.workmode.codeMode = prev;
+  const man = pack.manifest;
+  // (1) carimbo de MODOS: o marcador de cada modo, e a fronteira do que ele nao decide
+  ["Ao final da conversa, o assistente REGISTRA o que falta", "Saida de codigo via ASU", "Projeto em grupo"].forEach(m =>
+    assert(man.indexOf(m) > -1, "manifesto nao publica o marcador do modo: "+m.slice(0, 32)+" — sem marcador o projeto nao tem como distinguir sobra de novidade"));
+  assert(/nao ha marcador no CEREBRO/.test(man), "o modo skills-do-nicho nao tem marcador no CEREBRO e o manifesto finge que tem — declarar marcador inexistente e pior que declarar a ausencia");
+  assert(/esqueceu de LIGAR/.test(man) && /esqueceu de LIGAR/.test(prompt), "a fronteira sumiu: o marcador decide sobra, nao decide se o dono esqueceu de ligar um modo");
+  assert(!/o kit nao tem como saber qual dos dois casos e/.test(man), "a frase falsa continua no manifesto — o kit SABE, pelo gate que gera a secao");
+  // (2) carimbo de VERSAO: quatro carriers, e a linha declarada como do kit
+  const selo = "Kit de Contexto Universal v" + T.KIT_VERSION;
+  [["woTemplate", kit.woTemplate], ["applyWo", kit.applyWo], ["wrap", kit.wrap]].forEach(([n, txt]) =>
+    assert(txt.indexOf(selo) > -1, "o artefato "+n+" do kit-Code nao carrega o carimbo de versao — se so o CEREBRO carrega, o carimbo mora na ultima linha do arquivo mais mesclado e e o que mais se perde"));
+  assert(T.buildClaudeMd(T.normNiche(T.NICHES.dev)).indexOf(selo) > -1, "o CEREBRO perdeu o carimbo de versao");
+  assert(/nao funda, substitua/.test(kit.wrap), "o carimbo nao se declara como linha do KIT — linha sem dono e linha que o merge funde");
+  assert(/Carimbo de versao — linha do KIT/.test(man), "o manifesto nao explica que o carimbo nao se funde");
+  assert(man.indexOf("devem dizer `v" + T.KIT_VERSION + "`") > -1, "o manifesto nao da a conferencia pos-merge dos carimbos — sem ela «de que versao eu vim?» volta a ser arqueologia");
+  // (3) o arquivo avulso se le quando chega
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/se le no TURNO em que chega/.test(cmd), id+": nada manda ler o arquivo avulso no turno em que ele chega — adiar nao guarda o arquivo, so adia descobrir que ele sumiu");
+    assert(/prazo vencido nao rola para o turno seguinte/.test(cmd), id+": «Manter: nao li» sem prazo terminal volta a ser fila indefinida");
+  });
+  return "ok";
+});
+
 check("C55 a lista nao perde item e o relatorio nao mente (wo0105): terceiro estado no Arquivar, especie temporal no P8, carimbos comparados, .claude entregue inteiro, push com resultado real", () => {
   const kit = T.buildCodeKitFiles();
   Object.keys(T.NICHES).forEach(id => {
@@ -545,6 +576,17 @@ check("C54 o carimbo de versao nao mente (wo0103): KIT_VERSION casa com o topo d
   const mChg = chg.match(/^## v(\d+\.\d+\.\d+)/m);
   assert(mChg, "CHANGELOG.md sem entrada de versao no formato `## vX.Y.Z` — sem ela nao ha com o que comparar o carimbo");
   assert(mChg[1] === v, "KIT_VERSION e "+v+" mas o topo do CHANGELOG e v"+mChg[1]+": todo artefato gerado (pacote de update, kit do Code, templates) sairia carimbado com a versao errada, e quem recebe nao tem como saber");
+  // wo0106: o CHANGELOG perdeu 18 versoes seguidas (v1.102.0 a v1.119.0) sem ninguem notar, e a
+  // i-N47 ja tinha fechado o MESMO defeito uma vez. O buraco antigo e divida registrada; esta
+  // assercao impede que outro se abra: no momento do release, o topo e o anterior tem de ser
+  // minors consecutivos. Nao reconstroi o passado — impede o proximo salto.
+  const tops = (chg.match(/^## v(\d+)\.(\d+)\.(\d+)/gm) || []).slice(0, 2)
+    .map(h => h.replace(/^## v/, "").split(".").map(Number));
+  if (tops.length === 2 && tops[0][0] === tops[1][0]) {
+    const salto = tops[0][1] - tops[1][1];
+    assert(salto <= 1, "as duas entradas do topo do CHANGELOG sao v"+tops[0].join(".")+" e v"+tops[1].join(".")+
+      ": "+(salto-1)+" versao(oes) nunca foi(ram) registrada(s). O release que pula e este — o buraco nao aparece depois, aparece agora");
+  }
   const st = ler("meta/STATUS.md");
   const mSt = st.match(/Vers[aã]o atual:\s*\*\*v(\d+\.\d+\.\d+)\*\*/);
   assert(mSt, "STATUS.md sem a linha `Versao atual: **vX.Y.Z**`");
@@ -1123,7 +1165,10 @@ check("C40 vocabulario turno x conversa + o prompt de update alcanca projeto des
   T.STATE.workmode.codeMode = prev;
   assert(/Linhas revogadas/.test(prompt), "o prompt de update nao manda ler as linhas revogadas — a regra mora no CEREBRO, que e justamente o arquivo velho que o update vem consertar");
   assert(/[Cc]arimbo de modos/.test(prompt), "o prompt de update nao manda conferir o carimbo de modos");
-  assert(/nao remova sozinho/.test(prompt), "o prompt nao proibe remover sobra de modo por conta propria");
+  // wo0106: a regra mudou de conteudo, nao so de redacao — o marcador torna «sobra» decidivel, e a
+  // proibicao passa a valer so para a hipotese que o arquivo nao responde (o dono esqueceu de ligar).
+  assert(/marcador/i.test(prompt) && /sobra/.test(prompt), "o prompt nao da o criterio decidivel de sobra de modo");
+  assert(/esqueceu de LIGAR/.test(prompt) && /nao remova sozinho/.test(prompt), "o prompt removeu a cautela inteira — a hipotese «o dono esqueceu de ligar o modo» continua sendo pergunta para ele");
   assert(/nao fale de revogacao nem de carimbo/.test(prompt), "o prompt nao cobre o caso do projeto cujo CEREBRO e antigo demais para conhecer o mecanismo");
   const ondeRevog = prompt.indexOf("Linhas revogadas"), ondeArquivos = prompt.indexOf("Arquivos no pacote:");
   assert(ondeRevog > -1 && ondeArquivos > -1 && ondeRevog < ondeArquivos, "as duas secoes aparecem DEPOIS da lista de arquivos — quem le de cima para baixo ja comecou a comparar antes de saber delas");
@@ -1221,7 +1266,8 @@ check("C38 higiene universal + o update que sabe subtrair (wo0082): quatro regra
   assert(/Linhas revogadas/.test(man), "manifesto do pacote sem a secao de linhas revogadas");
   assert(/ASU nao/.test(man), "carimbo de modos do manifesto nao declara o ASU — modo nao declarado e sobra que ninguem detecta");
   assert(/compartilhado /.test(man), "carimbo de modos do manifesto nao declara o modo compartilhado");
-  assert(/nunca remova sozinho/.test(man), "manifesto nao proibe remover sobra de modo por conta propria");
+  assert(/Marcador \(so aparece com o modo LIGADO\)/.test(man), "manifesto nao publica o marcador de cada modo — sem ele «sobra ou modo esquecido?» fica sem arbitro, que foi a devolucao do satelite-web");
+  assert(/esqueceu de LIGAR/.test(man), "manifesto removeu a cautela inteira: o marcador decide sobra, nao decide se o dono esqueceu de ligar um modo");
   T.REVOCATIONS.forEach(r => assert(man.indexOf(r.texto) > -1, "revogacao '"+r.texto.slice(0,24)+"...' nao chegou ao manifesto do pacote"));
   return "ok ("+T.REVOCATIONS.length+" revogacao(oes) publicada(s))";
 });

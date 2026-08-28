@@ -1,10 +1,22 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.121.0**.
+> Histórico de versões. Versão atual: **v1.122.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.122.0 — Os dois carimbos respondem sozinhos (wo0106, D-137)
+- **Base:** itens (1) e (2) do feedback do satelite-web (registrados pela wo0104), o achado do dono em 28/08 sobre leitura adiada, e a medição do CHANGELOG feita no turno.
+- **Carimbo de modos:** o `_UPDATE-MANIFEST` passa a publicar, por modo, o **marcador** — o cabeçalho que só existe no arquivo gerado quando aquele modo está LIGADO, derivado por diferença e não escolhido (Code: «Ao final da conversa, o assistente REGISTRA o que falta»; ASU: «Saída de código via ASU (patch)»; compartilhado: «Projeto em grupo (HUB compartilhado)»; skills-do-nicho: **não há**, e o manifesto diz que não há). «Sobra ou modo esquecido?» vira decidível pelo próprio projeto, e a frase falsa *«o kit nao tem como saber qual dos dois casos e»* sai — o kit sabe, pelo gate que gera a seção.
+- A proibição de **remover sozinho** sobrevive, restrita à única hipótese que o arquivo não responde: **o dono esqueceu de LIGAR um modo**. O `_UPDATE-PROMPT` foi alinhado no mesmo commit, senão dois arquivos do mesmo pacote diriam o contrário.
+- **Carimbo de versão:** de um carrier para **quatro** (CEREBRO, modelo de WO e as duas skills), declarado como **linha do KIT que não se funde**, com conferência pós-merge no manifesto — medido: o CEREBRO instalado do FlatDrop tinha zero ocorrências do carimbo, porque era a última linha do arquivo mais mesclado do pacote.
+- **`HYGIENE_RULES`** ganha a regra do **arquivo avulso novo**: se lê no turno em que chega; «Manter: não li» carrega prazo, e **prazo vencido não rola** para o turno seguinte — medido, um arquivo esperou dois dias e sumiu do mount com o conteúdo.
+- **`C54`** ganha o degrau que impede o próximo salto de versão: no release, o topo e a entrada anterior do CHANGELOG têm de ser minors consecutivos. Não reconstrói o passado — impede o próximo buraco.
+- **Achado não previsto:** o `CHANGELOG.md` perdeu 18 versões (v1.102.0–v1.119.0), e a **i-N47** já tinha fechado o MESMO defeito. Reconstrução fica ABERTA como **i-N59**, com fonte disponível (D-115 a D-134).
+- Check **C56** novo, com três provas negativas. Prova negativa do C54 rodada (troca de `## v1.120.0` por `## v1.117.0` → vermelho com a contagem de versões puladas, revertido).
+- **`meta/ROADMAP.md`** revisado inteiro pela raia do chat neste ciclo — 87 versões de defasagem, nasce a Fase 6.
+- `KIT_VERSION 1.122.0`. **Custo de teto: zero** (C28 idêntico). `index.html` de **833.401 → 836.117** bytes. Harness **18/18, 99/99 → 100/100, 0 erros**.
 
 ## v1.121.0 — A lista não perde item e o relatório não mente (wo0105, D-136)
 - **Base:** achado do dono em 27/08 (a lista «exaustiva» perdeu um arquivo), a carta 04 do FlatDrop (§2, §4, §5), os achados do `FlatDrop_7.md`, e o erro de método do próprio chat neste turno.
