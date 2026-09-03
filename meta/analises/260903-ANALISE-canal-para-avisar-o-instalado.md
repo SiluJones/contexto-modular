@@ -1,8 +1,8 @@
 # ANÁLISE — Canal para avisar um instalado de que algo já foi corrigido
 
-> **Status:** Em discussão
+> **Status:** **Parqueada com gatilho** (decidido no mesmo dia — ver «Desfecho» no fim)
 > **Data:** 260903 · **Base:** v1.122.0, commit `3ea47ad` (mount de 2026-09-03 00:37)
-> **Vira:** — · **Decisão:** —
+> **Vira:** nada por ora — as duas peças ficam desenhadas e não aplicadas · **Decisão:** D-138
 > **Origem:** ROADMAP, Fase 6, item 1 («pede análise antes de WO»). Nasceu do item (9) da extração do Mapsmith 11 (`IDEAS.md`, 2026-08-20), que já declarava a causa estrutural e o gatilho de retorno — cumprido.
 
 ---
@@ -12,6 +12,8 @@
 O kit distribui por **pull e por leva**: o pacote de update só existe quando o dono abre o gerador, escolhe o nicho e entrega o zip a um projeto. Entre uma leva e a seguinte, um projeto instalado que topa com um defeito **do kit** não tem como saber se ele já foi corrigido — então conserta à mão, e às vezes devolve como feedback um item que o kit fechou antes.
 
 Quem paga é sempre o instalado, e o kit paga em feedback morto. Se nada for feito, o custo não é um evento raro: ele cresce com o número de projetos instalados (hoje **três** devolvendo crítica: `satelite-web`, `mapsmith`, `flatdrop`) e com a distância entre levas.
+
+> **Ressalva escrita depois, e ela vale mais que o parágrafo acima:** a distância entre levas **não é acidente**. Ver «Desfecho».
 
 **Escopo, porque o assunto tem duas direções e só uma é este item:**
 
@@ -93,3 +95,25 @@ Quatro perguntas, e nenhuma vira WO sem resposta:
 4. **O item 2 da Fase 6 pega carona?** Mesma estrutura, mesmo arquivo.
 
 **Medição obrigatória antes de a WO ser escrita, seja qual for a resposta:** o custo em caracteres do O5 no nicho mais apertado (`narrative`, folga 295), com o C28 rodado.
+
+---
+
+## Desfecho — 2026-09-03, no mesmo turno em que a análise foi entregue
+
+**O dono declarou a causa da janela, e ela não estava em lugar nenhum do repositório: a defasagem é deliberada.** As levas são espaçadas de propósito — ele segura a atualização para acumular o máximo de mudanças antes de mandar um projeto atualizar, para não obrigar o mesmo projeto a merges quatro vezes numa semana.
+
+Isso **requalifica o item inteiro**, e o registro precisa dizer isso com todas as letras, porque o ROADMAP o descrevia como «o item de maior custo acumulado»:
+
+- A janela entre levas é o **preço escolhido de uma economia** — merges raros e grandes em vez de frequentes e pequenos. O custo dos três casos é real, mas parte dele é o troco dessa escolha, não sintoma de defeito.
+- Quem decide o tamanho da janela é a mesma pessoa que decidiria aplicar as correções. Não há aqui um agente desinformado a ser avisado: **o kit não estava cego, estava esperando.**
+- Sobre a peça cara: o **O5** custa linhas de instrução em todos os 18 nichos para tratar um caso que o dono aceita pagar de propósito. Recusado por ora, e a recusa está certa pelo que se sabe hoje.
+
+**Decisão: parquear as duas peças, desenhadas e não aplicadas.** Não é abandono declarado (o desenho serve), nem pendência perpétua (tem gatilho) — que é o terceiro estado que o próprio kit exige para não repetir o caso do i18n, aberto por inação durante 88 versões.
+
+**Gatilho de volta, mais alto que o anterior de propósito:** *um projeto instalado pagar uma **WO** por defeito que o kit já corrigiu* — trabalho executado, não item de feedback. O gatilho antigo («a segunda vez que um projeto devolver feedback sobre defeito já fechado», `IDEAS.md`, item 9 da extração do Mapsmith) **já disparou, e foi ele que produziu esta análise**; mantê-lo reabriria a frente pelo mesmo custo que o dono decidiu pagar.
+
+**O que sobrevive para quem reabrir**, e é por isso que a análise fica no repositório em vez de virar conversa:
+
+- O **O3** custa **zero de teto** e a estrutura já existe (`REVOCATIONS` com campo `desde`, o carimbo em quatro carriers do lado do leitor). Se um dia entrar, entra por ali.
+- O **O5** é a peça que alcança o caso de janela curta, e é a cara. A medição obrigatória continua sendo o custo em caracteres no `narrative` (folga 295).
+- As duas perguntas de forma que ficaram sem resposta e não precisam de resposta agora: se a lista de «já corrigido» é tabela nova ou coluna nova na tabela de revogações; e se o item 2 da Fase 6 (terceiro veredito, «fica com o vocabulário trocado») pega carona quando isto voltar — ele mexe no mesmo lugar do manifesto.
