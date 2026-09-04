@@ -239,12 +239,31 @@ Regras práticas:
 
 ## 🧾 Bloco de fecho de turno (formato fixo — dogfood do wo0058/wo0060/wo0064)
 
-Todo turno de trabalho termina com este bloco, nesta ordem, **emitindo só as linhas que se aplicam** — linha sem conteúdo real não aparece (não escreva «nada a arquivar» nem invente handoff). **Próximo** vem ANTES de um divisor; o resto vem depois dele:
-- **Próximo** — sempre presente, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido.
-- **Estado** — uma linha: onde o projeto está agora (versão/fase e o resultado do harness) e o commit, quando existir.
-- **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. Não espere que o usuário pergunte.
+Todo turno de trabalho termina com este bloco, nesta ordem. **Próximo** vem ANTES de um divisor; o resto vem depois dele. **Quando cada linha aparece é CONDIÇÃO OBSERVÁVEL, não julgamento** — o teste é «a condição é falsa?», nunca «me pareceu que não se aplicava»: **Próximo**, **Estado** e **Config recomendada** saem SEMPRE; **Arquivar / Manter** sai quando houver qualquer arquivo avulso no mount, e a condição se verifica LISTANDO o mount, não lembrando; **Handoff** sai quando algum arquivo foi entregue NESTE turno. Fora disso a linha não existe — e linha sem conteúdo real não aparece: não escreva «nada a arquivar» nem invente handoff. **Reconstituir este bloco de memória é o que o faz derivar, e a variação é compensatória:** quem lembra do campo que esqueceu da última vez esquece outro — medido em quatro turnos seguidos deste projeto, quatro formas diferentes, com o formato fixo escrito no arquivo lido a cada mensagem. Por isso o esqueleto existe: **copie e preencha, não reconstitua.**
+- **Próximo** — sempre presente, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido. **A frase só pode conter resultado que o usuário saiba produzir:** se o resultado é do executor, peça o **relatório** («aplicada, relatório aqui»); se é fato do usuário, o comando exato e o que esperar ver vêm no MESMO turno. **E tem de ser COPIÁVEL COMO ESTÁ** — sem lacuna, reticências ou campo para preencher com dado ou medição («medidas são ___», «(...)», «saída do X aqui»): o uso real é copiar, colar e no máximo acrescentar decisões por cima, e uma lacuna transforma um gesto de dois segundos em trabalho de coleta. **A única lacuna aceitável é escolher entre opções já enumeradas no próprio turno** («fase 3: A, B ou C?») — escolher é barato porque o material já está na tela; produzir dado não é. Pela mesma razão, a frase pode já trazer a recomendação dentro dela, para o usuário só confirmar ou trocar.
+- **Estado** — uma linha: onde o projeto está agora (versão/fase e o resultado do harness) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno**, e a linha abre com o carimbo **`Base:`** — qual arquivo foi lido para saber o estado, com a data e o commit que ELE declara (`Base: _MANIFEST 04/09 07:35 · c6a0f38`). Sem cópia achatada, use o doc de estado e a data dele. Se não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe; se o dado não é legível por este canal, escreva isso, que é outro problema e tem outro remédio. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado.
+- **Arquivar / Manter** — quando houver arquivo avulso no mount. **Em lista**: uma linha **Arquivar:** com os nomes já absorvidos, uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras, e uma linha **Já arquivado:** com os que foram absorvidos em turno anterior e continuam no mount — só os nomes. **A lista é EXAUSTIVA e sai de uma LISTAGEM do mount, nunca da memória**: todo avulso entra numa das três, porque omissão é ambígua (pode significar «já extraí tudo» ou «nunca abri», e as duas pedem ações opostas), e a memória só devolve o que é novo. **«Arquivar» é afirmação forte:** só entra o que foi lido INTEIRO naquele turno; na dúvida, **Manter** com o motivo. Sem o terceiro estado a lista não tem saída: ou cresce para sempre, ou os itens caem em silêncio. Não espere que o usuário pergunte.
 - **Config recomendada** — em lista, uma linha por raia: **Chat** (planejamento — modelo + nível de esforço) e **Code** (execução — modelo + esforço + terminal). Nunca afirme saber a config atual — recomende pela tarefa que vem.
 - **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de sessão completo: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`.
+
+**Esqueleto — copie e preencha; a condição de cada linha está à direita:**
+
+```
+---
+**Próximo**                                   (sempre)
+- **Ação:** <a próxima coisa concreta a fazer>
+- **Peça no próximo turno:** «<frase copiável como está, sem lacuna>»
+**Estado:** Base: <arquivo lido NESTE turno + data/commit que ELE traz> · <versão/fase> · <harness> · <commit>   (sempre)
+**Arquivar / Manter**                         (se há avulso no mount — listado, não lembrado)
+- **Arquivar:** <nome> — <motivo>
+- **Manter:** <nome> — <motivo>
+- **Já arquivado:** <nomes>
+**Config recomendada**                        (sempre)
+- **Chat:** <modelo> · <esforço>
+- **Code:** <modelo> · <esforço> · <terminal>
+**Handoff**                                   (se algum arquivo foi entregue NESTE turno)
+- `<arquivo>` → <destino>
+```
 
 **De quem é este bloco (wo0065):** da raia de **planejamento** — o chat. O **Claude Code não fecha assim**: ele fecha com o **relatório de trabalho** — o que fez, os achados e desvios do texto literal da WO, os arquivos tocados, o resultado de `build`/`validate` e o commit. O relatório é insubstituível porque carrega o que só quem executou viu; o formulário, preenchido com «nada a arquivar» e «sem pendência», troca informação por ritual. Se o Code começar a emitir o bloco, é sinal de que esta seção foi lida sem a cláusula de raia — corrija aqui, não no turno.
 

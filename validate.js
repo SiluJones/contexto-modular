@@ -1743,7 +1743,10 @@ check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + for
   assert(/## Bloco de fecho de turno/.test(c),"CEREBRO sem a secao do bloco de fecho");
   ["Próximo","Estado","Arquivar / Manter","Config recomendada","Handoff"].forEach(k=>
     assert(new RegExp("\\*\\*"+k+"\\*\\*").test(c),"CEREBRO sem a linha: "+k));
-  assert(/só as linhas que se aplicam/.test(c),"CEREBRO nao manda condicionar as linhas");
+  assert(/CONDIÇÃO OBSERVÁVEL/.test(c),"CEREBRO nao condiciona as linhas por condicao observavel: voltou a deixar a omissao no julgamento de quem emite");
+  assert(/se há avulso no mount/.test(c) && /se algum arquivo foi entregue NESTE turno/.test(c),"o esqueleto do fecho perdeu as condicoes coladas nos rotulos (wo0111)");
+  assert(/COPIÁVEL COMO ESTÁ/.test(c),"o item Proximo nao exige a frase copiavel sem lacuna para o usuario preencher");
+  assert(/Esqueleto — copie e preencha/.test(c),"CEREBRO sem o esqueleto literal: o bloco volta a ser reconstituido de memoria");
   assert(/AAMMDD-HANDOFF-BRIEF\.md/.test(c),"CEREBRO nao nomeia o artefato de handoff");
   assert(/\*\*Próximo\*\* vem antes de um divisor/.test(c),"CEREBRO nao fixa a ordem (Proximo antes do divisor)");
   assert(/não uma jaula/.test(c),"CEREBRO nao autoriza o projeto a personalizar o bloco");
