@@ -1,8 +1,8 @@
 # ANÁLISE — A forma do fecho deriva, e o nome do relatório não diz do que trata
 
-> **Status:** **Decidida** em 2026-09-03 — ver «Decisão» no fim
+> **Status:** **Parcialmente implementada** — a metade do nome do relatório (F com G) saiu na **wo0110**, aplicada 2026-09-04, commit `cbff6ff`, D-139. A metade do fecho de turno (B, A e a cláusula da frase copiável) segue **pendente na wo0111**. Ver «Decisão» no fim.
 > **Data:** 260903 · **Base:** v1.122.0, commit `ca4e31b` (mount de 2026-09-03 20:28)
-> **Vira:** wo0110 (nome do relatório) e wo0111 (forma do fecho) · **Decisão:** do dono, no turno de 2026-09-03
+> **Vira:** wo0110 (nome do relatório — **aplicada**, D-139) e wo0111 (forma do fecho — **pendente**) · **Decisão:** do dono, no turno de 2026-09-03
 > **Origem:** reclamação do dono em 2026-09-03, com dois prints do `mapsmith 11` como evidência: (1) a forma do fecho de turno varia entre projetos e **dentro da mesma conversa**; (2) o mapsmith nomeia os relatórios do Code melhor do que o kit ensina.
 
 ---
