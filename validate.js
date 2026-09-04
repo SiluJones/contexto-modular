@@ -1484,7 +1484,9 @@ check("C30 contrapeso do gatilho de analise + relatorio em arquivo (wo0074): tes
   assert(/## Relatório em arquivo/.test(kit.claudeMd), "CLAUDE.md do kit nao manda gravar o relatorio em arquivo");
   assert(/Para desligar:\*\* apague esta seção/.test(kit.claudeMd), "o relatorio em arquivo nao tem interruptor local");
   assert(/additionalDirectories/.test(kit.settings), "settings.json do kit nao libera a pasta-pai (a escrita seria negada)");
-  ["applyWo","wrap"].forEach(k => assert(/AAMMDD-HHMM-code-<slug>\.txt/.test(kit[k]), "skill "+k+" nao grava o relatorio no arquivo (regra so no CLAUDE.md evapora)"));
+  assert(/AAMMDD-HHMM-code-<slug>-apply-<alvo>\.txt/.test(kit.applyWo), "skill applyWo nao grava o relatorio no arquivo com o ato apply (regra so no CLAUDE.md evapora)");
+  assert(/AAMMDD-HHMM-code-<slug>-wrap-<alvo>\.txt/.test(kit.wrap), "skill wrap nao grava o relatorio no arquivo com o ato wrap (regra so no CLAUDE.md evapora)");
+  assert(/`apply` · `wrap` · `probe` · `explore`/.test(kit.claudeMd), "o vocabulario fechado de <ato> sumiu do CLAUDE.md: sem lista fechada o campo vira texto livre");
   return "ok";
 });
 

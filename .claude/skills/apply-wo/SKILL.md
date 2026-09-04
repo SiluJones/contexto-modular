@@ -42,5 +42,5 @@ Regras de aplicação:
   aquele é da raia de planejamento.
 - **Se a WO declarar um «Próximo comando»**, termine o relatório com ele **CRU e SOZINHO na última
   linha**, sem frase de apresentação — texto em volta esconde o comando em vez de destacá-lo.
-- **Grave o mesmo relatório em `../AAMMDD-HHMM-code-kcm.txt`** (pasta-pai do repo). Sempre, sem
+- **Grave o mesmo relatório em `../AAMMDD-HHMM-code-kcm-apply-<alvo>.txt`** (`<alvo>` = a WO aplicada, ex. `wo0110`) (pasta-pai do repo). Sempre, sem
   pedido. Se a escrita for negada, diga e siga — o relatório no chat é que vale.

@@ -41,5 +41,5 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
 - **Ao mudar um número ou um estado no `meta/STATUS.md`** (contagem de checagens, versão, «harness
   NN/NN»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não
   é o único lugar onde ele aparece.
-- **Grave o relatório de trabalho em `../AAMMDD-HHMM-code-kcm.txt`** (pasta-pai do repo). Sempre, sem
+- **Grave o relatório de trabalho em `../AAMMDD-HHMM-code-kcm-wrap-<alvo>.txt`** (`<alvo>` = a WO que fechou, ou duas ou três palavras com hífen) (pasta-pai do repo). Sempre, sem
   pedido. Se a escrita for negada, diga e siga.
