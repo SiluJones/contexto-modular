@@ -1,8 +1,8 @@
 # ANÁLISE — O kit ensina a exploração e não entrega o gatilho dela
 
-> **Status:** Em discussão
+> **Status:** Implementada (opção A — a skill `sondar` — e a errata do nome, wo0112). A opção D (`i-N60`, generalizar o `C43`) segue **registrada, fora de escopo** — o dono decidiu adiá-la.
 > **Data:** 260904 · **Base:** KCM v1.122.0, commit `d25f38f` (mount de 2026-09-04 12:15) · mapsmith commit `79974f2` (mount de 2026-09-04 12:16)
-> **Vira:** — · **Decisão:** —
+> **Vira:** `wo0112` · **Decisão:** `D-141`
 > **Origem:** leitura do repositório do `mapsmith` a pedido do dono, para achar o que refinar no KCM. Não nasceu de defeito relatado: nasceu de uma comparação entre o que o kit ensina e o que um projeto instalado precisou fabricar sozinho.
 
 ---
