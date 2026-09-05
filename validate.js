@@ -992,6 +992,11 @@ check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do p
   const instWrap = lerRepo(".claude/skills/wrap/SKILL.md");
   const instApply = lerRepo(".claude/skills/apply-wo/SKILL.md");
   const instSet = lerRepo(".claude/settings.json");
+  // wo0112: a casa tambem instala a skill de exploracao. Nao e a generalizacao da i-N60
+  // (comparar TODA superficie instalada com a gerada) — e o minimo para a sondar nao nascer descoberta.
+  const instSondar = lerRepo(".claude/skills/sondar/SKILL.md");
+  assert(/name: sondar/.test(instSondar) && /NAO parta da lista de checagens que ja existe/.test(instSondar),
+    "a skill sondar instalada no KCM nao carrega a clausula que a separa da verificacao (a casa ficou atras do gerado)");
 
   // (1) clausulas portadoras: cada uma e conferida NOS DOIS LADOS.
   //     Some do gerado -> falha aqui tambem (o kit deixou de publicar a regra).
@@ -1876,6 +1881,27 @@ check("C10 narrative refino spec0048: 5 erros nomeados + cena-existe + notas-rev
   const cmd=T.buildClaudeMd(narr);
   assert(/concluída OU revisada/.test(cmd),"gatilho nao virou 'concluida OU revisada' no CEREBRO (triggersExtra vive no CEREBRO, nao nas Instrucoes)");
   return "ok";
+});
+
+/* C101 (wo0112) — A exploracao tem gatilho: o kit gera a skill /sondar, e ela carrega as
+   clausulas que a tornam exploracao e nao verificacao. Sem estes asserts a skill pode nascer
+   e virar uma segunda conferencia com outro nome. */
+check("C101 a exploracao tem gatilho (wo0112): o kit gera a skill sondar com as clausulas que a separam da verificacao", () => {
+  const kit = T.buildCodeKitFiles();
+  const s = kit.sondar || "";
+  assert(s.length > 0, "o kit nao gera a skill sondar");
+  assert(/^---\nname: sondar/m.test(s), "skill sondar sem cabecalho name: sondar");
+  assert(/disable-model-invocation: true/.test(s), "skill sondar sem disable-model-invocation: quem chama e o dono, nao o modelo");
+  assert(/NAO conclua/.test(s) && /nao veredito/.test(s), "skill sondar nao proibe veredito: viraria uma segunda verificacao");
+  assert(/NAO parta da lista de checagens que ja existe/.test(s), "skill sondar nao proibe partir da lista existente: so acharia o que o instrumento ja acha");
+  assert(/O que eu olhei e NAO achei nada/.test(s), "skill sondar sem a secao do que foi olhado e estava limpo: passada que sempre acha algo e passada que inventa");
+  assert(/observacoes descartadas/i.test(s), "skill sondar sem observacoes descartadas");
+  assert(/-explore-/.test(s), "skill sondar nao grava o relatorio com o ato explore do vocabulario fechado");
+  assert(/NAO abra ordem de trabalho/.test(s), "skill sondar nao respeita a raia: candidato vai para IDEAS pela raia de planejamento");
+  const cmd = T.buildClaudeMd(T.normNiche(T.NICHES.dev));
+  assert(/`\/sondar`/.test(cmd), "o CEREBRO nao cita o comando /sondar: a skill nasceria sem gatilho");
+  assert(/carimbo vem PRIMEIRO e o tipo depois/.test(cmd), "o CEREBRO nao traz a errata do nome (unica x serie)");
+  return "ok (skill sondar " + s.length + " bytes)";
 });
 
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {

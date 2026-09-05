@@ -1190,7 +1190,7 @@ const TRIGGERS_BASE = [
   ["Fim de QUALQUER turno de trabalho", "Emite o Bloco de fecho (formato fixo, secao propria). Nao espera fim de conversa: a maior parte do trabalho acontece em turnos que nao fecham nada."],
   ["Fim da conversa", "Entrega os arquivos completos afetados: STATUS.md + CHANGELOG.md (se fechou algo) + log do dia."],
   ["Evento que MERECE log: cortar versao, registrar uma decisao ou um bug grave, virar o dia de trabalho", "Escreve `logs/AAAA-MM-DD.md` na hora. O log nao espera o fim da conversa — numa conversa longa o fim nunca chega, e e assim que dias inteiros ficam sem registro."],
-  ["Precisa de um numero sobre material grande demais para a conversa", "Manda MEDIR (sonda) em vez de deduzir ou pedir upload. Se ninguem sabe ainda qual e a pergunta, manda EXPLORAR primeiro: exploracao produz hipotese, sonda produz evidencia."],
+  ["Precisa de um numero sobre material grande demais para a conversa, ou um defeito apareceu de raspao", "Manda MEDIR (sonda) em vez de deduzir ou pedir upload. Se ninguem sabe ainda qual e a pergunta, manda EXPLORAR primeiro (`/sondar`): exploracao produz hipotese, sonda produz evidencia."],
   ["Chega ou sai carta de outro projeto (negociacao de contrato entre frentes)", "Extrai o durável AGORA — acordo vira decisao registrada, o que nao coube vira ideia com gatilho — e NAO versiona a carta. Se ela pede resposta do outro lado, cria o item de espera com prazo: espera sem gatilho trava o projeto sem ninguem perceber."],
   ["Uma conferencia deu VERDE — antes de relatar", "Pergunte qual das duas perguntas esse verde responde: «esta la?» ou «presta?». Verde de existencia lido como verde de aptidao ja passou por 45 arquivos destruidos por dentro. Se o instrumento nao abre o conteudo, diga isso na MESMA linha do verde, nao no rodape."],
   ["Uma varredura ou conferencia nao achou NADA no lugar onde deveria achar algo", "Confirme que o arquivo chegou ao mount antes de concluir que esta limpo. Cheque `.gitignore` e `.flatdropignore`: pasta excluida produz varredura muda, e silencio de ferramenta nao e ausencia de problema."],
@@ -2639,7 +2639,7 @@ function buildClaudeMd(niche){
   L.push("**O esqueleto do relatório — o que sobreviveu a dezenas de execuções nos dois projetos que o escreveram:**");
   L.push("");
   L.push("```");
-  L.push("# SONDA — <assunto>                     <- o nome diz o QUE, não o quando");
+  L.push("# SONDA — <assunto>                     <- ver a nota de nome abaixo");
   L.push("- Gerado em: <data>  *(única linha não-determinística deste relatório)*");
   L.push("- Insumo: <caminho> · <tamanho> · sha256 <hash> · mtime <data>");
   L.push("- Referência: <caminho> | nenhuma — as seções comparativas saem NÃO CONFERIDAS");
@@ -2656,6 +2656,8 @@ function buildClaudeMd(niche){
   L.push("  - o que faltou NESTA execução (dinâmico)");
   L.push("  - o que esta sonda NUNCA olha (fixo, escrito uma vez e para sempre)");
   L.push("```");
+  L.push("");
+  L.push("**O nome do arquivo depende de a sonda ser única ou uma série, e o kit ensinava isso pela metade.** Sonda de assunto único, que vira registro e fica, é documento: `AAMMDD-SONDA-<assunto>.md`, e o nome diz o QUE. Sonda **reexecutável**, que existe para comparar antes/depois, é série: o carimbo vem PRIMEIRO e o tipo depois — `AAMMDD-HHMM-EXPLORACAO` ao lado de `AAMMDD-HHMM-CONFERENCIA` —, porque ali o que importa é a pasta se ordenar sozinha no tempo e o par ficar visível lado a lado; o assunto vai no título, dentro do arquivo. Escolher a forma errada custa nos dois sentidos: assunto num arquivo de série faz a ordem se perder, carimbo num documento único faz procurar por data o que se procura por tema.");
   L.push("");
   L.push("Três detalhes que só aparecem depois de usar: **(1)** marcar a data como a única linha não-determinística é o que torna dois relatórios diffáveis — sem isso, comparar antes/depois vira leitura à mão; **(2)** a lista fixa do «nunca olha» é mais valiosa que a dinâmica, porque é a que ninguém lembraria de escrever no dia; **(3)** o rodapé com contagem de alarmes em zero precisa negar a leitura fácil **na própria linha** — «zero alarmes» sem a negação ao lado vira «está certo» na conversa seguinte.");
   L.push("");
@@ -2846,6 +2848,7 @@ if(asuModeOn()){
     L.push("| `.claude/settings.json` | permissões (allow/deny) — adicione seu comando de build/teste ao `allow` |");
     L.push("| `.claude/skills/apply-wo/SKILL.md` | comando `/apply-wo`: aplica uma WO de `meta/workorders/` (âncora exata ou PARA e reporta) |");
     L.push("| `.claude/skills/wrap/SKILL.md` | comando `/wrap`: fecha a tarefa (append em STATUS/DECISIONS + `git diff` + commit) |");
+    L.push("| `.claude/skills/sondar/SKILL.md` | comando `/sondar`: passada exploratória sem hipótese prévia — devolve candidatos a checagem, nunca veredito |");
     L.push("");
     L.push("Instalação: descompacte `claude-code-kit.zip` e mova `CLAUDE.md` e a pasta `.claude/` para a **raiz do repo**. O `README.md` do zip repete os passos e traz a cláusula anti-`.gitignore` de `.claude/`. Formato atual (2026): os comandos são **Skills** em `.claude/skills/<nome>/SKILL.md`. O `.claude/commands/*.md` é **formato descontinuado**: projeto que ainda o tenha migra na próxima atualização — não é alternativa a escolher.");
   }
@@ -3457,8 +3460,51 @@ function buildCodeKitFiles(){
     "Resolva o push ANTES de escrever o relatorio, e escreva o campo do push com o RESULTADO REAL — nunca «pendente» por antecipacao. Se ele ficar mesmo pendente, REABRA o relatorio e corrija quando resolver: o arquivo que afirma o falso e o que a proxima sessao le. Confira tambem que nenhum relatorio `.txt` ficou DENTRO do repo (`git status` o mostraria como nao rastreado): o lugar dele e a pasta-pai, e relatorio na raiz vira `??` que ninguem identifica. Verde: `add`, `commit` e `push` sem perguntar — e, se a WO declarar um **Proximo comando**, termine o relatorio com ele CRU e SOZINHO na ultima linha, sem frase de apresentacao (texto em volta esconde o comando). Vermelho: nao commite nem empurre — feche com MENU DE OPCOES pela ferramenta `AskUserQuestion`, com a recomendada em primeiro lugar e marcada `(Recomendado)`. **Nunca pergunte em prosa — e menu numerado escrito no corpo da mensagem TAMBEM e prosa**, porque obriga o dono a digitar a resposta em vez de clicar. Sem a ferramenta, caia no menu numerado em texto e DIGA que caiu no fallback. **O cartao serve para ESCOLHER, nao para DISPARAR:** ele nao contorna `disable-model-invocation`, entao nao o use para oferecer «rodar a skill agora» — medido duas vezes, isso acrescenta um passo sem tirar nenhum. Resolva o push ANTES de escrever o relatorio. Grave o relatório de trabalho em `../AAMMDD-HHMM-code-<slug>-wrap-<alvo>.txt` (pasta-pai do repo) — o ato é sempre `wrap` nesta skill, e `<alvo>` é a WO que fechou (`wo0108`) ou, sem WO, duas ou três palavras com hífen. Se a escrita for negada, diga e siga.",
     ""
   ].join("\n");
+  const sondar = [
+    "---",
+    "name: sondar",
+    "description: Passada exploratoria sobre o material do projeto — le sem hipotese previa e devolve CANDIDATOS a checagem, nunca veredito. Use quando o usuario pedir /sondar.",
+    "disable-model-invocation: true",
+    "---",
+    "Voce vai LER o material do projeto e devolver um relatorio de EXPLORACAO.",
+    "",
+    "Isto nao e uma verificacao. A verificacao e determinista, mora no instrumento do projeto e responde perguntas que alguem ja sabia fazer. Sua funcao e a oposta: descobrir as perguntas que ninguem fez ainda. **Exploracao produz HIPOTESE; instrumento produz EVIDENCIA.**",
+    "",
+    "## Regras duras",
+    "",
+    "1. **NAO conclua e NAO use a palavra «verificado».** Voce produz candidatos, nao veredito. Quem decide e a raia de planejamento, com o dono.",
+    "2. **Todo achado vem com o comando ou o trecho exato que o reproduz.** Achado sem forma de reproduzir NAO entra: vai para «observacoes descartadas», com o motivo.",
+    "3. **Numero que voce contar de cabeca nao vale.** Conte com comando, e cole o comando ao lado do numero.",
+    "4. **NAO escreva nada no material explorado.** Nao renomeie, nao apague, nao conserte de passagem. Nao edite `meta/` nem o codigo. O relatorio e a sua UNICA saida.",
+    "5. **NAO parta da lista de checagens que ja existe.** Se voce so olhar onde o instrumento ja olha, voce so acha o que ele ja acharia — e o defeito que ele nao cobre sobrevive a mais uma rodada. Comece pelo material, nao pela lista.",
+    "6. **NAO abra ordem de trabalho e NAO mova ideia.** O destino de um candidato e o `IDEAS.md`, e quem o move para la e a raia de planejamento, depois que ele virar checagem determinista.",
+    "",
+    "## O que fazer",
+    "",
+    "Os quatro primeiros valem para qualquer projeto; o quinto so existe a partir da segunda vez.",
+    "",
+    "1. **Inventario bruto do que existe.** Que arquivos existem, por pasta e por extensao, com contagem tirada de comando. Inclua as pastas que ninguem abre — e as que o `.gitignore` esconde, se forem legiveis.",
+    "2. **O que os documentos DECLARAM contra o que existe.** Numero repetido em dois documentos que deveriam concordar (versao, contagem de testes, «funciona ate X»); caminho citado que nao existe no disco; arquivo no disco que documento nenhum cita; item marcado como pendente que ja esta feito, e o contrario.",
+    "3. **O instalado contra o gerado.** O que veio de fora (kit, template, biblioteca) e ficou para tras da fonte, e o que foi editado a mao e vai se perder na proxima atualizacao.",
+    "4. **Cruzamentos que a validacao NAO faz.** Procure ativamente: a mesma informacao declarada em dois lugares (elas concordam?); id referenciado que nao existe no indice correspondente; unidade, escala ou formato trocado entre campos irmaos; valor que parece caminho, data ou versao dentro de campo que ninguem confere.",
+    "5. **O que mudou desde a exploracao anterior**, se houver relatorio anterior.",
+    "",
+    "## O relatorio",
+    "",
+    "Grave em `../AAMMDD-HHMM-code-<slug>-explore-<alvo>.txt` (pasta-pai do repo, mesmo lugar e mesmo padrao dos outros relatorios; o ato e sempre `explore`). Use estas quatro secoes:",
+    "",
+    "- **O que eu olhei** — as pastas e os arquivos, com as contagens e os comandos usados.",
+    "- **O que eu olhei e NAO achei nada** — explicito, e nao e formalidade. Passada exploratoria que sempre acha algo e passada que inventa; dizer «olhei X e esta consistente» e RESULTADO, e e o que permite a proxima passada pular X. Sem esta secao, a exploracao seguinte recomeca do zero.",
+    "- **Candidatos a checagem** — um por bloco, cada um com: o fato observado, como reproduzir, e qual checagem determinista o capturaria. Voce PROPOE a checagem; nao a implementa.",
+    "- **Observacoes descartadas** — o que voce viu e nao conseguiu reproduzir, com o motivo. Descartar em silencio e perder o rastro de uma pergunta boa.",
+    "",
+    "Ao terminar, imprima o caminho do relatorio e um resumo de tres linhas. Se a passada nao produziu nenhum candidato, diga isso — e a secao «o que eu olhei e nao achei nada» passa a ser o corpo do relatorio, o que e um resultado util e nao um fracasso.",
+    "",
+    "Material a explorar: $ARGUMENTS",
+    ""
+  ].join("\n");
   const selo = "\n\n*" + kitStamp().replace(/\.$/, "") + " — esta linha e do KIT: nao funda, substitua pela do pacote mais recente.*\n";
-  return { claudeMd, settings, applyWo: applyWo + selo, wrap: wrap + selo, woTemplate: buildWoTemplate() + selo };
+  return { claudeMd, settings, applyWo: applyWo + selo, wrap: wrap + selo, sondar: sondar + selo, woTemplate: buildWoTemplate() + selo };
 }
 async function downloadCodeKitZIP(){
   if(typeof JSZip === "undefined"){
@@ -3471,6 +3517,7 @@ async function downloadCodeKitZIP(){
   zip.file(`${root}/.claude/settings.json`, f.settings);
   zip.file(`${root}/.claude/skills/apply-wo/SKILL.md`, f.applyWo);
   zip.file(`${root}/.claude/skills/wrap/SKILL.md`, f.wrap);
+  zip.file(`${root}/.claude/skills/sondar/SKILL.md`, f.sondar);
   zip.file(`${root}/meta/workorders/_TEMPLATE.md`, f.woTemplate);
   const readme = [
     "# Kit de arranque do Claude Code",
@@ -3606,6 +3653,7 @@ async function downloadStructuredZIP(){
     zip.file(`${root}/.claude/settings.json`, k.settings);
     zip.file(`${root}/.claude/skills/apply-wo/SKILL.md`, k.applyWo);
     zip.file(`${root}/.claude/skills/wrap/SKILL.md`, k.wrap);
+    zip.file(`${root}/.claude/skills/sondar/SKILL.md`, k.sondar);
     zip.file(`${root}/meta/workorders/_TEMPLATE.md`, k.woTemplate);
   }
   // Skills do nicho (se ligado): dentro de .claude/ se Code, senao na raiz
@@ -3814,6 +3862,8 @@ function buildUpdatePack(niche){
       nature: "template", role: "Comando /apply-wo.", content: k.applyWo });
     files.push({ flat: updateFlat("wrap.SKILL.md"), real: ".claude/skills/wrap/SKILL.md",
       nature: "template", role: "Comando /wrap.", content: k.wrap });
+    files.push({ flat: updateFlat("sondar.SKILL.md"), real: ".claude/skills/sondar/SKILL.md",
+      nature: "template", role: "Comando /sondar (exploracao).", content: k.sondar });
     files.push({ flat: updateFlat("workorders._TEMPLATE.md"), real: "meta/workorders/_TEMPLATE.md",
       nature: "template", role: "Modelo de WO (o proprio modelo, nao uma WO preenchida).", content: k.woTemplate });
   }
