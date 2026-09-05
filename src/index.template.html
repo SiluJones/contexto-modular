@@ -2384,7 +2384,7 @@ function buildInstr(niche){
       : "Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
     outOn.forEach(o => lines.push(`- ${o.label}`));
     lines.push("- Higiene no CEREBRO.md (resumo: STATUS só o agora; IDEAS nunca perde; uma fonte de verdade por dado).");
-    lines.push("- **Fecho do turno** (só o que se aplica): Próximo · Estado (abre com `Base:` — o lido NESTE turno, com data e commit) · Arquivar/Manter · Config por raia · Handoff. Formato no CEREBRO.");
+    lines.push("- **Fecho do turno** — formato fixo (divisor, listas, condição por linha) que não cabe aqui: **copie o esqueleto do CEREBRO**, não reconstitua de memória. `Estado` abre com `Base:` — o lido NESTE turno.");
   }
 
   lines.push("");
@@ -2620,7 +2620,7 @@ function buildClaudeMd(niche){
   L.push("- **Sonda** — script **determinístico** que a raia de planejamento escreve, a de execução roda sobre os dados, e que devolve um relatório pequeno. Responde perguntas que alguém já sabia fazer. **Produz evidência.** É reexecutável: rodar duas vezes (antes/depois de uma mudança) e comparar os dois relatórios é o que prova que a mudança fez o que prometia.");
   L.push("- **Exploração** — passada de leitura **sem hipótese prévia**, feita pela raia de execução, que devolve **candidatos a checagem**. Descobre as perguntas que ninguém fez. **Produz hipótese.**");
   L.push("");
-  L.push("**Funil:** `exploração` (levanta a pergunta) → `sonda` (mede) → **`instrumento`** (mede sempre) → `análise` (raciocina) → ordem de trabalho (muda). **Exploração e sonda não são ordem de trabalho:** não têm âncora, não têm commit, não mudam o repositório. O relatório é a única saída.");
+  L.push("**Funil:** `exploração` (levanta a pergunta) → `sonda` (mede) → **`instrumento`** (mede sempre) → `análise` (raciocina) → ordem de trabalho (muda). **Análise e ordem de trabalho mudam o repositório e vão com commit; exploração e sonda, não:** estas duas não têm âncora, não têm commit, não mudam o repositório — a análise vai para `meta/analises/`, que é versionado, e entra no `git add` da WO que nasce dela. O relatório é a única saída.");
   L.push("");
   L.push("**O terceiro estado: sonda que amadurece vira instrumento — e aí passa a dar veredito, de propósito.** Script que ninguém roda sozinho, sem teste, tem vida curta. Quando a mesma medição vale para sempre, ela sai do descartável e entra no produto: **versionada, com teste, e devolvendo código de erro quando o que ela mede está errado.** Aí é comando entregue, não sonda — e a proibição de veredito **deixa de valer**, porque instrumento que não reprova ninguém roda.");
   L.push("- **Gatilho da promoção: a sonda foi rodada uma SEGUNDA vez para comparar antes/depois.** A partir daí ela não é mais descartável — é instrumento sem teste, e o custo de deixá-la assim só cresce.");

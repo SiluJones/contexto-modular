@@ -1752,6 +1752,15 @@ check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + for
   assert(/se há avulso no mount/.test(c) && /se algum arquivo foi entregue NESTE turno/.test(c),"o esqueleto do fecho perdeu as condicoes coladas nos rotulos (wo0111)");
   assert(/COPIÁVEL COMO ESTÁ/.test(c),"o item Proximo nao exige a frase copiavel sem lacuna para o usuario preencher");
   assert(/Esqueleto — copie e preencha/.test(c),"CEREBRO sem o esqueleto literal: o bloco volta a ser reconstituido de memoria");
+  // wo0113: o RESUMO nas Instrucoes e lido a cada mensagem, e era ele que ensinava a forma errada.
+  // Nenhuma variante de "se aplica/se aplicam" pode voltar ali, e o resumo nao lista os campos
+  // separados por "·" — resumo que parece completo e o que impede alguem de ir ao CEREBRO.
+  const instr = T.buildInstr(T.normNiche(T.NICHES.dev));
+  const linhaFecho = (instr.split("\n").find(l => /\*\*Fecho do turno\*\*/.test(l)) || "");
+  assert(linhaFecho.length > 0, "as Instrucoes perderam a linha do Fecho do turno");
+  assert(!/se aplica|se aplicam/.test(linhaFecho), "o resumo do fecho voltou a condicionar por julgamento («so o que se aplica»): a clausula que a wo0111 tirou do CEREBRO nao pode viver no resumo");
+  assert(/copie o esqueleto do CEREBRO/.test(linhaFecho), "o resumo do fecho nao manda copiar o esqueleto: resumo que parece completo impede a ida ao CEREBRO");
+  assert(!/Arquivar\/Manter · Config/.test(linhaFecho), "o resumo voltou a listar os campos separados por ·, que e o que ensina o fecho em linha corrida");
   assert(/AAMMDD-HANDOFF-BRIEF\.md/.test(c),"CEREBRO nao nomeia o artefato de handoff");
   assert(/\*\*Próximo\*\* vem antes de um divisor/.test(c),"CEREBRO nao fixa a ordem (Proximo antes do divisor)");
   assert(/não uma jaula/.test(c),"CEREBRO nao autoriza o projeto a personalizar o bloco");
@@ -1901,6 +1910,8 @@ check("C101 a exploracao tem gatilho (wo0112): o kit gera a skill sondar com as 
   const cmd = T.buildClaudeMd(T.normNiche(T.NICHES.dev));
   assert(/`\/sondar`/.test(cmd), "o CEREBRO nao cita o comando /sondar: a skill nasceria sem gatilho");
   assert(/carimbo vem PRIMEIRO e o tipo depois/.test(cmd), "o CEREBRO nao traz a errata do nome (unica x serie)");
+  // wo0113: o funil cobre os QUATRO estados quanto a commit, nao so os dois que nao tem.
+  assert(/Análise e ordem de trabalho mudam o repositório e vão com commit/.test(cmd), "o funil voltou a negar commit a dois estados sem dizer nada dos outros dois: a analise vai para meta/analises/, que e versionado");
   return "ok (skill sondar " + s.length + " bytes)";
 });
 
