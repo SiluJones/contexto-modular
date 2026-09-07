@@ -1791,3 +1791,21 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Teto recalibrado — a Edição 1 é a única que custa.** Ela entra em `buildInstr`, que tem teto. A primeira redação estourou o combo do `narrative` (`C28`: 7616 > 7600); foi encurtada duas vezes até caber. Números finais: **padrão 6622/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7508/7600** — a folga do combo cai de 109 para 92. Par negativo medido: reinserir `(só o que se aplica)` na linha do resumo deixa o `C19` vermelho, com a mensagem sobre condicionar por julgamento. `index.html` 844.912 → 845.091 bytes.
 
 **Registrado, fora de escopo:** a `i-N60` (generalizar o `C43`) **disparou pela quarta vez** — esta WO tocou o `validate.js`; a IDEA-137 (previsão numérica de checklist); e o CEREBRO do próprio KCM não ter seção «Medição delegada» nem «Sonda e exploração» (`grep -ci` das frases-chave no `meta/CEREBRO.md` da casa devolve 0) — frente própria, decisão do dono.
+
+---
+
+## D-143 — A casa passa a carregar o que o kit ensina: medição delegada e o par sonda/exploração (wo0114)
+
+**Data:** 2026-09-07 · **Base:** decisão do dono (opção **a**, transplante adaptado), a partir da medição da exploração de 2026-09-04 e da leitura do `mapsmith` (commit `79974f2`). WO de doc, toca **apenas** `meta/CEREBRO.md`. · **Fecha:** o «fora de escopo» que D-141 e D-142 registraram — o CEREBRO da casa sem as duas seções que o kit ensina para os 18 nichos.
+
+**Medido, e o número era zero.** `grep -ci` no `meta/CEREBRO.md` da casa devolvia 0 para «sonda», «exploração», «quem tem o disco mede» e «candidatos a checagem». O CEREBRO **gerado** tem 24 seções de primeiro nível; o da casa tinha 15. O kit ensina as duas seções para os 18 nichos e a casa operava sem nenhuma — e o KCM é o único projeto que **nunca recebe pacote de update**, então ou entrava por WO ou não entrava. É também o projeto que mais depende de medição delegada: todo turno do chat depende de um relatório do Code ou de um sandbox reconstruído do mount.
+
+**As duas seções vêm adaptadas do `mapsmith`, não escritas do zero.** Origem: as seções «Medição delegada» e «Sonda e exploração» do CEREBRO deles, mais DEC-0029 (exploração produz hipótese, script produz evidência), DEC-0042 (medição delegada não ganha artefato próprio) e DEC-0051 (todo número publicado carrega como foi obtido; medição incompleta sai declarada).
+
+**A adaptação própria do KCM: quatro marcas de origem, não três.** Lá são `[medido]` · `[deduzido]` · `[relatado]`. Aqui o chat **consegue** medir, reconstruindo o repo em sandbox a partir do mount — e o mount chega achatado, então o sandbox **pode divergir do repositório real** (wo0111: previu 839.264 bytes, o Code obteve 839.262; 2 bytes de uma linha em branco que só existia no sandbox). Daí `[medido no repo]` e `[medido em sandbox]` serem marcas distintas: a segunda é forte para escrever a WO e fraca para virar veredito sobre o repo.
+
+**Edição 2, achado de raspão na própria leitura:** o comando de build documentado no CEREBRO da casa dizia «casco + **17** módulos». São **18** — o `build.js` imprime «18 modulo(s)» a cada execução. Corrigida a ocorrência viva (comentário `bash` da seção de Validação); a menção a «17 módulos» dentro de «Mudanças nesta revisão (v1.34.0)» é **relato histórico** e não se toca.
+
+**Custo de teto: zero.** O `meta/CEREBRO.md` é o CEREBRO da casa — não é gerado, não vai para nenhum nicho, não entra em `buildInstr`/`buildClaudeMd`. Os cinco números do `C28` não se movem. **Nenhum check lê este arquivo**: `node validate.js` seguiu **18/18 · 101/101 · 0 erros** só para confirmar que nada mais se mexeu; a rede da WO foi o `git diff`, lido com os olhos. `meta/CEREBRO.md` 40.691 → 46.960 bytes (a WO previa ≈46.990 num sandbox CRLF; o arquivo vivo do repo é LF — `git ls-files --eol` → `i/lf w/lf` —, e os ~30 bytes de diferença são os CR das ~30 linhas novas). 15 → 17 seções de primeiro nível.
+
+**Sem desvio de conteúdo do texto literal da WO.** Duas imprecisões do checklist da WO, não da aplicação: `grep -c "medido em sandbox"` esperava 2 mas devolve 1 (as duas ocorrências estão na mesma linha do bullet — `grep -o` confirma 2); e o total de bytes ficou 30 abaixo do previsto pela razão CRLF×LF acima. Commit `e424a84`, empurrado (`512e400..e424a84  main -> main`).
