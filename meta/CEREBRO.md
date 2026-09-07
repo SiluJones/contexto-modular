@@ -193,10 +193,40 @@ Todo arquivo entregue para baixar usa o **nome real do repo**, nunca o nome **ac
 
 ---
 
+## 📏 Medição delegada (quem tem o disco mede, quem tem o contexto decide)
+
+O chat lê o que chega pelo mount — achatado, sem árvore de pastas, sem histórico do git — e tem teto de contexto. O Code lê o repositório inteiro, no Windows, e não tem nenhum dos dois limites. Quando o dado que falta é **estado de arquivo** (quantas linhas, quantos bytes, se existe, o que declara), a saída não é deduzir nem pedir upload de arquivo grande: é **mandar medir**.
+
+- **A regra:** quem tem acesso ao disco mede, quem tem contexto decide. Nunca afirme estado de arquivo que você não leu — nem para justificar uma escolha, nem para escrever caminho «mais ou menos certo». Caminho com `...` no meio é o sintoma clássico de estado deduzido.
+- **O pedido de medição não é ordem de trabalho.** Não tem âncora, não tem edição, não tem commit. Se virar WO, você já estará escrevendo a ordem sem os números de que ela precisava — que é exatamente o erro que a medição evita.
+- **Peça número cru, não interpretação.** Diga o comando ou o que contar, e peça de volta o valor **e o comando que o produziu**. Executor que interpreta devolve opinião no lugar de dado — e opinião de quem mediu é a mais difícil de contestar depois, porque parece medida.
+- **Onde o pedido mora e onde o número pousa.** O pedido vai **dentro da WO**, na seção «Medição prévia», ou numa WO cujo único trabalho seja medir. O resultado sai no **relatório da execução** — `.txt` na pasta-pai, não versionado. O que sobrevive à leitura o chat leva ao meta canônico: `DECISIONS.md` se mudou uma decisão, `IDEAS.md` se mudou o destino de uma ideia, «Armadilhas» da WO se revelou risco. **Não crie pasta nem tipo de artefato novo para acomodar uma medição** — o custo nunca é o arquivo, é a estrutura que passa a pedir manutenção para sempre. **Número medido e não registrado volta a ser deduzido no turno seguinte.**
+- **Todo número publicado carrega COMO foi obtido**, e aqui são quatro marcas, não três: `[medido no repo]` · `[medido em sandbox]` · `[deduzido]` · `[relatado pelo dono]`. A quarta é a que este projeto precisou acrescentar: o chat **consegue** medir, reconstruindo o repositório em sandbox a partir do mount — e o sandbox nasce de um mount achatado, então **pode divergir do repositório real**. Caso medido: a wo0111 previu 839.264 bytes e o Code obteve 839.262; a diferença eram 2 bytes de uma linha em branco que só existia no sandbox. `[medido em sandbox]` é forte o bastante para escrever a WO e fraco o bastante para não virar veredito sobre o repo.
+- **Medição incompleta SAI, desde que saia declarada como incompleta.** Segurar o número até estar certo entrega o defeito depois que o outro lado já dependeu dele. Diga o que não foi medido e por quê; ausência declarada é dado, ausência silenciosa vira zero.
+- **Fato que o dono relata no chat não existe até estar num arquivo — e a origem vai junto.** `[relatado pelo dono]` e `[medido no repo]` têm forças diferentes, e a diferença é o que permite decidir se vale remedir. Apagar a marca é pior que não registrar: cria um fato de primeira classe a partir de uma lembrança.
+
+## 🔎 Sonda e exploração — o par que produz evidência, e o instrumento que ele vira
+
+A medição delegada responde a pergunta que alguém já soube fazer. Quando ninguém sabe ainda qual é a pergunta, ela não basta:
+
+- **Exploração** — passada de leitura **sem hipótese prévia** que devolve **candidatos a checagem**. Descobre as perguntas que ninguém fez. **Produz hipótese.** Tem gatilho próprio: a skill `/sondar` (wo0112), que o dono chama.
+- **Sonda** — script **determinístico**, escrito pela raia de planejamento e rodado pela de execução, que devolve um relatório pequeno. Responde pergunta que alguém já sabia fazer. **Produz evidência.**
+- **Instrumento** — a sonda que amadureceu: versionada, com teste, e **dando veredito**. Aqui o instrumento já existe e se chama `validate.js`. **O gatilho da promoção é preciso: no momento em que uma sonda é rodada uma SEGUNDA vez para comparar antes/depois, ela deixou de ser descartável — é instrumento sem teste.**
+
+**Funil:** `exploração` (levanta a pergunta) → `sonda` (mede) → `instrumento` (mede sempre) → `análise` (raciocina) → WO (muda). **Análise e WO mudam o repositório e vão com commit; exploração e sonda, não** — estas duas não têm âncora nem commit, e o relatório é a única saída.
+
+**Três propriedades do relatório — as três juntas, ou ele vira lixo:** (1) tabela e contagens, nunca prosa: número ao lado do comando que o produziu; (2) **o que NÃO foi olhado é declarado**, e amostragem é o caso difícil — amostra parece cobertura, então diga **quantos de quantos**; (3) todo achado vem com o comando que o reproduz, e o que não se reproduz vai para «observações descartadas», com o motivo.
+
+**A exploração NÃO parte da lista de checagens do instrumento.** Se ela só olhar onde o `validate.js` já olha, só acha o que ele já acharia. **E aqui isso é grave:** as 101 checagens nasceram uma a uma, cada uma de uma reclamação, de uma WO ou de uma suspeita nossa — **nenhuma nasceu de perguntar ao artefato o que ele declara**. Foi por isso que o `_TEMPLATE.md` ficou 6.618 bytes atrás por seis WOs, que quatro decisões viveram em `###` sem ninguém ver, e que o `KIT_VERSION` congelou três versões dentro da linha que o `C54` lê: **os três apareceram de raspão, enquanto se procurava outra coisa.**
+
+**Exploração e sonda não dão veredito; o instrumento dá, e é para isso que ele existe.** A sonda relata o fato e **não nomeia a causa** — ausências de origens diferentes produzem o mesmo sintoma. **Existência não é aptidão:** «está no arquivo?» e «o que está no arquivo presta?» são perguntas diferentes; ao escrever uma sonda, pergunte o que ela NÃO abre.
+
+**Onde mora.** Fora do que sobe ao Projeto: relatório em `../AAMMDD-HHMM-code-kcm-explore-<alvo>.txt`, com o ato `explore` do vocabulário fechado. O que sobe ao registro é o que foi **extraído** — um número no `DECISIONS`, um candidato no `IDEAS`. **O relatório é insumo, não memória.**
+
 ## ✅ Validação (sempre antes de publicar)
 
 ```bash
-# 1. Remontar o index.html a partir do casco + 17 modulos
+# 1. Remontar o index.html a partir do casco + 18 modulos
 node build.js          # gera o index.html (na raiz; caminho de saida em build-manifest.json)
 
 # 2. Harness: sintaxe (new Function) + teste DOM (jsdom) dos 17 nichos + checagens transversais
