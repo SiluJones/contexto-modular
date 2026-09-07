@@ -1491,6 +1491,11 @@ check("C30 contrapeso do gatilho de analise + relatorio em arquivo (wo0074): tes
   assert(/additionalDirectories/.test(kit.settings), "settings.json do kit nao libera a pasta-pai (a escrita seria negada)");
   assert(/AAMMDD-HHMM-code-<slug>-apply-<alvo>\.txt/.test(kit.applyWo), "skill applyWo nao grava o relatorio no arquivo com o ato apply (regra so no CLAUDE.md evapora)");
   assert(/AAMMDD-HHMM-code-<slug>-wrap-<alvo>\.txt/.test(kit.wrap), "skill wrap nao grava o relatorio no arquivo com o ato wrap (regra so no CLAUDE.md evapora)");
+  // wo0115: o 1b compara o que o git responde. Sobre MEDICAO o wrap cita e aponta, nunca conclui —
+  // dois casos medidos no mapsmith em tres ciclos, e o log do dia guardou o relatorio errado nos dois.
+  assert(/cita e aponta/.test(kit.wrap), "a skill wrap nao proibe concluir sobre medicao que ela nao rodou: o 1b so desmente o que o git responde");
+  assert(/grep -o \.\.\. \| wc -l/.test(kit.woTemplate), "o modelo de WO nao avisa que grep -c conta LINHAS: previsao de ocorrencia em paragrafo longo erra");
+  assert(/git ls-files --eol/.test(kit.woTemplate), "o modelo de WO nao avisa que byte previsto carrega o fim de linha (sandbox CRLF x repo LF)");
   assert(/`apply` · `wrap` · `probe` · `explore`/.test(kit.claudeMd), "o vocabulario fechado de <ato> sumiu do CLAUDE.md: sem lista fechada o campo vira texto livre");
   return "ok";
 });

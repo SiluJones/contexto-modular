@@ -32,7 +32,11 @@
 > **Numero de checklist e DERIVADO, nunca estimado.** Toda contagem prevista (`grep -c`, quantidade de bullets, de
 > arquivos) sai de simular o texto final DESTA WO, incluindo o que ela propria manda inserir — a WO costuma citar as
 > frases que insere, na prosa e no checklist, e a contagem ingenua erra por isso. Numero de memoria vira desvio no
-> relatorio de quem aplica, que estava certo.
+> relatorio de quem aplica, que estava certo. **`grep -c` conta LINHAS, nao ocorrencias:** em documento cujo
+> paragrafo e uma linha so, duas mencoes no mesmo bullet contam 1 — para ocorrencia use `grep -o ... | wc -l`,
+> e diga qual dos dois voce previu. **Byte previsto carrega o fim de linha:** numero tirado de sandbox que grava
+> CRLF erra 1 byte por linha nova quando o arquivo do repo e LF. Confira com `git ls-files --eol` antes de prever
+> tamanho, ou preveja faixa em vez de numero exato.
 > **Proximo comando:** o comando que o usuario deve rodar quando esta WO fechar em verde — ou apague a linha.
 > Ele vai CRU e SOZINHO na ultima linha do relatorio, sem frase de apresentacao: texto em volta esconde o comando.
 

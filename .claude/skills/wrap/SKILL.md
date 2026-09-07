@@ -12,6 +12,11 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
   que uma sessão futura vai ler. O relatório é escrito antes da última ação, então um push que saiu
   depois dele fica registrado como não feito. Divergência vira uma linha de correção no log do dia;
   **conferência que passa não vira linha**.
+- **Sobre MEDIÇÃO você não conclui: cita e aponta.** O `1b` compara commit e estado do git — o que o
+  git responde. Achado numérico do relatório anterior (bytes, contagens, qual chave) o git **não**
+  desmente: ou você reroda a medição e diz que rerodou, ou escreve «medido no relatório X, não
+  reconferido aqui». Contradizer sem remedir é caro — o log do dia guarda o relatório **errado**, e
+  desempatar dois registros que se negam custa uma sessão e exige os dois em mãos, que é o que se perde.
 - **O campo do push se escreve com o RESULTADO REAL**, nunca «pendente» por antecipação. Se ficar
   mesmo pendente, **REABRA o relatório** e corrija quando resolver — o arquivo que afirma o falso é o
   que a próxima sessão lê. E confira que nenhum relatório `.txt` ficou **DENTRO do repo**
