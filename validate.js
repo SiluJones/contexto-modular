@@ -980,7 +980,7 @@ check("C44 sonda e exploracao como par (wo0088): tres propriedades, sem veredito
 /* C43 (wo0087) — O KCM e usuario do proprio kit. Este e o UNICO check que abre arquivo
    de `.claude/` DO REPOSITORIO: todos os outros testam o que o kit EMITE, e foi por isso
    que as skills instaladas ficaram tres versoes atras do gerado sem ninguem notar. */
-check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do proprio KCM carregam as clausulas que o kit publica", () => {
+check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116): as QUATRO superficies instaladas do proprio KCM carregam as clausulas que o kit publica", () => {
   const pathmod = require("path");
   const raiz = pathmod.dirname(pathmod.resolve(path));
   const lerRepo = (rel) => {
@@ -992,8 +992,8 @@ check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do p
   const instWrap = lerRepo(".claude/skills/wrap/SKILL.md");
   const instApply = lerRepo(".claude/skills/apply-wo/SKILL.md");
   const instSet = lerRepo(".claude/settings.json");
-  // wo0112: a casa tambem instala a skill de exploracao. Nao e a generalizacao da i-N60
-  // (comparar TODA superficie instalada com a gerada) — e o minimo para a sondar nao nascer descoberta.
+  // wo0112: a casa tambem instala a skill de exploracao. Era o minimo para a sondar nao nascer
+  // descoberta; a generalizacao (i-N60) veio na wo0116, logo abaixo, e cobre quatro superficies.
   const instSondar = lerRepo(".claude/skills/sondar/SKILL.md");
   assert(/name: sondar/.test(instSondar) && /NAO parta da lista de checagens que ja existe/.test(instSondar),
     "a skill sondar instalada no KCM nao carrega a clausula que a separa da verificacao (a casa ficou atras do gerado)");
@@ -1021,13 +1021,40 @@ check("C43 o instalado nao fica atras do gerado (wo0087): skills e settings do p
     ["push com resultado real",  /RESULTADO REAL/,                        ["wrap"]],
     ["relatorio se reabre",      /REABRA o relat[oó]rio/,            ["wrap"]],
     ["relatorio fora do repo",   /DENTRO do repo/,                        ["wrap"]],
+    // wo0116 (i-N60): as clausulas das DUAS superficies novas. Escolhidas por MEDICAO — cada uma foi
+    // conferida presente no gerado E no instalado antes de entrar. No CLAUDE.md, "config modelo x
+    // esforco" e "additionalDirectories" ficaram DE FORA de proposito: existem no gerado e nao na
+    // casa, que adaptou o arquivo legitimamente. Conferir o que a casa tem direito de mudar seria
+    // transformar adaptacao em falha.
+    ["modelo de WO: ancoras lidas",   /Ancoras lidas em/,            ["woTemplate"]],
+    ["modelo de WO: numero derivado", /DERIVADO/,                    ["woTemplate"]],
+    ["modelo de WO: grep -o",         /grep -o \.\.\. \| wc -l/,      ["woTemplate"]],
+    ["modelo de WO: fim de linha",    /git ls-files --eol/,          ["woTemplate"]],
+    ["modelo de WO: medicao previa",  /Medicao previa/i,             ["woTemplate"]],
+    ["modelo de WO: proximo comando", /Proximo comando/i,            ["woTemplate"]],
+    ["CLAUDE.md: vocabulario de ato", /`apply` · `wrap` · `probe` · `explore`/, ["claudeMd"]],
+    ["CLAUDE.md: relatorio em arquivo", /-code-/,                    ["claudeMd"]],
+    ["CLAUDE.md: relatorio sem pedir", /sem pedir/i,                 ["claudeMd"]],
+    ["CLAUDE.md: como desligar",      /Para desligar/i,              ["claudeMd"]],
   ];
-  const gerado = { wrap: kit.wrap, applyWo: kit.applyWo };
-  const instalado = { wrap: instWrap, applyWo: instApply };
+  // wo0116 (i-N60): a generalizacao. O C43 cobria duas superficies instaladas; passa a cobrir quatro.
+  // As duas novas sao as que ficaram para tras sem ninguem ver: o modelo de WO da casa (6.618 bytes
+  // atras do gerado por seis WOs) e o CLAUDE.md. O metodo NAO muda — continua sendo clausula por
+  // regex, e nao diff: a exploracao de 04/09 mediu que comparar arquivo a arquivo da falso positivo
+  // em toda superficie que a casa adapta (29 linhas "ausentes" no CLAUDE.md eram redacao propria e
+  // placeholders substituidos, com a regra presente nos dois lados).
+  const instTpl = lerRepo("meta/workorders/_TEMPLATE.md");
+  const instClaude = lerRepo("CLAUDE.md");
+  const gerado = { wrap: kit.wrap, applyWo: kit.applyWo, woTemplate: kit.woTemplate, claudeMd: kit.claudeMd };
+  const instalado = { wrap: instWrap, applyWo: instApply, woTemplate: instTpl, claudeMd: instClaude };
+  const CAMINHO = {
+    wrap: ".claude/skills/wrap/SKILL.md", applyWo: ".claude/skills/apply-wo/SKILL.md",
+    woTemplate: "meta/workorders/_TEMPLATE.md", claudeMd: "CLAUDE.md"
+  };
   CLAUSULAS.forEach(([nome, re, alvos]) => {
     alvos.forEach(alvo => {
       assert(re.test(gerado[alvo]), "o kit GERADO perdeu a clausula '"+nome+"' na skill "+alvo+" — se ela sair daqui, o check para de proteger a casa tambem");
-      assert(re.test(instalado[alvo]), "a skill INSTALADA `.claude/skills/"+(alvo==="wrap"?"wrap":"apply-wo")+"/SKILL.md` nao tem a clausula '"+nome+"' que o kit publica: consertar o gerador nao conserta o instalado (D-115), e a casa e o primeiro instalado");
+      assert(re.test(instalado[alvo]), "a superficie INSTALADA `"+CAMINHO[alvo]+"` nao tem a clausula '"+nome+"' que o kit publica: a casa ficou atras do gerado");
     });
   });
 
