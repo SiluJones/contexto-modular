@@ -1,3 +1,9 @@
 * text=auto
+# wo0118: o CRLF do template deixa de ser habito da maquina e vira regra do repositorio.
+# `git ls-files --eol` mostrava `i/lf w/crlf attr/text=auto`: o CRLF vinha do core.autocrlf
+# do dono, nao daqui — um clone com outra configuracao traria LF e as ancoras multi-linha
+# das WOs parariam de casar SEM AVISO. Com o atributo, o indice segue LF (correto) e a arvore
+# de trabalho recebe CRLF em qualquer maquina. Nao exige --renormalize: o indice ja esta LF.
+src/index.template.html text eol=crlf
 .githooks/pre-commit text eol=lf
 *.sh text eol=lf

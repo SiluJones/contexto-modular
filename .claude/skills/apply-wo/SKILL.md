@@ -12,9 +12,12 @@ Regras de aplicação:
   lidas em» preenchido, **RECUSE** — não aplique, e diga que falta. Quem escreveu a WO é quem tem o
   viés; esta conferência é sua justamente por isso.
 - Localize cada âncora EXATAMENTE. Se não achar uma, PARE e reporte — nunca chute um lugar próximo.
-- **Fim de linha por arquivo:** `src/index.template.html` é **CRLF**; `validate.js`, `build.js` e os
-  `src/niches/*.js` são **LF**. Âncora de mais de uma linha colada com o separador errado não casa —
-  na dúvida, edite linha a linha.
+- **Fim de linha por arquivo:** na **árvore de trabalho** (o que o editor abre),
+  `src/index.template.html` é **CRLF** — garantido pelo `.gitattributes`, não pela configuração da
+  máquina; `validate.js`, `build.js`, os `src/niches/*.js` e todo `.md` são **LF**. *No índice do git
+  o template é LF, e isso é o certo: `git ls-files --eol` devolve `i/lf w/crlf attr/text=crlf`. Quem
+  compara os dois números sem saber disso acha que achou um defeito.* Âncora de mais de uma linha
+  colada com o separador errado não casa — na dúvida, edite linha a linha.
 - Antes de inserir, confira a **idempotência**: procure a frase-chave do texto NOVO. Se já existir,
   PULE o item e diga no relatório — não duplique.
 - Não toque em nada fora das edições nomeadas na WO.

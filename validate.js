@@ -1079,7 +1079,7 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116)
   try { cfg = JSON.parse(instSet); }
   catch(e){ assert(false, ".claude/settings.json do proprio repo nao e JSON valido ("+e.message+") — o Claude Code descarta o arquivo INTEIRO em silencio e caem todas as permissoes juntas"); }
   const allow = (cfg.permissions && cfg.permissions.allow) || [];
-  assert(allow.includes("Write"), ".claude/settings.json do repo sem `Write` no allow — as skills mandam criar log e relatorio, e a permissao nega o que a skill pede (D-115)");
+  assert(allow.includes("Write"), ".claude/settings.json do repo sem `Write` no allow — a skill wrap grava o relatorio em arquivo, e a permissao nega o que a skill pede (D-115)");
   assert(Array.isArray(cfg.permissions && cfg.permissions.additionalDirectories) && cfg.permissions.additionalDirectories.length > 0, ".claude/settings.json do repo sem `additionalDirectories` — sem ele o relatorio em arquivo na pasta-pai nao tem como ser gravado (D-108)");
 
   return "ok (instalado confere com o gerado em " + CLAUSULAS.length + " clausulas)";
@@ -1985,6 +1985,29 @@ check("C102 a prosa viva da casa nao mente sobre contagem de nicho nem caminho d
     assert(fs.existsSync(pathmod.join(raiz, rel)), "meta/CEREBRO.md cita `" + rel + "`, que nao existe nesse caminho — documento citado no lugar errado e pior que nao citado");
   });
   return "ok (N=" + N + ", " + citados.length + " caminhos meta/ conferidos)";
+});
+
+/* C103 (wo0118) — O invariante de fim de linha do template tem lastro no .gitattributes, e a
+   skill que o assume diz a MESMA coisa que o git. Antes, `git ls-files --eol` devolvia
+   attr/text=auto: o CRLF vinha da maquina do dono, e um clone com outra configuracao quebraria
+   as ancoras multi-linha das WOs sem aviso nenhum.
+   NAO cobre caminhos citados que nao existem — ver a "Medicao pedida" da wo0118: a lista so pode
+   ser levantada por quem tem o repo inteiro, e a raia de planejamento nao tem. */
+check("C103 o fim de linha do template tem lastro no repositorio (wo0118)", () => {
+  const pathmod = require("path");
+  const raiz = pathmod.dirname(pathmod.resolve(path));
+  const ler = (rel) => {
+    const abs = pathmod.join(raiz, rel);
+    assert(fs.existsSync(abs), "arquivo do proprio repo ausente: " + rel);
+    return fs.readFileSync(abs, "utf8");
+  };
+  const attrs = ler(".gitattributes");
+  assert(/^src\/index\.template\.html\s+text\s+eol=crlf\s*$/m.test(attrs),
+    ".gitattributes nao fixa `src/index.template.html text eol=crlf`: o CRLF que as skills assumem volta a depender do core.autocrlf da maquina");
+  const skApply = ler(".claude/skills/apply-wo/SKILL.md");
+  assert(/árvore de trabalho/.test(skApply) && /garantido pelo `\.gitattributes`/.test(skApply),
+    "a skill apply-wo afirma o CRLF sem dizer que e da arvore de trabalho e de onde vem a garantia: o git responde i/lf e a skill diz CRLF, e as duas frases precisam concordar");
+  return "ok (eol do template com lastro em .gitattributes)";
 });
 
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {
