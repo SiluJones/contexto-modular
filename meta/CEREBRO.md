@@ -30,7 +30,7 @@
 
 ## O que é este projeto (resumo de 30 segundos)
 
-O **Kit de Contexto Universal** é um único `index.html` autossuficiente (vanilla JS, sem build, sem dependências exceto JSZip via CDN) que ajuda usuários a manter contexto entre conversas com o Claude. Ele tem 16 nichos de conteúdo + 1 construtor (`custom`, unificado: compõe a partir dos prontos OU monta do zero); cada nicho gera Instruções de Projeto, um CEREBRO.md (o "cérebro"; antes chamado CLAUDE.md), e templates `.md` para baixar.
+O **Kit de Contexto Universal** é um único `index.html` autossuficiente (vanilla JS, sem build, sem dependências exceto JSZip via CDN) que ajuda usuários a manter contexto entre conversas com o Claude. Ele tem 17 nichos de conteúdo + 1 construtor (`custom`, unificado: compõe a partir dos prontos OU monta do zero); cada nicho gera Instruções de Projeto, um CEREBRO.md (o "cérebro"; antes chamado CLAUDE.md), e templates `.md` para baixar.
 
 O projeto está em **refinamento área por área** após o MVP: a fundação (regras universais) e os nichos vão sendo aprofundados um a um, cada um com pesquisa do domínio + feedback de uso real.
 
@@ -133,7 +133,7 @@ Quando o desenvolvimento roda no **Claude Code** (terminal/desktop), o chat (est
 
 ## 📝 Como manter os documentos deste projeto
 
-Os arquivos do projeto vivem em `meta/` (mais `README.md`, `PLANNING.md`, `DEPLOY-GUIDE.md` na raiz). Cada um tem um papel temporal:
+Os arquivos do projeto vivem em `meta/` (mais `README.md` e `PLANNING.md` na raiz; o `DEPLOY-GUIDE.md` é entregue FORA do repositório, para o dono guardar separado). Cada um tem um papel temporal:
 
 | Arquivo | Comportamento | Papel |
 |---|---|---|
@@ -146,7 +146,7 @@ Os arquivos do projeto vivem em `meta/` (mais `README.md`, `PLANNING.md`, `DEPLO
 | `meta/IDEAS.md` | Segundo cérebro | Ideias capturadas; nunca perde. |
 | `meta/TEMA/MAPA/FILTROS.md` | Estável | Brainstorm de origem (o kit é nicho Brainstorm). |
 | `meta/LOG-TEMPLATE.md` | Referência | Molde de log; nunca substituído. |
-| `meta/NICHOS-CANDIDATOS.md` | Referência | Mapa dos nichos que entraram/ficaram de fora. |
+| `NICHOS-CANDIDATOS.md` (raiz) | Referência | Mapa dos nichos que entraram/ficaram de fora. |
 
 ### Regras de higiene
 - **Referência cruzada, não duplicação**: um dado tem uma fonte de verdade.
@@ -181,7 +181,7 @@ Todo arquivo entregue para baixar usa o **nome real do repo**, nunca o nome **ac
 2. **Projetar**: cruzar feedback + pesquisa + o padrão de ouro do dev v2. Definir arquivos (núcleo enxuto + opcionais), behaviors específicos, prompts G+, gatilhos próprios.
 3. **Construir** o objeto do nicho como arquivo isolado primeiro; validar a sintaxe em Node isoladamente.
 4. **Editar** o módulo do nicho em `src/niches/<id>.js` (estrutura modular v1.33+; antes era splice por marcadores no `index.html`).
-5. **Validar**: `node build.js` (remonta o `index.html`) + `node validate.js index.html` — harness dos 17 nichos + checagens transversais (0 erros) + inspeção visual do nicho.
+5. **Validar**: `node build.js` (remonta o `index.html`) + `node validate.js index.html` — harness dos 18 nichos + checagens transversais (0 erros) + inspeção visual do nicho.
 6. **Publicar** o `index.html` remontado + atualizar `meta/CHANGELOG.md` (nova versão) e `meta/STATUS.md`.
 
 ### Padrão de qualidade de um nicho aprofundado
@@ -229,11 +229,11 @@ A medição delegada responde a pergunta que alguém já soube fazer. Quando nin
 # 1. Remontar o index.html a partir do casco + 18 modulos
 node build.js          # gera o index.html (na raiz; caminho de saida em build-manifest.json)
 
-# 2. Harness: sintaxe (new Function) + teste DOM (jsdom) dos 17 nichos + checagens transversais
+# 2. Harness: sintaxe (new Function) + teste DOM (jsdom) dos 18 nichos + checagens transversais
 #    (se faltar a lib: npm install jsdom  — uma vez, na pasta do repo)
 node validate.js index.html
 ```
-Nunca publicar sem o harness passar em **17/17 nichos + todas as checagens, 0 erros**. (O harness chama `buildClaudeMd`/`buildInstr` direto via shim, trocando o `boot()`; o "Boot failed: DOMException" do boot real não é usado aqui.) O `build.js` é ferramenta **do lado do dev** — o usuário final continua recebendo **um `index.html` único**, sem build (decisão D-001).
+Nunca publicar sem o harness passar em **18/18 nichos + todas as checagens, 0 erros**. (O harness chama `buildClaudeMd`/`buildInstr` direto via shim, trocando o `boot()`; o "Boot failed: DOMException" do boot real não é usado aqui.) O `build.js` é ferramenta **do lado do dev** — o usuário final continua recebendo **um `index.html` único**, sem build (decisão D-001).
 
 ---
 

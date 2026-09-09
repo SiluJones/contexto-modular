@@ -1947,6 +1947,46 @@ check("C101 a exploracao tem gatilho (wo0112): o kit gera a skill sondar com as 
   return "ok (skill sondar " + s.length + " bytes)";
 });
 
+/* C102 (wo0117) — A prosa VIVA da casa nao pode declarar contagem de nicho nem caminho de
+   documento que o disco desmente. Nenhum check abria meta/CEREBRO.md nem BUILD.md: a passada
+   de higiene da wo0064 corrigiu CLAUDE/BUILD/CONTEXT e deixou o CORPO do CEREBRO em 17, e o
+   BUILD.md ficou contraditorio consigo mesmo (18/18 numa linha, 17/17 na outra) por 52 versoes.
+   O numero e DERIVADO do build-manifest, nunca escrito aqui — se um nicho entrar, o check
+   acompanha sozinho. */
+check("C102 a prosa viva da casa nao mente sobre contagem de nicho nem caminho de documento (wo0117)", () => {
+  const pathmod = require("path");
+  const raiz = pathmod.dirname(pathmod.resolve(path));
+  const ler = (rel) => {
+    const abs = pathmod.join(raiz, rel);
+    assert(fs.existsSync(abs), "arquivo do proprio repo ausente: " + rel);
+    return fs.readFileSync(abs, "utf8");
+  };
+  const manifesto = JSON.parse(ler("build-manifest.json"));
+  const N = (manifesto.modules || manifesto.modulos || []).length;
+  assert(N >= 2, "build-manifest.json nao declara a lista de modulos: sem ela o numero volta a ser escrito a mao");
+  const cerebro = ler("meta/CEREBRO.md"), build = ler("BUILD.md");
+
+  // (1) a contagem do harness e sempre N/N. N-1 e o numero de nichos de CONTEUDO (o construtor
+  //     nao conta), e essa e a UNICA forma em que N-1 aparece corretamente.
+  [["meta/CEREBRO.md", cerebro], ["BUILD.md", build]].forEach(([nome, txt]) => {
+    // A forma errada aparece de tres jeitos, e o "N-1/N-1" NEM SEMPRE traz a palavra "nichos"
+    // ao lado — no BUILD.md era so "harness 17/17". Exigir a palavra faria o check passar no
+    // exato caso que o motivou.
+    const errado = new RegExp("\\b" + (N-1) + "\\s*/\\s*" + (N-1) + "\\b|harness d[oe]s? " + (N-1) + " nichos?|jsdom\\) d[oe]s? " + (N-1) + " nichos?", "i");
+    assert(!errado.test(txt), nome + " declara " + (N-1) + " nichos onde o build-manifest tem " + N + ": a prosa viva ficou atras do disco");
+  });
+  assert(new RegExp("\\b" + N + "\\s*/\\s*" + N + "\\s*nichos?").test(cerebro), "meta/CEREBRO.md nao declara a regra de ouro " + N + "/" + N);
+  assert(new RegExp((N-1) + " nichos de conte").test(cerebro), "meta/CEREBRO.md perdeu a contagem de nichos de conteudo (" + (N-1) + " + 1 construtor)");
+
+  // (2) todo `meta/X.md` citado na tabela de documentos do CEREBRO existe nesse caminho.
+  //     Pega o caso da wo0117: NICHOS-CANDIDATOS.md mora na raiz e a tabela dizia meta/.
+  const citados = [...new Set((cerebro.match(/`meta\/[A-Za-z0-9_-]+\.md`/g) || []).map(s => s.replace(/`/g, "")))];
+  citados.forEach(rel => {
+    assert(fs.existsSync(pathmod.join(raiz, rel)), "meta/CEREBRO.md cita `" + rel + "`, que nao existe nesse caminho — documento citado no lugar errado e pior que nao citado");
+  });
+  return "ok (N=" + N + ", " + citados.length + " caminhos meta/ conferidos)";
+});
+
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {
   const RE=/CONTEXT|PROJETO|JOGO|OBRA|PRODUTO|CONCEITO|TEMA|SÉRIE|SERIE/i;
   const semAncora=[], choque=[];

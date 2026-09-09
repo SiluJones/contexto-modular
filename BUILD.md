@@ -31,7 +31,7 @@ node validate.js index.html   # 18/18 nichos, 0 erros (regra de ouro antes de pu
 O assistente edita os módulos, roda `build.js` + `validate.js`, e entrega o `index.html` já construído + os arquivos-fonte alterados. O usuário comita os dois; não precisa ter Node para publicar (só dropa o `index.html` na raiz, como sempre).
 
 ## Garantia de segurança
-Migração nicho a nicho com duas redes: **md5** do bundle == original, e **harness 17/17**. Anti-teste validado: módulo corrompido faz o md5 divergir e o harness reprovar.
+Migração nicho a nicho com duas redes: **md5** do bundle == original, e **harness 18/18**. Anti-teste validado: módulo corrompido faz o md5 divergir e o harness reprovar.
 
 ## Hook de pré-commit (i-N38)
 `.githooks/pre-commit` bloqueia qualquer commit que **toque o produto** (`src/`, `index.html`, `build.js`, `validate.js`, `build-manifest.json`) se o **build** ou o **harness** não estiverem verdes — e ainda garante que o `index.html` commitado é o do build atual (se estava desatualizado, ele reconstrói e pede pra você `git add index.html` e refazer o commit). Commits que só mexem em `meta/` ou docs passam direto.
