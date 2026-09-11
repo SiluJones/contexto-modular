@@ -1021,6 +1021,10 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116)
     ["push com resultado real",  /RESULTADO REAL/,                        ["wrap"]],
     ["relatorio se reabre",      /REABRA o relat[oó]rio/,            ["wrap"]],
     ["relatorio fora do repo",   /DENTRO do repo/,                        ["wrap"]],
+    // wo0119: o log do dia. A skill GERADA manda cria-lo desde sempre (C47); a INSTALADA nao
+    // mandava, e por isso logs/ parou em 2026-09-02 enquanto oito sessoes fechavam com /wrap.
+    // Era um vao na lista de clausulas: 24 delas, nenhuma sobre o log.
+    ["wrap: log do dia",         /logs\/AAAA-MM-DD\.md/,                  ["wrap"]],
     // wo0116 (i-N60): as clausulas das DUAS superficies novas. Escolhidas por MEDICAO — cada uma foi
     // conferida presente no gerado E no instalado antes de entrar. No CLAUDE.md, "config modelo x
     // esforco" e "additionalDirectories" ficaram DE FORA de proposito: existem no gerado e nao na
@@ -2007,7 +2011,43 @@ check("C103 o fim de linha do template tem lastro no repositorio (wo0118)", () =
   const skApply = ler(".claude/skills/apply-wo/SKILL.md");
   assert(/árvore de trabalho/.test(skApply) && /garantido pelo `\.gitattributes`/.test(skApply),
     "a skill apply-wo afirma o CRLF sem dizer que e da arvore de trabalho e de onde vem a garantia: o git responde i/lf e a skill diz CRLF, e as duas frases precisam concordar");
-  return "ok (eol do template com lastro em .gitattributes)";
+  // (2) wo0119: caminho de analise ou de WO citado em documento existe no disco. A lista de
+  //     perdoados NAO foi inventada: veio da varredura que a raia de EXECUCAO rodou no repo
+  //     inteiro (relatorio 260909-1231), porque o mount do chat chega achatado e sem
+  //     meta/analises/ — la, 21 caminhos apareciam como ausentes e os 21 eram falso positivo.
+  const PERDOADOS = new Set([
+    // Ausente e JA DOCUMENTADO: a D-087 registra em prosa que esta analise nao esta no repo
+    // e nao foi recriada (a regra dura proibe reconstruir analise por memoria).
+    "meta/analises/260718-ANALISE-i-N7-SDD-NICHOS-CODIGO.md",
+    // Citada no cabecalho da wo0067, escrita ANTES de a pasta meta/analises/ existir (wo0062).
+    "meta/analises/260728-ANALISE-bloco-gerenciado-vs-manual.md",
+    // Duas analises do KCM citadas por analises irmas (260811-*) e que nunca foram commitadas.
+    // Ficam perdoadas porque as citacoes vivem em registro imutavel; se um dia forem recriadas,
+    // basta remover daqui e o check volta a exigi-las.
+    "meta/analises/260810-ANALISE-fatiamento-no-formato-do-pacote.md",
+    "meta/analises/260810-ANALISE-o-instrumento-mede-o-que-e-facil.md",
+    // Arquivo renomeado; a citacao sobrevive so em WO historica, que nao se reescreve.
+    "meta/workorders/_GUIA.md"
+  ]);
+  // Placeholders de modelo (`AAMMDD-woNNNN-desc.md`, `_GUIA-doc-por-spec.md`) nao sao caminho:
+  // sao exemplo de nome dentro do proprio texto que ensina a nomear.
+  const ehPlaceholder = (s) => /AAMMDD|NNNN|<|assunto|doc-por-spec/.test(s);
+  const alvos = ["meta/CEREBRO.md","meta/DECISIONS.md","meta/IDEAS.md","meta/ROADMAP.md","meta/STATUS.md","CLAUDE.md"];
+  const faltando = [];
+  alvos.forEach(rel => {
+    const abs = pathmod.join(raiz, rel);
+    if(!fs.existsSync(abs)) return;
+    const txt = fs.readFileSync(abs, "utf8");
+    const cits = txt.match(/meta\/(?:analises|workorders)\/[0-9A-Za-z_.-]+\.md/g) || [];
+    [...new Set(cits)].forEach(c => {
+      if(ehPlaceholder(c) || PERDOADOS.has(c)) return;
+      if(!fs.existsSync(pathmod.join(raiz, c))) faltando.push(rel + " -> " + c);
+    });
+  });
+  assert(faltando.length === 0,
+    "caminho citado que nao existe no disco (caso historico fechado entra na allowlist COMENTADA do C103; se nao for, o arquivo deveria ter sido commitado): " + faltando.join(" | "));
+
+  return "ok (eol com lastro, " + PERDOADOS.size + " caminhos perdoados)";
 });
 
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {

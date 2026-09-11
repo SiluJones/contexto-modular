@@ -22,6 +22,13 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
   que a próxima sessão lê. E confira que nenhum relatório `.txt` ficou **DENTRO do repo**
   (`git status` o mostraria como não rastreado): o lugar dele é a pasta-pai, e relatório na raiz vira
   um `??` que ninguém identifica.
+- **Escreva o log do dia em `logs/AAAA-MM-DD.md`** (formato em `meta/LOG-TEMPLATE.md`). Se o arquivo
+  do dia **não existe, CRIE** — não regenerar é uma coisa, não criar é outra. Se já existe,
+  **acrescente** com `## Conversa N`: o nome é da data, não da conversa, e arquivo novo por conversa
+  quebra o nome. **Duas conversas no mesmo dia = o MESMO arquivo.** O log é para o humano ler depois,
+  e é a única peça deste ciclo que não sobe ao mount — o que não for escrito aqui só existe nos
+  relatórios da pasta-pai, que ninguém varre. Cinco linhas escritas hoje valem mais que uma página
+  reconstituída na semana que vem.
 - **Relate:** o que foi feito, os achados e desvios do texto literal da WO (âncora já aplicada,
   arquivo ausente, tarefa que já existia), os arquivos tocados e o resultado de `build`/`validate`.
 - Atualize `meta/STATUS.md` (append na «Última sessão»; ajuste a versão se mudou — NÃO reescreva o
