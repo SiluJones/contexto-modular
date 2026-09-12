@@ -1903,3 +1903,25 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Custo de teto: não se aplica** — nada entra em `buildInstr` nem no CEREBRO; o `C28` não se move. **A WO não toca `src/`**: `node build.js` → `index.html` **846.128 bytes**, idêntico; `node validate.js index.html` → **18/18 · 103/103 · 0 erros**, o `C43` com `[ok (instalado confere com o gerado em 25 clausulas)]` e o `C103` com `[ok (eol com lastro, 5 caminhos perdoados)]`. `git diff` = `validate.js` + `.claude/skills/wrap/SKILL.md` + `logs/2026-09-09.md` (novo) + a WO (nova), aditivo + a substituição prevista no `C103`, sem remoção acidental; `index.html` e `src/` não aparecem. Commit `65473bc`, empurrado (`344aa30..65473bc  main -> main`).
 
 **Desvio do texto literal da WO:** o log foi criado como `logs/2026-09-09.md` — a WO o nomeia assim em três lugares (título da Edição 4, checklist, bloco de `git add`) embora a aplicação tenha ocorrido em 2026-09-10; segui a WO ao pé da letra. Ao restaurar o par negativo 1 usei `git checkout -- .claude/skills/wrap/SKILL.md`, que reverteu junto a Edição 1; reapliquei-a (mesma âncora, mesmo texto) e o commit final a contém. **Registrado, fora de escopo (como a WO fixou):** reconstruir os logs de 03 a 08 dia a dia; a skill `wrap` **gerada** (já manda criar o log, já é conferida pelo `C47`); os 3 falsos-caminhos (placeholders, ignorados por forma); o nicho de teste `Fallout 76` que o dono subiu ao mount (frente própria, começa por leitura).
+
+---
+
+## D-149 — Nasce o nicho «companion de jogo», e a entrega que encolhe passa a declarar o que saiu
+
+**Data:** 2026-09-12 · **Base:** `meta/analises/260911-ANALISE-nicho-companion-de-jogo.md` (revisão 2) · **Decisão do dono** em `260911-2004.txt` e `260912-0842.txt`.
+
+**O caso.** O dono montou um projeto de guia/companion para o jogo Fallout 76 arrastando os templates do nicho **dev**, e o resultado ficou raso em quatro pontos que ele nomeou. A análise mediu o porquê.
+
+**O achado que decide, e não é sobre jogo:** em todos os 18 nichos do kit, **o dono é a fonte da verdade** — ele escreve o livro, projeta o jogo, escreve o código. O documento envelhece só quando ele muda de ideia. Num companion, **a verdade é externa e se move sozinha, em calendário alheio**: o Fallout 76 tem quatro atualizações grandes mais quatro patches de apoio por ano [medido por pesquisa: Fallout Wiki e falloutbuilds, 2026], e elas mexem em armadura, explosivos e balanceamento de build — exatamente o que um guia ensina. Daí decorre tudo o que falhou: `SPEC.md` não serve porque não há o que especificar (ficou com o modelo intacto, 888 bytes), o `CHANGELOG` registra o projeto quando o que importa é o artefato, e um guia envelhece **sem ninguém tocá-lo**.
+
+**Por que não refinar `game` ou `rpg`:** o nicho `game` **já tem `MECANICAS.md`** — e mesmo assim não serve, porque lá mecânicas são **decisão de design** (se documento e jogo divergem, o jogo está errado) e aqui são **fato externo observado** (se divergem, o documento está errado). É a mesma palavra com a direção da verdade invertida.
+
+**Decidido:**
+1. **Nicho novo**, eixo «companion de um artefato acompanhado que muda sozinho», **com o Fallout como caso único**. O projeto de hardware fica fora — [relatado pelo dono] será provavelmente outro nicho, e a versão 1 desta análise o tratava como segundo caso do mesmo nicho por **inferência não medida**, corrigida na revisão 2.
+2. **Nomes, decididos pelo dono:** `rotas/` (não `guias/`, `detonado/` nem `walkthrough/`), `ALVO.md`, `ESCOLHAS.md`, `PATCHES.md`, `mecanicas/` como **pasta** com `INDICE.md`. Saem `SPEC.md`, `HISTORY.md`, `CHANGELOG.md`, `CONTEXT.md` e `DECISIONS.md`.
+3. **`PATCHES.md` contra a recomendação inicial do chat**, e a razão está registrada: o argumento contra era que «patches» seria específico demais para um nicho genérico — **mas o eixo genérico caiu junto com a inferência do hardware**, e com o nicho firmado em jogo o vocabulário do domínio é o certo.
+4. **`rotas/` porque detonado e walkthrough prometem o que o jogo-serviço não tem:** os dois significam passo a passo para **vencer** o jogo [medido por pesquisa: Wikipédia, *video game walkthrough* e *strategy guide*], e o Fallout 76 não tem «vencer». `rotas/` serve aos dois casos — um single-player com fim escreve ali um detonado, que é uma rota com destino.
+5. **Os dois eixos ficam separados:** o **nome** carrega o assunto e o progresso (estável); o **conteúdo** carrega o carimbo do patch em que cada afirmação volátil foi verificada. Revalidar depois de um patch vira **busca por carimbos antigos**, não releitura — e o new game+ deixa de ser problema, porque só o `STATUS.md` reinicia.
+6. **A regra da entrega que encolhe** (Edições 1 e 2 desta WO) vale para os 18 nichos desde já, independente do nicho novo.
+
+**Pendente de desenho, e é o próximo passo:** o nicho **ainda não foi escrito**. E a `i-N14` («Aprendizado/Guia», Fase 7) é irmã dele — progresso, fonte externa verificada e glossário são três peças comuns —, então os dois têm de ser desenhados **olhando um para o outro**, sob pena de nascerem com 70% de vocabulário repetido.

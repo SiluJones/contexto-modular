@@ -573,6 +573,16 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 ## i-N58 — `modelo-em-espera` é a primeira natureza nova do pacote desde que o protocolo existe — ABERTA, gatilho de repetição (wo0080)
 **2026-08-03.** Até a wo0080 o pacote de update só conhecia duas naturezas — `template` (comparar e adotar é seguro) e `fusao` (propor merge, o usuário decide). O `_TEMPLATE.md` de `analises/` não coube em nenhuma das duas: mandar como `template` comum criaria a pasta `analises/` vazia em todo projeto receptor, violando a regra de que pasta nasce no primeiro uso. Saiu uma terceira natureza — `modelo-em-espera` (guarde; só coloque se a pasta já existir no destino). Outros artefatos podem caber na mesma natureza (modelo de log, modelo de spec, guia de pasta que ainda não nasceu). **Gatilho:** quando um segundo arquivo pedir a mesma natureza, revisar se o protocolo precisa de uma seção própria para ela em vez de uma linha na legenda.
 
+## i-N61 — Cinco nichos nunca foram rodados, e o catálogo não distingue desenho de uso real — ABERTA, sem gatilho de data
+
+**Relatado pelo dono em 2026-09-11**, ao decidir o nicho companion: `product`, `business`, `career`, `comics` e `cuisine` nunca foram usados em projeto real — do `cuisine` houve um teste único, não repetido. São cinco de dezoito.
+
+**O que isso custa, e não é teto:** medido em 2026-09-12, as Instruções vão de `narrative` 6.622/6.900 (96%) a `custom` 3.297 (48%), e **o que limita o kit é o nicho mais pesado, não a quantidade** — nicho parado não aperta ninguém. O custo é de **confiança**: um catálogo em que um terço nunca rodou é um catálogo que ninguém sabe se funciona, e cada regra nova é escrita para dezoito nichos assumindo que os dezoito se comportam como os testados.
+
+**Decisão do dono:** ficam registrados para teste futuro em projeto próprio, **sem marcação na interface** — nada de rótulo «não verificado» para o usuário final.
+
+*Sem gatilho de data de propósito: o gatilho é o dono rodar um piloto de qualquer um deles. **Se algum for rodado, a primeira sessão dele é a mais valiosa do kit** — é a única chance de ver um nicho encontrar a realidade pela primeira vez, e isso não se repete.*
+
 ## i-N60 — O modelo de WO instalado ficou 6.618 bytes atrás do gerado, e nenhum check olha para ele — IMPLEMENTADA na wo0116
 
 **Medido em 2026-09-03, em sandbox reconstruído do mount `3ea47ad`:** `meta/workorders/_TEMPLATE.md` tinha **5.020 bytes** contra **11.638** do que o kit gera. Faltava ali, entre outras coisas, o campo **«Âncoras lidas em» — que a skill `apply-wo` instalada usa para RECUSAR uma WO**. A casa mandava recusar um campo que o próprio modelo dela não pedia, e o arquivo ainda carregava uma linha revogada desde a v1.106.0 («a primeira sessão depois de uma transferência»). O conteúdo foi sincronizado no mesmo ciclo (wo0108).

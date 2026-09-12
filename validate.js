@@ -1788,6 +1788,9 @@ check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + for
   assert(/se há avulso no mount/.test(c) && /se algum arquivo foi entregue NESTE turno/.test(c),"o esqueleto do fecho perdeu as condicoes coladas nos rotulos (wo0111)");
   assert(/COPIÁVEL COMO ESTÁ/.test(c),"o item Proximo nao exige a frase copiavel sem lacuna para o usuario preencher");
   assert(/Esqueleto — copie e preencha/.test(c),"CEREBRO sem o esqueleto literal: o bloco volta a ser reconstituido de memoria");
+  // wo0120: entrega que encolhe. Um projeto ficou com quatro guias onde deviam existir dois, e os
+  // obsoletos eram os MAIORES: o substituto encolheu porque o conteudo migrou, e isso nao foi dito.
+  assert(/SUBSTITUI outro e ficou MENOR/.test(c), "o CEREBRO nao exige declarar o que saiu quando o arquivo entregue encolhe: sem isso, quem recebe guarda os dois");
   // wo0113: o RESUMO nas Instrucoes e lido a cada mensagem, e era ele que ensinava a forma errada.
   // Nenhuma variante de "se aplica/se aplicam" pode voltar ali, e o resumo nao lista os campos
   // separados por "·" — resumo que parece completo e o que impede alguem de ir ao CEREBRO.
