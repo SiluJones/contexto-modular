@@ -32,6 +32,10 @@
 # aberta NOMINALMENTE dentro do bloco, na MESMA leva em que ela nasce — regra sobre caminho que
 # ainda nao existe nao sobrevive la dentro. Ex.:
 #   !meta/analises/260801-ANALISE-<assunto>.md
+# Decidida MAS com frente aberta continua subindo: o eixo nao e o Status do cabecalho, e «a proxima
+# frente ainda depende dela?». A 260911 virou Decidida na wo0120 e saiu do mount enquanto a frente
+# que ela alimenta (escrever o nicho) nem tinha comecado — a conversa seguinte trabalhou sem ela.
+# A reinclusao nominal sai quando a frente fecha, nao quando o Status muda.
 # Logs diarios: o "agora" esta no meta/STATUS.md; o consolidado no meta/CHANGELOG.md.
 # index.html: e gerado (~230 KB) e o planejamento sempre ancora em src/index.template.html.
 #   (Para inspecionar o build DENTRO do Projeto, reinclua com !index.html dentro do bloco.)
@@ -44,6 +48,7 @@ meta/workorders/*
 !meta/workorders/_GUIA-doc-por-wo.md
 meta/analises/*
 !meta/analises/_TEMPLATE.md
+!meta/analises/260911-ANALISE-nicho-companion-de-jogo.md
 logs/*
 index.html
 INSTRUCOES-DO-PROJETO.md

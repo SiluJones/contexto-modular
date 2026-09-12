@@ -6,14 +6,14 @@
 
 ## O que é
 Um `index.html` único (vanilla JS, sem build no lado do usuário) que gera arquivos de
-contexto para Projetos do Claude.ai. 17 nichos de conteúdo + 1 construtor (`custom`) = **18**.
+contexto para Projetos do Claude.ai. 18 nichos de conteúdo + 1 construtor (`custom`) = **19**.
 O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html` à mão.**
 
 ## Estrutura
 - `src/index.template.html` — casco (UI + lógica, sem os dados dos nichos)
 - `src/niches/<id>.js` — os 18 módulos de nicho (os dados)
 - `build.js` + `build-manifest.json` — remontam o `index.html` na raiz
-- `validate.js` — harness (18 nichos + checagens transversais)
+- `validate.js` — harness (19 nichos + checagens transversais)
 - `meta/` — docs: `CEREBRO.md` (cérebro), `STATUS`, `DECISIONS`, `CHANGELOG`, `ROADMAP`, `IDEAS`, `CONTEXT`…
 - `meta/workorders/` — WOs (instrução de aplicação Chat→Code), `AAMMDD-woNNNN-desc.md`
 - `meta/analises/` — análise antes do compromisso, `AAMMDD-ANALISE-<assunto>.md` (só mudança não-trivial)
@@ -22,7 +22,7 @@ O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html`
 - **Montar:** `node build.js`  → gera o `index.html` na raiz
 - **Validar:** `node validate.js index.html`  (precisa de jsdom: `npm install jsdom` uma vez)
 - **Conferir uma WO antes de aplicar:** `/check-wo <arquivo>` (read-only) · **aplicar:** `/apply-wo <arquivo>` · **fechar:** `/wrap`
-- **Nunca** commitar sem o harness em **18/18 nichos, 0 erros** (o total de checagens sobe a cada check novo).
+- **Nunca** commitar sem o harness em **19/19 nichos, 0 erros** (o total de checagens sobe a cada check novo).
 
 ## Como fechar uma tarefa
 **Relate o trabalho** — o que fez, os achados e desvios do texto literal da WO, os arquivos tocados, o resultado de `build`/`validate` e o commit. **Não** use o bloco de fecho de turno do `meta/CEREBRO.md` (Próximo/Estado/Arquivar/Config/Handoff): aquele é da raia de **planejamento**. Relatório > formulário — o que importa aqui é o que só você viu ao executar.

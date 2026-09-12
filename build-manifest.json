@@ -44,6 +44,10 @@
       "file": "src/niches/game.js"
     },
     {
+      "marker": "//__KCU_NICHE:companion__//",
+      "file": "src/niches/companion.js"
+    },
+    {
       "marker": "//__KCU_NICHE:pixel__//",
       "file": "src/niches/pixel.js"
     },

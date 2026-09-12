@@ -41,9 +41,9 @@ catch(e){ console.error("FALHA AO CARREGAR:", e.message); process.exit(2); }
 const ids = Object.keys(T.NICHES);
 
 // ============ GLOBAIS ============
-check("G1 shim/__T populado, 14 chaves, 18 nichos", () => {
+check("G1 shim/__T populado, 14 chaves, 19 nichos", () => {
   assert(T && Object.keys(T).length >= 12, "poucas chaves no shim");
-  assert(ids.length === 18, "esperado 18 nichos, achou " + ids.length);
+  assert(ids.length === 19, "esperado 19 nichos, achou " + ids.length);
   return ids.length + " nichos";
 });
 
@@ -1912,7 +1912,7 @@ check("C11 universais leva C (spec0049): pedido composto + genero em rename + si
   assert(/Pedido composto/.test(md),"cadence sem 'pedido composto'");
   assert(/concordância \(gênero\/número\)/.test(md),"consistency sem regra de genero no rename");
   assert(/Sincronia com o CEREBRO/.test(md),"refino sem regra de sincronia Instr<->CEREBRO");
-  assert(T.NICHES && Object.keys(T.NICHES).length===18,"nichos != 18");
+  assert(T.NICHES && Object.keys(T.NICHES).length===19,"nichos != 19");
   return "ok";
 });
 
@@ -1972,10 +1972,14 @@ check("C102 a prosa viva da casa nao mente sobre contagem de nicho nem caminho d
   const N = (manifesto.modules || manifesto.modulos || []).length;
   assert(N >= 2, "build-manifest.json nao declara a lista de modulos: sem ela o numero volta a ser escrito a mao");
   const cerebro = ler("meta/CEREBRO.md"), build = ler("BUILD.md");
+  // wo0121: o 19o nicho revelou que a varredura cobria DOIS arquivos e a casa mentia em quatro
+  // outros (README «18 nichos», CLAUDE.md «= 18», CONTEXT «18/18» 4x, MAPA «os 18 nichos»). Sao
+  // arquivos que um humano le antes de qualquer coisa; ficarem atras do disco e o mesmo defeito.
+  const OUTROS = ["CLAUDE.md", "README.md", "meta/CONTEXT.md", "meta/MAPA.md"];
 
   // (1) a contagem do harness e sempre N/N. N-1 e o numero de nichos de CONTEUDO (o construtor
   //     nao conta), e essa e a UNICA forma em que N-1 aparece corretamente.
-  [["meta/CEREBRO.md", cerebro], ["BUILD.md", build]].forEach(([nome, txt]) => {
+  [["meta/CEREBRO.md", cerebro], ["BUILD.md", build]].concat(OUTROS.map(rel => [rel, ler(rel)])).forEach(([nome, txt]) => {
     // A forma errada aparece de tres jeitos, e o "N-1/N-1" NEM SEMPRE traz a palavra "nichos"
     // ao lado — no BUILD.md era so "harness 17/17". Exigir a palavra faria o check passar no
     // exato caso que o motivou.
@@ -2051,6 +2055,39 @@ check("C103 o fim de linha do template tem lastro no repositorio (wo0118)", () =
     "caminho citado que nao existe no disco (caso historico fechado entra na allowlist COMENTADA do C103; se nao for, o arquivo deveria ter sido commitado): " + faltando.join(" | "));
 
   return "ok (eol com lastro, " + PERDOADOS.size + " caminhos perdoados)";
+});
+
+check("C104 o companion nao perde o que o separa dos outros 18 (wo0121)", () => {
+  // O nicho nasce de uma inversao: nos 18, o dono e a fonte da verdade; aqui a verdade e externa e
+  // se move sozinha. As quatro regras abaixo sao o que traduz essa inversao em metodo — sem elas o
+  // nicho vira um `game` com outro nome. Regex sobre o GERADO (Instrucoes + CEREBRO), nao sobre o
+  // modulo: o que importa e o que chega ao usuario.
+  const n = T.normNiche(T.NICHES.companion);
+  assert(n, "nicho companion ausente");
+  const instr = T.buildInstr(n), cer = T.buildClaudeMd(n);
+  const doisLados = (re, msg) => assert(re.test(instr) && re.test(cer), msg);
+  // (1) o carimbo e de VERSAO e so na afirmacao volatil — carimbar tudo vira teatro (risco nomeado
+  //     na analise 260911); e a data sozinha nao diz se um patch matou a afirmacao.
+  doisLados(/carimbo de vers[aã]o|[Cc]arimba a vers[aã]o/i,
+    "o companion perdeu o carimbo de versao: sem ele a afirmacao volatil nao tem como ser revalidada por busca");
+  assert(/vol[aá]til/i.test(instr) && /geografia e roteiro/i.test(instr),
+    "o carimbo deixou de ser restrito a afirmacao volatil: carimbar tudo e teatro e o carimbo perde sentido");
+  // (2) os quatro estados de confianca — o que separa fato de opiniao de forum
+  doisLados(/fato · consenso · relato · n[aã]o confirmado/i,
+    "o companion perdeu os quatro estados (fato/consenso/relato/nao confirmado): a afirmacao volta a entrar sem classificacao");
+  // (3) o documento que responde «o que mudou desde a ultima vez» — o motivo de origem do nicho
+  doisLados(/PATCHES\.md/,
+    "o companion perdeu o PATCHES.md: volta a nao existir lugar para o que a atualizacao invalidou");
+  // (4) so o STATUS reinicia numa jogada nova — e o que faz o new game+ deixar de ser problema
+  doisLados(/[uú]nico que reinicia/i,
+    "o companion perdeu a regra de que so o STATUS reinicia: a segunda jogada volta a contaminar rota e mecanica");
+  // (5) a armadilha e entregavel, e sao DUAS especies (artefato x fonte) — no piloto elas vinham
+  //     misturadas e repetidas em tres arquivos
+  assert(/artefato e a da fonte|do artefato e a da fonte/i.test(instr),
+    "o companion perdeu a separacao das duas especies de armadilha (do artefato x da fonte)");
+  // (6) o doc-ancora e o ALVO, nao um CONTEXT herdado
+  assert(n.anchorDoc === "ALVO.md", "o companion perdeu o anchorDoc ALVO.md e volta a cair na heuristica de CONTEXT");
+  return "ok (companion: carimbo, 4 estados, PATCHES, STATUS reinicia, 2 armadilhas)";
 });
 
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {

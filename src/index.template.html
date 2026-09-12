@@ -68,6 +68,7 @@
   html[data-niche="business"]{ --amber:#d4b896; --amber-soft:#e6d4b8; --green:#94a3b8; --grad-a:rgba(212,184,150,.07); --grad-b:rgba(148,163,184,.04); }
   html[data-niche="career"]{ --amber:#4ade80; --amber-soft:#86efac; --green:#a3e635; --grad-a:rgba(74,222,128,.08); --grad-b:rgba(163,230,53,.05); }
   html[data-niche="game"]{ --amber:#34d399; --amber-soft:#6ee7b7; --green:#fbbf24; --grad-a:rgba(52,211,153,.08); --grad-b:rgba(251,191,36,.06); }
+  html[data-niche="companion"]{ --amber:#38bdf8; --amber-soft:#7dd3fc; --green:#facc15; --grad-a:rgba(56,189,248,.09); --grad-b:rgba(250,204,21,.05); }
   html[data-niche="pixel"]{ --amber:#a3e635; --amber-soft:#bef264; --green:#22d3ee; --grad-a:rgba(163,230,53,.08); --grad-b:rgba(34,211,238,.06); }
   html[data-niche="brainstorm"]{ --amber:#fbbf24; --amber-soft:#fcd34d; --green:#34d399; --grad-a:rgba(251,191,36,.09); --grad-b:rgba(52,211,153,.05); }
   html[data-niche="music"]{ --amber:#22d3ee; --amber-soft:#67e8f9; --green:#a78bfa; --grad-a:rgba(34,211,238,.09); --grad-b:rgba(167,139,250,.05); }
@@ -396,6 +397,15 @@
   .hero-research cite{display:block;margin-top:10px;font-style:normal;font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
   .hero-research cite::before{content:'— '}
   .hero-research .footnote{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:11px;color:var(--ink-faint)}
+  .hero-companion{background:#0b1016;border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden;font-family:var(--body)}
+  .hero-companion .ver{display:flex;align-items:center;gap:9px;padding:9px 16px;background:#111a22;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--amber)}
+  .hero-companion .ver span{margin-left:auto;color:var(--ink-faint)}
+  .hero-companion .rows{padding:16px 20px;display:grid;gap:9px}
+  .hero-companion .row{display:flex;align-items:baseline;gap:10px;font-size:13px;color:var(--ink-dim);line-height:1.6}
+  .hero-companion .row b{font-family:var(--mono);font-size:10px;color:var(--amber-soft);border:1px solid var(--line);border-radius:5px;padding:2px 6px;flex:none}
+  .hero-companion .row.old{color:var(--ink-faint);text-decoration:line-through;text-decoration-color:var(--line)}
+  .hero-companion .row.old b{color:var(--green);border-color:var(--green);text-decoration:none;display:inline-block}
+  .hero-companion .foot{padding:11px 20px;border-top:1px dashed var(--line);font-size:11px;color:var(--ink-faint);font-family:var(--mono)}
 
   /* Produto/UX: wireframe */
   .hero-product{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -1354,6 +1364,9 @@ const NICHES = {};
 /* ---------- GAME (Game Design) ---------- */
 //__KCU_NICHE:game__//
 
+/* ---------- COMPANION (Companion de Jogo) ---------- */
+//__KCU_NICHE:companion__//
+
 /* ---------- PIXEL (Pixel Art) ---------- */
 //__KCU_NICHE:pixel__//
 
@@ -1712,6 +1725,15 @@ function heroHTML(id){
         <div><span class="p">$</span> <span class="c">echo "Pronto pra começar"</span></div>
         <div><span class="cur"></span></div>
       </div>`;
+    case "companion": return `
+      <div class="ver">◆ ALVO · temporada 14 <span>PATCHES.md · 2 afirmacoes caidas</span></div>
+      <div class="rows">
+        <div class="row"><b>estavel</b> A rota das primeiras horas continua valendo — geografia nao leva carimbo.</div>
+        <div class="row"><b>v.14</b> Limite de venda diario: 1.400 por dia · fonte: wiki oficial.</div>
+        <div class="row old"><b>v.12</b> Bonus de dano por carta: +20% fixo.</div>
+        <div class="row"><b>a testar</b> Purificador vem liberado no inicio? — abrir o menu de construcao e olhar.</div>
+      </div>
+      <div class="foot">revalidar = procurar carimbo anterior a v.14, nao reler tudo</div>`;
     case "design": return `
       <div class="swatches">
         <div class="sw" style="background:#1E2A3B">#1E2A3B</div>

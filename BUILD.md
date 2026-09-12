@@ -3,7 +3,7 @@
 > Saída **byte-idêntica** à v1.33.0 (md5 `bacd3b24ef8b5a34ffe51418bf72a975`). O que muda é a **fonte**, não o produto.
 
 ## Ideia
-O `index.html` continua sendo **1 arquivo, sem build no lado do usuário, roda via `file://` e GitHub Pages**. A diferença é só no desenvolvimento: os dados dos 18 nichos saíram de dentro do HTML e viraram **módulos** em `src/niches/`. Um script de concatenação (`build.js`) costura tudo de volta no `index.html` final. Isso destrava i18n auditável depois (dicionários entram como módulos, nada de `fetch` — `file://` intacto).
+O `index.html` continua sendo **1 arquivo, sem build no lado do usuário, roda via `file://` e GitHub Pages**. A diferença é só no desenvolvimento: os dados dos 19 nichos saíram de dentro do HTML e viraram **módulos** em `src/niches/`. Um script de concatenação (`build.js`) costura tudo de volta no `index.html` final. Isso destrava i18n auditável depois (dicionários entram como módulos, nada de `fetch` — `file://` intacto).
 
 ## Layout
 ```
@@ -23,7 +23,7 @@ Para mudar um nicho, edita-se `src/niches/<id>.js` (e/ou o `src/index.template.h
 ## Reconstruir
 ```
 node build.js                 # gera index.html a partir do template + módulos
-node validate.js index.html   # 18/18 nichos, 0 erros (regra de ouro antes de publicar)
+node validate.js index.html   # 19/19 nichos, 0 erros (regra de ouro antes de publicar)
 ```
 `build.js` falha **ruidosamente** se faltar um módulo, se um marcador aparecer != 1 vez, ou se sobrar marcador não resolvido.
 
@@ -31,7 +31,7 @@ node validate.js index.html   # 18/18 nichos, 0 erros (regra de ouro antes de pu
 O assistente edita os módulos, roda `build.js` + `validate.js`, e entrega o `index.html` já construído + os arquivos-fonte alterados. O usuário comita os dois; não precisa ter Node para publicar (só dropa o `index.html` na raiz, como sempre).
 
 ## Garantia de segurança
-Migração nicho a nicho com duas redes: **md5** do bundle == original, e **harness 18/18**. Anti-teste validado: módulo corrompido faz o md5 divergir e o harness reprovar.
+Migração nicho a nicho com duas redes: **md5** do bundle == original, e **harness 19/19**. Anti-teste validado: módulo corrompido faz o md5 divergir e o harness reprovar.
 
 ## Hook de pré-commit (i-N38)
 `.githooks/pre-commit` bloqueia qualquer commit que **toque o produto** (`src/`, `index.html`, `build.js`, `validate.js`, `build-manifest.json`) se o **build** ou o **harness** não estiverem verdes — e ainda garante que o `index.html` commitado é o do build atual (se estava desatualizado, ele reconstrói e pede pra você `git add index.html` e refazer o commit). Commits que só mexem em `meta/` ou docs passam direto.

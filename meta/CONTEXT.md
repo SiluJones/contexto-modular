@@ -2,7 +2,7 @@
 
 > O **passaporte** do projeto. Leia primeiro. Estável — muda pouco.
 > Meta deste arquivo: uma conversa NOVA entende o projeto inteiro e navega o código sem precisar de mais nada.
-> Versão de referência: **v1.86.0** · produto = um `index.html` **gerado** de `src/` · **18/18 nichos, 0 erros** no harness (o total de checagens sobe a cada check novo — hoje 65).
+> Versão de referência: **v1.86.0** · produto = um `index.html` **gerado** de `src/` · **19/19 nichos, 0 erros** no harness (o total de checagens sobe a cada check novo — hoje 65).
 > (Histórico de versões fica no CHANGELOG; o "porquê" de cada escolha, no DECISIONS; o estado atual, no STATUS; ideias no IDEAS.)
 >
 > **Mudanças nesta revisão (v1.42.0):** migração de nomes de gestão para **inglês** concluída (Fases 0-3, D-035); **CEREBRO niche-aware** (D-036); **disciplina v2** completa — ASU por download + escopo código-vs-docs (D-037), config **mode-aware** (D-038), nome de spec no Modo Code (D-039), obediência feedback/nome-de-download (D-040), e **formato de nome `AAMMDD-…`** para spec/ASU (D-041). Nada de conteúdo removido.
@@ -33,7 +33,7 @@ O kit é dogfooding: este projeto é gerenciado pelos arquivos que ele prega —
 - `src/index.template.html` — o **casco** (HTML/CSS/JS comum, sem os dados de nicho).
 - `src/niches/<id>.js` — **18 módulos**, um por nicho (os objetos `NICHES.<id>`).
 - `build.js` — concatenador Node puro (lê `build-manifest.json`, falha ruidosa se faltar peça) que remonta o `index.html` **na raiz** do repo.
-- `validate.js` — o **harness** (jsdom): extrai o `<script>`, troca `boot()` por um shim, roda os 18 nichos e as checagens transversais (65 hoje; o número sobe a cada check novo). `npm install jsdom` se faltar (declarado em `package.json`).
+- `validate.js` — o **harness** (jsdom): extrai o `<script>`, troca `boot()` por um shim, roda os 19 nichos e as checagens transversais (65 hoje; o número sobe a cada check novo). `npm install jsdom` se faltar (declarado em `package.json`).
 - `build-manifest.json` — lista os módulos na ordem do build.
 - Saída byte-idêntica à v1.33.0 com tudo desligado — o produto continua 1 arquivo único.
 
@@ -74,7 +74,7 @@ Cada nicho tem 12 prompt cards: 6 universais (A-F, da fundação) + 6 específic
 
 ## 3. Método de validação (harness jsdom) — REGRA DE OURO
 
-**NUNCA publicar sem o harness verde (18/18 nichos, 0 erros JS).** O harness é `validate.js` (na raiz do repo agora; `node validate.js index.html`). Fluxo: editar `src/` → `node build.js` (remonta o `index.html` na raiz) → `node validate.js index.html`. As checagens cobrem D-018/022/028/029 (v1.29–v1.34) + integridade dos chips (FIX-004) + smoke/round-trip do HUB + round-trip do switch ASU (G5) + suíte de fluxos. O container PODE resetar entre sessões — recriar/`npm install jsdom` se sumir. Erros de clipboard/download no jsdom são falsos-positivos; "Boot failed: DOMException" é esperado.
+**NUNCA publicar sem o harness verde (19/19 nichos, 0 erros JS).** O harness é `validate.js` (na raiz do repo agora; `node validate.js index.html`). Fluxo: editar `src/` → `node build.js` (remonta o `index.html` na raiz) → `node validate.js index.html`. As checagens cobrem D-018/022/028/029 (v1.29–v1.34) + integridade dos chips (FIX-004) + smoke/round-trip do HUB + round-trip do switch ASU (G5) + suíte de fluxos. O container PODE resetar entre sessões — recriar/`npm install jsdom` se sumir. Erros de clipboard/download no jsdom são falsos-positivos; "Boot failed: DOMException" é esperado.
 
 ## 4. Os 13 princípios universais (`BEHAVIORS_BASE`)
 1. Analisa antes de aceitar. 2. Não desperdiça tokens (pedir arquivo necessário ≠ desperdício; inventar arquivo falso = pior). 3. Direto e objetivo. 4. Admite incerteza (pesquisa o que muda antes de afirmar). 5. Explica trade-offs. 6. Instruções sempre cuidadosas. 7. Estuda o domínio antes de estruturar. 8. Verifica antes de pedir arquivo; não inventa o que falta (inferência PEDIDA é ok; **STATUS é pista, não fato** — confere o estado real antes de repetir pendência e atualiza o STATUS se já resolvida). 9. Captura ideias. 10. Cadência (fases auditáveis; não fragmenta o trivial). 11. Usa a versão mais recente que tem; só pára e pede quando não tem a que a tarefa exige. 12. **Higiene ao encolher** arquivos-chave (não encolhe em silêncio; abre com «Mudanças nesta revisão»; confere que nada único se perdeu). 13. **Pesquisa para refinar E para refutar** (busca a experiência de outros, inclusive onde a ideia já falhou).
@@ -114,7 +114,7 @@ Por razões históricas, nichos existem em 2 formatos: `renderTopbar` aceita `op
 2. **`renderTopbar` lendo só `f.opts`** → selects vazios. Corrigido v1.11.1 (aceita os dois).
 3. **`default:"pt-BR"` no langSel** (LANGS usa "pt") → idioma em branco. Corrigido v1.11.1.
 4. **git commit com `\`** → QUEBRA no CMD do Windows. Commit em UMA LINHA, `-m` repetido, **mensagem SEM acentos**.
-5. **Publicar sem validar** → NUNCA sem o harness verde (18/18 nichos, 0 erros).
+5. **Publicar sem validar** → NUNCA sem o harness verde (19/19 nichos, 0 erros).
 6. **The Brazilian House** → projeto de DESIGN GRÁFICO, NÃO culinária.
 7. **Editar a partir de FRAGMENTOS (RAG, sem mount nem anexo)** → arquivo falso. Critério: "tenho o COMPLETO?". Sem mount nem anexo, PEÇO o arquivo; nunca reconstruo.
 8. **`toPreset` guardando `body` como função** → sumia. STRING (FIX-003). Nada no localStorage pode ser função.
@@ -164,5 +164,5 @@ aplicador recusa, ou traduz nome-plano para caminho errado. Coordenação agora 
 - Commit ao final no formato do SO (Windows: uma linha, `-m` repetido, SEM acentos), pronto para colar.
 - **Handoff ao final:** dizer, arquivo por arquivo, onde colocar cada um na próxima conversa.
 - **P12** e **P13** valem para o nosso próprio trabalho, não só para a ferramenta.
-- Respostas concisas, sem floreio/bajulação; não fragmentar o trivial; nunca publicar sem 18/18 nichos e 0 erros; não introduzir framework/build/deps **no lado do usuário** (o build do dev é Node, fora do produto).
+- Respostas concisas, sem floreio/bajulação; não fragmentar o trivial; nunca publicar sem 19/19 nichos e 0 erros; não introduzir framework/build/deps **no lado do usuário** (o build do dev é Node, fora do produto).
 - **Dois `CLAUDE.md` não se confundem:** `meta/CEREBRO.md` (o cérebro — como o assistente trabalha) ≠ `CLAUDE.md` na raiz (lido pelo Claude Code: build, convenções, aponta pro `meta/`).

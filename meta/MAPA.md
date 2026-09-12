@@ -40,7 +40,7 @@
 
 ---
 
-## Eixos para olhar os 18 nichos
+## Eixos para olhar os 19 nichos
 
 ### Eixo 1 — Profissional ↔ Criativo
 - **Profissional:** dev, design, client, marketing, research, product, business — trabalhos com cliente, decisão, prazo.

@@ -17,7 +17,7 @@ O kit te entrega o **andaime** para fazer essa separação no domínio que impor
 
 ---
 
-## 18 nichos
+## 19 nichos
 
 ### Core (8) — trabalho profissional
 | Nicho | Para |
@@ -31,10 +31,11 @@ O kit te entrega o **andaime** para fazer essa separação no domínio que impor
 | **Produto/UX** | PMs/POs/UX — discovery, especificação, decisões com racional. |
 | **Negócios** | Empreendedores/consultores — análise, plano, sem chavão de MBA. |
 
-### Criativo & Mídia (8) — exploração, jogos, narrativa
+### Criativo & Mídia (9) — exploração, jogos, narrativa
 | Nicho | Para |
 |---|---|
 | **Game Design** | Indies, solo devs — mecânicas, lore, produção em paralelo. |
+| **Companion de Jogo** | Jogadores — acompanhar um jogo que muda sozinho: rotas, mecânicas verificadas, o que cada patch invalidou. |
 | **Pixel Art** | Artistas — restrição é o estilo, paleta canônica, animação. |
 | **Brainstorm** | Pensamento exploratório, estratégia, ideação. *(É o nicho deste próprio kit.)* |
 | **Música** | Compositores/produtores — projeto sonoro, letras, harmonia. |

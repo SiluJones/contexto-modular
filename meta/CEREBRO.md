@@ -6,7 +6,7 @@
 
 > **Mudanças nesta revisão (wo0064):** bloco de fecho v2 — **Próximo** ganha a segunda parte («peça no próximo turno») e **Arquivar / Manter** vira lista; o dogfood do KCM, que tinha ficado na versão pré-wo0060 (ordem e rótulo antigos), foi alinhado ao produto. Higiene: `CLAUDE.md`, `BUILD.md` e `CONTEXT.md` corrigidos de 17→18 nichos e do vocabulário `spec`→WO. Nada removido. `KIT_VERSION 1.86.0`.
 >
-> **Mudanças nesta revisão (wo0063, D-097):** o **produto** passa a ensinar a análise antes do compromisso (seção nova no CEREBRO gerado dos 18 nichos + gatilho de 145 chars nas Instruções + linha na tabela de documentos), com pasta preguiçosa (`analises/` e `specs/` nascem no primeiro uso) e cláusula de adoção. Regra nova de higiene do FlatDrop: modelo/guia de pasta ignorada sempre reincluídos com `!`. Comandos `/check-wo`, `/apply-wo` e `/wrap` atualizados (vocabulário WO, caminho `src/`, 18/18). Nada removido. `KIT_VERSION 1.85.0`.
+> **Mudanças nesta revisão (wo0063, D-097):** o **produto** passa a ensinar a análise antes do compromisso (seção nova no CEREBRO gerado dos 18 nichos + gatilho de 145 chars nas Instruções + linha na tabela de documentos), com pasta preguiçosa (`analises/` e `specs/` nascem no primeiro uso) e cláusula de adoção. Regra nova de higiene do FlatDrop: modelo/guia de pasta ignorada sempre reincluídos com `!`. Comandos `/check-wo`, `/apply-wo` e `/wrap` atualizados (vocabulário WO, caminho `src/`, contagem do harness). Nada removido. `KIT_VERSION 1.85.0`.
 >
 > **Mudanças nesta revisão (doc-only, sem bump de `KIT_VERSION`):** a entrada de `meta/analises/` ganha a convenção de nome (`AAMMDD-ANALISE-<assunto>.md`) e o funil explícito — **análise → WO (`meta/workorders/`) → `DECISIONS.md`**, com a spec de feature (`meta/specs/`) reservada ao trabalho de produto. Modelo em `meta/analises/_TEMPLATE.md` ganha o texto-guia de cada seção (antes só os títulos). Nada removido. (wo0062, D-096)
 >
@@ -30,7 +30,7 @@
 
 ## O que é este projeto (resumo de 30 segundos)
 
-O **Kit de Contexto Universal** é um único `index.html` autossuficiente (vanilla JS, sem build, sem dependências exceto JSZip via CDN) que ajuda usuários a manter contexto entre conversas com o Claude. Ele tem 17 nichos de conteúdo + 1 construtor (`custom`, unificado: compõe a partir dos prontos OU monta do zero); cada nicho gera Instruções de Projeto, um CEREBRO.md (o "cérebro"; antes chamado CLAUDE.md), e templates `.md` para baixar.
+O **Kit de Contexto Universal** é um único `index.html` autossuficiente (vanilla JS, sem build, sem dependências exceto JSZip via CDN) que ajuda usuários a manter contexto entre conversas com o Claude. Ele tem 18 nichos de conteúdo + 1 construtor (`custom`, unificado: compõe a partir dos prontos OU monta do zero); cada nicho gera Instruções de Projeto, um CEREBRO.md (o "cérebro"; antes chamado CLAUDE.md), e templates `.md` para baixar.
 
 O projeto está em **refinamento área por área** após o MVP: a fundação (regras universais) e os nichos vão sendo aprofundados um a um, cada um com pesquisa do domínio + feedback de uso real.
 
@@ -181,7 +181,7 @@ Todo arquivo entregue para baixar usa o **nome real do repo**, nunca o nome **ac
 2. **Projetar**: cruzar feedback + pesquisa + o padrão de ouro do dev v2. Definir arquivos (núcleo enxuto + opcionais), behaviors específicos, prompts G+, gatilhos próprios.
 3. **Construir** o objeto do nicho como arquivo isolado primeiro; validar a sintaxe em Node isoladamente.
 4. **Editar** o módulo do nicho em `src/niches/<id>.js` (estrutura modular v1.33+; antes era splice por marcadores no `index.html`).
-5. **Validar**: `node build.js` (remonta o `index.html`) + `node validate.js index.html` — harness dos 18 nichos + checagens transversais (0 erros) + inspeção visual do nicho.
+5. **Validar**: `node build.js` (remonta o `index.html`) + `node validate.js index.html` — harness dos 19 nichos + checagens transversais (0 erros) + inspeção visual do nicho.
 6. **Publicar** o `index.html` remontado + atualizar `meta/CHANGELOG.md` (nova versão) e `meta/STATUS.md`.
 
 ### Padrão de qualidade de um nicho aprofundado
@@ -229,11 +229,11 @@ A medição delegada responde a pergunta que alguém já soube fazer. Quando nin
 # 1. Remontar o index.html a partir do casco + 18 modulos
 node build.js          # gera o index.html (na raiz; caminho de saida em build-manifest.json)
 
-# 2. Harness: sintaxe (new Function) + teste DOM (jsdom) dos 18 nichos + checagens transversais
+# 2. Harness: sintaxe (new Function) + teste DOM (jsdom) dos 19 nichos + checagens transversais
 #    (se faltar a lib: npm install jsdom  — uma vez, na pasta do repo)
 node validate.js index.html
 ```
-Nunca publicar sem o harness passar em **18/18 nichos + todas as checagens, 0 erros**. (O harness chama `buildClaudeMd`/`buildInstr` direto via shim, trocando o `boot()`; o "Boot failed: DOMException" do boot real não é usado aqui.) O `build.js` é ferramenta **do lado do dev** — o usuário final continua recebendo **um `index.html` único**, sem build (decisão D-001).
+Nunca publicar sem o harness passar em **19/19 nichos + todas as checagens, 0 erros**. (O harness chama `buildClaudeMd`/`buildInstr` direto via shim, trocando o `boot()`; o "Boot failed: DOMException" do boot real não é usado aqui.) O `build.js` é ferramenta **do lado do dev** — o usuário final continua recebendo **um `index.html` único**, sem build (decisão D-001).
 
 ---
 

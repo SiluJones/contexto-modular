@@ -1925,3 +1925,33 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 6. **A regra da entrega que encolhe** (Edições 1 e 2 desta WO) vale para os 18 nichos desde já, independente do nicho novo.
 
 **Pendente de desenho, e é o próximo passo:** o nicho **ainda não foi escrito**. E a `i-N14` («Aprendizado/Guia», Fase 7) é irmã dele — progresso, fonte externa verificada e glossário são três peças comuns —, então os dois têm de ser desenhados **olhando um para o outro**, sob pena de nascerem com 70% de vocabulário repetido.
+
+---
+
+## D-150 — O nicho «companion de jogo» e escrito, e o C102 alcanca a prosa que ninguem varria
+
+**Data:** 2026-09-12 · **Base:** `meta/analises/260911-ANALISE-nicho-companion-de-jogo.md` (revisao 2), a `D-149`, a leitura integral do piloto `Fallout 76` e os seis pontos de decisao aceitos pelo dono em 2026-09-12.
+
+**O que fecha.** A `D-149` decidiu o eixo e os nomes e deixou o nicho por escrever. Esta decisao registra o conteudo, que so foi possivel depois de ler o piloto por inteiro — leitura que a propria analise declarou nao ter feito.
+
+**O conjunto final, com as tres casas que a `D-149` nao tinha:**
+1. **`FONTES.md`** — a hierarquia de confianca do piloto morava no `CONTEXT.md`, que sai. A **regra** (fato · consenso · relato · nao confirmado; opiniao isolada nao vira fato; fonte agregada/gerada so quando bate com um degrau acima) fica no CEREBRO, porque e comportamento; a **lista** das fontes deste projeto, com o degrau de cada uma, vira documento.
+2. **`ARMADILHAS.md`** — casa unica, com as **duas especies separadas**: a do artefato (o jogo induz ao erro) e a da fonte (guia sem data, rascunho de outra sessao tratado como fato). No piloto elas apareciam repetidas em tres arquivos. Rota e mecanica apontam; nao reexplicam.
+3. **As ferramentas da comunidade** ficam no `GLOSSARY.md` com a propriedade que importa — **viva × estatica** —, junto do jargao.
+
+**As outras quatro decisoes do dono, com o que as sustenta:**
+4. **`ESCOLHAS.md` guarda so escolha dentro do jogo.** Das 5 entradas do `DECISIONS` do piloto, tres eram decisoes sobre a propria documentacao — e so existiram porque o nicho nao existia. Com a estrutura vindo pronta do kit, elas deixam de nascer; o desvio em relacao ao que o nicho manda vai para «Feedback para o Kit», no IDEAS, que e o que o piloto ja fazia.
+5. **Granularidade de `mecanicas/`:** um arquivo por **sistema que o proprio jogo trata como sistema** (tem menu, tela ou nome proprio). Piso: nao enche uma tela e nao tem ritmo proprio → vira secao do vizinho. Teto: quando duas partes do mesmo arquivo passam a ter versoes de verificacao muito diferentes, **racha ali**. A regra entra escrita no `INDICE.md` para o primeiro uso real poder contesta-la.
+6. **O carimbo mora em tres lugares, com papeis distintos:** sufixo `[v. <versao>]` **so na afirmacao volatil** (numero, percentual, disponibilidade, balanceamento — geografia e roteiro nao levam, sob pena de virar teatro); cabecalho do arquivo com a versao em que ele foi revisado por inteiro; e `PATCHES.md` com o que cada atualizacao invalidou e onde. Juntos, transformam revalidacao em **busca por carimbos velhos**, nao releitura. O piloto carimbava **data de pesquisa** e nunca versao — por isso nao conseguia responder «o que mudou desde a ultima vez», que foi a pergunta que originou tudo.
+
+**Duas peças que sairam da leitura e nao estavam na `D-149`:** o par **escopo permanente (conta) × escopo de rodada** — e ele que dissolve uma escolha mutuamente exclusiva, e refina a `D-149`, que dizia apenas «so o STATUS reinicia» — e a **pendencia de confirmacao com o teste escrito junto**, que e «quem tem o disco mede» com outro disco: quem tem o jogo aberto.
+
+**A `i-N14` («Aprendizado/Guia») e reescrita no mesmo ciclo,** porque como estava ela **continha** este caso: listava «platinar/100%-ar um jogo» ao lado de «aprender Aseprite, Unity, Excel». Ficam nichos **irmaos e separados**: no companion quem se move e o **artefato**; em aprendizado quem se move e o **leitor**. Carimbo de versao e `PATCHES.md` so fazem sentido no primeiro; progresso, fonte externa verificada e glossario sao as tres pecas comuns.
+
+**`C104` novo.** Sem ele nada ficaria vermelho se as regras que separam o nicho dos outros 18 sumissem — e o nicho viraria um `game` com outro nome. Ele confere no **gerado** (Instrucoes e CEREBRO): carimbo de versao restrito a afirmacao volatil, os quatro estados, o `PATCHES.md`, «so o STATUS reinicia», as duas especies de armadilha e o `anchorDoc:"ALVO.md"`. Tres pares negativos medidos.
+
+**`C102` estendido.** Ao subir o 19o nicho, `README.md`, `CLAUDE.md`, `meta/CONTEXT.md` e `meta/MAPA.md` continuavam declarando 18 — o mesmo defeito da wo0117, nos arquivos que o check nao abria. So a **lista de arquivos** cresce (de 2 para 6): ampliar o regex para «N-1 nichos» foi medido em sandbox e produz falso positivo na frase correta «18 nichos de conteudo + 1 construtor = 19».
+
+**Custo medido:** `index.html` 846.719 → 877.931 bytes; harness 18/18 · 103/103 → **19/19 · 105/105**; `C28` **inalterado** (o `companion` fecha em 6.433 nas Instrucoes e o gargalo continua sendo o `narrative`, 6.622) — confirma o que a analise previu: nicho novo e enxuto nao aperta o teto de ninguem.
+
+**Fica pendente:** o nicho tem **um caso** (o piloto) e **nenhum uso real** ainda. O primeiro projeto que rodar o companion e a primeira chance de ver o vocabulario encontrar a realidade — vale o mesmo que a `i-N61` diz dos cinco nichos nunca rodados.
