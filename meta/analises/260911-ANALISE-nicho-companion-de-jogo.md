@@ -1,8 +1,8 @@
 # ANÁLISE — O caso Fallout 76: por que nenhum nicho do kit serve, e o que isso revela
 
-> **Status:** Decidida (2026-09-12) — wo0120 registra a decisão e a regra da entrega que encolhe; **o nicho ainda não foi escrito**, próxima frente.
+> **Status:** Implementada (2026-09-12) — wo0120 registrou a decisão e a regra da entrega que encolhe; wo0121 escreveu o nicho (`src/niches/companion.js`, 19º nicho, guardado pelo `C104`).
 > **Data:** 260911 · **Base:** KCM v1.122.0, commit `4b6403e` · projeto `Fallout 76` no mount de 2026-09-10 20:19 (20 arquivos, **sem controle de versão**) · `Projeto-Fallout_76.md` com os 8 blocos da conversa de lá
-> **Vira:** nicho novo «companion de jogo» (ainda por escrever) + `i-N61` (cinco nichos nunca rodados) · **Decisão:** `D-149`
+> **Vira:** nicho «companion de jogo», escrito na wo0121 + `i-N61` (cinco nichos nunca rodados) · **Decisão:** `D-149` / `D-150`
 > **Origem:** o dono montou um projeto de guia/companion de jogo usando o nicho **dev** do KCM, apontou que o resultado ficou raso em vários pontos, e pediu que o caso fosse estudado a fundo.
 
 ---
