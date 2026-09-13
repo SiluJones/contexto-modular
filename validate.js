@@ -2068,8 +2068,16 @@ check("C104 o companion nao perde o que o separa dos outros 18 (wo0121)", () => 
   const doisLados = (re, msg) => assert(re.test(instr) && re.test(cer), msg);
   // (1) o carimbo e de VERSAO e so na afirmacao volatil — carimbar tudo vira teatro (risco nomeado
   //     na analise 260911); e a data sozinha nao diz se um patch matou a afirmacao.
-  doisLados(/carimbo de vers[aã]o|[Cc]arimba a vers[aã]o/i,
-    "o companion perdeu o carimbo de versao: sem ele a afirmacao volatil nao tem como ser revalidada por busca");
+  //     APERTADO na wo0122: a wo0121 exigia apenas que o CONCEITO aparecesse em algum lugar do gerado,
+  //     e o modulo o repete em tres pontos (rotulo do comportamento, convencao, prosa do ALVO). Editar
+  //     so a CONVENCAO — a linha normativa que chega as Instrucoes — para «data da pesquisa» deixava o
+  //     kit entregando duas regras OPOSTAS no mesmo documento, com o harness verde. Texto contraditorio
+  //     e pior que ausente: ninguem procura o que nao sabe que mudou. Medido na aplicacao da wo0121.
+  doisLados(/Afirma[cç][aã]o vol[aá]til leva carimbo de VERS[AÃ]O/,
+    "o companion perdeu a CONVENCAO do carimbo de versao (a linha normativa, nao a mencao solta): sem ela a afirmacao volatil nao tem como ser revalidada por busca");
+  const PORDATA = /leva a data|carimbo d[ae] data|data d[ae] pesquisa/i;
+  assert(!PORDATA.test(instr) && !PORDATA.test(cer),
+    "o enquadramento revogado voltou: o carimbo do companion e de VERSAO do artefato, nao de data de pesquisa — data diz a idade, so a versao diz se um patch matou a afirmacao");
   assert(/vol[aá]til/i.test(instr) && /geografia e roteiro/i.test(instr),
     "o carimbo deixou de ser restrito a afirmacao volatil: carimbar tudo e teatro e o carimbo perde sentido");
   // (2) os quatro estados de confianca — o que separa fato de opiniao de forum

@@ -1955,3 +1955,23 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Custo medido:** `index.html` 846.719 → 877.931 bytes; harness 18/18 · 103/103 → **19/19 · 105/105**; `C28` **inalterado** (o `companion` fecha em 6.433 nas Instrucoes e o gargalo continua sendo o `narrative`, 6.622) — confirma o que a analise previu: nicho novo e enxuto nao aperta o teto de ninguem.
 
 **Fica pendente:** o nicho tem **um caso** (o piloto) e **nenhum uso real** ainda. O primeiro projeto que rodar o companion e a primeira chance de ver o vocabulario encontrar a realidade — vale o mesmo que a `i-N61` diz dos cinco nichos nunca rodados.
+
+---
+
+## FIX-037 — O C104 pegava a ausência, não a contradição; e a i-N14 esbarra num choque de atores
+
+**Data:** 2026-09-12 · **Base:** os três achados do relatório de aplicação da wo0121 e a conferência de volta feita no chat contra o mount de `b03ea3e`.
+
+**O defeito.** O `C104`, como a wo0121 o escreveu, exigia apenas que o **conceito** «carimbo de versão» aparecesse em algum lugar do gerado. Medido: o módulo o repete em **três** pontos (rótulo do comportamento, convenção, prosa do `ALVO.md`). Editar **só a convenção** — a linha normativa que chega às Instruções — para «data da pesquisa» deixava o kit entregando **duas regras opostas no mesmo documento**, com o harness verde. Texto ausente alguém procura; texto contraditório ninguém procura, porque ninguém sabe que mudou.
+
+**A correção.** O `C104(1)` passa a ancorar na **frase da convenção** (`Afirmação volátil leva carimbo de VERSÃO`), exigida nos dois lados do gerado, e a **recusar o enquadramento revogado** (`leva a data` · `carimbo de data` · `data de pesquisa`) em qualquer lugar das Instruções ou do CEREBRO. Nenhum check novo: o `C104` fica mais exigente, não se multiplica (105 antes, 105 depois).
+
+**A lição de método, que vale além deste check.** Um check que exige o **conceito** tolera redundância e por isso tolera contradição; um que exige a **linha normativa** não tolera nenhuma das duas. Quando um módulo repete uma regra em mais de um lugar por razão editorial, a rede precisa apontar para o lugar que **manda**, não para qualquer um que **menciona**.
+
+**E a causa de segunda ordem, que é minha:** a wo0121 prescreveu um par negativo de **uma** edição quando o teste que de fato rodou em sandbox fizera **três** — escrito de memória, não copiado do comando executado. Par negativo que não reproduz no repo não é rede, e a WO passou a afirmar uma proteção que nunca foi verificada onde importa. **Regra:** o par negativo de uma WO é copiado do comando que rodou, nunca redigido depois.
+
+**Dois achados da mesma aplicação que NÃO viram conserto**, e ficam registrados para não voltarem como surpresa: (a) a wo0121 dizia «4 ocorrências em 3 linhas» no `meta/CONTEXT.md` quando são 4 em 4 — o que salvou foi a instrução literal ser «substituir todas as ocorrências», e a lição é que **instrução que não depende da contagem sobrevive à contagem errada**; (b) o checklist previu `grep "platinar/100%-ar um jogo" = 0` enquanto o texto que a própria WO manda inserir contém a frase entre guillemets — a citação **fica**, porque é ela que explica por que a ideia mudou; o número é que estava errado, e é exatamente a armadilha que o `_TEMPLATE__workorders.md` descreve.
+
+**Achado não previsto, sobre a `i-N14`.** Ela declara conectar a «Educação & Cursos» (NICHOS-CANDIDATOS, nº1), mas o nº1 é sobre **quem ensina** (*«professor, instrutor, criador de curso, palestrante»*; arquivos `CURSO`, `APRENDIZES`, `MÓDULOS`, `AVALIAÇÕES`) e a `i-N14` é sobre **quem aprende**. Atores opostos do mesmo evento — a mesma costura que a wo0121 desfez entre «platinar um jogo» e «aprender Aseprite». Registrado dentro da própria `i-N14` como pré-requisito de escrita, e não resolvido aqui: resolver muda os arquivos, não o rótulo, e pede análise.
+
+**A reinclusão nominal da análise 260911 sai do `.flatdropignore`** — a frente que ela alimentava (escrever o nicho) fechou em `f06cd9a`, e a regra escrita na wo0121 manda a exceção sair com a frente, não com o Status.

@@ -48,7 +48,6 @@ meta/workorders/*
 !meta/workorders/_GUIA-doc-por-wo.md
 meta/analises/*
 !meta/analises/_TEMPLATE.md
-!meta/analises/260911-ANALISE-nicho-companion-de-jogo.md
 logs/*
 index.html
 INSTRUCOES-DO-PROJETO.md
