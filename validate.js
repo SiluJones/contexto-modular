@@ -1048,6 +1048,12 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     // que todo nicho recebe, e nao ao molde, que so o modo Code entrega.
     ["CEREBRO: valor declara a fonte", /declara onde nasce/,          ["cerebro"]],
     ["CEREBRO: olho humano e do dono", /quem tem a TELA v/,           ["cerebro"]],
+    // wo0124: as duas do ritual (FK-AD, FK-AE). Mesmo alvo `cerebro`, pelo mesmo motivo da wo0123:
+    // a regra vale nos dois lados ou nao vale. A da arvore nasce de um erro MEDIDO na casa — o
+    // `meta/CEREBRO.md` afirmava que o mount chega «sem arvore de pastas» enquanto o `_TREE_*.md`
+    // estava no mount desde sempre, e uma conversa recusou trabalho por causa dessa frase.
+    ["CEREBRO: arvore por pergunta",   /inclusive o que NÃO subiu/,   ["cerebro"]],
+    ["CEREBRO: ressalva tem custo",    /é proibido para o que está no mount/, ["cerebro"]],
     ["CLAUDE.md: vocabulario de ato", /`apply` · `wrap` · `probe` · `explore`/, ["claudeMd"]],
     ["CLAUDE.md: relatorio em arquivo", /-code-/,                    ["claudeMd"]],
     ["CLAUDE.md: relatorio sem pedir", /sem pedir/i,                 ["claudeMd"]],

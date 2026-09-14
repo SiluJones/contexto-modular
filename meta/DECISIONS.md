@@ -1997,3 +1997,19 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Custo medido:** `index.html` 877.931 → 880.810 bytes; `CLAUSULAS` 25 → 31; superfícies do `C43` 4 → 5; **checagens 105 → 105** (cláusula não é check); `C28` inalterado. Três pares negativos, um por direção protegida.
 
 **Fica pendente:** as outras duas ausências da mesma leva — a `FK-AE` (nota no mount é insumo obrigatório, e «não verificado» é proibido para o que está no mount) e a `FK-AD` (manifesto e árvore descritos por PERGUNTA, não por nome) —, que são do ritual e não do molde, e por isso vão numa WO própria. E a `DEC-056` (revisão externa de WO irreversível) segue não decidida: é a única da lista que exige um segundo agente.
+
+---
+
+## D-152 — A árvore do FlatDrop entra por PERGUNTA, e «não verificado» passa a ter custo
+
+**Data:** 2026-09-14 · **Base:** `FK-AD` e `FK-AE` do projeto `Sand-Land-Map` (leva `7c2e8c5`), mais a frase falsa medida no próprio `meta/CEREBRO.md`.
+
+**As duas últimas ausências da leva do mapa, e elas têm a mesma forma: a ressalva que parece rigor.** Uma diz «não posso saber» sobre algo legível; a outra diz «não verificado» sobre algo que está no mount. Nenhuma acusa, porque as duas têm a cara de uma admissão honesta de incerteza — e por isso ninguém as contesta. Erro declarado é pior que erro cometido quando o que se declara é falso.
+
+**`FK-AD` — a árvore.** O mecanismo não é regra faltando, é **rotulagem**: tudo o que aponta para o FlatDrop fala de «manifesto» e de «nomes achatados», então a consulta responde sempre «o nome plano difere do real?» e nunca «o que existe lá?». A saída é descrever os **dois artefatos por pergunta** — o manifesto responde *«como se chama e onde fica»*, a árvore responde *«o que existe lá, inclusive o que NÃO subiu»*, nomeando um a um os arquivos que a lista de exclusão pulou. **O caso não é emprestado:** o `meta/CEREBRO.md` desta casa afirmava, no documento lido em toda sessão, que o mount chega *«sem árvore de pastas»* — falso desde que o FlatDrop passou a gerar o `_TREE_*.md`, que está no mount agora. A Edição 2 é correção de fato, não melhoria de redação.
+
+**`FK-AE` — a ressalva com custo.** O produto já catalogava **quatro** modos de falhar a releitura do mount e nenhum era o mais comum: **cumpri-la pela metade**, listando os avulsos e abrindo só os que parecem relevantes. O verbete diz por que isso não se pega sozinho — *o que se perde nessa triagem é exatamente o que não se sabia que era preciso* —, e o custo medido do outro lado foi uma ideia do dono parada quatro dias no mount e uma WO escrita sobre uma premissa que um relatório não lido já tinha desmentido. A cláusula separa **não verificado** (podia ler, não li — adiamento sem prazo) de **não legível por este canal** (não há como daqui), e exige que qualquer uma das duas declare **qual leitura** a sustenta.
+
+**Mecanismo de guarda: o mesmo da wo0123.** As duas entram no CEREBRO gerado e no `meta/CEREBRO.md` com o **mesmo texto**, e viram cláusulas de alvo `cerebro` na lista do `C43` — que confere gerado e instalado com um regex só. **Custo medido:** `index.html` 880.810 → 882.573 bytes; `CLAUSULAS` 31 → 33; **checagens 105 → 105**; `C28` inalterado. Dois pares negativos, um por direção.
+
+**Fecha a leva do mapa.** Das seis ausências de conteúdo achadas em 2026-09-13, quatro saíram na wo0123 e estas duas aqui. **Fica aberta uma só, e é decisão do dono, não item de backlog:** a `DEC-056` — ordem de serviço irreversível passa por revisão de quem não conhece o repositório —, que é a única da lista que exige um segundo agente. E fica o gesto que ninguém fez ainda: **dizer ao projeto do mapa que as seis foram recebidas**, porque a última carta de volta é de 2026-08-18 e de lá para cá eles escreveram dezessete verbetes no escuro.
