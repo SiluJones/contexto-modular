@@ -37,6 +37,20 @@
 > e diga qual dos dois voce previu. **Byte previsto carrega o fim de linha:** numero tirado de sandbox que grava
 > CRLF erra 1 byte por linha nova quando o arquivo do repo e LF. Confira com `git ls-files --eol` antes de prever
 > tamanho, ou preveja faixa em vez de numero exato.
+> **Checagem negativa vai ancorada em `^`.** Sem excecao. O texto que uma WO insere quase sempre cita a
+> frase que ela manda conferir, e a cita no MEIO de uma linha, dentro de uma explicacao: `grep -c "frase"`
+> = 0 falha ai, `grep -c "^frase"` nao. A regra em prosa do paragrafo acima ja existia e foi violada pela
+> WO que a leu — forma mecanica nao depende de o autor lembrar, no fim, do que escreveu no meio.
+> **Padrao de conferencia e RECORTADO, nunca redigitado.** O padrao do `grep` sai por copia do texto da
+> ancora citada nesta mesma WO; o comando do par negativo sai do comando que voce de fato rodou. Padrao
+> que voce nao consegue recortar de uma ancora e sinal de que a conferencia mede outra coisa. Ja custou
+> duas vezes: um `grep` pedido com dois espacos de indentacao tendo a linha certa, com quatro, citada
+> tres paragrafos acima; e um par negativo prescrito com uma edicao quando o teste que rodou fizera tres.
+> **Valor exigido por uma instrucao declara ONDE NASCE.** Numero: o comando que o produz. Contagem: a
+> unidade (linha ou ocorrencia). Carimbo de hora: `date +%y%m%d-%H%M`, rodado na hora. Resultado de
+> terceiro: de quem, e em que artefato ele ja esta escrito. Valor exigido sem fonte e preenchido por
+> deducao — e saida deduzida e indistinguivel de saida medida no ponto onde e ESCRITA; as duas so se
+> separam no ponto onde e USADA, tarde demais.
 > **Proximo comando:** o comando que o usuario deve rodar quando esta WO fechar em verde — ou apague a linha.
 > Ele vai CRU e SOZINHO na ultima linha do relatorio, sem frase de apresentacao: texto em volta esconde o comando.
 
@@ -142,10 +156,14 @@ inserir varias linhas, ancore em UMA so e diga se o texto novo entra antes ou de
 - [ ] **Teste manual que a validacao NAO cobre** (obrigatorio quando a WO toca dado carregado ou UI).
       Cada passo de verificacao — nao cada item deste checklist — traz os tres campos abaixo. Passo
       sem os tres nao esta pronto para ser escrito:
-      - **Quem roda:** por padrao, **quem aplica**. So vai ao dono o passo que toca **rede de terceiro**
-        ou **destroi algo fora do repositorio**; leitura e operacao reversivel na mesma maquina nunca sao
-        dele. E quando for dele, o passo chega com o comando exato, o que esperar ver, e o que fazer se
-        vier diferente — **nunca peca um resultado que voce nao ensinou a produzir.**
+      - **Quem roda:** por padrao, **quem aplica**. Vai ao dono o passo que toca **rede de terceiro**, o
+        que **destroi algo fora do repositorio**, e o que exige **olho humano num renderizador** — abrir a
+        tela e dizer o que aparece. O terceiro caso e excecao MEDIDA, nao preferencia: tres WOs seguidas
+        puseram «abra e confira» na lista de quem aplica e as tres voltaram sem conferencia, porque o
+        navegador nao estava conectado a sessao dele; no mesmo periodo, dois roteiros escritos para o dono
+        devolveram 27 itens respondidos. Fora esses tres casos, leitura e operacao reversivel na mesma
+        maquina nunca sao dele. E quando for dele, o passo chega com o comando exato, o que esperar ver, e
+        o que fazer se vier diferente — **nunca peca um resultado que voce nao ensinou a produzir.**
       - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo
         que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica
         que o programa continua rodando. E o unico campo que da trabalho, e e o que separa conferir de

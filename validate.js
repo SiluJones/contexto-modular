@@ -980,7 +980,7 @@ check("C44 sonda e exploracao como par (wo0088): tres propriedades, sem veredito
 /* C43 (wo0087) — O KCM e usuario do proprio kit. Este e o UNICO check que abre arquivo
    de `.claude/` DO REPOSITORIO: todos os outros testam o que o kit EMITE, e foi por isso
    que as skills instaladas ficaram tres versoes atras do gerado sem ninguem notar. */
-check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116): as QUATRO superficies instaladas do proprio KCM carregam as clausulas que o kit publica", () => {
+check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 e na wo0123): as CINCO superficies instaladas do proprio KCM carregam as clausulas que o kit publica", () => {
   const pathmod = require("path");
   const raiz = pathmod.dirname(pathmod.resolve(path));
   const lerRepo = (rel) => {
@@ -1036,6 +1036,18 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116)
     ["modelo de WO: fim de linha",    /git ls-files --eol/,          ["woTemplate"]],
     ["modelo de WO: medicao previa",  /Medicao previa/i,             ["woTemplate"]],
     ["modelo de WO: proximo comando", /Proximo comando/i,            ["woTemplate"]],
+    // wo0123: as quatro regras da leva do projeto do mapa (FK-AB, FK-V+FIX-037, FK-AF, DEC-045).
+    // Entram AQUI por construcao: esta tabela confere a MESMA clausula no molde que o kit GERA e no
+    // molde INSTALADO na casa, que e o par de dogfooding. Regra que entrasse so num dos dois lados
+    // voltaria a ser conselho que o outro lado nao segue.
+    ["modelo de WO: negativa em ^",   /ancorada em `\^`/,            ["woTemplate"]],
+    ["modelo de WO: recortado",       /RECORTADO, nunca redigitado/,  ["woTemplate"]],
+    ["modelo de WO: valor tem fonte", /declara ONDE NASCE/,           ["woTemplate"]],
+    ["modelo de WO: olho humano",     /olho humano num renderizador/, ["woTemplate"]],
+    // As duas que valem para os 19 nichos, nao so para quem escreve WO — por isso vao ao CEREBRO,
+    // que todo nicho recebe, e nao ao molde, que so o modo Code entrega.
+    ["CEREBRO: valor declara a fonte", /declara onde nasce/,          ["cerebro"]],
+    ["CEREBRO: olho humano e do dono", /quem tem a TELA v/,           ["cerebro"]],
     ["CLAUDE.md: vocabulario de ato", /`apply` · `wrap` · `probe` · `explore`/, ["claudeMd"]],
     ["CLAUDE.md: relatorio em arquivo", /-code-/,                    ["claudeMd"]],
     ["CLAUDE.md: relatorio sem pedir", /sem pedir/i,                 ["claudeMd"]],
@@ -1049,11 +1061,16 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116)
   // placeholders substituidos, com a regra presente nos dois lados).
   const instTpl = lerRepo("meta/workorders/_TEMPLATE.md");
   const instClaude = lerRepo("CLAUDE.md");
-  const gerado = { wrap: kit.wrap, applyWo: kit.applyWo, woTemplate: kit.woTemplate, claudeMd: kit.claudeMd };
-  const instalado = { wrap: instWrap, applyWo: instApply, woTemplate: instTpl, claudeMd: instClaude };
+  // wo0123: a QUINTA superficie. O par do CEREBRO gerado nunca foi o `CLAUDE.md` da casa (que e
+  // ponteiro curto e adaptado de proposito) e sim o `meta/CEREBRO.md` — e ele nunca foi comparado
+  // com nada. Entra com as duas clausulas desta leva, nao com as antigas: comparar retroativamente
+  // transformaria adaptacao legitima em falha, que e o erro que o comentario acima ja evitou uma vez.
+  const instCerebro = lerRepo("meta/CEREBRO.md");
+  const gerado = { wrap: kit.wrap, applyWo: kit.applyWo, woTemplate: kit.woTemplate, claudeMd: kit.claudeMd, cerebro: T.buildClaudeMd(T.normNiche(T.NICHES.dev)) };
+  const instalado = { wrap: instWrap, applyWo: instApply, woTemplate: instTpl, claudeMd: instClaude, cerebro: instCerebro };
   const CAMINHO = {
     wrap: ".claude/skills/wrap/SKILL.md", applyWo: ".claude/skills/apply-wo/SKILL.md",
-    woTemplate: "meta/workorders/_TEMPLATE.md", claudeMd: "CLAUDE.md"
+    woTemplate: "meta/workorders/_TEMPLATE.md", claudeMd: "CLAUDE.md", cerebro: "meta/CEREBRO.md"
   };
   CLAUSULAS.forEach(([nome, re, alvos]) => {
     alvos.forEach(alvo => {

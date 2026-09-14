@@ -1975,3 +1975,25 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Achado não previsto, sobre a `i-N14`.** Ela declara conectar a «Educação & Cursos» (NICHOS-CANDIDATOS, nº1), mas o nº1 é sobre **quem ensina** (*«professor, instrutor, criador de curso, palestrante»*; arquivos `CURSO`, `APRENDIZES`, `MÓDULOS`, `AVALIAÇÕES`) e a `i-N14` é sobre **quem aprende**. Atores opostos do mesmo evento — a mesma costura que a wo0121 desfez entre «platinar um jogo» e «aprender Aseprite». Registrado dentro da própria `i-N14` como pré-requisito de escrita, e não resolvido aqui: resolver muda os arquivos, não o rótulo, e pede análise.
 
 **A reinclusão nominal da análise 260911 sai do `.flatdropignore`** — a frente que ela alimentava (escrever o nicho) fechou em `f06cd9a`, e a regra escrita na wo0121 manda a exceção sair com a frente, não com o Status.
+
+---
+
+## D-151 — Quatro regras da leva do mapa entram nos dois lados, e o C43 ganha a quinta superfície
+
+**Data:** 2026-09-13 · **Base:** `FK-AB`, `FK-V`, `FK-AC`/`FK-AF` e `DEC-045` do projeto `Sand-Land-Map` (leva `7c2e8c5`), mais os casos medidos na aplicação das wo0121 e wo0122 deste repositório.
+
+**O que entra, e por quê cada uma tem caso e não só argumento.**
+1. **Checagem negativa ancorada em `^`, sem exceção** (`FK-AB`). A regra em prosa já existia no molde e foi violada pela WO que a leu: a wo0121 pediu `grep = 0` para uma frase que ela própria manda inserir. **Forma mecânica não depende de o autor lembrar, no fim, do que escreveu no meio** — e é essa a diferença entre uma regra que pega e um conselho que não pega.
+2. **Padrão de conferência é recortado, nunca redigitado** (`FK-V` + a lição da `FIX-037`). Duas ocorrências independentes: o `hero-companion` = 10 somado de cabeça quando o real é 9, e o par negativo prescrito com uma edição quando o teste rodado fizera três. Padrão que não se consegue recortar de uma âncora é sinal de que a conferência mede outra coisa.
+3. **Olho humano num renderizador é do dono** (`FK-AC`/`FK-AF`). **Não é ausência, é conflito:** o molde dizia «leitura e operação reversível na mesma máquina nunca são dele», e o campo mediu o contrário para este caso — três WOs pediram «abra e confira» à execução e as três voltaram sem conferência, contra 27 itens respondidos por dois roteiros escritos para o dono. A cláusula vira exceção **medida**, com o número junto, para não ser lida como preferência.
+4. **Valor exigido declara onde nasce** (`DEC-045`). Número → o comando. Contagem → a unidade. Hora → o comando de data. Resultado de terceiro → de quem, e em que arquivo já está. *«Saída deduzida é indistinguível de saída medida no ponto onde é escrita, e só se separa no ponto onde é usada»* — por isso a fonte vai na instrução, não na revisão.
+
+**Os dois lados, que é o ponto estrutural.** Cada regra entra **no mesmo texto** na casa e no que o kit entrega — `meta/workorders/_TEMPLATE.md` e `buildWoTemplate()`; `meta/CEREBRO.md` e o CEREBRO gerado —, e não em prosa paralela. Isso não é elegância: é o que permite à lista `CLAUSULAS` do `C43` conferir os dois lados **com um regex só**. Regra escrita de um lado só volta a ser conselho que o outro não segue, que é a doença que a `FK-T` descreveu.
+
+**A quinta superfície.** O `C43` comparava quatro instaladas, e o `meta/CEREBRO.md` — que é o par real do CEREBRO gerado — **nunca tinha sido comparado com nada**. Entra com as duas cláusulas desta leva e **não com as antigas**: comparar retroativamente transformaria adaptação legítima em falha, que é o erro que o próprio comentário do check já evitou uma vez, no `CLAUDE.md`.
+
+**Onde as regras NÃO entram, e é decisão.** Nenhuma das quatro vai às Instruções: medido, o combo tem 92 caracteres de folga e o incremento do modo Code tem 36. E as duas regras de WO (`^` e «recortado») ficam fora do CEREBRO gerado, porque o CEREBRO não ensina WO — o kit teria vocabulário sem uso para 18 dos 19 nichos.
+
+**Custo medido:** `index.html` 877.931 → 880.810 bytes; `CLAUSULAS` 25 → 31; superfícies do `C43` 4 → 5; **checagens 105 → 105** (cláusula não é check); `C28` inalterado. Três pares negativos, um por direção protegida.
+
+**Fica pendente:** as outras duas ausências da mesma leva — a `FK-AE` (nota no mount é insumo obrigatório, e «não verificado» é proibido para o que está no mount) e a `FK-AD` (manifesto e árvore descritos por PERGUNTA, não por nome) —, que são do ritual e não do molde, e por isso vão numa WO própria. E a `DEC-056` (revisão externa de WO irreversível) segue não decidida: é a única da lista que exige um segundo agente.
