@@ -2705,6 +2705,7 @@ function buildClaudeMd(niche){
   L.push("Todo turno de trabalho fecha assim. **Próximo** vem antes de um divisor; o resto vem depois dele. **Quando cada linha aparece é CONDIÇÃO OBSERVÁVEL, não julgamento** — o teste é «a condição é falsa?», nunca «me pareceu que não se aplicava»: **Próximo**, **Estado** e **Config recomendada** saem SEMPRE; **Arquivar / Manter** sai quando houver qualquer arquivo avulso no mount, e essa condição se verifica LISTANDO o mount, não lembrando; **Handoff** sai quando algum arquivo foi entregue NESTE turno. Fora disso a linha não existe — e linha sem conteúdo real não aparece: não escreva «nada a arquivar» nem invente handoff. **Reconstituir este bloco de memória é o que o faz derivar, e a variação é compensatória:** quem lembra do campo que esqueceu da última vez esquece outro — medido em quatro turnos seguidos, quatro formas diferentes, com o formato fixo escrito no arquivo lido a cada mensagem. Por isso o esqueleto abaixo existe: **copie e preencha, não reconstitua.**");
   L.push("1. **Próximo** — sempre presente, ANTES do divisor, em duas partes: **(a) Ação** — a próxima coisa concreta a fazer; **(b) Peça no próximo turno** — a frase que o usuário pode mandar de volta para retomar sem reconstruir contexto (a frente sugerida, já redigida como pedido). Não é lista de possibilidades: é uma ação e um pedido.");
   L.push("   **A frase só pode conter resultado que o usuário saiba produzir.** É aqui que a regra de instruções cuidadosas costuma falhar — não por má vontade, mas porque a linha é redigida rápido, no fim do turno, e ninguém a lê como um pedido de trabalho. Antes de escrevê-la, pergunte de quem é cada resultado que ela menciona: se é do executor, peça o **relatório** («aplicada, aqui o relatório»); se é de fato do usuário, o **comando exato, quem roda e o que esperar ver** vêm no MESMO turno, não na resposta seguinte. Pedir «o teste manual deu X» sem nunca ter dito que teste é esse, quem o roda e como se roda transfere ao usuário um trabalho que ele não sabe que tem — e ele descobre isso escrevendo de volta para perguntar. **E a frase tem de ser COPIÁVEL COMO ESTÁ:** sem lacuna, reticências ou campo para o usuário preencher com dado ou medição («medidas são ___», «(...)», «saída do X aqui»). O uso real é copiar, colar e no máximo acrescentar decisões por cima; uma lacuna converte um gesto de dois segundos em trabalho de coleta, e irrita mais do que um pedido grande e claro. **A única lacuna aceitável é escolher entre opções já enumeradas no próprio turno** («fase 3: vamos de A, B ou C?») — escolher é barato porque o material já está na tela, produzir dado não é. Pela mesma razão, a frase pode vir com a recomendação já dentro dela, para o usuário só confirmar ou trocar.");
+  L.push("   **E a frase vai sozinha: uma sentença citável, sem ressalva colada.** Qualquer coisa anexada a ela — «— inclusive os três comandos», «(e confirme se X)» — é lida como **segunda tarefa**, mesmo quando descreve trabalho que o executor já ia fazer por outro documento; o usuário não tem como saber que aquilo não é com ele. Se o executor precisa de algo a mais, isso mora **na WO**, onde ele lê. É o modo de falha oposto ao da lacuna, e mais difícil de ver porque parece zelo: a lacuna pede trabalho que falta, o apêndice entrega trabalho que sobra.");
   L.push("2. **Estado** — uma linha: onde o projeto está agora (versão/fase e, havendo harness, o resultado dos testes) e o commit, quando existir. **Todo dado desta linha vem de leitura feita NESTE turno.** Se você não verificou, escreva «não verificado nesta rodada» — é resposta de primeira classe, não falha. E distinga do caso em que o dado **não é legível por este canal**: num Projeto alimentado por cópia achatada não há `.git`, então nenhum `git log` existe para ler — aí **comece pelo manifesto**: se o **manifesto da cópia achatada já trouxer o estado do repo** (último commit, branch, limpo/sujo), o dado está lido — use-o e NÃO peça, registrando que é foto da hora da geração, não do turno. Só quando não houver manifesto, ou ele não trouxer o estado, escreva «commit não legível pelo mount» e **peça uma vez** (`git log -1 --oneline`), em vez de repetir a ressalva todo turno. **A ordem desta regra é a regra:** exceção escrita depois da instrução chega tarde, porque quem lê de cima para baixo já pediu. **A linha abre com o carimbo `Base:`** — qual arquivo foi lido NESTE turno para saber o estado, com a data que ELE declara e o commit/versão que ELE traz (`Base: _MANIFEST 02/08 23:40 · d423747 · 3 .txt`). Sem cópia achatada, use o que houver: o doc de estado do projeto e a data dele. O carimbo existe porque campo de verificação genérico é inauditável — quem lê não sabe se você leu ou lembrou —, enquanto uma data que o próprio usuário gerou ele confere num olhar. Carimbo inventado é mentira detectável; campo vago não é. «Não verifiquei» é desleixo; «não dá para ler daqui» é fato, e o remédio de cada um é diferente. **O mount não carrega idade por arquivo** — medido: os arquivos chegam com a data zerada, e a única idade legível é a do manifesto, que vale para o lote inteiro e não diz qual arquivo mudou. Logo, «isto mudou desde que li?» é conferência de CONTEÚDO (uma frase-chave, um `grep`), nunca de data. Campo obrigatório sem dado fresco puxa a resposta da memória, e logo depois de entregar um trabalho a memória é a *expectativa* de que ele foi aplicado: previsão vestida de observação.");
   L.push("3. **Arquivar / Manter** — só se houver notas avulsas no mount. **Em lista**, como a Config e o Handoff: uma linha **Arquivar:** com os nomes já absorvidos e uma linha **Manter:** com os que seguem vivos, cada uma com o motivo em poucas palavras. **A lista é EXAUSTIVA:** todo arquivo avulso do mount entra numa das duas. Omissão é ambígua e o leitor não tem como desfazer a ambiguidade — pode significar «já extraí tudo» ou «nunca abri», e as duas pedem ações opostas. **«Arquivar» é afirmação forte:** só entra o que você leu INTEIRO naquele turno; na dúvida, «Manter» com o motivo. **E «Manter: não li» tem prazo** — fila indefinida não é cuidado: um relatório ficou quatro turnos nessa fila carregando a armadilha que voltou a acontecer duas vezes enquanto ele esperava. **Monte a lista a partir de uma LISTAGEM do mount, nunca da memória do que chegou neste turno** — é a diferença entre um comando e uma lembrança, e a lembrança só devolve o que é novo. **Terceiro estado, obrigatório:** arquivo já arquivado em turno anterior **continua no mount**, então continua na lista — numa terceira linha **Já arquivado:**, só os nomes, sem motivo, uma linha. Sem esse estado a lista não tem saída: ou cresce para sempre, ou os itens caem em silêncio — e cair em silêncio foi o que aconteceu cinco turnos depois de esta regra ser escrita, com quem a escreveu. Nome por nome — e não espere que eu pergunte.");
   L.push("4. **Config recomendada** — em lista, **uma linha por raia**, cada uma nomeando a raia, o tipo de modelo e o nível de esforço (e o terminal, se a raia usar). Só as raias que este projeto realmente usa. Nunca afirme saber a config atual — recomende pela tarefa que vem.");
@@ -3270,6 +3271,13 @@ function buildWoTemplate(){
     "> frase que ela manda conferir, e a cita no MEIO de uma linha, dentro de uma explicacao: `grep -c \"frase\"`",
     "> = 0 falha ai, `grep -c \"^frase\"` nao. A regra em prosa do paragrafo acima ja existia e foi violada pela",
     "> WO que a leu — forma mecanica nao depende de o autor lembrar, no fim, do que escreveu no meio.",
+    "> **Quando o `grep` nao serve, diga que a checagem e DE LEITURA.** Prosa quebra em varias linhas, e uma",
+    "> frase que a propria WO escreveu em duas nao e encontrada inteira por padrao nenhum de linha unica —",
+    "> **ja derrubou um check deste repositorio**, que exigia uma frase contigua e a recebeu partida. As",
+    "> saidas, nesta ordem: escolher como padrao um **trecho curto que caiba numa linha** e que o texto novo",
+    "> nao cite; ou, nao havendo, **escrever que aquele item e de leitura** — «abra o arquivo e confira que o",
+    "> paragrafo X esta inteiro» —, porque a lista de conferencia tem o direito de mandar abrir o arquivo.",
+    "> Inventar um padrao que nao casa e pior que admitir que ali nao cabe `grep`.",
     "> **Padrao de conferencia e RECORTADO, nunca redigitado.** O padrao do `grep` sai por copia do texto da",
     "> ancora citada nesta mesma WO; o comando do par negativo sai do comando que voce de fato rodou. Padrao",
     "> que voce nao consegue recortar de uma ancora e sinal de que a conferencia mede outra coisa. Ja custou",
@@ -3316,6 +3324,11 @@ function buildWoTemplate(){
     "- **Declare quantos.** Escreva o numero de pontos encontrados — \"onze lugares montam este caminho\" — para",
     "  que quem aplica possa **contestar a contagem antes de agir**. Ja foi assim que um inventario truncado foi",
     "  pego: a WO dizia onze, o executor achou doze. A contagem e a rede; a proibicao do `head` sozinha nao pega.",
+    "- **E declare de QUE.** Numero de cobertura sem a unidade DENTRO dele nao e contestavel: «20/20",
+    "  comparados» media arquivos contra um pacote, e a conclusao «encerrado» falava do repositorio — duas",
+    "  coberturas diferentes, e a segunda nunca foi declarada. Escreva «20/20 arquivos do pacote comparados;",
+    "  varredura do repo: pendente», nao «20/20». A pergunta «quantos?» so e respondivel junto com «de que?»,",
+    "  e **no fim de um trabalho longo a segunda metade e a que se perde**.",
     "",
     "---",
     "",
@@ -3335,7 +3348,13 @@ function buildWoTemplate(){
     "",
     "> Variantes — use a que couber, sempre com a ancora acima: **Inserir IMEDIATAMENTE APOS** ·",
     "> **Inserir IMEDIATAMENTE ANTES** · **Remover o bloco inteiro** · **Criar arquivo novo** (sem ancora;",
-    "> diga o que fazer se ele ja existir).",
+    "> diga o que fazer se ele ja existir) · **MOVER**.",
+    "> **Mover e a edicao mais fragil que existe numa WO de doc, porque tem DUAS METADES:** a que escreve no",
+    "> destino e a que remove a estrutura na origem. A ancora precisa conter **as duas**, e a que falta e",
+    "> sempre a de apagar — ancorar so no ponto de insercao descreve metade da operacao e, ao pe da letra,",
+    "> produz conteudo duplicado ou duas estruturas aninhadas com o texto antigo preso entre elas. Se voce",
+    "> nao consegue ancorar a remocao, **quebre em duas edicoes numeradas** — remover primeiro, inserir",
+    "> depois — e diga na WO que sao as duas metades da mesma operacao.",
     "",
     "## Edicao 2 — `caminho/real/do/arquivo.ext` · [...]",
     "",
@@ -3405,6 +3424,13 @@ function buildWoTemplate(){
     "        leitura e operacao reversivel na mesma maquina nunca sao dele. E quando for dele, o passo chega com",
     "        o comando exato, o que esperar ver, e o que fazer se vier diferente —",
     "        **nunca peca um resultado que voce nao ensinou a produzir.**",
+    "      - **Quando o passo e do dono, ele nao e item de checklist: e ROTEIRO, e roteiro tem forma.** Sai da",
+    "        lista de quem aplica e vai para o fecho do chat, como bloco proprio com quatro linhas de",
+    "        cabecalho — **Para** (quem, e com o que aberto) · **Por que** (o que a automacao nao cobriu,",
+    "        nomeando a WO) · **Formato** (cada item diz **o que se ve quando esta certo**, com numero quando",
+    "        existe numero) · **Tempo** (quanto dura num passe so) — e uma secao final **«o que este roteiro",
+    "        NAO testa»**, que e o que impede «passou tudo» de ser lido como «esta tudo certo». Forma medida",
+    "        em campo: 27 itens respondidos em dois roteiros, contra zero em tres tentativas sem forma.",
     "      - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo",
     "        que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica",
     "        que o programa continua rodando. E o unico campo que da trabalho, e e o que separa conferir de",

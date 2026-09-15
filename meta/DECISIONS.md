@@ -2035,3 +2035,26 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Custo medido:** `index.html` 882.573 → 884.945 bytes; `CLAUSULAS` 33 → 35; **checagens 105 → 105**; `C28` inalterado; `HYGIENE_RULES` 21+1 → 22+0.
 
 **Fecha a extração da leva do mapa.** Das oito ausências (seis da triagem de 13/09 e estas duas), todas entraram. Segue aberta uma só, e é decisão do dono: a **`DEC-056`** — ordem de serviço irreversível passa por revisão de quem não conhece o repositório —, a única que exige um segundo agente. **A carta de volta ao `Sand-Land-Map` sai depois desta WO**, não antes: escrever antes de terminar a extração faria a carta descrever um estado que já mudou.
+
+---
+
+## D-154 — O material NÃO curado do vizinho rendeu mais que a seção de feedback, e o roteiro vira tipo
+
+**Data:** 2026-09-15 · **Base:** `DEC-048`, `DEC-052`, o `ROTEIRO-conferencia-humana` de 29/08, a técnica do `grep` em prosa e a cláusula do fecho do `Sand-Land-Map` (leva `97e4ed5`).
+
+**O achado de método, e ele vale mais que as cinco regras.** Nenhuma das cinco estava na seção «Feedback para o Kit» deles. Feedback curado é o que o remetente **sabe** que é transferível; o que ele guardou como decisão local costuma ser mais afiado, porque nasceu de um caso que doeu — e ninguém o oferece, porque parece específico demais. **Medido: a seção curada rendeu seis itens em dois dias de leitura; a varredura do material não curado rendeu cinco em um turno.** Regra: quando um projeto vizinho tem acervo, o `DECISIONS` e as «técnicas específicas` dele valem tanto quanto a seção que ele escreveu para nós.
+
+**O que entrou.**
+1. **`DEC-048` — a unidade DENTRO do número de cobertura.** O nosso Inventário mandava «declare quantos» e parava no numerador. «20/20 comparados» media arquivos contra um pacote enquanto a conclusão falava do repositório: duas coberturas, e a segunda nunca declarada. *A pergunta «quantos?» só é respondível junto com «de quê?», e no fim de um trabalho longo a segunda metade é a que se perde.*
+2. **`DEC-052` — a variante MOVER, com as duas metades.** A wo0125 adotou a metade proibitiva da `FK-S` (aviso é dívida) e deixou a construtiva: toda edição que move tem a metade que escreve e a metade que apaga, e a âncora precisa conter as duas. Sem isso, ao pé da letra, o resultado é conteúdo duplicado ou estruturas aninhadas. **Caso do próprio turno em que a regra foi escrita:** um comando do sandbox abriu o template para escrita antes de calcular o texto, a expressão falhou no meio e o arquivo ficou vazio — mesma forma, primeira metade destruindo antes de a segunda existir.
+3. **O roteiro vira tipo com forma.** O kit **exigia** o artefato desde a wo0123 e nunca o definiu: zero ocorrências de «roteiro» no `GLOSSARY.md` e no molde. Agora tem forma — **Para · Por que · Formato · Tempo** e uma seção **«o que este roteiro NÃO testa»** —, medida em campo: 27 itens respondidos em dois roteiros contra zero em três tentativas sem forma.
+4. **A válvula da checagem de leitura.** O `grep` falha de dois jeitos previsíveis em prosa; o `^` da wo0123 cobre o primeiro (texto novo cita o velho) e não o segundo (**prosa quebra em várias linhas**), que derrubou o `C42` na wo0125. A saída escrita: trecho curto que caiba numa linha; e, não havendo, **declarar o item como de leitura** — a lista de conferência tem o direito de mandar abrir o arquivo. *Inventar um padrão que não casa é pior que admitir que ali não cabe `grep`.*
+5. **«A frase vai sozinha».** A `DEC-044` — o «Próximo» diz de quem é o resultado — **já estava no kit**, nos dois lados, e uma varredura anterior a declarou ausente porque grepou a **frase** e não o **fato**, que é o que o próprio Inventário proíbe. O que faltava é o modo de falha **oposto ao da lacuna**: a ressalva colada. «— inclusive os três comandos» é lida como segunda tarefa mesmo descrevendo trabalho que o executor já ia fazer; a lacuna pede trabalho que falta, o apêndice entrega trabalho que sobra, e o apêndice é mais difícil de ver porque parece zelo.
+
+**Uma assimetria medida, e ela corta nos dois sentidos.** O CEREBRO deles está **atrás** do nosso na estrutura do fecho — não tem o esqueleto «copie e preencha», nem o `Arquivar / Manter` em três estados, nem a regra de que cada linha é condição observável — e **à frente** na cláusula do Próximo. Projeto vizinho desatualizado não é projeto vizinho sem o que ensinar.
+
+**O bloco de fecho continua sendo o único texto normativo do kit sem rede.** Nenhum check olha um turno de chat; o que segura é o esqueleto. Por isso esta WO acrescenta ali **uma** frase e para — encostar no fecho é barato de fazer e caro de errar.
+
+**Custo medido:** `index.html` 884.945 → 888.250 bytes; `CLAUSULAS` 35 → 40; **checagens 105 → 105**; `C28` inalterado. Três pares negativos, um por superfície.
+
+**Fica pendente:** as 19 análises e a spec deles, que são de domínio e **não** foram varridas — cobertura declarada como pendente, não como concluída. E a **`DEC-056`** (revisão de WO por quem não conhece o repositório), que segue sendo decisão do dono.

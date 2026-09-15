@@ -52,6 +52,13 @@
 > frase que ela manda conferir, e a cita no MEIO de uma linha, dentro de uma explicacao: `grep -c "frase"`
 > = 0 falha ai, `grep -c "^frase"` nao. A regra em prosa do paragrafo acima ja existia e foi violada pela
 > WO que a leu — forma mecanica nao depende de o autor lembrar, no fim, do que escreveu no meio.
+> **Quando o `grep` nao serve, diga que a checagem e DE LEITURA.** Prosa quebra em varias linhas, e uma
+> frase que a propria WO escreveu em duas nao e encontrada inteira por padrao nenhum de linha unica —
+> **ja derrubou um check deste repositorio**, que exigia uma frase contigua e a recebeu partida. As
+> saidas, nesta ordem: escolher como padrao um **trecho curto que caiba numa linha** e que o texto novo
+> nao cite; ou, nao havendo, **escrever que aquele item e de leitura** — «abra o arquivo e confira que o
+> paragrafo X esta inteiro» —, porque a lista de conferencia tem o direito de mandar abrir o arquivo.
+> Inventar um padrao que nao casa e pior que admitir que ali nao cabe `grep`.
 > **Padrao de conferencia e RECORTADO, nunca redigitado.** O padrao do `grep` sai por copia do texto da
 > ancora citada nesta mesma WO; o comando do par negativo sai do comando que voce de fato rodou. Padrao
 > que voce nao consegue recortar de uma ancora e sinal de que a conferencia mede outra coisa. Ja custou
@@ -98,6 +105,11 @@ fica invisivel dos dois lados, porque a correcao e a conferencia saem do mesmo i
 - **Declare quantos.** Escreva o numero de pontos encontrados — "onze lugares montam este caminho" — para
   que quem aplica possa **contestar a contagem antes de agir**. Ja foi assim que um inventario truncado foi
   pego: a WO dizia onze, o executor achou doze. A contagem e a rede; a proibicao do `head` sozinha nao pega.
+- **E declare de QUE.** Numero de cobertura sem a unidade DENTRO dele nao e contestavel: «20/20
+  comparados» media arquivos contra um pacote, e a conclusao «encerrado» falava do repositorio — duas
+  coberturas diferentes, e a segunda nunca foi declarada. Escreva «20/20 arquivos do pacote comparados;
+  varredura do repo: pendente», nao «20/20». A pergunta «quantos?» so e respondivel junto com «de que?»,
+  e **no fim de um trabalho longo a segunda metade e a que se perde**.
 
 ---
 
@@ -117,7 +129,13 @@ fica invisivel dos dois lados, porque a correcao e a conferencia saem do mesmo i
 
 > Variantes — use a que couber, sempre com a ancora acima: **Inserir IMEDIATAMENTE APOS** ·
 > **Inserir IMEDIATAMENTE ANTES** · **Remover o bloco inteiro** · **Criar arquivo novo** (sem ancora;
-> diga o que fazer se ele ja existir).
+> diga o que fazer se ele ja existir) · **MOVER**.
+> **Mover e a edicao mais fragil que existe numa WO de doc, porque tem DUAS METADES:** a que escreve no
+> destino e a que remove a estrutura na origem. A ancora precisa conter **as duas**, e a que falta e
+> sempre a de apagar — ancorar so no ponto de insercao descreve metade da operacao e, ao pe da letra,
+> produz conteudo duplicado ou duas estruturas aninhadas com o texto antigo preso entre elas. Se voce
+> nao consegue ancorar a remocao, **quebre em duas edicoes numeradas** — remover primeiro, inserir
+> depois — e diga na WO que sao as duas metades da mesma operacao.
 
 ## Edicao 2 — `caminho/real/do/arquivo.ext` · [...]
 
@@ -187,6 +205,13 @@ WO avisou que certa frase «nao e citada por nenhum texto inserido — conferido
         leitura e operacao reversivel na mesma maquina nunca sao dele. E quando for dele, o passo chega com
         o comando exato, o que esperar ver, e o que fazer se vier diferente —
         **nunca peca um resultado que voce nao ensinou a produzir.**
+      - **Quando o passo e do dono, ele nao e item de checklist: e ROTEIRO, e roteiro tem forma.** Sai da
+        lista de quem aplica e vai para o fecho do chat, como bloco proprio com quatro linhas de
+        cabecalho — **Para** (quem, e com o que aberto) · **Por que** (o que a automacao nao cobriu,
+        nomeando a WO) · **Formato** (cada item diz **o que se ve quando esta certo**, com numero quando
+        existe numero) · **Tempo** (quanto dura num passe so) — e uma secao final **«o que este roteiro
+        NAO testa»**, que e o que impede «passou tudo» de ser lido como «esta tudo certo». Forma medida
+        em campo: 27 itens respondidos em dois roteiros, contra zero em tres tentativas sem forma.
       - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo
         que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica
         que o programa continua rodando. E o unico campo que da trabalho, e e o que separa conferir de

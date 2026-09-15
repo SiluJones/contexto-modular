@@ -1048,6 +1048,13 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     // marcava como «ainda nao enviadas» — e o canal deles e o arquivo, nao a carta.
     ["modelo de WO: comando no lugar do numero", /peca o COMANDO — nao o numero/, ["woTemplate"]],
     ["modelo de WO: aviso e divida do autor",    /Aviso e divida do autor/,       ["woTemplate"]],
+    // wo0126: a leva do projeto do mapa que nao estava na secao de feedback deles — saiu das decisoes
+    // DEC-048 e DEC-052, do ROTEIRO de 29/08 e da tecnica do `grep` em prosa no CEREBRO deles.
+    ["modelo de WO: unidade da cobertura", /E declare de QUE/,              ["woTemplate"]],
+    ["modelo de WO: mover tem duas metades", /DUAS METADES/,               ["woTemplate"]],
+    ["modelo de WO: checagem de leitura",  /a checagem e DE LEITURA/,       ["woTemplate"]],
+    ["modelo de WO: roteiro tem forma",    /e ROTEIRO, e roteiro tem forma/,["woTemplate"]],
+    ["CEREBRO: a frase vai sozinha",       /a frase vai sozinha/,           ["cerebro"]],
     // As duas que valem para os 19 nichos, nao so para quem escreve WO — por isso vao ao CEREBRO,
     // que todo nicho recebe, e nao ao molde, que so o modo Code entrega.
     ["CEREBRO: valor declara a fonte", /declara onde nasce/,          ["cerebro"]],
