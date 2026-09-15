@@ -2058,3 +2058,19 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Custo medido:** `index.html` 884.945 → 888.250 bytes; `CLAUSULAS` 35 → 40; **checagens 105 → 105**; `C28` inalterado. Três pares negativos, um por superfície.
 
 **Fica pendente:** as 19 análises e a spec deles, que são de domínio e **não** foram varridas — cobertura declarada como pendente, não como concluída. E a **`DEC-056`** (revisão de WO por quem não conhece o repositório), que segue sendo decisão do dono.
+
+---
+
+## D-155 — Fecha a extração do vizinho: o roteiro ganha retorno, o risco ganha comando, o byte ganha ponta
+
+**Data:** 2026-09-15 · **Base:** o `ROTEIRO-passe-de-navegador` de 01/09 e a análise do `.gitignore` do `Sand-Land-Map`; e o relatório de aplicação da wo0126 deste repositório.
+
+**1. A forma do roteiro estava incompleta, e o defeito é de quem a declarou.** A wo0126 derivou o tipo de **um** exemplo, havendo **dois** na mesma pasta. Entram os três campos que faltavam: **Estado** (commit, versão instalada e **onde está o rollback vivo** — a linha que decide se o dono pode mexer sem medo), **Preparo** (o que abrir antes, para o passe não parar no meio) e, o que mais importa, **«o que me mandar de volta»** — o contrato de retorno, dizendo em que forma a resposta volta. Sem ele o dono responde em prosa livre e alguém tem de perguntar de novo, que é o atrito que o roteiro existe para evitar. **Regra que fica: tipo de documento não se declara a partir de um exemplo só — varra a pasta inteira antes de fixar a forma.**
+
+**2. Risco que se confere por comando não é risco: é custo de conferência.** Da análise do `.gitignore` deles sai o argumento que decidiu: *«regra em camadas é notoriamente fácil de errar — mas é verificável por comando»*. Generalizado, separa duas perguntas que a intuição funde: **qual erra mais fácil** e **qual avisa quando errou**. Opção que erra fácil e avisa na hora ganha de opção que erra difícil e falha em silêncio — e a intuição prefere a segunda, porque só enxerga a primeira metade. Ausente no kit, conferido por **cinco formulações** em quatro documentos.
+
+**3. O byte previsto carrega o fim de linha **e a ponta**.** O molde já mandava conferir CRLF × LF; faltava dizer **onde** o número foi medido. Na wo0126, quatro tamanhos previstos bateram no **blob** e divergiram na **árvore de trabalho**, porque `core.autocrlf=true` converte no checkout os arquivos que o `.gitattributes` marca só como `text=auto`. Quem aplicou investigou com `git cat-file -s` e provou que os números da WO estavam certos — **e a conferência, feita na outra ponta, parecia errada**. É a `DEC-048` num eixo novo: a unidade de um tamanho não é «bytes», é «bytes onde». *Nota de rastreamento: nenhuma WO alterou `core.autocrlf`; config de git fica fora de escopo de WO, e o desvio precede esta série.*
+
+**A extração do `Sand-Land-Map` fecha aqui, com cobertura declarada.** Integral: a seção de feedback (32 verbetes), o molde de WO deles, os 65 títulos de `DECISIONS` com leitura completa das 10 de método, as 13 «Técnicas específicas», os dois ROTEIRO e a forma das duas sondas. Por amostragem: os 33 arquivos restantes, dos quais as duas entradas mais densas em vocabulário de método foram abertas e são de **domínio**. **A varredura integral das 19 análises segue pendente, e a recomendação é não fazê-la:** o rendimento caiu de seis itens em dois dias (seção curada) para cinco em um turno (decisões e técnicas) para três neste (dois roteiros e uma análise).
+
+**O saldo da extração inteira: catorze regras, e a maioria veio do que eles NÃO curaram para nós.** Seis da seção de feedback, cinco das decisões e técnicas locais, três desta WO. **Fica aberta uma só, e é decisão do dono: a `DEC-056`** — ordem de serviço irreversível passa por revisão de quem não conhece o repositório —, a única que exige um segundo agente. **A carta 04 sai agora**, e é ela que fecha o ciclo do lado deles.

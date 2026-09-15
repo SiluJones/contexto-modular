@@ -1055,6 +1055,12 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     ["modelo de WO: checagem de leitura",  /a checagem e DE LEITURA/,       ["woTemplate"]],
     ["modelo de WO: roteiro tem forma",    /e ROTEIRO, e roteiro tem forma/,["woTemplate"]],
     ["CEREBRO: a frase vai sozinha",       /a frase vai sozinha/,           ["cerebro"]],
+    // wo0127: fecha a extracao do projeto do mapa. As duas primeiras saem do ROTEIRO de 01/09, que a
+    // wo0126 nao tinha lido; a terceira saiu do relatorio de aplicacao da wo0126, que achou o
+    // `core.autocrlf` separando arvore de trabalho e blob.
+    ["modelo de WO: roteiro tem retorno", /o que me mandar de volta/i,  ["woTemplate"]],
+    ["modelo de WO: byte tem ponta",      /qual das duas pontas/,       ["woTemplate"]],
+    ["CEREBRO: risco conferivel",         /n[aã]o [eé] risco: [eé] custo de confer/i, ["cerebro"]],
     // As duas que valem para os 19 nichos, nao so para quem escreve WO — por isso vao ao CEREBRO,
     // que todo nicho recebe, e nao ao molde, que so o modo Code entrega.
     ["CEREBRO: valor declara a fonte", /declara onde nasce/,          ["cerebro"]],

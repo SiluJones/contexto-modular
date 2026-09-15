@@ -9056,6 +9056,7 @@ function buildClaudeMd(niche){
   L.push("- **Onde:** `analises/AAMMDD-ANALISE-<assunto>.md` (projeto com pasta `meta/`: `meta/analises/`). A pasta **nasce no primeiro uso** — nunca antes, nunca vazia. A data é a de criação e não muda depois.");
   L.push("- **O que tem dentro:** `Status` (Rascunho · Em discussão · Decidida · Implementada · Abandonada · Substituída) · **Problema** (o que dói, para quem, o que acontece se nada for feito) · **Restrições / o que foi medido** · **Opções consideradas** (inclusive as descartadas, com o motivo do descarte) · **Recomendação** (uma, explícita, com o porquê) · **Riscos** (o que vigiar depois de aplicar) · **Ponto de decisão** (o que você precisa do usuário).");
   L.push("- **Meça antes de propor.** O que dá para medir, meça; o resto entra rotulado como estimativa. Análise que projeta ganho sem medir vira erro de planejamento.");
+  L.push("- **Risco que se confere por comando não é risco: é custo de conferência.** Ao comparar opções, a que parece mais arriscada costuma ser a mais barata de auditar. Separe **qual erra mais fácil** de **qual avisa quando errou**: opção que erra fácil e avisa na hora perde para opção que erra difícil e falha em silêncio, e a intuição diz o contrário porque só enxerga a primeira metade. Quando a diferença entre duas opções é essa, escreva o comando que audita **junto da recomendação** — é ele que transforma risco em item de checklist.");
   L.push("- **A análise não decide nem abre trabalho sozinha.** Ela para no ponto de decisão e espera o usuário. Depois de decidida, o desfecho vai para o `DECISIONS.md` (a análise guarda o raciocínio; o DECISIONS guarda a decisão) e a análise só muda de `Status` — análise vencida não se apaga: o «por que não» é o que evita refazer o mesmo debate daqui a seis meses.");
   L.push(analiseFunil(niche));
   L.push("- **Gatilho concreto, além do «não-trivial»:** mudar o **formato de um artefato que outra pessoa — ou o você do futuro — vai ler ou editar** pede análise, mesmo quando o diff é pequeno. Nome de arquivo, estrutura de pasta, layout de bloco gerado, campo de formulário, vocabulário de um termo em uso: o custo não está no diff, está em quem vai conviver com ele. **É uma pergunta a refazer DEPOIS de ler a fonte, não uma senha para começar a escrever** — e tem limite: acrescentar um campo, uma linha ou uma seção a um formato que **já é extensível** não é mudar o formato. Se quem lê hoje continua lendo sem ajuste, não há convivência nova a negociar.");
@@ -9775,7 +9776,12 @@ function buildWoTemplate(){
     "> paragrafo e uma linha so, duas mencoes no mesmo bullet contam 1 — para ocorrencia use `grep -o ... | wc -l`,",
     "> e diga qual dos dois voce previu. **Byte previsto carrega o fim de linha:** numero tirado de sandbox que grava",
     "> CRLF erra 1 byte por linha nova quando o arquivo do repo e LF. Confira com `git ls-files --eol` antes de prever",
-    "> tamanho, ou preveja faixa em vez de numero exato.",
+    "> tamanho, ou preveja faixa em vez de numero exato. **E carrega tambem ONDE foi medido:** arvore de",
+    "> trabalho e blob do git nao sao a mesma coisa quando `core.autocrlf` esta ligado — a maquina converte",
+    "> no checkout arquivos que o `.gitattributes` marca so como `text=auto`, e o `wc -c` da arvore diverge",
+    "> do `git cat-file -s` do indice por 1 byte por linha. **Diga qual das duas pontas voce previu**; na",
+    "> duvida, preveja o blob, que e o que fica no repositorio. Ja custou um desvio de relatorio em que os",
+    "> numeros da WO estavam certos e a conferencia, feita na outra ponta, parecia errada.",
     "> **Onde o numero absoluto e caro de simular, peca o COMANDO — nao o numero.** «Rode isto antes, rode",
     "> depois, diga os dois valores e por que a diferenca e essa.» Transfere a aritmetica de quem ESCREVE, que",
     "> nao tem o repositorio na mao, para quem APLICA, que tem — e produz o dado que a WO queria, em vez de um",
@@ -9945,11 +9951,16 @@ function buildWoTemplate(){
     "        o comando exato, o que esperar ver, e o que fazer se vier diferente —",
     "        **nunca peca um resultado que voce nao ensinou a produzir.**",
     "      - **Quando o passo e do dono, ele nao e item de checklist: e ROTEIRO, e roteiro tem forma.** Sai da",
-    "        lista de quem aplica e vai para o fecho do chat, como bloco proprio com quatro linhas de",
-    "        cabecalho — **Para** (quem, e com o que aberto) · **Por que** (o que a automacao nao cobriu,",
+    "        lista de quem aplica e vai para o fecho do chat, como bloco proprio. **Cinco linhas de",
+    "        cabecalho:** **Para** (quem, e com o que aberto) · **Por que** (o que a automacao nao cobriu,",
     "        nomeando a WO) · **Formato** (cada item diz **o que se ve quando esta certo**, com numero quando",
-    "        existe numero) · **Tempo** (quanto dura num passe so) — e uma secao final **«o que este roteiro",
-    "        NAO testa»**, que e o que impede «passou tudo» de ser lido como «esta tudo certo». Forma medida",
+    "        existe numero) · **Tempo** (quanto dura num passe so) · **Estado** (commit, versao instalada e",
+    "        **onde esta o rollback vivo** — e a linha que decide se o dono pode mexer sem medo). **Tres",
+    "        secoes:** **Preparo** (o que abrir e deixar pronto antes de comecar, para o passe nao parar no",
+    "        meio), os itens, e **«o que este roteiro NAO testa»**, que impede «passou tudo» de ser lido como",
+    "        «esta tudo certo». **E fecha com «o que me mandar de volta»** — o contrato de retorno, dizendo em",
+    "        que forma a resposta volta (numero, sim/nao, print). **Sem ele o dono responde em prosa livre e",
+    "        alguem tem de perguntar de novo**, que e o atrito que o roteiro existe para evitar. Forma medida",
     "        em campo: 27 itens respondidos em dois roteiros, contra zero em tres tentativas sem forma.",
     "      - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo",
     "        que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica",

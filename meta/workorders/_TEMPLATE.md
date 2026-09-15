@@ -36,7 +36,12 @@
 > paragrafo e uma linha so, duas mencoes no mesmo bullet contam 1 — para ocorrencia use `grep -o ... | wc -l`,
 > e diga qual dos dois voce previu. **Byte previsto carrega o fim de linha:** numero tirado de sandbox que grava
 > CRLF erra 1 byte por linha nova quando o arquivo do repo e LF. Confira com `git ls-files --eol` antes de prever
-> tamanho, ou preveja faixa em vez de numero exato.
+> tamanho, ou preveja faixa em vez de numero exato. **E carrega tambem ONDE foi medido:** arvore de
+> trabalho e blob do git nao sao a mesma coisa quando `core.autocrlf` esta ligado — a maquina converte
+> no checkout arquivos que o `.gitattributes` marca so como `text=auto`, e o `wc -c` da arvore diverge
+> do `git cat-file -s` do indice por 1 byte por linha. **Diga qual das duas pontas voce previu**; na
+> duvida, preveja o blob, que e o que fica no repositorio. Ja custou um desvio de relatorio em que os
+> numeros da WO estavam certos e a conferencia, feita na outra ponta, parecia errada.
 > **Onde o numero absoluto e caro de simular, peca o COMANDO — nao o numero.** «Rode isto antes, rode
 > depois, diga os dois valores e por que a diferenca e essa.» Transfere a aritmetica de quem ESCREVE, que
 > nao tem o repositorio na mao, para quem APLICA, que tem — e produz o dado que a WO queria, em vez de um
@@ -206,11 +211,16 @@ WO avisou que certa frase «nao e citada por nenhum texto inserido — conferido
         o comando exato, o que esperar ver, e o que fazer se vier diferente —
         **nunca peca um resultado que voce nao ensinou a produzir.**
       - **Quando o passo e do dono, ele nao e item de checklist: e ROTEIRO, e roteiro tem forma.** Sai da
-        lista de quem aplica e vai para o fecho do chat, como bloco proprio com quatro linhas de
-        cabecalho — **Para** (quem, e com o que aberto) · **Por que** (o que a automacao nao cobriu,
+        lista de quem aplica e vai para o fecho do chat, como bloco proprio. **Cinco linhas de
+        cabecalho:** **Para** (quem, e com o que aberto) · **Por que** (o que a automacao nao cobriu,
         nomeando a WO) · **Formato** (cada item diz **o que se ve quando esta certo**, com numero quando
-        existe numero) · **Tempo** (quanto dura num passe so) — e uma secao final **«o que este roteiro
-        NAO testa»**, que e o que impede «passou tudo» de ser lido como «esta tudo certo». Forma medida
+        existe numero) · **Tempo** (quanto dura num passe so) · **Estado** (commit, versao instalada e
+        **onde esta o rollback vivo** — e a linha que decide se o dono pode mexer sem medo). **Tres
+        secoes:** **Preparo** (o que abrir e deixar pronto antes de comecar, para o passe nao parar no
+        meio), os itens, e **«o que este roteiro NAO testa»**, que impede «passou tudo» de ser lido como
+        «esta tudo certo». **E fecha com «o que me mandar de volta»** — o contrato de retorno, dizendo em
+        que forma a resposta volta (numero, sim/nao, print). **Sem ele o dono responde em prosa livre e
+        alguem tem de perguntar de novo**, que e o atrito que o roteiro existe para evitar. Forma medida
         em campo: 27 itens respondidos em dois roteiros, contra zero em tres tentativas sem forma.
       - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo
         que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica
