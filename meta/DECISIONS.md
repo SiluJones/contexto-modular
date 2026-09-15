@@ -2013,3 +2013,25 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Mecanismo de guarda: o mesmo da wo0123.** As duas entram no CEREBRO gerado e no `meta/CEREBRO.md` com o **mesmo texto**, e viram cláusulas de alvo `cerebro` na lista do `C43` — que confere gerado e instalado com um regex só. **Custo medido:** `index.html` 880.810 → 882.573 bytes; `CLAUSULAS` 31 → 33; **checagens 105 → 105**; `C28` inalterado. Dois pares negativos, um por direção.
 
 **Fecha a leva do mapa.** Das seis ausências de conteúdo achadas em 2026-09-13, quatro saíram na wo0123 e estas duas aqui. **Fica aberta uma só, e é decisão do dono, não item de backlog:** a `DEC-056` — ordem de serviço irreversível passa por revisão de quem não conhece o repositório —, que é a única da lista que exige um segundo agente. E fica o gesto que ninguém fez ainda: **dizer ao projeto do mapa que as seis foram recebidas**, porque a última carta de volta é de 2026-08-18 e de lá para cá eles escreveram dezessete verbetes no escuro.
+
+---
+
+## D-153 — O número previsto vira comando medido, o aviso vira dívida, e duas correções de casa
+
+**Data:** 2026-09-14 · **Base:** `FK-R` e `FK-S` do `Sand-Land-Map` (leva `97e4ed5`), mais dois defeitos introduzidos pelas wo0123/wo0124 deste repositório.
+
+**`FK-R` — o `^` não cobre o número absoluto.** A regra da wo0123 resolve a classe da **citação** (a WO conta uma frase que ela mesma insere). A classe do **número absoluto** ficou aberta e pegou três WOs seguidas daqui: 4.915 linhas previstas contra 4.917 reais, uma ocorrência prevista 10 contra 9, um negativo previsto 0 contra 1 — **só o terceiro** era da classe coberta. O diagnóstico do projeto do mapa é de **posição**, não de regra: *«a checklist é escrita por último, com o trabalho já mentalmente concluído»*, por quem não tem o repositório na mão. A regra nova move a aritmética para quem tem, com **regra de corte** para não virar burocracia: previsão que soma parcelas de edições diferentes, ou conta ocorrências dentro de texto que a WO insere, é cara e vai como antes/depois; contagem de linha única ancorada em `^` é barata e segue como número.
+
+**`FK-S` — aviso é dívida do autor.** *«Quando o autor consegue descrever o modo de falha com precisão suficiente para avisar, ele tem informação suficiente para eliminar a falha.»* O caso é nosso: a wo0124 avisou que certa frase «não é citada por nenhum texto inserido — conferido», e **era falsa**, com o conserto ao alcance de quem escreveu o aviso. A seção de armadilhas passa a aceitar só o que é **propriedade do arquivo ou do ambiente** — CRLF, bloco regenerado, número de check em voo —, e tudo o mais volta como conserto.
+
+**As duas escaparam da triagem de 13/09** porque o projeto do mapa as marca como «ainda NÃO enviadas». A marca é da contabilidade deles; **o canal é o arquivo, e o arquivo chegou**. Regra: feedback lido é feedback recebido, independente de o remetente considerar despachado.
+
+**Correção de fato — a causa do olho humano.** A cláusula da wo0123 dizia que as três conferências falharam *«porque o navegador não estava conectado à sessão dele»*. Os números são da `FK-AC`; a causa única veio da `FK-AF`, que é **outro episódio**. A fonte diz *«por motivos diferentes»* e acrescenta o que faltava: *«a decisão não depende de saber por que a ferramenta falha — o que decidiu foi o contraste»*. Texto normativo publicado com causa mais específica do que a fonte sustenta é o mesmo defeito de sempre, um nível acima: **não é número deduzido, é causalidade deduzida.**
+
+**Correção de higiene — a indentação.** `HYGIENE_RULES` tinha 21 entradas com 2 espaços e 1 com 4, inserida pela wo0124 porque a WO mandava 4 (deslize de quem a escreveu, citando o padrão do array vizinho). Quem aplicou seguiu o literal e **fez certo**: o executor não reformata por juízo próprio. O conserto é de quem errou, e fica registrado que a ordem das duas coisas é essa.
+
+**Um par negativo de graça.** Ao requebrar as linhas da cláusula corrigida, a frase `nunca peca um resultado que voce nao ensinou a produzir` ficou partida em duas e o **`C42` caiu** — ele exige a frase contígua. Nenhum teste foi desenhado para isso; o check provou sozinho que protege o que diz proteger, e o texto final traz a frase inteira numa linha.
+
+**Custo medido:** `index.html` 882.573 → 884.945 bytes; `CLAUSULAS` 33 → 35; **checagens 105 → 105**; `C28` inalterado; `HYGIENE_RULES` 21+1 → 22+0.
+
+**Fecha a extração da leva do mapa.** Das oito ausências (seis da triagem de 13/09 e estas duas), todas entraram. Segue aberta uma só, e é decisão do dono: a **`DEC-056`** — ordem de serviço irreversível passa por revisão de quem não conhece o repositório —, a única que exige um segundo agente. **A carta de volta ao `Sand-Land-Map` sai depois desta WO**, não antes: escrever antes de terminar a extração faria a carta descrever um estado que já mudou.

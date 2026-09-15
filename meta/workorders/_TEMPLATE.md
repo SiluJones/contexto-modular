@@ -37,6 +37,17 @@
 > e diga qual dos dois voce previu. **Byte previsto carrega o fim de linha:** numero tirado de sandbox que grava
 > CRLF erra 1 byte por linha nova quando o arquivo do repo e LF. Confira com `git ls-files --eol` antes de prever
 > tamanho, ou preveja faixa em vez de numero exato.
+> **Onde o numero absoluto e caro de simular, peca o COMANDO — nao o numero.** «Rode isto antes, rode
+> depois, diga os dois valores e por que a diferenca e essa.» Transfere a aritmetica de quem ESCREVE, que
+> nao tem o repositorio na mao, para quem APLICA, que tem — e produz o dado que a WO queria, em vez de um
+> palpite conferido. **Regra de corte:** previsao que depende de somar parcelas de edicoes diferentes, ou
+> de contar ocorrencias dentro de texto que a propria WO insere, e **cara** e vai como antes/depois;
+> contagem de uma linha unica ancorada em `^` e **barata** e vai como numero. **Medido:** tres WOs
+> seguidas erraram um numero absoluto — 4.915 linhas previstas contra 4.917 reais (numero tirado de uma
+> medicao feita antes da ultima edicao), uma ocorrencia prevista 10 contra 9 reais (duas parcelas somadas
+> de cabeca) e um negativo previsto 0 contra 1 real. So o terceiro e da classe que o `^` resolve. Regra
+> por si so nao conserta defeito de POSICAO: a checklist e escrita por ultimo, com o trabalho ja
+> mentalmente concluido, e e ali que a aritmetica de quem nao tem o repo falha.
 > **Checagem negativa vai ancorada em `^`.** Sem excecao. O texto que uma WO insere quase sempre cita a
 > frase que ela manda conferir, e a cita no MEIO de uma linha, dentro de uma explicacao: `grep -c "frase"`
 > = 0 falha ai, `grep -c "^frase"` nao. A regra em prosa do paragrafo acima ja existia e foi violada pela
@@ -134,6 +145,15 @@ perceber: ancora que aparece duas vezes, arquivo com fim de linha CRLF (ancora m
 sempre a mesma: ancora de UMA linha nao tem quebra dentro, entao o fim de linha nao morde — para
 inserir varias linhas, ancore em UMA so e diga se o texto novo entra antes ou depois dela.]
 
+**Aviso e divida do autor, nao protecao do leitor.** Quando voce consegue descrever o modo de falha com
+precisao suficiente para avisar, voce tem informacao suficiente para **eliminar** a falha — o aviso e a
+prova de que o conserto era possivel. Antes de escrever «⚠ cuidado com X», responda: por que X nao foi
+resolvido na ancora, no padrao do grep ou na ordem das edicoes? Se a resposta existir, conserte e apague o
+aviso. So sobra aqui o que e **propriedade do arquivo ou do ambiente** e nao esta ao seu alcance: fim de
+linha CRLF, bloco que sera regenerado, numero de check ja usado por outra WO em voo. **Caso medido:** uma
+WO avisou que certa frase «nao e citada por nenhum texto inserido — conferido», e era falsa; o conserto
+(ancorar o padrao em `^`) estava ao alcance de quem escreveu o aviso.
+
 ---
 
 ## Depois de aplicar — conferencia antes do commit
@@ -158,12 +178,15 @@ inserir varias linhas, ancore em UMA so e diga se o texto novo entra antes ou de
       sem os tres nao esta pronto para ser escrito:
       - **Quem roda:** por padrao, **quem aplica**. Vai ao dono o passo que toca **rede de terceiro**, o
         que **destroi algo fora do repositorio**, e o que exige **olho humano num renderizador** — abrir a
-        tela e dizer o que aparece. O terceiro caso e excecao MEDIDA, nao preferencia: tres WOs seguidas
-        puseram «abra e confira» na lista de quem aplica e as tres voltaram sem conferencia, porque o
-        navegador nao estava conectado a sessao dele; no mesmo periodo, dois roteiros escritos para o dono
-        devolveram 27 itens respondidos. Fora esses tres casos, leitura e operacao reversivel na mesma
-        maquina nunca sao dele. E quando for dele, o passo chega com o comando exato, o que esperar ver, e
-        o que fazer se vier diferente — **nunca peca um resultado que voce nao ensinou a produzir.**
+        tela e dizer o que aparece. O terceiro caso e excecao MEDIDA, nao preferencia: tres WOs adiaram
+        conferencia de interface esperando que quem aplica a fizesse, e as tres falharam **por motivos
+        diferentes** — extensao do navegador devolvendo a aba, depois captura de tela em branco por
+        timeout. Saldo: zero conferencias. No mesmo periodo, dois roteiros escritos para o dono devolveram
+        27 itens respondidos, e **o que decidiu foi esse contraste, nao o diagnostico de cada falha** — nao
+        e preciso saber por que a ferramenta falha para parar de depender dela. Fora esses tres casos,
+        leitura e operacao reversivel na mesma maquina nunca sao dele. E quando for dele, o passo chega com
+        o comando exato, o que esperar ver, e o que fazer se vier diferente —
+        **nunca peca um resultado que voce nao ensinou a produzir.**
       - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo
         que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica
         que o programa continua rodando. E o unico campo que da trabalho, e e o que separa conferir de

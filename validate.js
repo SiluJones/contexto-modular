@@ -1044,6 +1044,10 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     ["modelo de WO: recortado",       /RECORTADO, nunca redigitado/,  ["woTemplate"]],
     ["modelo de WO: valor tem fonte", /declara ONDE NASCE/,           ["woTemplate"]],
     ["modelo de WO: olho humano",     /olho humano num renderizador/, ["woTemplate"]],
+    // wo0125: FK-R e FK-S, as duas que a triagem de 13/09 deixou passar porque o projeto do mapa as
+    // marcava como «ainda nao enviadas» — e o canal deles e o arquivo, nao a carta.
+    ["modelo de WO: comando no lugar do numero", /peca o COMANDO — nao o numero/, ["woTemplate"]],
+    ["modelo de WO: aviso e divida do autor",    /Aviso e divida do autor/,       ["woTemplate"]],
     // As duas que valem para os 19 nichos, nao so para quem escreve WO — por isso vao ao CEREBRO,
     // que todo nicho recebe, e nao ao molde, que so o modo Code entrega.
     ["CEREBRO: valor declara a fonte", /declara onde nasce/,          ["cerebro"]],
