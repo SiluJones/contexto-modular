@@ -44,8 +44,22 @@ Detalhes completos: `README.md`, `PLANNING.md`, `meta/STATUS.md`, `meta/CHANGELO
 2. Lê **`meta/STATUS.md`** — descobre a fase atual e o próximo passo.
 3. Lê a última entrada de **`meta/CHANGELOG.md`** — vê o que mudou na sessão anterior.
 4. Consulta sob demanda (não por padrão): `meta/DECISIONS.md` (por que as coisas são como são), `meta/IDEAS.md`, `PLANNING.md`, e o `index.html` em si.
-5. **Se a tarefa for mexer no `index.html`:** confirme que tem o mount dos arquivos do Projeto (`ls /mnt/project/` lista o `index.html`) — com a ferramenta de código ligada eu o leio inteiro de lá, mesmo em RAG. Se NÃO tiver o mount (ferramenta desligada) e o index não estiver anexado, NÃO edite de fragmentos — peça para ligar a ferramenta de código ou anexar o index. (Ver «Transferência e fidelidade» abaixo.)
+5. **Se a tarefa for mexer no `index.html`:** leia `src/` e o `index.html` direto do disco — a pasta do repositório está vinculada (ver «Canal do chat» logo abaixo). Sem a pasta, vale a reserva: o mount ou o arquivo anexado, e nunca editar de fragmentos (ver «Transferência e fidelidade»).
 6. Antes de executar, confirma em uma frase o que entendeu da tarefa.
+
+## 🗂️ Canal do chat — pasta vinculada (D-157)
+
+> Desde 2026-10-12 (`D-156`) o chat lê e grava **direto na pasta do repositório**, pelo app desktop. Toda menção a mount, `/mnt/project`, `_MANIFEST`, FlatDrop, upload e «nome de download» no resto deste arquivo é **canal de reserva**: vale só quando a conversa roda sem a pasta. Se a pasta não responder, diga qual canal você tem e siga a reserva — nunca trabalhe de memória. É a seção que o kit gera desde a wo0129, adaptada à casa.
+
+- **Ritual em dois tempos.** Ao abrir a conversa: este CEREBRO, a «Última sessão» do `meta/STATUS.md` (o arquivo passa de 270 mil caracteres; o resto, sob demanda) e o topo do CHANGELOG. Em todo turno: `git log -3 --oneline`, `git status --short` e a listagem da pasta-pai `Contexto\`. Commit novo que toque um desses arquivos manda relê-lo. O vigia é o `Base:` do fecho.
+- **Git pelo chat é só leitura, sempre com `GIT_OPTIONAL_LOCKS=0`.** Commit e push são do Code. Arquivo novo que o chat cria no repo fica fora do índice até a WO seguinte versioná-lo.
+- **Arquivo que o chat autora vai direto para o lugar definitivo**, em LF, relido do disco antes de sobrescrever. Nada de entregar para download o que tem lugar no repo.
+- **A WO confere o que o chat gravou:** o cabeçalho lista o `sha1sum` de cada arquivo gravado pelo chat que ela versiona, e a Edição 0 confere antes de tudo.
+- **Um dono por documento, escrito.** Nesta casa: o chat grava inteiros `meta/analises/`, as WOs, o `INSTRUCOES-DO-PROJETO.md`, as cartas e o handoff da pasta-pai, e as seções do chat no log do dia; o Code escreve `src/`, `index.html`, `validate.js`, `meta/STATUS.md` (pelo `/wrap`) e a sua seção do log; `meta/CEREBRO.md`, `meta/DECISIONS.md`, `meta/IDEAS.md`, `meta/CHANGELOG.md` e os moldes mudam por WO.
+- **Notas e relatórios na pasta-pai `Contexto\`**, fora do Git. O chat lê inteiro, registra e arquiva **movendo** para `notas-arquivadas\` — mover, nunca apagar —, listando antes e depois.
+- **Segredo não mora na pasta-pai** nem em nota `.txt`: o que está ali entra no contexto todo turno.
+- **As Instruções:** a fonte é o `INSTRUCOES-DO-PROJETO.md` do repo; o que o assistente lê é a cópia colada no painel, e só o dono a atualiza. WO que muda as Instruções termina pedindo para recolar. Tamanho por `wc -m`, no turno.
+- **O terminal do chat é uma VM Linux, não o PowerShell do dono:** comando começa do zero, teto de cerca de 3 minutos, nada em segundo plano; fim de linha `i/lf w/crlf` não é mudança. O harness roda ali (`node build.js` + `node validate.js`, com o `node_modules` do dono) numa réplica fora da pasta — nunca no repo vivo antes da WO.
 
 ---
 

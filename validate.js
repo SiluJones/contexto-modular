@@ -1071,6 +1071,11 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     // estava no mount desde sempre, e uma conversa recusou trabalho por causa dessa frase.
     ["CEREBRO: arvore por pergunta",   /inclusive o que NÃO subiu/,   ["cerebro"]],
     ["CEREBRO: ressalva tem custo",    /é proibido para o que está no mount/, ["cerebro"]],
+    // wo0129 (D-157): o canal pasta vinculada. As tres valem nos dois lados — a casa roda nesse canal
+    // desde 2026-10-12, e o gerado o tem por padrao.
+    ["CEREBRO: git do chat so le",       /GIT_OPTIONAL_LOCKS=0/,         ["cerebro"]],
+    ["CEREBRO: dono por documento",      /Um dono por documento, escrito/, ["cerebro"]],
+    ["modelo de WO: hash do que o chat gravou", /o `sha1sum` que o chat mediu/, ["woTemplate"]],
     ["CLAUDE.md: vocabulario de ato", /`apply` · `wrap` · `probe` · `explore`/, ["claudeMd"]],
     ["CLAUDE.md: relatorio em arquivo", /-code-/,                    ["claudeMd"]],
     ["CLAUDE.md: relatorio sem pedir", /sem pedir/i,                 ["claudeMd"]],
@@ -1916,7 +1921,10 @@ check("C15 rename spec->WO (spec0053): caminhos, comando e prosa; sem quebrar pa
 
 check("C14 adesao ao ritual (spec0052): mount-check por turno + memoria x mount + fix vazamento ASU no modo Code", () => {
   const n=T.normNiche(T.NICHES.dev);
-  assert(/reveja o mount a cada turno/i.test(T.buildInstr(n)),"Instr sem gatilho de reler o mount por turno");
+  T.STATE.workmode={mountMode:"yes"};
+  assert(/reveja o mount a cada turno/i.test(T.buildInstr(n)),"Instr (canal mount) sem gatilho de reler o mount por turno");
+  T.STATE.workmode={};
+  assert(/Em TODO turno, ANTES de responder/.test(T.buildInstr(n)),"Instr (canal pasta, o padrao) sem o ritual de turno");
   assert(/não trate o mount como verdade absoluta/.test(T.buildClaudeMd(n)),"CEREBRO sem logica memoria x mount");
   T.STATE.workmode={codeMode:"yes"};
   assert(!/asuNNNN/.test(T.buildClaudeMd(T.normNiche(T.NICHES.dev))),"modo Code sem ASU cita asuNNNN (vazamento)");
@@ -2136,6 +2144,34 @@ check("C104 o companion nao perde o que o separa dos outros 18 (wo0121)", () => 
   // (6) o doc-ancora e o ALVO, nao um CONTEXT herdado
   assert(n.anchorDoc === "ALVO.md", "o companion perdeu o anchorDoc ALVO.md e volta a cair na heuristica de CONTEXT");
   return "ok (companion: carimbo, 4 estados, PATCHES, STATUS reinicia, 2 armadilhas)";
+});
+
+check("C105 o canal do chat e um eixo (wo0129, D-157): pasta vinculada por padrao, mount como reserva, e o texto de cada canal so aparece no seu", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{});
+  const fora=[];
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    [false,true].forEach(code => {
+      S.workmode = { codeMode: code ? "yes" : "" };
+      const iD=T.buildInstr(n), cD=T.buildClaudeMd(n);
+      S.workmode = { codeMode: code ? "yes" : "", mountMode:"yes" };
+      const iM=T.buildInstr(n), cM=T.buildClaudeMd(n);
+      const tag=id+(code?"+Code":"");
+      if(!/GIT_OPTIONAL_LOCKS=0/.test(iD)) fora.push(tag+": Instr do canal pasta sem o git so leitura");
+      if(/mount/i.test(iD)) fora.push(tag+": Instr do canal pasta ainda fala em mount");
+      if(/Nome de download/.test(iD)) fora.push(tag+": Instr do canal pasta manda nome de download");
+      if(!/## Canal do chat — pasta vinculada/.test(cD)) fora.push(tag+": CEREBRO do canal pasta sem a secao");
+      if(!/canal de reserva/.test(cD)) fora.push(tag+": CEREBRO do canal pasta nao rotula o mount como reserva");
+      if(/sha1sum/.test(cD) !== code) fora.push(tag+": hash da WO "+(code ? "ausente com o Code" : "vazou sem o Code"));
+      if(!/reveja o mount a cada turno/i.test(iM)) fora.push(tag+": Instr do canal mount perdeu o ritual de reserva");
+      if(!/Nome de download/.test(iM)) fora.push(tag+": Instr do canal mount perdeu o nome de download");
+      if(/Canal do chat — pasta vinculada|GIT_OPTIONAL_LOCKS/.test(iM+cM)) fora.push(tag+": texto do canal pasta vazou no mount");
+      if(!code && iM.length > T.INSTR_TETO) fora.push(tag+": Instr do canal mount "+iM.length+">"+T.INSTR_TETO);
+    });
+  });
+  S.workmode = prev;
+  assert(fora.length===0, fora.join(" | "));
+  return "ok (19 nichos x Code x canal)";
 });
 
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {

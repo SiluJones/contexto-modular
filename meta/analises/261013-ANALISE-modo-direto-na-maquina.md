@@ -1,8 +1,8 @@
 # ANÁLISE — O modo «direto na máquina»: o que os três projetos já decidiram, e o que o kit precisa absorver
 
-> **Status:** Em discussão
+> **Status:** Decidida em 2026-10-13 — os cinco pontos aceitos pelo dono como estão; vira a wo0129 (kit + casa na mesma leva)
 > **Data:** 261013 · **Base:** KCM v1.122.0, commit `4cc5557` (`main` = `origin/main`) · GameDataHub `7b15fd7` · satelite-web `760411f` · Sand-Land-Map `bad361f` — os quatro lidos no disco nesta conversa, com `git log`
-> **Vira:** — · **Decisão:** — · **Origem:** `i-N62`, `D-156`
+> **Vira:** `meta/workorders/261013-wo0129-canal-do-chat-vira-eixo.md` · **Decisão:** `D-157` · **Origem:** `i-N62`, `D-156`
 
 ---
 
@@ -132,3 +132,9 @@ Para o **próprio KCM** (dogfooding): adotar os itens 1, 2, 5 e 8 nas Instruçõ
 3. **Os nove itens do bloco `disco`:** algum sai, ou falta algum?
 4. **O KCM se converte na mesma leva** (itens 1, 2, 5, 8 nas Instruções e no CEREBRO da casa), ou numa WO própria antes da de kit?
 5. **Carta aos três projetos** com os achados que valem para eles agora — sem esperar o kit: `GIT_OPTIONAL_LOCKS` no satelite, `sha1sum` na Edição 0 para Sand e satelite, segredos fora da pasta-pai no GDH e no satelite?
+
+## Desvio na execução (registrado pelo chat ao escrever a wo0129)
+
+- **Padrão `disco` virou o botão «Mount» desligado.** O eixo entrou como um quarto modo de trabalho, com a lógica invertida: ligado = canal de reserva. Assim um projeto salvo antes da wo0129 (sem a chave) abre já no canal novo, e o selo só aparece quando alguém escolhe o caminho antigo.
+- **Os itens 7, 8 e 9 ficaram só no CEREBRO gerado.** As Instruções levam os itens 1, 2, 3 e o 6 resumido; o resto custaria teto. Medido na réplica: Instruções no padrão, pior nicho, **6 603** no canal pasta contra **6 622** no mount; incremento do Code **546/550** — está no limite, e o próximo acréscimo ao ramo do Code vai precisar cortar alguma coisa.
+- **`.claude/settings.local.json` entrou no `.gitignore`** na mesma WO (pendência 5 do handoff de 12/10).

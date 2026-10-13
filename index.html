@@ -238,6 +238,7 @@
   .modebtn.mode-group{--mc:var(--green)}
   .modebtn.mode-code{--mc:var(--code)}
   .modebtn.mode-asu{--mc:var(--teal)}
+  .modebtn.mode-mount{--mc:var(--ink-dim)}
   /* dica (tooltip) — hover/foco, não bloqueia o clique, não cobre conteúdo (WCAG 1.4.13) */
   .modebtn .tip{position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:max-content;max-width:260px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--ink-dim);font-family:var(--body);font-size:12px;line-height:1.4;letter-spacing:0;text-transform:none;opacity:0;visibility:hidden;transform:translateY(-3px);transition:opacity .12s,transform .12s;pointer-events:none;box-shadow:var(--shadow)}
   .modebtn:hover .tip,.modebtn:focus-visible .tip{opacity:1;visibility:visible;transform:translateY(0)}
@@ -8467,6 +8468,8 @@ const WORK_MODES = [
     desc:"Desenvolver no Claude Code — emite o kit de arranque (CLAUDE.md, settings, skills) como download à parte." },
   { id:"asuMode",   key:"asu",   label:"ASU",   glyph:"»", cls:"mode-asu",
     desc:"Saída via ASU (patch) — edições viram instrução .yaml para baixar e aplicar; escrita nova/rolante sai inteira." },
+  { id:"mountMode", key:"mount", label:"Mount", glyph:"⇪", cls:"mode-mount",
+    desc:"Chat SEM pasta vinculada (site sem vínculo, outra conta) — o repositório chega ao Projeto achatado pelo FlatDrop e o chat entrega arquivos para baixar. Desligado (padrão): o chat lê e grava na pasta do projeto." },
 ];
 function modesClusterHTML(){
   const btns = WORK_MODES.map(m => {
@@ -8791,6 +8794,9 @@ function renderOutputs(niche){
 function groupModeOn(){ return !!(STATE.workmode && STATE.workmode.groupMode === "yes"); }
 function asuModeOn(){ return !!(STATE.workmode && STATE.workmode.asuMode === "yes"); }
 function codeModeOn(){ return !!(STATE.workmode && STATE.workmode.codeMode === "yes"); }
+/* Canal do chat (wo0129, D-157): padrao = pasta vinculada (o chat le e grava no disco).
+   mountMode "yes" = canal de reserva (mount do Projeto, FlatDrop, entrega para baixar). */
+function mountModeOn(){ return !!(STATE.workmode && STATE.workmode.mountMode === "yes"); }
 
 /* Selos de estado — fonte unica (pura, testavel no harness) + render (spec0029).
    Ordem estavel: grupo, Code, ASU. ASU = chevron duplo » + teal. */
@@ -8850,17 +8856,25 @@ function buildInstr(niche){
     ctxName,
     coreFiles.find(n=>/STATUS/i.test(n)),
   ].filter(Boolean);
-  lines.push(`Antes de qualquer ação, leia nesta ordem: ${readOrder.map(f=>`\`${f}\``).join(" → ")}${coreFiles.some(n=>/CHANGELOG/i.test(n))?" → última entrada do `CHANGELOG.md`":""}. E reveja o mount a cada turno (novos \`.txt\`/arquivos), sem esperar eu sinalizar.`);
-  lines.push("Releia o mount ANTES de responder e de qualquer ferramenta, nunca de memória. Mensagem cheia de pedidos é onde essa releitura mais falha — e onde mais importa. Nota `.txt` é entrada transitória, a fundir nos meta/; se não houver, siga.");
+  const ordemLeitura = `${readOrder.map(f=>`\`${f}\``).join(" → ")}${coreFiles.some(n=>/CHANGELOG/i.test(n))?" → última entrada do `CHANGELOG.md`":""}`;
+  if(mountModeOn()){
+    lines.push(`Antes de qualquer ação, leia nesta ordem: ${ordemLeitura}. E reveja o mount a cada turno (novos \`.txt\`/arquivos), sem esperar eu sinalizar.`);
+    lines.push("Releia o mount ANTES de responder e de qualquer ferramenta, nunca de memória. Mensagem cheia de pedidos é onde essa releitura mais falha — e onde mais importa. Nota `.txt` é entrada transitória, a fundir nos meta/; se não houver, siga.");
+  } else {
+    lines.push(`Ao ABRIR a conversa, leia nesta ordem: ${ordemLeitura}. Em TODO turno, ANTES de responder e de qualquer ferramenta: ${codeModeOn() ? "`git log -3`, `git status` e" : "liste a pasta e"} a pasta-pai, nunca de memória.`);
+    lines.push("Mensagem cheia de pedidos é onde essa releitura mais falha. Nota `.txt` da pasta-pai: leia inteira, funda nos meta/ e arquive MOVENDO.");
+  }
   lines.push("Confirme em uma frase o que entendeu da tarefa antes de executar. Se houver ambiguidade real, pergunte antes.");
   if(groupModeOn()) lines.push("Projeto em grupo: existe um `HUB.md` compartilhado (gerado na página HUB do kit). Leia-o logo após o STATUS — sua caixa de entrada e o status das outras frentes. Nunca altere arquivos de outra frente; sugestões vão para a caixa dela.");
   if(asuModeOn()) lines.push("ASU: **editar** o que já existe → instrução `yaml` para baixar (`AAMMDD-asuNNNN.yaml`, bytes exatos, âncora copiada do arquivo vivo). **Escrita nova, reescrita profunda e docs rolantes** → arquivo inteiro. Escopo por tipo de arquivo e verificação: CEREBRO.");
   if(asuModeOn()) lines.push("**Feedback ASU:** limitação ou pedido de melhoria da ferramenta → «Feedback para o ASU» no IDEAS, antes de fechar.");
-  lines.push("**Nome de download:** arquivo para baixar usa o nome SIMPLES (ex.: `IDEAS.md`), sem prefixo de pasta (não `meta_IDEAS.md`). Só prefixe para desambiguar dois arquivos de mesmo nome.");
+  lines.push(mountModeOn()
+    ? "**Nome de download:** arquivo para baixar usa o nome SIMPLES (ex.: `IDEAS.md`), sem prefixo de pasta (não `meta_IDEAS.md`). Só prefixe para desambiguar dois arquivos de mesmo nome."
+    : "**Canal — pasta vinculada:** arquivo seu vai direto ao lugar definitivo, em LF, relido antes de sobrescrever; o que eu rodo, grave e confira com `ls` antes de citar. Git só leitura (`GIT_OPTIONAL_LOCKS=0`). Resto: CEREBRO, «Canal do chat».");
   lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir config diferente, recomende-a explícita — no chat: modelo + esforço (Baixo→Máximo) + pensamento (lig/desl); no Claude Code: modelo + `/effort` (ou `ultrathink`/`ultracode`), SEM toggle de pensamento. Nunca afirme saber a atual; recomende pela tarefa. Pesada com config fraca → peça aumento; folga → diga que pode baixar.");
   lines.push("**Log:** nomeie `logs/AAAA-MM-DD.md` (data ISO, sem a palavra \"log\" no nome).");
   lines.push("**Análise antes do compromisso:** não-trivial → `analises/AAMMDD-ANALISE-<tema>.md`; QUÊ já decidido = execução, vá direto. Gatilho e abandono no CEREBRO.");
-  if(codeModeOn()) lines.push("**Arquivo não lido não se deduz — mande o Code medir.**");
+  if(codeModeOn()) lines.push(mountModeOn() ? "**Arquivo não lido não se deduz — mande o Code medir.**" : "**Arquivo não lido não se deduz — leia do disco; o Code mede o que roda.**");
   if(codeModeOn()) lines.push("**WO nunca vai sozinha:** entregue junto a linha `/apply-wo <arquivo>` para eu colar no Code.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
     lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO, mensagem sem acento. Bloco git parcial (só `add`) não serve: os três em ordem, ou só o `commit`.");
@@ -9003,6 +9017,27 @@ function buildClaudeMd(niche){
   L.push(`${order.length+1}. **Não lê por padrão:** IDEAS inteiro, logs antigos, arquivos de arquivo morto. Lê sob demanda quando a tarefa exigir.`);
   L.push(`${order.length+2}. Antes de executar: confirma em uma frase o que entendeu. Se houver ambiguidade real, pergunta antes.`);
 
+  // Canal do chat (wo0129, D-157; analise 261013): com a pasta vinculada (padrao), o chat le e grava no
+  // disco. O texto de mount do resto do arquivo NAO se reescreve: uma frase o rotula como reserva.
+  if(!mountModeOn()){
+    const comCode = codeModeOn();
+    L.push("");
+    L.push("## Canal do chat — pasta vinculada");
+    L.push("");
+    L.push("> Este projeto roda com o chat **lendo e gravando na pasta do projeto** (app desktop com a pasta vinculada). Toda menção a mount, `_MANIFEST`, FlatDrop, upload e «nome de download» no resto deste arquivo é **canal de reserva**: vale só quando a conversa roda sem a pasta (site sem vínculo, outra conta). Se a pasta não responder, diga qual canal você tem e siga a reserva — nunca trabalhe de memória.");
+    L.push("");
+    L.push("- **Ritual em dois tempos.** Ao abrir a conversa, os arquivos de contexto na ordem acima. Em todo turno, só o barato e verificável: " + (comCode ? "`git log -3 --oneline`, `git status --short`" : "a listagem da pasta do projeto") + " e a listagem da pasta-pai; arquivo de contexto que mudou se relê. Ler tudo em todo turno não escala, e regra dura que ninguém cumpre ensina a ignorar as outras. O vigia é o `Base:` do fecho: turno que afirma estado sem leitura feita nele falhou o ritual.");
+    L.push("- **Git pelo chat é só leitura, sempre com `GIT_OPTIONAL_LOCKS=0`.** Um `git status` comum grava `.git/index.lock`, e o chat não consegue apagá-lo: o Git do dono fica travado até alguém remover à mão. " + (comCode ? "Commit e push são do Code." : "Commit é do dono: entregue o bloco pronto."));
+    L.push("- **Arquivo que você autora vai direto para o lugar definitivo** — nunca para download nem para pasta provisória. Em LF; releia do disco antes de sobrescrever, porque outro escritor pode ter mexido. O que o dono vai rodar ou abrir é gravado e conferido com `ls` **antes** da resposta que o cita.");
+    if(comCode) L.push("- **A WO confere o que você gravou.** Cada arquivo que você gravou e a WO vai versionar entra no cabeçalho dela com o `sha1sum` medido ao gravar; a Edição 0 confere, e hash diferente para a aplicação. No mount, o meio impedia dois escritores; no disco, quem impede é o hash.");
+    L.push("- **Um dono por documento, escrito.** O meio não impede mais dois escritores no mesmo arquivo; só a regra impede. " + (comCode
+      ? "Padrão: o chat escreve inteiros a análise, a WO, CONTEXT, CEREBRO, Instruções e GLOSSARY; o Code escreve o código, STATUS, DECISIONS, CHANGELOG e a sua seção do log; IDEAS e todo doc grande e vivo mudam por WO."
+      : "Padrão: o chat escreve os documentos; o dono revisa e versiona.") + " O projeto pode mudar a divisão — registrando em DECISIONS —, nunca deixá-la implícita.");
+    L.push("- **Notas e relatórios moram na pasta-pai,** fora do Git. Leia inteira a que chegou, funda nos meta/ e arquive **movendo** para `notas-arquivadas/` dentro dela — mover, nunca apagar. Liste a pasta antes e depois: arquivo que some sem comando que o cite é perda, não arquivamento.");
+    L.push("- **Segredo não mora em pasta que o chat lê a cada turno.** `.env`, cookie e token ficam no repositório (ignorados pelo Git) ou fora das pastas concedidas: o que está na pasta-pai entra no contexto todo turno.");
+    L.push("- **As Instruções do Projeto têm duas cópias, e a fonte é o arquivo do repositório.** Mudança nas Instruções muda primeiro o arquivo; o fecho pede ao dono que cole no painel do Projeto. O tamanho sai de `wc -m` no turno, nunca de número gravado em documento.");
+    L.push("- **O terminal do chat não é o do dono.** É uma VM Linux: cada comando começa do zero, tem teto de cerca de 3 minutos, e processo em segundo plano morre com a chamada. Arquivo «modificado» só por fim de linha (`i/lf w/crlf`) não mudou. Apagar vem desligado: peça a permissão, não contorne.");
+  }
   // Tecnicas especificas do projeto (sand-land FK/DEC-018): o unico conteudo que sobrevive a um rebase do kit
   L.push("");
   L.push("## Técnicas específicas deste projeto");
@@ -9758,6 +9793,9 @@ function buildWoTemplate(){
     "> **Pre-requisito:** versao/commit em que esta WO foi escrita, e o estado esperado (testes verdes, arvore limpa).",
     "> **Base:** a decisao, a analise ou a conversa que originou.",
     "> **Depende de:** WOs que precisam estar aplicadas antes — ou apague a linha.",
+    "> **Arquivos que o chat gravou no disco e esta WO versiona:** um por linha, com o `sha1sum` que o chat mediu",
+    "> ao grava-los. A Edicao 0 roda `sha1sum` em cada um ANTES de tudo: hash diferente = outro escritor mexeu",
+    "> no arquivo depois do chat — **PARE e reporte**, nao commite por cima. Sem pasta vinculada, apague a linha.",
     "> **Ancora semantica:** se um trecho-ancora nao bater EXATAMENTE, **PARE e reporte** — nunca chute um",
     "> lugar proximo. Os arquivos podem ter mudado entre a escrita desta WO e a aplicacao.",
     "> **Idempotencia:** antes de cada insercao, procure a frase-chave do texto NOVO. Se ja existir, **PULE**",

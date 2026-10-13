@@ -2102,3 +2102,17 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **A primeira sessão no fluxo novo, medida.** A conversa de 2026-10-12 começou **no site**, sem as ferramentas do computador e com o mount vazio — e o `260926-0947.txt` foi declarado *não legível por este canal*. O turno seguinte rodou **no app desktop**: o chat pediu acesso à pasta `Contexto`, o dono concedeu, e o `.txt`, os três prints e o repositório local foram lidos (HEAD `c3b6459`), com o harness rodado no próprio repo (**19/19 · 105/105**). O terceiro voltou **ao site** e o acesso continuou. **O meio muda dentro da mesma conversa**, e a ressalva escrita num turno pode estar vencida no seguinte — é a `FK-AE` no eixo do tempo.
 
 **O chat na máquina, medido nesta conversa, não é o ambiente do Code:** roda numa máquina Linux dentro do PC (`node`, `git`, `python3`, `npm` presentes; **sem PowerShell**), cada comando começa do zero com teto de 3 minutos, apagar arquivo vem desligado (o `git` deixa `.lock` em `.git` até ser liberado) e a rede segue lista de permissão. E o argumento a favor de manter o Code é de **verificação**, não de ferramenta: nesta série o relatório do Code pegou erro do chat quatro vezes. Isso entra como dado da análise da `i-N62`, não como decisão.
+
+## D-157 — O canal do chat vira eixo do kit: pasta vinculada por padrão, mount como reserva
+
+**Data:** 2026-10-13 · **WO:** 0129 · **Análise:** `meta/analises/261013-ANALISE-modo-direto-na-maquina.md` · **Origem:** `i-N62`, `D-156` · **Base:** os três projetos do dono que já rodam no canal novo (GameDataHub `DEC-085`, Sand-Land-Map `DEC-079`, satelite-web `FIX-075`/`FIX-076`), lidos no disco em 2026-10-13 `[medido por instrumento]`.
+
+**Decisão.** A pergunta da `i-N62` — terceira raia, variante do modo Code ou substituto do mount — tinha premissa errada: são **dois eixos independentes**, quem executa (`Code`) e por onde o chat lê e grava (**canal**). O gerador ganha o botão **Mount**: desligado (o padrão), as Instruções e o CEREBRO descrevem a pasta vinculada; ligado, sai o texto antigo, sem uma vírgula mudada. Os nove itens do canal pasta vêm todos de incidente medido nos três projetos: ritual em dois tempos, Git só leitura com `GIT_OPTIONAL_LOCKS=0`, arquivo do chat direto no lugar definitivo, `sha1sum` na Edição 0, um dono por documento escrito, notas na pasta-pai arquivadas movendo, segredo fora da pasta-pai, Instruções com fonte no repo e medidas por `wc -m`, e o ambiente da VM.
+
+**O que NÃO se fez, e por quê.** As 67 menções a mount em `src/` e as 43 no CEREBRO gerado **ficam**: uma frase da seção nova as rotula como canal de reserva. Reescrevê-las apagaria o que volta a valer quando o canal mudar de novo (mudou três vezes em quatro dias em setembro) e o que ainda vale para contas sem o app desktop. O **FlatDrop** fica como ferramenta de exceção. **Custo de teto:** as Instruções do canal pasta custam menos que as de mount no padrão (o `C28` mede).
+
+**A casa converte na mesma leva** (dogfooding): `INSTRUCOES-DO-PROJETO.md` reescrito pelo chat no canal novo, seção «Canal do chat» no `meta/CEREBRO.md`, linha do `sha1sum` no molde de WO. O `C43` passa a conferir três cláusulas novas nos dois lados (43 → 46).
+
+**Sem caso rodado:** a combinação canal pasta × `Code = não` é desenho — os três projetos que fundamentam a decisão têm Code. Fica com o rótulo da `i-N61` até um projeto rodar nela.
+
+**Não cortei versão.** O padrão do que o kit gera mudou, e isso justifica a v1.123.0 — decisão do dono, junto da reconstrução do CHANGELOG (`i-N59`).

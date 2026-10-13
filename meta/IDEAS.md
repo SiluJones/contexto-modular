@@ -588,7 +588,7 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 
 **É um terceiro modo de falha, e as duas regras atuais não o pegam:** a «lacuna» (`___` a preencher, wo0064) pede trabalho que falta; o «apêndice» («a frase vai sozinha», wo0126) entrega trabalho que sobra; a **ambiguidade** entrega a frase certa com dois sentidos. A regra candidata: *o Próximo nomeia o entregável e quem o produz — «o chat entrega X», nunca só «X».* Era para ter virado a wo0128; foi adiada pela mudança de fluxo (`D-156`) e fica aqui até a próxima WO de kit.
 
-## i-N62 — Um modo do KCM que trabalha DIRETO NA MÁQUINA (chat no app desktop com pasta conectada, só ele ou junto do modo Code) — ABERTA, gatilho: a próxima conversa, com os três projetos que já rodam assim
+## i-N62 — Um modo do KCM que trabalha DIRETO NA MÁQUINA (chat no app desktop com pasta conectada, só ele ou junto do modo Code) — DECIDIDA em 2026-10-13 (`D-157`, wo0129; análise `261013-ANALISE-modo-direto-na-maquina.md`)
 
 **Relatado pelo dono em 2026-10-12** (fatos do relato, não medidos daqui): uma atualização de layout do Claude tornou impraticável o fluxo **FlatDrop → upload para o mount** que o kit inteiro pressupõe (detalhe e contorno no parágrafo seguinte); em compensação, o app desktop passou a permitir que o chat trabalhe **direto em pastas da máquina**. **Três projetos do dono já rodam nesse fluxo novo.** O dono escolhe, como pasta de contexto do projeto no app desktop, **a mesma raiz do repositório** onde o Code trabalha, e costuma dar ao chat permissão de leitura na **pasta-pai** do projeto (onde ficam as notas `.txt` e os relatórios). Pediu à Anthropic uma correção pequena na interface «Nova» e não foi atendido.
 

@@ -13,3 +13,6 @@ dist/
 node_modules/
 
 # (instrucoes/ NAO entra aqui de proposito: instrucao APLICADA e registro -> vai pro repo)
+
+# Permissoes locais do Claude Code: por maquina, nao se versionam (wo0129)
+.claude/settings.local.json
