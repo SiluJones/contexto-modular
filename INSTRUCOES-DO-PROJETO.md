@@ -5,7 +5,7 @@
 > **Esta é a cópia que vale.** O `INSTRUCOES-DO-PROJETO.md` do repo é backup versionado e **não sobe ao mount** (`437fd39`): ao falar do que o assistente lê em toda mensagem, a referência é este texto, aqui no painel. Ao aplicar uma WO que mude estas instruções, **recole o arquivo aqui** — enquanto o painel não for atualizado, o repo está certo e o assistente continua errado.
 
 ## O que é
-KCM = gerador (um `index.html` vanilla, montado de `src/` via `build.js`) que produz kits de contexto para **18 nichos**. Dogfooding: este projeto é mantido pelos próprios arquivos que ele prega. Toolchain irmão: **ASU** (aplica patches YAML) e **FlatDrop** (achata repo para upload). Repo: `SiluJones/contexto-modular`.
+KCM = gerador (um `index.html` vanilla, montado de `src/` via `build.js`) que produz kits de contexto para **19 nichos**. Dogfooding: este projeto é mantido pelos próprios arquivos que ele prega. Toolchain irmão: **ASU** (aplica patches YAML) e **FlatDrop** (achata repo para upload). Repo: `SiluJones/contexto-modular`.
 
 ## Ritual de início (todo turno que abre sessão)
 1. Leia `meta/STATUS.md` para o estado atual — mas **STATUS é pista, não fato** (P8): confira o arquivo vivo antes de repetir uma pendência como aberta.
@@ -29,7 +29,7 @@ KCM = gerador (um `index.html` vanilla, montado de `src/` via `build.js`) que pr
 - **Análise antes do compromisso:** mudança não-trivial começa por análise escrita (problema · o que foi medido · opções · recomendação · riscos · ponto de decisão) — nunca por plano de execução. Mudança pequena vai direto a WO, sem cerimônia.
 
 ## Ao final da sessão (obrigatório, mode-aware, sem travar)
-- **Validação:** nada que toca `index.html`/`src/` sai sem `node build.js` + `node validate.js` — regra de ouro **18/18 nichos, 0 erros** (o total de checagens sobe a cada check novo). Doc-only não precisa (a rede é o `git diff`).
+- **Validação:** nada que toca `index.html`/`src/` sai sem `node build.js` + `node validate.js` — regra de ouro **19/19 nichos, 0 erros** (o total de checagens sobe a cada check novo). Doc-only não precisa (a rede é o `git diff`).
 - **Commit:** entregue o `git commit` pronto, em **bloco separado** para copiar isolado, mensagem **sem acento**. Não pule o commit. **Bloco `git` parcial (só `add`) não serve:** ou os três em ordem (`add`/`commit`/`push`), ou só o `commit` — que é o que importa.
 - **Feche com o bloco padrão** (só o que se aplica — linha sem conteúdo real **não aparece**: não invente handoff, não escreva "nada a arquivar" nem "nenhuma pendência"): **Próximo** (sempre — a ação + o que pedir no próximo turno) · **Estado** (versão/fase + harness + commit) · **Arquivar / Manter** (em lista, só se houver nota no mount) · **Config recomendada** por raia — **Chat** (planejamento) e **Code** (execução), nunca afirmando saber a config atual · **Handoff** (arquivo por arquivo; sessão completa = `AAMMDD-HANDOFF-BRIEF.md`). Formato completo no CEREBRO.
 
