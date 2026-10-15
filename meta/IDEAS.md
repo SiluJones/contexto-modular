@@ -576,6 +576,10 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 ## i-N58 — `modelo-em-espera` é a primeira natureza nova do pacote desde que o protocolo existe — ABERTA, gatilho de repetição (wo0080)
 **2026-08-03.** Até a wo0080 o pacote de update só conhecia duas naturezas — `template` (comparar e adotar é seguro) e `fusao` (propor merge, o usuário decide). O `_TEMPLATE.md` de `analises/` não coube em nenhuma das duas: mandar como `template` comum criaria a pasta `analises/` vazia em todo projeto receptor, violando a regra de que pasta nasce no primeiro uso. Saiu uma terceira natureza — `modelo-em-espera` (guarde; só coloque se a pasta já existir no destino). Outros artefatos podem caber na mesma natureza (modelo de log, modelo de spec, guia de pasta que ainda não nasceu). **Gatilho:** quando um segundo arquivo pedir a mesma natureza, revisar se o protocolo precisa de uma seção própria para ela em vez de uma linha na legenda.
 
+## i-N65 — Rótulo de bug e idioma do código escolhidos na montagem do kit — ABERTA, produto, pede análise
+
+**Origem:** GameDataHub, feedback de 2026-07-18 e de 2026-09-18 — duas adoções seguidas com o mesmo custo. O kit gera `FIX-N` e código em inglês; o GameDataHub usa `BUG-00N` e código em pt-BR, e cada pacote de atualização pede a mesma troca manual em quatro artefatos (DECISIONS, LOG-TEMPLATE, skill `wrap`, molde de WO). **A ideia:** dois campos na montagem — rótulo de bug e idioma do código — aplicados pelo gerador em todas as superfícies. Pede análise: toca o pacote de atualização, as revogações e o `C43`.
+
 ## i-N64 — O `/wrap` confere a FORMA do STATUS antes de editar, não só o que o relatório afirma — RESOLVIDA em 2026-10-15 (wo0130, `D-158`): passo de contagem nas duas skills `/wrap`, a gerada e a da casa
 
 **Origem:** achado registrado pelo próprio Code no fim da `FIX-038` (2026-09-15) e deixado «para o chat considerar»; capturado aqui em 2026-10-12 para não ficar só dentro de uma decisão. O fecho da wo0126 **sobrescreveu** a «Última sessão» da wo0125 em vez de rebaixá-la para «Sessão anterior»; o resultado imediato parecia certo e a perda só apareceu comparando com o commit anterior. O item 1b do `/wrap` confere o que o relatório **afirma**, não a estrutura do arquivo que o fecho edita.
@@ -640,6 +644,14 @@ O usuário quer que, ao fim de cada sessão, junto do resumo/dúvidas, o chat **
 Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev); commit às vezes não sai e o `git commit` deve vir **separado** no copia-e-cola. O usuário aceita esperar (não quer o chat perguntando "quer que eu gere agora?"); quer **previsão e cuidado** na geração. Estender ao possível a outros nichos. (D-040 mira o commit; confirmar.)
 
 ## 📮 Feedback para o Kit
+
+> **Livro de leitura (D-159)** — até onde o KCM leu a seção de feedback de cada vizinho. Atualize ao ler; confira ao abrir a conversa com a pasta do vizinho concedida.
+>
+> | Projeto | Seção de feedback | Último item lido | Lido em |
+> |---|---|---|---|
+> | Sand-Land-Map | `meta/IDEAS.md`, «📮 Feedback ao KCM — leva nova» | `FK-AZ` e `IDEIA-084` | 2026-10-15 |
+> | GameDataHub | `meta/IDEAS.md`, «🔁 Feedback para o Kit» e «🧩 Feedback para o Kit» | leva de 2026-10-02 | 2026-10-15 |
+> | satelite-web | `meta/IDEAS.md`, «🧰 Feedback para o Kit» | item de 2026-10-12 | 2026-10-15 |
 
 ### 2026-09-02 — Carta 02 do satelite-web: três achados de uso, e um deles corrige uma conclusão nossa
 Eles aplicaram a leva v1.120.0 por inteiro entre 25 e 28/08 — skills, `_TEMPLATE.md`, `settings.json`, `.flatdropignore`, `meta/SPEC.md` e o merge dos dois `fusao` (CEREBRO de 41 KB para 79,8 KB; Instruções de 5.796 para 7.463 caracteres, teto 7.600), com cinco WOs desde então. **Abrem dizendo que nada ali é reclamação de coisa que não funcionou:** é o que apareceu ao usar. Os três nascem de coisas que o kit «já quase acerta», e em cada uma falta meio passo. **Nenhum item pede resposta** — os três já viraram prática local lá.

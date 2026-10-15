@@ -58,6 +58,7 @@ Detalhes completos: `README.md`, `PLANNING.md`, `meta/STATUS.md`, `meta/CHANGELO
 - **Um dono por documento, escrito.** Nesta casa: o chat grava inteiros `meta/analises/`, as WOs, o `INSTRUCOES-DO-PROJETO.md`, as cartas e o handoff da pasta-pai, e as seções do chat no log do dia; o Code escreve `src/`, `index.html`, `validate.js`, `meta/STATUS.md` (pelo `/wrap`) e a sua seção do log; `meta/CEREBRO.md`, `meta/DECISIONS.md`, `meta/IDEAS.md`, `meta/CHANGELOG.md` e os moldes mudam por WO.
 - **Notas e relatórios na pasta-pai `Contexto\`**, fora do Git. O chat lê inteiro, registra e arquiva **movendo** para `notas-arquivadas\` — mover, nunca apagar —, listando antes e depois.
 - **Segredo não mora na pasta-pai** nem em nota `.txt`: o que está ali entra no contexto todo turno.
+- **Livro de leitura dos vizinhos (D-159):** a tabela no topo de «Feedback para o Kit», no `meta/IDEAS.md`, diz até onde lemos a seção de feedback de cada projeto. Ao abrir a conversa com a pasta de um vizinho concedida, confira a seção dele contra o marcador e diga no `Base:` se há item novo. Existe porque 58 entradas ficaram seis semanas sem leitura.
 - **As Instruções:** a fonte é o `INSTRUCOES-DO-PROJETO.md` do repo; o que o assistente lê é a cópia colada no painel, e só o dono a atualiza. WO que muda as Instruções termina pedindo para recolar. Tamanho por `wc -m`, no turno.
 - **O terminal do chat é uma VM Linux, não o PowerShell do dono:** comando começa do zero, teto de cerca de 3 minutos, nada em segundo plano; fim de linha `i/lf w/crlf` não é mudança. O harness roda ali (`node build.js` + `node validate.js`, com o `node_modules` do dono) numa réplica fora da pasta — nunca no repo vivo antes da WO.
 
@@ -170,6 +171,14 @@ Os arquivos do projeto vivem em `meta/` (mais `README.md` e `PLANNING.md` na rai
 - **STATUS é só o agora**: versão concluída sai do STATUS e vira entrada no CHANGELOG.
 - **DECISIONS cresce devagar**: cada decisão grande vira D-NNN; não reescrever as antigas.
 - **CHANGELOG por versão**: cada sessão que entrega algo ganha um vX.Y.Z no topo.
+
+- **Instrução de edição manual entrega o comando que MOSTRA o alvo antes do que o altera.** «Ache a entrada que começa com X e apague a linha» é verdadeira e inútil quando o arquivo tem uma linha só, enorme: o dono abre, não acha e não sabe o que fazer. Em JSON, entregue o comando que edita, não a descrição do que procurar — o dono tem terminal, e a mão dele não é o lugar de resolver busca em texto.
+- **A sintaxe do comando é da RAIA que o roda.** O executor roda num shell do tipo Bash, onde a barra invertida escapa o caractere seguinte: comando para ele usa `/` nos caminhos. O dono cola no shell dele, e a barra invertida só entra onde esse shell a exige; em comando `git`, `/` funciona nos dois — prefira. E todo comando que o dono copia vai em **bloco cercado**, nunca em código inline: o Markdown come a barra invertida antes de `_`, e o terminal recebe outro nome de arquivo.
+- **Ao medir a AUSÊNCIA de um artefato, abra-o antes de concluir por que ele falta.** A medição «não está versionado» pode estar certa e a conclusão «ficou órfão» errada: a razão costuma estar escrita no próprio arquivo — no cabeçalho, uma decisão do dono de mantê-lo fora.
+- **Antes de especificar uma frente, releia as entradas do IDEAS dela.** O resumo da conversa perde requisito que o IDEAS já detalhava, e a pergunta que o IDEAS já respondia volta a ser feita — gastando a rodada que a captura existia para poupar.
+- **Arquivar é MOVER para `notas-arquivadas\`, nunca apagar** — o verbo errado na linha de contrato é repetido fielmente, turno após turno.
+- **O handoff nunca é versionado nem entra no repositório:** `AAMMDD-HANDOFF-BRIEF.md` mora na pasta-pai e se arquiva como a correspondência.
+- **Versionar não é promover** (sonda): guardar a sonda no repo não a faz dar veredito; antes de promover, ela chama o código de produção e, se mede desempenho, mede também o acerto contra um oráculo.
 
 ### Refino deste CEREBRO.md (dogfooding do G19 — wo0055)
 - **É dever nosso, não só do usuário pedir.** Este arquivo cresce por decisões concretas (D-NNN), mas se uma regra vira atrito repetido — descumprida, nunca aplicada, gatilho que não dispara — propor o ajuste é nosso; não esperar o usuário reclamar.

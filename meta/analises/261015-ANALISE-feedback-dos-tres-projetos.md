@@ -1,8 +1,8 @@
 # ANÁLISE — O feedback que os três projetos escreveram e o KCM não leu: triagem, levas e versão
 
-> **Status:** Decidida em 2026-10-15 — o dono mandou seguir com a recomendação inteira; em execução (wo0130 escrita, wo0131 a seguir)
+> **Status:** Decidida em 2026-10-15 — o dono mandou seguir com a recomendação inteira. Leva 1 aplicada (wo0130, `1286fdf`, v1.123.0); leva 2 escrita (wo0131, v1.124.0). Cartas: depois da wo0131
 > **Data:** 261015 · **Base:** KCM `cb061c5` (v1.122.0, 19/19 · 106/106) · Sand-Land-Map `bad361f` · GameDataHub `7b15fd7` · satelite-web `5c970a1` — os quatro lidos no disco nesta conversa
-> **Vira:** `meta/workorders/261015-wo0130-feedback-leva-1-molde-skills-e-versao.md` (leva 1) e a wo0131 (leva 2) · **Decisão:** `D-158` · **Origem:** pedido do dono em 2026-10-15 («antes das cartas, outra leitura, cuidadosa»); `D-157`
+> **Vira:** `meta/workorders/261015-wo0130-feedback-leva-1-molde-skills-e-versao.md` (leva 1) e `meta/workorders/261015-wo0131-feedback-leva-2-cerebro-instrucoes-e-livro.md` (leva 2) · **Decisão:** `D-158`, `D-159` · **Origem:** pedido do dono em 2026-10-15 («antes das cartas, outra leitura, cuidadosa»); `D-157`
 
 ---
 
@@ -159,3 +159,9 @@ Esses dois o dono resolve hoje, com uma frase no chat de cada projeto (texto pro
 - **A wo0130 leva 16 cláusulas novas ao `C43`, não uma por regra.** A regra da hora mora nas duas skills e é uma cláusula com dois alvos; a regra da versão é só da casa e não tem par gerado. `C43`: 46 → **62**.
 - **A regra do `/wrap` foi reescrita para passar no `C49`:** a primeira versão citava «Última sessão», vocabulário de cadência que o kit revogou; ficou «o bloco do topo do STATUS», que vale para o kit e para a casa.
 - **A wo0130 toca o cabeçalho do `meta/STATUS.md`** (só o número da versão), porque o `C54` exige STATUS e `KIT_VERSION` iguais no mesmo commit. Exceção de raia declarada na `D-158`.
+
+## Desvio na execução (registrado pelo chat ao escrever a wo0131)
+
+- **A linha do fecho nas Instruções não lista os cinco itens.** A sugestão do satelite-web (07/10) colide com a `D-142`, que proíbe o resumo de listar os campos separados por «·» — o `C19` acusou. Entrou a contagem: «o esqueleto tem cinco itens; sem saber nomeá-los, abra-o». A forma longa da frase estourou o combo do `narrative` (7.611 > 7.600) e foi encurtada.
+- **O teto está quase cheio nos dois eixos:** padrão 6.662/6.900, `+Code` 546/550, combo 7.580/7.600. A próxima regra que precisar estar nas Instruções vai exigir cortar outra — candidata a análise própria antes da próxima leva.
+- **Duas correções na skill `apply-wo` da casa vieram do relatório da wo0130**, não da triagem: o fim de linha afirmado (todo `.md` LF) estava errado, e o caminho do argumento dobrava `meta/workorders/`.

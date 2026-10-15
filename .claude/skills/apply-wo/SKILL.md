@@ -4,7 +4,8 @@ description: Aplica uma WO de meta/workorders/ ao repo do KCM — localiza cada 
 disable-model-invocation: true
 ---
 
-Leia o arquivo de WO em `meta/workorders/$ARGUMENTS` e execute-o. Se o nome não vier na invocação,
+Leia o arquivo de WO em `meta/workorders/$ARGUMENTS` e execute-o (se o argumento já começar por
+`meta/workorders/`, use-o como está). Se o nome não vier na invocação,
 PEÇA — não escolha uma WO por conta própria.
 
 Regras de aplicação:
@@ -14,7 +15,9 @@ Regras de aplicação:
 - Localize cada âncora EXATAMENTE. Se não achar uma, PARE e reporte — nunca chute um lugar próximo.
 - **Fim de linha por arquivo:** na **árvore de trabalho** (o que o editor abre),
   `src/index.template.html` é **CRLF** — garantido pelo `.gitattributes`, não pela configuração da
-  máquina; `validate.js`, `build.js`, os `src/niches/*.js` e todo `.md` são **LF**. *No índice do git
+  máquina. Os demais variam com o `core.autocrlf` da máquina — medido em 2026-10-15: `validate.js`,
+  `meta/CEREBRO.md`, `meta/DECISIONS.md`, o molde de WO e a skill `wrap` são **CRLF** na árvore, o resto
+  LF; confira com `git ls-files --eol <arquivo>` antes de editar. *No índice do git
   o template é LF, e isso é o certo: `git ls-files --eol` devolve `i/lf w/crlf attr/text=crlf`. Quem
   compara os dois números sem saber disso acha que achou um defeito.* Âncora de mais de uma linha
   colada com o separador errado não casa — na dúvida, edite linha a linha.

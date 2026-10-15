@@ -2128,3 +2128,21 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Um caso desta própria leva.** A `FK-AX` do Sand-Land-Map (28/09: «inserir após» com âncora de prefixo vira inserção do lado errado) descreveu o desvio que o Code teve ao aplicar a wo0129, duas semanas depois. A regra entra no molde com o caso medido, e esta WO a cumpre: toda edição é **trocar**, com a âncora repetida no texto novo.
 
 **Exceção de raia, declarada.** Esta WO toca o cabeçalho do `meta/STATUS.md`, que é do `/wrap`, para trocar só o número da versão — o `C54` exige STATUS e `KIT_VERSION` iguais no mesmo commit, e o gancho de pré-commit roda o harness.
+
+## D-159 — A segunda leva do feedback dos vizinhos entra pelo CEREBRO, pelas Instruções e pelo prompt de atualização, e nasce o livro de leitura
+
+**Data:** 2026-10-15 · **WO:** 0131 · **Análise:** `meta/analises/261015-ANALISE-feedback-dos-tres-projetos.md` · **Antecede:** `D-158` (leva 1).
+
+**Decisão.** Entram as regras da triagem que moram no CEREBRO gerado (doze), na linha do fecho das Instruções e no prompt de atualização (duas), e as que valem para a casa entram também no `meta/CEREBRO.md` — oito cláusulas novas no `C43` (62 → 70) e o `C106` para o que não tem par instalado. Corta a **v1.124.0** pela regra da `D-158`.
+
+**O livro de leitura.** A causa do atraso não era desatenção: nada disparava a leitura das seções de feedback, que moram no repositório de quem escreve. O remédio é barato porque o canal pasta (`D-157`) alcança os vizinhos: uma tabela no topo de «Feedback para o Kit» com o último item lido de cada projeto, conferida na abertura da conversa em que a pasta do vizinho estiver concedida. No kit, a seção «Correspondência entre projetos» ensina o mesmo. **Vigiar:** se a próxima leitura atrasar de novo, a tabela vira check.
+
+**Do relatório da wo0130**, duas correções na skill `apply-wo` da casa: ela afirmava que todo `.md` é LF (medido: cinco arquivos estão em CRLF na árvore do dono) e não aceitava o caminho completo no argumento, que dobrava `meta/workorders/`. A segunda é também erro do chat, que passava o caminho completo na linha `/apply-wo`; a linha volta a levar só o nome do arquivo.
+
+**A sugestão do satelite-web de 07/10 (listar os itens do fecho nas Instruções) entra em outra forma.** Ela tem evidência — depois de uma compactação, o chat fechou pela versão curta e esqueceu o roteiro —, mas a lista em linha é o que a `D-142` proíbe, e o `C19` acusou. Entra a contagem: a linha diz que o esqueleto tem cinco itens, e quem não souber nomeá-los abre o CEREBRO. A perda de memória vira gatilho, sem ensinar a forma corrida.
+
+**E uma do `/wrap` dela, que deixou o harness vermelho.** O fecho citou no STATUS o caminho da wo0131 abreviado com reticências, e o `C103` confere que caminho citado existe, e acusou — no repo vivo, desde `b1fb048`. O `/wrap` tinha rodado o harness ANTES de escrever, e fecho só de doc não roda depois. Esta WO corrige o caminho e acrescenta à skill `/wrap` da casa: depois de escrever STATUS, DECISIONS ou log, o harness roda antes do commit.
+
+**Já entregue pela leva 1, sem repetir aqui:** o roteiro no corpo da resposta (terceira regra de item do molde, wo0130).
+
+**Recusadas, com motivo (na análise):** `.gitattributes` no kit de arranque, entrega incremental em arquivo separado, infra multi-máquina. **Produto:** `i-N65`.

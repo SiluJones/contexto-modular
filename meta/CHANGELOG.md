@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.123.0**.
+> Histórico de versões. Versão atual: **v1.124.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.124.0 — A segunda leva do feedback dos vizinhos, e o livro de leitura que impede o atraso de se repetir (wo0131, D-159)
+- **CEREBRO gerado:** instrução de edição manual entrega o comando que mostra o alvo · a sintaxe do comando é da raia que o roda, e comando do dono vai em bloco cercado · ao medir a ausência de um artefato, abra-o antes de concluir por quê · releia o IDEAS da frente antes de especificar · DECISIONS arquiva por evento, com `Status:` fechado · arquivar é mover · o handoff nunca é versionado · versionar uma sonda não é promovê-la (código de produção, oráculo) · sem mount, a ferramenta do Projeto entrega o arquivo inteiro · com Code, «arquivo inteiro» passa a valer só para o que o assistente autora, e arquivo com seção de outro autor nunca vai inteiro · o exemplo do fecho deixa de pedir o relatório colado · **livro de leitura** na correspondência entre projetos.
+- **Instruções geradas:** a linha do fecho diz que o esqueleto tem cinco itens e manda abri-lo a quem não souber nomeá-los — sem listar os campos, que é o que a `D-142` proíbe. Custo medido no `C28`.
+- **Prompt de atualização:** comparar por bloco, cobertura declarada por arquivo; vocabulário novo não renomeia arquivo antigo.
+- **A casa:** as mesmas regras no `meta/CEREBRO.md`, o livro de leitura aberto no `meta/IDEAS.md`, a `i-N65` (rótulo de bug e idioma na montagem) registrada como produto, e duas correções na skill `apply-wo` que o relatório da wo0130 apontou.
+- Origem: `FK-AH`, `FK-AI`, `FK-AJ`, `FK-AK`, `FK-AL`, `FK-AN`, `FK-AO`, `FK-AV` (Sand-Land-Map); 18/09, 25/09, 28/09 e 29/09 (GameDataHub); 11/07, 28/08, 21/09 e 07/10 (satelite-web). Análise `261015-ANALISE-feedback-dos-tres-projetos.md`.
+- Harness **19/19 · 107/107** (entra o `C106`); `C43` de **62 para 70** cláusulas.
 
 ## v1.123.0 — A primeira leva do feedback dos vizinhos, e a regra que faltava para cortar versão (wo0130, D-158)
 - **Por que esta entrada carrega mais que a própria WO:** a v1.122.0 (28/08) atravessou as wo0107 a wo0129 sem corte, embora várias mudassem o que o kit gera. O resumo abaixo sai do registro (`D-138` a `D-157`); o detalhe vive em `meta/DECISIONS.md`.

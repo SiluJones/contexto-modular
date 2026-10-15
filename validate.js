@@ -1094,6 +1094,16 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     ["skills: origem da hora",           /date \+%y%m%d-%H%M/,                    ["applyWo","wrap"]],
     ["wrap: conta a estrutura",          /conte a ESTRUTURA que voc[eê] editou/,   ["wrap"]],
     ["wrap: teto medido",                /wc -m/,                                  ["wrap"]],
+    // wo0131 (D-159): a segunda leva do feedback dos tres projetos — as regras de CEREBRO que a casa
+    // tambem carrega, conferidas nos dois lados.
+    ["CEREBRO: edicao manual mostra o alvo", /MOSTRA o alvo antes do que o altera/,   ["cerebro"]],
+    ["CEREBRO: sintaxe por raia",            /A sintaxe do comando [eé] da RAIA/,       ["cerebro"]],
+    ["CEREBRO: abrir o ausente",             /abra-o antes de concluir por que ele falta/, ["cerebro"]],
+    ["CEREBRO: IDEAS antes da spec",         /releia as entradas do IDEAS dela/,       ["cerebro"]],
+    ["CEREBRO: arquivar e mover",            /Arquivar [eé] MOVER/,                     ["cerebro"]],
+    ["CEREBRO: handoff nao versionado",      /O handoff nunca [eé] versionado/,         ["cerebro"]],
+    ["CEREBRO: versionar nao e promover",    /Versionar n[aã]o [eé] promover/,          ["cerebro"]],
+    ["CEREBRO: livro de leitura",            /[Ll]ivro de leitura/,                     ["cerebro"]],
     ["CLAUDE.md: vocabulario de ato", /`apply` · `wrap` · `probe` · `explore`/, ["claudeMd"]],
     ["CLAUDE.md: relatorio em arquivo", /-code-/,                    ["claudeMd"]],
     ["CLAUDE.md: relatorio sem pedir", /sem pedir/i,                 ["claudeMd"]],
@@ -2190,6 +2200,26 @@ check("C105 o canal do chat e um eixo (wo0129, D-157): pasta vinculada por padra
   S.workmode = prev;
   assert(fora.length===0, fora.join(" | "));
   return "ok (19 nichos x Code x canal)";
+});
+
+check("C106 a segunda leva do feedback dos vizinhos chega ao gerado (wo0131, D-159): o fecho diz quantos itens tem, o modo Code nao manda entregar tudo inteiro, e o update compara por bloco", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{}); const fora=[];
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    S.workmode={}; const ins=T.buildInstr(n), semCode=T.buildClaudeMd(n);
+    S.workmode={codeMode:"yes"}; const comCode=T.buildClaudeMd(n);
+    if(!/o esqueleto tem cinco itens/.test(ins)) fora.push(id+": a linha do fecho nas Instrucoes nao diz quantos itens o esqueleto tem");
+    if(!/nunca vai inteiro/.test(comCode)) fora.push(id+": com Code, o CEREBRO ainda manda entregar todo documento inteiro");
+    if(/nunca vai inteiro/.test(semCode)) fora.push(id+": sem Code, o teste do outro autor vazou");
+    if(/aplicada, aqui o relat/.test(comCode)) fora.push(id+": o exemplo do fecho ainda pede o relatorio colado");
+  });
+  S.workmode={codeMode:"yes"};
+  const up=T.buildUpdatePrompt(T.normNiche(T.NICHES.dev));
+  if(!/Compare por BLOCO de texto/.test(up)) fora.push("update: sem o metodo de comparacao por bloco");
+  if(!/POR ARQUIVO/.test(up)) fora.push("update: cobertura declarada em lote");
+  S.workmode=prev;
+  assert(fora.length===0, fora.join(" | "));
+  return "ok (19 nichos)";
 });
 
 check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistente (choque CONTEXT)", () => {

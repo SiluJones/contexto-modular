@@ -43,6 +43,9 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
 - O `HHMM` do nome do relatório sai de `date +%y%m%d-%H%M`, rodado na hora — nunca de cabeça.
 - **Versão (D-158):** WO que muda o que o kit **gera** já traz o corte de minor (`KIT_VERSION`, topo do
   CHANGELOG e «Versão atual» do STATUS). Se ela tocou `src/` e não cortou, aponte no relatório.
+- **Depois de escrever STATUS, DECISIONS ou log, rode `node validate.js index.html` antes do commit** — sem
+  build, que o `index.html` não mudou. O `C102` e o `C103` leem prosa: fecho «só de doc» também quebra o
+  harness, e foi assim que um caminho abreviado no STATUS deixou o repo vermelho sem ninguém ver (D-159).
 - Acrescente `D-0NN` / `FIX-0NN` em `meta/DECISIONS.md` se houve decisão ou correção registrável.
 - Se alguma análise de `meta/analises/` foi decidida, implementada ou abandonada nesta sessão,
   atualize o **Status** dela (e os elos «Vira» / «Decisão») — análise não se apaga, muda de estado.
