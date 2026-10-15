@@ -1,6 +1,6 @@
 # ANÁLISE — O feedback que os três projetos escreveram e o KCM não leu: triagem, levas e versão
 
-> **Status:** Decidida em 2026-10-15 — o dono mandou seguir com a recomendação inteira. Leva 1 aplicada (wo0130, `1286fdf`, v1.123.0); leva 2 escrita (wo0131, v1.124.0). Cartas: depois da wo0131
+> **Status:** Decidida em 2026-10-15 — o dono mandou seguir com a recomendação inteira. Leva 1 aplicada (wo0130, `1286fdf`, v1.123.0); leva 2 aplicada (wo0131, `357ccdf`, v1.124.0). Cartas: depois da wo0131
 > **Data:** 261015 · **Base:** KCM `cb061c5` (v1.122.0, 19/19 · 106/106) · Sand-Land-Map `bad361f` · GameDataHub `7b15fd7` · satelite-web `5c970a1` — os quatro lidos no disco nesta conversa
 > **Vira:** `meta/workorders/261015-wo0130-feedback-leva-1-molde-skills-e-versao.md` (leva 1) e `meta/workorders/261015-wo0131-feedback-leva-2-cerebro-instrucoes-e-livro.md` (leva 2) · **Decisão:** `D-158`, `D-159` · **Origem:** pedido do dono em 2026-10-15 («antes das cartas, outra leitura, cuidadosa»); `D-157`
 
