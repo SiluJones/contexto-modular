@@ -77,6 +77,30 @@
 > terceiro: de quem, e em que artefato ele ja esta escrito. Valor exigido sem fonte e preenchido por
 > deducao — e saida deduzida e indistinguivel de saida medida no ponto onde e ESCRITA; as duas so se
 > separam no ponto onde e USADA, tarde demais.
+> **A string contada e EXCLUSIVA do texto que a WO insere.** Se ela aparece tambem noutro ponto do
+> arquivo, o numero previsto e da intencao, nao do arquivo — quatro contagens seguidas erraram assim
+> num projeto vizinho, todas por uma string generica que ja existia la. O comando antes/depois resolve
+> o VALOR; esta regra resolve o ALVO, e os dois defeitos sao diferentes.
+> **Comando de conferencia que voce nao rodou no ambiente de quem aplica vai marcado «nao testado».**
+> Um `grep` de fim de linha devolveu o oposto do prometido noutra plataforma, e so nao virou ciclo
+> perdido porque quem aplicou montou um controle sozinho. Marcado, o vermelho dele e lido como suspeita
+> do instrumento, nao da aplicacao.
+> **Esperado deduzido nao e condicao de parada.** Valor que voce deduziu e nao mediu (um status HTTP,
+> um total) vai rotulado «deduzido — relate o cru, nao pare»; so valor medido pode mandar parar.
+> **Quando o numero absoluto e inevitavel, escreva-o como PISO** («se der menos que 126, PARE»): protege
+> contra perda sem depender de acertar o total. **E rede ja vermelha nao e rede:** se lint ou build ja
+> falham antes da WO, o criterio e o DELTA — meca o baseline (`git stash`, rode, `git stash pop`),
+> compare antes e depois, e nomeie cada erro novo.
+> **Referencia a outro documento cita o TRECHO literal, nunca numero de linha ou de secao.** Trecho
+> falha alto quando o documento muda; numero falha em silencio e parece preciso enquanto esta errado.
+> Vale para comportamento de arquivo de terceiro (CSS, configuracao de biblioteca): o conserto cita a
+> regra que ele vence, com o seletor ou a chave literal — afirmar cascata sem abrir o arquivo ja
+> declarou resolvido o que nao estava.
+> **Simule a WO a partir do PROPRIO TEXTO dela.** Aplique as edicoes numa copia do repositorio lendo-as
+> do arquivo da WO — nao da lembranca nem do script que as gerou — e compare com o que foi testado. Ja
+> pegou uma linha em branco que o bloco cercado perdeu e um saldo que esquecia as linhas da propria WO.
+> **O bloco de commit da WO nao traz rodape de coautoria.** Quem commita poe o seu: o modelo e a sessao
+> sao de quem aplica, e um rodape escrito por quem redigiu e trocado na aplicacao.
 > **Proximo comando:** o comando que o usuario deve rodar quando esta WO fechar em verde — ou apague a linha.
 > Ele vai CRU e SOZINHO na ultima linha do relatorio, sem frase de apresentacao: texto em volta esconde o comando.
 
@@ -84,6 +108,9 @@
 > Se **CHAT**: esta WO toca so codigo/config — nao faca append nos `meta/`; o chat entrega os
 > documentos depois da validacao. Se **CODE**: esta WO E o registro — aplique os appends previstos
 > e nao espere doc do chat. *Uma fonte por doc por ciclo; escolher errado aqui duplica conteudo.*
+> **O banner decide quem APLICA, nao quem redige.** WO que traga edicao numerada num documento que o
+> banner reserva ao chat e contraditoria: quem aplica PARA e pergunta, em vez de escolher um dos lados
+> — escolher em silencio ja deixou o registro de uma WO inteira de fora.
 
 ---
 
@@ -144,6 +171,12 @@ fica invisivel dos dois lados, porque a correcao e a conferencia saem do mesmo i
 > produz conteudo duplicado ou duas estruturas aninhadas com o texto antigo preso entre elas. Se voce
 > nao consegue ancorar a remocao, **quebre em duas edicoes numeradas** — remover primeiro, inserir
 > depois — e diga na WO que sao as duas metades da mesma operacao.
+> **Inserir so com ancora de LINHA INTEIRA.** Ancora que e so o comeco de uma linha longa pede a quem
+> aplica que ache o fim de uma linha que ele nao ve inteira, e ja virou insercao do lado errado. Prefira
+> **Substituir** com a ancora repetida dentro do texto novo: substituir nao tem lado. Linha em branco na
+> BORDA do texto novo nao sobrevive ao bloco cercado — ponha-a no MEIO, entre a ancora e o texto.
+> **Caso medido:** um script de aplicacao tratou «inserir apos» como «substituir» em tres edicoes; o
+> saldo de linhas previsto pela WO acusou, e quem aplicou corrigiu antes do commit.
 
 ## Edicao 2 — `caminho/real/do/arquivo.ext` · [...]
 
@@ -225,6 +258,11 @@ WO avisou que certa frase «nao e citada por nenhum texto inserido — conferido
         que forma a resposta volta (numero, sim/nao, print). **Sem ele o dono responde em prosa livre e
         alguem tem de perguntar de novo**, que e o atrito que o roteiro existe para evitar. Forma medida
         em campo: 27 itens respondidos em dois roteiros, contra zero em tres tentativas sem forma.
+        **Tres regras de item.** (1) O item descreve o ESTADO FINAL, nao a acao: «deixe o arquivo sem
+        a chave X, ainda valido como JSON», nunca «apague a linha» — a acao tem duas leituras, e a
+        errada e a mais natural. (2) Estado intermediario so entra se for REPRESENTAVEL no modelo:
+        escreva qual valor o representa; se nao houver, o item mede outra coisa. (3) O roteiro vai
+        INTEIRO no corpo da resposta do chat, numerado — nunca «ver o fim da WO».
       - **Chega no ramo?** Uma linha nomeando o arquivo e a funcao por onde a execucao passa pelo codigo
         que esta WO mudou. Se voce nao consegue tracar essa linha, o passo nao verifica esta WO: verifica
         que o programa continua rodando. E o unico campo que da trabalho, e e o que separa conferir de

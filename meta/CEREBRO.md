@@ -254,6 +254,8 @@ node validate.js index.html
 ```
 Nunca publicar sem o harness passar em **19/19 nichos + todas as checagens, 0 erros**. (O harness chama `buildClaudeMd`/`buildInstr` direto via shim, trocando o `boot()`; o "Boot failed: DOMException" do boot real não é usado aqui.) O `build.js` é ferramenta **do lado do dev** — o usuário final continua recebendo **um `index.html` único**, sem build (decisão D-001).
 
+**Corte de versão (D-158).** WO que muda o que o kit **gera** (`src/`, e por isso o `index.html`) corta **minor** na mesma WO: `KIT_VERSION` no template, entrada nova no topo do `meta/CHANGELOG.md` e «Versão atual» no cabeçalho do `meta/STATUS.md` — o `C54` exige os três iguais. WO que só mexe na casa (`meta/`, skills, harness sem mudar o gerado) não corta. É regra, não preferência: o número é o que diz a um projeto instalado que ele está atrás, e a v1.122.0 atravessou 23 WOs que mudaram o gerado sem que nenhum instalado pudesse saber.
+
 ---
 
 ## 🚫 Não faça sem pedir

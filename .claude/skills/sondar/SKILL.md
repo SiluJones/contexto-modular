@@ -29,6 +29,7 @@ Os quatro primeiros valem para qualquer projeto; o quinto so existe a partir da 
 ## O relatorio
 
 Grave em `../AAMMDD-HHMM-code-<slug>-explore-<alvo>.txt` (pasta-pai do repo, mesmo lugar e mesmo padrao dos outros relatorios; o ato e sempre `explore`). Use estas quatro secoes:
+O `HHMM` sai de `date +%y%m%d-%H%M`, rodado na hora — nunca de cabeça.
 
 - **O que eu olhei** — as pastas e os arquivos, com as contagens e os comandos usados.
 - **O que eu olhei e NAO achei nada** — explicito, e nao e formalidade. Passada exploratoria que sempre acha algo e passada que inventa; dizer «olhei X e esta consistente» e RESULTADO, e e o que permite a proxima passada pular X. Sem esta secao, a exploracao seguinte recomeca do zero.

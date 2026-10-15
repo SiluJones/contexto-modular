@@ -2116,3 +2116,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Sem caso rodado:** a combinação canal pasta × `Code = não` é desenho — os três projetos que fundamentam a decisão têm Code. Fica com o rótulo da `i-N61` até um projeto rodar nela.
 
 **Não cortei versão.** O padrão do que o kit gera mudou, e isso justifica a v1.123.0 — decisão do dono, junto da reconstrução do CHANGELOG (`i-N59`).
+
+## D-158 — A primeira leva do feedback dos vizinhos entra pelo molde e pelas skills, e o corte de versão vira regra
+
+**Data:** 2026-10-15 · **WO:** 0130 · **Análise:** `meta/analises/261015-ANALISE-feedback-dos-tres-projetos.md` · **Origem:** 58 entradas dos três projetos que usam o kit, escritas entre 18/07 e 13/10 e nunca lidas aqui `[medido por instrumento: leitura no disco, 2026-10-15]`.
+
+**Decisão.** Das 37 entradas a adotar, entram nesta leva as que moram no **molde de WO** e nas **skills** — onze regras no molde, seis nas skills —, cada uma com o mesmo texto no gerado e na casa e uma cláusula no `C43` (46 → 62). As do CEREBRO, das Instruções e do prompt de atualização vão na wo0131, junto do livro de leitura que impede o atraso de se repetir.
+
+**Corte de versão, e por que não é decisão do dono.** Não havia regra escrita, e por isso a v1.122.0 (28/08) atravessou 23 WOs que mudaram o gerado, inclusive um nicho novo e o eixo canal. O número é o carimbo pelo qual um projeto instalado sabe que está atrás (`D-137`); deixá-lo parado é carimbar conteúdo de outubro como de agosto. Regra: **WO que muda o que o kit gera corta minor na mesma WO** (`KIT_VERSION`, topo do CHANGELOG, «Versão atual» do STATUS — os três que o `C54` compara). Esta WO corta a **v1.123.0**, e a entrada dela no CHANGELOG resume `D-138` a `D-157` pelo registro.
+
+**Um caso desta própria leva.** A `FK-AX` do Sand-Land-Map (28/09: «inserir após» com âncora de prefixo vira inserção do lado errado) descreveu o desvio que o Code teve ao aplicar a wo0129, duas semanas depois. A regra entra no molde com o caso medido, e esta WO a cumpre: toda edição é **trocar**, com a âncora repetida no texto novo.
+
+**Exceção de raia, declarada.** Esta WO toca o cabeçalho do `meta/STATUS.md`, que é do `/wrap`, para trocar só o número da versão — o `C54` exige STATUS e `KIT_VERSION` iguais no mesmo commit, e o gancho de pré-commit roda o harness.

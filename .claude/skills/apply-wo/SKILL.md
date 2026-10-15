@@ -22,8 +22,8 @@ Regras de aplicação:
   PULE o item e diga no relatório — não duplique.
 - Não toque em nada fora das edições nomeadas na WO.
 - WO só de doc (`meta/`) NÃO precisa de build. WO que toca `src/` (template ou nicho) precisa de
-  `node build.js` e depois `node validate.js index.html` — regra de ouro **18/18 nichos, 0 erros**
-  (o total de checagens sobe a cada check novo; o que não muda é 18/18 e 0 erros).
+  `node build.js` e depois `node validate.js index.html` — regra de ouro **19/19 nichos, 0 erros**
+  (o total de checagens sobe a cada check novo; o que não muda é 19/19 e 0 erros).
 - Nunca edite o `index.html` direto: ele é **gerado**. Edite `src/` e rode o build.
 - Ao terminar, rode `git diff` e confira que bate com a forma esperada (aditivo + as substituições
   previstas; sem remoção acidental) ANTES de commitar.
@@ -40,6 +40,15 @@ Regras de aplicação:
   skill agora» — medido duas vezes, isso acrescenta um passo sem tirar nenhum. Se a minha escolha chegar depois, o relatório se
   REESCREVE. Isto vale mesmo quando a WO traz os blocos de `git` no corpo: os blocos são o QUE rodar,
   não um pedido para eu rodar.
+- **Banner contraditório:** se o «Canal dos meta» disser CHAT e o corpo trouxer edição numerada num
+  documento `meta/`, a WO é contraditória: PARE e pergunte. O banner decide quem APLICA; escolher um
+  dos lados em silêncio já deixou o registro de uma WO inteira de fora.
+- **Corpo mínimo do relatório**, nesta ordem: (1) o que foi feito, edição por edição; (2) a SAÍDA CRUA
+  das conferências — o número e o comando que o produziu, nunca só «bate»; (3) o que fugiu do texto
+  literal da WO; (4) o que muda para quem usa; (5) o que você olhou além da WO; (6) arquivos tocados;
+  (7) build/validação; (8) commit e push. Relatório que só repete «bate, bate, bate» não foi escrito
+  por quem olhou o diff.
+- O `HHMM` do nome do relatório sai de `date +%y%m%d-%H%M`, rodado na hora — nunca de cabeça.
 - Feche com o **relatório de trabalho** — o que fez, achados e desvios do texto literal da WO,
   arquivos tocados, resultado de build/validate, o commit. **Não** use o bloco de fecho do chat:
   aquele é da raia de planejamento.

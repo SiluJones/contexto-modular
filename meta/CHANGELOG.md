@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.122.0**.
+> Histórico de versões. Versão atual: **v1.123.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.123.0 — A primeira leva do feedback dos vizinhos, e a regra que faltava para cortar versão (wo0130, D-158)
+- **Por que esta entrada carrega mais que a própria WO:** a v1.122.0 (28/08) atravessou as wo0107 a wo0129 sem corte, embora várias mudassem o que o kit gera. O resumo abaixo sai do registro (`D-138` a `D-157`); o detalhe vive em `meta/DECISIONS.md`.
+- **De 28/08 a 13/10, pelo registro:** relatório com ato e alvo no nome (`D-139`) · bloco de fecho com condição observável e esqueleto literal (`D-140`, `D-142`) · skill `sondar` gerada e o par sonda/exploração (`D-141`, `D-143`) · `/wrap` cita em vez de concluir sobre medição; armadilhas do `grep -c` e do fim de linha no molde (`D-144`) · `C43` conferindo as superfícies instaladas da casa, quatro e depois cinco (`D-145`, `D-151`) · `C102` e `C103`: prosa viva que não mente sobre contagem, e caminho citado que existe (`D-146`–`D-148`) · **19º nicho, companion de jogo** (`D-149`, `D-150`) · as catorze regras do Sand-Land-Map (`D-151`–`D-155`) · **o eixo canal: pasta vinculada por padrão, mount como reserva** (`D-156`, `D-157`).
+- **Nesta WO — molde de WO (onze regras):** a string contada é exclusiva do texto inserido · comando não rodado no ambiente de quem aplica vai marcado «não testado» · esperado deduzido não manda parar · número absoluto como piso · rede já vermelha se mede por delta · referência cita trecho literal · simular a WO a partir do próprio texto · o bloco de commit não traz rodapé de coautoria · o banner decide quem aplica · inserção só com âncora de linha inteira · três regras de item de roteiro. Origem: `FK-AG`, `FK-AQ`, `FK-AS`, `FK-AU`, `FK-AR`, `FK-AT`, `FK-AW`, `FK-AX`, `IDEIA-084` (Sand-Land-Map); 02/10 e 18/09 (GameDataHub); 28/08 e 29/09 (satelite-web).
+- **Nesta WO — skills:** `/apply-wo` para em banner contraditório e relata com corpo mínimo de oito partes (satelite-web, 06/10); `/wrap` conta a estrutura que editou antes do commit (`FK-AP` + `i-N64`) e mede o teto das Instruções quando as toca (GameDataHub, 02/10); as três skills dizem de onde nasce o `HHMM` (satelite-web, 21/09).
+- **A regra do corte (`D-158`):** WO que muda o que o kit gera corta minor na mesma WO — `KIT_VERSION`, topo deste arquivo e «Versão atual» do STATUS.
+- Harness **19/19 · 106/106**; `C43` de **46 para 62** cláusulas, todas conferidas nos dois lados.
 
 ## v1.122.0 — Os dois carimbos respondem sozinhos (wo0106, D-137)
 - **Base:** itens (1) e (2) do feedback do satelite-web (registrados pela wo0104), o achado do dono em 28/08 sobre leitura adiada, e a medição do CHANGELOG feita no turno.

@@ -33,6 +33,16 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
   arquivo ausente, tarefa que já existia), os arquivos tocados e o resultado de `build`/`validate`.
 - Atualize `meta/STATUS.md` (append na «Última sessão»; ajuste a versão se mudou — NÃO reescreva o
   arquivo).
+- **Antes do commit, conte a ESTRUTURA que você editou.** No `STATUS.md`, o bloco da sessão anterior
+  tem de continuar no arquivo depois da sua edição — procure o título dele: mover tem duas metades, e a
+  que some é sempre a de apagar. Estrutura que costuma duplicar (`<details>`, o bloco do topo do
+  STATUS) tem contagem esperada — `grep -c` da abertura e do fechamento, um de cada. Aviso em prosa já falhou duas
+  vezes seguidas; contagem não.
+- Se o commit toca `INSTRUCOES-DO-PROJETO.md`, meça `wc -m` e escreva o número no relatório, ao lado do
+  teto do projeto: teto que ninguém mede envelhece calado.
+- O `HHMM` do nome do relatório sai de `date +%y%m%d-%H%M`, rodado na hora — nunca de cabeça.
+- **Versão (D-158):** WO que muda o que o kit **gera** já traz o corte de minor (`KIT_VERSION`, topo do
+  CHANGELOG e «Versão atual» do STATUS). Se ela tocou `src/` e não cortou, aponte no relatório.
 - Acrescente `D-0NN` / `FIX-0NN` em `meta/DECISIONS.md` se houve decisão ou correção registrável.
 - Se alguma análise de `meta/analises/` foi decidida, implementada ou abandonada nesta sessão,
   atualize o **Status** dela (e os elos «Vira» / «Decisão») — análise não se apaga, muda de estado.
