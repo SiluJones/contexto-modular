@@ -1,6 +1,6 @@
 # ANÁLISE — O teto das Instruções geradas (i-N67)
 
-> **Status:** Decidida (2026-10-16) — recomendação aceita como está
+> **Status:** Decidida (2026-10-16) — recomendação aceita como está; WO-1 implementada na wo0133 (`664858e`), WO-2 aberta
 > **Data:** 261016 · **Base:** v1.124.0, HEAD `0e41773`, harness 19/19 · 107/107 · 0 erros
 > **Vira:** wo0133 (WO-1: papéis curtos + régua dos quatro eixos); a WO-2 (convenções) segue aberta na `i-N67` · **Decisão:** D-160
 > **Raia:** Chat (análise; **não** é WO). **Antecessoras:** `260726-ANALISE-ENXUGAMENTO-INSTRUCOES.md` (D-090 a D-094) e `260727-ANALISE-teto-por-configuracao.md` (D-103, D-105).
