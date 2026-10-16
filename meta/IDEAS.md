@@ -576,6 +576,26 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 ## i-N58 — `modelo-em-espera` é a primeira natureza nova do pacote desde que o protocolo existe — ABERTA, gatilho de repetição (wo0080)
 **2026-08-03.** Até a wo0080 o pacote de update só conhecia duas naturezas — `template` (comparar e adotar é seguro) e `fusao` (propor merge, o usuário decide). O `_TEMPLATE.md` de `analises/` não coube em nenhuma das duas: mandar como `template` comum criaria a pasta `analises/` vazia em todo projeto receptor, violando a regra de que pasta nasce no primeiro uso. Saiu uma terceira natureza — `modelo-em-espera` (guarde; só coloque se a pasta já existir no destino). Outros artefatos podem caber na mesma natureza (modelo de log, modelo de spec, guia de pasta que ainda não nasceu). **Gatilho:** quando um segundo arquivo pedir a mesma natureza, revisar se o protocolo precisa de uma seção própria para ela em vez de uma linha na legenda.
 
+## i-N68 — Conferências de tela pendentes do dono — ABERTA, gatilho: a próxima vez que o dono abrir o `index.html` no navegador
+
+**Origem:** duas conferências que só o olho humano faz, e que nenhum arquivo registrava como pendentes `[medido: grep no STATUS e no IDEAS, 2026-10-16]`.
+- **wo0129:** o grupo «modo» do topo mostra **quatro** botões (Grupo, Code, ASU, **Mount**), e clicar em Mount troca a prévia das Instruções para o texto com «reveja o mount». Declarada «do dono» no relatório de aplicação da wo0129.
+- **wo0121 a wo0127:** o roteiro de conferência de tela de seis itens, entregue em 2026-09-15 e **sem resposta** — registrado só no handoff de 2026-10-12, que é transitório. Reemitir só se o dono quiser; as versões v1.123.0 e v1.124.0 não mexeram na interface além do botão Mount.
+
+**Como fecha:** o dono responde no chat; o chat registra a resposta com `[relatado pelo dono]`.
+
+## i-N67 — O teto das Instruções geradas está quase cheio nos dois eixos — ABERTA, gatilho: antes da próxima regra que precise morar nas Instruções
+
+**Medido na wo0131** `[medido por instrumento: C28]`: padrão **6.662/6.900**, incremento do Code **546/550**, combo **7.580/7.600**. A wo0131 teve de encurtar uma frase porque o combo do `narrative` deu 7.611. A próxima regra que precise estar nas Instruções — e não no CEREBRO — vai exigir cortar outra.
+
+**A ideia:** análise antes da próxima leva. Mede o que cada linha das Instruções custa e quantas vezes ela evitou erro (o `DECISIONS` diz), e decide entre três saídas: cortar o que o CEREBRO já cobre, subir o teto com justificativa medida, ou mover o texto do ramo do Code para a skill `apply-wo`, que só o executor lê. **Não decidido.**
+
+## i-N66 — Os prompts de setup e de transferência não conhecem o eixo canal — ABERTA, gatilho: a próxima WO de kit
+
+**Achado em 2026-10-16**, quando o dono colou o prompt «E» (Conversa pesada — transferir agora) para fechar esta conversa. Na versão com Code, ele pede o brief «para eu colar como primeira mensagem» e o arquivo novo ou pequeno «inteiro para eu baixar». As duas frases são do canal mount. A wo0129 levou o eixo canal às Instruções e ao CEREBRO, mas **não aos prompts de setup** (`PROMPTS_BASE`), e nenhum check os compara com o canal. **Pergunta do dono, registrada:** com o canal pasta, precisa mandar o prompt inteiro? Resposta dada no chat: **não** — «o chat fecha a conversa com o handoff» basta, porque as Instruções e o CEREBRO já carregam a regra; o prompt só repete e, nas duas frases, contradiz.
+
+**A ideia:** os prompts ganham o ramo do canal, como as Instruções ganharam — no canal pasta, o brief é gravado na pasta-pai e a conversa nova o lê pelo ritual; o arquivo pequeno vai direto para o lugar dele. E um check que confira que nenhum prompt, no canal pasta, manda baixar ou colar arquivo.
+
 ## i-N65 — Rótulo de bug e idioma do código escolhidos na montagem do kit — ABERTA, produto, pede análise
 
 **Origem:** GameDataHub, feedback de 2026-07-18 e de 2026-09-18 — duas adoções seguidas com o mesmo custo. O kit gera `FIX-N` e código em inglês; o GameDataHub usa `BUG-00N` e código em pt-BR, e cada pacote de atualização pede a mesma troca manual em quatro artefatos (DECISIONS, LOG-TEMPLATE, skill `wrap`, molde de WO). **A ideia:** dois campos na montagem — rótulo de bug e idioma do código — aplicados pelo gerador em todas as superfícies. Pede análise: toca o pacote de atualização, as revogações e o `C43`.
@@ -652,6 +672,13 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 > | Sand-Land-Map | `meta/IDEAS.md`, «📮 Feedback ao KCM — leva nova» | `FK-AZ` e `IDEIA-084` | 2026-10-15 |
 > | GameDataHub | `meta/IDEAS.md`, «🔁 Feedback para o Kit» e «🧩 Feedback para o Kit» | leva de 2026-10-02 | 2026-10-15 |
 > | satelite-web | `meta/IDEAS.md`, «🧰 Feedback para o Kit» | item de 2026-10-12 | 2026-10-15 |
+
+### 2026-10-15 — Cartas enviadas aos três vizinhos, com o que cada uma pede de volta (aguardando, com gatilho)
+
+Entregues pelo chat na pasta-pai de cada destinatário, depois das levas v1.123.0 e v1.124.0; a cópia do KCM está em `../notas-arquivadas/` `[medido por instrumento: cmp das cópias, 2026-10-15]`. Cada uma responde o feedback do destinatário item por item, com o destino e a versão.
+- **Sand-Land-Map, carta 05.** Pede: se a forma «trocar», com a âncora repetida no texto, atrapalha a leitura da WO. Declara pendente a leitura do `DECISIONS` deles, prometida na carta 04. **Gatilho:** a próxima conversa com a pasta deles concedida.
+- **GameDataHub, carta 01** (a primeira). Pede: tirar o `cf_clearance` do `- Comando.txt` da pasta-pai — **ainda lá** `[medido, 2026-10-15]`; e se o executor deles também aplica WO lendo do texto dela. **Gatilho:** a próxima leitura do livro.
+- **satelite-web, carta 03.** Confirma o `FIX-091` deles (locks e `.env`, resolvidos no mesmo dia). Pede dados de campo da `DEC-138` (o chat aplicando SQL pelo MCP): quantos aplicados e quantos desfeitos. **Gatilho: 2026-11-15** — sem resposta, o KCM mede sozinho no `meta/sql/` e no log deles.
 
 ### 2026-09-02 — Carta 02 do satelite-web: três achados de uso, e um deles corrige uma conclusão nossa
 Eles aplicaram a leva v1.120.0 por inteiro entre 25 e 28/08 — skills, `_TEMPLATE.md`, `settings.json`, `.flatdropignore`, `meta/SPEC.md` e o merge dos dois `fusao` (CEREBRO de 41 KB para 79,8 KB; Instruções de 5.796 para 7.463 caracteres, teto 7.600), com cinco WOs desde então. **Abrem dizendo que nada ali é reclamação de coisa que não funcionou:** é o que apareceu ao usar. Os três nascem de coisas que o kit «já quase acerta», e em cada uma falta meio passo. **Nenhum item pede resposta** — os três já viraram prática local lá.
