@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -1642,36 +1642,72 @@ check("C29 fecho da leva sand-land (wo0072): gaveta Adiadas com gatilho, tipos d
   return "ok (" + vistos + " IDEAS · " + comHistory + " HISTORY)";
 });
 
-check("C28 teto por configuracao (wo0071): 6900 no padrao, orcamento por modo, total nos combos <= INSTR_TETO_MODOS", () => {
+check("C28 teto por configuracao (wo0071; quatro eixos na wo0133, D-160): 6900 no padrao dos dois canais, orcamento por modo e por grupo, total nos combos com a linha do SO <= INSTR_TETO_MODOS", () => {
   const S=T.STATE; S.workmode = S.workmode || {};
-  const pc=S.workmode.codeMode, pa=S.workmode.asuMode;
-  function len(niche, code, asu){
-    S.workmode.codeMode = code ? "yes" : "";
-    S.workmode.asuMode  = asu  ? "yes" : "";
+  const antes={mountMode:S.workmode.mountMode, groupMode:S.workmode.groupMode, codeMode:S.workmode.codeMode, asuMode:S.workmode.asuMode}, osAntes=T.OSENV.value;
+  function len(niche, m, g, code, asu){
+    S.workmode.mountMode = m ? "yes" : "";
+    S.workmode.groupMode = g ? "yes" : "no";
+    S.workmode.codeMode  = code ? "yes" : "";
+    S.workmode.asuMode   = asu  ? "yes" : "";
     return T.buildInstr(niche).length;
   }
-  const fora=[]; let maxCode=0, maxAsu=0, maxTotal=0, maxPadrao=0, maxCompart=0;
+  // a linha do sistema operacional: o maior custo entre os sistemas, medido no gerado (nao depende de nicho nem de modo)
+  const nRef=T.normNiche(T.NICHES.dev); T.OSENV.value="none"; const semSO=len(nRef,0,0,0,0); let maxSO=0;
+  Object.keys(T.OS_CMDNOTE).forEach(k => { T.OSENV.value=k; maxSO=Math.max(maxSO, len(nRef,0,0,0,0)-semSO); });
+  T.OSENV.value="none";
+  const fora=[]; let maxCode=0, maxAsu=0, maxTotal=0, maxPadrao=0, maxCompart=0, maxGrupo=0, configs=0;
   Object.keys(T.NICHES).forEach(id => {
     const n=T.normNiche(T.NICHES[id]);
-    const padrao=len(n,0,0), comCode=len(n,1,0), comAsu=len(n,0,1), combo=len(n,1,1);
-    const incCode=comCode-padrao, incAsu=combo-comCode, compart=comCode+comAsu-combo-padrao, total=Math.max(comCode,comAsu,combo);
-    maxCode=Math.max(maxCode,incCode); maxAsu=Math.max(maxAsu,incAsu); maxCompart=Math.max(maxCompart,compart);
-    maxTotal=Math.max(maxTotal,total); maxPadrao=Math.max(maxPadrao,padrao);
-    if(padrao > T.INSTR_TETO) fora.push(id+" padrao "+padrao+">"+T.INSTR_TETO);
-    if(incCode > T.MODO_ORCAMENTO.code) fora.push(id+" +Code +"+incCode+">"+T.MODO_ORCAMENTO.code);
-    if(incAsu  > T.MODO_ORCAMENTO.asu)  fora.push(id+" +ASU(marginal) +"+incAsu+">"+T.MODO_ORCAMENTO.asu);
-    if(compart > T.MODO_ORCAMENTO.compartilhado) fora.push(id+" compartilhado +"+compart+">"+T.MODO_ORCAMENTO.compartilhado);
-    if(total   > T.INSTR_TETO_MODOS)    fora.push(id+" combo "+total+">"+T.INSTR_TETO_MODOS);
+    [0,1].forEach(m => [0,1].forEach(g => {
+      const ch=(m?"mount":"pasta")+(g?"+grupo":"");
+      const padrao=len(n,m,g,0,0), comCode=len(n,m,g,1,0), comAsu=len(n,m,g,0,1), combo=len(n,m,g,1,1); configs+=4;
+      const incCode=comCode-padrao, incAsu=combo-comCode, compart=comCode+comAsu-combo-padrao;
+      const total=Math.max(comCode,comAsu,combo,g?padrao:0)+maxSO;
+      maxCode=Math.max(maxCode,incCode); maxAsu=Math.max(maxAsu,incAsu); maxCompart=Math.max(maxCompart,compart); maxTotal=Math.max(maxTotal,total);
+      if(!g){ maxPadrao=Math.max(maxPadrao,padrao); if(padrao > T.INSTR_TETO) fora.push(id+" "+ch+" padrao "+padrao+">"+T.INSTR_TETO); }
+      if(g){ [[0,0],[1,0],[0,1],[1,1]].forEach(([c,a]) => { const inc=len(n,m,1,c,a)-len(n,m,0,c,a); maxGrupo=Math.max(maxGrupo,inc); if(inc > T.MODO_ORCAMENTO.grupo) fora.push(id+" "+ch+" grupo +"+inc+">"+T.MODO_ORCAMENTO.grupo); }); }
+      if(incCode > T.MODO_ORCAMENTO.code) fora.push(id+" "+ch+" +Code +"+incCode+">"+T.MODO_ORCAMENTO.code);
+      if(incAsu  > T.MODO_ORCAMENTO.asu)  fora.push(id+" "+ch+" +ASU(marginal) +"+incAsu+">"+T.MODO_ORCAMENTO.asu);
+      if(compart > T.MODO_ORCAMENTO.compartilhado) fora.push(id+" "+ch+" compartilhado +"+compart+">"+T.MODO_ORCAMENTO.compartilhado);
+      if(total   > T.INSTR_TETO_MODOS)    fora.push(id+" "+ch+" combo+SO "+total+">"+T.INSTR_TETO_MODOS);
+    }));
   });
-  S.workmode.codeMode=pc; S.workmode.asuMode=pa;
+  Object.assign(S.workmode, antes); T.OSENV.value=osAntes;
+  assert(configs === 16*Object.keys(T.NICHES).length, "esperado 16 configuracoes por nicho, medi "+configs);
   assert(fora.length===0, "fora do orcamento -> " + fora.join(", "));
   // o produto ENSINA os numeros que o harness cobra (senao o projeto nao consegue reproduzir a conta)
   const cmd=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
   assert(/Teto por configuração/.test(cmd), "CEREBRO nao ensina o teto por configuracao");
   assert(cmd.indexOf("+"+T.MODO_ORCAMENTO.code)>=0 && cmd.indexOf("+"+T.MODO_ORCAMENTO.asu)>=0 && cmd.indexOf(String(T.MODO_ORCAMENTO.compartilhado))>=0, "CEREBRO nao publica os tres orcamentos (Code, ASU, compartilhado)");
+  assert(cmd.indexOf("+"+T.MODO_ORCAMENTO.grupo+"** para o projeto em grupo")>=0, "CEREBRO nao publica o orcamento do grupo");
+  assert(/contando a linha do sistema operacional/.test(cmd), "CEREBRO nao diz que a linha do SO conta no total");
   assert(cmd.indexOf(String(T.INSTR_TETO_MODOS))>=0, "CEREBRO nao publica o total maximo com modos ligados");
   assert(/O que se trava é o \*\*incremento\*\*/.test(cmd), "CEREBRO nao explica que a trava e do incremento, nao do total");
-  return "ok (padrao " + maxPadrao + "/" + T.INSTR_TETO + " · +Code " + maxCode + "/" + T.MODO_ORCAMENTO.code + " · +ASU " + maxAsu + "/" + T.MODO_ORCAMENTO.asu + " · compart " + maxCompart + "/" + T.MODO_ORCAMENTO.compartilhado + " · combo " + maxTotal + "/" + T.INSTR_TETO_MODOS + ")";
+  return "ok (padrao " + maxPadrao + "/" + T.INSTR_TETO + " · +Code " + maxCode + "/" + T.MODO_ORCAMENTO.code + " · +ASU " + maxAsu + "/" + T.MODO_ORCAMENTO.asu + " · compart " + maxCompart + "/" + T.MODO_ORCAMENTO.compartilhado + " · grupo " + maxGrupo + "/" + T.MODO_ORCAMENTO.grupo + " · SO " + maxSO + " · combo+SO " + maxTotal + "/" + T.INSTR_TETO_MODOS + " · " + configs + " configuracoes)";
+});
+
+check("C107 papel curto nas Instrucoes, papel inteiro no CEREBRO (wo0133, D-160)", () => {
+  const LIM=45, nunca=/nunca (é )?substitu/; let curtos=0, arquivos=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const instr=T.buildInstr(n), cmd=T.buildClaudeMd(n);
+    assert(instr.indexOf("- **CEREBRO.md** — o comportamento completo do assistente.")>=0, id+": a linha do CEREBRO.md nas Instrucoes nao e a curta");
+    T.effectiveFiles(n).forEach(f => {
+      arquivos++;
+      const visto = f.short || f.role;
+      assert(visto.length <= LIM, id+"/"+f.name+": papel nas Instrucoes com "+visto.length+" > "+LIM+" (falta o short curado)");
+      assert(instr.indexOf("- **"+f.name+"** — "+visto) >= 0, id+"/"+f.name+": as Instrucoes nao listam o arquivo com o papel curto");
+      assert(cmd.indexOf(f.role) >= 0, id+"/"+f.name+": o CEREBRO perdeu o papel inteiro");
+      if(f.short){
+        curtos++;
+        assert(f.short !== f.role, id+"/"+f.name+": short igual ao papel");
+        assert(/^OPCIONAL/.test(f.role) === /^OPCIONAL/.test(f.short), id+"/"+f.name+": o short perdeu (ou inventou) o marcador OPCIONAL");
+        assert(!nunca.test(f.role) || nunca.test(f.short), id+"/"+f.name+": o short perdeu o «nunca substituido»");
+      }
+    });
+  });
+  return "ok (" + curtos + " papeis curtos em " + arquivos + " arquivos)";
 });
 
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {

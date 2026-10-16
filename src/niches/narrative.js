@@ -250,7 +250,7 @@ NICHES.narrative = {
     ]
   },
   contextFiles:[
-    {name:"BIBLIA.md", cat:"ctx", role:"A story bible: premissa, mundo, regras, tom. Enxuta (Tier 1 primeiro). Estável.", content:`# BIBLIA.md — [Nome da Obra]
+    {name:"BIBLIA.md", cat:"ctx", role:"A story bible: premissa, mundo, regras, tom. Enxuta (Tier 1 primeiro). Estável.", short:"Premissa, mundo, regras, tom. Estável.", content:`# BIBLIA.md — [Nome da Obra]
 
 > A **bíblia da obra**: a enciclopédia que mantém tudo consistente da página 1 ao "fim".
 > **Estável** e **enxuta**: comece pelo essencial (Tier 1). Só aprofunde quando a obra pedir — documentar demais rouba tempo da escrita.
@@ -281,7 +281,7 @@ NICHES.narrative = {
 > As poucas verdades que NÃO podem variar. (Detalhe fica em CONTINUIDADE.md.)
 - [Ex: a magia sempre cobra um preço físico; a cidade fica ao norte do rio.]
 `},
-    {name:"PERSONAGENS.md", cat:"ctx", role:"Fichas: voz, arco, traços, relações e evolução intencional de cada personagem. Estável.", content:`# PERSONAGENS.md — [Obra]
+    {name:"PERSONAGENS.md", cat:"ctx", role:"Fichas: voz, arco, traços, relações e evolução intencional de cada personagem. Estável.", short:"Fichas: voz, arco, relações. Estável.", content:`# PERSONAGENS.md — [Obra]
 
 > Fichas dos personagens. **Estável** — atualiza quando um arco avança ou um traço se firma.
 > O assistente consulta para manter cada personagem coerente (ou evoluindo de propósito, não por descuido).
@@ -310,7 +310,7 @@ NICHES.narrative = {
 > Três camadas de investimento: **primário** (ficha completa acima), **secundário** (recorrente — precisa de UMA vida fora do protagonista que o leitor sinta: um ofício, uma rotina, uma relação que não inclui o MC), **terciário** (aparição pontual — uma linha ou gesto específico, nunca arquétipo vazio). O mundo deve parecer que continua existindo quando o protagonista não está olhando.
 - **[Nome]** — [função na trama + o traço que o distingue + a vida fora do MC, se secundário.]
 `},
-    {name:"ENREDO.md", cat:"ctx", role:"Estrutura e enredo: beats, o que já aconteceu, o que vem, decisões de trama. Cresce devagar.", content:`# ENREDO.md — Estrutura e Trama
+    {name:"ENREDO.md", cat:"ctx", role:"Estrutura e enredo: beats, o que já aconteceu, o que vem, decisões de trama. Cresce devagar.", short:"Beats, o que aconteceu, o que vem.", content:`# ENREDO.md — Estrutura e Trama
 
 > A espinha da história + o registro do que já aconteceu e do que vem.
 > **Cresce devagar.** Beats aqui são DIAGNÓSTICO, não fórmula — a história tem prioridade sobre o outline.
@@ -344,7 +344,7 @@ NICHES.narrative = {
 > Promessas feitas ao leitor que precisam de resolução (setups esperando payoff).
 - [Fio aberto — onde foi plantado — onde/como pretende pagar.]
 `},
-    {name:"VOZ.md", cat:"ctx", role:"A voz da obra: tom, ritmo, exemplos de prosa aprovada, o que evitar. Protege o estilo do autor. Estável.", content:`# VOZ.md — Voz e Estilo
+    {name:"VOZ.md", cat:"ctx", role:"A voz da obra: tom, ritmo, exemplos de prosa aprovada, o que evitar. Protege o estilo do autor. Estável.", short:"Tom, ritmo, prosa aprovada. Protege o estilo.", content:`# VOZ.md — Voz e Estilo
 
 > Guarda a VOZ — que é do autor, não do assistente. Serve para o assistente respeitar o estilo, não para padronizá-lo.
 > O assistente consulta antes de sugerir prosa, e nunca empurra a obra em direção a um texto genérico.
@@ -377,7 +377,7 @@ NICHES.narrative = {
 ## Decisões de estilo
 - [Escolhas conscientes: presente histórico? itálico para pensamento? Cruza com a grafia em CONTINUIDADE.]
 `},
-    {name:"CONTINUIDADE.md", cat:"hist", role:"Notas de continuidade + grafia canônica + inconsistências resolvidas. A memória factual. CRESCE.", content:`# CONTINUIDADE.md — Notas de Continuidade
+    {name:"CONTINUIDADE.md", cat:"hist", role:"Notas de continuidade + grafia canônica + inconsistências resolvidas. A memória factual. CRESCE.", short:"Memória factual e grafia canônica. CRESCE.", content:`# CONTINUIDADE.md — Notas de Continuidade
 
 > A memória factual da obra. **Cresce.** É aqui que se previne o olho que muda de cor e o nome grafado de dois jeitos.
 > O assistente consulta antes de afirmar detalhes e registra cada novo fato/correção.
@@ -420,7 +420,7 @@ NICHES.narrative = {
 - **Conflito:** [o que se contradizia.]
 - **Resolução:** [o que ficou valendo como cânone.]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"Onde estamos: capítulo, cena, próxima escrita, o que está aberto. Rolante.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"Onde estamos: capítulo, cena, próxima escrita, o que está aberto. Rolante.", short:"Capítulo, cena, próxima escrita. Rolante.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar a escrita.
 > Item resolvido sai daqui (vira resumo em ENREDO, ou nota no log).
@@ -446,7 +446,7 @@ NICHES.narrative = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + a próxima escrita óbvia.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -471,7 +471,7 @@ NICHES.narrative = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    {name:"CRONOLOGIA.md", cat:"opcional", role:"OPCIONAL — linha do tempo dos eventos da obra. Use quando há saltos temporais ou tramas paralelas.", content:`# CRONOLOGIA.md — Linha do Tempo
+    {name:"CRONOLOGIA.md", cat:"opcional", role:"OPCIONAL — linha do tempo dos eventos da obra. Use quando há saltos temporais ou tramas paralelas.", short:"OPCIONAL — linha do tempo dos eventos.", content:`# CRONOLOGIA.md — Linha do Tempo
 
 > **Opcional.** Use quando a obra tem saltos temporais, flashbacks, tramas paralelas ou uma história longa onde "quando aconteceu o quê" começa a escapar.
 > Separa a ordem CRONOLÓGICA (quando os eventos ocorrem na história) da ordem NARRATIVA (em que o leitor descobre).
@@ -499,7 +499,7 @@ NICHES.narrative = {
 ## Pontos de convergência
 - [Onde os fios/linhas se cruzam — para sincronizar.]
 `},
-    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", content:`# GLOSSARY.md — Termos da Obra
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", short:"OPCIONAL — termos e nomes do mundo.", content:`# GLOSSARY.md — Termos da Obra
 
 > **Opcional.** Use quando a obra inventa vocabulário (fantasia, ficção científica, mundos próprios) que se repete e precisa de sentido e grafia estáveis.
 > A grafia canônica também vive em CONTINUIDADE; aqui entra o SIGNIFICADO.
@@ -522,7 +522,7 @@ NICHES.narrative = {
 ## Línguas / expressões inventadas
 - **[Palavra/expressão]** — [tradução/sentido; quando se usa.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.

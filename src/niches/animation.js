@@ -53,7 +53,7 @@ NICHES.animation = {
     ["Episódio/curta finalizado", "Entrega STATUS.md e PRODUCAO.md (estado + o que aprendeu)."],
   ],
   contextFiles:[
-    { name:"PROJETO.md", cat:"essencial", role:"A bíblia: premissa, mundo, tom, arco geral. O norte criativo. Estável.",
+    { name:"PROJETO.md", cat:"essencial", role:"A bíblia: premissa, mundo, tom, arco geral. O norte criativo. Estável.", short:"Premissa, mundo, tom, arco. Estável.",
       content:`# PROJETO.md — [Nome do Projeto]
 
 > A **bíblia** do projeto. O assistente lê primeiro para alinhar história, tom e estilo.
@@ -85,7 +85,7 @@ NICHES.animation = {
 > Limites de visão — evita virar outra coisa e estourar o escopo.
 - [Ex.: não é série longa; não tem ação pesada; não é realista.]
 `},
-    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco, evolução. Estável; consultado antes de inventar.",
+    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco, evolução. Estável; consultado antes de inventar.", short:"Elenco; consulte antes de inventar.",
       content:`# PERSONAGENS.md — Elenco
 
 > O elenco — design e voz de cada um. O assistente consulta para manter coerência visual e de fala.
@@ -111,7 +111,7 @@ NICHES.animation = {
 ## Relações
 - [Quem é o quê de quem; as tensões/vínculos que geram drama.]
 `},
-    { name:"ROTEIROS.md", cat:"essencial", role:"Roteiros e estrutura de episódio/curta, com beats e timing pretendido. Cresce.",
+    { name:"ROTEIROS.md", cat:"essencial", role:"Roteiros e estrutura de episódio/curta, com beats e timing pretendido. Cresce.", short:"Roteiros com beats e timing. Cresce.",
       content:`# ROTEIROS.md — Roteiros e Estrutura
 
 > **Cresce** conforme a história é escrita. Guarda roteiros, beats e o timing pretendido.
@@ -146,7 +146,7 @@ NICHES.animation = {
 ## [Próximo episódio]
 [...]
 `},
-    { name:"ESTILO.md", cat:"essencial", role:"Direção de arte e som: visual, paleta, princípios de movimento, áudio. Estável.",
+    { name:"ESTILO.md", cat:"essencial", role:"Direção de arte e som: visual, paleta, princípios de movimento, áudio. Estável.", short:"Arte, movimento e som. Estável.",
       content:`# ESTILO.md — Direção de Arte e Som
 
 > Mantém a coerência audiovisual — tudo precisa parecer e soar de uma peça só.
@@ -176,7 +176,7 @@ NICHES.animation = {
 ## Identidade
 - [O elemento audiovisual-assinatura — o que faz alguém reconhecer a obra num quadro ou num som.]
 `},
-    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, pipeline, marcos e o que foi cortado. A defesa contra estourar prazo. Rolante-cresce.",
+    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, pipeline, marcos e o que foi cortado. A defesa contra estourar prazo. Rolante-cresce.", short:"Escopo, pipeline, cortes: contra o prazo.",
       content:`# PRODUCAO.md — Escopo e Pipeline
 
 > A **defesa contra o escopo impossível** — animação custa caro em tempo, e excesso de ambição mata projetos.
@@ -208,7 +208,7 @@ NICHES.animation = {
 ## Riscos de produção
 - [A cena que vai dar mais trabalho do que parece; a dependência arriscada; o gargalo do pipeline.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde a produção está agora: o que está feito, em que etapa, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde a produção está agora: o que está feito, em que etapa, próximos passos. Rolante.", short:"Etapa atual, próximos passos. Rolante.",
       content:`# STATUS.md — Estado da Produção
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -237,7 +237,7 @@ NICHES.animation = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -262,7 +262,7 @@ NICHES.animation = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"CENAS.md", cat:"opcional", role:"OPCIONAL — quebra de cenas/shots com staging e notas de animação. Use na produção shot a shot.",
+    { name:"CENAS.md", cat:"opcional", role:"OPCIONAL — quebra de cenas/shots com staging e notas de animação. Use na produção shot a shot.", short:"OPCIONAL — cenas e shots com staging.",
       content:`# CENAS.md — Quebra de Cenas / Shots
 
 > **Opcional.** Use na fase de produção, quando o trabalho é shot a shot e vale rastrear cada um.
@@ -284,7 +284,7 @@ NICHES.animation = {
 ## [Próxima cena]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

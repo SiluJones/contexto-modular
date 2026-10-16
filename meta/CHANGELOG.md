@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.124.0**.
+> Histórico de versões. Versão atual: **v1.125.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.125.0 — O teto das Instruções passa a olhar os quatro eixos, e o papel de cada arquivo encurta nas Instruções (wo0133, D-160)
+- **Instruções geradas:** cada arquivo de contexto aparece com uma frase curada de até 45 caracteres (campo `short`); o papel inteiro segue no CEREBRO gerado, na tabela de documentos, e no cabeçalho do template. A linha do `CEREBRO.md` também encurta. Padrão máximo **6.681 → 6.034**; pior caso realista (`narrative`, grupo + Code + ASU + a linha do Windows) **8.027 → 7.380**.
+- **Teto por configuração:** o `C28` mede canal × grupo × Code × ASU — 16 configurações por nicho, 304 no total — e soma a linha do sistema operacional ao total dos combos. O grupo ganha orçamento próprio (**+250**), publicado no CEREBRO gerado junto dos outros três.
+- **Reabre a `D-094`**, que manteve os papéis longos quando a folga era de 862 a 1.647. O teto **não sobe** (`D-103` confirmada) e o ramo do Code fica nas Instruções.
+- Origem: análise `261016-ANALISE-teto-das-instrucoes-geradas.md` (`i-N67`). Harness **19/19 · 108/108** (entra o `C107`).
 
 ## v1.124.0 — A segunda leva do feedback dos vizinhos, e o livro de leitura que impede o atraso de se repetir (wo0131, D-159)
 - **CEREBRO gerado:** instrução de edição manual entrega o comando que mostra o alvo · a sintaxe do comando é da raia que o roda, e comando do dono vai em bloco cercado · ao medir a ausência de um artefato, abra-o antes de concluir por quê · releia o IDEAS da frente antes de especificar · DECISIONS arquiva por evento, com `Status:` fechado · arquivar é mover · o handoff nunca é versionado · versionar uma sonda não é promovê-la (código de produção, oráculo) · sem mount, a ferramenta do Projeto entrega o arquivo inteiro · com Code, «arquivo inteiro» passa a valer só para o que o assistente autora, e arquivo com seção de outro autor nunca vai inteiro · o exemplo do fecho deixa de pedir o relatório colado · **livro de leitura** na correspondência entre projetos.

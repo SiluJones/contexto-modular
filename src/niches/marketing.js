@@ -50,7 +50,7 @@ NICHES.marketing = {
     ["Campanha ou análise de métrica fechada", "Entrega STATUS.md (e RESULTADOS, se usa o arquivo)."],
   ],
   contextFiles:[
-    {name:"MARCA.md", cat:"ctx", role:"Posicionamento, valores, diferenciais e os 3-5 pilares de conteúdo. Estável.", content:`# MARCA.md — [Nome]
+    {name:"MARCA.md", cat:"ctx", role:"Posicionamento, valores, diferenciais e os 3-5 pilares de conteúdo. Estável.", short:"Posicionamento e pilares de conteúdo.", content:`# MARCA.md — [Nome]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar todo conteúdo ao posicionamento e aos pilares.
 > Muda pouco: só em reposicionamento real.
@@ -82,7 +82,7 @@ NICHES.marketing = {
 ## Concorrentes / referências
 - [Quem mais fala com esta audiência; o que fazem bem; onde há espaço para a marca se destacar.]
 `},
-    {name:"AUDIENCIA.md", cat:"ctx", role:"Personas, suas dores/desejos, canais e a linguagem que ressoa. Estável.", content:`# AUDIÊNCIA.md — Quem Ouve a Marca
+    {name:"AUDIENCIA.md", cat:"ctx", role:"Personas, suas dores/desejos, canais e a linguagem que ressoa. Estável.", short:"Personas, dores, canais, linguagem.", content:`# AUDIÊNCIA.md — Quem Ouve a Marca
 
 > Arquivo **estável**. O assistente consulta para escrever PARA a audiência (a partir da dor dela), não para a marca.
 > Revise trimestralmente — o comportamento da audiência evolui.
@@ -108,7 +108,7 @@ NICHES.marketing = {
 ## Para quem NÃO é
 - **[Quem]** — [por que não é o alvo; evita diluir a mensagem tentando agradar todos.]
 `},
-    {name:"TOM-E-VOZ.md", cat:"ctx", role:"Guia de linguagem: como a marca soa, exemplos bons e ruins, palavras e proibições. Estável.", content:`# TOM-E-VOZ.md — Guia de Linguagem
+    {name:"TOM-E-VOZ.md", cat:"ctx", role:"Guia de linguagem: como a marca soa, exemplos bons e ruins, palavras e proibições. Estável.", short:"Como a marca soa; exemplos e proibições.", content:`# TOM-E-VOZ.md — Guia de Linguagem
 
 > Arquivo **estável** e central. Garante que a marca soe igual em todo canal e formato.
 > O assistente consulta antes de escrever qualquer peça — a voz é da marca/humano, não uma voz genérica de IA.
@@ -147,7 +147,7 @@ NICHES.marketing = {
 > Como a voz se adapta ao nativo de cada plataforma (sem deixar de ser a mesma marca).
 - **[Canal]:** [o que muda — tamanho, formalidade, uso de emoji, etc.]
 `},
-    {name:"PAUTA.md", cat:"ctx", role:"Calendário editorial vivo: temas, pilares, formatos, datas, status. Rolante para o período ativo.", content:`# PAUTA.md — Calendário Editorial
+    {name:"PAUTA.md", cat:"ctx", role:"Calendário editorial vivo: temas, pilares, formatos, datas, status. Rolante para o período ativo.", short:"Calendário editorial vivo. Rolante.", content:`# PAUTA.md — Calendário Editorial
 
 > **Documento vivo** (rolante para o período ativo). Previne produção de última hora e garante cadência e consistência.
 > O que foi publicado desce para o histórico; o que vem fica no topo. O assistente consulta para saber o que está no ar e o que falta.
@@ -178,7 +178,7 @@ NICHES.marketing = {
 > Desce para cá depois de no ar — referência do que já foi feito (evita repetir, ajuda a medir).
 - **[dd/mm]** — [tema] — [canal] — [resultado, se medido → RESULTADOS.md].
 `},
-    {name:"STATUS.md", cat:"ctx", role:"Estado atual: campanha ativa, conteúdo urgente, próximos passos. Rolante.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"Estado atual: campanha ativa, conteúdo urgente, próximos passos. Rolante.", short:"Campanha ativa, urgências, próximos passos.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde a operação de conteúdo está.
 > Item resolvido sai daqui (vira histórico na PAUTA ou nota no log).
@@ -207,7 +207,7 @@ NICHES.marketing = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -232,7 +232,7 @@ NICHES.marketing = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    {name:"RESULTADOS.md", cat:"opcional", role:"OPCIONAL — desempenho de conteúdo e campanhas, por funil. Use quando há medição contínua.", content:`# RESULTADOS.md — Desempenho
+    {name:"RESULTADOS.md", cat:"opcional", role:"OPCIONAL — desempenho de conteúdo e campanhas, por funil. Use quando há medição contínua.", short:"OPCIONAL — desempenho por funil.", content:`# RESULTADOS.md — Desempenho
 
 > **Opcional.** Use quando a operação mede resultado de forma contínua. Liga conteúdo/campanha a métricas por estágio do funil, distinguindo o que importa do que é vaidade.
 > Serve para decidir o que repetir, ajustar ou cortar — com dado, não com achismo.
@@ -258,7 +258,7 @@ NICHES.marketing = {
 > O que já sabemos que funciona com esta audiência — para não re-testar.
 - [Aprendizado — de onde veio.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.

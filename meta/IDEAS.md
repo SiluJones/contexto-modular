@@ -576,6 +576,12 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 ## i-N58 — `modelo-em-espera` é a primeira natureza nova do pacote desde que o protocolo existe — ABERTA, gatilho de repetição (wo0080)
 **2026-08-03.** Até a wo0080 o pacote de update só conhecia duas naturezas — `template` (comparar e adotar é seguro) e `fusao` (propor merge, o usuário decide). O `_TEMPLATE.md` de `analises/` não coube em nenhuma das duas: mandar como `template` comum criaria a pasta `analises/` vazia em todo projeto receptor, violando a regra de que pasta nasce no primeiro uso. Saiu uma terceira natureza — `modelo-em-espera` (guarde; só coloque se a pasta já existir no destino). Outros artefatos podem caber na mesma natureza (modelo de log, modelo de spec, guia de pasta que ainda não nasceu). **Gatilho:** quando um segundo arquivo pedir a mesma natureza, revisar se o protocolo precisa de uma seção própria para ela em vez de uma linha na legenda.
 
+## i-N69 — Medir o teto em regras, não só em caracteres — ABERTA, sem gatilho de data
+
+**Origem:** análise `261016-ANALISE-teto-das-instrucoes-geradas.md`, opção (2). O teto em caracteres mede um substituto: na evidência externa de 2026, o que derruba a aderência é o número de regras simultâneas — preprint arXiv 2607.19257, não revisado: resposta perfeita de 93,8% com 10 regras e 23,8% com 40, no Claude Sonnet 5 `[relatado pela fonte]`. Uma regra longa e única custa mais caracteres e menos atenção que três curtas.
+
+**A ideia:** um contador de regras ao lado do de caracteres no `C28` — linha de conteúdo fora os títulos, como a análise contou (54 na `narrative` com Code + ASU). Só mede; não decide teto. Complementa a entrada de 2026-07-29 («Revisar o orçamento por modo quando o custo real de token/caractere mudar»), que segue sendo a única condição para o teto subir.
+
 ## i-N68 — Conferências de tela pendentes do dono — ABERTA, gatilho: a próxima vez que o dono abrir o `index.html` no navegador
 
 **Origem:** duas conferências que só o olho humano faz, e que nenhum arquivo registrava como pendentes `[medido: grep no STATUS e no IDEAS, 2026-10-16]`.
@@ -584,7 +590,7 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 
 **Como fecha:** o dono responde no chat; o chat registra a resposta com `[relatado pelo dono]`.
 
-## i-N67 — O teto das Instruções geradas está quase cheio nos dois eixos — ABERTA, gatilho: antes da próxima regra que precise morar nas Instruções
+## i-N67 — O teto das Instruções geradas está quase cheio nos dois eixos — DECIDIDA em 2026-10-16 (`D-160`; análise `261016-ANALISE-teto-das-instrucoes-geradas.md`): a WO-1 é a wo0133 (papéis curtos + `C28` nos quatro eixos); a WO-2, a curadoria das convenções que repetem um princípio do nicho, segue ABERTA
 
 **Medido na wo0131** `[medido por instrumento: C28]`: padrão **6.662/6.900**, incremento do Code **546/550**, combo **7.580/7.600**. A wo0131 teve de encurtar uma frase porque o combo do `narrative` deu 7.611. A próxima regra que precise estar nas Instruções — e não no CEREBRO — vai exigir cortar outra.
 

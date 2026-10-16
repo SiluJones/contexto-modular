@@ -54,7 +54,7 @@ NICHES.brainstorm = {
     ["Fase fechada (síntese + decisão)", "Entrega STATUS.md (a síntese, o caminho recomendado e o próximo passo)."],
   ],
   contextFiles:[
-    { name:"TEMA.md", cat:"essencial", role:"O que se explora, por quê, e a pergunta central. O norte da exploração. Estável.",
+    { name:"TEMA.md", cat:"essencial", role:"O que se explora, por quê, e a pergunta central. O norte da exploração. Estável.", short:"O que se explora e a pergunta central.",
       content:`# TEMA.md — [O que estamos explorando]
 
 > Arquivo **estável**. O assistente lê primeiro para saber o que se explora e em que enquadramento.
@@ -82,7 +82,7 @@ NICHES.brainstorm = {
 > Limites do escopo da exploração — evita divergir para o infinito.
 - [Ex.: não é redesenhar o produto inteiro; não é sobre preço.]
 `},
-    { name:"IDEAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.",
+    { name:"IDEAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.", short:"Ideias com ID, descartadas inclusas.",
       content:`# IDEAS.md — Banco de Ideias
 
 > **Cresce** e nunca encolhe: toda ideia que surge entra aqui com um ID. **Nada se perde** — a ideia descartada hoje pode servir amanhã noutro contexto.
@@ -128,7 +128,7 @@ NICHES.brainstorm = {
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.",
+    { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.", short:"Clusters e eixos do espaço de ideias.",
       content:`# MAPA.md — Clusters e Eixos
 
 > Organiza as ideias do IDEAS.md em grupos com sentido — para enxergar o espaço, não uma lista solta.
@@ -156,7 +156,7 @@ NICHES.brainstorm = {
 > O que o mapa revela: temas recorrentes, contradições entre ideias, lacunas.
 - [Padrão/tensão observado.]
 `},
-    { name:"FILTROS.md", cat:"essencial", role:"Critérios de corte e priorização — explícitos. A convergência honesta. Cresce devagar.",
+    { name:"FILTROS.md", cat:"essencial", role:"Critérios de corte e priorização — explícitos. A convergência honesta. Cresce devagar.", short:"Critérios de corte, explícitos.",
       content:`# FILTROS.md — Critérios de Convergência
 
 > Onde a convergência fica HONESTA: os critérios na mesa, aplicados à vista. Convergir sem critério é palpite disfarçado.
@@ -187,7 +187,7 @@ NICHES.brainstorm = {
 > Ao fim da convergência: a recomendação (com confiança proporcional à evidência) e o próximo passo.
 [A síntese: por aqui, por isto, e o primeiro passo concreto.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Fase atual, a síntese do momento e a próxima decisão. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Fase atual, a síntese do momento e a próxima decisão. Rolante.", short:"Fase, síntese do momento. Rolante.",
       content:`# STATUS.md — Estado da Exploração
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber em que fase estamos e o que vem.
@@ -216,7 +216,7 @@ NICHES.brainstorm = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
+    { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.", short:"OPCIONAL — decisões da exploração.",
       content:`# DECISIONS.md — Decisões da Exploração
 
 > **Opcional.** Use quando o brainstorm leva a decisões que precisam ser lembradas e justificadas depois (ex.: alimentando um projeto real).
@@ -247,7 +247,7 @@ NICHES.brainstorm = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

@@ -53,7 +53,7 @@ NICHES.comics = {
     ["Capítulo/edição finalizado", "Entrega STATUS.md (estado + o que aprendeu sobre ritmo/recepção)."],
   ],
   contextFiles:[
-    { name:"OBRA.md", cat:"essencial", role:"A bíblia: premissa, tom, arco geral, formato. O norte criativo. Estável.",
+    { name:"OBRA.md", cat:"essencial", role:"A bíblia: premissa, tom, arco geral, formato. O norte criativo. Estável.", short:"Premissa, tom, arco, formato. Estável.",
       content:`# OBRA.md — [Nome da Obra]
 
 > A **bíblia** da obra. O assistente lê primeiro para alinhar história, tom e ritmo.
@@ -89,7 +89,7 @@ NICHES.comics = {
 ## O que a obra NÃO é (anti-escopo)
 - [Limites de visão — evita virar outra coisa e estourar o escopo.]
 `},
-    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco. Estável; consultado antes de inventar.",
+    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco. Estável; consultado antes de inventar.", short:"Elenco; consulte antes de inventar.",
       content:`# PERSONAGENS.md — Elenco
 
 > O elenco — design e voz de cada um. O assistente consulta para manter coerência visual e de fala.
@@ -115,7 +115,7 @@ NICHES.comics = {
 ## Relações
 - [Quem é o quê de quem; as tensões/vínculos que geram drama.]
 `},
-    { name:"ROTEIRO.md", cat:"essencial", role:"Roteiros em página/quadro, com diálogo, descrição e notas de layout. Cresce.",
+    { name:"ROTEIRO.md", cat:"essencial", role:"Roteiros em página/quadro, com diálogo, descrição e notas de layout. Cresce.", short:"Roteiro por página e quadro. Cresce.",
       content:`# ROTEIRO.md — Roteiro
 
 > **Cresce** conforme a história é escrita. Roteiro em formato de quadrinho — serve ao artista e ao letreirista.
@@ -153,7 +153,7 @@ QUADRO 2 — [...]
 ## [Próximo capítulo]
 [...]
 `},
-    { name:"MUNDO.md", cat:"essencial", role:"Mundo, regras, lugares, facções. A coerência do universo. Estável.",
+    { name:"MUNDO.md", cat:"essencial", role:"Mundo, regras, lugares, facções. A coerência do universo. Estável.", short:"Mundo, regras, facções. Estável.",
       content:`# MUNDO.md — Mundo e Lore
 
 > A coerência do universo da obra. O assistente consulta antes de afirmar fatos do mundo.
@@ -186,7 +186,7 @@ QUADRO 2 — [...]
 > Fatos que já entraram na obra (inclusive improvisados) e agora são verdade.
 - [Fato — em que capítulo surgiu.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde a obra está agora: o que está pronto, em que etapa, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde a obra está agora: o que está pronto, em que etapa, próximos passos. Rolante.", short:"Etapa atual, próximos passos. Rolante.",
       content:`# STATUS.md — Estado da Obra
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -215,7 +215,7 @@ QUADRO 2 — [...]
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -240,7 +240,7 @@ QUADRO 2 — [...]
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"PRANCHAS.md", cat:"opcional", role:"OPCIONAL — breakdown visual página a página (thumbnails, layout, fluxo de leitura). Use ao planejar a arte.",
+    { name:"PRANCHAS.md", cat:"opcional", role:"OPCIONAL — breakdown visual página a página (thumbnails, layout, fluxo de leitura). Use ao planejar a arte.", short:"OPCIONAL — breakdown visual por página.",
       content:`# PRANCHAS.md — Breakdown de Páginas
 
 > **Opcional.** Use ao planejar a arte página a página (thumbnails/layout), entre o roteiro e o desenho final.
@@ -267,7 +267,7 @@ QUADRO 2 — [...]
 > Se há páginas duplas, o que elas fazem (panorama, grande momento) e como L/R se combinam.
 - [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

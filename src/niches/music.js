@@ -52,7 +52,7 @@ NICHES.music = {
     ["Conceito/sonoridade do projeto definido", "Entrega PROJETO.md completo atualizado."],
   ],
   contextFiles:[
-    { name:"PROJETO.md", cat:"essencial", role:"Conceito, sonoridade-alvo, voz lírica, referências. O norte do projeto. Estável.",
+    { name:"PROJETO.md", cat:"essencial", role:"Conceito, sonoridade-alvo, voz lírica, referências. O norte do projeto. Estável.", short:"Conceito, sonoridade-alvo, referências.",
       content:`# PROJETO.md — [Nome do Projeto]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar tudo ao conceito e à sonoridade pretendida.
@@ -87,7 +87,7 @@ NICHES.music = {
 - **Idioma das letras:** [pt-BR / outro]
 - **Formato:** [single / EP / álbum / trilha] — [nº de faixas previstas.]
 `},
-    { name:"FAIXAS.md", cat:"essencial", role:"Catálogo das faixas: estado (ideia→master), tom, BPM, o que falta. Cresce.",
+    { name:"FAIXAS.md", cat:"essencial", role:"Catálogo das faixas: estado (ideia→master), tom, BPM, o que falta. Cresce.", short:"Faixas: estado, tom, BPM, o que falta.",
       content:`# FAIXAS.md — Catálogo de Faixas
 
 > **Cresce** conforme as músicas nascem e avançam. Mostra o estado de cada faixa e o que falta.
@@ -115,7 +115,7 @@ NICHES.music = {
 > A ordem das faixas conta uma história — energia, tonalidade, pacing do disco.
 - [Ordem provisória + a lógica (abre com X pela energia, fecha com Y pelo clima).]
 `},
-    { name:"LETRAS.md", cat:"essencial", role:"Letras em construção, com voz, prosódia e o que cada uma quer dizer. Cresce.",
+    { name:"LETRAS.md", cat:"essencial", role:"Letras em construção, com voz, prosódia e o que cada uma quer dizer. Cresce.", short:"Letras em construção, com prosódia.",
       content:`# LETRAS.md — Letras
 
 > **Cresce.** As letras e o trabalho sobre elas. O assistente consulta para manter a voz lírica e a prosódia.
@@ -145,7 +145,7 @@ NICHES.music = {
 > Versos soltos, imagens, títulos em potencial — capturados antes de esquecer, para usar depois.
 - [linha ou imagem solta.]
 `},
-    { name:"ARRANJO.md", cat:"essencial", role:"Estrutura, harmonia e decisões de arranjo/produção, com a intenção. Cresce devagar.",
+    { name:"ARRANJO.md", cat:"essencial", role:"Estrutura, harmonia e decisões de arranjo/produção, com a intenção. Cresce devagar.", short:"Estrutura, harmonia, arranjo, com intenção.",
       content:`# ARRANJO.md — Arranjo e Harmonia
 
 > Onde vivem as decisões de estrutura, harmonia e produção — com o PORQUÊ (a sensação pretendida). **Cresce devagar.**
@@ -177,7 +177,7 @@ NICHES.music = {
 - **Mix (ordem):** gain staging primeiro (mix estático antes de plugins; headroom -6 a -3 dB no master); EQ para dar espaço (kick × baixo: separar fundamentais, cortar "mud" 125-500 Hz); então compressão, espacialização (pan/reverb); comparar com a referência.
 - **Antes do master (QC):** ouviu em vários ambientes (fone, monitor, celular, carro)? o gap que mais derruba qualidade é pular o controle pré-master.
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde o projeto está agora, faixa ativa, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde o projeto está agora, faixa ativa, próximos passos. Rolante.", short:"Faixa ativa, próximos passos. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -206,7 +206,7 @@ NICHES.music = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -231,7 +231,7 @@ NICHES.music = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"REFERENCIAS.md", cat:"opcional", role:"OPCIONAL — biblioteca de referências sonoras destrinchadas. Use quando o projeto se apoia em muitas referências.",
+    { name:"REFERENCIAS.md", cat:"opcional", role:"OPCIONAL — biblioteca de referências sonoras destrinchadas. Use quando o projeto se apoia em muitas referências.", short:"OPCIONAL — referências sonoras destrinchadas.",
       content:`# REFERENCIAS.md — Biblioteca de Referências
 
 > **Opcional.** Use quando o projeto se apoia em várias referências e vale destrinchar cada uma (em vez de só listar em PROJETO).
@@ -253,7 +253,7 @@ NICHES.music = {
 - **Letra/tema:** [letristas/faixas que inspiram a escrita.]
 - **Groove/ritmo:** [referências de levada.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

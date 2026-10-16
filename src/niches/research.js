@@ -52,7 +52,7 @@ NICHES.research = {
     ["Conceito-chave definido", "Entrega SINTESE.md (ou GLOSSARY) com a definição registrada."],
   ],
   contextFiles:[
-    { name:"TEMA.md", cat:"essencial", role:"A pergunta de pesquisa, o recorte, a justificativa e a tese provisória. Estável.",
+    { name:"TEMA.md", cat:"essencial", role:"A pergunta de pesquisa, o recorte, a justificativa e a tese provisória. Estável.", short:"Pergunta, recorte, tese provisória.",
       content:`# TEMA.md — [Título da Pesquisa]
 
 > Arquivo **estável**. O assistente lê primeiro para entender o que se investiga e os limites do recorte.
@@ -82,7 +82,7 @@ NICHES.research = {
 - **Citação:** [ABNT / APA / Chicago...]
 - **Idioma do texto:** [pt-BR / outro]
 `},
-    { name:"FONTES.md", cat:"essencial", role:"Catálogo de referências VERIFICADAS, com citekey e a nota de por que cada uma importa. Cresce.",
+    { name:"FONTES.md", cat:"essencial", role:"Catálogo de referências VERIFICADAS, com citekey e a nota de por que cada uma importa. Cresce.", short:"Referências VERIFICADAS, com citekey.",
       content:`# FONTES.md — Catálogo de Referências
 
 > Arquivo que **cresce**. A bibliografia da pesquisa, separada das notas de ideia (que ficam em SINTESE).
@@ -115,7 +115,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 > Fontes mencionadas mas ainda não conferidas — NÃO citar até verificar.
 - [ ] [referência incompleta a localizar/confirmar.]
 `},
-    { name:"HIPOTESES.md", cat:"essencial", role:"Hipóteses ativas e seu status, separando evidência de tese de especulação. Cresce devagar.",
+    { name:"HIPOTESES.md", cat:"essencial", role:"Hipóteses ativas e seu status, separando evidência de tese de especulação. Cresce devagar.", short:"Hipóteses: evidência separada de especulação.",
       content:`# HIPOTESES.md — Hipóteses e Status
 
 > Arquivo que **cresce devagar**. Separa o que é hipótese (a testar) do que já é evidência (sustentado) e do que é especulação (inferência).
@@ -142,7 +142,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 > Lampejos a desenvolver — o "inbox" intelectual. Sem compromisso ainda.
 - [ideia solta + por que pode valer.]
 `},
-    { name:"SINTESE.md", cat:"essencial", role:"O argumento em construção: tese, estrutura, conceitos definidos, síntese das fontes. Estável-rolante.",
+    { name:"SINTESE.md", cat:"essencial", role:"O argumento em construção: tese, estrutura, conceitos definidos, síntese das fontes. Estável-rolante.", short:"O argumento em construção.",
       content:`# SINTESE.md — Argumento em Construção
 
 > O coração intelectual da pesquisa: onde as fontes viram ARGUMENTO (não pilha de resumos).
@@ -175,7 +175,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Lacunas / a desenvolver
 - [Pontos do argumento ainda frágeis ou sem fonte; o que pesquisar a seguir.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Fase, prazos, próximas leituras e pendências. Rolante — o resolvido sai.",
+    { name:"STATUS.md", cat:"rolante", role:"Fase, prazos, próximas leituras e pendências. Rolante — o resolvido sai.", short:"Fase, prazos, próximas leituras. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -203,7 +203,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -228,7 +228,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.",
+    { name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.", short:"OPCIONAL — termos e conceitos da pesquisa.",
       content:`# GLOSSARY.md — Termos e Conceitos
 
 > **Opcional.** Use quando a pesquisa lida com vocabulário técnico denso, conceitos de autores diferentes (que podem definir o mesmo termo de modos distintos), ou jargão que se repete.
@@ -249,7 +249,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Termos em outra língua
 - **[termo original]** — [tradução adotada + por que; alternativas descartadas.]
 `},
-    { name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.",
+    { name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.", short:"OPCIONAL — fases fechadas; lido sob demanda.",
       content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para material denso já estável que pesaria no contexto do dia a dia — uma revisão de literatura já fechada, um levantamento extenso, fichamentos antigos.
@@ -272,7 +272,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 5. [Autópsia de um problema resolvido]
 [Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

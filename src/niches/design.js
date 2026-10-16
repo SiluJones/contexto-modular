@@ -49,7 +49,7 @@ NICHES.design = {
     ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISIONS/STATUS o impacto no escopo."],
   ],
   contextFiles:[
-    {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", content:`# PROJETO.md — [Nome do Projeto]
+    {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", short:"O brief: objetivo, entregáveis, exclusões.", content:`# PROJETO.md — [Nome do Projeto]
 
 > Arquivo **estável**. O brief é a fundação de tudo — o assistente lê para alinhar direção e julgar pedidos.
 > Mude só em alteração real de escopo (e isso vira decisão registrada).
@@ -87,7 +87,7 @@ NICHES.design = {
 ## Prazo
 - [Marco — data — status]
 `},
-    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: gosto, vetos, como dá feedback. Estável.", content:`# CLIENTE.md — [Nome do Cliente]
+    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: gosto, vetos, como dá feedback. Estável.", short:"O cliente: gosto, vetos, feedback. Estável.", content:`# CLIENTE.md — [Nome do Cliente]
 
 > Arquivo **estável**. O assistente lê para acertar o tom da comunicação e antecipar o gosto/atrito.
 
@@ -113,7 +113,7 @@ NICHES.design = {
 ## Histórico
 - [Projetos anteriores; atritos e como foram resolvidos.]
 `},
-    {name:"MARCA.md", cat:"ctx", role:"O sistema visual: logo (regras), paleta em todos os espaços de cor, tipografia, extensões, tom. Estável.", content:`# MARCA.md — Sistema Visual
+    {name:"MARCA.md", cat:"ctx", role:"O sistema visual: logo (regras), paleta em todos os espaços de cor, tipografia, extensões, tom. Estável.", short:"Sistema visual: logo, paleta, tipografia.", content:`# MARCA.md — Sistema Visual
 
 > Arquivo **estável** e central. É a fonte de verdade do visual — toda peça obedece a ele.
 > Para identidade/marca, são seis ativos: logo, marca secundária, paleta, tipografia, extensões, tom.
@@ -153,7 +153,7 @@ NICHES.design = {
 ## 6. Tom visual
 - [A "personalidade" que o conjunto transmite, em uma frase + o que NÃO somos.]
 `},
-    {name:"REFERENCIAS.md", cat:"ctx", role:"Moodboard textual: paletas, tipografias, links — distinguindo conteúdo de estilo. Estável.", content:`# REFERENCIAS.md — [Projeto]
+    {name:"REFERENCIAS.md", cat:"ctx", role:"Moodboard textual: paletas, tipografias, links — distinguindo conteúdo de estilo. Estável.", short:"Moodboard: conteúdo separado de estilo.", content:`# REFERENCIAS.md — [Projeto]
 
 > Arquivo **estável**. Moodboard em texto + referências do cliente, com a distinção crucial: conteúdo vs. estilo.
 
@@ -176,7 +176,7 @@ NICHES.design = {
 ## Referências negativas
 - [Estilos/exemplos que o projeto NÃO deve seguir — explicitamente.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", content:`# DECISIONS.md — Decisões Visuais
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", short:"O porquê de cada escolha visual.", content:`# DECISIONS.md — Decisões Visuais
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das escolhas — o que o arquivo de design não conta.
 > Evita refazer a mesma discussão ("por que não usamos azul mesmo?") a cada conversa.
@@ -206,7 +206,7 @@ NICHES.design = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    {name:"REVISOES.md", cat:"hist", role:"Histórico de versões entregues, feedback do cliente e qual rodada foi usada. CRESCE.", content:`# REVISOES.md — Histórico de Versões
+    {name:"REVISOES.md", cat:"hist", role:"Histórico de versões entregues, feedback do cliente e qual rodada foi usada. CRESCE.", short:"Versões, feedback e rodadas usadas. CRESCE.", content:`# REVISOES.md — Histórico de Versões
 
 > Arquivo que **cresce**. Cada versão entregue e cada feedback ficam registrados, com a rodada de revisão.
 > Prova o que foi entregue/quando e mostra quantas rodadas já rolaram (controle de escopo).
@@ -226,7 +226,7 @@ NICHES.design = {
 ## [Entregável] — v[N+1]
 [...]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"O agora: o que está aprovado, o que aguarda, próximo passo, com quem está a bola. Rolante.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"O agora: o que está aprovado, o que aguarda, próximo passo, com quem está a bola. Rolante.", short:"Aprovado, pendente, com quem está a bola.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
 > Item resolvido sai daqui (vira versão em REVISOES, ou nota no log).
@@ -257,7 +257,7 @@ NICHES.design = {
 ## 💬 Última conversa
 **[data]** — [o que rolou + onde parou + próximo passo óbvio.]
 `},
-    {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", content:`# PRODUCAO.md — Pré-impressão e Exportação
+    {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", short:"OPCIONAL — checklist de pré-impressão.", content:`# PRODUCAO.md — Pré-impressão e Exportação
 
 > **Opcional**, mas obrigatório quando há peça para impressão. Reúne as specs e o checklist que evitam reimpressão cara.
 > Regra de ouro: projetar em CMYK desde o início se o destino é papel.
@@ -294,7 +294,7 @@ NICHES.design = {
 ## Notas da gráfica
 - [Especificidades que o impressor pediu; aprendizados de tiragens anteriores.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.

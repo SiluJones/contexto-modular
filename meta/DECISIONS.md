@@ -2146,3 +2146,17 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Já entregue pela leva 1, sem repetir aqui:** o roteiro no corpo da resposta (terceira regra de item do molde, wo0130).
 
 **Recusadas, com motivo (na análise):** `.gitattributes` no kit de arranque, entrega incremental em arquivo separado, infra multi-máquina. **Produto:** `i-N65`.
+
+## D-160 — O teto das Instruções olha os quatro eixos, e o papel do arquivo encurta nas Instruções (reabre a D-094)
+
+**Data:** 2026-10-16 · **WO:** 0133 · **Análise:** `meta/analises/261016-ANALISE-teto-das-instrucoes-geradas.md` · **Reabre:** `D-094` (os papéis dos arquivos) · **Estende:** `D-105` (teto por configuração).
+
+**Decisão.** Aceita como está a recomendação da análise (dono, 2026-10-16): (1) a `D-094` é reaberta — o papel de cada arquivo de contexto ganha uma frase curada de até 45 caracteres no campo `short`, que tem precedência nas Instruções; o `role` inteiro segue no CEREBRO gerado, na tabela de documentos, e no cabeçalho de cada template; (2) o `C28` passa a medir os quatro eixos do gerador — canal × grupo × Code × ASU, 16 configurações por nicho — e soma a linha do sistema operacional ao total dos combos; o grupo ganha o balde `grupo ≤ 250` no `MODO_ORCAMENTO`; (3) o teto **não sobe**: a `D-103` é confirmada com o critério de hoje, e a ideia de medir regras em vez de caracteres fica na `i-N69`; (4) o ramo do Code fica nas Instruções — as quatro linhas dele são lidas pelo chat, não pelo executor; (5) duas WOs — esta, e a curadoria das convenções que repetem um princípio do nicho, que segue aberta na `i-N67`. Corta a **v1.125.0** (`D-158`).
+
+**Por que a D-094 caiu.** Ela manteve os papéis longos porque a folga era de 862 a 1.647 por nicho. Em 16/10 a folga padrão da `narrative` era 238, e com grupo + Code + ASU três nichos passavam do total de 7.600 sem o harness ver.
+
+**Por que a régua mudou.** O `C28` (wo0071) nasceu com dois eixos. O grupo é mais antigo que ele e nunca teve orçamento (+234 em todo nicho); o canal entrou na wo0129, depois dele; a linha do sistema operacional (até 213) nunca foi medida. O pior caso realista era 8.027 (`narrative`, pasta + grupo + Code + ASU + Windows) com o harness verde. É o mesmo defeito que a `D-105` achou com o balde compartilhado: linha sem orçamento cresce sem dono.
+
+**Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0133 traz a medida no repo]`: padrão máximo **6.681 → 6.034**; combo com a linha do SO **8.027 → 7.380**/7.600; incrementos inalterados (Code 546, ASU 372, compartilhado 372); grupo **234**/250; SO 213. **174 papéis curtos em 174 arquivos** — 157 dos módulos e o IDEAS universal, injetado em 17 nichos. Check novo `C107`: o papel visto nas Instruções tem até 45 caracteres, o inteiro está no CEREBRO, e o curto preserva «OPCIONAL» e «nunca substituído». Harness 107 → **108**.
+
+**Fica fora, de propósito:** o construtor `custom` monta arquivos sem `short` e mostra o papel inteiro, como hoje; o vocabulário de mount nas Instruções do canal pasta («(no Projeto)») é da `i-N66`; as Instruções da casa (7.039) não são geradas, e o `C28` não as mede.

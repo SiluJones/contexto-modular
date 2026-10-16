@@ -54,7 +54,7 @@ NICHES.pixel = {
     ["Decisão de técnica (dithering, AA, dimensão)", "Entrega ESTILO.md (ou RESTRICOES) com a decisão e o porquê."],
   ],
   contextFiles:[
-    { name:"ESTILO.md", cat:"essencial", role:"A bíblia visual: paleta, resolução, outline, regras de sombreamento. A fonte da consistência. Estável.",
+    { name:"ESTILO.md", cat:"essencial", role:"A bíblia visual: paleta, resolução, outline, regras de sombreamento. A fonte da consistência. Estável.", short:"Paleta, resolução, sombreamento. Estável.",
       content:`# ESTILO.md — Guia Visual
 
 > A **bíblia visual** do projeto — trava o que mantém todos os assets coerentes. O assistente lê primeiro e consulta antes de sugerir qualquer coisa visual.
@@ -95,7 +95,7 @@ NICHES.pixel = {
 ## O que evitar (assinatura negativa)
 - [Vilões a banir neste projeto: jaggies, banding, pillow shading, tangentes, doubles, AA excessivo.]
 `},
-    { name:"SPRITES.md", cat:"essencial", role:"Catálogo de personagens e assets: specs, paleta usada, estado. Cresce.",
+    { name:"SPRITES.md", cat:"essencial", role:"Catálogo de personagens e assets: specs, paleta usada, estado. Cresce.", short:"Catálogo de assets: specs e estado. Cresce.",
       content:`# SPRITES.md — Catálogo de Sprites e Assets
 
 > **Cresce** conforme os assets são feitos. Mantém specs e estado de cada um, e garante que todos sigam o ESTILO.
@@ -126,7 +126,7 @@ NICHES.pixel = {
 > O que falta criar, em ordem de prioridade.
 - [ ] [Asset — prioridade — depende de quê.]
 `},
-    { name:"ANIMACAO.md", cat:"essencial", role:"Convenções de animação: contagem de frames, timing por ação, pivô. Estável.",
+    { name:"ANIMACAO.md", cat:"essencial", role:"Convenções de animação: contagem de frames, timing por ação, pivô. Estável.", short:"Frames, timing por ação, pivô. Estável.",
       content:`# ANIMACAO.md — Convenções de Animação
 
 > Onde vivem as regras de movimento — para todas as entidades animarem de forma coerente.
@@ -164,7 +164,7 @@ NICHES.pixel = {
 ## Onion skinning / fluxo
 - [Como o artista mantém proporção entre frames (onion skinning na ferramenta).]
 `},
-    { name:"RESTRICOES.md", cat:"essencial", role:"Regras autoimpostas e limites técnicos do projeto. A disciplina criativa. Estável.",
+    { name:"RESTRICOES.md", cat:"essencial", role:"Regras autoimpostas e limites técnicos do projeto. A disciplina criativa. Estável.", short:"Regras autoimpostas e limites técnicos.",
       content:`# RESTRICOES.md — Regras Autoimpostas
 
 > As **restrições deliberadas** que dão identidade e disciplina — em pixel art, limite é estilo.
@@ -191,7 +191,7 @@ NICHES.pixel = {
 ## Por que estas restrições
 [O efeito de identidade/coerência que elas criam — para lembrar por que valem a pena quando incomodarem.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"O que está em produção agora, próximos assets, pendências. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"O que está em produção agora, próximos assets, pendências. Rolante.", short:"Em produção, próximos assets. Rolante.",
       content:`# STATUS.md — Em Produção
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -217,7 +217,7 @@ NICHES.pixel = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -242,7 +242,7 @@ NICHES.pixel = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"TILESET.md", cat:"opcional", role:"OPCIONAL — design de tilesets e cenários: módulos, transições, regras de encaixe. Use em jogos com mapas/cenários.",
+    { name:"TILESET.md", cat:"opcional", role:"OPCIONAL — design de tilesets e cenários: módulos, transições, regras de encaixe. Use em jogos com mapas/cenários.", short:"OPCIONAL — tilesets e regras de encaixe.",
       content:`# TILESET.md — Tilesets e Cenário
 
 > **Opcional.** Use quando o projeto tem cenários montados com tiles (plataforma, top-down, RPG).
@@ -269,7 +269,7 @@ NICHES.pixel = {
 ## Props e decoração
 - [Objetos que povoam o cenário — tamanho, paleta, densidade.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

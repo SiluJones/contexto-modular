@@ -54,7 +54,7 @@ NICHES.rpg = {
     ["Decisão de arco/trama da campanha", "Entrega CAMPANHA.md completo (o rumo + os fios afetados)."],
   ],
   contextFiles:[
-    { name:"MUNDO.md", cat:"essencial", role:"Cenário, regras do mundo, lugares e facções. A bíblia do mundo. Estável.",
+    { name:"MUNDO.md", cat:"essencial", role:"Cenário, regras do mundo, lugares e facções. A bíblia do mundo. Estável.", short:"Cenário, lugares, facções. Estável.",
       content:`# MUNDO.md — [Nome do Cenário]
 
 > A **bíblia do mundo** — mantém o cenário coerente entre sessões. O assistente lê primeiro e consulta antes de afirmar fatos do mundo.
@@ -85,7 +85,7 @@ NICHES.rpg = {
 > Fatos que surgiram jogando (improvisados) e agora são verdade. Registre para não contradizer.
 - [Fato — em que sessão surgiu.]
 `},
-    { name:"PJs.md", cat:"essencial", role:"Personagens dos jogadores: ficha resumida, ganchos pessoais, arco. O centro da história. Estável.",
+    { name:"PJs.md", cat:"essencial", role:"Personagens dos jogadores: ficha resumida, ganchos pessoais, arco. O centro da história. Estável.", short:"PJs: ficha, ganchos, arco. O centro.",
       content:`# PJs.md — Personagens dos Jogadores
 
 > Os protagonistas — o centro da campanha. O assistente consulta para tecer a trama em torno deles e manter coerência.
@@ -112,7 +112,7 @@ NICHES.rpg = {
 - **Dinâmica:** [como o grupo funciona junto; tensões/sinergias.]
 - **Objetivo comum:** [o que une a party agora.]
 `},
-    { name:"NPCs.md", cat:"essencial", role:"NPCs do mundo: voz, motivação, stakes, estado. Cresce.",
+    { name:"NPCs.md", cat:"essencial", role:"NPCs do mundo: voz, motivação, stakes, estado. Cresce.", short:"NPCs: voz, motivação, estado. Cresce.",
       content:`# NPCs.md — Personagens do Mundo
 
 > **Cresce** conforme NPCs surgem. Cada um com voz, motivação e stakes — para interações importarem.
@@ -139,7 +139,7 @@ NICHES.rpg = {
 > Nomes + um traço, para puxar quando a party for a um lugar inesperado.
 - **[Nome]** — [um traço/voz em uma linha.]
 `},
-    { name:"CAMPANHA.md", cat:"essencial", role:"Arco geral, ganchos, segredos, fios soltos e o que já aconteceu. A espinha da história. Cresce.",
+    { name:"CAMPANHA.md", cat:"essencial", role:"Arco geral, ganchos, segredos, fios soltos e o que já aconteceu. A espinha da história. Cresce.", short:"Arco, ganchos, segredos, fios soltos.",
       content:`# CAMPANHA.md — Arco e Fios
 
 > A espinha da campanha + a memória do que já rolou. **Cresce.**
@@ -176,7 +176,7 @@ NICHES.rpg = {
 ### DEC-[N] — [a decisão] · [data]
 [O que e por quê; o que afeta nos fios.]
 `},
-    { name:"SESSAO.md", cat:"rolante", role:"Prep da PRÓXIMA sessão (método Lazy DM). Rolante — recriada a cada sessão.", content:`# SESSAO.md — Prep da Próxima Sessão
+    { name:"SESSAO.md", cat:"rolante", role:"Prep da PRÓXIMA sessão (método Lazy DM). Rolante — recriada a cada sessão.", short:"Prep da PRÓXIMA sessão. Recriada a cada uma.", content:`# SESSAO.md — Prep da Próxima Sessão
 
 > **Rolante**: a prep da PRÓXIMA mesa. Substituída a cada sessão (a anterior vira resumo em CAMPANHA).
 > Método Lazy DM: leve, modular, improvisável. Prepare o que a party vai tocar — não o mundo inteiro.
@@ -215,7 +215,7 @@ NICHES.rpg = {
 ## Notas da mesa
 - [Lembretes: spotlight de quem está sobrando? regra a conferir? promessa a pagar?]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Estado da campanha agora: onde a história parou, próxima sessão, pendências. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Estado da campanha agora: onde a história parou, próxima sessão, pendências. Rolante.", short:"Onde a história parou. Rolante.",
       content:`# STATUS.md — Estado da Campanha
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde a história parou e o que vem.
@@ -244,7 +244,7 @@ NICHES.rpg = {
 ## 💬 Última conversa
 **[data]** — [resumo de 2-4 linhas + onde parou + próximo passo óbvio. Detalhe completo em CAMPANHA.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -269,7 +269,7 @@ NICHES.rpg = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"REGRAS-CASEIRAS.md", cat:"opcional", role:"OPCIONAL — house rules, decisões de regra e rulings recorrentes. Use quando a mesa tem ajustes próprios do sistema.",
+    { name:"REGRAS-CASEIRAS.md", cat:"opcional", role:"OPCIONAL — house rules, decisões de regra e rulings recorrentes. Use quando a mesa tem ajustes próprios do sistema.", short:"OPCIONAL — house rules e rulings.",
       content:`# REGRAS-CASEIRAS.md — House Rules e Rulings
 
 > **Opcional.** Use quando a mesa adapta o sistema ou acumula decisões de regra que precisam ser consistentes entre sessões.
@@ -293,7 +293,7 @@ NICHES.rpg = {
 ## Dúvidas de regra em aberto
 - [Regra a esclarecer antes da próxima vez que aparecer.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão (pós-jogo). Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão (pós-jogo). Referência fixa — nunca substituído.", short:"Modelo do log de sessão; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.

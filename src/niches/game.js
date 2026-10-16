@@ -58,7 +58,7 @@ NICHES.game = {
     ["Cena, missão ou diálogo ramificado escrito/decidido", "Entrega ROTEIRO.md completo (a cena no formato de jogo: escolhas com consequências, requisitos, lore passivo, estado de sincronia)."],
   ],
   contextFiles:[
-    { name:"JOGO.md", cat:"essencial", role:"A visão: pitch, experiência alvo, core loop, pilares, público. O norte. Estável.",
+    { name:"JOGO.md", cat:"essencial", role:"A visão: pitch, experiência alvo, core loop, pilares, público. O norte. Estável.", short:"Pitch, core loop, pilares. O norte.",
       content:`# JOGO.md — [Nome do Jogo]
 
 > A **visão** do jogo — o DNA dele. O assistente lê primeiro para alinhar todo design.
@@ -94,7 +94,7 @@ NICHES.game = {
 > Limites de visão. Evita o jogo virar outra coisa.
 - [Ex.: não é mundo aberto; não tem multiplayer; não é difícil estilo soulslike.]
 `},
-    { name:"MECANICAS.md", cat:"essencial", role:"Sistemas, regras e balanceamento — com a INTENÇÃO de design por trás dos números. Cresce.",
+    { name:"MECANICAS.md", cat:"essencial", role:"Sistemas, regras e balanceamento — com a INTENÇÃO de design por trás dos números. Cresce.", short:"Sistemas e a INTENÇÃO por trás dos números.",
       content:`# MECANICAS.md — Sistemas e Regras
 
 > O coração jogável: mecânicas, sistemas e balanceamento. **Cresce** conforme o design se firma.
@@ -131,7 +131,7 @@ NICHES.game = {
 ### DEC-[N] — [a decisão] · [data]
 [O que foi decidido, a intenção por trás, alternativas, e o efeito sistêmico esperado.]
 `},
-    { name:"UNIVERSO.md", cat:"essencial", role:"Lore, mundo, personagens e tom — a bíblia de ficção do jogo. Estável; consultada antes de inventar.",
+    { name:"UNIVERSO.md", cat:"essencial", role:"Lore, mundo, personagens e tom — a bíblia de ficção do jogo. Estável; consultada antes de inventar.", short:"Lore e mundo; consulte antes de inventar.",
       content:`# UNIVERSO.md — Mundo e Lore
 
 > A **bíblia de ficção** do jogo — mantém o mundo coerente. O assistente consulta antes de afirmar qualquer fato do universo.
@@ -162,7 +162,7 @@ NICHES.game = {
 > História antiga, facções, detalhe cultural. Adicione sob demanda.
 - [...]
 `},
-    { name:"ARTE-E-SOM.md", cat:"essencial", role:"Direção de arte e áudio: estilo visual, paleta, referências, feel sonoro. Estável.",
+    { name:"ARTE-E-SOM.md", cat:"essencial", role:"Direção de arte e áudio: estilo visual, paleta, referências, feel sonoro. Estável.", short:"Direção de arte e áudio. Estável.",
       content:`# ARTE-E-SOM.md — Direção de Arte e Áudio
 
 > Mantém a coerência audiovisual — o jogo precisa parecer e soar como uma coisa só.
@@ -189,7 +189,7 @@ NICHES.game = {
 ## Identidade
 - [O elemento audiovisual-assinatura — o que faz alguém reconhecer o jogo numa screenshot ou num clipe de som.]
 `},
-    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, marcos, vertical slice e o que foi cortado/adiado. A defesa contra scope creep. Rolante-cresce.",
+    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, marcos, vertical slice e o que foi cortado/adiado. A defesa contra scope creep. Rolante-cresce.", short:"Escopo, marcos, cortes: contra scope creep.",
       content:`# PRODUCAO.md — Escopo e Produção
 
 > A **defesa contra o scope creep** — o assassino nº1 de jogos indie. Mantém o escopo honesto e o que ficou para depois.
@@ -222,7 +222,7 @@ NICHES.game = {
 ## Riscos de produção
 - [O que pode estourar o prazo; a tarefa que você está subestimando; dependência arriscada.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde o desenvolvimento está agora: o que funciona, o que está em construção, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde o desenvolvimento está agora: o que funciona, o que está em construção, próximos passos. Rolante.", short:"O que funciona, o que se constrói. Rolante.",
       content:`# STATUS.md — Estado do Desenvolvimento
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -254,7 +254,7 @@ NICHES.game = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -279,7 +279,7 @@ NICHES.game = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"NIVEIS.md", cat:"opcional", role:"OPCIONAL — design de níveis/fases/encontros. Use quando o jogo tem level design estruturado.",
+    { name:"NIVEIS.md", cat:"opcional", role:"OPCIONAL — design de níveis/fases/encontros. Use quando o jogo tem level design estruturado.", short:"OPCIONAL — design de níveis e encontros.",
       content:`# NIVEIS.md — Design de Níveis
 
 > **Opcional.** Use quando o jogo tem níveis, fases, mapas ou encontros desenhados (plataforma, metroidvania, RPG, puzzle).
@@ -303,7 +303,7 @@ NICHES.game = {
 ## [Próximo nível]
 [...]
 `},
-    { name:"ROTEIRO.md", cat:"opcional", role:"OPCIONAL — a casa da narrativa cena a cena: missões, diálogos ramificados, lore passivo, cutscenes, tutorial narrativo. Use quando o jogo conta história.", content:`# ROTEIRO.md — Narrativa cena a cena
+    { name:"ROTEIRO.md", cat:"opcional", role:"OPCIONAL — a casa da narrativa cena a cena: missões, diálogos ramificados, lore passivo, cutscenes, tutorial narrativo. Use quando o jogo conta história.", short:"OPCIONAL — narrativa cena a cena, diálogos.", content:`# ROTEIRO.md — Narrativa cena a cena
 
 > Aqui vive o que o jogador VIVE, na ordem em que vive. Regras do mundo ficam em UNIVERSO.md; mecânica em MECANICAS.md. Narrativa de jogo é ramificada e interativa — escolha tem consequência.
 
@@ -338,7 +338,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 ## Tutorial narrativo
 (que mecânica é ensinada por qual cena — ensinar JOGANDO, dentro da história, não por caixa de texto)
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

@@ -50,7 +50,7 @@ NICHES.client = {
     ["Valor cotado / fatura / pagamento", "Entrega FINANCEIRO.md completo (quando o projeto usa esse arquivo)."],
   ],
   contextFiles:[
-    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: perfil, como se comunica, como dá feedback, sensibilidades, o que evitar. Estável.", content:`# CLIENTE.md — [Nome do Cliente]
+    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: perfil, como se comunica, como dá feedback, sensibilidades, o que evitar. Estável.", short:"O cliente: perfil, feedback, o que evitar.", content:`# CLIENTE.md — [Nome do Cliente]
 
 > Arquivo **estável**. O assistente lê no início para acertar o tom e antecipar atritos.
 > Atualize quando aprender algo novo sobre como o cliente funciona — não a cada mensagem.
@@ -79,7 +79,7 @@ NICHES.client = {
 ## Histórico da relação
 - [Como começou; projetos anteriores; momentos de atrito e como foram resolvidos.]
 `},
-    {name:"PROJETO.md", cat:"ctx", role:"O projeto ativo: objetivo, escopo, entregáveis, rodadas de revisão e — crucial — o que NÃO está incluído. Estável dentro do projeto.", content:`# PROJETO.md — [Nome do Projeto]
+    {name:"PROJETO.md", cat:"ctx", role:"O projeto ativo: objetivo, escopo, entregáveis, rodadas de revisão e — crucial — o que NÃO está incluído. Estável dentro do projeto.", short:"Escopo, entregáveis e o que NÃO está nele.", content:`# PROJETO.md — [Nome do Projeto]
 
 > Arquivo **estável** dentro do projeto. É a referência para julgar se um pedido novo está dentro ou fora do contratado.
 > Mude só em alteração real de escopo (e isso vira acordo em ACORDOS.md).
@@ -113,7 +113,7 @@ NICHES.client = {
 > Distinga referência de CONTEÚDO (usar o texto/dados) de referência de ESTILO (usar o visual). Anote qual é qual para não confundir.
 - [Referência — é conteúdo ou estilo?]
 `},
-    {name:"ACORDOS.md", cat:"ctx", role:"Tudo que foi combinado, aprovado ou prometido — verbal ou escrito. A memória formal da relação. CRESCE.", content:`# ACORDOS.md — Registro de Combinados
+    {name:"ACORDOS.md", cat:"ctx", role:"Tudo que foi combinado, aprovado ou prometido — verbal ou escrito. A memória formal da relação. CRESCE.", short:"Tudo combinado ou prometido. CRESCE.", content:`# ACORDOS.md — Registro de Combinados
 
 > Arquivo que **cresce**. Cada coisa combinada vira um item datado. É a defesa contra "tinha ficado combinado outra coisa".
 > Inclui: aprovações, mudanças de escopo, promessas de prazo, decisões de design/conteúdo aceitas pelo cliente.
@@ -142,7 +142,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 > Coisas combinadas só na conversa, sem registro formal. Sugerir confirmação por escrito.
 - [ ] [Acordo verbal X — enviar confirmação ao cliente.]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"O estado da relação agora: próxima ação, com quem está a bola, prazo, risco. Rolante — o resolvido sai.", content:`# STATUS.md — Estado da Relação
+    {name:"STATUS.md", cat:"ctx", role:"O estado da relação agora: próxima ação, com quem está a bola, prazo, risco. Rolante — o resolvido sai.", short:"Próxima ação, bola, prazo, risco. Rolante.", content:`# STATUS.md — Estado da Relação
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde a relação está e o que fazer em seguida.
 > Item resolvido sai daqui (vira entrega em ENTREGAS, ou nota no log).
@@ -167,7 +167,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## 💬 Última interação
 **[data]** — [o que rolou + onde parou + próximo passo óbvio. Primeira coisa que o assistente lê para retomar.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -192,7 +192,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    {name:"ENTREGAS.md", cat:"hist", role:"Histórico de entregas, versões e aprovações. CRESCE — registro do que já saiu.", content:`# ENTREGAS.md — Histórico de Entregas
+    {name:"ENTREGAS.md", cat:"hist", role:"Histórico de entregas, versões e aprovações. CRESCE — registro do que já saiu.", short:"Entregas, versões e aprovações. CRESCE.", content:`# ENTREGAS.md — Histórico de Entregas
 
 > Arquivo que **cresce**. Cada versão entregue e cada aprovação ficam registradas, com data.
 > Útil para provar o que foi entregue e quando, e para ver quantas rodadas já rolaram.
@@ -215,7 +215,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Marcos de pagamento (se atrelados a entrega)
 - [Entrega X → fatura Y → status.]
 `},
-    {name:"COMUNICACOES.md", cat:"opcional", role:"OPCIONAL — registro do texto final das mensagens-chave enviadas ao cliente. Use quando a comunicação é sensível ou frequente.", content:`# COMUNICACOES.md — Mensagens-Chave Enviadas
+    {name:"COMUNICACOES.md", cat:"opcional", role:"OPCIONAL — registro do texto final das mensagens-chave enviadas ao cliente. Use quando a comunicação é sensível ou frequente.", short:"OPCIONAL — texto final das mensagens-chave.", content:`# COMUNICACOES.md — Mensagens-Chave Enviadas
 
 > **Opcional.** Use quando a relação tem comunicação delicada ou muitas trocas que vale guardar.
 > Registra o texto FINAL que foi ao cliente (após você editar) — para manter consistência de tom e ter histórico do que foi dito.
@@ -235,7 +235,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## [Assunto] — AAAA-MM-DD
 [...]
 `},
-    {name:"FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — valores cotados, faturas, pagamentos. Use quando há mais de uma cobrança ou risco de esquecer o que foi cotado.", content:`# FINANCEIRO.md — Valores e Pagamentos
+    {name:"FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — valores cotados, faturas, pagamentos. Use quando há mais de uma cobrança ou risco de esquecer o que foi cotado.", short:"OPCIONAL — cotações, faturas, pagamentos.", content:`# FINANCEIRO.md — Valores e Pagamentos
 
 > **Opcional.** Use quando o projeto tem múltiplas cobranças, fases pagas, ou histórico de valores que é fácil esquecer ("quanto cotei mesmo?").
 > Mantenha factual. Não substitui contrato/nota fiscal — é a memória de trabalho.
@@ -257,7 +257,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Notas
 - [Combinados sobre forma de pagamento, parcelamento, etc.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.

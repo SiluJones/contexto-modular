@@ -53,7 +53,7 @@ NICHES.cuisine = {
     ["Análise de custo/precificação feita", "Entrega MENU.md (ou CUSTOS, se usa o arquivo) com plate cost e margem."],
   ],
   contextFiles:[
-    { name:"CONCEITO.md", cat:"essencial", role:"Identidade da cozinha: o que é, para quem, tradição-base, princípios. O norte. Estável.",
+    { name:"CONCEITO.md", cat:"essencial", role:"Identidade da cozinha: o que é, para quem, tradição-base, princípios. O norte. Estável.", short:"Identidade da cozinha. O norte. Estável.",
       content:`# CONCEITO.md — [Nome da Cozinha / Projeto]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar receitas e menu à identidade.
@@ -86,7 +86,7 @@ NICHES.cuisine = {
 ## O que esta cozinha NÃO é
 - [Limites de identidade — ex.: não é fine dining; não usa ultraprocessados; não é picante.]
 `},
-    { name:"RECEITAS.md", cat:"essencial", role:"Receitas afinadas: ratio, método, o porquê, rendimento, alérgenos. Cresce.",
+    { name:"RECEITAS.md", cat:"essencial", role:"Receitas afinadas: ratio, método, o porquê, rendimento, alérgenos. Cresce.", short:"Receitas: ratio, método, alérgenos. Cresce.",
       content:`# RECEITAS.md — Receitas Afinadas
 
 > **Cresce** conforme as receitas são desenvolvidas e afinadas. Cada uma guarda o RATIO e o PORQUÊ — não só a lista de ingredientes.
@@ -121,7 +121,7 @@ NICHES.cuisine = {
 ## [Próxima receita]
 [...]
 `},
-    { name:"MENU.md", cat:"essencial", role:"A carta: pratos, estrutura, e (se comercial) margem/popularidade. Rolante-cresce.",
+    { name:"MENU.md", cat:"essencial", role:"A carta: pratos, estrutura, e (se comercial) margem/popularidade. Rolante-cresce.", short:"A carta e, se comercial, a margem.",
       content:`# MENU.md — A Carta
 
 > A carta atual e seu raciocínio. O assistente consulta para coerência (a carta conta uma história) e, no comercial, para equilíbrio de margem.
@@ -155,7 +155,7 @@ NICHES.cuisine = {
 ## Sazonalidade / próximas trocas
 - [Ingredientes da estação a aproveitar; o que entra/sai na próxima revisão.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"O que está em teste/desenvolvimento agora, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"O que está em teste/desenvolvimento agora, próximos passos. Rolante.", short:"Em teste agora, próximos passos. Rolante.",
       content:`# STATUS.md — Em Desenvolvimento
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -182,7 +182,7 @@ NICHES.cuisine = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -207,7 +207,7 @@ NICHES.cuisine = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"CUSTOS.md", cat:"opcional", role:"OPCIONAL — plate cost, food cost % e margem por prato. Use no contexto comercial.",
+    { name:"CUSTOS.md", cat:"opcional", role:"OPCIONAL — plate cost, food cost % e margem por prato. Use no contexto comercial.", short:"OPCIONAL — plate cost e margem por prato.",
       content:`# CUSTOS.md — Custo e Precificação
 
 > **Opcional.** Use no contexto comercial (restaurante, food service, catering). Reúne o custo real por prato e a margem.
@@ -238,7 +238,7 @@ NICHES.cuisine = {
 ## Notas de precificação
 - [Ajustes ao mercado local; ancoragem (item caro que faz o resto parecer bom valor); combos/extras que elevam o ticket.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de prova/desenvolvimento. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de prova/desenvolvimento. Referência fixa — nunca substituído.", short:"Modelo do log de prova; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Prova/Desenvolvimento
 
 > **Referência fixa.** O MOLDE — não é substituído.

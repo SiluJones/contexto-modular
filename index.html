@@ -1108,7 +1108,7 @@ const FILE_PHILOSOPHY = {
 /* Template universal de IDEAS — gatilhos/P9/higiene referenciam IDEAS em TODO nicho;
    injetado via normNiche quando o nicho não traz o seu (dev e brainstorm trazem). */
 const UNIVERSAL_IDEAS_TPL = { name:"IDEAS.md", cat:"ctx",
-  role:"Segundo cérebro do projeto: captura toda ideia (sua e do assistente) na hora. Ideia muda de status, não some.",
+  role:"Segundo cérebro do projeto: captura toda ideia (sua e do assistente) na hora. Ideia muda de status, não some.", short:"Segundo cérebro: ideia muda, não some.",
   content:`# IDEAS.md — Banco de ideias
 
 > Segundo cérebro: captura tudo, nunca perde nada. Ideia muda de status, não some.
@@ -1302,9 +1302,9 @@ const INSTR_TETO = 6900;
    nao o total (que varia com a riqueza do nicho). O total nos combos tem a tolerancia do pior
    caso ja usado pelo G16. */
 const INSTR_TETO_MODOS = 7600;
-const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450 };
+const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.124.0";
+const KIT_VERSION = "1.125.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1360,7 +1360,7 @@ NICHES.dev = {
     ["Termo técnico próprio do projeto usado", "Entrega o GLOSSARY.md completo com o termo definido."],
   ],
   contextFiles:[
-    {name:"SPEC.md", cat:"opcional", role:"Modelo de **spec de feature** (Spec-Driven Development): o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. **Sob demanda** — copie para `specs/AAMMDD-nome.md`, uma por feature, e a pasta nasce aí. **Não é o modelo das WOs** (instrução de aplicação Chat→Code, em `meta/workorders/`): spec diz o QUE construir, WO diz COMO aplicar.", content:`# SPEC — [nome da feature]
+    {name:"SPEC.md", cat:"opcional", role:"Modelo de **spec de feature** (Spec-Driven Development): o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. **Sob demanda** — copie para `specs/AAMMDD-nome.md`, uma por feature, e a pasta nasce aí. **Não é o modelo das WOs** (instrução de aplicação Chat→Code, em `meta/workorders/`): spec diz o QUE construir, WO diz COMO aplicar.", short:"Spec de feature (o QUÊ), sob demanda; não WO.", content:`# SPEC — [nome da feature]
 
 > Modelo. Copie para \`specs/AAMMDD-nome-da-feature.md\` e preencha ANTES de codar.
 > A spec diz **o que** construir e **quando está pronto**; o passo a passo da edição é outra coisa.
@@ -1382,7 +1382,7 @@ NICHES.dev = {
 ## Passos
 [Quebra em passos pequenos, ordenados, cada um entregável e testável.]
 `},
-    {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
+    {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", short:"Visão, stack, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
 
 > Arquivo **estável**. O assistente lê no início de cada conversa para se ambientar.
 > Muda pouco: só em alteração estrutural (stack, arquitetura, escopo, nova armadilha descoberta).
@@ -1452,7 +1452,7 @@ projeto/
 - **O que é sucesso:** [como se mede]
 - **O que o projeto deliberadamente NÃO é:** [limites de escopo]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"O agora: o que funciona, o que está em progresso, o que está quebrado, backlog curto. Rolante — o resolvido sai.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"O agora: o que funciona, o que está em progresso, o que está quebrado, backlog curto. Rolante — o resolvido sai.", short:"O agora e o backlog curto. Rolante.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: descreve só o AGORA. O assistente lê no início para saber onde retomar.
 > Item resolvido SAI daqui — vai para o CHANGELOG (se foi entrega) e/ou para o log do dia.
@@ -1481,7 +1481,7 @@ projeto/
 ## 💬 Última conversa
 **[data]** — [2-4 linhas: o que foi feito, onde parou, qual o próximo passo óbvio. É a primeira coisa que o assistente lê para retomar o fio.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões de arquitetura (DEC) e bugs graves resolvidos (FIX). Cresce devagar.", content:`# DECISIONS.md — Registro de Decisões
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões de arquitetura (DEC) e bugs graves resolvidos (FIX). Cresce devagar.", short:"O porquê: arquitetura (DEC) e bugs (FIX).", content:`# DECISIONS.md — Registro de Decisões
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ — o que o código sozinho não conta.
 > Duas naturezas: **DEC** (decisões de arquitetura/design) e **FIX** (bugs graves resolvidos, para não repetir).
@@ -1521,7 +1521,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 - **Solução:** [o que foi feito.]
 - **Lição:** [o que evita que volte a acontecer; virou armadilha em CONTEXT?]
 `},
-    {name:"CHANGELOG.md", cat:"hist", role:"Histórico de versões entregues (SemVer + Keep a Changelog). Cresce no topo.", content:`# CHANGELOG
+    {name:"CHANGELOG.md", cat:"hist", role:"Histórico de versões entregues (SemVer + Keep a Changelog). Cresce no topo.", short:"Versões entregues (SemVer). Cresce no topo.", content:`# CHANGELOG
 
 > Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 > **Cresce**: entradas novas no topo. Registra só o que foi de fato concluído/entregue.
@@ -1542,7 +1542,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ### Removido
 - [O que saiu.]
 `},
-    {name:"IDEAS.md", cat:"ctx", role:"Segundo cérebro: ideias suas e do assistente. Nunca perde nada — ideia muda de status, não some.", content:`# IDEAS.md — Brainstorm e Visão
+    {name:"IDEAS.md", cat:"ctx", role:"Segundo cérebro: ideias suas e do assistente. Nunca perde nada — ideia muda de status, não some.", short:"Segundo cérebro: ideia muda, não some.", content:`# IDEAS.md — Brainstorm e Visão
 
 > **Segundo cérebro** do projeto. Captura TUDO que for mencionado, mesmo solto ou no meio de outro assunto.
 > Nunca perde: ideia implementada vai para «Concluídas»; ideia recusada vai para «Descartadas» com o motivo.
@@ -1590,7 +1590,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este arquivo é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
@@ -1621,7 +1621,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## Próximos passos
 - [Ações para o próximo turno.]
 `},
-    {name:"ROADMAP.md", cat:"opcional", role:"OPCIONAL — plano deliberado de evolução em fases. Use quando o projeto tem direção de médio/longo prazo.", content:`# ROADMAP.md — Plano Intencional de Evolução
+    {name:"ROADMAP.md", cat:"opcional", role:"OPCIONAL — plano deliberado de evolução em fases. Use quando o projeto tem direção de médio/longo prazo.", short:"OPCIONAL — plano de evolução em fases.", content:`# ROADMAP.md — Plano Intencional de Evolução
 
 > **Opcional.** Use quando o projeto tem um plano em fases — não para tarefas soltas (isso é o Backlog do STATUS) nem para brainstorm (isso é o IDEAS).
 > Cada fase tem um objetivo e um critério de conclusão. Marque o estado: 🟢 concluída · 🟡 em curso/próxima · 🔵 futura · 🚫 descartada.
@@ -1648,7 +1648,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 🚫 Itens descartados desta visão
 - **[Item]** — fora de escopo porque [motivo]. (Pode viver no IDEAS se ainda for ideia.)
 `},
-    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre conversas.", content:`# GLOSSARY.md — Termos do Projeto
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre conversas.", short:"OPCIONAL — jargão que se repete no projeto.", content:`# GLOSSARY.md — Termos do Projeto
 
 > **Opcional.** Use quando o projeto tem vocabulário próprio (nomes de módulos, conceitos, identificadores) que o assistente reexplicaria a cada conversa sem isto.
 > Mantenha curto: só o que não é óbvio para alguém de fora.
@@ -1667,7 +1667,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## Identificadores
 - **[Sigla/ID]** — [o que significa no projeto.]
 `},
-    {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
+    {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", short:"OPCIONAL — fases antigas; lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para conhecimento denso que já foi aprendido e não muda mais — guias técnicos, análises de viabilidade, notas de migração — que tornariam o CONTEXT pesado demais.
 > Não é lido no início da conversa; o assistente consulta sob demanda quando o assunto aparece.
@@ -1781,7 +1781,7 @@ NICHES.design = {
     ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISIONS/STATUS o impacto no escopo."],
   ],
   contextFiles:[
-    {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", content:`# PROJETO.md — [Nome do Projeto]
+    {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", short:"O brief: objetivo, entregáveis, exclusões.", content:`# PROJETO.md — [Nome do Projeto]
 
 > Arquivo **estável**. O brief é a fundação de tudo — o assistente lê para alinhar direção e julgar pedidos.
 > Mude só em alteração real de escopo (e isso vira decisão registrada).
@@ -1819,7 +1819,7 @@ NICHES.design = {
 ## Prazo
 - [Marco — data — status]
 `},
-    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: gosto, vetos, como dá feedback. Estável.", content:`# CLIENTE.md — [Nome do Cliente]
+    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: gosto, vetos, como dá feedback. Estável.", short:"O cliente: gosto, vetos, feedback. Estável.", content:`# CLIENTE.md — [Nome do Cliente]
 
 > Arquivo **estável**. O assistente lê para acertar o tom da comunicação e antecipar o gosto/atrito.
 
@@ -1845,7 +1845,7 @@ NICHES.design = {
 ## Histórico
 - [Projetos anteriores; atritos e como foram resolvidos.]
 `},
-    {name:"MARCA.md", cat:"ctx", role:"O sistema visual: logo (regras), paleta em todos os espaços de cor, tipografia, extensões, tom. Estável.", content:`# MARCA.md — Sistema Visual
+    {name:"MARCA.md", cat:"ctx", role:"O sistema visual: logo (regras), paleta em todos os espaços de cor, tipografia, extensões, tom. Estável.", short:"Sistema visual: logo, paleta, tipografia.", content:`# MARCA.md — Sistema Visual
 
 > Arquivo **estável** e central. É a fonte de verdade do visual — toda peça obedece a ele.
 > Para identidade/marca, são seis ativos: logo, marca secundária, paleta, tipografia, extensões, tom.
@@ -1885,7 +1885,7 @@ NICHES.design = {
 ## 6. Tom visual
 - [A "personalidade" que o conjunto transmite, em uma frase + o que NÃO somos.]
 `},
-    {name:"REFERENCIAS.md", cat:"ctx", role:"Moodboard textual: paletas, tipografias, links — distinguindo conteúdo de estilo. Estável.", content:`# REFERENCIAS.md — [Projeto]
+    {name:"REFERENCIAS.md", cat:"ctx", role:"Moodboard textual: paletas, tipografias, links — distinguindo conteúdo de estilo. Estável.", short:"Moodboard: conteúdo separado de estilo.", content:`# REFERENCIAS.md — [Projeto]
 
 > Arquivo **estável**. Moodboard em texto + referências do cliente, com a distinção crucial: conteúdo vs. estilo.
 
@@ -1908,7 +1908,7 @@ NICHES.design = {
 ## Referências negativas
 - [Estilos/exemplos que o projeto NÃO deve seguir — explicitamente.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", content:`# DECISIONS.md — Decisões Visuais
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que cada escolha visual: esta fonte, esta cor, este símbolo, este layout. Cresce devagar.", short:"O porquê de cada escolha visual.", content:`# DECISIONS.md — Decisões Visuais
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das escolhas — o que o arquivo de design não conta.
 > Evita refazer a mesma discussão ("por que não usamos azul mesmo?") a cada conversa.
@@ -1938,7 +1938,7 @@ NICHES.design = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    {name:"REVISOES.md", cat:"hist", role:"Histórico de versões entregues, feedback do cliente e qual rodada foi usada. CRESCE.", content:`# REVISOES.md — Histórico de Versões
+    {name:"REVISOES.md", cat:"hist", role:"Histórico de versões entregues, feedback do cliente e qual rodada foi usada. CRESCE.", short:"Versões, feedback e rodadas usadas. CRESCE.", content:`# REVISOES.md — Histórico de Versões
 
 > Arquivo que **cresce**. Cada versão entregue e cada feedback ficam registrados, com a rodada de revisão.
 > Prova o que foi entregue/quando e mostra quantas rodadas já rolaram (controle de escopo).
@@ -1958,7 +1958,7 @@ NICHES.design = {
 ## [Entregável] — v[N+1]
 [...]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"O agora: o que está aprovado, o que aguarda, próximo passo, com quem está a bola. Rolante.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"O agora: o que está aprovado, o que aguarda, próximo passo, com quem está a bola. Rolante.", short:"Aprovado, pendente, com quem está a bola.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
 > Item resolvido sai daqui (vira versão em REVISOES, ou nota no log).
@@ -1989,7 +1989,7 @@ NICHES.design = {
 ## 💬 Última conversa
 **[data]** — [o que rolou + onde parou + próximo passo óbvio.]
 `},
-    {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", content:`# PRODUCAO.md — Pré-impressão e Exportação
+    {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", short:"OPCIONAL — checklist de pré-impressão.", content:`# PRODUCAO.md — Pré-impressão e Exportação
 
 > **Opcional**, mas obrigatório quando há peça para impressão. Reúne as specs e o checklist que evitam reimpressão cara.
 > Regra de ouro: projetar em CMYK desde o início se o destino é papel.
@@ -2026,7 +2026,7 @@ NICHES.design = {
 ## Notas da gráfica
 - [Especificidades que o impressor pediu; aprendizados de tiragens anteriores.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -2151,7 +2151,7 @@ NICHES.client = {
     ["Valor cotado / fatura / pagamento", "Entrega FINANCEIRO.md completo (quando o projeto usa esse arquivo)."],
   ],
   contextFiles:[
-    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: perfil, como se comunica, como dá feedback, sensibilidades, o que evitar. Estável.", content:`# CLIENTE.md — [Nome do Cliente]
+    {name:"CLIENTE.md", cat:"ctx", role:"Quem é o cliente: perfil, como se comunica, como dá feedback, sensibilidades, o que evitar. Estável.", short:"O cliente: perfil, feedback, o que evitar.", content:`# CLIENTE.md — [Nome do Cliente]
 
 > Arquivo **estável**. O assistente lê no início para acertar o tom e antecipar atritos.
 > Atualize quando aprender algo novo sobre como o cliente funciona — não a cada mensagem.
@@ -2180,7 +2180,7 @@ NICHES.client = {
 ## Histórico da relação
 - [Como começou; projetos anteriores; momentos de atrito e como foram resolvidos.]
 `},
-    {name:"PROJETO.md", cat:"ctx", role:"O projeto ativo: objetivo, escopo, entregáveis, rodadas de revisão e — crucial — o que NÃO está incluído. Estável dentro do projeto.", content:`# PROJETO.md — [Nome do Projeto]
+    {name:"PROJETO.md", cat:"ctx", role:"O projeto ativo: objetivo, escopo, entregáveis, rodadas de revisão e — crucial — o que NÃO está incluído. Estável dentro do projeto.", short:"Escopo, entregáveis e o que NÃO está nele.", content:`# PROJETO.md — [Nome do Projeto]
 
 > Arquivo **estável** dentro do projeto. É a referência para julgar se um pedido novo está dentro ou fora do contratado.
 > Mude só em alteração real de escopo (e isso vira acordo em ACORDOS.md).
@@ -2214,7 +2214,7 @@ NICHES.client = {
 > Distinga referência de CONTEÚDO (usar o texto/dados) de referência de ESTILO (usar o visual). Anote qual é qual para não confundir.
 - [Referência — é conteúdo ou estilo?]
 `},
-    {name:"ACORDOS.md", cat:"ctx", role:"Tudo que foi combinado, aprovado ou prometido — verbal ou escrito. A memória formal da relação. CRESCE.", content:`# ACORDOS.md — Registro de Combinados
+    {name:"ACORDOS.md", cat:"ctx", role:"Tudo que foi combinado, aprovado ou prometido — verbal ou escrito. A memória formal da relação. CRESCE.", short:"Tudo combinado ou prometido. CRESCE.", content:`# ACORDOS.md — Registro de Combinados
 
 > Arquivo que **cresce**. Cada coisa combinada vira um item datado. É a defesa contra "tinha ficado combinado outra coisa".
 > Inclui: aprovações, mudanças de escopo, promessas de prazo, decisões de design/conteúdo aceitas pelo cliente.
@@ -2243,7 +2243,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 > Coisas combinadas só na conversa, sem registro formal. Sugerir confirmação por escrito.
 - [ ] [Acordo verbal X — enviar confirmação ao cliente.]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"O estado da relação agora: próxima ação, com quem está a bola, prazo, risco. Rolante — o resolvido sai.", content:`# STATUS.md — Estado da Relação
+    {name:"STATUS.md", cat:"ctx", role:"O estado da relação agora: próxima ação, com quem está a bola, prazo, risco. Rolante — o resolvido sai.", short:"Próxima ação, bola, prazo, risco. Rolante.", content:`# STATUS.md — Estado da Relação
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde a relação está e o que fazer em seguida.
 > Item resolvido sai daqui (vira entrega em ENTREGAS, ou nota no log).
@@ -2268,7 +2268,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## 💬 Última interação
 **[data]** — [o que rolou + onde parou + próximo passo óbvio. Primeira coisa que o assistente lê para retomar.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -2293,7 +2293,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    {name:"ENTREGAS.md", cat:"hist", role:"Histórico de entregas, versões e aprovações. CRESCE — registro do que já saiu.", content:`# ENTREGAS.md — Histórico de Entregas
+    {name:"ENTREGAS.md", cat:"hist", role:"Histórico de entregas, versões e aprovações. CRESCE — registro do que já saiu.", short:"Entregas, versões e aprovações. CRESCE.", content:`# ENTREGAS.md — Histórico de Entregas
 
 > Arquivo que **cresce**. Cada versão entregue e cada aprovação ficam registradas, com data.
 > Útil para provar o que foi entregue e quando, e para ver quantas rodadas já rolaram.
@@ -2316,7 +2316,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Marcos de pagamento (se atrelados a entrega)
 - [Entrega X → fatura Y → status.]
 `},
-    {name:"COMUNICACOES.md", cat:"opcional", role:"OPCIONAL — registro do texto final das mensagens-chave enviadas ao cliente. Use quando a comunicação é sensível ou frequente.", content:`# COMUNICACOES.md — Mensagens-Chave Enviadas
+    {name:"COMUNICACOES.md", cat:"opcional", role:"OPCIONAL — registro do texto final das mensagens-chave enviadas ao cliente. Use quando a comunicação é sensível ou frequente.", short:"OPCIONAL — texto final das mensagens-chave.", content:`# COMUNICACOES.md — Mensagens-Chave Enviadas
 
 > **Opcional.** Use quando a relação tem comunicação delicada ou muitas trocas que vale guardar.
 > Registra o texto FINAL que foi ao cliente (após você editar) — para manter consistência de tom e ter histórico do que foi dito.
@@ -2336,7 +2336,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## [Assunto] — AAAA-MM-DD
 [...]
 `},
-    {name:"FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — valores cotados, faturas, pagamentos. Use quando há mais de uma cobrança ou risco de esquecer o que foi cotado.", content:`# FINANCEIRO.md — Valores e Pagamentos
+    {name:"FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — valores cotados, faturas, pagamentos. Use quando há mais de uma cobrança ou risco de esquecer o que foi cotado.", short:"OPCIONAL — cotações, faturas, pagamentos.", content:`# FINANCEIRO.md — Valores e Pagamentos
 
 > **Opcional.** Use quando o projeto tem múltiplas cobranças, fases pagas, ou histórico de valores que é fácil esquecer ("quanto cotei mesmo?").
 > Mantenha factual. Não substitui contrato/nota fiscal — é a memória de trabalho.
@@ -2358,7 +2358,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ## Notas
 - [Combinados sobre forma de pagamento, parcelamento, etc.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido neste formato. Logs vivem no Git, lidos sob demanda.
@@ -2686,7 +2686,7 @@ NICHES.narrative = {
     ]
   },
   contextFiles:[
-    {name:"BIBLIA.md", cat:"ctx", role:"A story bible: premissa, mundo, regras, tom. Enxuta (Tier 1 primeiro). Estável.", content:`# BIBLIA.md — [Nome da Obra]
+    {name:"BIBLIA.md", cat:"ctx", role:"A story bible: premissa, mundo, regras, tom. Enxuta (Tier 1 primeiro). Estável.", short:"Premissa, mundo, regras, tom. Estável.", content:`# BIBLIA.md — [Nome da Obra]
 
 > A **bíblia da obra**: a enciclopédia que mantém tudo consistente da página 1 ao "fim".
 > **Estável** e **enxuta**: comece pelo essencial (Tier 1). Só aprofunde quando a obra pedir — documentar demais rouba tempo da escrita.
@@ -2717,7 +2717,7 @@ NICHES.narrative = {
 > As poucas verdades que NÃO podem variar. (Detalhe fica em CONTINUIDADE.md.)
 - [Ex: a magia sempre cobra um preço físico; a cidade fica ao norte do rio.]
 `},
-    {name:"PERSONAGENS.md", cat:"ctx", role:"Fichas: voz, arco, traços, relações e evolução intencional de cada personagem. Estável.", content:`# PERSONAGENS.md — [Obra]
+    {name:"PERSONAGENS.md", cat:"ctx", role:"Fichas: voz, arco, traços, relações e evolução intencional de cada personagem. Estável.", short:"Fichas: voz, arco, relações. Estável.", content:`# PERSONAGENS.md — [Obra]
 
 > Fichas dos personagens. **Estável** — atualiza quando um arco avança ou um traço se firma.
 > O assistente consulta para manter cada personagem coerente (ou evoluindo de propósito, não por descuido).
@@ -2746,7 +2746,7 @@ NICHES.narrative = {
 > Três camadas de investimento: **primário** (ficha completa acima), **secundário** (recorrente — precisa de UMA vida fora do protagonista que o leitor sinta: um ofício, uma rotina, uma relação que não inclui o MC), **terciário** (aparição pontual — uma linha ou gesto específico, nunca arquétipo vazio). O mundo deve parecer que continua existindo quando o protagonista não está olhando.
 - **[Nome]** — [função na trama + o traço que o distingue + a vida fora do MC, se secundário.]
 `},
-    {name:"ENREDO.md", cat:"ctx", role:"Estrutura e enredo: beats, o que já aconteceu, o que vem, decisões de trama. Cresce devagar.", content:`# ENREDO.md — Estrutura e Trama
+    {name:"ENREDO.md", cat:"ctx", role:"Estrutura e enredo: beats, o que já aconteceu, o que vem, decisões de trama. Cresce devagar.", short:"Beats, o que aconteceu, o que vem.", content:`# ENREDO.md — Estrutura e Trama
 
 > A espinha da história + o registro do que já aconteceu e do que vem.
 > **Cresce devagar.** Beats aqui são DIAGNÓSTICO, não fórmula — a história tem prioridade sobre o outline.
@@ -2780,7 +2780,7 @@ NICHES.narrative = {
 > Promessas feitas ao leitor que precisam de resolução (setups esperando payoff).
 - [Fio aberto — onde foi plantado — onde/como pretende pagar.]
 `},
-    {name:"VOZ.md", cat:"ctx", role:"A voz da obra: tom, ritmo, exemplos de prosa aprovada, o que evitar. Protege o estilo do autor. Estável.", content:`# VOZ.md — Voz e Estilo
+    {name:"VOZ.md", cat:"ctx", role:"A voz da obra: tom, ritmo, exemplos de prosa aprovada, o que evitar. Protege o estilo do autor. Estável.", short:"Tom, ritmo, prosa aprovada. Protege o estilo.", content:`# VOZ.md — Voz e Estilo
 
 > Guarda a VOZ — que é do autor, não do assistente. Serve para o assistente respeitar o estilo, não para padronizá-lo.
 > O assistente consulta antes de sugerir prosa, e nunca empurra a obra em direção a um texto genérico.
@@ -2813,7 +2813,7 @@ NICHES.narrative = {
 ## Decisões de estilo
 - [Escolhas conscientes: presente histórico? itálico para pensamento? Cruza com a grafia em CONTINUIDADE.]
 `},
-    {name:"CONTINUIDADE.md", cat:"hist", role:"Notas de continuidade + grafia canônica + inconsistências resolvidas. A memória factual. CRESCE.", content:`# CONTINUIDADE.md — Notas de Continuidade
+    {name:"CONTINUIDADE.md", cat:"hist", role:"Notas de continuidade + grafia canônica + inconsistências resolvidas. A memória factual. CRESCE.", short:"Memória factual e grafia canônica. CRESCE.", content:`# CONTINUIDADE.md — Notas de Continuidade
 
 > A memória factual da obra. **Cresce.** É aqui que se previne o olho que muda de cor e o nome grafado de dois jeitos.
 > O assistente consulta antes de afirmar detalhes e registra cada novo fato/correção.
@@ -2856,7 +2856,7 @@ NICHES.narrative = {
 - **Conflito:** [o que se contradizia.]
 - **Resolução:** [o que ficou valendo como cânone.]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"Onde estamos: capítulo, cena, próxima escrita, o que está aberto. Rolante.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"Onde estamos: capítulo, cena, próxima escrita, o que está aberto. Rolante.", short:"Capítulo, cena, próxima escrita. Rolante.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar a escrita.
 > Item resolvido sai daqui (vira resumo em ENREDO, ou nota no log).
@@ -2882,7 +2882,7 @@ NICHES.narrative = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + a próxima escrita óbvia.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -2907,7 +2907,7 @@ NICHES.narrative = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    {name:"CRONOLOGIA.md", cat:"opcional", role:"OPCIONAL — linha do tempo dos eventos da obra. Use quando há saltos temporais ou tramas paralelas.", content:`# CRONOLOGIA.md — Linha do Tempo
+    {name:"CRONOLOGIA.md", cat:"opcional", role:"OPCIONAL — linha do tempo dos eventos da obra. Use quando há saltos temporais ou tramas paralelas.", short:"OPCIONAL — linha do tempo dos eventos.", content:`# CRONOLOGIA.md — Linha do Tempo
 
 > **Opcional.** Use quando a obra tem saltos temporais, flashbacks, tramas paralelas ou uma história longa onde "quando aconteceu o quê" começa a escapar.
 > Separa a ordem CRONOLÓGICA (quando os eventos ocorrem na história) da ordem NARRATIVA (em que o leitor descobre).
@@ -2935,7 +2935,7 @@ NICHES.narrative = {
 ## Pontos de convergência
 - [Onde os fios/linhas se cruzam — para sincronizar.]
 `},
-    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", content:`# GLOSSARY.md — Termos da Obra
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos, nomes próprios, jargão do mundo + significado. Use em fantasia/ficção científica com muito vocabulário.", short:"OPCIONAL — termos e nomes do mundo.", content:`# GLOSSARY.md — Termos da Obra
 
 > **Opcional.** Use quando a obra inventa vocabulário (fantasia, ficção científica, mundos próprios) que se repete e precisa de sentido e grafia estáveis.
 > A grafia canônica também vive em CONTINUIDADE; aqui entra o SIGNIFICADO.
@@ -2958,7 +2958,7 @@ NICHES.narrative = {
 ## Línguas / expressões inventadas
 - **[Palavra/expressão]** — [tradução/sentido; quando se usa.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -3088,7 +3088,7 @@ NICHES.marketing = {
     ["Campanha ou análise de métrica fechada", "Entrega STATUS.md (e RESULTADOS, se usa o arquivo)."],
   ],
   contextFiles:[
-    {name:"MARCA.md", cat:"ctx", role:"Posicionamento, valores, diferenciais e os 3-5 pilares de conteúdo. Estável.", content:`# MARCA.md — [Nome]
+    {name:"MARCA.md", cat:"ctx", role:"Posicionamento, valores, diferenciais e os 3-5 pilares de conteúdo. Estável.", short:"Posicionamento e pilares de conteúdo.", content:`# MARCA.md — [Nome]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar todo conteúdo ao posicionamento e aos pilares.
 > Muda pouco: só em reposicionamento real.
@@ -3120,7 +3120,7 @@ NICHES.marketing = {
 ## Concorrentes / referências
 - [Quem mais fala com esta audiência; o que fazem bem; onde há espaço para a marca se destacar.]
 `},
-    {name:"AUDIENCIA.md", cat:"ctx", role:"Personas, suas dores/desejos, canais e a linguagem que ressoa. Estável.", content:`# AUDIÊNCIA.md — Quem Ouve a Marca
+    {name:"AUDIENCIA.md", cat:"ctx", role:"Personas, suas dores/desejos, canais e a linguagem que ressoa. Estável.", short:"Personas, dores, canais, linguagem.", content:`# AUDIÊNCIA.md — Quem Ouve a Marca
 
 > Arquivo **estável**. O assistente consulta para escrever PARA a audiência (a partir da dor dela), não para a marca.
 > Revise trimestralmente — o comportamento da audiência evolui.
@@ -3146,7 +3146,7 @@ NICHES.marketing = {
 ## Para quem NÃO é
 - **[Quem]** — [por que não é o alvo; evita diluir a mensagem tentando agradar todos.]
 `},
-    {name:"TOM-E-VOZ.md", cat:"ctx", role:"Guia de linguagem: como a marca soa, exemplos bons e ruins, palavras e proibições. Estável.", content:`# TOM-E-VOZ.md — Guia de Linguagem
+    {name:"TOM-E-VOZ.md", cat:"ctx", role:"Guia de linguagem: como a marca soa, exemplos bons e ruins, palavras e proibições. Estável.", short:"Como a marca soa; exemplos e proibições.", content:`# TOM-E-VOZ.md — Guia de Linguagem
 
 > Arquivo **estável** e central. Garante que a marca soe igual em todo canal e formato.
 > O assistente consulta antes de escrever qualquer peça — a voz é da marca/humano, não uma voz genérica de IA.
@@ -3185,7 +3185,7 @@ NICHES.marketing = {
 > Como a voz se adapta ao nativo de cada plataforma (sem deixar de ser a mesma marca).
 - **[Canal]:** [o que muda — tamanho, formalidade, uso de emoji, etc.]
 `},
-    {name:"PAUTA.md", cat:"ctx", role:"Calendário editorial vivo: temas, pilares, formatos, datas, status. Rolante para o período ativo.", content:`# PAUTA.md — Calendário Editorial
+    {name:"PAUTA.md", cat:"ctx", role:"Calendário editorial vivo: temas, pilares, formatos, datas, status. Rolante para o período ativo.", short:"Calendário editorial vivo. Rolante.", content:`# PAUTA.md — Calendário Editorial
 
 > **Documento vivo** (rolante para o período ativo). Previne produção de última hora e garante cadência e consistência.
 > O que foi publicado desce para o histórico; o que vem fica no topo. O assistente consulta para saber o que está no ar e o que falta.
@@ -3216,7 +3216,7 @@ NICHES.marketing = {
 > Desce para cá depois de no ar — referência do que já foi feito (evita repetir, ajuda a medir).
 - **[dd/mm]** — [tema] — [canal] — [resultado, se medido → RESULTADOS.md].
 `},
-    {name:"STATUS.md", cat:"ctx", role:"Estado atual: campanha ativa, conteúdo urgente, próximos passos. Rolante.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"Estado atual: campanha ativa, conteúdo urgente, próximos passos. Rolante.", short:"Campanha ativa, urgências, próximos passos.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde a operação de conteúdo está.
 > Item resolvido sai daqui (vira histórico na PAUTA ou nota no log).
@@ -3245,7 +3245,7 @@ NICHES.marketing = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -3270,7 +3270,7 @@ NICHES.marketing = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    {name:"RESULTADOS.md", cat:"opcional", role:"OPCIONAL — desempenho de conteúdo e campanhas, por funil. Use quando há medição contínua.", content:`# RESULTADOS.md — Desempenho
+    {name:"RESULTADOS.md", cat:"opcional", role:"OPCIONAL — desempenho de conteúdo e campanhas, por funil. Use quando há medição contínua.", short:"OPCIONAL — desempenho por funil.", content:`# RESULTADOS.md — Desempenho
 
 > **Opcional.** Use quando a operação mede resultado de forma contínua. Liga conteúdo/campanha a métricas por estágio do funil, distinguindo o que importa do que é vaidade.
 > Serve para decidir o que repetir, ajustar ou cortar — com dado, não com achismo.
@@ -3296,7 +3296,7 @@ NICHES.marketing = {
 > O que já sabemos que funciona com esta audiência — para não re-testar.
 - [Aprendizado — de onde veio.]
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um \`logs/AAAA-MM-DD.md\` preenchido. Logs vivem no Git, lidos sob demanda.
@@ -3419,7 +3419,7 @@ NICHES.research = {
     ["Conceito-chave definido", "Entrega SINTESE.md (ou GLOSSARY) com a definição registrada."],
   ],
   contextFiles:[
-    { name:"TEMA.md", cat:"essencial", role:"A pergunta de pesquisa, o recorte, a justificativa e a tese provisória. Estável.",
+    { name:"TEMA.md", cat:"essencial", role:"A pergunta de pesquisa, o recorte, a justificativa e a tese provisória. Estável.", short:"Pergunta, recorte, tese provisória.",
       content:`# TEMA.md — [Título da Pesquisa]
 
 > Arquivo **estável**. O assistente lê primeiro para entender o que se investiga e os limites do recorte.
@@ -3449,7 +3449,7 @@ NICHES.research = {
 - **Citação:** [ABNT / APA / Chicago...]
 - **Idioma do texto:** [pt-BR / outro]
 `},
-    { name:"FONTES.md", cat:"essencial", role:"Catálogo de referências VERIFICADAS, com citekey e a nota de por que cada uma importa. Cresce.",
+    { name:"FONTES.md", cat:"essencial", role:"Catálogo de referências VERIFICADAS, com citekey e a nota de por que cada uma importa. Cresce.", short:"Referências VERIFICADAS, com citekey.",
       content:`# FONTES.md — Catálogo de Referências
 
 > Arquivo que **cresce**. A bibliografia da pesquisa, separada das notas de ideia (que ficam em SINTESE).
@@ -3482,7 +3482,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 > Fontes mencionadas mas ainda não conferidas — NÃO citar até verificar.
 - [ ] [referência incompleta a localizar/confirmar.]
 `},
-    { name:"HIPOTESES.md", cat:"essencial", role:"Hipóteses ativas e seu status, separando evidência de tese de especulação. Cresce devagar.",
+    { name:"HIPOTESES.md", cat:"essencial", role:"Hipóteses ativas e seu status, separando evidência de tese de especulação. Cresce devagar.", short:"Hipóteses: evidência separada de especulação.",
       content:`# HIPOTESES.md — Hipóteses e Status
 
 > Arquivo que **cresce devagar**. Separa o que é hipótese (a testar) do que já é evidência (sustentado) e do que é especulação (inferência).
@@ -3509,7 +3509,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 > Lampejos a desenvolver — o "inbox" intelectual. Sem compromisso ainda.
 - [ideia solta + por que pode valer.]
 `},
-    { name:"SINTESE.md", cat:"essencial", role:"O argumento em construção: tese, estrutura, conceitos definidos, síntese das fontes. Estável-rolante.",
+    { name:"SINTESE.md", cat:"essencial", role:"O argumento em construção: tese, estrutura, conceitos definidos, síntese das fontes. Estável-rolante.", short:"O argumento em construção.",
       content:`# SINTESE.md — Argumento em Construção
 
 > O coração intelectual da pesquisa: onde as fontes viram ARGUMENTO (não pilha de resumos).
@@ -3542,7 +3542,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Lacunas / a desenvolver
 - [Pontos do argumento ainda frágeis ou sem fonte; o que pesquisar a seguir.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Fase, prazos, próximas leituras e pendências. Rolante — o resolvido sai.",
+    { name:"STATUS.md", cat:"rolante", role:"Fase, prazos, próximas leituras e pendências. Rolante — o resolvido sai.", short:"Fase, prazos, próximas leituras. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -3570,7 +3570,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -3595,7 +3595,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.",
+    { name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos técnicos e conceitos próprios da pesquisa. Use quando há vocabulário denso ou herdado de vários autores.", short:"OPCIONAL — termos e conceitos da pesquisa.",
       content:`# GLOSSARY.md — Termos e Conceitos
 
 > **Opcional.** Use quando a pesquisa lida com vocabulário técnico denso, conceitos de autores diferentes (que podem definir o mesmo termo de modos distintos), ou jargão que se repete.
@@ -3616,7 +3616,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## Termos em outra língua
 - **[termo original]** — [tradução adotada + por que; alternativas descartadas.]
 `},
-    { name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.",
+    { name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas: revisões já fechadas, levantamentos extensos. Lido sob demanda.", short:"OPCIONAL — fases fechadas; lido sob demanda.",
       content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para material denso já estável que pesaria no contexto do dia a dia — uma revisão de literatura já fechada, um levantamento extenso, fichamentos antigos.
@@ -3639,7 +3639,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ## 5. [Autópsia de um problema resolvido]
 [Sintoma → causa raiz → correção → como evitar de novo. Vale sobretudo quando o sintoma apareceu longe da causa.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -3756,7 +3756,7 @@ NICHES.product = {
     ["Spec/PRD escrito ou priorização feita", "Entrega STATUS.md completo (iniciativa + métrica + prioridade)."],
   ],
   contextFiles:[
-    { name:"PRODUTO.md", cat:"essencial", role:"Visão, proposta de valor, princípios, North Star. O norte que filtra decisões. Estável.",
+    { name:"PRODUTO.md", cat:"essencial", role:"Visão, proposta de valor, princípios, North Star. O norte que filtra decisões. Estável.", short:"Visão, valor, North Star. Estável.",
       content:`# PRODUTO.md — [Nome do Produto]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar toda decisão à visão.
@@ -3789,7 +3789,7 @@ NICHES.product = {
 - **Concorrentes/alternativas:** [quem mais resolve este job, incluindo "não fazer nada".]
 - **Nosso diferencial:** [o que nos posiciona.]
 `},
-    { name:"PERSONAS.md", cat:"essencial", role:"Personas/segmentos com seus jobs, dores e ganhos. Quem usa e por quê. Estável.",
+    { name:"PERSONAS.md", cat:"essencial", role:"Personas/segmentos com seus jobs, dores e ganhos. Quem usa e por quê. Estável.", short:"Quem usa: jobs, dores, ganhos.",
       content:`# PERSONAS.md — Personas e Segmentos
 
 > Arquivo **estável**. O assistente consulta para representar o usuário e julgar relevância de pedidos.
@@ -3815,7 +3815,7 @@ NICHES.product = {
 ## Anti-persona (para quem NÃO é)
 - **[Quem]** — [por que este produto não atende esta pessoa; evita decisões de agradar quem não é o alvo.]
 `},
-    { name:"JORNADAS.md", cat:"essencial", role:"Jornadas-chave dos usuários: passos, emoções, pontos de atrito e oportunidades. Estável.",
+    { name:"JORNADAS.md", cat:"essencial", role:"Jornadas-chave dos usuários: passos, emoções, pontos de atrito e oportunidades. Estável.", short:"Jornadas: passos, atritos, oportunidades.",
       content:`# JORNADAS.md — Jornadas do Usuário
 
 > Arquivo **estável**. Mapeia como o usuário atravessa o produto (ou o problema) — onde trava, onde poderia ser melhor.
@@ -3845,7 +3845,7 @@ NICHES.product = {
 ## [Próxima jornada]
 [...]
 `},
-    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.",
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.", short:"Decisões de produto, com métrica esperada.",
       content:`# DECISIONS.md — Decisões de Produto
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das decisões — evita rediscussão e orienta quem chega depois.
@@ -3879,7 +3879,7 @@ NICHES.product = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Iniciativas em curso, métricas atuais, prioridades e próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Iniciativas em curso, métricas atuais, prioridades e próximos passos. Rolante.", short:"Iniciativas, métricas, prioridades. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde o produto está e o que vem.
@@ -3911,7 +3911,7 @@ NICHES.product = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"EXPERIMENTOS.md", cat:"opcional", role:"OPCIONAL — hipóteses testadas e resultados (A/B, entrevistas, protótipos). Use quando o produto valida por experimento.",
+    { name:"EXPERIMENTOS.md", cat:"opcional", role:"OPCIONAL — hipóteses testadas e resultados (A/B, entrevistas, protótipos). Use quando o produto valida por experimento.", short:"OPCIONAL — hipóteses testadas e resultados.",
       content:`# EXPERIMENTOS.md — Hipóteses e Aprendizados
 
 > **Opcional.** Use quando o produto valida decisões por experimento (A/B, teste de protótipo, entrevistas, fake door).
@@ -3933,7 +3933,7 @@ NICHES.product = {
 > Verdades validadas sobre o usuário/produto — para não retestar.
 - [Aprendizado — de qual experimento veio.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -4054,7 +4054,7 @@ NICHES.business = {
     ["Mudança de contexto (mercado, empresa)", "Entrega CONTEXT.md completo atualizado."],
   ],
   contextFiles:[
-    { name:"CONTEXT.md", cat:"essencial", role:"Empresa, mercado, momento, modelo de negócio. O pano de fundo. Estável.",
+    { name:"CONTEXT.md", cat:"essencial", role:"Empresa, mercado, momento, modelo de negócio. O pano de fundo. Estável.", short:"Empresa, mercado, modelo de negócio.",
       content:`# CONTEXT.md — [Empresa / Projeto]
 
 > Arquivo **estável**. O assistente lê primeiro para entender o negócio antes de analisar.
@@ -4085,7 +4085,7 @@ NICHES.business = {
 ## Restrições
 - [Limites reais: capital, equipe, tempo, regulação — o que condiciona as decisões.]
 `},
-    { name:"OBJETIVOS.md", cat:"essencial", role:"Objetivos atuais com critério de sucesso mensurável (OKR). O filtro das decisões. Estável-rolante.",
+    { name:"OBJETIVOS.md", cat:"essencial", role:"Objetivos atuais com critério de sucesso mensurável (OKR). O filtro das decisões. Estável-rolante.", short:"Objetivos com critério mensurável (OKR).",
       content:`# OBJETIVOS.md — Objetivos e Metas
 
 > O **filtro** de toda decisão: serve a algum objetivo daqui? Se não, é distração.
@@ -4114,7 +4114,7 @@ NICHES.business = {
 > Foco é dizer não. Oportunidades adiadas de propósito (evita dispersão).
 - [Iniciativa/mercado — por que fica para depois.]
 `},
-    { name:"ANALISE.md", cat:"essencial", role:"Análises em andamento, com premissas e sensibilidade explícitas. Cresce.",
+    { name:"ANALISE.md", cat:"essencial", role:"Análises em andamento, com premissas e sensibilidade explícitas. Cresce.", short:"Análises com premissas e sensibilidade.",
       content:`# ANALISE.md — Análises
 
 > Onde mora o RACIOCÍNIO — e, principalmente, as PREMISSAS. **Cresce.**
@@ -4148,7 +4148,7 @@ NICHES.business = {
 ## [Próxima análise]
 [...]
 `},
-    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de negócio com premissas, alternativas, contraponto e risco. Cresce devagar.",
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de negócio com premissas, alternativas, contraponto e risco. Cresce devagar.", short:"Decisões com premissas, contraponto e risco.",
       content:`# DECISIONS.md — Decisões de Negócio
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das decisões — evita rediscutir e mostra com que premissas algo foi decidido (úteis para revisar quando a realidade muda).
@@ -4181,7 +4181,7 @@ NICHES.business = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde o negócio está agora: foco, números-chave, decisões pendentes, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde o negócio está agora: foco, números-chave, decisões pendentes, próximos passos. Rolante.", short:"Foco, números-chave, pendências. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -4211,7 +4211,7 @@ NICHES.business = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.",
+    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.", short:"OPCIONAL — unit economics e projeções.",
       content:`# MODELO-FINANCEIRO.md — Unit Economics e Projeções
 
 > **Opcional**, mas valioso quando há decisão financeira. Reúne os poucos números que dizem se o modelo se sustenta.
@@ -4252,7 +4252,7 @@ NICHES.business = {
 > Em 3-4 frases: o que estes números contam sobre a saúde e o futuro do negócio.
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -4388,7 +4388,7 @@ NICHES.career = {
     ["Currículo/pitch pedido", "Checa o lastro antes de escrever; entrega o artefato + registra a versão em MERCADO.md."],
   ],
   contextFiles:[
-    { name:"CONTEXT.md", cat:"essencial", role:"Quem sou: formação, histórico, restrições reais, o que busco. O pano de fundo. Estável.",
+    { name:"CONTEXT.md", cat:"essencial", role:"Quem sou: formação, histórico, restrições reais, o que busco. O pano de fundo. Estável.", short:"Quem sou, restrições reais, o que busco.",
       content:`# CONTEXT.md — [Seu nome / projeto de carreira]
 
 > Arquivo **estável**. O assistente lê primeiro para saber com quem está falando.
@@ -4418,7 +4418,7 @@ NICHES.career = {
 [Do que você gosta, o que te drena, onde você rende. Fato observado, não autoimagem.]
 `
     },
-    { name:"EVIDENCIAS.md", cat:"essencial", role:"O coração. Append-only: fato datado + prova + competência que demonstra. Cresce sempre.",
+    { name:"EVIDENCIAS.md", cat:"essencial", role:"O coração. Append-only: fato datado + prova + competência que demonstra. Cresce sempre.", short:"Fato datado + prova + competência. Só cresce.",
       content:`# EVIDENCIAS.md — o que eu já fiz, com prova
 
 > **Append-only.** Nunca reescreva o arquivo: só acrescente ao topo da lista.
@@ -4451,7 +4451,7 @@ Uma entrada por fato. Formato:
 - **Onde usar:**
 `
     },
-    { name:"DOSSIE.md", cat:"essencial", role:"Retrato consolidado, DERIVADO das evidências: competência com nível e lastro. Rolante.",
+    { name:"DOSSIE.md", cat:"essencial", role:"Retrato consolidado, DERIVADO das evidências: competência com nível e lastro. Rolante.", short:"Retrato DERIVADO das evidências. Rolante.",
       content:`# DOSSIE.md — o retrato consolidado
 
 > **Derivado.** Toda linha aqui aponta para uma evidência (EV-xxx). Se não aponta, **não pode ficar**.
@@ -4480,7 +4480,7 @@ Uma entrada por fato. Formato:
 - [copiado do CONTEXT; o assistente usa para avisar quando o escopo tenta cruzar.]
 `
     },
-    { name:"SITUACAO.md", cat:"essencial", role:"Emprego atual: contratado × real, linha do tempo do escopo, remuneração, sinais. Cresce.",
+    { name:"SITUACAO.md", cat:"essencial", role:"Emprego atual: contratado × real, linha do tempo do escopo, remuneração, sinais. Cresce.", short:"Emprego atual: contratado × real. Cresce.",
       content:`# SITUACAO.md — o emprego atual
 
 > Aqui mora o dado que a negociação exige e a memória perde: **o que foi combinado × o que você faz**.
@@ -4515,7 +4515,7 @@ Uma entrada por fato. Formato:
 - [AAAA-MM-DD] [o que te irritou/drenou. Fica aqui como sinal — nunca vira premissa de decisão sem checagem.]
 `
     },
-    { name:"MERCADO.md", cat:"recomendado", role:"Vagas-alvo, requisitos recorrentes, faixas COM FONTE, e o pipeline de candidaturas. Cresce.",
+    { name:"MERCADO.md", cat:"recomendado", role:"Vagas-alvo, requisitos recorrentes, faixas COM FONTE, e o pipeline de candidaturas. Cresce.", short:"Vagas, requisitos, faixas COM FONTE.",
       content:`# MERCADO.md — o que o mercado pede e paga
 
 > **Regra dura:** número sem fonte não entra. Toda faixa vem com **fonte + data + região + senioridade**.
@@ -4546,7 +4546,7 @@ Uma entrada por fato. Formato:
 |---|---|---|---|
 `
     },
-    { name:"PLANO.md", cat:"recomendado", role:"Fases com GATILHO explícito: «quando X, faço Y». O critério antes da emoção. Rolante.",
+    { name:"PLANO.md", cat:"recomendado", role:"Fases com GATILHO explícito: «quando X, faço Y». O critério antes da emoção. Rolante.", short:"Fases com GATILHO: «quando X, faço Y».",
       content:`# PLANO.md — o que fazer, e quando
 
 > O plano existe para você decidir **com a cabeça fria hoje** o que vai fazer **no dia quente**.
@@ -4576,7 +4576,7 @@ Uma entrada por fato. Formato:
 - [foco é dizer não. Escreva o que fica de fora e por quê.]
 `
     },
-    { name:"ESTUDO.md", cat:"recomendado", role:"Trilha derivada da lacuna MERCADO × DOSSIE. Estudo por lacuna, não por curiosidade. Rolante.",
+    { name:"ESTUDO.md", cat:"recomendado", role:"Trilha derivada da lacuna MERCADO × DOSSIE. Estudo por lacuna, não por curiosidade. Rolante.", short:"Trilha pela lacuna MERCADO × DOSSIE.",
       content:`# ESTUDO.md — a trilha (por lacuna, não por curiosidade)
 
 > Só entra aqui o que fecha uma **lacuna real**: o mercado pede (MERCADO.md) e você não tem prova (DOSSIE.md).
@@ -4600,7 +4600,7 @@ Uma entrada por fato. Formato:
 |---|---|---|
 `
     },
-    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de carreira com premissas, alternativas, contra-argumento e risco aceito. Cresce devagar.",
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de carreira com premissas, alternativas, contra-argumento e risco aceito. Cresce devagar.", short:"Decisões com premissas e risco aceito.",
       content:`# DECISIONS.md — as decisões (e o porquê)
 
 > Append-only. Uma decisão por bloco. **Nenhuma decisão irreversível entra aqui sem o contra-argumento
@@ -4620,7 +4620,7 @@ Uma entrada por fato. Formato:
 - **Sinal de revisão:** [o que, se acontecer, me faz reabrir esta decisão.]
 `
     },
-    { name:"STATUS.md", cat:"rolante", role:"O agora: frente ativa, próximo passo, o que está pendente de decisão. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"O agora: frente ativa, próximo passo, o que está pendente de decisão. Rolante.", short:"Frente ativa, próximo passo. Rolante.",
       content:`# STATUS.md — onde eu estou agora
 
 > Rolante: só o agora. Item resolvido sai daqui (o registro fica em DECISIONS/EVIDENCIAS).
@@ -4638,7 +4638,7 @@ Uma entrada por fato. Formato:
 [O que fazer no próximo turno.]
 `
     },
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# logs/AAAA-MM-DD.md — log do dia
 
 ## O que aconteceu
@@ -4764,7 +4764,7 @@ NICHES.game = {
     ["Cena, missão ou diálogo ramificado escrito/decidido", "Entrega ROTEIRO.md completo (a cena no formato de jogo: escolhas com consequências, requisitos, lore passivo, estado de sincronia)."],
   ],
   contextFiles:[
-    { name:"JOGO.md", cat:"essencial", role:"A visão: pitch, experiência alvo, core loop, pilares, público. O norte. Estável.",
+    { name:"JOGO.md", cat:"essencial", role:"A visão: pitch, experiência alvo, core loop, pilares, público. O norte. Estável.", short:"Pitch, core loop, pilares. O norte.",
       content:`# JOGO.md — [Nome do Jogo]
 
 > A **visão** do jogo — o DNA dele. O assistente lê primeiro para alinhar todo design.
@@ -4800,7 +4800,7 @@ NICHES.game = {
 > Limites de visão. Evita o jogo virar outra coisa.
 - [Ex.: não é mundo aberto; não tem multiplayer; não é difícil estilo soulslike.]
 `},
-    { name:"MECANICAS.md", cat:"essencial", role:"Sistemas, regras e balanceamento — com a INTENÇÃO de design por trás dos números. Cresce.",
+    { name:"MECANICAS.md", cat:"essencial", role:"Sistemas, regras e balanceamento — com a INTENÇÃO de design por trás dos números. Cresce.", short:"Sistemas e a INTENÇÃO por trás dos números.",
       content:`# MECANICAS.md — Sistemas e Regras
 
 > O coração jogável: mecânicas, sistemas e balanceamento. **Cresce** conforme o design se firma.
@@ -4837,7 +4837,7 @@ NICHES.game = {
 ### DEC-[N] — [a decisão] · [data]
 [O que foi decidido, a intenção por trás, alternativas, e o efeito sistêmico esperado.]
 `},
-    { name:"UNIVERSO.md", cat:"essencial", role:"Lore, mundo, personagens e tom — a bíblia de ficção do jogo. Estável; consultada antes de inventar.",
+    { name:"UNIVERSO.md", cat:"essencial", role:"Lore, mundo, personagens e tom — a bíblia de ficção do jogo. Estável; consultada antes de inventar.", short:"Lore e mundo; consulte antes de inventar.",
       content:`# UNIVERSO.md — Mundo e Lore
 
 > A **bíblia de ficção** do jogo — mantém o mundo coerente. O assistente consulta antes de afirmar qualquer fato do universo.
@@ -4868,7 +4868,7 @@ NICHES.game = {
 > História antiga, facções, detalhe cultural. Adicione sob demanda.
 - [...]
 `},
-    { name:"ARTE-E-SOM.md", cat:"essencial", role:"Direção de arte e áudio: estilo visual, paleta, referências, feel sonoro. Estável.",
+    { name:"ARTE-E-SOM.md", cat:"essencial", role:"Direção de arte e áudio: estilo visual, paleta, referências, feel sonoro. Estável.", short:"Direção de arte e áudio. Estável.",
       content:`# ARTE-E-SOM.md — Direção de Arte e Áudio
 
 > Mantém a coerência audiovisual — o jogo precisa parecer e soar como uma coisa só.
@@ -4895,7 +4895,7 @@ NICHES.game = {
 ## Identidade
 - [O elemento audiovisual-assinatura — o que faz alguém reconhecer o jogo numa screenshot ou num clipe de som.]
 `},
-    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, marcos, vertical slice e o que foi cortado/adiado. A defesa contra scope creep. Rolante-cresce.",
+    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, marcos, vertical slice e o que foi cortado/adiado. A defesa contra scope creep. Rolante-cresce.", short:"Escopo, marcos, cortes: contra scope creep.",
       content:`# PRODUCAO.md — Escopo e Produção
 
 > A **defesa contra o scope creep** — o assassino nº1 de jogos indie. Mantém o escopo honesto e o que ficou para depois.
@@ -4928,7 +4928,7 @@ NICHES.game = {
 ## Riscos de produção
 - [O que pode estourar o prazo; a tarefa que você está subestimando; dependência arriscada.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde o desenvolvimento está agora: o que funciona, o que está em construção, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde o desenvolvimento está agora: o que funciona, o que está em construção, próximos passos. Rolante.", short:"O que funciona, o que se constrói. Rolante.",
       content:`# STATUS.md — Estado do Desenvolvimento
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -4960,7 +4960,7 @@ NICHES.game = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -4985,7 +4985,7 @@ NICHES.game = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"NIVEIS.md", cat:"opcional", role:"OPCIONAL — design de níveis/fases/encontros. Use quando o jogo tem level design estruturado.",
+    { name:"NIVEIS.md", cat:"opcional", role:"OPCIONAL — design de níveis/fases/encontros. Use quando o jogo tem level design estruturado.", short:"OPCIONAL — design de níveis e encontros.",
       content:`# NIVEIS.md — Design de Níveis
 
 > **Opcional.** Use quando o jogo tem níveis, fases, mapas ou encontros desenhados (plataforma, metroidvania, RPG, puzzle).
@@ -5009,7 +5009,7 @@ NICHES.game = {
 ## [Próximo nível]
 [...]
 `},
-    { name:"ROTEIRO.md", cat:"opcional", role:"OPCIONAL — a casa da narrativa cena a cena: missões, diálogos ramificados, lore passivo, cutscenes, tutorial narrativo. Use quando o jogo conta história.", content:`# ROTEIRO.md — Narrativa cena a cena
+    { name:"ROTEIRO.md", cat:"opcional", role:"OPCIONAL — a casa da narrativa cena a cena: missões, diálogos ramificados, lore passivo, cutscenes, tutorial narrativo. Use quando o jogo conta história.", short:"OPCIONAL — narrativa cena a cena, diálogos.", content:`# ROTEIRO.md — Narrativa cena a cena
 
 > Aqui vive o que o jogador VIVE, na ordem em que vive. Regras do mundo ficam em UNIVERSO.md; mecânica em MECANICAS.md. Narrativa de jogo é ramificada e interativa — escolha tem consequência.
 
@@ -5044,7 +5044,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
 ## Tutorial narrativo
 (que mecânica é ensinada por qual cena — ensinar JOGANDO, dentro da história, não por caixa de texto)
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -5180,7 +5180,7 @@ NICHES.companion = {
     ["Jogada/personagem novo começou", "Reinicia só o `STATUS.md`; `ESCOLHAS.md` ganha entrada dizendo qual rodada é qual."],
   ],
   contextFiles:[
-    { name:"ALVO.md", cat:"essencial", role:"O artefato: versão, plataforma, a instância que conta, o que é 'pronto' e o ritmo de mudança. Estável.",
+    { name:"ALVO.md", cat:"essencial", role:"O artefato: versão, plataforma, a instância que conta, o que é 'pronto' e o ritmo de mudança. Estável.", short:"Versão, plataforma, o que é 'pronto'.",
       content:`# ALVO.md — [Jogo]
 
 > O **artefato acompanhado** — o que é, em que versão, onde, e o que conta como pronto.
@@ -5217,7 +5217,7 @@ NICHES.companion = {
 - **O que os patches costumam mexer:** [balanceamento? economia? mapa? conquistas?]
 - **Onde as notas saem:** [site oficial/wiki — a fonte de \`PATCHES.md\`]
 `},
-    { name:"FONTES.md", cat:"essencial", role:"Em quem este projeto confia, por degrau — e o que cada fonte não responde. Cresce.",
+    { name:"FONTES.md", cat:"essencial", role:"Em quem este projeto confia, por degrau — e o que cada fonte não responde. Cresce.", short:"Fontes por degrau, e o que cada uma não diz.",
       content:`# FONTES.md — Em quem este projeto confia
 
 > Esta é a **lista**. A **regra** (como classificar uma afirmação) está no CEREBRO.
@@ -5250,7 +5250,7 @@ NICHES.companion = {
 ## Fora deste projeto
 - [fonte descartada + o motivo — evita ser readotada daqui a três meses]
 `},
-    { name:"ARMADILHAS.md", cat:"essencial", role:"O que faz perder tempo ou fechar porta: a do artefato e a da fonte, separadas.",
+    { name:"ARMADILHAS.md", cat:"essencial", role:"O que faz perder tempo ou fechar porta: a do artefato e a da fonte, separadas.", short:"O que faz perder tempo ou fechar porta.",
       content:`# ARMADILHAS.md — O que o guia genérico não avisa
 
 > **Casa única.** Rotas e mecânicas apontam para cá; não reexplicam.
@@ -5281,7 +5281,7 @@ NICHES.companion = {
 Quando você tropeçou porque ninguém avisou, o defeito é do guia, não seu — e fica registrado assim.
 Armadilha que já custou algo real vai para o topo da lista; a hipotética fica embaixo.
 `},
-    { name:"mecanicas/INDICE.md", cat:"essencial", role:"Uma linha por sistema: o mapa de `mecanicas/`, e por onde começar depois de um patch.",
+    { name:"mecanicas/INDICE.md", cat:"essencial", role:"Uma linha por sistema: o mapa de `mecanicas/`, e por onde começar depois de um patch.", short:"Uma linha por sistema; por onde começar.",
       content:`# mecanicas/INDICE.md — Mapa dos sistemas
 
 > Uma linha por arquivo. **Referência**, não sequência: a ordem aqui é a de consulta, não a de jogo.
@@ -5299,7 +5299,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 - **Teto:** quando duas partes do mesmo arquivo passam a ter versões de verificação muito diferentes, **racha ali**.
 - Um arquivo por item individual (cada arma, cada carta) é fragmentação, não organização.
 `},
-    { name:"mecanicas/[sistema].md", cat:"essencial", role:"Como um sistema funciona de verdade, com carimbo só no que é volátil. Referência.",
+    { name:"mecanicas/[sistema].md", cat:"essencial", role:"Como um sistema funciona de verdade, com carimbo só no que é volátil. Referência.", short:"Como um sistema funciona; carimbo no volátil.",
       content:`# [Sistema] — como funciona de verdade
 
 > **Referência estável.** Vale em qualquer fase do jogo; leia quando a dúvida aparecer.
@@ -5329,7 +5329,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## Fontes
 - [nome] — [o que ela sustenta aqui]
 `},
-    { name:"rotas/NN-[assunto].md", cat:"essencial", role:"Sequência: o que fazer, em que ordem, num trecho — aponta para `mecanicas/`, não reexplica.",
+    { name:"rotas/NN-[assunto].md", cat:"essencial", role:"Sequência: o que fazer, em que ordem, num trecho — aponta para `mecanicas/`, não reexplica.", short:"Sequência de um trecho; aponta, não explica.",
       content:`# [NN] — [Assunto da rota]
 
 > **Sequência.** A ordem importa. Como os sistemas funcionam está em \`mecanicas/\` — aqui não se reexplica.
@@ -5357,7 +5357,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## Como eu sei que terminei esta rota
 [Condição observável no jogo — não "quando sentir que acabou".]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Eu agora: onde estou, pendências de confirmação, próximo passo. O ÚNICO que reinicia numa jogada nova.",
+    { name:"STATUS.md", cat:"rolante", role:"Eu agora: onde estou, pendências de confirmação, próximo passo. O ÚNICO que reinicia numa jogada nova.", short:"Onde estou; o ÚNICO que reinicia na jogada.",
       content:`# STATUS.md — Onde eu estou
 
 > **Rolante.** Só o agora. Item resolvido sai daqui.
@@ -5385,7 +5385,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## ⚠️ Atenção no curto prazo
 - [Escolha que tranca e está chegando · armadilha que vale relembrar antes da próxima sessão.]
 `},
-    { name:"ESCOLHAS.md", cat:"rolante", role:"As escolhas que fecharam portas no jogo: o porquê, o escopo, o que ficou de fora. Append-only.",
+    { name:"ESCOLHAS.md", cat:"rolante", role:"As escolhas que fecharam portas no jogo: o porquê, o escopo, o que ficou de fora. Append-only.", short:"Escolhas que fecharam portas. Append-only.",
       content:`# ESCOLHAS.md — O que eu escolhi, e o que isso fechou
 
 > **Append-only.** Uma entrada por escolha que tem custo de reversão. Entrada antiga não se reescreve;
@@ -5404,7 +5404,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 - **Por que escolhi assim:** [o trade-off, na sua voz]
 - **Do que abri mão:** [o que a outra opção daria]
 `},
-    { name:"PATCHES.md", cat:"rolante", role:"O que mudou NO JOGO, quando, e o que isso invalidou aqui. Responde «o que mudou desde a última vez».",
+    { name:"PATCHES.md", cat:"rolante", role:"O que mudou NO JOGO, quando, e o que isso invalidou aqui. Responde «o que mudou desde a última vez».", short:"O que mudou no jogo e o que invalidou aqui.",
       content:`# PATCHES.md — O que mudou no jogo, e o que caiu aqui
 
 > Entradas novas no topo. Registra o **artefato**, não este projeto.
@@ -5425,7 +5425,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 **Não mexeu em nada nosso**
 - [dito explicitamente quando for o caso: ausência de impacto também é informação]
 `},
-    { name:"GLOSSARY.md", cat:"essencial", role:"Jargão do jogo e da comunidade — uma linha por termo. A explicação completa mora em `mecanicas/`.",
+    { name:"GLOSSARY.md", cat:"essencial", role:"Jargão do jogo e da comunidade — uma linha por termo. A explicação completa mora em `mecanicas/`.", short:"Jargão, uma linha por termo.",
       content:`# GLOSSARY.md — Jargão
 
 > **Uma linha por termo.** Se precisou de parágrafo, o lugar é \`mecanicas/\`.
@@ -5442,7 +5442,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## Deste projeto
 - **[Termo que só existe aqui]** — [o que significa nestes documentos.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca é substituído pelo log preenchido.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca é substituído pelo log preenchido.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do log do dia
 
 > **Referência fixa.** Este arquivo é o MOLDE; o log do dia é outro arquivo (\`logs/AAAA-MM-DD.md\`).
@@ -5573,7 +5573,7 @@ NICHES.pixel = {
     ["Decisão de técnica (dithering, AA, dimensão)", "Entrega ESTILO.md (ou RESTRICOES) com a decisão e o porquê."],
   ],
   contextFiles:[
-    { name:"ESTILO.md", cat:"essencial", role:"A bíblia visual: paleta, resolução, outline, regras de sombreamento. A fonte da consistência. Estável.",
+    { name:"ESTILO.md", cat:"essencial", role:"A bíblia visual: paleta, resolução, outline, regras de sombreamento. A fonte da consistência. Estável.", short:"Paleta, resolução, sombreamento. Estável.",
       content:`# ESTILO.md — Guia Visual
 
 > A **bíblia visual** do projeto — trava o que mantém todos os assets coerentes. O assistente lê primeiro e consulta antes de sugerir qualquer coisa visual.
@@ -5614,7 +5614,7 @@ NICHES.pixel = {
 ## O que evitar (assinatura negativa)
 - [Vilões a banir neste projeto: jaggies, banding, pillow shading, tangentes, doubles, AA excessivo.]
 `},
-    { name:"SPRITES.md", cat:"essencial", role:"Catálogo de personagens e assets: specs, paleta usada, estado. Cresce.",
+    { name:"SPRITES.md", cat:"essencial", role:"Catálogo de personagens e assets: specs, paleta usada, estado. Cresce.", short:"Catálogo de assets: specs e estado. Cresce.",
       content:`# SPRITES.md — Catálogo de Sprites e Assets
 
 > **Cresce** conforme os assets são feitos. Mantém specs e estado de cada um, e garante que todos sigam o ESTILO.
@@ -5645,7 +5645,7 @@ NICHES.pixel = {
 > O que falta criar, em ordem de prioridade.
 - [ ] [Asset — prioridade — depende de quê.]
 `},
-    { name:"ANIMACAO.md", cat:"essencial", role:"Convenções de animação: contagem de frames, timing por ação, pivô. Estável.",
+    { name:"ANIMACAO.md", cat:"essencial", role:"Convenções de animação: contagem de frames, timing por ação, pivô. Estável.", short:"Frames, timing por ação, pivô. Estável.",
       content:`# ANIMACAO.md — Convenções de Animação
 
 > Onde vivem as regras de movimento — para todas as entidades animarem de forma coerente.
@@ -5683,7 +5683,7 @@ NICHES.pixel = {
 ## Onion skinning / fluxo
 - [Como o artista mantém proporção entre frames (onion skinning na ferramenta).]
 `},
-    { name:"RESTRICOES.md", cat:"essencial", role:"Regras autoimpostas e limites técnicos do projeto. A disciplina criativa. Estável.",
+    { name:"RESTRICOES.md", cat:"essencial", role:"Regras autoimpostas e limites técnicos do projeto. A disciplina criativa. Estável.", short:"Regras autoimpostas e limites técnicos.",
       content:`# RESTRICOES.md — Regras Autoimpostas
 
 > As **restrições deliberadas** que dão identidade e disciplina — em pixel art, limite é estilo.
@@ -5710,7 +5710,7 @@ NICHES.pixel = {
 ## Por que estas restrições
 [O efeito de identidade/coerência que elas criam — para lembrar por que valem a pena quando incomodarem.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"O que está em produção agora, próximos assets, pendências. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"O que está em produção agora, próximos assets, pendências. Rolante.", short:"Em produção, próximos assets. Rolante.",
       content:`# STATUS.md — Em Produção
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -5736,7 +5736,7 @@ NICHES.pixel = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -5761,7 +5761,7 @@ NICHES.pixel = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"TILESET.md", cat:"opcional", role:"OPCIONAL — design de tilesets e cenários: módulos, transições, regras de encaixe. Use em jogos com mapas/cenários.",
+    { name:"TILESET.md", cat:"opcional", role:"OPCIONAL — design de tilesets e cenários: módulos, transições, regras de encaixe. Use em jogos com mapas/cenários.", short:"OPCIONAL — tilesets e regras de encaixe.",
       content:`# TILESET.md — Tilesets e Cenário
 
 > **Opcional.** Use quando o projeto tem cenários montados com tiles (plataforma, top-down, RPG).
@@ -5788,7 +5788,7 @@ NICHES.pixel = {
 ## Props e decoração
 - [Objetos que povoam o cenário — tamanho, paleta, densidade.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -5909,7 +5909,7 @@ NICHES.brainstorm = {
     ["Fase fechada (síntese + decisão)", "Entrega STATUS.md (a síntese, o caminho recomendado e o próximo passo)."],
   ],
   contextFiles:[
-    { name:"TEMA.md", cat:"essencial", role:"O que se explora, por quê, e a pergunta central. O norte da exploração. Estável.",
+    { name:"TEMA.md", cat:"essencial", role:"O que se explora, por quê, e a pergunta central. O norte da exploração. Estável.", short:"O que se explora e a pergunta central.",
       content:`# TEMA.md — [O que estamos explorando]
 
 > Arquivo **estável**. O assistente lê primeiro para saber o que se explora e em que enquadramento.
@@ -5937,7 +5937,7 @@ NICHES.brainstorm = {
 > Limites do escopo da exploração — evita divergir para o infinito.
 - [Ex.: não é redesenhar o produto inteiro; não é sobre preço.]
 `},
-    { name:"IDEAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.",
+    { name:"IDEAS.md", cat:"essencial", role:"O banco de ideias com IDs — inclui as descartadas (com a razão). Nada se perde. Cresce.", short:"Ideias com ID, descartadas inclusas.",
       content:`# IDEAS.md — Banco de Ideias
 
 > **Cresce** e nunca encolhe: toda ideia que surge entra aqui com um ID. **Nada se perde** — a ideia descartada hoje pode servir amanhã noutro contexto.
@@ -5983,7 +5983,7 @@ NICHES.brainstorm = {
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.",
+    { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.", short:"Clusters e eixos do espaço de ideias.",
       content:`# MAPA.md — Clusters e Eixos
 
 > Organiza as ideias do IDEAS.md em grupos com sentido — para enxergar o espaço, não uma lista solta.
@@ -6011,7 +6011,7 @@ NICHES.brainstorm = {
 > O que o mapa revela: temas recorrentes, contradições entre ideias, lacunas.
 - [Padrão/tensão observado.]
 `},
-    { name:"FILTROS.md", cat:"essencial", role:"Critérios de corte e priorização — explícitos. A convergência honesta. Cresce devagar.",
+    { name:"FILTROS.md", cat:"essencial", role:"Critérios de corte e priorização — explícitos. A convergência honesta. Cresce devagar.", short:"Critérios de corte, explícitos.",
       content:`# FILTROS.md — Critérios de Convergência
 
 > Onde a convergência fica HONESTA: os critérios na mesa, aplicados à vista. Convergir sem critério é palpite disfarçado.
@@ -6042,7 +6042,7 @@ NICHES.brainstorm = {
 > Ao fim da convergência: a recomendação (com confiança proporcional à evidência) e o próximo passo.
 [A síntese: por aqui, por isto, e o primeiro passo concreto.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Fase atual, a síntese do momento e a próxima decisão. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Fase atual, a síntese do momento e a próxima decisão. Rolante.", short:"Fase, síntese do momento. Rolante.",
       content:`# STATUS.md — Estado da Exploração
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber em que fase estamos e o que vem.
@@ -6071,7 +6071,7 @@ NICHES.brainstorm = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.",
+    { name:"DECISIONS.md", cat:"opcional", role:"OPCIONAL — decisões tomadas na exploração, com o racional. Use quando o brainstorm alimenta escolhas que precisam ser lembradas.", short:"OPCIONAL — decisões da exploração.",
       content:`# DECISIONS.md — Decisões da Exploração
 
 > **Opcional.** Use quando o brainstorm leva a decisões que precisam ser lembradas e justificadas depois (ex.: alimentando um projeto real).
@@ -6102,7 +6102,7 @@ NICHES.brainstorm = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -6225,7 +6225,7 @@ NICHES.music = {
     ["Conceito/sonoridade do projeto definido", "Entrega PROJETO.md completo atualizado."],
   ],
   contextFiles:[
-    { name:"PROJETO.md", cat:"essencial", role:"Conceito, sonoridade-alvo, voz lírica, referências. O norte do projeto. Estável.",
+    { name:"PROJETO.md", cat:"essencial", role:"Conceito, sonoridade-alvo, voz lírica, referências. O norte do projeto. Estável.", short:"Conceito, sonoridade-alvo, referências.",
       content:`# PROJETO.md — [Nome do Projeto]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar tudo ao conceito e à sonoridade pretendida.
@@ -6260,7 +6260,7 @@ NICHES.music = {
 - **Idioma das letras:** [pt-BR / outro]
 - **Formato:** [single / EP / álbum / trilha] — [nº de faixas previstas.]
 `},
-    { name:"FAIXAS.md", cat:"essencial", role:"Catálogo das faixas: estado (ideia→master), tom, BPM, o que falta. Cresce.",
+    { name:"FAIXAS.md", cat:"essencial", role:"Catálogo das faixas: estado (ideia→master), tom, BPM, o que falta. Cresce.", short:"Faixas: estado, tom, BPM, o que falta.",
       content:`# FAIXAS.md — Catálogo de Faixas
 
 > **Cresce** conforme as músicas nascem e avançam. Mostra o estado de cada faixa e o que falta.
@@ -6288,7 +6288,7 @@ NICHES.music = {
 > A ordem das faixas conta uma história — energia, tonalidade, pacing do disco.
 - [Ordem provisória + a lógica (abre com X pela energia, fecha com Y pelo clima).]
 `},
-    { name:"LETRAS.md", cat:"essencial", role:"Letras em construção, com voz, prosódia e o que cada uma quer dizer. Cresce.",
+    { name:"LETRAS.md", cat:"essencial", role:"Letras em construção, com voz, prosódia e o que cada uma quer dizer. Cresce.", short:"Letras em construção, com prosódia.",
       content:`# LETRAS.md — Letras
 
 > **Cresce.** As letras e o trabalho sobre elas. O assistente consulta para manter a voz lírica e a prosódia.
@@ -6318,7 +6318,7 @@ NICHES.music = {
 > Versos soltos, imagens, títulos em potencial — capturados antes de esquecer, para usar depois.
 - [linha ou imagem solta.]
 `},
-    { name:"ARRANJO.md", cat:"essencial", role:"Estrutura, harmonia e decisões de arranjo/produção, com a intenção. Cresce devagar.",
+    { name:"ARRANJO.md", cat:"essencial", role:"Estrutura, harmonia e decisões de arranjo/produção, com a intenção. Cresce devagar.", short:"Estrutura, harmonia, arranjo, com intenção.",
       content:`# ARRANJO.md — Arranjo e Harmonia
 
 > Onde vivem as decisões de estrutura, harmonia e produção — com o PORQUÊ (a sensação pretendida). **Cresce devagar.**
@@ -6350,7 +6350,7 @@ NICHES.music = {
 - **Mix (ordem):** gain staging primeiro (mix estático antes de plugins; headroom -6 a -3 dB no master); EQ para dar espaço (kick × baixo: separar fundamentais, cortar "mud" 125-500 Hz); então compressão, espacialização (pan/reverb); comparar com a referência.
 - **Antes do master (QC):** ouviu em vários ambientes (fone, monitor, celular, carro)? o gap que mais derruba qualidade é pular o controle pré-master.
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde o projeto está agora, faixa ativa, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde o projeto está agora, faixa ativa, próximos passos. Rolante.", short:"Faixa ativa, próximos passos. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -6379,7 +6379,7 @@ NICHES.music = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -6404,7 +6404,7 @@ NICHES.music = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"REFERENCIAS.md", cat:"opcional", role:"OPCIONAL — biblioteca de referências sonoras destrinchadas. Use quando o projeto se apoia em muitas referências.",
+    { name:"REFERENCIAS.md", cat:"opcional", role:"OPCIONAL — biblioteca de referências sonoras destrinchadas. Use quando o projeto se apoia em muitas referências.", short:"OPCIONAL — referências sonoras destrinchadas.",
       content:`# REFERENCIAS.md — Biblioteca de Referências
 
 > **Opcional.** Use quando o projeto se apoia em várias referências e vale destrinchar cada uma (em vez de só listar em PROJETO).
@@ -6426,7 +6426,7 @@ NICHES.music = {
 - **Letra/tema:** [letristas/faixas que inspiram a escrita.]
 - **Groove/ritmo:** [referências de levada.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -6551,7 +6551,7 @@ NICHES.rpg = {
     ["Decisão de arco/trama da campanha", "Entrega CAMPANHA.md completo (o rumo + os fios afetados)."],
   ],
   contextFiles:[
-    { name:"MUNDO.md", cat:"essencial", role:"Cenário, regras do mundo, lugares e facções. A bíblia do mundo. Estável.",
+    { name:"MUNDO.md", cat:"essencial", role:"Cenário, regras do mundo, lugares e facções. A bíblia do mundo. Estável.", short:"Cenário, lugares, facções. Estável.",
       content:`# MUNDO.md — [Nome do Cenário]
 
 > A **bíblia do mundo** — mantém o cenário coerente entre sessões. O assistente lê primeiro e consulta antes de afirmar fatos do mundo.
@@ -6582,7 +6582,7 @@ NICHES.rpg = {
 > Fatos que surgiram jogando (improvisados) e agora são verdade. Registre para não contradizer.
 - [Fato — em que sessão surgiu.]
 `},
-    { name:"PJs.md", cat:"essencial", role:"Personagens dos jogadores: ficha resumida, ganchos pessoais, arco. O centro da história. Estável.",
+    { name:"PJs.md", cat:"essencial", role:"Personagens dos jogadores: ficha resumida, ganchos pessoais, arco. O centro da história. Estável.", short:"PJs: ficha, ganchos, arco. O centro.",
       content:`# PJs.md — Personagens dos Jogadores
 
 > Os protagonistas — o centro da campanha. O assistente consulta para tecer a trama em torno deles e manter coerência.
@@ -6609,7 +6609,7 @@ NICHES.rpg = {
 - **Dinâmica:** [como o grupo funciona junto; tensões/sinergias.]
 - **Objetivo comum:** [o que une a party agora.]
 `},
-    { name:"NPCs.md", cat:"essencial", role:"NPCs do mundo: voz, motivação, stakes, estado. Cresce.",
+    { name:"NPCs.md", cat:"essencial", role:"NPCs do mundo: voz, motivação, stakes, estado. Cresce.", short:"NPCs: voz, motivação, estado. Cresce.",
       content:`# NPCs.md — Personagens do Mundo
 
 > **Cresce** conforme NPCs surgem. Cada um com voz, motivação e stakes — para interações importarem.
@@ -6636,7 +6636,7 @@ NICHES.rpg = {
 > Nomes + um traço, para puxar quando a party for a um lugar inesperado.
 - **[Nome]** — [um traço/voz em uma linha.]
 `},
-    { name:"CAMPANHA.md", cat:"essencial", role:"Arco geral, ganchos, segredos, fios soltos e o que já aconteceu. A espinha da história. Cresce.",
+    { name:"CAMPANHA.md", cat:"essencial", role:"Arco geral, ganchos, segredos, fios soltos e o que já aconteceu. A espinha da história. Cresce.", short:"Arco, ganchos, segredos, fios soltos.",
       content:`# CAMPANHA.md — Arco e Fios
 
 > A espinha da campanha + a memória do que já rolou. **Cresce.**
@@ -6673,7 +6673,7 @@ NICHES.rpg = {
 ### DEC-[N] — [a decisão] · [data]
 [O que e por quê; o que afeta nos fios.]
 `},
-    { name:"SESSAO.md", cat:"rolante", role:"Prep da PRÓXIMA sessão (método Lazy DM). Rolante — recriada a cada sessão.", content:`# SESSAO.md — Prep da Próxima Sessão
+    { name:"SESSAO.md", cat:"rolante", role:"Prep da PRÓXIMA sessão (método Lazy DM). Rolante — recriada a cada sessão.", short:"Prep da PRÓXIMA sessão. Recriada a cada uma.", content:`# SESSAO.md — Prep da Próxima Sessão
 
 > **Rolante**: a prep da PRÓXIMA mesa. Substituída a cada sessão (a anterior vira resumo em CAMPANHA).
 > Método Lazy DM: leve, modular, improvisável. Prepare o que a party vai tocar — não o mundo inteiro.
@@ -6712,7 +6712,7 @@ NICHES.rpg = {
 ## Notas da mesa
 - [Lembretes: spotlight de quem está sobrando? regra a conferir? promessa a pagar?]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Estado da campanha agora: onde a história parou, próxima sessão, pendências. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Estado da campanha agora: onde a história parou, próxima sessão, pendências. Rolante.", short:"Onde a história parou. Rolante.",
       content:`# STATUS.md — Estado da Campanha
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde a história parou e o que vem.
@@ -6741,7 +6741,7 @@ NICHES.rpg = {
 ## 💬 Última conversa
 **[data]** — [resumo de 2-4 linhas + onde parou + próximo passo óbvio. Detalhe completo em CAMPANHA.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -6766,7 +6766,7 @@ NICHES.rpg = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"REGRAS-CASEIRAS.md", cat:"opcional", role:"OPCIONAL — house rules, decisões de regra e rulings recorrentes. Use quando a mesa tem ajustes próprios do sistema.",
+    { name:"REGRAS-CASEIRAS.md", cat:"opcional", role:"OPCIONAL — house rules, decisões de regra e rulings recorrentes. Use quando a mesa tem ajustes próprios do sistema.", short:"OPCIONAL — house rules e rulings.",
       content:`# REGRAS-CASEIRAS.md — House Rules e Rulings
 
 > **Opcional.** Use quando a mesa adapta o sistema ou acumula decisões de regra que precisam ser consistentes entre sessões.
@@ -6790,7 +6790,7 @@ NICHES.rpg = {
 ## Dúvidas de regra em aberto
 - [Regra a esclarecer antes da próxima vez que aparecer.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão (pós-jogo). Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de sessão (pós-jogo). Referência fixa — nunca substituído.", short:"Modelo do log de sessão; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Sessão
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -6914,7 +6914,7 @@ NICHES.cuisine = {
     ["Análise de custo/precificação feita", "Entrega MENU.md (ou CUSTOS, se usa o arquivo) com plate cost e margem."],
   ],
   contextFiles:[
-    { name:"CONCEITO.md", cat:"essencial", role:"Identidade da cozinha: o que é, para quem, tradição-base, princípios. O norte. Estável.",
+    { name:"CONCEITO.md", cat:"essencial", role:"Identidade da cozinha: o que é, para quem, tradição-base, princípios. O norte. Estável.", short:"Identidade da cozinha. O norte. Estável.",
       content:`# CONCEITO.md — [Nome da Cozinha / Projeto]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar receitas e menu à identidade.
@@ -6947,7 +6947,7 @@ NICHES.cuisine = {
 ## O que esta cozinha NÃO é
 - [Limites de identidade — ex.: não é fine dining; não usa ultraprocessados; não é picante.]
 `},
-    { name:"RECEITAS.md", cat:"essencial", role:"Receitas afinadas: ratio, método, o porquê, rendimento, alérgenos. Cresce.",
+    { name:"RECEITAS.md", cat:"essencial", role:"Receitas afinadas: ratio, método, o porquê, rendimento, alérgenos. Cresce.", short:"Receitas: ratio, método, alérgenos. Cresce.",
       content:`# RECEITAS.md — Receitas Afinadas
 
 > **Cresce** conforme as receitas são desenvolvidas e afinadas. Cada uma guarda o RATIO e o PORQUÊ — não só a lista de ingredientes.
@@ -6982,7 +6982,7 @@ NICHES.cuisine = {
 ## [Próxima receita]
 [...]
 `},
-    { name:"MENU.md", cat:"essencial", role:"A carta: pratos, estrutura, e (se comercial) margem/popularidade. Rolante-cresce.",
+    { name:"MENU.md", cat:"essencial", role:"A carta: pratos, estrutura, e (se comercial) margem/popularidade. Rolante-cresce.", short:"A carta e, se comercial, a margem.",
       content:`# MENU.md — A Carta
 
 > A carta atual e seu raciocínio. O assistente consulta para coerência (a carta conta uma história) e, no comercial, para equilíbrio de margem.
@@ -7016,7 +7016,7 @@ NICHES.cuisine = {
 ## Sazonalidade / próximas trocas
 - [Ingredientes da estação a aproveitar; o que entra/sai na próxima revisão.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"O que está em teste/desenvolvimento agora, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"O que está em teste/desenvolvimento agora, próximos passos. Rolante.", short:"Em teste agora, próximos passos. Rolante.",
       content:`# STATUS.md — Em Desenvolvimento
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -7043,7 +7043,7 @@ NICHES.cuisine = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -7068,7 +7068,7 @@ NICHES.cuisine = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"CUSTOS.md", cat:"opcional", role:"OPCIONAL — plate cost, food cost % e margem por prato. Use no contexto comercial.",
+    { name:"CUSTOS.md", cat:"opcional", role:"OPCIONAL — plate cost, food cost % e margem por prato. Use no contexto comercial.", short:"OPCIONAL — plate cost e margem por prato.",
       content:`# CUSTOS.md — Custo e Precificação
 
 > **Opcional.** Use no contexto comercial (restaurante, food service, catering). Reúne o custo real por prato e a margem.
@@ -7099,7 +7099,7 @@ NICHES.cuisine = {
 ## Notas de precificação
 - [Ajustes ao mercado local; ancoragem (item caro que faz o resto parecer bom valor); combos/extras que elevam o ticket.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de prova/desenvolvimento. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log de prova/desenvolvimento. Referência fixa — nunca substituído.", short:"Modelo do log de prova; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log de Prova/Desenvolvimento
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -7221,7 +7221,7 @@ NICHES.animation = {
     ["Episódio/curta finalizado", "Entrega STATUS.md e PRODUCAO.md (estado + o que aprendeu)."],
   ],
   contextFiles:[
-    { name:"PROJETO.md", cat:"essencial", role:"A bíblia: premissa, mundo, tom, arco geral. O norte criativo. Estável.",
+    { name:"PROJETO.md", cat:"essencial", role:"A bíblia: premissa, mundo, tom, arco geral. O norte criativo. Estável.", short:"Premissa, mundo, tom, arco. Estável.",
       content:`# PROJETO.md — [Nome do Projeto]
 
 > A **bíblia** do projeto. O assistente lê primeiro para alinhar história, tom e estilo.
@@ -7253,7 +7253,7 @@ NICHES.animation = {
 > Limites de visão — evita virar outra coisa e estourar o escopo.
 - [Ex.: não é série longa; não tem ação pesada; não é realista.]
 `},
-    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco, evolução. Estável; consultado antes de inventar.",
+    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco, evolução. Estável; consultado antes de inventar.", short:"Elenco; consulte antes de inventar.",
       content:`# PERSONAGENS.md — Elenco
 
 > O elenco — design e voz de cada um. O assistente consulta para manter coerência visual e de fala.
@@ -7279,7 +7279,7 @@ NICHES.animation = {
 ## Relações
 - [Quem é o quê de quem; as tensões/vínculos que geram drama.]
 `},
-    { name:"ROTEIROS.md", cat:"essencial", role:"Roteiros e estrutura de episódio/curta, com beats e timing pretendido. Cresce.",
+    { name:"ROTEIROS.md", cat:"essencial", role:"Roteiros e estrutura de episódio/curta, com beats e timing pretendido. Cresce.", short:"Roteiros com beats e timing. Cresce.",
       content:`# ROTEIROS.md — Roteiros e Estrutura
 
 > **Cresce** conforme a história é escrita. Guarda roteiros, beats e o timing pretendido.
@@ -7314,7 +7314,7 @@ NICHES.animation = {
 ## [Próximo episódio]
 [...]
 `},
-    { name:"ESTILO.md", cat:"essencial", role:"Direção de arte e som: visual, paleta, princípios de movimento, áudio. Estável.",
+    { name:"ESTILO.md", cat:"essencial", role:"Direção de arte e som: visual, paleta, princípios de movimento, áudio. Estável.", short:"Arte, movimento e som. Estável.",
       content:`# ESTILO.md — Direção de Arte e Som
 
 > Mantém a coerência audiovisual — tudo precisa parecer e soar de uma peça só.
@@ -7344,7 +7344,7 @@ NICHES.animation = {
 ## Identidade
 - [O elemento audiovisual-assinatura — o que faz alguém reconhecer a obra num quadro ou num som.]
 `},
-    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, pipeline, marcos e o que foi cortado. A defesa contra estourar prazo. Rolante-cresce.",
+    { name:"PRODUCAO.md", cat:"essencial", role:"Escopo, pipeline, marcos e o que foi cortado. A defesa contra estourar prazo. Rolante-cresce.", short:"Escopo, pipeline, cortes: contra o prazo.",
       content:`# PRODUCAO.md — Escopo e Pipeline
 
 > A **defesa contra o escopo impossível** — animação custa caro em tempo, e excesso de ambição mata projetos.
@@ -7376,7 +7376,7 @@ NICHES.animation = {
 ## Riscos de produção
 - [A cena que vai dar mais trabalho do que parece; a dependência arriscada; o gargalo do pipeline.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde a produção está agora: o que está feito, em que etapa, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde a produção está agora: o que está feito, em que etapa, próximos passos. Rolante.", short:"Etapa atual, próximos passos. Rolante.",
       content:`# STATUS.md — Estado da Produção
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -7405,7 +7405,7 @@ NICHES.animation = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -7430,7 +7430,7 @@ NICHES.animation = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"CENAS.md", cat:"opcional", role:"OPCIONAL — quebra de cenas/shots com staging e notas de animação. Use na produção shot a shot.",
+    { name:"CENAS.md", cat:"opcional", role:"OPCIONAL — quebra de cenas/shots com staging e notas de animação. Use na produção shot a shot.", short:"OPCIONAL — cenas e shots com staging.",
       content:`# CENAS.md — Quebra de Cenas / Shots
 
 > **Opcional.** Use na fase de produção, quando o trabalho é shot a shot e vale rastrear cada um.
@@ -7452,7 +7452,7 @@ NICHES.animation = {
 ## [Próxima cena]
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -7577,7 +7577,7 @@ NICHES.comics = {
     ["Capítulo/edição finalizado", "Entrega STATUS.md (estado + o que aprendeu sobre ritmo/recepção)."],
   ],
   contextFiles:[
-    { name:"OBRA.md", cat:"essencial", role:"A bíblia: premissa, tom, arco geral, formato. O norte criativo. Estável.",
+    { name:"OBRA.md", cat:"essencial", role:"A bíblia: premissa, tom, arco geral, formato. O norte criativo. Estável.", short:"Premissa, tom, arco, formato. Estável.",
       content:`# OBRA.md — [Nome da Obra]
 
 > A **bíblia** da obra. O assistente lê primeiro para alinhar história, tom e ritmo.
@@ -7613,7 +7613,7 @@ NICHES.comics = {
 ## O que a obra NÃO é (anti-escopo)
 - [Limites de visão — evita virar outra coisa e estourar o escopo.]
 `},
-    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco. Estável; consultado antes de inventar.",
+    { name:"PERSONAGENS.md", cat:"essencial", role:"Elenco: design (silhueta), voz, arco. Estável; consultado antes de inventar.", short:"Elenco; consulte antes de inventar.",
       content:`# PERSONAGENS.md — Elenco
 
 > O elenco — design e voz de cada um. O assistente consulta para manter coerência visual e de fala.
@@ -7639,7 +7639,7 @@ NICHES.comics = {
 ## Relações
 - [Quem é o quê de quem; as tensões/vínculos que geram drama.]
 `},
-    { name:"ROTEIRO.md", cat:"essencial", role:"Roteiros em página/quadro, com diálogo, descrição e notas de layout. Cresce.",
+    { name:"ROTEIRO.md", cat:"essencial", role:"Roteiros em página/quadro, com diálogo, descrição e notas de layout. Cresce.", short:"Roteiro por página e quadro. Cresce.",
       content:`# ROTEIRO.md — Roteiro
 
 > **Cresce** conforme a história é escrita. Roteiro em formato de quadrinho — serve ao artista e ao letreirista.
@@ -7677,7 +7677,7 @@ QUADRO 2 — [...]
 ## [Próximo capítulo]
 [...]
 `},
-    { name:"MUNDO.md", cat:"essencial", role:"Mundo, regras, lugares, facções. A coerência do universo. Estável.",
+    { name:"MUNDO.md", cat:"essencial", role:"Mundo, regras, lugares, facções. A coerência do universo. Estável.", short:"Mundo, regras, facções. Estável.",
       content:`# MUNDO.md — Mundo e Lore
 
 > A coerência do universo da obra. O assistente consulta antes de afirmar fatos do mundo.
@@ -7710,7 +7710,7 @@ QUADRO 2 — [...]
 > Fatos que já entraram na obra (inclusive improvisados) e agora são verdade.
 - [Fato — em que capítulo surgiu.]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde a obra está agora: o que está pronto, em que etapa, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde a obra está agora: o que está pronto, em que etapa, próximos passos. Rolante.", short:"Etapa atual, próximos passos. Rolante.",
       content:`# STATUS.md — Estado da Obra
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -7739,7 +7739,7 @@ QUADRO 2 — [...]
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -7764,7 +7764,7 @@ QUADRO 2 — [...]
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"PRANCHAS.md", cat:"opcional", role:"OPCIONAL — breakdown visual página a página (thumbnails, layout, fluxo de leitura). Use ao planejar a arte.",
+    { name:"PRANCHAS.md", cat:"opcional", role:"OPCIONAL — breakdown visual página a página (thumbnails, layout, fluxo de leitura). Use ao planejar a arte.", short:"OPCIONAL — breakdown visual por página.",
       content:`# PRANCHAS.md — Breakdown de Páginas
 
 > **Opcional.** Use ao planejar a arte página a página (thumbnails/layout), entre o roteiro e o desenho final.
@@ -7791,7 +7791,7 @@ QUADRO 2 — [...]
 > Se há páginas duplas, o que elas fazem (panorama, grande momento) e como L/R se combinam.
 - [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.
@@ -7881,7 +7881,7 @@ NICHES.custom = {
     "Os prompts A-F universais funcionam normalmente; seus G+ se somam a eles."
   ],
   contextFiles:[
-    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", content:`# DECISIONS.md — Decisões e o porquê
+    {name:"DECISIONS.md", cat:"rolante", role:"Por que as coisas são como são: decisões importantes (DEC) e problemas graves resolvidos (FIX). Cresce devagar; append-only.", short:"O porquê: decisões (DEC) e correções (FIX).", content:`# DECISIONS.md — Decisões e o porquê
 
 > Cresce devagar. Guarda o PORQUÊ — o que não se deduz do resto.
 > Duas naturezas: **DEC** (decisões) e **FIX** (problemas graves resolvidos, para não repetir).
@@ -7950,7 +7950,7 @@ function normFiles(arr){
   return (arr||[]).map(f => ({
     name:    f.name,
     cat:     map[f.cat] || f.cat || "essencial",
-    role:    f.role,
+    role:    f.role, short: f.short,
     content: f.content
   }));
 }
@@ -8933,8 +8933,8 @@ function buildInstr(niche){
   if(_instrFiles.length){
     lines.push("");
     lines.push("## Arquivos de contexto (no Projeto)");
-    lines.push("- **CEREBRO.md** — comportamento do assistente (este conjunto de regras, em versão completa).");
-    _instrFiles.forEach(f => lines.push(`- **${f.name}** — ${f.role}`));
+    lines.push("- **CEREBRO.md** — o comportamento completo do assistente.");
+    _instrFiles.forEach(f => lines.push(`- **${f.name}** — ${f.short || f.role}`));
     lines.push("- Logs detalhados do dia NÃO ficam no Projeto: vivem em `logs/` no Git e são lidos sob demanda.");
   }
 
@@ -9297,7 +9297,7 @@ function buildClaudeMd(niche){
   L.push("- **Sincronia com o CEREBRO.** Quando uma customização estrutural entra no CEREBRO (novo modo, novo arquivo, mudança de processo), a versão curta das Instruções pode ficar para trás e até contradizê-lo. Ao mexer no CEREBRO, cheque se as Instruções ainda batem; se divergirem, proponha alinhar/regenerar a versão curta.");
   L.push("- **Uma regra por linha, verbo no imperativo, sem preâmbulo.** Prosa explicativa vive no CEREBRO.");
   L.push(`- **Teto:** na configuração **padrão**, as Instruções não devem passar de ~**6.900** caracteres. Ao propor uma mudança, diga o tamanho antes e depois.`);
-  L.push(`- **Teto por configuração.** Ligar um modo de trabalho tem orçamento próprio, porque o custo é real e recorrente: **+${MODO_ORCAMENTO.code}** para o Modo Code sobre o padrão, **+${MODO_ORCAMENTO.asu}** para o ASU sobre o que o Code já custa, e **${MODO_ORCAMENTO.compartilhado}** para as linhas que *qualquer* modo de trabalho liga (elas têm limite próprio, senão crescem sem dono). O **total** com modos ligados não passa de **${INSTR_TETO_MODOS}**. O que se trava é o **incremento**, não o total: o total depende de quanta coisa este projeto tem, e isso é seu; o incremento é o que a regra nova custa, e é o que precisa caber. Não caber é sinal de que outra linha precisa ser curada primeiro — mandar detalhe para este CEREBRO é de graça, e a versão curta fica na Instrução.`);
+  L.push(`- **Teto por configuração.** Ligar um modo de trabalho tem orçamento próprio, porque o custo é real e recorrente: **+${MODO_ORCAMENTO.code}** para o Modo Code sobre o padrão, **+${MODO_ORCAMENTO.asu}** para o ASU sobre o que o Code já custa, e **${MODO_ORCAMENTO.compartilhado}** para as linhas que *qualquer* modo de trabalho liga (elas têm limite próprio, senão crescem sem dono), e **+${MODO_ORCAMENTO.grupo}** para o projeto em grupo. O **total** com modos ligados — contando a linha do sistema operacional, quando escolhido — não passa de **${INSTR_TETO_MODOS}**. O que se trava é o **incremento**, não o total: o total depende de quanta coisa este projeto tem, e isso é seu; o incremento é o que a regra nova custa, e é o que precisa caber. Não caber é sinal de que outra linha precisa ser curada primeiro — mandar detalhe para este CEREBRO é de graça, e a versão curta fica na Instrução.`);
   L.push("- **Registre:** toda mudança de instrução vira uma linha no DECISIONS (o que mudou e por quê) e um item em «Feedback para o Kit» no IDEAS — é assim que o kit aprende com este projeto.");
 
   L.push("");

@@ -65,7 +65,7 @@ NICHES.career = {
     ["Currículo/pitch pedido", "Checa o lastro antes de escrever; entrega o artefato + registra a versão em MERCADO.md."],
   ],
   contextFiles:[
-    { name:"CONTEXT.md", cat:"essencial", role:"Quem sou: formação, histórico, restrições reais, o que busco. O pano de fundo. Estável.",
+    { name:"CONTEXT.md", cat:"essencial", role:"Quem sou: formação, histórico, restrições reais, o que busco. O pano de fundo. Estável.", short:"Quem sou, restrições reais, o que busco.",
       content:`# CONTEXT.md — [Seu nome / projeto de carreira]
 
 > Arquivo **estável**. O assistente lê primeiro para saber com quem está falando.
@@ -95,7 +95,7 @@ NICHES.career = {
 [Do que você gosta, o que te drena, onde você rende. Fato observado, não autoimagem.]
 `
     },
-    { name:"EVIDENCIAS.md", cat:"essencial", role:"O coração. Append-only: fato datado + prova + competência que demonstra. Cresce sempre.",
+    { name:"EVIDENCIAS.md", cat:"essencial", role:"O coração. Append-only: fato datado + prova + competência que demonstra. Cresce sempre.", short:"Fato datado + prova + competência. Só cresce.",
       content:`# EVIDENCIAS.md — o que eu já fiz, com prova
 
 > **Append-only.** Nunca reescreva o arquivo: só acrescente ao topo da lista.
@@ -128,7 +128,7 @@ Uma entrada por fato. Formato:
 - **Onde usar:**
 `
     },
-    { name:"DOSSIE.md", cat:"essencial", role:"Retrato consolidado, DERIVADO das evidências: competência com nível e lastro. Rolante.",
+    { name:"DOSSIE.md", cat:"essencial", role:"Retrato consolidado, DERIVADO das evidências: competência com nível e lastro. Rolante.", short:"Retrato DERIVADO das evidências. Rolante.",
       content:`# DOSSIE.md — o retrato consolidado
 
 > **Derivado.** Toda linha aqui aponta para uma evidência (EV-xxx). Se não aponta, **não pode ficar**.
@@ -157,7 +157,7 @@ Uma entrada por fato. Formato:
 - [copiado do CONTEXT; o assistente usa para avisar quando o escopo tenta cruzar.]
 `
     },
-    { name:"SITUACAO.md", cat:"essencial", role:"Emprego atual: contratado × real, linha do tempo do escopo, remuneração, sinais. Cresce.",
+    { name:"SITUACAO.md", cat:"essencial", role:"Emprego atual: contratado × real, linha do tempo do escopo, remuneração, sinais. Cresce.", short:"Emprego atual: contratado × real. Cresce.",
       content:`# SITUACAO.md — o emprego atual
 
 > Aqui mora o dado que a negociação exige e a memória perde: **o que foi combinado × o que você faz**.
@@ -192,7 +192,7 @@ Uma entrada por fato. Formato:
 - [AAAA-MM-DD] [o que te irritou/drenou. Fica aqui como sinal — nunca vira premissa de decisão sem checagem.]
 `
     },
-    { name:"MERCADO.md", cat:"recomendado", role:"Vagas-alvo, requisitos recorrentes, faixas COM FONTE, e o pipeline de candidaturas. Cresce.",
+    { name:"MERCADO.md", cat:"recomendado", role:"Vagas-alvo, requisitos recorrentes, faixas COM FONTE, e o pipeline de candidaturas. Cresce.", short:"Vagas, requisitos, faixas COM FONTE.",
       content:`# MERCADO.md — o que o mercado pede e paga
 
 > **Regra dura:** número sem fonte não entra. Toda faixa vem com **fonte + data + região + senioridade**.
@@ -223,7 +223,7 @@ Uma entrada por fato. Formato:
 |---|---|---|---|
 `
     },
-    { name:"PLANO.md", cat:"recomendado", role:"Fases com GATILHO explícito: «quando X, faço Y». O critério antes da emoção. Rolante.",
+    { name:"PLANO.md", cat:"recomendado", role:"Fases com GATILHO explícito: «quando X, faço Y». O critério antes da emoção. Rolante.", short:"Fases com GATILHO: «quando X, faço Y».",
       content:`# PLANO.md — o que fazer, e quando
 
 > O plano existe para você decidir **com a cabeça fria hoje** o que vai fazer **no dia quente**.
@@ -253,7 +253,7 @@ Uma entrada por fato. Formato:
 - [foco é dizer não. Escreva o que fica de fora e por quê.]
 `
     },
-    { name:"ESTUDO.md", cat:"recomendado", role:"Trilha derivada da lacuna MERCADO × DOSSIE. Estudo por lacuna, não por curiosidade. Rolante.",
+    { name:"ESTUDO.md", cat:"recomendado", role:"Trilha derivada da lacuna MERCADO × DOSSIE. Estudo por lacuna, não por curiosidade. Rolante.", short:"Trilha pela lacuna MERCADO × DOSSIE.",
       content:`# ESTUDO.md — a trilha (por lacuna, não por curiosidade)
 
 > Só entra aqui o que fecha uma **lacuna real**: o mercado pede (MERCADO.md) e você não tem prova (DOSSIE.md).
@@ -277,7 +277,7 @@ Uma entrada por fato. Formato:
 |---|---|---|
 `
     },
-    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de carreira com premissas, alternativas, contra-argumento e risco aceito. Cresce devagar.",
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de carreira com premissas, alternativas, contra-argumento e risco aceito. Cresce devagar.", short:"Decisões com premissas e risco aceito.",
       content:`# DECISIONS.md — as decisões (e o porquê)
 
 > Append-only. Uma decisão por bloco. **Nenhuma decisão irreversível entra aqui sem o contra-argumento
@@ -297,7 +297,7 @@ Uma entrada por fato. Formato:
 - **Sinal de revisão:** [o que, se acontecer, me faz reabrir esta decisão.]
 `
     },
-    { name:"STATUS.md", cat:"rolante", role:"O agora: frente ativa, próximo passo, o que está pendente de decisão. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"O agora: frente ativa, próximo passo, o que está pendente de decisão. Rolante.", short:"Frente ativa, próximo passo. Rolante.",
       content:`# STATUS.md — onde eu estou agora
 
 > Rolante: só o agora. Item resolvido sai daqui (o registro fica em DECISIONS/EVIDENCIAS).
@@ -315,7 +315,7 @@ Uma entrada por fato. Formato:
 [O que fazer no próximo turno.]
 `
     },
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# logs/AAAA-MM-DD.md — log do dia
 
 ## O que aconteceu

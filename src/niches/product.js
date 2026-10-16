@@ -49,7 +49,7 @@ NICHES.product = {
     ["Spec/PRD escrito ou priorização feita", "Entrega STATUS.md completo (iniciativa + métrica + prioridade)."],
   ],
   contextFiles:[
-    { name:"PRODUTO.md", cat:"essencial", role:"Visão, proposta de valor, princípios, North Star. O norte que filtra decisões. Estável.",
+    { name:"PRODUTO.md", cat:"essencial", role:"Visão, proposta de valor, princípios, North Star. O norte que filtra decisões. Estável.", short:"Visão, valor, North Star. Estável.",
       content:`# PRODUTO.md — [Nome do Produto]
 
 > Arquivo **estável**. O assistente lê primeiro para alinhar toda decisão à visão.
@@ -82,7 +82,7 @@ NICHES.product = {
 - **Concorrentes/alternativas:** [quem mais resolve este job, incluindo "não fazer nada".]
 - **Nosso diferencial:** [o que nos posiciona.]
 `},
-    { name:"PERSONAS.md", cat:"essencial", role:"Personas/segmentos com seus jobs, dores e ganhos. Quem usa e por quê. Estável.",
+    { name:"PERSONAS.md", cat:"essencial", role:"Personas/segmentos com seus jobs, dores e ganhos. Quem usa e por quê. Estável.", short:"Quem usa: jobs, dores, ganhos.",
       content:`# PERSONAS.md — Personas e Segmentos
 
 > Arquivo **estável**. O assistente consulta para representar o usuário e julgar relevância de pedidos.
@@ -108,7 +108,7 @@ NICHES.product = {
 ## Anti-persona (para quem NÃO é)
 - **[Quem]** — [por que este produto não atende esta pessoa; evita decisões de agradar quem não é o alvo.]
 `},
-    { name:"JORNADAS.md", cat:"essencial", role:"Jornadas-chave dos usuários: passos, emoções, pontos de atrito e oportunidades. Estável.",
+    { name:"JORNADAS.md", cat:"essencial", role:"Jornadas-chave dos usuários: passos, emoções, pontos de atrito e oportunidades. Estável.", short:"Jornadas: passos, atritos, oportunidades.",
       content:`# JORNADAS.md — Jornadas do Usuário
 
 > Arquivo **estável**. Mapeia como o usuário atravessa o produto (ou o problema) — onde trava, onde poderia ser melhor.
@@ -138,7 +138,7 @@ NICHES.product = {
 ## [Próxima jornada]
 [...]
 `},
-    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.",
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de produto com racional, alternativas e métrica esperada. Cresce devagar.", short:"Decisões de produto, com métrica esperada.",
       content:`# DECISIONS.md — Decisões de Produto
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das decisões — evita rediscussão e orienta quem chega depois.
@@ -172,7 +172,7 @@ NICHES.product = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Iniciativas em curso, métricas atuais, prioridades e próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Iniciativas em curso, métricas atuais, prioridades e próximos passos. Rolante.", short:"Iniciativas, métricas, prioridades. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde o produto está e o que vem.
@@ -204,7 +204,7 @@ NICHES.product = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"EXPERIMENTOS.md", cat:"opcional", role:"OPCIONAL — hipóteses testadas e resultados (A/B, entrevistas, protótipos). Use quando o produto valida por experimento.",
+    { name:"EXPERIMENTOS.md", cat:"opcional", role:"OPCIONAL — hipóteses testadas e resultados (A/B, entrevistas, protótipos). Use quando o produto valida por experimento.", short:"OPCIONAL — hipóteses testadas e resultados.",
       content:`# EXPERIMENTOS.md — Hipóteses e Aprendizados
 
 > **Opcional.** Use quando o produto valida decisões por experimento (A/B, teste de protótipo, entrevistas, fake door).
@@ -226,7 +226,7 @@ NICHES.product = {
 > Verdades validadas sobre o usuário/produto — para não retestar.
 - [Aprendizado — de qual experimento veio.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

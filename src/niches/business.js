@@ -50,7 +50,7 @@ NICHES.business = {
     ["Mudança de contexto (mercado, empresa)", "Entrega CONTEXT.md completo atualizado."],
   ],
   contextFiles:[
-    { name:"CONTEXT.md", cat:"essencial", role:"Empresa, mercado, momento, modelo de negócio. O pano de fundo. Estável.",
+    { name:"CONTEXT.md", cat:"essencial", role:"Empresa, mercado, momento, modelo de negócio. O pano de fundo. Estável.", short:"Empresa, mercado, modelo de negócio.",
       content:`# CONTEXT.md — [Empresa / Projeto]
 
 > Arquivo **estável**. O assistente lê primeiro para entender o negócio antes de analisar.
@@ -81,7 +81,7 @@ NICHES.business = {
 ## Restrições
 - [Limites reais: capital, equipe, tempo, regulação — o que condiciona as decisões.]
 `},
-    { name:"OBJETIVOS.md", cat:"essencial", role:"Objetivos atuais com critério de sucesso mensurável (OKR). O filtro das decisões. Estável-rolante.",
+    { name:"OBJETIVOS.md", cat:"essencial", role:"Objetivos atuais com critério de sucesso mensurável (OKR). O filtro das decisões. Estável-rolante.", short:"Objetivos com critério mensurável (OKR).",
       content:`# OBJETIVOS.md — Objetivos e Metas
 
 > O **filtro** de toda decisão: serve a algum objetivo daqui? Se não, é distração.
@@ -110,7 +110,7 @@ NICHES.business = {
 > Foco é dizer não. Oportunidades adiadas de propósito (evita dispersão).
 - [Iniciativa/mercado — por que fica para depois.]
 `},
-    { name:"ANALISE.md", cat:"essencial", role:"Análises em andamento, com premissas e sensibilidade explícitas. Cresce.",
+    { name:"ANALISE.md", cat:"essencial", role:"Análises em andamento, com premissas e sensibilidade explícitas. Cresce.", short:"Análises com premissas e sensibilidade.",
       content:`# ANALISE.md — Análises
 
 > Onde mora o RACIOCÍNIO — e, principalmente, as PREMISSAS. **Cresce.**
@@ -144,7 +144,7 @@ NICHES.business = {
 ## [Próxima análise]
 [...]
 `},
-    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de negócio com premissas, alternativas, contraponto e risco. Cresce devagar.",
+    { name:"DECISIONS.md", cat:"essencial", role:"Decisões de negócio com premissas, alternativas, contraponto e risco. Cresce devagar.", short:"Decisões com premissas, contraponto e risco.",
       content:`# DECISIONS.md — Decisões de Negócio
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ das decisões — evita rediscutir e mostra com que premissas algo foi decidido (úteis para revisar quando a realidade muda).
@@ -177,7 +177,7 @@ NICHES.business = {
 ## DEC-[N+1] — [...]
 [...]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Onde o negócio está agora: foco, números-chave, decisões pendentes, próximos passos. Rolante.",
+    { name:"STATUS.md", cat:"rolante", role:"Onde o negócio está agora: foco, números-chave, decisões pendentes, próximos passos. Rolante.", short:"Foco, números-chave, pendências. Rolante.",
       content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: só o AGORA. O assistente lê para saber onde retomar.
@@ -207,7 +207,7 @@ NICHES.business = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.",
+    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.", short:"OPCIONAL — unit economics e projeções.",
       content:`# MODELO-FINANCEIRO.md — Unit Economics e Projeções
 
 > **Opcional**, mas valioso quando há decisão financeira. Reúne os poucos números que dizem se o modelo se sustenta.
@@ -248,7 +248,7 @@ NICHES.business = {
 > Em 3-4 frases: o que estes números contam sobre a saúde e o futuro do negócio.
 [...]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** O MOLDE — não é substituído.

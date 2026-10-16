@@ -44,7 +44,7 @@ NICHES.dev = {
     ["Termo técnico próprio do projeto usado", "Entrega o GLOSSARY.md completo com o termo definido."],
   ],
   contextFiles:[
-    {name:"SPEC.md", cat:"opcional", role:"Modelo de **spec de feature** (Spec-Driven Development): o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. **Sob demanda** — copie para `specs/AAMMDD-nome.md`, uma por feature, e a pasta nasce aí. **Não é o modelo das WOs** (instrução de aplicação Chat→Code, em `meta/workorders/`): spec diz o QUE construir, WO diz COMO aplicar.", content:`# SPEC — [nome da feature]
+    {name:"SPEC.md", cat:"opcional", role:"Modelo de **spec de feature** (Spec-Driven Development): o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. **Sob demanda** — copie para `specs/AAMMDD-nome.md`, uma por feature, e a pasta nasce aí. **Não é o modelo das WOs** (instrução de aplicação Chat→Code, em `meta/workorders/`): spec diz o QUE construir, WO diz COMO aplicar.", short:"Spec de feature (o QUÊ), sob demanda; não WO.", content:`# SPEC — [nome da feature]
 
 > Modelo. Copie para \`specs/AAMMDD-nome-da-feature.md\` e preencha ANTES de codar.
 > A spec diz **o que** construir e **quando está pronto**; o passo a passo da edição é outra coisa.
@@ -66,7 +66,7 @@ NICHES.dev = {
 ## Passos
 [Quebra em passos pequenos, ordenados, cada um entregável e testável.]
 `},
-    {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
+    {name:"CONTEXT.md", cat:"ctx", role:"O que o projeto é: visão, stack, estrutura, como as peças críticas funcionam, armadilhas, produto. Estável.", short:"Visão, stack, armadilhas, produto. Estável.", content:`# CONTEXT.md — [Nome do Projeto]
 
 > Arquivo **estável**. O assistente lê no início de cada conversa para se ambientar.
 > Muda pouco: só em alteração estrutural (stack, arquitetura, escopo, nova armadilha descoberta).
@@ -136,7 +136,7 @@ projeto/
 - **O que é sucesso:** [como se mede]
 - **O que o projeto deliberadamente NÃO é:** [limites de escopo]
 `},
-    {name:"STATUS.md", cat:"ctx", role:"O agora: o que funciona, o que está em progresso, o que está quebrado, backlog curto. Rolante — o resolvido sai.", content:`# STATUS.md — Estado Atual
+    {name:"STATUS.md", cat:"ctx", role:"O agora: o que funciona, o que está em progresso, o que está quebrado, backlog curto. Rolante — o resolvido sai.", short:"O agora e o backlog curto. Rolante.", content:`# STATUS.md — Estado Atual
 
 > Arquivo **rolante**: descreve só o AGORA. O assistente lê no início para saber onde retomar.
 > Item resolvido SAI daqui — vai para o CHANGELOG (se foi entrega) e/ou para o log do dia.
@@ -165,7 +165,7 @@ projeto/
 ## 💬 Última conversa
 **[data]** — [2-4 linhas: o que foi feito, onde parou, qual o próximo passo óbvio. É a primeira coisa que o assistente lê para retomar o fio.]
 `},
-    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões de arquitetura (DEC) e bugs graves resolvidos (FIX). Cresce devagar.", content:`# DECISIONS.md — Registro de Decisões
+    {name:"DECISIONS.md", cat:"ctx", role:"Por que as coisas são como são: decisões de arquitetura (DEC) e bugs graves resolvidos (FIX). Cresce devagar.", short:"O porquê: arquitetura (DEC) e bugs (FIX).", content:`# DECISIONS.md — Registro de Decisões
 
 > Arquivo que **cresce devagar**. Guarda o PORQUÊ — o que o código sozinho não conta.
 > Duas naturezas: **DEC** (decisões de arquitetura/design) e **FIX** (bugs graves resolvidos, para não repetir).
@@ -205,7 +205,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 - **Solução:** [o que foi feito.]
 - **Lição:** [o que evita que volte a acontecer; virou armadilha em CONTEXT?]
 `},
-    {name:"CHANGELOG.md", cat:"hist", role:"Histórico de versões entregues (SemVer + Keep a Changelog). Cresce no topo.", content:`# CHANGELOG
+    {name:"CHANGELOG.md", cat:"hist", role:"Histórico de versões entregues (SemVer + Keep a Changelog). Cresce no topo.", short:"Versões entregues (SemVer). Cresce no topo.", content:`# CHANGELOG
 
 > Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 > **Cresce**: entradas novas no topo. Registra só o que foi de fato concluído/entregue.
@@ -226,7 +226,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ### Removido
 - [O que saiu.]
 `},
-    {name:"IDEAS.md", cat:"ctx", role:"Segundo cérebro: ideias suas e do assistente. Nunca perde nada — ideia muda de status, não some.", content:`# IDEAS.md — Brainstorm e Visão
+    {name:"IDEAS.md", cat:"ctx", role:"Segundo cérebro: ideias suas e do assistente. Nunca perde nada — ideia muda de status, não some.", short:"Segundo cérebro: ideia muda, não some.", content:`# IDEAS.md — Brainstorm e Visão
 
 > **Segundo cérebro** do projeto. Captura TUDO que for mencionado, mesmo solto ou no meio de outro assunto.
 > Nunca perde: ideia implementada vai para «Concluídas»; ideia recusada vai para «Descartadas» com o motivo.
@@ -274,7 +274,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
 `},
-    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
+    {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
 > **Referência fixa.** Este arquivo é o MOLDE — não é substituído.
 > O log entra ao bater um gatilho de evento — cortar versão, registrar decisão ou erro grave, virar o dia —, e não «no fim», que numa conversa longa nunca chega. O assistente entrega um arquivo novo \`logs/AAAA-MM-DD.md\` preenchido neste formato.
@@ -305,7 +305,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## Próximos passos
 - [Ações para o próximo turno.]
 `},
-    {name:"ROADMAP.md", cat:"opcional", role:"OPCIONAL — plano deliberado de evolução em fases. Use quando o projeto tem direção de médio/longo prazo.", content:`# ROADMAP.md — Plano Intencional de Evolução
+    {name:"ROADMAP.md", cat:"opcional", role:"OPCIONAL — plano deliberado de evolução em fases. Use quando o projeto tem direção de médio/longo prazo.", short:"OPCIONAL — plano de evolução em fases.", content:`# ROADMAP.md — Plano Intencional de Evolução
 
 > **Opcional.** Use quando o projeto tem um plano em fases — não para tarefas soltas (isso é o Backlog do STATUS) nem para brainstorm (isso é o IDEAS).
 > Cada fase tem um objetivo e um critério de conclusão. Marque o estado: 🟢 concluída · 🟡 em curso/próxima · 🔵 futura · 🚫 descartada.
@@ -332,7 +332,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 🚫 Itens descartados desta visão
 - **[Item]** — fora de escopo porque [motivo]. (Pode viver no IDEAS se ainda for ideia.)
 `},
-    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre conversas.", content:`# GLOSSARY.md — Termos do Projeto
+    {name:"GLOSSARY.md", cat:"opcional", role:"OPCIONAL — termos próprios do projeto. Use quando há jargão que se repete entre conversas.", short:"OPCIONAL — jargão que se repete no projeto.", content:`# GLOSSARY.md — Termos do Projeto
 
 > **Opcional.** Use quando o projeto tem vocabulário próprio (nomes de módulos, conceitos, identificadores) que o assistente reexplicaria a cada conversa sem isto.
 > Mantenha curto: só o que não é óbvio para alguém de fora.
@@ -351,7 +351,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## Identificadores
 - **[Sigla/ID]** — [o que significa no projeto.]
 `},
-    {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
+    {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", short:"OPCIONAL — fases antigas; lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
 
 > **Opcional.** Arquivo-baú para conhecimento denso que já foi aprendido e não muda mais — guias técnicos, análises de viabilidade, notas de migração — que tornariam o CONTEXT pesado demais.
 > Não é lido no início da conversa; o assistente consulta sob demanda quando o assunto aparece.

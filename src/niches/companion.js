@@ -58,7 +58,7 @@ NICHES.companion = {
     ["Jogada/personagem novo começou", "Reinicia só o `STATUS.md`; `ESCOLHAS.md` ganha entrada dizendo qual rodada é qual."],
   ],
   contextFiles:[
-    { name:"ALVO.md", cat:"essencial", role:"O artefato: versão, plataforma, a instância que conta, o que é 'pronto' e o ritmo de mudança. Estável.",
+    { name:"ALVO.md", cat:"essencial", role:"O artefato: versão, plataforma, a instância que conta, o que é 'pronto' e o ritmo de mudança. Estável.", short:"Versão, plataforma, o que é 'pronto'.",
       content:`# ALVO.md — [Jogo]
 
 > O **artefato acompanhado** — o que é, em que versão, onde, e o que conta como pronto.
@@ -95,7 +95,7 @@ NICHES.companion = {
 - **O que os patches costumam mexer:** [balanceamento? economia? mapa? conquistas?]
 - **Onde as notas saem:** [site oficial/wiki — a fonte de \`PATCHES.md\`]
 `},
-    { name:"FONTES.md", cat:"essencial", role:"Em quem este projeto confia, por degrau — e o que cada fonte não responde. Cresce.",
+    { name:"FONTES.md", cat:"essencial", role:"Em quem este projeto confia, por degrau — e o que cada fonte não responde. Cresce.", short:"Fontes por degrau, e o que cada uma não diz.",
       content:`# FONTES.md — Em quem este projeto confia
 
 > Esta é a **lista**. A **regra** (como classificar uma afirmação) está no CEREBRO.
@@ -128,7 +128,7 @@ NICHES.companion = {
 ## Fora deste projeto
 - [fonte descartada + o motivo — evita ser readotada daqui a três meses]
 `},
-    { name:"ARMADILHAS.md", cat:"essencial", role:"O que faz perder tempo ou fechar porta: a do artefato e a da fonte, separadas.",
+    { name:"ARMADILHAS.md", cat:"essencial", role:"O que faz perder tempo ou fechar porta: a do artefato e a da fonte, separadas.", short:"O que faz perder tempo ou fechar porta.",
       content:`# ARMADILHAS.md — O que o guia genérico não avisa
 
 > **Casa única.** Rotas e mecânicas apontam para cá; não reexplicam.
@@ -159,7 +159,7 @@ NICHES.companion = {
 Quando você tropeçou porque ninguém avisou, o defeito é do guia, não seu — e fica registrado assim.
 Armadilha que já custou algo real vai para o topo da lista; a hipotética fica embaixo.
 `},
-    { name:"mecanicas/INDICE.md", cat:"essencial", role:"Uma linha por sistema: o mapa de `mecanicas/`, e por onde começar depois de um patch.",
+    { name:"mecanicas/INDICE.md", cat:"essencial", role:"Uma linha por sistema: o mapa de `mecanicas/`, e por onde começar depois de um patch.", short:"Uma linha por sistema; por onde começar.",
       content:`# mecanicas/INDICE.md — Mapa dos sistemas
 
 > Uma linha por arquivo. **Referência**, não sequência: a ordem aqui é a de consulta, não a de jogo.
@@ -177,7 +177,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 - **Teto:** quando duas partes do mesmo arquivo passam a ter versões de verificação muito diferentes, **racha ali**.
 - Um arquivo por item individual (cada arma, cada carta) é fragmentação, não organização.
 `},
-    { name:"mecanicas/[sistema].md", cat:"essencial", role:"Como um sistema funciona de verdade, com carimbo só no que é volátil. Referência.",
+    { name:"mecanicas/[sistema].md", cat:"essencial", role:"Como um sistema funciona de verdade, com carimbo só no que é volátil. Referência.", short:"Como um sistema funciona; carimbo no volátil.",
       content:`# [Sistema] — como funciona de verdade
 
 > **Referência estável.** Vale em qualquer fase do jogo; leia quando a dúvida aparecer.
@@ -207,7 +207,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## Fontes
 - [nome] — [o que ela sustenta aqui]
 `},
-    { name:"rotas/NN-[assunto].md", cat:"essencial", role:"Sequência: o que fazer, em que ordem, num trecho — aponta para `mecanicas/`, não reexplica.",
+    { name:"rotas/NN-[assunto].md", cat:"essencial", role:"Sequência: o que fazer, em que ordem, num trecho — aponta para `mecanicas/`, não reexplica.", short:"Sequência de um trecho; aponta, não explica.",
       content:`# [NN] — [Assunto da rota]
 
 > **Sequência.** A ordem importa. Como os sistemas funcionam está em \`mecanicas/\` — aqui não se reexplica.
@@ -235,7 +235,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## Como eu sei que terminei esta rota
 [Condição observável no jogo — não "quando sentir que acabou".]
 `},
-    { name:"STATUS.md", cat:"rolante", role:"Eu agora: onde estou, pendências de confirmação, próximo passo. O ÚNICO que reinicia numa jogada nova.",
+    { name:"STATUS.md", cat:"rolante", role:"Eu agora: onde estou, pendências de confirmação, próximo passo. O ÚNICO que reinicia numa jogada nova.", short:"Onde estou; o ÚNICO que reinicia na jogada.",
       content:`# STATUS.md — Onde eu estou
 
 > **Rolante.** Só o agora. Item resolvido sai daqui.
@@ -263,7 +263,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## ⚠️ Atenção no curto prazo
 - [Escolha que tranca e está chegando · armadilha que vale relembrar antes da próxima sessão.]
 `},
-    { name:"ESCOLHAS.md", cat:"rolante", role:"As escolhas que fecharam portas no jogo: o porquê, o escopo, o que ficou de fora. Append-only.",
+    { name:"ESCOLHAS.md", cat:"rolante", role:"As escolhas que fecharam portas no jogo: o porquê, o escopo, o que ficou de fora. Append-only.", short:"Escolhas que fecharam portas. Append-only.",
       content:`# ESCOLHAS.md — O que eu escolhi, e o que isso fechou
 
 > **Append-only.** Uma entrada por escolha que tem custo de reversão. Entrada antiga não se reescreve;
@@ -282,7 +282,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 - **Por que escolhi assim:** [o trade-off, na sua voz]
 - **Do que abri mão:** [o que a outra opção daria]
 `},
-    { name:"PATCHES.md", cat:"rolante", role:"O que mudou NO JOGO, quando, e o que isso invalidou aqui. Responde «o que mudou desde a última vez».",
+    { name:"PATCHES.md", cat:"rolante", role:"O que mudou NO JOGO, quando, e o que isso invalidou aqui. Responde «o que mudou desde a última vez».", short:"O que mudou no jogo e o que invalidou aqui.",
       content:`# PATCHES.md — O que mudou no jogo, e o que caiu aqui
 
 > Entradas novas no topo. Registra o **artefato**, não este projeto.
@@ -303,7 +303,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 **Não mexeu em nada nosso**
 - [dito explicitamente quando for o caso: ausência de impacto também é informação]
 `},
-    { name:"GLOSSARY.md", cat:"essencial", role:"Jargão do jogo e da comunidade — uma linha por termo. A explicação completa mora em `mecanicas/`.",
+    { name:"GLOSSARY.md", cat:"essencial", role:"Jargão do jogo e da comunidade — uma linha por termo. A explicação completa mora em `mecanicas/`.", short:"Jargão, uma linha por termo.",
       content:`# GLOSSARY.md — Jargão
 
 > **Uma linha por termo.** Se precisou de parágrafo, o lugar é \`mecanicas/\`.
@@ -320,7 +320,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 ## Deste projeto
 - **[Termo que só existe aqui]** — [o que significa nestes documentos.]
 `},
-    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca é substituído pelo log preenchido.",
+    { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca é substituído pelo log preenchido.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do log do dia
 
 > **Referência fixa.** Este arquivo é o MOLDE; o log do dia é outro arquivo (\`logs/AAAA-MM-DD.md\`).
