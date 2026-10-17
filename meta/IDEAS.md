@@ -576,13 +576,19 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 ## i-N58 — `modelo-em-espera` é a primeira natureza nova do pacote desde que o protocolo existe — ABERTA, gatilho de repetição (wo0080)
 **2026-08-03.** Até a wo0080 o pacote de update só conhecia duas naturezas — `template` (comparar e adotar é seguro) e `fusao` (propor merge, o usuário decide). O `_TEMPLATE.md` de `analises/` não coube em nenhuma das duas: mandar como `template` comum criaria a pasta `analises/` vazia em todo projeto receptor, violando a regra de que pasta nasce no primeiro uso. Saiu uma terceira natureza — `modelo-em-espera` (guarde; só coloque se a pasta já existir no destino). Outros artefatos podem caber na mesma natureza (modelo de log, modelo de spec, guia de pasta que ainda não nasceu). **Gatilho:** quando um segundo arquivo pedir a mesma natureza, revisar se o protocolo precisa de uma seção própria para ela em vez de uma linha na legenda.
 
+## i-N70 — Os princípios universais P8 e P11 ainda falam a língua do mount — ABERTA, pede análise
+
+**Origem:** inventário da `i-N66` em 2026-10-16, e uma captura de tela do dono: a busca por «reveja o mount a cada turno», com o Mount desligado, achou o texto na definição do P8 («Verifica antes de pedir arquivo») no formulário do kit. O P8 fala em subir, upload e rever o mount a cada turno; o P11 fala em «do Projeto/mount».
+
+**Por que ficou fora da wo0135:** os dois vão inteiros ao CEREBRO gerado, onde a `D-157` declarou toda menção ao mount como canal de reserva — então não estão errados, estão no idioma da reserva. Mudar princípio universal muda os 19 nichos e o `C43` da casa; pede análise: ramo por canal na definição, texto neutro de canal, ou deixar como reserva.
+
 ## i-N69 — Medir o teto em regras, não só em caracteres — ABERTA, sem gatilho de data
 
 **Origem:** análise `261016-ANALISE-teto-das-instrucoes-geradas.md`, opção (2). O teto em caracteres mede um substituto: na evidência externa de 2026, o que derruba a aderência é o número de regras simultâneas — preprint arXiv 2607.19257, não revisado: resposta perfeita de 93,8% com 10 regras e 23,8% com 40, no Claude Sonnet 5 `[relatado pela fonte]`. Uma regra longa e única custa mais caracteres e menos atenção que três curtas.
 
 **A ideia:** um contador de regras ao lado do de caracteres no `C28` — linha de conteúdo fora os títulos, como a análise contou (54 na `narrative` com Code + ASU). Só mede; não decide teto. Complementa a entrada de 2026-07-29 («Revisar o orçamento por modo quando o custo real de token/caractere mudar»), que segue sendo a única condição para o teto subir.
 
-## i-N68 — Conferências de tela pendentes do dono — ABERTA, gatilho: a próxima vez que o dono abrir o `index.html` no navegador
+## i-N68 — Conferências de tela pendentes do dono — ABERTA só para o roteiro das wo0121–wo0127; as duas conferências da wo0129 fecharam em 2026-10-16 (7/7 ok no roteiro da wo0134, `[relatado pelo dono]`, com capturas)
 
 **Origem:** duas conferências que só o olho humano faz, e que nenhum arquivo registrava como pendentes `[medido: grep no STATUS e no IDEAS, 2026-10-16]`.
 - **wo0129:** o grupo «modo» do topo mostra **quatro** botões (Grupo, Code, ASU, **Mount**), e clicar em Mount troca a prévia das Instruções para o texto com «reveja o mount». Declarada «do dono» no relatório de aplicação da wo0129.
@@ -596,7 +602,7 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 
 **A ideia:** análise antes da próxima leva. Mede o que cada linha das Instruções custa e quantas vezes ela evitou erro (o `DECISIONS` diz), e decide entre três saídas: cortar o que o CEREBRO já cobre, subir o teto com justificativa medida, ou mover o texto do ramo do Code para a skill `apply-wo`, que só o executor lê. **Não decidido.**
 
-## i-N66 — Os prompts de setup e de transferência não conhecem o eixo canal — ABERTA, gatilho: a próxima WO de kit
+## i-N66 — Os prompts de setup e de transferência não conhecem o eixo canal — RESOLVIDA em 2026-10-17 (wo0135, `D-162`): Instruções e prompts A, D, E, F com o ramo do canal, `C109`; os princípios P8 e P11 seguem na `i-N70`
 
 **Achado em 2026-10-16**, quando o dono colou o prompt «E» (Conversa pesada — transferir agora) para fechar esta conversa. Na versão com Code, ele pede o brief «para eu colar como primeira mensagem» e o arquivo novo ou pequeno «inteiro para eu baixar». As duas frases são do canal mount. A wo0129 levou o eixo canal às Instruções e ao CEREBRO, mas **não aos prompts de setup** (`PROMPTS_BASE`), e nenhum check os compara com o canal. **Pergunta do dono, registrada:** com o canal pasta, precisa mandar o prompt inteiro? Resposta dada no chat: **não** — «o chat fecha a conversa com o handoff» basta, porque as Instruções e o CEREBRO já carregam a regra; o prompt só repete e, nas duas frases, contradiz.
 

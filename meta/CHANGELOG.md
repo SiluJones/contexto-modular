@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.126.0**.
+> Histórico de versões. Versão atual: **v1.127.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.127.0 — No canal pasta, as Instruções e os prompts param de mandar baixar, colar e anexar (wo0135, D-162)
+- **Instruções geradas, canal pasta:** o título vira «Arquivos de contexto», sem «(no Projeto)»; a linha dos logs perde «NÃO ficam no Projeto»; e, sem o modo Code, a entrega diz **grave cada documento direto no lugar dele** em vez de «arquivo novo para baixar e substituir». No canal pasta as Instruções ficam 22 caracteres menores, e 42 com Code; no mount, nada muda.
+- **Prompts, canal pasta:** **A** lê a pasta pelo ritual; **D** lista a pasta em vez de pedir anexo e `_MANIFEST`, e grava os arquivos no lugar; **E** grava o `HANDOFF-BRIEF` na pasta-pai (nunca versionado) e o arquivo pequeno direto no lugar, com ou sem Code; **F** pede a pasta-pai e lê o brief lá.
+- **O canal mount não muda:** cada frase antiga virou o ramo do mount, sem redigitar. Check novo `C109`: nada no canal pasta manda baixar, colar arquivo, anexar ou ler `_MANIFEST`, e o mount guarda a reserva.
+- **Fica para análise:** os princípios universais P8 e P11 ainda falam a língua do mount no CEREBRO (`i-N70`). Origem: `i-N66`, achada ao colar o prompt E em 16/10. Harness **19/19 · 110/110**.
 
 ## v1.126.0 — A convenção que repete um princípio do nicho sai das Instruções e fica no CEREBRO (wo0134, D-161)
 - **Instruções geradas:** 46 convenções, em 16 nichos, deixam de aparecer nas Instruções porque um princípio do próprio nicho, na mesma página, já diz a regra. Elas seguem inteiras no CEREBRO gerado, na mesma ordem, e na UI, marcadas «só no CEREBRO». Padrão máximo **6.034 → 5.852**; pior caso realista **7.380 → 7.198**.

@@ -1729,6 +1729,35 @@ check("C108 convencao so no CEREBRO: a marca tem par, sai das Instrucoes e fica 
   return "ok (" + marcadas + " convencoes so no CEREBRO em " + nichos + " nichos)";
 });
 
+check("C109 no canal pasta, as Instrucoes e os prompts A, D, E, F nao mandam baixar, colar arquivo nem anexar (wo0135, D-162)", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{});
+  // «para baixar (`AAMMDD-asu…`)» e o .yaml do ASU, aplicado pela interface do ASU: fora desta WO. «no Projeto» so com maiuscula: «no projeto», minusculo, e prosa comum.
+  const RUIM=/para (eu )?baixar(?! \(`AAMMDD-asu)|baixar e substituir|para eu colar como|_MANIFEST|arquivos do Projeto|Anexe os arquivos/i, RUIM_P=/no Projeto/;
+  const byId=id=>T.PROMPTS_BASE.find(x=>x.id===id);
+  const fora=[]; let textos=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    [["",""],["yes",""],["","yes"],["yes","yes"]].forEach(([c,a]) => {
+      S.workmode={codeMode:c, asuMode:a, groupMode:"no", mountMode:""};
+      const tag=id+(c?"+Code":"")+(a?"+ASU":"");
+      const I=T.buildInstr(n); textos++;
+      const mi=I.match(RUIM)||I.match(RUIM_P); if(mi) fora.push(tag+" Instr: «"+mi[0]+"»");
+      ["A","D","E","F"].forEach(pid => { const b=byId(pid).body({},n); textos++; const m=b.match(RUIM)||b.match(RUIM_P); if(m) fora.push(tag+" prompt "+pid+": «"+m[0]+"»"); });
+    });
+  });
+  // o par: o canal mount continua com a reserva (o ramo, nao a delecao)
+  const dev=T.normNiche(T.NICHES.dev);
+  S.workmode={codeMode:"yes", mountMode:"yes"};
+  const eM=byId("E").body({},dev), fM=byId("F").body({},dev), aM=byId("A").body({},dev), iM=T.buildInstr(dev);
+  S.workmode=prev;
+  assert(fora.length===0, "vocabulario do mount no canal pasta -> "+fora.slice(0,8).join(" | ")+(fora.length>8?" (+"+(fora.length-8)+")":""));
+  assert(/para eu colar como primeira mensagem/.test(eM), "o canal mount perdeu o brief para colar (prompt E)");
+  assert(/_MANIFEST/.test(fM), "o canal mount perdeu o _MANIFEST na retomada (prompt F)");
+  assert(/arquivos do Projeto/.test(aM), "o canal mount perdeu a leitura do Projeto (prompt A)");
+  assert(/Arquivos de contexto \(no Projeto\)/.test(iM), "o canal mount perdeu o titulo dos arquivos no Projeto");
+  return "ok (" + textos + " textos do canal pasta sem vocabulario do mount)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";

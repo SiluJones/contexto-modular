@@ -963,9 +963,9 @@ const today = new Date().toISOString().slice(0,10);
    ============================================================ */
 const PROMPTS_BASE = [
   { id:"A", title:"Dia a dia — com Projeto",
-    when:"Claude já lê os arquivos do Projeto sozinho; esta linha só confirma.",
+    when:"Claude já lê o contexto sozinho (os arquivos do Projeto, ou a pasta pelo ritual); esta linha só confirma.",
     fill:"task", fillLabel:"Sua solicitação",
-    body:(p,n)=>`Leia os arquivos do Projeto para se ambientar antes de responder.\n\n---\n${p.task||"[SUA SOLICITAÇÃO]"}` },
+    body:(p,n)=>`${mountModeOn() ? "Leia os arquivos do Projeto para se ambientar antes de responder." : "Leia os arquivos de contexto na pasta do projeto, pelo ritual das Instruções, antes de responder."}\n\n---\n${p.task||"[SUA SOLICITAÇÃO]"}` },
   { id:"B", title:"Dia a dia — sem Projeto",
     when:"Anexe os .md pelo clipe antes de enviar.",
     fill:"task", fillLabel:"Sua solicitação",
@@ -1004,9 +1004,9 @@ const PROMPTS_BASE = [
       L.push(p.situation||"[O que já foi feito, o que funciona/está pendente, principais decisões já tomadas]");
       L.push("");
       L.push("MATERIAL ATUAL:");
-      L.push("[Anexe os arquivos relevantes ou descreva o que existe]");
+      L.push(mountModeOn() ? "[Anexe os arquivos relevantes ou descreva o que existe]" : "[A pasta do projeto está vinculada: o que existe nela é o material — descreva aqui só o que não está lá]");
       L.push("");
-      L.push("Antes de gerar qualquer coisa: **se eu anexei um `_MANIFEST.md`** (o mapa de um pacote estruturado — download ↓ do KCM ou FlatDrop), ele é a fonte de verdade de nomes e estrutura. Leia por ele, entenda o que JÁ veio pronto e **não regenere o que já existe** — só complemente o que falta. Sem `_MANIFEST.md`, trate o material como arquivos soltos.");
+      L.push(!mountModeOn() ? "Antes de gerar qualquer coisa: **liste a pasta** e entenda o que JÁ existe nela. **Não regenere o que já existe** — só complemente o que falta." : "Antes de gerar qualquer coisa: **se eu anexei um `_MANIFEST.md`** (o mapa de um pacote estruturado — download ↓ do KCM ou FlatDrop), ele é a fonte de verdade de nomes e estrutura. Leia por ele, entenda o que JÁ veio pronto e **não regenere o que já existe** — só complemente o que falta. Sem `_MANIFEST.md`, trate o material como arquivos soltos.");
       if(codeModeOn()){
         L.push("");
         L.push("**Modo Code:** o repositório é a verdade. Leia o que já está versionado e ACRESCENTE os arquivos de contexto que faltam — não reescreva o que existe.");
@@ -1015,7 +1015,7 @@ const PROMPTS_BASE = [
         L.push("**Modo ASU:** mudanças em arquivos que já existem saem como instrução `.yaml`, não como arquivo inteiro. Arquivos novos (os de contexto que ainda não existem) vêm inteiros.");
       }
       L.push("");
-      L.push("Gere preenchidos com a realidade atual (só os que ainda não existem, ou complementando os que vieram incompletos):");
+      L.push(!mountModeOn() ? "Grave direto na pasta, cada um no lugar dele, preenchidos com a realidade atual (só os que ainda não existem, ou complementando os que vieram incompletos):" : "Gere preenchidos com a realidade atual (só os que ainda não existem, ou complementando os que vieram incompletos):");
       L.push(n.contextFiles.map(f=>`- ${f.name} (${f.role})`).join("\n"));
       L.push(`- logs/${today}.md`);
       return L.join("\n");
@@ -1027,7 +1027,7 @@ const PROMPTS_BASE = [
       const L = [];
       L.push("Esta conversa está ficando pesada. Vamos preparar a transferência para uma conversa nova.");
       L.push("");
-      L.push("**1) Gere um **`AAMMDD-HANDOFF-BRIEF.md`** (arquivo NOVO, para eu colar como primeira mensagem da próxima conversa). Ele é um ATALHO de arranque, não a memória — a memória continua nos arquivos de contexto. Inclua, com detalhe:");
+      L.push(!mountModeOn() ? "**1) Grave um **`AAMMDD-HANDOFF-BRIEF.md`** (arquivo NOVO) na pasta-pai do projeto — fora do repositório, nunca versionado; a próxima conversa o lê pelo ritual de abertura. Ele é um ATALHO de arranque, não a memória — a memória continua nos arquivos de contexto. Inclua, com detalhe:" : "**1) Gere um **`AAMMDD-HANDOFF-BRIEF.md`** (arquivo NOVO, para eu colar como primeira mensagem da próxima conversa). Ele é um ATALHO de arranque, não a memória — a memória continua nos arquivos de contexto. Inclua, com detalhe:");
       L.push("- Onde estamos: estado atual e o que já está fechado.");
       L.push("- O que foi feito nesta sessão — e POR QUÊ (o motivo, não só o quê).");
       L.push("- Pendências concretas: o que fazer primeiro, com o passo exato.");
@@ -1039,7 +1039,7 @@ const PROMPTS_BASE = [
       if(codeModeOn()){
         L.push("- O repositório é a fonte de verdade e o Claude Code já escreve nele (append em STATUS/DECISIONS/logs). **NÃO regenere os arquivos de contexto aqui no chat**: dois escritores brigam, e reescrever um doc grande no fim de uma conversa pesada é como se perde conteúdo.");
         L.push("- **Mas regenerar é diferente de criar.** Documento que já existe: não reescreva. Documento que NÃO existe — o log do dia é o caso típico — escreva agora; não há dois escritores num arquivo que ninguém escreveu.");
-        L.push("- Em vez de listar o que falta registrar: **REGISTRE**. O que for delta em documento grande vai como **WO** em `meta/workorders/`, com o texto exato de cada inserção e a linha `/apply-wo` junto; o que for arquivo novo ou pequeno vem inteiro para eu baixar. Não me devolva bloco para eu colar no Code — a caixa dele tem limite, e é por isso que a WO existe.");
+        L.push(!mountModeOn() ? "- Em vez de listar o que falta registrar: **REGISTRE**. O que for delta em documento grande vai como **WO** em `meta/workorders/`, com o texto exato de cada inserção e a linha `/apply-wo` junto; o que for arquivo novo ou pequeno, grave inteiro direto no lugar dele. Não me devolva bloco para eu colar no Code — a caixa dele tem limite, e é por isso que a WO existe." : "- Em vez de listar o que falta registrar: **REGISTRE**. O que for delta em documento grande vai como **WO** em `meta/workorders/`, com o texto exato de cada inserção e a linha `/apply-wo` junto; o que for arquivo novo ou pequeno vem inteiro para eu baixar. Não me devolva bloco para eu colar no Code — a caixa dele tem limite, e é por isso que a WO existe.");
         L.push("- Ao final, me mostre a lista do que ficou por registrar. **Ela deve estar vazia** — se não estiver, o fecho não terminou.");
         L.push("- Garanta que está tudo **commitado e enviado** — o repo é o que a próxima conversa vai ler.");
         L.push("- Fato que eu relatei no chat e que não está em arquivo nenhum ainda (uma medição, uma confirmação, um envio) **não existe para a próxima conversa**: registre-o marcando a origem — `[relatado pelo dono]` é diferente de `[medido por instrumento]`.");
@@ -1047,7 +1047,7 @@ const PROMPTS_BASE = [
         L.push("- Edições em arquivos que já existem saem como **instrução .yaml (ASU)** — não me devolva o arquivo inteiro.");
         L.push("- O HANDOFF-BRIEF é arquivo novo: esse vem inteiro.");
       } else {
-        L.push(`- Entregue INTEIROS **apenas os arquivos que mudaram nesta sessão** (prontos para baixar e substituir), incluindo o log \`logs/${today}.md\`. Não regenere os que não mudaram.`);
+        L.push(!mountModeOn() ? `- Grave INTEIROS, direto no lugar de cada um na pasta, **apenas os arquivos que mudaram nesta sessão**, incluindo o log \`logs/${today}.md\`. Não regenere os que não mudaram.` : `- Entregue INTEIROS **apenas os arquivos que mudaram nesta sessão** (prontos para baixar e substituir), incluindo o log \`logs/${today}.md\`. Não regenere os que não mudaram.`);
         L.push("- Antes de encolher ou reescrever qualquer arquivo, confirme que nada ÚNICO se perdeu (uma decisão, uma ideia, um detalhe que só existia ali) e me diga o que saiu e por quê.");
       }
       if(groupModeOn()){
@@ -1058,14 +1058,14 @@ const PROMPTS_BASE = [
       return L.join("\n");
     } },
   { id:"F", title:"Retomar após transferência",
-    when:"Primeira mensagem na conversa nova. Cole junto com o HANDOFF-BRIEF.",
+    when:"Primeira mensagem na conversa nova. No canal mount, cole junto com o HANDOFF-BRIEF; no canal pasta, ele já está na pasta-pai.",
     fill:"task", fillLabel:"O que quer fazer hoje",
     body:(p,n)=>{
       const steps = [];
       if(codeModeOn()) steps.push("O repositório é a fonte de verdade: leia a versão atual dos arquivos (puxe antes de começar), nunca a memória.");
-      steps.push("Se houver um `_MANIFEST.md` no material (pacote estruturado — download ↓ do KCM ou FlatDrop), use-o como mapa de nomes e estrutura antes de deduzir qualquer caminho.");
+      if(!mountModeOn()) steps.push("Peça acesso à pasta-pai do projeto se a conversa não a tiver: o brief e as notas moram lá."); else steps.push("Se houver um `_MANIFEST.md` no material (pacote estruturado — download ↓ do KCM ou FlatDrop), use-o como mapa de nomes e estrutura antes de deduzir qualquer caminho.");
       steps.push("Leia os arquivos de contexto: primeiro o que define seu comportamento, depois o estado atual, as decisões e o que ficou pendente.");
-      steps.push("Leia o `AAMMDD-HANDOFF-BRIEF.md` da conversa anterior — ele é um ATALHO de arranque, **não a verdade**. Se o brief divergir dos arquivos, os ARQUIVOS vencem.");
+      steps.push("Leia o `AAMMDD-HANDOFF-BRIEF.md` da conversa anterior" + (mountModeOn() ? "" : " (na pasta-pai)") + " — ele é um ATALHO de arranque, **não a verdade**. Se o brief divergir dos arquivos, os ARQUIVOS vencem.");
       steps.push("Confirme em UMA frase o que entendeu do estado e do próximo passo. Em ambiguidade real, pergunte antes de executar.");
       const ritual = steps.map((s,i) => `${i+1}. ${s}`).join("\n");
       return `Estou retomando o trabalho numa conversa nova. Antes de responder:\n\n${ritual}\n\n---\n${p.task||"[O QUE QUER FAZER HOJE]"}`;
@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.126.0";
+const KIT_VERSION = "1.127.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2419,10 +2419,10 @@ function buildInstr(niche){
   const _instrFiles = effectiveFiles(niche);
   if(_instrFiles.length){
     lines.push("");
-    lines.push("## Arquivos de contexto (no Projeto)");
+    lines.push(mountModeOn() ? "## Arquivos de contexto (no Projeto)" : "## Arquivos de contexto");
     lines.push("- **CEREBRO.md** — o comportamento completo do assistente.");
     _instrFiles.forEach(f => lines.push(`- **${f.name}** — ${f.short || f.role}`));
-    lines.push("- Logs detalhados do dia NÃO ficam no Projeto: vivem em `logs/` no Git e são lidos sob demanda.");
+    lines.push(!mountModeOn() ? "- Logs detalhados do dia vivem em `logs/` e são lidos sob demanda." : "- Logs detalhados do dia NÃO ficam no Projeto: vivem em `logs/` no Git e são lidos sob demanda.");
   }
 
   const outOn = (niche.outputs||[]).filter(o => STATE.outputs[o.id] !== false);
@@ -2431,7 +2431,7 @@ function buildInstr(niche){
     lines.push(codeModeOn() ? "## Ao final da conversa, REGISTRE o que falta (não liste)" : "## Ao final da conversa, entregue arquivos completos");
     lines.push(codeModeOn()
       ? "Registre AQUI, não liste para depois: doc grande por WO (com a linha `/apply-wo`), arquivo novo ou pequeno inteiro, e o log do dia SEMPRE. A lista termina vazia. Regenerar × criar: CEREBRO.md."
-      : "Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
+      : !mountModeOn() ? "Grave cada documento afetado INTEIRO e atualizado, direto no lugar dele e relido antes de sobrescrever; nunca blocos soltos para colar à mão. Aplicar é decisão do usuário: diga o que gravou. Detalhes e exceções no CEREBRO.md." : "Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
     outOn.forEach(o => lines.push(`- ${o.label}`));
     lines.push("- Higiene no CEREBRO.md (resumo: STATUS só o agora; IDEAS nunca perde; uma fonte de verdade por dado).");
     lines.push("- **Fecho do turno** — formato fixo (divisor, listas, condição por linha) que não cabe aqui: **copie o esqueleto do CEREBRO**, não reconstitua de memória — o esqueleto tem cinco itens; sem saber nomeá-los, abra-o. `Estado` abre com `Base:` — o lido NESTE turno.");

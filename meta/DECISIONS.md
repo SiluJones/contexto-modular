@@ -2174,3 +2174,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0134 traz a medida no repo]`: 46 convenções em 16 nichos; padrão máximo **6.034 → 5.852**; combo com a linha do SO **7.380 → 7.198**/7.600; economia no padrão de 0 a 464 por nicho, 4.848 nos 19. Check novo `C108`. Harness 108 → **109**.
 
 **Vigiar:** a marca é por texto exato. Quem editar uma convenção marcada sem editar a marca deixa o `C108` vermelho («a marca ficou órfã») — é o aviso de que as duas mudam juntas.
+
+## D-162 — No canal pasta, as Instruções e os prompts param de mandar baixar, colar e anexar
+
+**Data:** 2026-10-17 · **WO:** 0135 · **Origem:** `i-N66` (achada em 16/10, ao colar o prompt E) e o inventário do chat em 16/10 · **Estende:** `D-157` (o eixo canal).
+
+**Decisão.** A `D-157` levou o eixo canal às Instruções e ao CEREBRO, mas não aos prompts de setup (`PROMPTS_BASE`) nem a três linhas das Instruções. No canal pasta — o padrão — o kit ainda mandava «colar o brief como primeira mensagem», «baixar e substituir» e «anexar o `_MANIFEST`», o que contradiz o canal: o chat grava direto no disco. Esta WO dá o ramo do canal a três linhas das Instruções (o título dos arquivos, a linha dos logs, a entrega sem Code) e a quatro prompts (A, D, E, F). O canal mount não muda: cada frase antiga virou o ramo do mount, recortada, sem redigitar. Corta a **v1.127.0** (`D-158`).
+
+**O check.** `C109` confere 380 textos do canal pasta (19 nichos × sem modo, Code, ASU e os dois × Instruções e os quatro prompts) contra o vocabulário do mount, e o par: o canal mount guarda a reserva nos prompts A, E e F e no título dos arquivos. O `G23` segue verde — o código dos prompts D e F continua citando o `_MANIFEST`, agora no ramo do mount.
+
+**Escopo decidido pelo dono (2026-10-17):** Instruções e prompts A, D, E, F, check novo. **Ficam fora:** os princípios universais P8 e P11, que vão inteiros ao CEREBRO, onde a `D-157` declarou o mount como reserva; mudar princípio universal pede análise (`i-N70`). O prompt B («sem Projeto») e o C («do zero») não têm vocabulário do mount no canal pasta (medido em 16/10). **Também registrado:** as duas conferências de tela da wo0129 fecharam (`i-N68`, 7/7 ok, `[relatado pelo dono]`).
+
+**Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0135 traz a medida no repo]`: canal pasta — Instruções 22 caracteres menores sem modo, 42 com Code; incremento do Code 546 → **526**/550; canal mount — 532 textos (Instruções e os seis prompts, 19 nichos × quatro combinações de modo) idênticos ao HEAD. Check novo `C109`. Harness 109 → **110**.
