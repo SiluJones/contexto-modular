@@ -34,6 +34,12 @@ NICHES.business = {
         ["swot","SWOT"], ["okr","OKRs"], ["canvas","Business Model Canvas"], ["lean","Lean Canvas"], ["porter","5 Forças de Porter"], ["pestle","PESTLE"], ["unit","Unit economics"], ["jtbd","JTBD"], ["bcg","Matriz BCG"], ["ansoff","Ansoff"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Toda análise/projeção declara suas premissas; premissa frágil é sinalizada, com a sensibilidade da conclusão.",
+    "Framework é lente, não receita: entender o problema vem antes; combinar frameworks só se cada um agregar.",
+    "Decisão é avaliada por risco E custo de oportunidade; métricas financeiras são interdependentes.",
+    "A estratégia (OBJETIVOS) é o filtro: o que não serve à meta é sinalizado como distração.",
+  ],
   conventions:[
     "Toda análise/projeção declara suas premissas; premissa frágil é sinalizada, com a sensibilidade da conclusão.",
     "Número vem com conta ou fonte; estimativa é rotulada como tal (com faixa); benchmark de decisão é verificado antes de afirmar.",

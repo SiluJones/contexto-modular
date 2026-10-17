@@ -1,8 +1,8 @@
 # ANÁLISE — O teto das Instruções geradas (i-N67)
 
-> **Status:** Decidida (2026-10-16) — recomendação aceita como está; WO-1 implementada na wo0133 (`664858e`), WO-2 aberta
+> **Status:** Decidida (2026-10-16) — recomendação aceita como está; WO-1 implementada na wo0133 (`664858e`); WO-2 escrita na wo0134
 > **Data:** 261016 · **Base:** v1.124.0, HEAD `0e41773`, harness 19/19 · 107/107 · 0 erros
-> **Vira:** wo0133 (WO-1: papéis curtos + régua dos quatro eixos); a WO-2 (convenções) segue aberta na `i-N67` · **Decisão:** D-160
+> **Vira:** wo0133 (WO-1: papéis curtos + régua dos quatro eixos) e wo0134 (WO-2: convenções só no CEREBRO) · **Decisão:** D-160, D-161
 > **Raia:** Chat (análise; **não** é WO). **Antecessoras:** `260726-ANALISE-ENXUGAMENTO-INSTRUCOES.md` (D-090 a D-094) e `260727-ANALISE-teto-por-configuracao.md` (D-103, D-105).
 > **Método:** réplica `git archive HEAD | tar -x` fora da pasta do repo; `node build.js` gerou um `index.html` byte-idêntico ao do repo (`cmp`), e o harness da réplica deu 19/19 · 107/107. Sondas em Node chamando o `buildInstr` e o `buildClaudeMd` reais, pelo mesmo shim do `validate.js`. Todo número desta análise é `[medido em sandbox]` salvo marca em contrário — e o sandbox aqui não diverge do repo no artefato medido, porque o `index.html` é o mesmo byte a byte.
 
@@ -176,6 +176,27 @@ Não abro WO sem esse aval.
 - **A estimativa da seção 1-B errou para menos, e a diferença tem dono:** a análise previa cerca de 7.297 para 1-A + 1-B; a WO-1 faz só a 1-B e mede 7.380. Os 83 que faltam são a parte da 1-A (182) menos o que a WO-1 cortou além da estimativa (99): a linha do `CEREBRO.md` e as frases curadas abaixo de 45, que a soma da 1-B — só o excedente acima de 45 — não contava.
 - **Achado de desenho:** a normalização dos arquivos (`normFiles`) copia só `name`, `cat`, `role` e `content`; um campo novo no módulo some antes de chegar às Instruções. A WO-1 faz a normalização carregar o `short`.
 - **Contagem:** 174 papéis curtos em 174 arquivos — 157 nos módulos de nicho e o IDEAS universal, injetado em 17 nichos.
+
+## WO-2 — o que a curadoria das convenções decidiu e mediu (2026-10-16)
+
+**Decisão, uma a uma:** das 59 candidatas da seção 5, **46 ficam só no CEREBRO** e **13 ficam nas Instruções**. O critério é o da seção 1-A: sai a convenção que o princípio, na mesma página, já diz; fica a que traz uma regra que o princípio não tem.
+
+**Dois desvios do texto da seção 1-A, declarados:**
+- **«Apagar» virou «só no CEREBRO».** O array `conventions` é um só para as Instruções e para o CEREBRO; apagar tiraria a regra dos dois, e a seção 4 prometia que ela ficaria no CEREBRO. A WO-2 marca o texto exato num campo novo, `conventionsSoCerebro`, e nada se move entre arrays.
+- **«Fundir» não foi usado.** Fundir o detalhe na frase curta do princípio alongaria o `short` que a `D-090` curou; a convenção com detalhe a mais fica nas Instruções, inteira.
+
+**Um conflito com decisão antiga, resolvido a favor dela:** a primeira versão marcava `companion[2]` («Afirmação volátil leva carimbo de VERSÃO…»), e o `C104` acusou na réplica — desde o aperto da wo0122 (`D-150`) ele exige essa frase normativa nas Instruções, porque editada sozinha ela já deixou duas regras opostas no mesmo documento. Ela fica.
+
+**Medido na réplica** (HEAD `4922fd7` com a wo0134 aplicada a partir do texto dela; `[medido em sandbox]`):
+
+| | depois da WO-1 | depois da WO-2 |
+|---|---|---|
+| padrão máximo (pasta ou mount) | 6.034 | **5.852** |
+| pior caso realista (combo + linha do Windows) | 7.380 | **7.198** |
+| `narrative` / `game` / `companion` P--- | 6.015 / 5.886 / 5.820 | **5.833 / 5.425 / 5.509** |
+| economia por nicho no padrão | — | de 0 a 464 (4.848 nos 19) |
+
+A estimativa da seção 5 era de 6.432 caracteres para as 59 candidatas; saem 4.848 porque 13 ficam.
 
 ---
 

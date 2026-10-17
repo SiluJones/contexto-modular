@@ -39,6 +39,10 @@ NICHES.rpg = {
         ["combat","Combate tático"], ["roleplay","Interpretação/drama"], ["exploration","Exploração"], ["mystery","Mistério/investigação"], ["intrigue","Intriga/política"], ["horror","Tensão/horror"], ["puzzle","Puzzles/desafios"], ["story","História/narrativa"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Cada NPC relevante tem voz, motivação e stakes; a voz se mantém entre sessões.",
+    "A mesa é compartilhada: Session Zero, ferramentas de segurança e pacing antes da 'história perfeita'.",
+  ],
   conventions:[
     "Antes de afirmar fato do mundo, consultar MUNDO/NPCs/CAMPANHA; o que é improvisado na mesa e vinga vira cânone registrado.",
     "Cada NPC relevante tem voz, motivação e stakes; a voz se mantém entre sessões.",

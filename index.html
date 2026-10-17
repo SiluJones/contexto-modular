@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.125.0";
+const KIT_VERSION = "1.126.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1765,6 +1765,10 @@ NICHES.design = {
     ],
     other:false
   },
+  conventionsSoCerebro:[
+    "O sistema visual (paleta, tipografia, regras de logo) vive em MARCA.md; toda peça nova obedece a ele.",
+    "Escopo (entregáveis, rodadas, exclusões) vive em PROJETO.md e é a referência para julgar pedidos novos.",
+  ],
   conventions:[
     "O sistema visual (paleta, tipografia, regras de logo) vive em MARCA.md; toda peça nova obedece a ele.",
     "Cores são registradas em todos os espaços relevantes: HEX e RGB (tela), CMYK (impressão offset), Pantone (cor especial) — para a marca não mudar de tom entre mídias.",
@@ -2135,6 +2139,10 @@ NICHES.client = {
     ],
     other:false
   },
+  conventionsSoCerebro:[
+    "Feedback ambíguo ou de origem incerta (IA do cliente, terceiros) é validado antes de virar trabalho.",
+    "Afirmação técnica que vira promessa ao cliente é verificada antes de sair.",
+  ],
   conventions:[
     "Acordos verbais viram registro escrito em ACORDOS.md no mesmo dia — não basta \"a gente combinou\".",
     "Escopo (entregáveis, rodadas de revisão, exclusões) vive em PROJETO.md e é a referência para julgar pedidos novos.",
@@ -2473,6 +2481,10 @@ NICHES.narrative = {
     ],
     other:false
   },
+  conventionsSoCerebro:[
+    "Antes de afirmar um fato da obra, consultar BIBLIA/PERSONAGENS/CONTINUIDADE — não inventar o que contradiz o cânone.",
+    "Manter a bíblia no essencial (Tier 1); não super-documentar.",
+  ],
   conventions:[
     "A prosa segue o modo de colaboração escolhido em «A obra» — rascunho dirigível (padrão) ou direção criativa (a IA escreve a versão final; o autor dirige e reage) — sempre ancorada em VOZ.md, nunca padronizando o estilo.",
     "Antes de afirmar um fato da obra, consultar BIBLIA/PERSONAGENS/CONTINUIDADE — não inventar o que contradiz o cânone.",
@@ -3072,6 +3084,11 @@ NICHES.marketing = {
     ],
     other:false
   },
+  conventionsSoCerebro:[
+    "Todo conteúdo serve a um dos 3-5 pilares da marca e a uma dor da audiência — nada de post solto sem encaixe.",
+    "Cada peça/campanha tem um objetivo no funil e a métrica adequada ao estágio — vanity metric não conta como sucesso.",
+    "A PAUTA.md é documento vivo: tema, pilar, formato, canal, status; o publicado vira histórico.",
+  ],
   conventions:[
     "Todo conteúdo serve a um dos 3-5 pilares da marca e a uma dor da audiência — nada de post solto sem encaixe.",
     "A voz vive em TOM-E-VOZ.md e é idêntica entre formatos/canais; a IA não vira dona da voz (POV e precisão são do humano).",
@@ -3404,6 +3421,11 @@ NICHES.research = {
         ["abnt","ABNT"], ["apa","APA"], ["chicago","Chicago"], ["mla","MLA"], ["vancouver","Vancouver"], ["ieee","IEEE"], ["other","Outra"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Separar sempre evidência (com fonte) de hipótese (a testar) de especulação (inferência) — em HIPOTESES e na própria escrita.",
+    "Síntese liga fontes num argumento; não é resumo sequencial. Cada fonte tem função (apoia/complica/contradiz).",
+    "Traduções vêm sinalizadas, com o original referenciado; termo técnico incerto traz o original entre parênteses.",
+  ],
   conventions:[
     "Nenhuma citação entra sem verificação: referência fabricada é falha grave, não detalhe. Na dúvida, sinalizar «não verificado» em vez de inventar.",
     "Cada fonte na FONTES tem citekey (autor-ano), dados completos e uma nota de POR QUE importa para a pesquisa.",
@@ -3741,6 +3763,11 @@ NICHES.product = {
         ["jtbd","JTBD"], ["ost","Opportunity Solution Tree"], ["rice","RICE"], ["kano","Kano"], ["moscow","MoSCoW"], ["okr","OKRs"], ["northstar","North Star Metric"], ["doublediamond","Double Diamond"], ["story","User Stories"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Job antes de feature: nenhum pedido vira solução sem o problema/JTBD entendido primeiro.",
+    "Decisões de produto relevantes vão para DECISIONS.md com racional, alternativas e o que se esperava.",
+    "Risco e hipótese frágil são sinalizados antes de refinar a solução.",
+  ],
   conventions:[
     "Job antes de feature: nenhum pedido vira solução sem o problema/JTBD entendido primeiro.",
     "Toda iniciativa tem métrica de sucesso definida ANTES de construir (liga ao North Star quando há).",
@@ -4038,6 +4065,12 @@ NICHES.business = {
         ["swot","SWOT"], ["okr","OKRs"], ["canvas","Business Model Canvas"], ["lean","Lean Canvas"], ["porter","5 Forças de Porter"], ["pestle","PESTLE"], ["unit","Unit economics"], ["jtbd","JTBD"], ["bcg","Matriz BCG"], ["ansoff","Ansoff"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Toda análise/projeção declara suas premissas; premissa frágil é sinalizada, com a sensibilidade da conclusão.",
+    "Framework é lente, não receita: entender o problema vem antes; combinar frameworks só se cada um agregar.",
+    "Decisão é avaliada por risco E custo de oportunidade; métricas financeiras são interdependentes.",
+    "A estratégia (OBJETIVOS) é o filtro: o que não serve à meta é sinalizado como distração.",
+  ],
   conventions:[
     "Toda análise/projeção declara suas premissas; premissa frágil é sinalizada, com a sensibilidade da conclusão.",
     "Número vem com conta ou fonte; estimativa é rotulada como tal (com faixa); benchmark de decisão é verificado antes de afirmar.",
@@ -4368,6 +4401,9 @@ NICHES.career = {
         ["pressure","Ambiente de pressão constante"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Nada entra em currículo/portfólio/pitch sem fato datado e prova em EVIDENCIAS.md; adjetivo é derivado, nunca afirmado.",
+  ],
   conventions:[
     "Nada entra em currículo/portfólio/pitch sem fato datado e prova em EVIDENCIAS.md; adjetivo é derivado, nunca afirmado.",
     "Escopo real é registrado no dia em que muda (data, quem pediu, prova); cruzar fronteira declarada gera aviso antes do aceite.",
@@ -4746,6 +4782,11 @@ NICHES.game = {
         ["mastery","Maestria/habilidade"], ["exploration","Exploração/descoberta"], ["tension","Tensão/medo"], ["narrative","História/imersão"], ["strategy","Estratégia/decisão"], ["creativity","Criatividade/expressão"], ["social","Social/competição"], ["relax","Relaxamento/fluxo"], ["progression","Progressão/recompensa"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Em balanceamento, registrar a INTENÇÃO de design (curva, sensação), não só o número atual — e as premissas de quem vai jogar.",
+    "Decisão de design é hipótese: validar barato (protótipo, vertical slice, playtest) antes de comprometer produção.",
+    "O assistente também CONSTRÓI: protótipo jogável, código, conteúdo e dados — design vira artefato testável, não só documento. A narrativa cena a cena (missões, diálogos ramificados, lore passivo) vive em ROTEIRO.md.",
+  ],
   conventions:[
     "O design parte da experiência alvo (aesthetic); mecânica que não a serve é candidata a corte.",
     "Tudo se ancora no core loop; polir o primário vem antes de adicionar o secundário.",
@@ -5162,6 +5203,11 @@ NICHES.companion = {
         ["order","Ordem do que fazer"], ["traps","Não cair em armadilha"], ["build","Direção de build/estilo"], ["collect","Coletáveis e conquistas"], ["economy","Economia e recursos"], ["choices","Escolhas que trancam"], ["efficiency","Eficiência sem estragar a diversão"], ["catchup","Retomar depois de meses"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Se o documento e o jogo divergem, o documento está errado — a tela é sempre a versão mais atual.",
+    "Afirmação mecânica entra classificada (fato · consenso · relato · não confirmado), com a fonte pelo nome.",
+    "Escolha que fecha porta vai para `ESCOLHAS.md` com o escopo (conta × rodada) e o contorno, se houver.",
+  ],
   conventions:[
     "Se o documento e o jogo divergem, o documento está errado — a tela é sempre a versão mais atual.",
     "Afirmação mecânica entra classificada (fato · consenso · relato · não confirmado), com a fonte pelo nome.",
@@ -5558,6 +5604,12 @@ NICHES.pixel = {
         ["dither","Dithering"], ["aa","Anti-aliasing seletivo"], ["selout","Selective outlining"], ["noout","Sem outline"], ["limitpal","Paleta restrita (≤16)"], ["rota","Rotação/clusters"], ["subpixel","Sub-pixel animation"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "A paleta de ESTILO.md é regra; cor nova entra só como decisão explícita. Cor serve para esculpir forma, não enfeitar.",
+    "Anti-aliasing é escolha consciente (onde/quanto), nunca passo automático — em baixa resolução, menos costuma ser mais.",
+    "Em animação: timing antes de contagem de frames; duração variável; squash & stretch mesmo em baixa resolução.",
+    "Decisões de estilo/técnica vão com o porquê em ESTILO; o assistente orienta e critica — o artista executa.",
+  ],
   conventions:[
     "A paleta de ESTILO.md é regra; cor nova entra só como decisão explícita. Cor serve para esculpir forma, não enfeitar.",
     "Silhueta legível primeiro; pensar em clusters de luz/sombra antes de detalhe.",
@@ -5893,6 +5945,12 @@ NICHES.brainstorm = {
         ["scamper","SCAMPER"], ["reverse","Brainstorm reverso"], ["hmw","How Might We"], ["mindmap","Mapa mental"], ["analogies","Analogias"], ["firstprinciples","First principles"], ["sixhats","6 chapéus"], ["matrix","Matriz impacto×esforço"], ["crazy8s","Crazy 8s"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Divergir antes de convergir: proteger a geração do julgamento; abrir, depois fechar. Sinalizar a fase.",
+    "O assistente é espelho e contraponto, não eco — não bajula; oferece a objeção honesta e a pergunta que examina a premissa.",
+    "Quando satura no óbvio, usar técnicas (SCAMPER, reverso, analogias) para forçar ângulos novos.",
+    "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEAS.md; ao fim de uma fase, sintetizar e recomendar um caminho.",
+  ],
   conventions:[
     "Divergir antes de convergir: proteger a geração do julgamento; abrir, depois fechar. Sinalizar a fase.",
     "O assistente é espelho e contraponto, não eco — não bajula; oferece a objeção honesta e a pergunta que examina a premissa.",
@@ -6210,6 +6268,11 @@ NICHES.music = {
         ["writing","Composição"], ["lyrics","Letra"], ["harmony","Harmonia/teoria"], ["arrangement","Arranjo"], ["production","Produção/beat"], ["mixing","Mix"], ["mastering","Master"], ["concept","Conceito do projeto"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Referência é lente para mirar, não molde para copiar — traduzir o que serve para a voz do artista.",
+    "Arranjo é movimento (entradas/saídas, contraste verso↔refrão); tirar para destacar.",
+    "Decisões de produção/harmonia/arranjo vão com o porquê (a intenção/sensação) — coerência entre faixas.",
+  ],
   conventions:[
     "O assistente não ouve áudio: julga estrutura/harmonia/letra no papel e dá checklists; o sonoro é avaliado de ouvido pelo artista.",
     "Letra busca prosódia (palavra+música), parte do específico para o universal; rima é ferramenta, não obrigação.",
@@ -6536,6 +6599,10 @@ NICHES.rpg = {
         ["combat","Combate tático"], ["roleplay","Interpretação/drama"], ["exploration","Exploração"], ["mystery","Mistério/investigação"], ["intrigue","Intriga/política"], ["horror","Tensão/horror"], ["puzzle","Puzzles/desafios"], ["story","História/narrativa"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Cada NPC relevante tem voz, motivação e stakes; a voz se mantém entre sessões.",
+    "A mesa é compartilhada: Session Zero, ferramentas de segurança e pacing antes da 'história perfeita'.",
+  ],
   conventions:[
     "Antes de afirmar fato do mundo, consultar MUNDO/NPCs/CAMPANHA; o que é improvisado na mesa e vinga vira cânone registrado.",
     "Cada NPC relevante tem voz, motivação e stakes; a voz se mantém entre sessões.",
@@ -6898,6 +6965,11 @@ NICHES.cuisine = {
         ["braise","Brasear/cozidos"], ["roast","Assar"], ["saute","Saltear/selar"], ["bake","Panificação"], ["pastry","Confeitaria"], ["ferment","Fermentação"], ["sauce","Molhos"], ["grill","Grelhar"], ["sousvide","Sous-vide"], ["raw","Cru/cura"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Receita é pensada em RATIO antes de quantidade fixa; escalar mantém a proporção e o equilíbrio.",
+    "A pesquisa de ratios/técnicas informa o primeiro teste (que nunca é aleatório), não o dirige.",
+    "Técnica explicada com o porquê (ciência); técnica-base antes de truque.",
+  ],
   conventions:[
     "Receita é pensada em RATIO antes de quantidade fixa; escalar mantém a proporção e o equilíbrio.",
     "No desenvolvimento, muda-se UMA variável por teste; testar ≥2 vezes antes de dar como certa.",
@@ -7205,6 +7277,12 @@ NICHES.animation = {
         ["comedy","Comédia"], ["drama","Drama"], ["action","Ação"], ["poetic","Poético/lírico"], ["dark","Sombrio"], ["whimsy","Lúdico/fantasioso"], ["epic","Épico"], ["slice","Cotidiano"], ["experimental","Experimental"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Movimento pensado pelos 12 princípios, com moderação e a serviço da intenção da cena.",
+    "Timing e staging resolvidos cedo (storyboard, animatic) — antes da produção cara; o animatic trava o ritmo.",
+    "Voz e design por personagem mantidos coerentes; silhueta legível que comunica personalidade.",
+    "Em série: cada episódio fecha por si E faz avançar o arco maior.",
+  ],
   conventions:[
     "Antes de afirmar fato da história/mundo/personagem, consultar PROJETO/PERSONAGENS/ROTEIROS; o improvisado que vinga vira cânone.",
     "Movimento pensado pelos 12 princípios, com moderação e a serviço da intenção da cena.",
@@ -8758,6 +8836,13 @@ function renderBuilderSection(niche){
   });
 }
 
+/* Convencoes que entram nas Instrucoes (wo0134, D-161): a lista inteira vai para o CEREBRO, a UI e o
+   construtor custom; as marcadas em `conventionsSoCerebro` (texto exato) ficam so no CEREBRO, porque
+   um principio do nicho na mesma pagina ja diz a regra. */
+function conventionsInstr(niche){
+  const so = new Set((niche && niche.conventionsSoCerebro) || []);
+  return ((niche && niche.conventions) || []).filter(c => !so.has(c));
+}
 function renderConventionsBlock(niche){
   const host = $("#g-conventions");
   if(!host) return;
@@ -8768,7 +8853,7 @@ function renderConventionsBlock(niche){
   }
   host.style.display = "";
   host.innerHTML = `<div class="glabel">Convenções do nicho <span class="gn">· entram nas instruções</span></div>` +
-    niche.conventions.map(c => `<div style="color:var(--ink-dim);font-size:13px;padding:5px 0;line-height:1.55">· ${escapeHTML(c)}</div>`).join("");
+    niche.conventions.map(c => `<div style="color:var(--ink-dim);font-size:13px;padding:5px 0;line-height:1.55">· ${escapeHTML(c)}${(niche.conventionsSoCerebro||[]).includes(c) ? ' <span class="gn">· só no CEREBRO</span>' : ''}</div>`).join("");
 }
 
 function renderOutputs(niche){
@@ -8925,7 +9010,7 @@ function buildInstr(niche){
   if(niche.conventions && niche.conventions.length){
     lines.push("");
     lines.push("## Convenções");
-    niche.conventions.forEach(c => lines.push(`- ${c}`));
+    conventionsInstr(niche).forEach(c => lines.push(`- ${c}`));
   }
 
   // Arquivos + saídas — compacto

@@ -34,6 +34,11 @@ NICHES.marketing = {
     ],
     other:false
   },
+  conventionsSoCerebro:[
+    "Todo conteúdo serve a um dos 3-5 pilares da marca e a uma dor da audiência — nada de post solto sem encaixe.",
+    "Cada peça/campanha tem um objetivo no funil e a métrica adequada ao estágio — vanity metric não conta como sucesso.",
+    "A PAUTA.md é documento vivo: tema, pilar, formato, canal, status; o publicado vira histórico.",
+  ],
   conventions:[
     "Todo conteúdo serve a um dos 3-5 pilares da marca e a uma dor da audiência — nada de post solto sem encaixe.",
     "A voz vive em TOM-E-VOZ.md e é idêntica entre formatos/canais; a IA não vira dona da voz (POV e precisão são do humano).",

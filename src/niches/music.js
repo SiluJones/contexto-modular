@@ -37,6 +37,11 @@ NICHES.music = {
         ["writing","Composição"], ["lyrics","Letra"], ["harmony","Harmonia/teoria"], ["arrangement","Arranjo"], ["production","Produção/beat"], ["mixing","Mix"], ["mastering","Master"], ["concept","Conceito do projeto"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Referência é lente para mirar, não molde para copiar — traduzir o que serve para a voz do artista.",
+    "Arranjo é movimento (entradas/saídas, contraste verso↔refrão); tirar para destacar.",
+    "Decisões de produção/harmonia/arranjo vão com o porquê (a intenção/sensação) — coerência entre faixas.",
+  ],
   conventions:[
     "O assistente não ouve áudio: julga estrutura/harmonia/letra no papel e dá checklists; o sonoro é avaliado de ouvido pelo artista.",
     "Letra busca prosódia (palavra+música), parte do específico para o universal; rima é ferramenta, não obrigação.",

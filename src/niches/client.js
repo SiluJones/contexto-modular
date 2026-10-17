@@ -34,6 +34,10 @@ NICHES.client = {
     ],
     other:false
   },
+  conventionsSoCerebro:[
+    "Feedback ambíguo ou de origem incerta (IA do cliente, terceiros) é validado antes de virar trabalho.",
+    "Afirmação técnica que vira promessa ao cliente é verificada antes de sair.",
+  ],
   conventions:[
     "Acordos verbais viram registro escrito em ACORDOS.md no mesmo dia — não basta \"a gente combinou\".",
     "Escopo (entregáveis, rodadas de revisão, exclusões) vive em PROJETO.md e é a referência para julgar pedidos novos.",

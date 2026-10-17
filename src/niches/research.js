@@ -37,6 +37,11 @@ NICHES.research = {
         ["abnt","ABNT"], ["apa","APA"], ["chicago","Chicago"], ["mla","MLA"], ["vancouver","Vancouver"], ["ieee","IEEE"], ["other","Outra"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Separar sempre evidência (com fonte) de hipótese (a testar) de especulação (inferência) — em HIPOTESES e na própria escrita.",
+    "Síntese liga fontes num argumento; não é resumo sequencial. Cada fonte tem função (apoia/complica/contradiz).",
+    "Traduções vêm sinalizadas, com o original referenciado; termo técnico incerto traz o original entre parênteses.",
+  ],
   conventions:[
     "Nenhuma citação entra sem verificação: referência fabricada é falha grave, não detalhe. Na dúvida, sinalizar «não verificado» em vez de inventar.",
     "Cada fonte na FONTES tem citekey (autor-ano), dados completos e uma nota de POR QUE importa para a pesquisa.",

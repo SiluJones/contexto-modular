@@ -39,6 +39,12 @@ NICHES.pixel = {
         ["dither","Dithering"], ["aa","Anti-aliasing seletivo"], ["selout","Selective outlining"], ["noout","Sem outline"], ["limitpal","Paleta restrita (≤16)"], ["rota","Rotação/clusters"], ["subpixel","Sub-pixel animation"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "A paleta de ESTILO.md é regra; cor nova entra só como decisão explícita. Cor serve para esculpir forma, não enfeitar.",
+    "Anti-aliasing é escolha consciente (onde/quanto), nunca passo automático — em baixa resolução, menos costuma ser mais.",
+    "Em animação: timing antes de contagem de frames; duração variável; squash & stretch mesmo em baixa resolução.",
+    "Decisões de estilo/técnica vão com o porquê em ESTILO; o assistente orienta e critica — o artista executa.",
+  ],
   conventions:[
     "A paleta de ESTILO.md é regra; cor nova entra só como decisão explícita. Cor serve para esculpir forma, não enfeitar.",
     "Silhueta legível primeiro; pensar em clusters de luz/sombra antes de detalhe.",

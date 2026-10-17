@@ -45,6 +45,9 @@ NICHES.career = {
         ["pressure","Ambiente de pressão constante"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Nada entra em currículo/portfólio/pitch sem fato datado e prova em EVIDENCIAS.md; adjetivo é derivado, nunca afirmado.",
+  ],
   conventions:[
     "Nada entra em currículo/portfólio/pitch sem fato datado e prova em EVIDENCIAS.md; adjetivo é derivado, nunca afirmado.",
     "Escopo real é registrado no dia em que muda (data, quem pediu, prova); cruzar fronteira declarada gera aviso antes do aceite.",

@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.125.0**.
+> Histórico de versões. Versão atual: **v1.126.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.126.0 — A convenção que repete um princípio do nicho sai das Instruções e fica no CEREBRO (wo0134, D-161)
+- **Instruções geradas:** 46 convenções, em 16 nichos, deixam de aparecer nas Instruções porque um princípio do próprio nicho, na mesma página, já diz a regra. Elas seguem inteiras no CEREBRO gerado, na mesma ordem, e na UI, marcadas «só no CEREBRO». Padrão máximo **6.034 → 5.852**; pior caso realista **7.380 → 7.198**.
+- **Ficam 13**, decididas uma a uma, porque trazem regra que o princípio não tem: o carimbo de versão do `companion` (guardado pelo `C104`), segurança e parecer (`career`, `cuisine`), estimativa rotulada com faixa (`business`, `career`), o improvisado que vira cânone (`rpg`, `animation`, `comics`), prep leve, e ofício (`music`, `animation`, `comics`).
+- **O mecanismo:** campo novo `conventionsSoCerebro`, com o texto exato da convenção; nada se move entre arrays. O construtor `custom` recebe a lista inteira, como antes. Check novo `C108`: a marca tem par, a marcada não está nas Instruções, e toda convenção continua no CEREBRO.
+- Origem: análise `261016-ANALISE-teto-das-instrucoes-geradas.md`, frente 1-A (`i-N67`, agora resolvida). Harness **19/19 · 109/109**.
 
 ## v1.125.0 — O teto das Instruções passa a olhar os quatro eixos, e o papel de cada arquivo encurta nas Instruções (wo0133, D-160)
 - **Instruções geradas:** cada arquivo de contexto aparece com uma frase curada de até 45 caracteres (campo `short`); o papel inteiro segue no CEREBRO gerado, na tabela de documentos, e no cabeçalho do template. A linha do `CEREBRO.md` também encurta. Padrão máximo **6.681 → 6.034**; pior caso realista (`narrative`, grupo + Code + ASU + a linha do Windows) **8.027 → 7.380**.

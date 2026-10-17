@@ -38,6 +38,12 @@ NICHES.brainstorm = {
         ["scamper","SCAMPER"], ["reverse","Brainstorm reverso"], ["hmw","How Might We"], ["mindmap","Mapa mental"], ["analogies","Analogias"], ["firstprinciples","First principles"], ["sixhats","6 chapéus"], ["matrix","Matriz impacto×esforço"], ["crazy8s","Crazy 8s"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Divergir antes de convergir: proteger a geração do julgamento; abrir, depois fechar. Sinalizar a fase.",
+    "O assistente é espelho e contraponto, não eco — não bajula; oferece a objeção honesta e a pergunta que examina a premissa.",
+    "Quando satura no óbvio, usar técnicas (SCAMPER, reverso, analogias) para forçar ângulos novos.",
+    "Nada se perde: toda ideia (mesmo a descartada, com a razão) vai para IDEAS.md; ao fim de uma fase, sintetizar e recomendar um caminho.",
+  ],
   conventions:[
     "Divergir antes de convergir: proteger a geração do julgamento; abrir, depois fechar. Sinalizar a fase.",
     "O assistente é espelho e contraponto, não eco — não bajula; oferece a objeção honesta e a pergunta que examina a premissa.",

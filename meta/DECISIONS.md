@@ -2160,3 +2160,17 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0133 traz a medida no repo]`: padrão máximo **6.681 → 6.034**; combo com a linha do SO **8.027 → 7.380**/7.600; incrementos inalterados (Code 546, ASU 372, compartilhado 372); grupo **234**/250; SO 213. **174 papéis curtos em 174 arquivos** — 157 dos módulos e o IDEAS universal, injetado em 17 nichos. Check novo `C107`: o papel visto nas Instruções tem até 45 caracteres, o inteiro está no CEREBRO, e o curto preserva «OPCIONAL» e «nunca substituído». Harness 107 → **108**.
 
 **Fica fora, de propósito:** o construtor `custom` monta arquivos sem `short` e mostra o papel inteiro, como hoje; o vocabulário de mount nas Instruções do canal pasta («(no Projeto)») é da `i-N66`; as Instruções da casa (7.039) não são geradas, e o `C28` não as mede.
+
+## D-161 — A convenção que repete um princípio do nicho fica só no CEREBRO
+
+**Data:** 2026-10-16 · **WO:** 0134 · **Análise:** `meta/analises/261016-ANALISE-teto-das-instrucoes-geradas.md` (frente 1-A) · **Antecede:** `D-160` (a WO-1).
+
+**Decisão.** Das 59 convenções que a sonda da análise apontou como repetição de um princípio do próprio nicho (limiar de sobreposição 0,4), **46 saem das Instruções** e **13 ficam**, decididas uma a uma pelo critério: sai a que o princípio, na mesma página, já diz; fica a que traz uma regra que o princípio não tem. As 46 continuam inteiras no CEREBRO gerado, na mesma ordem, e na UI, marcadas «só no CEREBRO». Corta a **v1.126.0** (`D-158`). Com esta WO a `i-N67` está resolvida.
+
+**O mecanismo, e por que não «apagar».** A análise dizia «apagar a convenção quando o princípio diz o mesmo». O array `conventions` é um só para as Instruções e para o CEREBRO: apagar tiraria a regra dos dois. A convenção fica no array e um campo novo, `conventionsSoCerebro`, lista o texto exato das que as Instruções omitem. Nada se move entre arrays, e o construtor `custom` segue recebendo a lista inteira. **Fundir** o detalhe na frase curta do princípio também ficou de fora: alongaria o `short` que a `D-090` curou; a convenção com detalhe a mais fica nas Instruções, inteira.
+
+**As 13 que ficam:** a frase normativa do carimbo de versão do `companion` (`companion[2]`), que o `C104` exige nas Instruções desde o aperto da wo0122 (`D-150`) — a primeira versão desta WO a marcava, e o `C104` acusou na réplica; segurança e parecer (`career[5]`, `cuisine[5]`), estimativa rotulada com faixa (`business[1]`, `career[2]` — esta abranda o princípio, que exige fonte sempre), o improvisado que vinga vira cânone registrado (`rpg[0]`, `animation[0]`, `comics[0]`), prep leve (`rpg[3]`) e ofício que o princípio não carrega (`music[1]`, `music[2]`, `animation[5]`, `comics[5]`). Índice = posição no array `conventions` do módulo, a partir de 0.
+
+**Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0134 traz a medida no repo]`: 46 convenções em 16 nichos; padrão máximo **6.034 → 5.852**; combo com a linha do SO **7.380 → 7.198**/7.600; economia no padrão de 0 a 464 por nicho, 4.848 nos 19. Check novo `C108`. Harness 108 → **109**.
+
+**Vigiar:** a marca é por texto exato. Quem editar uma convenção marcada sem editar a marca deixa o `C108` vermelho («a marca ficou órfã») — é o aviso de que as duas mudam juntas.

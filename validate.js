@@ -1710,6 +1710,25 @@ check("C107 papel curto nas Instrucoes, papel inteiro no CEREBRO (wo0133, D-160)
   return "ok (" + curtos + " papeis curtos em " + arquivos + " arquivos)";
 });
 
+check("C108 convencao so no CEREBRO: a marca tem par, sai das Instrucoes e fica no CEREBRO (wo0134, D-161)", () => {
+  let marcadas=0, nichos=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    const so=n.conventionsSoCerebro||[], conv=n.conventions||[];
+    const instr=T.buildInstr(n), cmd=T.buildClaudeMd(n);
+    if(so.length) nichos++;
+    so.forEach(c => {
+      marcadas++;
+      assert(conv.indexOf(c)>=0, id+": convencao marcada so-CEREBRO sem par em conventions (a marca ficou orfa): "+c.slice(0,60));
+      assert(instr.indexOf("- "+c)<0, id+": convencao marcada so-CEREBRO ainda nas Instrucoes: "+c.slice(0,60));
+    });
+    conv.forEach(c => assert(cmd.indexOf("- "+c)>=0, id+": o CEREBRO perdeu a convencao: "+c.slice(0,60)));
+    if(conv.length) assert(conv.length > so.length, id+": todas as convencoes sairam das Instrucoes");
+  });
+  assert(marcadas >= 46, "esperado ao menos 46 convencoes so no CEREBRO (wo0134), achei "+marcadas);
+  return "ok (" + marcadas + " convencoes so no CEREBRO em " + nichos + " nichos)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";

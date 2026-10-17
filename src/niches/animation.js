@@ -37,6 +37,12 @@ NICHES.animation = {
         ["comedy","Comédia"], ["drama","Drama"], ["action","Ação"], ["poetic","Poético/lírico"], ["dark","Sombrio"], ["whimsy","Lúdico/fantasioso"], ["epic","Épico"], ["slice","Cotidiano"], ["experimental","Experimental"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Movimento pensado pelos 12 princípios, com moderação e a serviço da intenção da cena.",
+    "Timing e staging resolvidos cedo (storyboard, animatic) — antes da produção cara; o animatic trava o ritmo.",
+    "Voz e design por personagem mantidos coerentes; silhueta legível que comunica personalidade.",
+    "Em série: cada episódio fecha por si E faz avançar o arco maior.",
+  ],
   conventions:[
     "Antes de afirmar fato da história/mundo/personagem, consultar PROJETO/PERSONAGENS/ROTEIROS; o improvisado que vinga vira cânone.",
     "Movimento pensado pelos 12 princípios, com moderação e a serviço da intenção da cena.",

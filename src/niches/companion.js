@@ -40,6 +40,11 @@ NICHES.companion = {
         ["order","Ordem do que fazer"], ["traps","Não cair em armadilha"], ["build","Direção de build/estilo"], ["collect","Coletáveis e conquistas"], ["economy","Economia e recursos"], ["choices","Escolhas que trancam"], ["efficiency","Eficiência sem estragar a diversão"], ["catchup","Retomar depois de meses"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Se o documento e o jogo divergem, o documento está errado — a tela é sempre a versão mais atual.",
+    "Afirmação mecânica entra classificada (fato · consenso · relato · não confirmado), com a fonte pelo nome.",
+    "Escolha que fecha porta vai para `ESCOLHAS.md` com o escopo (conta × rodada) e o contorno, se houver.",
+  ],
   conventions:[
     "Se o documento e o jogo divergem, o documento está errado — a tela é sempre a versão mais atual.",
     "Afirmação mecânica entra classificada (fato · consenso · relato · não confirmado), com a fonte pelo nome.",

@@ -37,6 +37,11 @@ NICHES.cuisine = {
         ["braise","Brasear/cozidos"], ["roast","Assar"], ["saute","Saltear/selar"], ["bake","Panificação"], ["pastry","Confeitaria"], ["ferment","Fermentação"], ["sauce","Molhos"], ["grill","Grelhar"], ["sousvide","Sous-vide"], ["raw","Cru/cura"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Receita é pensada em RATIO antes de quantidade fixa; escalar mantém a proporção e o equilíbrio.",
+    "A pesquisa de ratios/técnicas informa o primeiro teste (que nunca é aleatório), não o dirige.",
+    "Técnica explicada com o porquê (ciência); técnica-base antes de truque.",
+  ],
   conventions:[
     "Receita é pensada em RATIO antes de quantidade fixa; escalar mantém a proporção e o equilíbrio.",
     "No desenvolvimento, muda-se UMA variável por teste; testar ≥2 vezes antes de dar como certa.",

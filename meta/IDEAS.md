@@ -590,7 +590,7 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 
 **Como fecha:** o dono responde no chat; o chat registra a resposta com `[relatado pelo dono]`.
 
-## i-N67 — O teto das Instruções geradas está quase cheio nos dois eixos — DECIDIDA em 2026-10-16 (`D-160`; análise `261016-ANALISE-teto-das-instrucoes-geradas.md`): a WO-1 é a wo0133 (papéis curtos + `C28` nos quatro eixos); a WO-2, a curadoria das convenções que repetem um princípio do nicho, segue ABERTA
+## i-N67 — O teto das Instruções geradas está quase cheio nos dois eixos — RESOLVIDA em 2026-10-16 (`D-160`, `D-161`; análise `261016-ANALISE-teto-das-instrucoes-geradas.md`): WO-1 = wo0133 (papéis curtos + `C28` nos quatro eixos), WO-2 = wo0134 (46 convenções só no CEREBRO)
 
 **Medido na wo0131** `[medido por instrumento: C28]`: padrão **6.662/6.900**, incremento do Code **546/550**, combo **7.580/7.600**. A wo0131 teve de encurtar uma frase porque o combo do `narrative` deu 7.611. A próxima regra que precise estar nas Instruções — e não no CEREBRO — vai exigir cortar outra.
 

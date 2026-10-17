@@ -37,6 +37,10 @@ NICHES.narrative = {
     ],
     other:false
   },
+  conventionsSoCerebro:[
+    "Antes de afirmar um fato da obra, consultar BIBLIA/PERSONAGENS/CONTINUIDADE — não inventar o que contradiz o cânone.",
+    "Manter a bíblia no essencial (Tier 1); não super-documentar.",
+  ],
   conventions:[
     "A prosa segue o modo de colaboração escolhido em «A obra» — rascunho dirigível (padrão) ou direção criativa (a IA escreve a versão final; o autor dirige e reage) — sempre ancorada em VOZ.md, nunca padronizando o estilo.",
     "Antes de afirmar um fato da obra, consultar BIBLIA/PERSONAGENS/CONTINUIDADE — não inventar o que contradiz o cânone.",

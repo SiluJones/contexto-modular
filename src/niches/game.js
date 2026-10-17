@@ -40,6 +40,11 @@ NICHES.game = {
         ["mastery","Maestria/habilidade"], ["exploration","Exploração/descoberta"], ["tension","Tensão/medo"], ["narrative","História/imersão"], ["strategy","Estratégia/decisão"], ["creativity","Criatividade/expressão"], ["social","Social/competição"], ["relax","Relaxamento/fluxo"], ["progression","Progressão/recompensa"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Em balanceamento, registrar a INTENÇÃO de design (curva, sensação), não só o número atual — e as premissas de quem vai jogar.",
+    "Decisão de design é hipótese: validar barato (protótipo, vertical slice, playtest) antes de comprometer produção.",
+    "O assistente também CONSTRÓI: protótipo jogável, código, conteúdo e dados — design vira artefato testável, não só documento. A narrativa cena a cena (missões, diálogos ramificados, lore passivo) vive em ROTEIRO.md.",
+  ],
   conventions:[
     "O design parte da experiência alvo (aesthetic); mecânica que não a serve é candidata a corte.",
     "Tudo se ancora no core loop; polir o primário vem antes de adicionar o secundário.",

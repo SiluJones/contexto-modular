@@ -34,6 +34,11 @@ NICHES.product = {
         ["jtbd","JTBD"], ["ost","Opportunity Solution Tree"], ["rice","RICE"], ["kano","Kano"], ["moscow","MoSCoW"], ["okr","OKRs"], ["northstar","North Star Metric"], ["doublediamond","Double Diamond"], ["story","User Stories"] ] },
     ]
   },
+  conventionsSoCerebro:[
+    "Job antes de feature: nenhum pedido vira solução sem o problema/JTBD entendido primeiro.",
+    "Decisões de produto relevantes vão para DECISIONS.md com racional, alternativas e o que se esperava.",
+    "Risco e hipótese frágil são sinalizados antes de refinar a solução.",
+  ],
   conventions:[
     "Job antes de feature: nenhum pedido vira solução sem o problema/JTBD entendido primeiro.",
     "Toda iniciativa tem métrica de sucesso definida ANTES de construir (liga ao North Star quando há).",

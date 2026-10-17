@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.125.0";
+const KIT_VERSION = "1.126.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2238,6 +2238,13 @@ function renderBuilderSection(niche){
   });
 }
 
+/* Convencoes que entram nas Instrucoes (wo0134, D-161): a lista inteira vai para o CEREBRO, a UI e o
+   construtor custom; as marcadas em `conventionsSoCerebro` (texto exato) ficam so no CEREBRO, porque
+   um principio do nicho na mesma pagina ja diz a regra. */
+function conventionsInstr(niche){
+  const so = new Set((niche && niche.conventionsSoCerebro) || []);
+  return ((niche && niche.conventions) || []).filter(c => !so.has(c));
+}
 function renderConventionsBlock(niche){
   const host = $("#g-conventions");
   if(!host) return;
@@ -2248,7 +2255,7 @@ function renderConventionsBlock(niche){
   }
   host.style.display = "";
   host.innerHTML = `<div class="glabel">Convenções do nicho <span class="gn">· entram nas instruções</span></div>` +
-    niche.conventions.map(c => `<div style="color:var(--ink-dim);font-size:13px;padding:5px 0;line-height:1.55">· ${escapeHTML(c)}</div>`).join("");
+    niche.conventions.map(c => `<div style="color:var(--ink-dim);font-size:13px;padding:5px 0;line-height:1.55">· ${escapeHTML(c)}${(niche.conventionsSoCerebro||[]).includes(c) ? ' <span class="gn">· só no CEREBRO</span>' : ''}</div>`).join("");
 }
 
 function renderOutputs(niche){
@@ -2405,7 +2412,7 @@ function buildInstr(niche){
   if(niche.conventions && niche.conventions.length){
     lines.push("");
     lines.push("## Convenções");
-    niche.conventions.forEach(c => lines.push(`- ${c}`));
+    conventionsInstr(niche).forEach(c => lines.push(`- ${c}`));
   }
 
   // Arquivos + saídas — compacto
