@@ -2186,3 +2186,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Escopo decidido pelo dono (2026-10-17):** Instruções e prompts A, D, E, F, check novo. **Ficam fora:** os princípios universais P8 e P11, que vão inteiros ao CEREBRO, onde a `D-157` declarou o mount como reserva; mudar princípio universal pede análise (`i-N70`). O prompt B («sem Projeto») e o C («do zero») não têm vocabulário do mount no canal pasta (medido em 16/10). **Também registrado:** as duas conferências de tela da wo0129 fecharam (`i-N68`, 7/7 ok, `[relatado pelo dono]`).
 
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0135 traz a medida no repo]`: canal pasta — Instruções 22 caracteres menores sem modo, 42 com Code; incremento do Code 546 → **526**/550; canal mount — 532 textos (Instruções e os seis prompts, 19 nichos × quatro combinações de modo) idênticos ao HEAD. Check novo `C109`. Harness 109 → **110**.
+
+## D-163 — A idempotência da WO se confere pelo texto novo inteiro, não por frase-chave
+
+**Data:** 2026-10-18 · **WO:** 0136 · **Origem:** resposta do GameDataHub à carta 01 (2026-10-16), lida no livro de leitura de 17/10 · **Corrige:** a regra de idempotência do molde de WO, à luz da forma «trocar» (FK-AX do Sand-Land-Map, adotada na leva da `D-159`).
+
+**Decisão.** O molde ensinava a substituir repetindo a âncora dentro do texto novo, e no mesmo cabeçalho mandava conferir a idempotência pela frase-chave do texto novo. As duas regras se contradizem: se a frase-chave cai no trecho que repete a âncora, ela já existe antes de aplicar e a edição é pulada em silêncio — o GameDataHub mediu isso na wo0129 deles. A regra passa a ser: **«já aplicada» é o texto NOVO INTEIRO presente no arquivo.** Vale nas quatro superfícies — o molde de WO e a skill `apply-wo`, gerados e instalados na casa; a skill gerada não tinha regra de idempotência e passa a ter. Corta a **v1.128.0** (`D-158`).
+
+**O check.** O `C43` ganha a cláusula «idempotencia pelo texto inteiro» nos dois lados (70 → 71) e uma conferência negativa: a frase antiga não volta em nenhuma das quatro superfícies. Nenhum check novo (110).
+
+**Fora:** a variante que o GameDataHub propôs para quando o texto novo contém a âncora («e a âncora ausente») — na forma «trocar» a âncora continua no arquivo depois de aplicar, então a condição falharia; o texto inteiro basta sozinho. Os cabeçalhos das WOs já aplicadas, que citam a frase antiga, são história.
+
+**Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0136 traz a medida no repo]`: `index.html` 922.276 → 922.680 bytes; `C28` inalterado; harness 19/19 · 110/110.

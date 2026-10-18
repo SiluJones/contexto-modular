@@ -21,7 +21,8 @@ Regras de aplicação:
   o template é LF, e isso é o certo: `git ls-files --eol` devolve `i/lf w/crlf attr/text=crlf`. Quem
   compara os dois números sem saber disso acha que achou um defeito.* Âncora de mais de uma linha
   colada com o separador errado não casa — na dúvida, edite linha a linha.
-- Antes de inserir, confira a **idempotência**: procure a frase-chave do texto NOVO. Se já existir,
+- Antes de cada edição, confira a **idempotência** pelo texto NOVO INTEIRO — frase-chave não basta: na forma
+  «trocar» o texto novo repete a âncora, e um trecho dele já existe antes de aplicar. Se o inteiro já estiver no arquivo,
   PULE o item e diga no relatório — não duplique.
 - Não toque em nada fora das edições nomeadas na WO.
 - WO só de doc (`meta/`) NÃO precisa de build. WO que toca `src/` (template ou nicho) precisa de

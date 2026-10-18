@@ -681,9 +681,15 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 >
 > | Projeto | Seção de feedback | Último item lido | Lido em |
 > |---|---|---|---|
-> | Sand-Land-Map | `meta/IDEAS.md`, «📮 Feedback ao KCM — leva nova» | `FK-AZ` e `IDEIA-084` | 2026-10-15 |
-> | GameDataHub | `meta/IDEAS.md`, «🔁 Feedback para o Kit» e «🧩 Feedback para o Kit» | leva de 2026-10-02 | 2026-10-15 |
-> | satelite-web | `meta/IDEAS.md`, «🧰 Feedback para o Kit» | item de 2026-10-12 | 2026-10-15 |
+> | Sand-Land-Map | `meta/IDEAS.md`, «📮 Feedback ao KCM — leva nova» | `FK-AZ` e `IDEIA-084` (sem verbete novo; carta 06 lida) | 2026-10-17 |
+> | GameDataHub | `meta/IDEAS.md`, «🔁 Feedback para o Kit» e «🧩 Feedback para o Kit» | resposta à carta 01, de 2026-10-16 | 2026-10-17 |
+> | satelite-web | `meta/IDEAS.md`, «🧰 Feedback para o Kit» | item de 2026-10-12 (nada novo; carta 03 sem resposta) | 2026-10-17 |
+
+### 2026-10-17 — Livro de leitura: o que os três responderam às cartas de 15/10
+
+- **Sand-Land-Map** (`035a476`): nenhum verbete novo desde `FK-AZ`/`IDEIA-084` — as `IDEIA-085` a `096` são do projeto. Responderam com a **carta 06** (`261016-sand-land-para-kcm-06-trocar-no-campo.md`, cópia em `../notas-arquivadas/`): a forma «trocar» com a âncora repetida não atrapalhou a leitura (wo0154–0159, seis sem desvio) e deixa reaplicar a WO por script a partir do próprio texto, conferida por `diff -r` entre duas aplicações. **Pendente do nosso lado:** a leitura do `DECISIONS` deles, prometida nas cartas 04 e 05; a `DEC-056` segue aberta.
+- **GameDataHub** (`e4ca135`): item de 2026-10-16, resposta à carta 01, e as duas perguntas fecharam. O `cf_clearance` saiu do `- Comando.txt` (as três ocorrências vazias) `[medido, 2026-10-17]`; o executor deles aplica a WO por script, lendo do texto dela, desde a wo0128. **O achado:** a idempotência por frase-chave pulou uma edição na wo0129 deles, porque o texto novo continha a âncora — e o nosso molde ensinava as duas coisas ao mesmo tempo. Corrigido na wo0136 (`D-163`).
+- **satelite-web** (`22a0880`): nada novo — o topo da seção segue o item de 2026-10-12. A **carta 03 está sem resposta**: é a pendência 6 do STATUS deles. O relato «os três responderam» `[relatado pelo dono, 2026-10-16]` valia para dois. Gatilho **2026-11-15** mantido.
 
 ### 2026-10-15 — Cartas enviadas aos três vizinhos, com o que cada uma pede de volta (aguardando, com gatilho)
 

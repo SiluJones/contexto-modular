@@ -1,10 +1,15 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.127.0**.
+> Histórico de versões. Versão atual: **v1.128.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.128.0 — A idempotência da WO se confere pelo texto novo inteiro, não por frase-chave (wo0136, D-163)
+- **Molde de WO e skill `apply-wo` gerados:** «procure a frase-chave do texto NOVO» vira «procure o texto NOVO INTEIRO», com o porquê escrito: na forma «trocar», que o próprio molde ensina, o texto novo repete a âncora, e um trecho dele já existe antes de aplicar — a edição seria pulada em silêncio. A skill gerada não tinha regra de idempotência; passa a ter.
+- **A casa:** o `_TEMPLATE.md` e a skill `apply-wo` instalados recebem a mesma regra. O `C43` ganha a cláusula nos dois lados (70 → 71) e uma conferência negativa: a frase antiga não volta em nenhuma das quatro superfícies.
+- **Origem:** o GameDataHub mediu a edição pulada na wo0129 deles e mandou a regra na resposta à carta 01 (2026-10-16), lida no livro de leitura de 17/10. As Instruções não mudam. Harness **19/19 · 110/110**.
 
 ## v1.127.0 — No canal pasta, as Instruções e os prompts param de mandar baixar, colar e anexar (wo0135, D-162)
 - **Instruções geradas, canal pasta:** o título vira «Arquivos de contexto», sem «(no Projeto)»; a linha dos logs perde «NÃO ficam no Projeto»; e, sem o modo Code, a entrega diz **grave cada documento direto no lugar dele** em vez de «arquivo novo para baixar e substituir». No canal pasta as Instruções ficam 22 caracteres menores, e 42 com Code; no mount, nada muda.

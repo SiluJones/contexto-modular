@@ -1091,6 +1091,9 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     ["modelo de WO: item de roteiro",    /Tres regras de item/,                    ["woTemplate"]],
     ["apply-wo: banner contraditorio",   /a WO [eé] contradit[oó]ria/,             ["applyWo"]],
     ["apply-wo: corpo minimo",           /SA[IÍ]DA CRUA/,                          ["applyWo"]],
+    // wo0136 (D-163): idempotencia pelo texto NOVO INTEIRO. A frase-chave contradiz a forma «trocar», que
+    // repete a ancora no texto novo: o GameDataHub mediu uma edicao pulada em silencio na wo0129 deles.
+    ["idempotencia pelo texto inteiro",  /texto NOVO INTEIRO/,                     ["woTemplate","applyWo"]],
     ["skills: origem da hora",           /date \+%y%m%d-%H%M/,                    ["applyWo","wrap"]],
     ["wrap: conta a estrutura",          /conte a ESTRUTURA que voc[eê] editou/,   ["wrap"]],
     ["wrap: teto medido",                /wc -m/,                                  ["wrap"]],
@@ -1133,6 +1136,13 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
       assert(re.test(gerado[alvo]), "o kit GERADO perdeu a clausula '"+nome+"' na skill "+alvo+" — se ela sair daqui, o check para de proteger a casa tambem");
       assert(re.test(instalado[alvo]), "a superficie INSTALADA `"+CAMINHO[alvo]+"` nao tem a clausula '"+nome+"' que o kit publica: a casa ficou atras do gerado");
     });
+  });
+
+  // (2a) wo0136: a frase antiga da idempotencia nao volta em nenhum dos quatro lados — com ela, na forma
+  //      «trocar», a edicao e pulada em silencio porque o texto novo repete a ancora.
+  ["woTemplate", "applyWo"].forEach(alvo => {
+    assert(!/frase-chave do texto NOVO/.test(gerado[alvo]), "o kit GERADO voltou a conferir idempotencia pela frase-chave do texto NOVO ("+alvo+"): na forma «trocar» o texto novo repete a ancora e a edicao e pulada em silencio (wo0136)");
+    assert(!/frase-chave do texto NOVO/.test(instalado[alvo]), "a superficie INSTALADA `"+CAMINHO[alvo]+"` ainda confere idempotencia pela frase-chave do texto NOVO (wo0136)");
   });
 
   // (2b) o GERADO nao pode conter a propria linha que a lista de revogacoes manda remover.
