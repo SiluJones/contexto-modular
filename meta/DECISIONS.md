@@ -2212,3 +2212,13 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Fora, por decisão do dono (2026-10-19):** o CEREBRO, numa segunda análise que ramifica só as regras que disparam no canal pasta (`i-N70`, ampliada); o «método C» do satelite-web, que vira a `i-N71` com gatilho de dez WOs. Também fora: a skill `wrap` da casa, que ainda diz «não sobe ao mount» numa linha (vai com a `i-N70`).
 
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0137 traz a medida no repo]`: `index.html` 922.680 → 924.444 bytes; check novo `C110` (228 textos); harness 110 → **111**.
+
+## D-165 — Carta de vizinho lida deixa um aviso de lido na pasta de quem enviou
+
+**Data:** 2026-10-19 · **WO:** 0138 · **Origem:** carta 07 do Mapoteca (`FK-BB`) · **Estende:** `D-159` (o livro de leitura).
+
+**Decisão.** Quando o KCM lê uma carta de vizinho, deixa no mesmo turno um aviso na pasta-pai de quem enviou, ao lado da carta: `AAMMDD-kcm-leu-<NN>.md`, com três linhas — data da leitura e o commit do KCM; o que foi extraído e para onde, ou «lido, sem extração ainda»; se vem resposta e até quando. O aviso não consome número do contador compartilhado. Adotado no formato que o Mapoteca propôs, que faz o mesmo com as cartas do KCM desde a carta 08 (`261019-mapoteca-leu-08.md`).
+
+**Por quê.** O livro de leitura (`D-159`) resolve o atraso do lado de quem lê, mas mora no repositório de quem leu: quem enviou não vê. O Mapoteca listou a carta 06 como «não entregue» e propôs reescrevê-la, dois dias depois de o KCM tê-la lido. O canal pasta já alcança a pasta-pai do vizinho, então o aviso custa um arquivo de três linhas.
+
+**Fora:** virar regra gerada para todo projeto do kit — a `FK-BB` vai para a triagem com a `FK-BA`. Aqui é prática da casa, escrita no `meta/CEREBRO.md`.
