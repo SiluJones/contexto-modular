@@ -711,7 +711,7 @@ check("C50 varredura muda nao e varredura limpa (wo0098): o pacote confere se as
   assert(/confira se as superficies que eu vou mandar varrer estao AQUI/i.test(prompt), "o prompt manda varrer as skills primeiro sem conferir se elas chegaram — instrucao que executa e nao faz nada e pior que instrucao nenhuma");
   assert(/`\.claude\/skills\/\*`/.test(prompt), "a lista de superficies a conferir nao nomeia as skills, que sao a mais perigosa");
   assert(/Ausencia nao e «nada a fazer» — e cegueira/.test(prompt), "o prompt nao diz o que a ausencia significa, entao ela vira 'nada a fazer'");
-  assert(/gitignore|flatdropignore/i.test(prompt), "o prompt nao aponta a causa provavel da ausencia");
+  assert(/gitignore|flatdropignore|fora da pasta concedida/i.test(prompt), "o prompt nao aponta a causa provavel da ausencia");
   // o pre-flight precisa vir ANTES da instrucao de varrer as skills
   const iPre = prompt.indexOf("confira se as superficies"), iVarra = prompt.indexOf("Varra as **skills** primeiro");
   assert(iPre > -1 && iVarra > -1 && iPre < iVarra, "o pre-flight das superficies vem DEPOIS da ordem de varrer — quem le ja varreu no vazio antes de chegar nele");
@@ -1094,6 +1094,8 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     // wo0136 (D-163): idempotencia pelo texto NOVO INTEIRO. A frase-chave contradiz a forma «trocar», que
     // repete a ancora no texto novo: o GameDataHub mediu uma edicao pulada em silencio na wo0129 deles.
     ["idempotencia pelo texto inteiro",  /texto NOVO INTEIRO/,                     ["woTemplate","applyWo"]],
+    // wo0137 (D-164): o molde e neutro de canal e rotula o FlatDrop como reserva; a casa acompanha.
+    ["modelo de WO: FlatDrop e reserva",  /canal de reserva \(FlatDrop\)/,         ["woTemplate"]],
     ["skills: origem da hora",           /date \+%y%m%d-%H%M/,                    ["applyWo","wrap"]],
     ["wrap: conta a estrutura",          /conte a ESTRUTURA que voc[eê] editou/,   ["wrap"]],
     ["wrap: teto medido",                /wc -m/,                                  ["wrap"]],
@@ -1768,6 +1770,40 @@ check("C109 no canal pasta, as Instrucoes e os prompts A, D, E, F nao mandam bai
   return "ok (" + textos + " textos do canal pasta sem vocabulario do mount)";
 });
 
+check("C110 no canal pasta, o prompt de atualizacao, o CLAUDE.md, o molde de WO e o prompt C nao falam a lingua do mount (wo0137, D-164)", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{});
+  // O molde e neutro de canal: «o mount, no canal de reserva» e o FlatDrop rotulado como reserva ficam. O papel do .flatdropignore no pacote tambem e rotulado reserva.
+  const RUIM=/\bmount\b(?!, no canal de reserva)|\bSubi\b|\bupload\b|subir a um Projeto|Ele sobe sempre ao Projeto/;
+  const byId=id=>T.PROMPTS_BASE.find(x=>x.id===id);
+  const fora=[]; let textos=0;
+  const olha=(tag, txt)=>{ textos++; const m=String(txt).match(RUIM); if(m) fora.push(tag+": «"+m[0]+"»"); };
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    [["",""],["yes",""],["","yes"],["yes","yes"]].forEach(([c,a]) => {
+      S.workmode={codeMode:c, asuMode:a, groupMode:"no", mountMode:""};
+      const tag=id+(c?"+Code":"")+(a?"+ASU":"");
+      olha(tag+" atualizacao", T.buildUpdatePrompt(n));
+      olha(tag+" prompt C", byId("C").body({},n));
+      if(c){ const k=T.buildCodeKitFiles(); olha(tag+" CLAUDE.md", k.claudeMd); olha(tag+" molde", k.woTemplate); }
+    });
+  });
+  // o par: o canal mount continua com a reserva (o ramo, nao a delecao)
+  const dev=T.normNiche(T.NICHES.dev);
+  S.workmode={codeMode:"", asuMode:"", groupMode:"no", mountMode:""};
+  const upP=T.buildUpdatePrompt(dev);
+  S.workmode={codeMode:"yes", asuMode:"", groupMode:"no", mountMode:"yes"};
+  const upM=T.buildUpdatePrompt(dev), kM=T.buildCodeKitFiles();
+  S.workmode={codeMode:"", asuMode:"", groupMode:"no", mountMode:"yes"};
+  const cM=byId("C").body({},dev);
+  S.workmode=prev;
+  assert(fora.length===0, "vocabulario do mount no canal pasta -> "+fora.slice(0,8).join(" | ")+(fora.length>8?" (+"+(fora.length-8)+")":""));
+  assert(/pasta-pai/.test(upP) && /notas-arquivadas\//.test(upP), "no canal pasta, o prompt de atualizacao nao diz onde o pacote mora nem para onde ele vai depois do merge");
+  assert(/liste o mount/.test(upM), "o canal mount perdeu o prompt de atualizacao da reserva");
+  assert(/Eu leio só o que chega pelo mount/.test(kM.claudeMd), "o canal mount perdeu a linha do CLAUDE.md");
+  assert(/subir a um Projeto/.test(cM), "o canal mount perdeu o prompt C da reserva");
+  return "ok (" + textos + " textos do canal pasta sem vocabulario do mount)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";
@@ -1823,7 +1859,7 @@ check("C26 curadoria das linhas de modo (wo0069): versao curta nas Instrucoes, d
 check("C25 protocolo de update e gatilho da releitura (wo0068): estado do repo, template nao substitui vivo, commands legado, SPEC e SDD", () => {
   const dev=T.normNiche(T.NICHES.dev);
   const prompt=T.buildUpdatePrompt(dev);
-  assert(/liste o mount e me diga em que versao\/commit/.test(prompt),"_UPDATE-PROMPT nao pede o estado do repo antes de comparar");
+  assert(/e me diga em que versao\/commit este projeto esta/.test(prompt),"_UPDATE-PROMPT nao pede o estado do repo antes de comparar");
   assert(/Template generico NUNCA substitui arquivo vivo refinado/.test(prompt),"_UPDATE-PROMPT nao afirma que template nao substitui vivo");
   assert(/commands\/`? foi substituido por/.test(prompt),"_UPDATE-PROMPT nao marca .claude/commands/ como legado");
   const specFile=(dev.contextFiles||[]).find(f=>/^SPEC\.md$/i.test(f.name||""));

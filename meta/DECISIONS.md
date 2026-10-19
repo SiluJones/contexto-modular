@@ -2198,3 +2198,17 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Fora:** a variante que o GameDataHub propôs para quando o texto novo contém a âncora («e a âncora ausente») — na forma «trocar» a âncora continua no arquivo depois de aplicar, então a condição falharia; o texto inteiro basta sozinho. Os cabeçalhos das WOs já aplicadas, que citam a frase antiga, são história.
 
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0136 traz a medida no repo]`: `index.html` 922.276 → 922.680 bytes; `C28` inalterado; harness 19/19 · 110/110.
+
+## D-164 — No canal pasta, o prompt de atualização, o `CLAUDE.md`, o molde de WO e o prompt C param de falar a língua do mount
+
+**Data:** 2026-10-19 · **WO:** 0137 · **Origem:** pergunta do dono em 2026-10-18 e a análise `meta/analises/261018-ANALISE-canal-pasta-no-resto-do-kit.md` (quatro pontos aceitos em 2026-10-19) · **Estende:** `D-157` e `D-162`.
+
+**Decisão.** A sonda de 18/10 achou o vocabulário do mount, no canal pasta, fora do que o `C109` cobre: o prompt de atualização inteiro, uma linha do `CLAUDE.md` gerado, duas do molde de WO e uma do prompt C. O prompt de atualização é o primeiro texto que o chat de um vizinho lê ao receber o pacote, e os três vizinhos trabalham no canal pasta. Esta WO dá o ramo do canal ao prompt de atualização, ao `CLAUDE.md` e ao prompt C (o texto antigo vira o ramo do mount, recortado) e deixa o molde de WO neutro de canal, na casa também. Corta a **v1.129.0** (`D-158`).
+
+**Onde o pacote mora no canal pasta** (ponto 2 da análise): o dono descompacta o zip na pasta-pai do projeto, numa pasta `AAMMDD-kcm-update-vX.Y.Z/`, fora do repositório e nunca versionada, como as cartas; fechado o merge, o chat a **move** para `notas-arquivadas/`. O ramo sai do canal com que o dono gera o pacote — o padrão é o canal pasta.
+
+**O check.** `C110` confere o prompt de atualização e o prompt C nos 19 nichos × quatro combinações de modo, e o `CLAUDE.md` e o molde com o Code, contra o vocabulário do mount; e o par: o canal mount guarda a reserva no prompt de atualização, no `CLAUDE.md` e no prompt C. `C25` e `C50` passam a aceitar o texto do canal pasta; o `C43` ganha a cláusula do FlatDrop como reserva no molde (71 → 72).
+
+**Fora, por decisão do dono (2026-10-19):** o CEREBRO, numa segunda análise que ramifica só as regras que disparam no canal pasta (`i-N70`, ampliada); o «método C» do satelite-web, que vira a `i-N71` com gatilho de dez WOs. Também fora: a skill `wrap` da casa, que ainda diz «não sobe ao mount» numa linha (vai com a `i-N70`).
+
+**Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0137 traz a medida no repo]`: `index.html` 922.680 → 924.444 bytes; check novo `C110` (228 textos); harness 110 → **111**.

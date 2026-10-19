@@ -989,7 +989,7 @@ const PROMPTS_BASE = [
         L.push("");
         L.push("**Modo ASU:** projeto novo não tem o que editar — gere os arquivos inteiros normalmente nesta primeira leva.");
       } else {
-        L.push("Prontos para eu subir a um Projeto do claude.ai (ou versionar) e usar como contexto na próxima conversa.");
+        L.push(!mountModeOn() ? "Grave-os direto na pasta do projeto, cada um no lugar dele, para servirem de contexto na próxima conversa." : "Prontos para eu subir a um Projeto do claude.ai (ou versionar) e usar como contexto na próxima conversa.");
       }
       return L.join("\n");
     } },
@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.128.0";
+const KIT_VERSION = "1.129.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9869,7 +9869,7 @@ function buildWoTemplate(){
     "# WO NNNN — [titulo curto e concreto, no que a WO ENTREGA]",
     "",
     "> **Este arquivo e o MODELO — nao o preencha aqui.** Copie para `meta/workorders/AAMMDD-woNNNN-desc.md`",
-    "> e preencha a copia. Ele sobe sempre ao Projeto (o `.flatdropignore` ignora `meta/workorders/*` mas",
+    "> e preencha a copia. No canal de reserva (FlatDrop) o modelo sobe ao Projeto mesmo assim (o `.flatdropignore` ignora `meta/workorders/*` mas",
     "> reinclui `!meta/workorders/_TEMPLATE.md`), para que a primeira conversa depois de uma transferencia",
     "> tenha o formato a mao sem precisar das WOs antigas.",
     ">",
@@ -9899,7 +9899,7 @@ function buildWoTemplate(){
     "> quem escreveu (que tem o vies) e vai para quem aplica (que nao tem), que e o mesmo desenho que faz o «PARE e reporte»",
     "> funcionar todas as vezes. O campo pede o TRECHO, nao uma marca de conferido: nao se escreve o trecho sem abrir o arquivo.",
     "> **Afirmacao sobre artefato legivel nao e opiniao, e leitura** — o que uma ferramenta faz, o que um simbolo contem, em que",
-    "> estado esta o mount. Nao cite simbolo, caminho ou capacidade de ferramenta que voce nao leu neste turno; declarar «nao li»",
+    "> estado esta a pasta (ou o mount, no canal de reserva). Nao cite simbolo, caminho ou capacidade de ferramenta que voce nao leu neste turno; declarar «nao li»",
     "> nao autoriza escrever a WO em cima.",
     "> **Numero de checklist e DERIVADO, nunca estimado.** Toda contagem prevista (`grep -c`, quantidade de bullets, de",
     "> arquivos) sai de simular o texto final DESTA WO, incluindo o que ela propria manda inserir — a WO costuma citar as",
@@ -10198,7 +10198,7 @@ function buildCodeKitFiles(){
     "- **Ao fechar a tarefa, RELATE o trabalho** — o que fez, achados e desvios do que a tarefa pedia, arquivos tocados, resultado do build/validação e o commit. **Não** copie o bloco de fecho do `meta/CEREBRO.md`: aquele é da raia de planejamento, e trocar relatório por formulário perde o que só você viu.",
     "",
     "## Quando eu pedir medição",
-    "- Eu leio só o que chega pelo mount; você lê o disco. Se eu pedir para **medir**, o pedido não tem âncora nem commit: não edite nada, não conserte nada, não sugira nada.",
+    (!mountModeOn() ? "- Eu leio a pasta com teto de contexto e de tempo por comando; você lê o repositório inteiro. Se eu pedir para **medir**, o pedido não tem âncora nem commit: não edite nada, não conserte nada, não sugira nada." : "- Eu leio só o que chega pelo mount; você lê o disco. Se eu pedir para **medir**, o pedido não tem âncora nem commit: não edite nada, não conserte nada, não sugira nada."),
     "- Responda com o **número cru e o comando que o produziu**. Sem interpretação, sem recomendação — se você achar que o número indica um problema, diga o número primeiro e a suspeita depois, separada.",
     "- Se o alvo estiver fora da raiz do repositório, isso depende de `permissions.additionalDirectories` no `.claude/settings.json` (a mesma chave do relatório em arquivo). Se a leitura for negada, DIGA — não estime.",
     "",
@@ -10680,7 +10680,7 @@ function buildUpdatePack(niche){
   files.push({ flat: updateFlat("gitignore"), real: ".gitignore", nature: "template",
     role: "Ignora lixo de SO/editor.", content: structuredGitignore() });
   files.push({ flat: updateFlat("flatdropignore"), real: ".flatdropignore", nature: "template",
-    role: "Enxuga o que sobe ao Projeto do Claude (logs/, workorders no modo Code).", content: structuredFlatdropignore(codeOn) });
+    role: "Canal de reserva (FlatDrop): enxuga o que sobe ao Projeto do Claude (logs/, workorders no modo Code).", content: structuredFlatdropignore(codeOn) });
   const manifest = buildUpdateManifest(niche, files, codeOn, skillsOn);
   return { files, manifest, codeOn, skillsOn, affix: UPDATE_AFFIX };
 }
@@ -10689,11 +10689,11 @@ function buildUpdatePrompt(niche){
   const pack = buildUpdatePack(niche);
   if(!pack) return "";
   const L = [];
-  L.push(`Subi um **template-update** do KCM para este projeto (nicho: ${niche.label}). No mount ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo.`);
+  L.push(!mountModeOn() ? `Descompactei um **template-update** do KCM para este projeto (nicho: ${niche.label}) na pasta-pai do projeto, numa pasta \`AAMMDD-kcm-update-v${KIT_VERSION}/\` — fora do repositorio, nunca versionada. Nela ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo. Fechado o merge, **mova** a pasta para \`notas-arquivadas/\` na pasta-pai — mover, nunca apagar.` : `Subi um **template-update** do KCM para este projeto (nicho: ${niche.label}). No mount ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo.`);
   L.push("");
-  L.push("**Antes de comparar qualquer coisa:** liste o mount e me diga em que versao/commit este projeto esta. O pacote descreve o KIT, nao o seu repo — comparar sem saber o estado atual e comparar com memoria.");
+  L.push(!mountModeOn() ? "**Antes de comparar qualquer coisa:** rode `git log -3 --oneline` e `git status --short` no repositorio e me diga em que versao/commit este projeto esta. O pacote descreve o KIT, nao o seu repo — comparar sem saber o estado atual e comparar com memoria." : "**Antes de comparar qualquer coisa:** liste o mount e me diga em que versao/commit este projeto esta. O pacote descreve o KIT, nao o seu repo — comparar sem saber o estado atual e comparar com memoria.");
   L.push("");
-  L.push("**E confira se as superficies que eu vou mandar varrer estao AQUI.** Diga quais destes o mount NAO tem: `.claude/settings.json`, `.claude/skills/*`, `CLAUDE.md`, `meta/*`. **Ausencia nao e «nada a fazer» — e cegueira**, e ela costuma ter causa: `.gitignore` ou `.flatdropignore` deste projeto excluindo a pasta. Se as skills nao chegaram, a instrucao «varra as skills primeiro» vira um comando que executa e nao faz nada, e a superficie mais perigosa fica intacta parecendo limpa. Nesse caso me diga ANTES de comparar o resto: e mais barato refazer o upload agora do que descobrir depois que meia varredura foi no vazio.");
+  L.push(!mountModeOn() ? "**E confira se as superficies que eu vou mandar varrer estao AQUI.** Diga quais destes o repositorio NAO tem: `.claude/settings.json`, `.claude/skills/*`, `CLAUDE.md`, `meta/*`. **Ausencia nao e «nada a fazer» — e cegueira**, e ela costuma ter causa: o arquivo nunca foi criado aqui, ou mora fora da pasta concedida a esta conversa. Se as skills nao estao no repositorio, a instrucao «varra as skills primeiro» vira um comando que executa e nao faz nada, e a superficie mais perigosa fica intacta parecendo limpa. Nesse caso me diga ANTES de comparar o resto." : "**E confira se as superficies que eu vou mandar varrer estao AQUI.** Diga quais destes o mount NAO tem: `.claude/settings.json`, `.claude/skills/*`, `CLAUDE.md`, `meta/*`. **Ausencia nao e «nada a fazer» — e cegueira**, e ela costuma ter causa: `.gitignore` ou `.flatdropignore` deste projeto excluindo a pasta. Se as skills nao chegaram, a instrucao «varra as skills primeiro» vira um comando que executa e nao faz nada, e a superficie mais perigosa fica intacta parecendo limpa. Nesse caso me diga ANTES de comparar o resto: e mais barato refazer o upload agora do que descobrir depois que meia varredura foi no vazio.");
   L.push("");
   L.push("**Template generico NUNCA substitui arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` que este projeto ja especializou entram por padrao em **(c)**: o generico ensina estrutura, o vivo ja evoluiu. A UNICA excecao e formato descontinuado, que sempre migra — hoje: `.claude/commands/` foi substituido por `.claude/skills/<nome>/SKILL.md` (com front-matter). Se este projeto ainda usa `commands/`, isso e migracao, nao escolha.");
   L.push("");

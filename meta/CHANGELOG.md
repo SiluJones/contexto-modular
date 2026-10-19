@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.128.0**.
+> Histórico de versões. Versão atual: **v1.129.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.129.0 — No canal pasta, o prompt de atualização, o `CLAUDE.md`, o molde de WO e o prompt C param de falar a língua do mount (wo0137, D-164)
+- **Prompt de atualização, canal pasta:** o pacote mora na pasta-pai do projeto, em `AAMMDD-kcm-update-vX.Y.Z/`, fora do repositório e nunca versionado; o estado do projeto sai de `git log` e `git status`, e não de «liste o mount»; a superfície que falta é «o repositório não tem»; fechado o merge, a pasta é **movida** para `notas-arquivadas/`. O papel do `.flatdropignore` no pacote passa a dizer que é canal de reserva.
+- **`CLAUDE.md` gerado, canal pasta:** «Eu leio só o que chega pelo mount» vira «Eu leio a pasta com teto de contexto e de tempo por comando; você lê o repositório inteiro».
+- **Molde de WO, gerado e da casa:** neutro de canal — o FlatDrop vira canal de reserva, e a leitura vale para «a pasta (ou o mount, no canal de reserva)». O `C43` ganha a cláusula (71 → 72).
+- **Prompt C, canal pasta, sem Code nem ASU:** grava os arquivos direto na pasta.
+- **O canal mount não muda:** cada frase antiga virou o ramo do mount. Check novo `C110`; `C25` e `C50` passam a aceitar o texto do canal pasta. O CEREBRO fica para a segunda etapa (`i-N70`). Origem: `meta/analises/261018-ANALISE-canal-pasta-no-resto-do-kit.md`. Harness **19/19 · 111/111**.
 
 ## v1.128.0 — A idempotência da WO se confere pelo texto novo inteiro, não por frase-chave (wo0136, D-163)
 - **Molde de WO e skill `apply-wo` gerados:** «procure a frase-chave do texto NOVO» vira «procure o texto NOVO INTEIRO», com o porquê escrito: na forma «trocar», que o próprio molde ensina, o texto novo repete a âncora, e um trecho dele já existe antes de aplicar — a edição seria pulada em silêncio. A skill gerada não tinha regra de idempotência; passa a ter.

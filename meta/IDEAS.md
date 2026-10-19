@@ -576,7 +576,17 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 ## i-N58 — `modelo-em-espera` é a primeira natureza nova do pacote desde que o protocolo existe — ABERTA, gatilho de repetição (wo0080)
 **2026-08-03.** Até a wo0080 o pacote de update só conhecia duas naturezas — `template` (comparar e adotar é seguro) e `fusao` (propor merge, o usuário decide). O `_TEMPLATE.md` de `analises/` não coube em nenhuma das duas: mandar como `template` comum criaria a pasta `analises/` vazia em todo projeto receptor, violando a regra de que pasta nasce no primeiro uso. Saiu uma terceira natureza — `modelo-em-espera` (guarde; só coloque se a pasta já existir no destino). Outros artefatos podem caber na mesma natureza (modelo de log, modelo de spec, guia de pasta que ainda não nasceu). **Gatilho:** quando um segundo arquivo pedir a mesma natureza, revisar se o protocolo precisa de uma seção própria para ela em vez de uma linha na legenda.
 
-## i-N70 — Os princípios universais P8 e P11 ainda falam a língua do mount — ABERTA, pede análise
+## i-N71 — O «método C» do satelite-web: o chat aplica direto e o Code confere — ABERTA, gatilho: dez WOs no método C no satelite-web
+
+**Origem:** `DEC-178` do satelite-web (2026-10-18), lida no disco em 18/10; ponto 4 da análise `261018-ANALISE-canal-pasta-no-resto-do-kit.md`. O chat grava direto na árvore do repositório tudo o que entrega — inclusive edições em arquivo existente e STATUS, DECISIONS e log — e roda `tsc` e ESLint antes; a WO deixa de carregar âncoras e vira a ordem de conferência e publicação (inventário com o md5 final de cada arquivo, `git status` contra o inventário, lint, build, commit, push); o Code não reescreve: falhou, para e relata.
+
+**Por que importa ao KCM:** aqui o chat aplica a WO por script numa réplica e o Code aplica de novo no repositório. O defeito corrigido na wo0136 — a idempotência da transcrição — só existe porque a mudança é transcrita duas vezes.
+
+**O que falta para decidir:** dado de campo. Pedir ao satelite-web, depois de dez WOs no método C: quantas pararam no Code e por quê, se algum erro passou para o commit, e como ficou o dono por documento com um escritor só. Até lá, a casa não muda.
+
+## i-N70 — O CEREBRO no canal pasta: as regras que disparam todo turno ainda falam a língua do mount — ABERTA, pede análise; gatilho: depois do pacote v1.129.0
+
+**Ampliada em 2026-10-19** (ponto 3 da análise `261018-ANALISE-canal-pasta-no-resto-do-kit.md`): além de P8 e P11, o fecho («Arquivar / Manter — só se houver notas avulsas no mount»), a abertura de turno do mount ao lado do «Ritual em dois tempos» do canal pasta, a entrega sem Code («baixar e substituir», que contradiz as Instruções desde a wo0135) e o gatilho de varredura «confirme que o arquivo chegou ao mount». A análise mede 47 linhas distintas do mount no CEREBRO gerado no canal pasta; a proposta é ramificar só as que disparam no canal pasta e deixar a transferência e o achatamento inteiros como reserva.
 
 **Origem:** inventário da `i-N66` em 2026-10-16, e uma captura de tela do dono: a busca por «reveja o mount a cada turno», com o Mount desligado, achou o texto na definição do P8 («Verifica antes de pedir arquivo») no formulário do kit. O P8 fala em subir, upload e rever o mount a cada turno; o P11 fala em «do Projeto/mount».
 

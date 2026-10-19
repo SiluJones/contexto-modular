@@ -1,7 +1,7 @@
 # WO NNNN — [titulo curto e concreto, no que a WO ENTREGA]
 
 > **Este arquivo e o MODELO — nao o preencha aqui.** Copie para `meta/workorders/AAMMDD-woNNNN-desc.md`
-> e preencha a copia. Ele sobe sempre ao Projeto (o `.flatdropignore` ignora `meta/workorders/*` mas
+> e preencha a copia. No canal de reserva (FlatDrop) o modelo sobe ao Projeto mesmo assim (o `.flatdropignore` ignora `meta/workorders/*` mas
 > reinclui `!meta/workorders/_TEMPLATE.md`), para que a primeira conversa depois de uma transferencia
 > tenha o formato a mao sem precisar das WOs antigas.
 >
@@ -31,7 +31,7 @@
 > quem escreveu (que tem o vies) e vai para quem aplica (que nao tem), que e o mesmo desenho que faz o «PARE e reporte»
 > funcionar todas as vezes. O campo pede o TRECHO, nao uma marca de conferido: nao se escreve o trecho sem abrir o arquivo.
 > **Afirmacao sobre artefato legivel nao e opiniao, e leitura** — o que uma ferramenta faz, o que um simbolo contem, em que
-> estado esta o mount. Nao cite simbolo, caminho ou capacidade de ferramenta que voce nao leu neste turno; declarar «nao li»
+> estado esta a pasta (ou o mount, no canal de reserva). Nao cite simbolo, caminho ou capacidade de ferramenta que voce nao leu neste turno; declarar «nao li»
 > nao autoriza escrever a WO em cima.
 > **Numero de checklist e DERIVADO, nunca estimado.** Toda contagem prevista (`grep -c`, quantidade de bullets, de
 > arquivos) sai de simular o texto final DESTA WO, incluindo o que ela propria manda inserir — a WO costuma citar as
