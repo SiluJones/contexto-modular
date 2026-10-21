@@ -592,7 +592,7 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 
 **O que falta para decidir:** dado de campo. Pedir ao satelite-web, depois de dez WOs no método C: quantas pararam no Code e por quê, se algum erro passou para o commit, e como ficou o dono por documento com um escritor só. Até lá, a casa não muda.
 
-## i-N70 — O CEREBRO no canal pasta: as regras que disparam todo turno ainda falam a língua do mount — ABERTA, pede análise; gatilho: depois do pacote v1.129.0
+## i-N70 — O CEREBRO no canal pasta: as regras que disparam todo turno ainda falam a língua do mount — RESOLVIDA em 2026-10-21 (wo0140, `D-167`): 39 trocas aplicadas só no canal pasta, `C112`; a transferência fica como reserva, marcada no título
 
 **Ampliada em 2026-10-19** (ponto 3 da análise `261018-ANALISE-canal-pasta-no-resto-do-kit.md`): além de P8 e P11, o fecho («Arquivar / Manter — só se houver notas avulsas no mount»), a abertura de turno do mount ao lado do «Ritual em dois tempos» do canal pasta, a entrega sem Code («baixar e substituir», que contradiz as Instruções desde a wo0135) e o gatilho de varredura «confirme que o arquivo chegou ao mount». A análise mede 47 linhas distintas do mount no CEREBRO gerado no canal pasta; a proposta é ramificar só as que disparam no canal pasta e deixar a transferência e o achatamento inteiros como reserva.
 

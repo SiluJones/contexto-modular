@@ -2234,3 +2234,17 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Fora:** o CEREBRO no canal pasta (`i-N70`, a WO seguinte, v1.131.0); uma varredura geral de contradições (fica como exploração). A data da pasta do pacote vem de `today`, que é a data UTC do kit: gerado à noite no Brasil, sai com a data do dia seguinte — comportamento de todo o kit, mantido.
 
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0139 traz a medida no repo]`: `index.html` 924.444 → 925.835 bytes; incremento do Code nas Instruções 526 → 540/550; check novo `C111`; harness 111 → **112**.
+
+## D-167 — No canal pasta, o CEREBRO deixa a língua do mount nas regras que disparam todo turno, por uma tabela de trocas
+
+**Data:** 2026-10-21 · **WO:** 0140 · **Origem:** `i-N70` e a análise `meta/analises/261020-ANALISE-contradicoes-do-cerebro-gerado.md` (WO-2), cinco pontos aceitos pelo dono em 2026-10-20 · **Estende:** `D-157`, `D-162`, `D-164`.
+
+**Decisão.** As regras do CEREBRO gerado que disparam todo turno no canal pasta — abertura de turno, releitura, ressalva, fecho, gatilhos de medição e de varredura, P8, P11, entrega sem Code, protocolo de atualização, medição delegada, correspondência — ganham o texto do canal pasta. A seção de transferência e o achatamento ficam como reserva, marcados no título. **O mecanismo não é o ternário da wo0135:** quase todas essas linhas vêm de constantes carregadas uma vez (`HYGIENE_RULES`, `TRIGGERS_BASE`, `UPDATE_PROTOCOL`, `BEHAVIORS_BASE`), que não sabem o canal. É uma tabela de 39 pares exatos (`CANAL_PASTA`: texto do mount recortado do gerado × texto do canal pasta), aplicada à saída do `buildClaudeMd` só com o Mount desligado. O CEREBRO do mount sai idêntico por construção. Corta a **v1.131.0** (`D-158`).
+
+**O check.** `C112`: cada par ainda acha o seu texto no CEREBRO do mount — se alguém reescrever uma dessas regras, a troca correspondente para de casar e o check acusa, em vez de o canal pasta voltar calado ao texto velho —, e nenhum texto velho sobra no do canal pasta. Nove asserções antigas cobravam a frase do mount no CEREBRO padrão; passam a aceitar a dos dois canais. A cláusula «ressalva tem custo» do `C43` muda de frase no gerado e na casa.
+
+**Na casa, além da frase:** a skill `wrap` mandava o Code atualizar o status da análise, e o «dono por documento» diz que a análise é do chat — o `/wrap` da wo0139 obedeceu à skill. A skill passa a mandar relatar.
+
+**Fora:** o P8 da casa (`meta/CEREBRO.md`, «Reveja o mount a CADA turno») — a casa tem a própria seção de canal, que manda; fica para quando a casa revisar os princípios.
+
+**Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0140 traz a medida no repo]`: `index.html` 925.835 → 936.658 bytes; CEREBRO no canal pasta, linhas distintas com vocabulário do mount: 46 → 29 (a transferência e as legítimas nos dois canais); canal mount 741/741 textos idênticos; check novo `C112`; harness 112 → **113**.

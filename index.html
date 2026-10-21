@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.130.0";
+const KIT_VERSION = "1.131.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9073,6 +9073,91 @@ function analiseFunil(niche){
 
 /* Gera o CLAUDE.md COMPLETO — comportamento, higiene, gatilhos, manutenção.
    Este é o arquivo que o usuário sobe no Projeto e versiona no Git. */
+// wo0140 (i-N70, D-167): no canal pasta, as regras do CEREBRO que disparam todo turno deixam a lingua do mount.
+// Cada par: o texto do mount, recortado do CEREBRO gerado, e o texto do canal pasta. A tabela so se aplica com o
+// Mount desligado, entao o CEREBRO do mount sai identico. A secao de transferencia e o achatamento continuam,
+// marcados como reserva no titulo. O C112 confere que cada par ainda acha o seu texto.
+const CANAL_PASTA = [
+  ["liste o mount, leia o cabeçalho da cópia achatada se houver (data de geração + estado do repo), e confira a versão viva do artefato principal contra a que você acha que sabe. Um passo, quatro fatos, e só então o trabalho. **Sem cópia achatada nem manifesto** o passo continua valendo com o que houver — a listagem sozinha já mostra nota nova —; o que muda é o carimbo do fecho, que declara a base pobre em vez de fingir precisão.",
+   "rode `git log -3 --oneline` e `git status --short`, liste a pasta-pai, e confira a versão viva do artefato principal contra a que você acha que sabe. Um passo, quatro fatos, e só então o trabalho. **Sem a pasta**, vale a reserva (o mount e a cópia achatada); o que muda é o carimbo do fecho, que declara a base pobre em vez de fingir precisão."],
+  ["A releitura do mount não tem gatilho próprio",
+   "A releitura da pasta não tem gatilho próprio"],
+  ["porque quem pede muito costuma ter subido algo antes de pedir",
+   "porque quem pede muito costuma ter posto algo na pasta antes de pedir"],
+  ["**E os canais não chegam juntos:** relatório que a execução grava em arquivo nasce no instante da aplicação, enquanto a cópia achatada exige um passo manual de quem a gera. **Compare os dois carimbos de commit — o do manifesto e o do relatório — e o mais recente vence.** O relatório lidera **por padrão**, porque normalmente nasce primeiro; não por natureza: o dono commita entre relatórios (salva um doc que o chat entregou, corrige um arquivo à mão) e aí o manifesto está à frente e é a cópia que está em dia. Uma vez que se compara em vez de supor, a divergência vira diagnóstico: **iguais** = o mount é o estado pós-aplicação; **manifesto à frente** = houve commit sem executor, o manifesto lidera; **manifesto atrás** = o mount foi gerado antes de aplicar, o relatório lidera; **iguais mas com arquivo divergindo do commit** = há trabalho por cima, leia quais; **dois relatórios com o mesmo commit** = um foi reaberto e corrigido, vale o corrigido.",
+   "**E o relatório não é o estado:** ele afirma um commit, e o `git log` diz se esse commit existe e se há outro por cima — o dono commita entre relatórios (salva um doc, corrige um arquivo à mão). Compare em vez de supor, e a divergência vira diagnóstico: **iguais** = o disco é o estado pós-aplicação; **há commit depois** = houve trabalho por cima, leia o que entrou; **o commit do relatório não aparece** = não foi empurrado, ou foi refeito: pergunte; **`git status` com arquivo mudado** = há trabalho não versionado, leia quais; **dois relatórios com o mesmo commit** = um foi reaberto e corrigido, vale o corrigido."],
+  ["o dono subiu porque e para agora",
+   "o dono o pos ali porque e para agora"],
+  ["**«Não verificado» é proibido para o que está no mount,",
+   "**«Não verificado» é proibido para o que está ao seu alcance — a pasta, ou o mount na reserva —,"],
+  ["«listei o mount e não está lá» é ressalva",
+   "«listei a pasta e não está lá» é ressalva"],
+  ["Manda MEDIR (sonda) em vez de deduzir ou pedir upload.",
+   "Manda MEDIR (sonda) em vez de deduzir ou pedir o arquivo."],
+  ["Confirme que o arquivo chegou ao mount antes de concluir que esta limpo. Cheque `.gitignore` e `.flatdropignore`:",
+   "Confirme que o arquivo esta na pasta que voce le antes de concluir que esta limpo. Cheque o `.gitignore` e o que esta conversa alcanca:"],
+  ["APLICA de forma simples: baixa os arquivos completos e substitui os antigos na pasta (e sobe no Git/Projeto, se usar). Sem editar nada à mão.",
+   "APLICA de forma simples: o assistente grava os arquivos completos direto no lugar deles, e o usuário confere e versiona. Sem editar nada à mão."],
+  ["Sobre os arquivos: os documentos já no Projeto chegam ao assistente como somente-leitura (ele lê, não salva por cima). Isso NÃO o impede de entregar versões novas — ele cria cada arquivo atualizado como arquivo novo para baixar. Sem ferramenta de download, entrega o conteúdo completo de cada arquivo no chat, um por bloco.",
+   "Sobre os arquivos: com a pasta vinculada, o assistente lê e grava no disco — e relê antes de sobrescrever, porque outro escritor pode ter mexido."],
+  ["Se eu colar (ou subir) um bloco/arquivo marcado",
+   "Se eu colar um bloco, ou puser na pasta um arquivo, marcado"],
+  ["## Transferência entre conversas: o que vai para o Projeto e o que se anexa",
+   "## Transferência entre conversas — canal de reserva (sem a pasta vinculada): o que vai para o Projeto e o que se anexa"],
+  ["Cada arquivo abaixo vem INTEIRO e atualizado, pronto para você baixar e substituir o antigo. Aplicá-los é decisão sua:",
+   "Cada arquivo abaixo é gravado INTEIRO e atualizado, direto no lugar dele na pasta, relido antes de sobrescrever. Diga o que gravou — versioná-los é decisão sua:"],
+  ["Antes de pedir que o usuário suba qualquer arquivo (JSON, log, saída, documento), verifica primeiro se ele já não está disponível — na base do Projeto, nos uploads, ou já colado na conversa.",
+   "Antes de pedir que o usuário traga qualquer arquivo (JSON, log, saída, documento), verifica primeiro se ele já não está disponível — na pasta do projeto, na pasta-pai, ou já colado na conversa."],
+  ["Quando o usuário diz «já subi X»",
+   "Quando o usuário diz «já pus X na pasta»"],
+  ["Só pede o upload se a busca não encontrar",
+   "Só pede o arquivo se a busca não encontrar"],
+  ["(arquivos do Projeto/mount, o que já foi entregue na conversa)",
+   "(a pasta, o `git log`, o que já foi entregue na conversa)"],
+  ["Reveja o mount a CADA turno (novos `.txt`, `_MANIFEST`, arquivos mudados) antes de responder — não espere eu sinalizar upload; um «continuar» ou uma reclamação também pode vir com o mount atualizado. Compare o mount com o que você lembrava: não trate o mount como verdade absoluta nem confie só na memória — o mount é provavelmente a pasta do usuário, mas ele pode ter esquecido de subir. Se difere do que você lembrava, é provável atualização: estude a diferença. Se o mount bate com a memória mas eu afirmo ter aplicado algo que não aparece, faça o que dá e AVISE («o mount não parece atualizado com X»), em vez de inferir cegamente ou regenerar o que já foi feito.",
+   "Releia a pasta a CADA turno (`git log -3 --oneline`, `git status --short` e a listagem da pasta-pai: nota nova, relatório novo, commit novo) antes de responder — não espere eu sinalizar; um «continuar» ou uma reclamação também pode vir com o disco mudado. Compare o disco com o que você lembrava: se difere, é provável atualização — estude a diferença. Se o disco bate com a memória mas eu afirmo ter aplicado algo que não aparece, faça o que dá e AVISE («o commit de X não aparece no `git log`»), em vez de inferir cegamente ou regenerar o que já foi feito."],
+  ["e em que ESTADO está o mount.",
+   "e em que ESTADO está a pasta."],
+  ["O mount responde o AGORA.",
+   "O disco responde o AGORA."],
+  ["o mount não é prova, e usá-lo assim",
+   "o disco não é prova, e usá-lo assim"],
+  ["Antes de finalizar uma resposta pedindo que eu suba qualquer arquivo (JSON, log, saída, documento), o assistente verifica primeiro se ele já não está disponível — na base do Projeto, nos uploads, ou já citado/colado na conversa.",
+   "Antes de finalizar uma resposta pedindo que eu traga qualquer arquivo (JSON, log, saída, documento), o assistente verifica primeiro se ele já não está disponível — na pasta do projeto, na pasta-pai, ou já citado/colado na conversa."],
+  ["para eu subir certo de primeira",
+   "para eu pôr certo de primeira"],
+  ["for mais nova que a do Projeto/mount",
+   "for mais nova que a do disco"],
+  ["e não a do Projeto»)",
+   "e não a do disco»)"],
+  ["Não vê o disco local do usuário; compara com o que tem à vista.",
+   "Com a pasta vinculada, vê o disco: relê a versão do disco antes de usar a sua — ela pode ter mudado depois que você a leu."],
+  ["Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`:",
+   "Se aparecer na pasta-pai uma pasta `AAMMDD-kcm-update-vX.Y.Z/` com arquivos de sufixo `__template-update` e um `_UPDATE-MANIFEST.md`:"],
+  ["Antes de comparar, o assistente lista o mount e diz em que versão/commit",
+   "Antes de comparar, o assistente roda `git log` e diz em que versão/commit"],
+  ["precisa continuar no mount até o merge fechar",
+   "precisa continuar na pasta-pai até o merge fechar — e então é MOVIDO para as notas arquivadas"],
+  ["A raia de planejamento tem teto de contexto e lê só o que chega pelo mount; a raia de execução lê o disco inteiro e não tem nenhum dos dois limites.",
+   "A raia de planejamento lê a pasta, com teto de contexto e de tempo por comando; a raia de execução lê o repositório inteiro e não tem nenhum dos dois limites."],
+  ["a saída não é pedir upload de um arquivo grande",
+   "a saída não é pedir o arquivo grande"],
+  ["chega como upload, é lida",
+   "chega na pasta-pai, é lida"],
+  ["**Arquivar / Manter** sai quando houver qualquer arquivo avulso no mount, e essa condição se verifica LISTANDO o mount, não lembrando",
+   "**Arquivar / Manter** sai quando houver qualquer arquivo avulso na pasta-pai, e essa condição se verifica LISTANDO a pasta-pai, não lembrando"],
+  ["só se houver notas avulsas no mount.",
+   "só se houver notas avulsas na pasta-pai."],
+  ["todo arquivo avulso do mount entra numa das duas",
+   "todo arquivo avulso da pasta-pai entra numa das duas"],
+  ["**Monte a lista a partir de uma LISTAGEM do mount,",
+   "**Monte a lista a partir de uma LISTAGEM da pasta-pai,"],
+  ["arquivo já arquivado em turno anterior **continua no mount**, então continua na lista",
+   "arquivo dado como arquivado em turno anterior que **continua na pasta-pai** (o movimento não foi feito) continua na lista"],
+  ["(se há avulso no mount — listado, não lembrado)",
+   "(se há avulso na pasta-pai — listado, não lembrado)"],
+];
+function canalPasta(s){ return CANAL_PASTA.reduce((t, [velho, novo]) => t.split(velho).join(novo), s); }
 function buildClaudeMd(niche){
   if(!niche) niche = getCurrentNiche();
   if(!niche) return "";
@@ -9551,6 +9636,7 @@ if(asuModeOn()){
   }
   L.push("");
   L.push(`*Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — nicho ${niche.label}. Edite à vontade: este arquivo é seu.*`);
+  if(!mountModeOn()) return canalPasta(L.join("\n"));
 
   return L.join("\n");
 }

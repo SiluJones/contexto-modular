@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.130.0**.
+> Histórico de versões. Versão atual: **v1.131.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.131.0 — No canal pasta, o CEREBRO deixa a língua do mount nas regras que disparam todo turno (wo0140, D-167)
+- **Uma tabela de 39 trocas exatas** (`CANAL_PASTA`), aplicada ao CEREBRO gerado só com o Mount desligado: a abertura de turno roda `git log` e `git status` e lista a pasta-pai; a releitura é da pasta, e o desempate entre relatório e estado é o `git log`; o fecho fala de avulso na pasta-pai; P8 relê a pasta a cada turno e P11 compara com o disco; a entrega sem Code grava no lugar; o protocolo de atualização procura `AAMMDD-kcm-update-vX.Y.Z/` na pasta-pai; a medição delegada diz que o chat lê a pasta; e a seção de transferência ganha «canal de reserva» no título. O canal mount sai idêntico (741 de 741 textos), e as Instruções não mudam.
+- **Check novo `C112`:** cada troca ainda acha o seu texto no CEREBRO do mount, e nenhum texto velho sobra no do canal pasta, em 19 nichos × quatro modos. Nove asserções antigas, que cobravam a frase do mount no CEREBRO padrão, passam a aceitar a frase de qualquer um dos dois canais (`C14`, `C19`, `C29`, `C33`, `C41`, `C55`). A cláusula «ressalva tem custo» do `C43` passa a «é proibido para o que está ao seu alcance», no gerado e na casa.
+- **A casa:** `meta/CEREBRO.md` acompanha a frase da ressalva; a skill `wrap` deixa de mandar o Code atualizar o status da análise — a análise é do chat, e o Code relata a mudança de estado.
+- **Origem:** `i-N70` e a análise `meta/analises/261020-ANALISE-contradicoes-do-cerebro-gerado.md` (WO-2). Harness **19/19 · 113/113**.
 
 ## v1.130.0 — O que o kit gera para de se contradizer, e o pacote diz a própria versão e a própria pasta (wo0139, D-166)
 - **Quatro contradições consertadas pelo lado velho:** «a entrega é por ARQUIVO COMPLETO» passa a valer sem executor, e com executor remete ao teste do parágrafo seguinte; o gatilho «Fim da conversa» aponta para a seção do modo em vez de mandar entregar arquivos completos; o CEREBRO diz o que o manifesto já dizia desde a `D-137` — o marcador decide a sobra, e só o modo esquecido de LIGAR fica para o dono; o pedido de medição vai como arquivo, nunca colado; e, com o Code, a linha de commit das Instruções diz que havendo WO o bloco é dela (+14 caracteres; incremento do Code 526 → 540/550).

@@ -1,8 +1,8 @@
 # ANÁLISE — As contradições do que o kit gera, o pacote que não diz a própria versão, e o CEREBRO no canal pasta
 
-> **Status:** WO-1 implementada em 2026-10-20 (wo0139, `84184bd`, v1.130.0); WO-2 (CEREBRO no canal pasta) em aberto. Decidida em 2026-10-20 — os cinco pontos aceitos pelo dono como recomendados; vira a wo0139 (WO-1) e, depois, a WO do CEREBRO no canal pasta (WO-2)
+> **Status:** Implementada em parte — WO-1 aplicada em 2026-10-20 (wo0139, `84184bd`, v1.130.0); WO-2 escrita em 2026-10-21 (wo0140, v1.131.0). Decidida em 2026-10-20 — os cinco pontos aceitos pelo dono como recomendados.
 > **Data:** 261020 · **Base:** v1.129.0, commit `ef9695a` (`main` = `origin/main`); medido numa réplica `git archive` de `1d31add` com a wo0138 aplicada (o `src/` é o mesmo do HEAD); GameDataHub `1aab2ab` lido no disco
-> **Vira:** `meta/workorders/261020-wo0139-contradicoes-e-pacote-com-versao.md` (WO-1) · **Decisão:** `D-166` · **Origem:** o item de 2026-10-19 do GameDataHub («Pacote v1.127.0 e carta 02: o que o merge achou no próprio pacote», `meta/analises/261019-ANALISE-merge-kcm-v1127.md` deles); `i-N72`; `i-N70`
+> **Vira:** `meta/workorders/261020-wo0139-contradicoes-e-pacote-com-versao.md` (WO-1) · `meta/workorders/261021-wo0140-cerebro-no-canal-pasta.md` (WO-2) · **Decisão:** `D-166` (WO-1), `D-167` (WO-2)
 
 ## Problema
 

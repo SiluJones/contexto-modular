@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -538,13 +538,13 @@ check("C55 a lista nao perde item e o relatorio nao mente (wo0105): terceiro est
     const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
     // (1) Arquivar/Manter: terceiro estado + derivada de listagem. Sem os dois a lista "exaustiva"
     // perde item em silencio — medido: sumiu um arquivo do mount cinco turnos depois da wo0102.
-    assert(/Monte a lista a partir de uma LISTAGEM do mount/.test(cmd), id+": a lista de Arquivar ainda sai da memoria do que chegou — memoria so devolve o que e novo");
+    assert(/Monte a lista a partir de uma LISTAGEM (do mount|da pasta-pai)/.test(cmd), id+": a lista de Arquivar ainda sai da memoria do que chegou — memoria so devolve o que e novo");
     assert(/Já arquivado:/.test(cmd), id+": falta o terceiro estado — sem saida, ou a lista cresce para sempre ou os itens caem em silencio");
     // (2) P8: a quarta especie, a evidencia com a data errada
     assert(/evidência com a DATA errada/.test(cmd), id+": o P8 nao cobre a medicao real sobre o instante errado — e a especie que se disfarca de leitura");
-    assert(/o mount não é prova/.test(cmd), id+": falta dizer que o mount responde o AGORA, nao o ENTAO");
+    assert(/o (mount|disco) não é prova/.test(cmd), id+": falta dizer que o mount responde o AGORA, nao o ENTAO");
     // (3) desempate entre os dois canais, por medicao e nao por suposicao
-    assert(/mais recente vence/.test(cmd), id+": sem criterio de desempate, «o relatorio lidera sempre» erra quando o dono commita entre relatorios");
+    assert(/mais recente vence|o `git log` diz se esse commit existe/.test(cmd), id+": sem criterio de desempate, «o relatorio lidera sempre» erra quando o dono commita entre relatorios");
     // (4) e (5) as duas regras de higiene novas
     assert(/Arquivo sob `\.claude\/` o chat entrega INTEIRO/.test(cmd), id+": nada diz que configuracao do executor nao e aplicavel pelo executor — o classificador barra e o ciclo se perde");
     assert(/o bloco de commit e de quem APLICA/.test(cmd), id+": dois blocos de commit no mesmo turno = passo manual para o dono ou registro que fica para tras");
@@ -1070,7 +1070,7 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     // `meta/CEREBRO.md` afirmava que o mount chega «sem arvore de pastas» enquanto o `_TREE_*.md`
     // estava no mount desde sempre, e uma conversa recusou trabalho por causa dessa frase.
     ["CEREBRO: arvore por pergunta",   /inclusive o que NÃO subiu/,   ["cerebro"]],
-    ["CEREBRO: ressalva tem custo",    /é proibido para o que está no mount/, ["cerebro"]],
+    ["CEREBRO: ressalva tem custo",    /é proibido para o que está ao seu alcance/, ["cerebro"]],
     // wo0129 (D-157): o canal pasta vinculada. As tres valem nos dois lados — a casa roda nesse canal
     // desde 2026-10-12, e o gerado o tem por padrao.
     ["CEREBRO: git do chat so le",       /GIT_OPTIONAL_LOCKS=0/,         ["cerebro"]],
@@ -1225,7 +1225,7 @@ check("C41 o fecho em modo Code registra em vez de listar (wo0085): canal por do
     assert(/Regenerar ≠ criar/.test(cmdC), id+" (Code): o CEREBRO nao distingue regenerar de criar — foi assim que o log de dia inexistente virou 'nao regenere'");
     assert(/lista do que ficou por registrar|termina com essa lista \*\*vazia\*\*/.test(cmdC), id+" (Code): o CEREBRO nao exige que a lista do fecho termine vazia");
     assert(/caixa de mensagem/.test(cmdC), id+" (Code): o CEREBRO nao proibe empurrar bloco para o usuario colar no executor");
-    assert(/vem INTEIRO e atualizado/.test(cmdN), id+" (sem Code): o CEREBRO universal perdeu a entrega inteira");
+    assert(/vem INTEIRO e atualizado|é gravado INTEIRO e atualizado/.test(cmdN), id+" (sem Code): o CEREBRO universal perdeu a entrega inteira");
     assert(!/Regenerar ≠ criar/.test(cmdN), id+" (sem Code): a regra de canal do modo Code vazou para projeto sem executor");
   });
   // (2) o log do dia ganhou gatilho de EVENTO — nao pende so do fim da conversa
@@ -1523,14 +1523,14 @@ check("C33 leitura antes do trabalho (wo0077): abertura de turno antes de qualqu
     assert(/NESTE turno/.test(ins), id+": o carimbo nao amarra a leitura ao turno corrente");
     assert(/ANTES de responder e de qualquer ferramenta/.test(ins), id+": Instrucoes nao poem a releitura ANTES das ferramentas");
     assert(/Abertura de turno, antes de QUALQUER outra ferramenta/.test(cmd), id+": CEREBRO sem o passo de abertura de turno");
-    assert(/Sem cópia achatada nem manifesto/.test(cmd), id+": o passo de abertura nao degrada para projeto sem copia achatada");
+    assert(/Sem cópia achatada nem manifesto|\*\*Sem a pasta\*\*, vale a reserva/.test(cmd), id+": o passo de abertura nao degrada para projeto sem copia achatada");
     assert(/é de TURNO/.test(cmd), id+": CEREBRO nao distingue cerimonia de sessao de gatilho de turno");
     assert(/falsa confirmação/.test(cmd), id+": CEREBRO sem a regra da falsa confirmacao do sandbox");
     assert(/Âncora que ainda casa prova que a sua cópia é velha/.test(cmd), id+": CEREBRO nao explica por que a ancora que casa engana");
     // wo0105 / i-N56 (3a ocorrencia na mesma leva): a regra deixou de SUPOR direcao e passou a MEDIR
     // (carta 04 do FlatDrop: o dono commita entre relatorios, e ai o manifesto e que lidera). A assercao
     // mira o efeito — «ha um criterio explicito de desempate entre os dois canais» — nao a frase antiga.
-    assert(/mais recente vence/.test(cmd) && /manifesto/.test(cmd) && /relat[oó]rio lidera \*\*por padrão\*\*/.test(cmd),
+    assert((/mais recente vence/.test(cmd) && /manifesto/.test(cmd) && /relat[oó]rio lidera \*\*por padrão\*\*/.test(cmd)) || /o `git log` diz se esse commit existe/.test(cmd),
       id+": CEREBRO nao da criterio de desempate entre manifesto e relatorio — supor direcao erra quando o dono commita entre relatorios");
     assert(/A linha abre com o carimbo/.test(cmd), id+": CEREBRO nao descreve o carimbo Base");
     assert(/confere num olhar/.test(cmd), id+": CEREBRO nao diz POR QUE o carimbo e auditavel (razao de existir)");
@@ -1648,7 +1648,7 @@ check("C29 fecho da leva sand-land (wo0072): gaveta Adiadas com gatilho, tipos d
   // 3) CEREBRO: pacote de update e transitorio, mas fica ate o merge fechar + cobertura de leitura
   Object.keys(T.NICHES).forEach(id => {
     const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
-    assert(/continuar no mount até o merge fechar/.test(cmd), id+": CEREBRO nao manda manter o pacote no mount ate o merge fechar");
+    assert(/continuar (no mount|na pasta-pai) até o merge fechar/.test(cmd), id+": CEREBRO nao manda manter o pacote no mount ate o merge fechar");
     assert(/declara a cobertura de leitura/.test(cmd), id+": CEREBRO nao exige declarar o que foi lido verbatim");
   });
   return "ok (" + vistos + " IDEAS · " + comHistory + " HISTORY)";
@@ -1844,6 +1844,32 @@ check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coe
   return "ok (" + PARES.length + " pares em " + textos + " combinacoes; pasta do pacote " + pasta + ")";
 });
 
+check("C112 no canal pasta, o CEREBRO nao manda fazer pelo mount o que a pasta faz: cada troca acha o seu texto, nenhum texto velho sobra, e o mount sai igual (wo0140, D-167)", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{});
+  const P=T.CANAL_PASTA, usada=P.map(()=>0), fora=[]; let textos=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    [["",""],["yes",""],["","yes"],["yes","yes"]].forEach(([c,a]) => {
+      const tag=id+(c?"+Code":"")+(a?"+ASU":"");
+      S.workmode={codeMode:c, asuMode:a, groupMode:"no", mountMode:"yes"};
+      const M=T.buildClaudeMd(n);
+      S.workmode={codeMode:c, asuMode:a, groupMode:"no", mountMode:""};
+      const C=T.buildClaudeMd(n); textos++;
+      P.forEach(([velho,novo],i) => {
+        if(M.indexOf(velho)>-1) usada[i]++;
+        if(C.indexOf(velho)>-1) fora.push(tag+": «"+velho.slice(0,48)+"»");
+      });
+      // o mount nao passa pela tabela: aplicar a tabela ao CEREBRO do mount nao pode dar o do mount de volta
+      if(T.canalPasta(M)===M) fora.push(tag+": a tabela nao achou nada no CEREBRO do mount");
+    });
+  });
+  S.workmode=prev;
+  const parada=P.map((p,i)=>usada[i]?null:(i+1)+": «"+p[0].slice(0,48)+"»").filter(Boolean);
+  assert(parada.length===0, "troca que nao acha mais o seu texto no CEREBRO do mount (o texto velho mudou e a tabela ficou para tras) -> "+parada.slice(0,6).join(" | "));
+  assert(fora.length===0, "texto do mount que sobrou no CEREBRO do canal pasta -> "+fora.slice(0,6).join(" | ")+(fora.length>6?" (+"+(fora.length-6)+")":""));
+  return "ok (" + P.length + " trocas em " + textos + " CEREBROs do canal pasta; o mount sai sem elas)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";
@@ -2028,7 +2054,7 @@ check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + for
   ["Próximo","Estado","Arquivar / Manter","Config recomendada","Handoff"].forEach(k=>
     assert(new RegExp("\\*\\*"+k+"\\*\\*").test(c),"CEREBRO sem a linha: "+k));
   assert(/CONDIÇÃO OBSERVÁVEL/.test(c),"CEREBRO nao condiciona as linhas por condicao observavel: voltou a deixar a omissao no julgamento de quem emite");
-  assert(/se há avulso no mount/.test(c) && /se algum arquivo foi entregue NESTE turno/.test(c),"o esqueleto do fecho perdeu as condicoes coladas nos rotulos (wo0111)");
+  assert(/se há avulso (no mount|na pasta-pai)/.test(c) && /se algum arquivo foi entregue NESTE turno/.test(c),"o esqueleto do fecho perdeu as condicoes coladas nos rotulos (wo0111)");
   assert(/COPIÁVEL COMO ESTÁ/.test(c),"o item Proximo nao exige a frase copiavel sem lacuna para o usuario preencher");
   assert(/Esqueleto — copie e preencha/.test(c),"CEREBRO sem o esqueleto literal: o bloco volta a ser reconstituido de memoria");
   // wo0120: entrega que encolhe. Um projeto ficou com quatro guias onde deviam existir dois, e os
@@ -2123,7 +2149,7 @@ check("C14 adesao ao ritual (spec0052): mount-check por turno + memoria x mount 
   assert(/reveja o mount a cada turno/i.test(T.buildInstr(n)),"Instr (canal mount) sem gatilho de reler o mount por turno");
   T.STATE.workmode={};
   assert(/Em TODO turno, ANTES de responder/.test(T.buildInstr(n)),"Instr (canal pasta, o padrao) sem o ritual de turno");
-  assert(/não trate o mount como verdade absoluta/.test(T.buildClaudeMd(n)),"CEREBRO sem logica memoria x mount");
+  assert(/não trate o mount como verdade absoluta|Compare o disco com o que você lembrava/.test(T.buildClaudeMd(n)),"CEREBRO sem logica memoria x mount");
   T.STATE.workmode={codeMode:"yes"};
   assert(!/asuNNNN/.test(T.buildClaudeMd(T.normNiche(T.NICHES.dev))),"modo Code sem ASU cita asuNNNN (vazamento)");
   T.STATE.workmode={asuMode:"yes"};

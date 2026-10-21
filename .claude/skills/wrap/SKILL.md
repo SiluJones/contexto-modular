@@ -47,8 +47,8 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
   build, que o `index.html` não mudou. O `C102` e o `C103` leem prosa: fecho «só de doc» também quebra o
   harness, e foi assim que um caminho abreviado no STATUS deixou o repo vermelho sem ninguém ver (D-159).
 - Acrescente `D-0NN` / `FIX-0NN` em `meta/DECISIONS.md` se houve decisão ou correção registrável.
-- Se alguma análise de `meta/analises/` foi decidida, implementada ou abandonada nesta sessão,
-  atualize o **Status** dela (e os elos «Vira» / «Decisão») — análise não se apaga, muda de estado.
+- Se alguma análise de `meta/analises/` foi decidida, implementada ou abandonada nesta sessão, **diga no relatório**
+  qual e para que estado — não edite: a análise é do chat (CEREBRO, «Canal do chat», dono por documento), e ele atualiza o **Status** e os elos «Vira» / «Decisão» no turno seguinte. Análise não se apaga, muda de estado.
 - **Resolva o push ANTES de escrever o relatório** — o relatório é o ÚLTIMO passo, sempre.
   **Verde** (`git diff` conferido e, se tocou `src/`, build + harness verdes): rode `add`, `commit` e
   `push` você mesmo, SEM perguntar. Você tem o terminal; entregar bloco para eu colar é trocar de raia.
