@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -1363,7 +1363,7 @@ check("C38 higiene universal + o update que sabe subtrair (wo0082): quatro regra
     [/otimizar o processo em vez de executá-lo/, "a regra de metodo perdeu o modo de falha que a motivou"],
     [/Fim de QUALQUER turno de trabalho/, "tabela de gatilhos sem a linha do bloco de fecho"],
     [/O merge sabe somar, não sabe subtrair/, "protocolo de update nao explica que o merge nao subtrai"],
-    [/reporta como choque com a seção citada e não remove sozinho/, "sobra de modo desligado sem a regra de reportar-e-nao-remover"],
+    [/essa você pergunta, e não remove sozinho/, "sobra de modo desligado sem a regra: marcador decide a sobra, e so o modo esquecido de LIGAR fica para o dono (D-137, wo0139)"],
   ];
   Object.keys(T.NICHES).forEach(id => {
     const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
@@ -1802,6 +1802,46 @@ check("C110 no canal pasta, o prompt de atualizacao, o CLAUDE.md, o molde de WO 
   assert(/Eu leio só o que chega pelo mount/.test(kM.claudeMd), "o canal mount perdeu a linha do CLAUDE.md");
   assert(/subir a um Projeto/.test(cM), "o canal mount perdeu o prompt C da reserva");
   return "ok (" + textos + " textos do canal pasta sem vocabulario do mount)";
+});
+
+check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coexistir, e o pacote diz a propria versao e a propria pasta (wo0139, D-166)", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{});
+  // Cada par: duas regras que, no mesmo texto lido pelo assistente (Instrucoes + CEREBRO + manifesto + prompt de atualizacao),
+  // mandam coisas opostas. Semeado com as quatro do GameDataHub (2026-10-19). Par novo entra aqui quando alguem achar.
+  // O quarto campo diz se o par so se contradiz com o Code ligado (sem Code nao ha WO, e as duas regras nao se tocam).
+  const PARES=[
+    ["entrega por arquivo completo x modo Code registra", /a entrega é por ARQUIVO COMPLETO, nunca por blocos soltos/, /o assistente REGISTRA o que falta/, true],
+    ["gatilho do fim da conversa x modo Code registra",   /\| Fim da conversa \| Entrega os arquivos completos/,      /o assistente REGISTRA o que falta/, true],
+    ["carimbo indistinguivel x carimbo decidivel",        /não tem como distinguir os dois casos/,                   /DECIDIVEL/,                                       false],
+    ["medicao em bloco colavel x nunca empurre bloco",    /É bloco colável, entregue como qualquer instrução/,       /Isso inclui pedido de medição/, true],
+    ["commit sem excecao x commit e da WO",               /\*\*Commit:\*\* ao concluir mudança versionada, ENTREGUE/, /Havendo WO no turno, o bloco de commit/, true]
+  ];
+  const fora=[]; let textos=0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n=T.normNiche(T.NICHES[id]);
+    ["", "yes"].forEach(mnt => [["",""],["yes",""],["","yes"],["yes","yes"]].forEach(([c,a]) => {
+      S.workmode={codeMode:c, asuMode:a, groupMode:"no", mountMode:mnt};
+      const pk=T.buildUpdatePack(n);
+      const txt=[T.buildInstr(n), T.buildClaudeMd(n), pk?pk.manifest:"", T.buildUpdatePrompt(n)].join("\n");
+      textos++;
+      PARES.forEach(([nome,a1,b1,soCode]) => { if(soCode && !c) return; if(a1.test(txt) && b1.test(txt)) fora.push(id+(c?"+Code":"")+(a?"+ASU":"")+(mnt?"+mount":"")+": "+nome); });
+    }));
+  });
+  // i-N72: no canal pasta, o prompt cita a pasta que o zip cria, e abre pela versao
+  const dev=T.normNiche(T.NICHES.dev);
+  S.workmode={codeMode:"yes", asuMode:"", groupMode:"no", mountMode:""};
+  const upP=T.buildUpdatePrompt(dev), pasta=T.updatePackFolder();
+  S.workmode={codeMode:"yes", asuMode:"", groupMode:"no", mountMode:"yes"};
+  const upM=T.buildUpdatePrompt(dev);
+  S.workmode=prev;
+  const fonte=fs.readFileSync(path,"utf8");
+  assert(fora.length===0, "o kit gera duas regras que se contradizem -> "+fora.slice(0,6).join(" | ")+(fora.length>6?" (+"+(fora.length-6)+")":""));
+  assert(/^\d{6}-kcm-update-v\d+\.\d+\.\d+$/.test(pasta) && pasta.endsWith(T.KIT_VERSION), "o nome da pasta do pacote nao tem a forma AAMMDD-kcm-update-vX.Y.Z com a versao do kit: "+pasta);
+  assert(upP.indexOf("`"+pasta+"/`")>-1, "no canal pasta, o prompt de atualizacao nao cita a pasta que o zip cria ("+pasta+"/)");
+  assert(/updatePackFolder\(\) \+ "\.zip"/.test(fonte) && /zip\.file\(dir \+ f\.flat/.test(fonte), "o download do pacote nao usa a pasta que o prompt cita — o nome do zip e o do prompt voltam a divergir");
+  [upP, upM].forEach(u => assert(/\*\*Primeiro, a versao:\*\*/.test(u) && u.indexOf("v"+T.KIT_VERSION)>-1, "o prompt de atualizacao nao manda conferir a versao do pacote antes de comparar"));
+  assert(upP.indexOf("**Primeiro, a versao:**") < upP.indexOf("**Antes de comparar qualquer coisa:**"), "a conferencia da versao vem DEPOIS da ordem de comparar");
+  return "ok (" + PARES.length + " pares em " + textos + " combinacoes; pasta do pacote " + pasta + ")";
 });
 
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {

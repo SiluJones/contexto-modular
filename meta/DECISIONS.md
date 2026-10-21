@@ -2222,3 +2222,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Por quê.** O livro de leitura (`D-159`) resolve o atraso do lado de quem lê, mas mora no repositório de quem leu: quem enviou não vê. O Mapoteca listou a carta 06 como «não entregue» e propôs reescrevê-la, dois dias depois de o KCM tê-la lido. O canal pasta já alcança a pasta-pai do vizinho, então o aviso custa um arquivo de três linhas.
 
 **Fora:** virar regra gerada para todo projeto do kit — a `FK-BB` vai para a triagem com a `FK-BA`. Aqui é prática da casa, escrita no `meta/CEREBRO.md`.
+
+## D-166 — O que o kit gera para de se contradizer, com um check de pares; e o pacote diz a própria versão e a própria pasta
+
+**Data:** 2026-10-20 · **WO:** 0139 · **Origem:** o item de 2026-10-19 do GameDataHub (o merge do pacote v1.127.0 achou quatro contradições no próprio pacote) e a análise `meta/analises/261020-ANALISE-contradicoes-do-cerebro-gerado.md`, cinco pontos aceitos pelo dono em 2026-10-20 · **Resolve:** `i-N72`.
+
+**Decisão.** As quatro contradições — entrega por arquivo completo × o modo Code registra; o gatilho do fim da conversa × o modo Code registra; o carimbo «indistinguível» no CEREBRO × «decidível» no manifesto (`D-137`); a medição em bloco colável × nunca empurre bloco; o commit sem exceção nas Instruções × «havendo WO, o bloco é de quem aplica» — são consertadas pelo lado velho, que é o que ficou para trás quando a regra nova entrou. O `C111` guarda os cinco pares (o gatilho e a entrega contam separados) em 19 nichos × quatro modos × dois canais; o par que só se contradiz com o Code é conferido só com o Code. No pacote, o canal pasta ganha o nome conferível: zip e pasta `AAMMDD-kcm-update-vX.Y.Z`, citados pelo prompt a partir de uma função só (`updatePackFolder`), e o prompt abre mandando conferir a versão. Corta a **v1.130.0** (`D-158`).
+
+**Por quê o check de pares.** O harness conferia que cada regra existe, e nada conferia que duas regras do mesmo texto concordam: as quatro nasceram de uma regra nova que entrou sem tocar a antiga. O par listado não volta; o par novo continua sendo achado por leitura — desta vez, a do vizinho no merge.
+
+**Fora:** o CEREBRO no canal pasta (`i-N70`, a WO seguinte, v1.131.0); uma varredura geral de contradições (fica como exploração). A data da pasta do pacote vem de `today`, que é a data UTC do kit: gerado à noite no Brasil, sai com a data do dia seguinte — comportamento de todo o kit, mantido.
+
+**Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0139 traz a medida no repo]`: `index.html` 924.444 → 925.835 bytes; incremento do Code nas Instruções 526 → 540/550; check novo `C111`; harness 111 → **112**.

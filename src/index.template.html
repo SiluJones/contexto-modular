@@ -1204,7 +1204,7 @@ const TRIGGERS_BASE = [
   ["Ideia mencionada (sua ou minha)", "Entrega o IDEAS.md completo com a ideia capturada (na hora, sem pedir)."],
   ["Feedback sobre o kit — dito OU feito (desvio estrutural: diretriz nova neste CEREBRO.md, template alterado/dispensado, arquivo novo criado)", "Registra na hora no IDEAS.md, seção «Feedback para o Kit»: o que foi observado/mudado e por quê. É o material que volta para evoluir o kit — sem o registro, o aprendizado deste projeto se perde."],
   ["Fim de QUALQUER turno de trabalho", "Emite o Bloco de fecho (formato fixo, secao propria). Nao espera fim de conversa: a maior parte do trabalho acontece em turnos que nao fecham nada."],
-  ["Fim da conversa", "Entrega os arquivos completos afetados: STATUS.md + CHANGELOG.md (se fechou algo) + log do dia."],
+  ["Fim da conversa", "Registra o que falta, cada documento pelo canal dele — como diz a seção «Ao final da conversa»: STATUS.md + CHANGELOG.md (se fechou algo) + log do dia."],
   ["Evento que MERECE log: cortar versao, registrar uma decisao ou um bug grave, virar o dia de trabalho", "Escreve `logs/AAAA-MM-DD.md` na hora. O log nao espera o fim da conversa — numa conversa longa o fim nunca chega, e e assim que dias inteiros ficam sem registro."],
   ["Precisa de um numero sobre material grande demais para a conversa, ou um defeito apareceu de raspao", "Manda MEDIR (sonda) em vez de deduzir ou pedir upload. Se ninguem sabe ainda qual e a pergunta, manda EXPLORAR primeiro (`/sondar`): exploracao produz hipotese, sonda produz evidencia."],
   ["Chega ou sai carta de outro projeto (negociacao de contrato entre frentes)", "Extrai o durável AGORA — acordo vira decisao registrada, o que nao coube vira ideia com gatilho — e NAO versiona a carta. Se ela pede resposta do outro lado, cria o item de espera com prazo: espera sem gatilho trava o projeto sem ninguem perceber."],
@@ -1221,7 +1221,7 @@ const TRIGGERS_BASE = [
    trabalho de montar o arquivo inteiro é do assistente, não do usuário. */
 const UPDATE_PROTOCOL = {
   titulo: "Como o assistente entrega as atualizações dos documentos",
-  intro: "As mudanças nos documentos que decorrem do trabalho do assistente são registradas pelo PRÓPRIO assistente — quando ele faz algo, ele mesmo atualiza os docs afetados. O que o usuário quer acrescentar por conta (ele sabe onde e o quê) é decisão dele. Em ambos os casos, a entrega é por ARQUIVO COMPLETO, nunca por blocos soltos para o usuário costurar à mão.",
+  intro: "As mudanças nos documentos que decorrem do trabalho do assistente são registradas pelo PRÓPRIO assistente — quando ele faz algo, ele mesmo atualiza os docs afetados. O que o usuário quer acrescentar por conta (ele sabe onde e o quê) é decisão dele. Em ambos os casos, nada vai em blocos soltos para o usuário costurar à mão: sem executor no repositório, a entrega é por ARQUIVO COMPLETO; com executor, vale o teste do parágrafo seguinte.",
   claudeFaz: [
     "Registra o que decorre do próprio trabalho: se o trabalho mexeu em STATUS, decisões, ideias, etc., o assistente entrega esses arquivos atualizados — não espera o usuário pedir.",
     "Entrega o arquivo INTEIRO já atualizado (não um trecho, não «adicione esta linha»). O usuário só substitui o antigo pelo novo.",
@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.129.0";
+const KIT_VERSION = "1.130.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2369,7 +2369,7 @@ function buildInstr(niche){
   if(codeModeOn()) lines.push(mountModeOn() ? "**Arquivo não lido não se deduz — mande o Code medir.**" : "**Arquivo não lido não se deduz — leia do disco; o Code mede o que roda.**");
   if(codeModeOn()) lines.push("**WO nunca vai sozinha:** entregue junto a linha `/apply-wo <arquivo>` para eu colar no Code.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
-    lines.push("**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO, mensagem sem acento. Bloco git parcial (só `add`) não serve: os três em ordem, ou só o `commit`.");
+    lines.push(codeModeOn() ? "**Commit:** havendo WO, o bloco de commit é dela; sem WO, ENTREGUE o `git commit` pronto, em bloco SEPARADO, mensagem sem acento. Bloco git parcial (só `add`) não serve: os três em ordem, ou só o `commit`." : "**Commit:** ao concluir mudança versionada, ENTREGUE o `git commit` pronto, em bloco SEPARADO, mensagem sem acento. Bloco git parcial (só `add`) não serve: os três em ordem, ou só o `commit`.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
     lines.push("**Entregáveis de repo (sem eu pedir):** `.gitignore` do stack na PRIMEIRA leva com estrutura; `README.md` quando ela estabilizar — se for cedo, DIGA e por quê. Detalhe no CEREBRO.");
 
@@ -2596,7 +2596,7 @@ function buildClaudeMd(niche){
   L.push("## Ao receber um template-update do KCM");
   L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio** — e mais: **template genérico não é candidato a substituir arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados caem por padrão em (c) — o genérico ensina estrutura, o vivo já evoluiu; não é escolha a ser oferecida ao usuário a cada update. A **única** exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). Antes de comparar, o assistente lista o mount e diz em que versão/commit o projeto está: comparar sem saber o estado atual é comparar com memória. **O pacote é entrada transitória, mas não descartável no meio do caminho:** enquanto um merge estiver em curso, ele precisa continuar no mount até o merge fechar — pacote que sai antes do fim leva embora o original de comparação, e o que ficou de fora só aparece depois. Se ele já saiu, o assistente **declara a cobertura de leitura**: quais faixas leu **verbatim** e quais não. É essa declaração que permite fechar a lacuna com um diff dirigido em vez de refazer o merge inteiro. Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído: propõe o merge, o usuário decide — nunca substituição cega.");
   L.push("");
-  L.push("**O merge sabe somar, não sabe subtrair — e por isso o manifesto traz duas seções que a comparação não produz.** (1) **Linhas revogadas:** o kit às vezes APAGA uma linha de propósito, e comparar arquivos só revela o que é novo — o texto antigo continua vivo no seu, invisível ao merge, dirigindo comportamento que já foi corrigido. Procure cada texto listado; se achar, remova, ou registre o desvio se este projeto tiver motivo para manter. (2) **Carimbo de modos:** o manifesto declara com quais modos o pacote foi gerado. Seção de um modo declarado como `nao` que ainda exista no seu arquivo é sobra de configuração antiga — **ou** o pacote foi gerado com o modo esquecido. O assistente **não tem como distinguir os dois casos**, então **reporta como choque com a seção citada e não remove sozinho**. Migrar de modo (ASU→Code, por exemplo) não limpa o CEREBRO já gerado: um CEREBRO gerado é arquivo, não função.");
+  L.push("**O merge sabe somar, não sabe subtrair — e por isso o manifesto traz duas seções que a comparação não produz.** (1) **Linhas revogadas:** o kit às vezes APAGA uma linha de propósito, e comparar arquivos só revela o que é novo — o texto antigo continua vivo no seu, invisível ao merge, dirigindo comportamento que já foi corrigido. Procure cada texto listado; se achar, remova, ou registre o desvio se este projeto tiver motivo para manter. (2) **Carimbo de modos:** o manifesto declara com quais modos o pacote foi gerado. Seção de um modo declarado como `nao` que ainda exista no seu arquivo é sobra de configuração antiga — **ou** o pacote foi gerado com o modo esquecido. O manifesto dá o **marcador** de cada modo — o cabeçalho que só existe no arquivo gerado com o modo LIGADO: marcador presente com o modo declarado `nao` é **sobra**, e sai, dito no relatório. A única hipótese que o arquivo não responde é **o dono ter esquecido de LIGAR o modo** ao gerar o pacote: essa você pergunta, e não remove sozinho. Migrar de modo (ASU→Code, por exemplo) não limpa o CEREBRO já gerado: um CEREBRO gerado é arquivo, não função.");
   L.push("");
   L.push("## Regras de higiene (impedem inchaço e duplicação)");
   L.push("");
@@ -2680,7 +2680,7 @@ function buildClaudeMd(niche){
   L.push("A raia de planejamento tem teto de contexto e lê só o que chega pelo mount; a raia de execução lê o disco inteiro e não tem nenhum dos dois limites. Quando o dado que falta é **estado de arquivo** — quantas linhas, quais chaves, que dimensão, se existe —, a saída não é pedir upload de um arquivo grande nem escrever um script para o dono rodar: é **mandar medir**.");
   L.push("");
   L.push("- **A regra:** quem tem acesso ao disco mede, quem tem contexto decide. Nunca afirme estado de arquivo que você não leu — nem para justificar uma escolha, nem para escrever caminho «mais ou menos certo». Caminho com `...` no meio é o sintoma clássico de estado deduzido.");
-  L.push("- **O pedido de medição não é ordem de trabalho.** Não tem âncora, não tem edição, não tem commit e não muda arquivo nenhum. É bloco colável, entregue como qualquer instrução ao executor — não crie arquivo nem pasta para ele. Se virar ordem de trabalho, você já estará escrevendo a ordem sem os números que ela precisava, que é exatamente o erro que a medição evita.");
+  L.push("- **O pedido de medição não é ordem de trabalho.** Não tem âncora, não tem edição, não tem commit e não muda arquivo nenhum. Mas não vai colado na mensagem do executor: vai como arquivo — a seção «Medição prévia» de uma WO, ou um `.md` curto com o que rodar e o formato do relatório. Não crie pasta nova para ele. Se virar ordem de trabalho, você já estará escrevendo a ordem sem os números que ela precisava, que é exatamente o erro que a medição evita.");
   L.push("- **Peça número cru, não interpretação.** Diga o comando ou o que contar, e peça de volta o valor e o comando que o produziu. Executor que interpreta devolve opinião no lugar de dado — e opinião de quem mediu é a mais difícil de contestar depois, porque parece medida.");
   L.push("- **Todo valor que você pede declara onde nasce.** Número: o comando que o produz. Contagem: a unidade (linha ou ocorrência). Carimbo de hora: o comando de data, rodado na hora. Resultado de terceiro: de quem, e em que arquivo já está escrito. Valor exigido sem fonte é preenchido por dedução — e saída deduzida é indistinguível de saída medida no ponto onde é ESCRITA; as duas só se separam no ponto onde é USADA, tarde demais.");
   L.push("- **Quem tem o disco mede; quem tem a TELA vê.** Conferência que exige olho humano num renderizador — abrir o app e dizer o que aparece — é do dono, em roteiro onde cada item diz **o que se vê quando está certo**. Não é preferência: três pedidos de «abra e confira» dirigidos à execução voltaram sem conferência nenhuma, e no mesmo período dois roteiros escritos para o dono devolveram 27 itens respondidos.");
@@ -4087,11 +4087,15 @@ function buildUpdatePack(niche){
   return { files, manifest, codeOn, skillsOn, affix: UPDATE_AFFIX };
 }
 /* Prompt de atualizacao: DISPARO para a IA-alvo (comparar/propor/fundir), NUNCA lista de diffs (analise §3). */
+// i-N72 (wo0139): o nome que o zip cria e o nome que o prompt cita saem daqui, e de nenhum outro lugar.
+function updatePackFolder(){ return today.slice(2).replace(/-/g, "") + "-kcm-update-v" + KIT_VERSION; }
 function buildUpdatePrompt(niche){
   const pack = buildUpdatePack(niche);
   if(!pack) return "";
   const L = [];
-  L.push(!mountModeOn() ? `Descompactei um **template-update** do KCM para este projeto (nicho: ${niche.label}) na pasta-pai do projeto, numa pasta \`AAMMDD-kcm-update-v${KIT_VERSION}/\` — fora do repositorio, nunca versionada. Nela ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo. Fechado o merge, **mova** a pasta para \`notas-arquivadas/\` na pasta-pai — mover, nunca apagar.` : `Subi um **template-update** do KCM para este projeto (nicho: ${niche.label}). No mount ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo.`);
+  L.push(!mountModeOn() ? `Descompactei um **template-update** do KCM para este projeto (nicho: ${niche.label}) na pasta-pai do projeto, numa pasta \`${updatePackFolder()}/\` — fora do repositorio, nunca versionada. Nela ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo. Fechado o merge, **mova** a pasta para \`notas-arquivadas/\` na pasta-pai — mover, nunca apagar.` : `Subi um **template-update** do KCM para este projeto (nicho: ${niche.label}). No mount ha um \`_UPDATE-MANIFEST.md\` com o mapa nome-plano -> destino real e a natureza de cada arquivo.`);
+  L.push("");
+  L.push("**Primeiro, a versao:** este pacote e da **v" + KIT_VERSION + "** (linha `- Kit:` do `_UPDATE-MANIFEST.md`). Se a carta ou o dono anunciou outra versao, **PARE** e avise antes de comparar qualquer coisa — pacote de versao errada nao se funde: se regenera.");
   L.push("");
   L.push(!mountModeOn() ? "**Antes de comparar qualquer coisa:** rode `git log -3 --oneline` e `git status --short` no repositorio e me diga em que versao/commit este projeto esta. O pacote descreve o KIT, nao o seu repo — comparar sem saber o estado atual e comparar com memoria." : "**Antes de comparar qualquer coisa:** liste o mount e me diga em que versao/commit este projeto esta. O pacote descreve o KIT, nao o seu repo — comparar sem saber o estado atual e comparar com memoria.");
   L.push("");
@@ -4134,13 +4138,15 @@ async function downloadUpdatePack(){
   const pack = buildUpdatePack(niche);
   if(!pack) return;
   const zip = new JSZip();
-  pack.files.forEach(f => zip.file(f.flat, f.content || ""));   // achatado na raiz do zip
-  zip.file("_UPDATE-MANIFEST.md", pack.manifest);
-  zip.file("_UPDATE-PROMPT.md", buildUpdatePrompt(niche));
+  // canal pasta: o conteudo vai dentro de uma pasta com o nome que o prompt cita (i-N72); no mount, achatado na raiz
+  const dir = mountModeOn() ? "" : updatePackFolder() + "/";
+  pack.files.forEach(f => zip.file(dir + f.flat, f.content || ""));
+  zip.file(dir + "_UPDATE-MANIFEST.md", pack.manifest);
+  zip.file(dir + "_UPDATE-PROMPT.md", buildUpdatePrompt(niche));
   const blob = await zip.generateAsync({type:"blob"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url; a.download = `${niche.id || projectSlug(niche.label)}-template-update.zip`;
+  a.href = url; a.download = mountModeOn() ? `${niche.id || projectSlug(niche.label)}-template-update.zip` : updatePackFolder() + ".zip";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1500);
 }

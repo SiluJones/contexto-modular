@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.129.0**.
+> Histórico de versões. Versão atual: **v1.130.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.130.0 — O que o kit gera para de se contradizer, e o pacote diz a própria versão e a própria pasta (wo0139, D-166)
+- **Quatro contradições consertadas pelo lado velho:** «a entrega é por ARQUIVO COMPLETO» passa a valer sem executor, e com executor remete ao teste do parágrafo seguinte; o gatilho «Fim da conversa» aponta para a seção do modo em vez de mandar entregar arquivos completos; o CEREBRO diz o que o manifesto já dizia desde a `D-137` — o marcador decide a sobra, e só o modo esquecido de LIGAR fica para o dono; o pedido de medição vai como arquivo, nunca colado; e, com o Code, a linha de commit das Instruções diz que havendo WO o bloco é dela (+14 caracteres; incremento do Code 526 → 540/550).
+- **Check novo `C111`, de pares:** cinco pares de regras que não podem coexistir no mesmo texto lido pelo assistente (Instruções + CEREBRO + manifesto + prompt de atualização), varridos em 19 nichos × quatro modos × dois canais. Semeado com as quatro do GameDataHub; par novo entra quando alguém achar. O `C38` passa a cobrar a regra decidível do carimbo.
+- **O pacote (`i-N72`):** no canal pasta, o zip se chama `AAMMDD-kcm-update-vX.Y.Z.zip` e traz o conteúdo dentro de uma pasta com o mesmo nome, que é a que o `_UPDATE-PROMPT.md` cita; e o prompt abre mandando conferir a versão do manifesto contra a anunciada — diferente, PARE. No mount, o zip continua como era.
+- **Origem:** o item de 2026-10-19 do GameDataHub e a análise `meta/analises/261020-ANALISE-contradicoes-do-cerebro-gerado.md`. O CEREBRO no canal pasta (`i-N70`) é a WO seguinte. Harness **19/19 · 112/112**.
 
 ## v1.129.0 — No canal pasta, o prompt de atualização, o `CLAUDE.md`, o molde de WO e o prompt C param de falar a língua do mount (wo0137, D-164)
 - **Prompt de atualização, canal pasta:** o pacote mora na pasta-pai do projeto, em `AAMMDD-kcm-update-vX.Y.Z/`, fora do repositório e nunca versionado; o estado do projeto sai de `git log` e `git status`, e não de «liste o mount»; a superfície que falta é «o repositório não tem»; fechado o merge, a pasta é **movida** para `notas-arquivadas/`. O papel do `.flatdropignore` no pacote passa a dizer que é canal de reserva.
