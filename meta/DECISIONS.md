@@ -2248,3 +2248,13 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Fora:** o P8 da casa (`meta/CEREBRO.md`, «Reveja o mount a CADA turno») — a casa tem a própria seção de canal, que manda; fica para quando a casa revisar os princípios.
 
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0140 traz a medida no repo]`: `index.html` 925.835 → 936.658 bytes; CEREBRO no canal pasta, linhas distintas com vocabulário do mount: 46 → 29 (a transferência e as legítimas nos dois canais); canal mount 741/741 textos idênticos; check novo `C112`; harness 112 → **113**.
+
+## D-168 — A pasta do histórico das conversas (CDC) é do dono, só leitura, e numera as conversas
+
+**Data:** 2026-10-23 · **WO:** 0141 · **Origem:** pedido do dono em 2026-10-23, depois de incluir a mesma cláusula nos três vizinhos · **Estende:** `D-157` (o canal pasta), a regra «arquivar é mover».
+
+**Decisão.** `notas-arquivadas\- Histórico - KCM (CDC)\` guarda as conversas do KCM exportadas pelo CDC (`KCM N.md`, `(simples).md`, `.json`, `.cdc.json`, `cdc-raw\`). O chat pode ler; não põe nada dentro, não move, não renomeia, não apaga e não versiona. **O «Arquivar» é o ponto de risco desta casa:** a pasta mora dentro de `notas-arquivadas\`, o destino de todo arquivamento — então arquivar é mover para a RAIZ de `notas-arquivadas\`, nunca para dentro de uma subpasta, e nenhum comando do chat usa curinga ou recursão que alcance o histórico. A conversa se numera pelo «KCM N» do histórico (a de 17 a 23/10 é a KCM 22), e o handoff e o log citam esse número. A regra mora no `meta/CEREBRO.md`, e a frase curta nas Instruções da casa, lida em toda mensagem.
+
+**Por que não uma trava no sistema de arquivos.** O atributo de só leitura do Windows impediria o CDC de reexportar as conversas por cima — o dono atualiza a pasta. A proteção que sobra ao chat já existe: apagar vem desligado na pasta vinculada. O resto é regra escrita, no ponto onde o gesto acontece.
+
+**Fora:** a moldura do kit (a pasta do histórico no CEREBRO gerado) — `i-N73`, com as outras lacunas que o merge do v1.129.0 achou.

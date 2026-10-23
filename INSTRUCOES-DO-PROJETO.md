@@ -8,7 +8,7 @@
 KCM = gerador (um `index.html` vanilla, montado de `src/` via `build.js`) que produz kits de contexto para **19 nichos**. Dogfooding: este projeto é mantido pelos próprios arquivos que ele prega. Toolchain irmão: **ASU** (aplica patches YAML) e **FlatDrop** (achata repo para upload — hoje ferramenta de exceção). Repo: `SiluJones/contexto-modular`.
 
 ## Canal (D-157)
-O chat lê e grava **direto na pasta do repo** (`…\Contexto\contexto-modular`), pelo app desktop. A pasta-pai `Contexto\` guarda notas, relatórios do Code e o handoff: conversa nova pede acesso a ela antes de tudo. **Git pelo chat é só leitura, com `GIT_OPTIONAL_LOCKS=0`**; quem commita é o Code. Sem a pasta, diga qual canal você tem e siga a reserva do CEREBRO (mount/FlatDrop) — nunca trabalhe de memória. Detalhe e dono de cada documento: CEREBRO, «Canal do chat».
+O chat lê e grava **direto na pasta do repo** (`…\Contexto\contexto-modular`), pelo app desktop. A pasta-pai `Contexto\` guarda notas, relatórios do Code e o handoff: conversa nova pede acesso a ela antes de tudo. **`notas-arquivadas\- Histórico - KCM (CDC)\` é do dono, só leitura:** nada entra, sai ou muda ali — nem no «Arquivar»; a conversa se numera pelo «KCM N» dela. **Git pelo chat é só leitura, com `GIT_OPTIONAL_LOCKS=0`**; quem commita é o Code. Sem a pasta, diga qual canal você tem e siga a reserva do CEREBRO (mount/FlatDrop) — nunca trabalhe de memória. Detalhe e dono de cada documento: CEREBRO, «Canal do chat».
 
 ## Ritual
 1. **Ao abrir a conversa:** `meta/CEREBRO.md` → «Última sessão» do `meta/STATUS.md` (o resto sob demanda) → topo do `meta/CHANGELOG.md`. **STATUS é pista, não fato** (P8): confira o arquivo vivo antes de repetir uma pendência como aberta.

@@ -1,6 +1,6 @@
 # ANÁLISE — As contradições do que o kit gera, o pacote que não diz a própria versão, e o CEREBRO no canal pasta
 
-> **Status:** Implementada em parte — WO-1 aplicada em 2026-10-20 (wo0139, `84184bd`, v1.130.0); WO-2 escrita em 2026-10-21 (wo0140, v1.131.0). Decidida em 2026-10-20 — os cinco pontos aceitos pelo dono como recomendados.
+> **Status:** Implementada — WO-1 em 2026-10-20 (wo0139, `84184bd`, v1.130.0) e WO-2 em 2026-10-21 (wo0140, `5378763`, v1.131.0). Decidida em 2026-10-20 — os cinco pontos aceitos pelo dono como recomendados. Falta o ponto 5: o pacote único aos vizinhos.
 > **Data:** 261020 · **Base:** v1.129.0, commit `ef9695a` (`main` = `origin/main`); medido numa réplica `git archive` de `1d31add` com a wo0138 aplicada (o `src/` é o mesmo do HEAD); GameDataHub `1aab2ab` lido no disco
 > **Vira:** `meta/workorders/261020-wo0139-contradicoes-e-pacote-com-versao.md` (WO-1) · `meta/workorders/261021-wo0140-cerebro-no-canal-pasta.md` (WO-2) · **Decisão:** `D-166` (WO-1), `D-167` (WO-2)
 
