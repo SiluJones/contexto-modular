@@ -38,7 +38,7 @@ Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o 
   que some é sempre a de apagar. Estrutura que costuma duplicar (`<details>`, o bloco do topo do
   STATUS) tem contagem esperada — `grep -c` da abertura e do fechamento, um de cada. Aviso em prosa já falhou duas
   vezes seguidas; contagem não.
-- Se o commit toca `INSTRUCOES-DO-PROJETO.md`, meça `wc -m` e escreva o número no relatório, ao lado do
+- Se o commit toca `INSTRUCOES-DO-PROJETO.md`, meça os caracteres com `LC_ALL=C.UTF-8 wc -m` (sem o locale, `wc -m` conta bytes) e escreva o número no relatório, ao lado do
   teto do projeto: teto que ninguém mede envelhece calado.
 - O `HHMM` do nome do relatório sai de `date +%y%m%d-%H%M`, rodado na hora — nunca de cabeça.
 - **Versão (D-158):** WO que muda o que o kit **gera** já traz o corte de minor (`KIT_VERSION`, topo do

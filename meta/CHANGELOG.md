@@ -1,10 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.131.0**.
+> Histórico de versões. Versão atual: **v1.132.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.132.0 — O que o merge do v1.129.0 achou nos vizinhos: dois pares contraditórios, bullets fora do lugar, `.claude/`, `wc -m`, a pasta do histórico e o molde de WO (wo0142, D-169)
+- **Dois pares contraditórios a menos, e no `C111`:** as Instruções diziam «se a PRÓXIMA etapa pedir config diferente» e o CEREBRO «a Config sai SEMPRE» — vale o CEREBRO, e as Instruções encolhem 36 caracteres; o texto diz «**Próximo** vem antes de um divisor» (`D-094`, a ordem que o dono aprovou) e o esqueleto abria com `---` acima do Próximo — o esqueleto passa a ter o divisor logo abaixo do «Peça», no kit e na casa. Os cinco bullets do refino das Instruções saem do fim do bloco de fecho e voltam à seção «Refino», com asserção de posição.
+- **`.claude/` no canal pasta:** a skill muda por WO, como qualquer arquivo; o `settings.json` o chat entrega inteiro — no mount, para download; no canal pasta, gravado na pasta-pai com o comando de cópia no fecho, porque nem a ponte do chat nem o executor gravam a configuração de permissão do executor.
+- **O tamanho das Instruções em caracteres, com o locale dito:** `len()` em UTF-8 ou `LC_ALL=C.UTF-8 wc -m` — sem o locale, `wc -m` conta bytes (no Git Bash do Code, 7.463 para 7.199 caracteres). No CEREBRO gerado, na skill `wrap` gerada e na casa.
+- **A pasta do histórico das conversas**, se o dono mantiver uma, entra na seção «Canal do chat» do CEREBRO gerado: só leitura, fora do git e do «Arquivar», e o número da conversa vem dela.
+- **Molde de WO (gerado e casa):** âncora e texto novo sem linha em branco nas bordas, com o saldo de linhas como VERMELHO; o teste novo roda contra o código de antes e tem de falhar; relatório e log pela ferramenta de escrita, nunca `echo -e`. O `C43` ganha as três cláusulas.
+- **A idempotência da WO, corrigida (emenda a `D-163`):** «já aplicada» é o texto novo inteiro presente **e a âncora ausente** — salvo quando a âncora está dentro do texto novo (forma «trocar»). Só com o texto inteiro, a REMOÇÃO era pulada sem ser aplicada, porque o texto novo dela é um pedaço da âncora; achado na réplica desta WO, que tem duas remoções. No molde e na skill `apply-wo`, gerados e da casa; o `C43` ganha a cláusula (75 → 76).
+- **Origem:** os três vizinhos, no merge do v1.129.0 (`FK-BC` do Mapoteca; a fusão do GameDataHub; o item de 23/10 do satelite-web), e a análise `meta/analises/261023-ANALISE-lacunas-do-pacote-e-metodo-c.md`. Harness **19/19 · 113/113**.
 
 ## v1.131.0 — No canal pasta, o CEREBRO deixa a língua do mount nas regras que disparam todo turno (wo0140, D-167)
 - **Uma tabela de 39 trocas exatas** (`CANAL_PASTA`), aplicada ao CEREBRO gerado só com o Mount desligado: a abertura de turno roda `git log` e `git status` e lista a pasta-pai; a releitura é da pasta, e o desempate entre relatório e estado é o `git log`; o fecho fala de avulso na pasta-pai; P8 relê a pasta a cada turno e P11 compara com o disco; a entrega sem Code grava no lugar; o protocolo de atualização procura `AAMMDD-kcm-update-vX.Y.Z/` na pasta-pai; a medição delegada diz que o chat lê a pasta; e a seção de transferência ganha «canal de reserva» no título. O canal mount sai idêntico (741 de 741 textos), e as Instruções não mudam.

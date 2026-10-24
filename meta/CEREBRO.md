@@ -61,7 +61,7 @@ Detalhes completos: `README.md`, `PLANNING.md`, `meta/STATUS.md`, `meta/CHANGELO
 - **Segredo não mora na pasta-pai** nem em nota `.txt`: o que está ali entra no contexto todo turno.
 - **Livro de leitura dos vizinhos (D-159):** a tabela no topo de «Feedback para o Kit», no `meta/IDEAS.md`, diz até onde lemos a seção de feedback de cada projeto. Ao abrir a conversa com a pasta de um vizinho concedida, confira a seção dele contra o marcador e diga no `Base:` se há item novo. Existe porque 58 entradas ficaram seis semanas sem leitura.
 - **Aviso de lido (D-165):** carta de vizinho lida ganha, no turno em que é lida, um aviso na pasta-pai de **quem enviou**, ao lado da carta: `AAMMDD-kcm-leu-<NN>.md`, três linhas — data da leitura e o commit do KCM; o que foi extraído e para onde (`D-NNN`, versão), ou «lido, sem extração ainda»; se vem resposta e até quando. Não consome número do contador de cartas. Existe porque o livro de leitura só mostra a leitura a quem leu: o Mapoteca quase reescreveu uma carta que o KCM já tinha lido (`FK-BB`, carta 07).
-- **As Instruções:** a fonte é o `INSTRUCOES-DO-PROJETO.md` do repo; o que o assistente lê é a cópia colada no painel, e só o dono a atualiza. WO que muda as Instruções termina pedindo para recolar. Tamanho por `wc -m`, no turno.
+- **As Instruções:** a fonte é o `INSTRUCOES-DO-PROJETO.md` do repo; o que o assistente lê é a cópia colada no painel, e só o dono a atualiza. WO que muda as Instruções termina pedindo para recolar. Tamanho em caracteres, no turno: `len()` do texto em UTF-8 ou `LC_ALL=C.UTF-8 wc -m` — sem o locale, `wc -m` conta bytes (no Git Bash do Code, 7.463 para 7.199 caracteres).
 - **O terminal do chat é uma VM Linux, não o PowerShell do dono:** comando começa do zero, teto de cerca de 3 minutos, nada em segundo plano; fim de linha `i/lf w/crlf` não é mudança. O harness roda ali (`node build.js` + `node validate.js`, com o `node_modules` do dono) numa réplica fora da pasta — nunca no repo vivo antes da WO.
 
 ---
@@ -311,10 +311,10 @@ Todo turno de trabalho termina com este bloco, nesta ordem. **Próximo** vem ANT
 **Esqueleto — copie e preencha; a condição de cada linha está à direita:**
 
 ```
----
 **Próximo**                                   (sempre)
 - **Ação:** <a próxima coisa concreta a fazer>
 - **Peça no próximo turno:** «<frase copiável como está, sem lacuna>»
+---
 **Estado:** Base: <arquivo lido NESTE turno + data/commit que ELE traz> · <versão/fase> · <harness> · <commit>   (sempre)
 **Arquivar / Manter**                         (se há avulso no mount — listado, não lembrado)
 - **Arquivar:** <nome> — <motivo>

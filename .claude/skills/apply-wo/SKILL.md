@@ -22,7 +22,8 @@ Regras de aplicação:
   compara os dois números sem saber disso acha que achou um defeito.* Âncora de mais de uma linha
   colada com o separador errado não casa — na dúvida, edite linha a linha.
 - Antes de cada edição, confira a **idempotência** pelo texto NOVO INTEIRO — frase-chave não basta: na forma
-  «trocar» o texto novo repete a âncora, e um trecho dele já existe antes de aplicar. Se o inteiro já estiver no arquivo,
+  «trocar» o texto novo repete a âncora, e um trecho dele já existe antes de aplicar; na REMOÇÃO o texto novo é um pedaço da
+  âncora. Já aplicada = o inteiro está no arquivo **e a âncora não** (salvo quando a âncora está dentro do texto novo):
   PULE o item e diga no relatório — não duplique.
 - Não toque em nada fora das edições nomeadas na WO.
 - WO só de doc (`meta/`) NÃO precisa de build. WO que toca `src/` (template ou nicho) precisa de

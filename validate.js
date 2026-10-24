@@ -546,7 +546,7 @@ check("C55 a lista nao perde item e o relatorio nao mente (wo0105): terceiro est
     // (3) desempate entre os dois canais, por medicao e nao por suposicao
     assert(/mais recente vence|o `git log` diz se esse commit existe/.test(cmd), id+": sem criterio de desempate, «o relatorio lidera sempre» erra quando o dono commita entre relatorios");
     // (4) e (5) as duas regras de higiene novas
-    assert(/Arquivo sob `\.claude\/` o chat entrega INTEIRO/.test(cmd), id+": nada diz que configuracao do executor nao e aplicavel pelo executor — o classificador barra e o ciclo se perde");
+    assert(/Arquivo sob `\.claude\/`: a skill/.test(cmd) && /`\.claude\/settings\.json` o chat entrega INTEIRO/.test(cmd), id+": nada diz que configuracao do executor nao e aplicavel pelo executor — o classificador barra e o ciclo se perde");
     assert(/o bloco de commit e de quem APLICA/.test(cmd), id+": dois blocos de commit no mesmo turno = passo manual para o dono ou registro que fica para tras");
   });
   // (6) o relatorio: resultado real, reabertura, e nao ficar dentro do repo
@@ -1094,6 +1094,11 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     // wo0136 (D-163): idempotencia pelo texto NOVO INTEIRO. A frase-chave contradiz a forma «trocar», que
     // repete a ancora no texto novo: o GameDataHub mediu uma edicao pulada em silencio na wo0129 deles.
     ["idempotencia pelo texto inteiro",  /texto NOVO INTEIRO/,                     ["woTemplate","applyWo"]],
+    // wo0142 (i-N73 5, o que o GameDataHub devolveu na fusao do v1.129.0).
+    ["modelo de WO: sem borda em branco",   /sem linha em branco nas BORDAS/,        ["woTemplate"]],
+    ["modelo de WO: teste falha antes",     /rode-o contra o codigo de ANTES/,       ["woTemplate"]],
+    ["modelo de WO: escrita pela ferramenta", /nunca por `echo -e`/,                 ["woTemplate"]],
+    ["idempotencia: a ancora ausente",     /salvo quando a [aâ]ncora est[aá] (DENTRO|dentro) do texto novo/, ["woTemplate","applyWo"]],
     // wo0137 (D-164): o molde e neutro de canal e rotula o FlatDrop como reserva; a casa acompanha.
     ["modelo de WO: FlatDrop e reserva",  /canal de reserva \(FlatDrop\)/,         ["woTemplate"]],
     ["skills: origem da hora",           /date \+%y%m%d-%H%M/,                    ["applyWo","wrap"]],
@@ -1814,7 +1819,10 @@ check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coe
     ["gatilho do fim da conversa x modo Code registra",   /\| Fim da conversa \| Entrega os arquivos completos/,      /o assistente REGISTRA o que falta/, true],
     ["carimbo indistinguivel x carimbo decidivel",        /não tem como distinguir os dois casos/,                   /DECIDIVEL/,                                       false],
     ["medicao em bloco colavel x nunca empurre bloco",    /É bloco colável, entregue como qualquer instrução/,       /Isso inclui pedido de medição/, true],
-    ["commit sem excecao x commit e da WO",               /\*\*Commit:\*\* ao concluir mudança versionada, ENTREGUE/, /Havendo WO no turno, o bloco de commit/, true]
+    ["commit sem excecao x commit e da WO",               /\*\*Commit:\*\* ao concluir mudança versionada, ENTREGUE/, /Havendo WO no turno, o bloco de commit/, true],
+    // wo0142 (i-N73, FK-BC do Mapoteca): o lado velho de cada par sai na mesma WO.
+    ["config se a proxima etapa x config sempre",         /se a PRÓXIMA etapa pedir config diferente/,               /\*\*Config recomendada\*\* saem SEMPRE/,       false],
+    ["divisor depois do proximo x esqueleto que abre com ele", /vem antes de um divisor; o resto vem depois dele/,      /```\n---\n\*\*Próximo\*\*/,                   false]
   ];
   const fora=[]; let textos=0;
   Object.keys(T.NICHES).forEach(id => {
@@ -1841,6 +1849,10 @@ check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coe
   assert(/updatePackFolder\(\) \+ "\.zip"/.test(fonte) && /zip\.file\(dir \+ f\.flat/.test(fonte), "o download do pacote nao usa a pasta que o prompt cita — o nome do zip e o do prompt voltam a divergir");
   [upP, upM].forEach(u => assert(/\*\*Primeiro, a versao:\*\*/.test(u) && u.indexOf("v"+T.KIT_VERSION)>-1, "o prompt de atualizacao nao manda conferir a versao do pacote antes de comparar"));
   assert(upP.indexOf("**Primeiro, a versao:**") < upP.indexOf("**Antes de comparar qualquer coisa:**"), "a conferencia da versao vem DEPOIS da ordem de comparar");
+  // wo0142 (FK-BC 4): os cinco bullets do refino das Instrucoes moram na secao «Refino», nao no fim do fecho.
+  { const C=T.buildClaudeMd(dev), iR=C.indexOf("## Refino das Instruções"), iN=C.indexOf("\n## ", iR+5);
+    ["- **Sincronia com o CEREBRO.**", "- **Registre:** toda mudança de instrução"].forEach(b => { const i=C.indexOf(b);
+      assert(iR>-1 && i>iR && i<iN, "o bullet «"+b.slice(4,30)+"» saiu da secao «Refino das Instruções» — e a regra que so se le no lugar certo"); }); }
   return "ok (" + PARES.length + " pares em " + textos + " combinacoes; pasta do pacote " + pasta + ")";
 });
 

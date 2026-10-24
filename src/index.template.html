@@ -1185,7 +1185,7 @@ const HYGIENE_RULES = [
   "**Arquivo avulso novo se le no TURNO em que chega.** Nota, relatorio, carta, analise: o dono subiu porque e para agora. Adiar e a excecao e precisa de motivo dito em voz alta — «Manter: nao li» carrega prazo, e prazo vencido nao rola para o turno seguinte: ou se le, ou se declara abandonado. **Medido: um arquivo esperou dois dias, o dono cobrou, e no turno seguinte ele tinha saido do mount — o conteudo se perdeu inteiro.** Adiar leitura nao guarda o arquivo; so adia a descoberta de que ele sumiu.",
   "**«Não verificado» é proibido para o que está no mount, e toda ressalva declara a leitura que a sustenta.** Duas coisas diferentes se parecem por fora: **não verificado** (podia ler, não li) e **não legível por este canal** (não há como daqui). A primeira tem a forma de uma admissão honesta e é adiamento sem prazo — ninguém, nem quem escreve, distingue as duas na leitura seguinte. Antes de escrever qualquer uma, diga **qual leitura** foi feita: «listei o mount e não está lá» é ressalva; «não olhei» é trabalho pendente. E o quinto modo de falhar a releitura, o mais comum e o mais silencioso, é **cumpri-la pela metade** — listar os avulsos e abrir só os que parecem relevantes: o que se perde nessa triagem é exatamente o que não se sabia que era preciso, e o custo medido foi uma ideia do dono parada quatro dias no mount e uma ordem de serviço escrita sobre uma premissa que um relatório não lido já tinha desmentido.",
   "**Havendo WO no turno, o bloco de commit e de quem APLICA — e cobre tudo.** A WO ja carrega o proprio `git add`; o chat nao entrega bloco separado por cima, porque dois blocos no mesmo turno significam ou um passo manual para o dono ou um registro que fica para tras. O bloco de quem aplica cobre a WO, os arquivos que o chat entregou para download e qualquer pendencia. **Nao havendo WO, o bloco e do chat.** Salvaguarda: quem aplica confere a presenca no disco do que o chat entregou e, se faltar, commita o resto e RELATA — nunca supoe que chegou.",
-  "**Arquivo sob `.claude/` o chat entrega INTEIRO, para download — a WO so o menciona no `git add`.** Configuracao do executor nao e aplicavel pelo executor: o classificador bloqueia, e com razao — a barreira existe para ele nao se autoconceder permissao, e «eu autorizo» dito na conversa nao muda isso. Medido em campo: uma WO que montava delta em `.claude/` foi barrada e custou o ciclo inteiro. A mesma logica vale para qualquer arquivo que governe o que o executor pode fazer.",
+  "**Arquivo sob `.claude/`: a skill (`.claude/skills/*`) muda por WO, como qualquer arquivo; o `.claude/settings.json` o chat entrega INTEIRO — no mount, para download; no canal pasta, gravado na pasta-pai (`AAMMDD-claude-settings.json`), com o comando exato de copia no fecho, porque a ponte do chat tambem nao grava em `.claude/` — e a WO so o menciona no `git add`.** Configuracao de permissao do executor nao e aplicavel pelo executor: o classificador bloqueia, e com razao — a barreira existe para ele nao se autoconceder permissao, e «eu autorizo» dito na conversa nao muda isso. Medido em campo: uma WO que montava delta em `.claude/` foi barrada e custou o ciclo inteiro. A mesma logica vale para qualquer arquivo que governe o que o executor pode fazer.",
   "**Todo comando entregue ao usuario vai INTEIRO e diz QUEM executa.** Inteiro: nada de `<...>`, `<caminho>` ou reticencias no lugar de um valor que voce ja tem impresso na conversa. Placeholder so vale quando o valor e genuinamente desconhecido — e ai vem NOMEADO («troque `<id>` pelo id do mapa»), nunca como reticencias. Quem executa: **«e do usuario» e conclusao, nao rotulo, e exige nomear o impedimento** — a pergunta de uma linha antes de escrever isso e *o que este comando faz que o executor nao consegue?*, e sem resposta o comando e do executor. **Impedimento de um passo nao se herda para o passo vizinho:** descobrir que a rede local derruba HTTPS nao torna manual um comando que so le arquivo local. Custo medido em campo: cinco tarefas seguidas carimbadas «conferencia do dono» para um comando que o executor rodaria sozinho, e um caminho entregue com reticencias que estava completo em tres relatorios do mesmo dia.",
   "**Instrução de edição manual entrega o comando que MOSTRA o alvo antes do que o altera.** «Ache a entrada que começa com X e apague a linha» é verdadeira e inútil quando o arquivo tem uma linha só, enorme: o dono abre, não acha e não sabe o que fazer. Em JSON, entregue o comando que edita, não a descrição do que procurar — o dono tem terminal, e a mão dele não é o lugar de resolver busca em texto.",
   "**A sintaxe do comando é da RAIA que o roda.** O executor roda num shell do tipo Bash, onde a barra invertida escapa o caractere seguinte: comando para ele usa `/` nos caminhos. O dono cola no shell dele, e a barra invertida só entra onde esse shell a exige; em comando `git`, `/` funciona nos dois — prefira. E todo comando que o dono copia vai em **bloco cercado**, nunca em código inline: o Markdown come a barra invertida antes de `_`, e o terminal recebe outro nome de arquivo.",
@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.131.0";
+const KIT_VERSION = "1.132.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2363,7 +2363,7 @@ function buildInstr(niche){
   lines.push(mountModeOn()
     ? "**Nome de download:** arquivo para baixar usa o nome SIMPLES (ex.: `IDEAS.md`), sem prefixo de pasta (não `meta_IDEAS.md`). Só prefixe para desambiguar dois arquivos de mesmo nome."
     : "**Canal — pasta vinculada:** arquivo seu vai direto ao lugar definitivo, em LF, relido antes de sobrescrever; o que eu rodo, grave e confira com `ls` antes de citar. Git só leitura (`GIT_OPTIONAL_LOCKS=0`). Resto: CEREBRO, «Canal do chat».");
-  lines.push("**Config:** no fim, se a PRÓXIMA etapa pedir config diferente, recomende-a explícita — no chat: modelo + esforço (Baixo→Máximo) + pensamento (lig/desl); no Claude Code: modelo + `/effort` (ou `ultrathink`/`ultracode`), SEM toggle de pensamento. Nunca afirme saber a atual; recomende pela tarefa. Pesada com config fraca → peça aumento; folga → diga que pode baixar.");
+  lines.push("**Config:** no fim, sempre, recomende-a por raia — no chat: modelo + esforço (Baixo→Máximo) + pensamento (lig/desl); no Claude Code: modelo + `/effort` (ou `ultrathink`/`ultracode`), SEM toggle de pensamento. Nunca afirme saber a atual; recomende pela tarefa. Pesada com config fraca → peça aumento; folga → diga que pode baixar.");
   lines.push("**Log:** nomeie `logs/AAAA-MM-DD.md` (data ISO, sem a palavra \"log\" no nome).");
   lines.push("**Análise antes do compromisso:** não-trivial → `analises/AAMMDD-ANALISE-<tema>.md`; QUÊ já decidido = execução, vá direto. Gatilho e abandono no CEREBRO.");
   if(codeModeOn()) lines.push(mountModeOn() ? "**Arquivo não lido não se deduz — mande o Code medir.**" : "**Arquivo não lido não se deduz — leia do disco; o Code mede o que roda.**");
@@ -2611,8 +2611,9 @@ function buildClaudeMd(niche){
       ? "Padrão: o chat escreve inteiros a análise, a WO, CONTEXT, CEREBRO, Instruções e GLOSSARY; o Code escreve o código, STATUS, DECISIONS, CHANGELOG e a sua seção do log; IDEAS e todo doc grande e vivo mudam por WO."
       : "Padrão: o chat escreve os documentos; o dono revisa e versiona.") + " O projeto pode mudar a divisão — registrando em DECISIONS —, nunca deixá-la implícita.");
     L.push("- **Notas e relatórios moram na pasta-pai,** fora do Git. Leia inteira a que chegou, funda nos meta/ e arquive **movendo** para `notas-arquivadas/` dentro dela — mover, nunca apagar. Liste a pasta antes e depois: arquivo que some sem comando que o cite é perda, não arquivamento.");
+    L.push("- **Se o dono mantém uma pasta de histórico das conversas** (por exemplo, exportada pelo CDC para dentro da pasta de arquivo), **ela é dele e só leitura:** leia quando a origem de uma decisão ajudar; não ponha nada dentro, não mova, não renomeie, não apague e não versione — nem no «Arquivar», que move para a RAIZ da pasta de arquivo, nunca para uma subpasta dela. Se ela numera as conversas, o handoff e o log citam esse número.");
     L.push("- **Segredo não mora em pasta que o chat lê a cada turno.** `.env`, cookie e token ficam no repositório (ignorados pelo Git) ou fora das pastas concedidas: o que está na pasta-pai entra no contexto todo turno.");
-    L.push("- **As Instruções do Projeto têm duas cópias, e a fonte é o arquivo do repositório.** Mudança nas Instruções muda primeiro o arquivo; o fecho pede ao dono que cole no painel do Projeto. O tamanho sai de `wc -m` no turno, nunca de número gravado em documento.");
+    L.push("- **As Instruções do Projeto têm duas cópias, e a fonte é o arquivo do repositório.** Mudança nas Instruções muda primeiro o arquivo; o fecho pede ao dono que cole no painel do Projeto. O tamanho sai no turno, em caracteres — `len()` do texto em UTF-8, ou `LC_ALL=C.UTF-8 wc -m`: sem o locale, `wc -m` conta bytes —, nunca de número gravado em documento.");
     L.push("- **O terminal do chat não é o do dono.** É uma VM Linux: cada comando começa do zero, tem teto de cerca de 3 minutos, e processo em segundo plano morre com a chamada. Arquivo «modificado» só por fim de linha (`i/lf w/crlf`) não mudou. Apagar vem desligado: peça a permissão, não contorne.");
   }
   // Tecnicas especificas do projeto (sand-land FK/DEC-018): o unico conteudo que sobrevive a um rebase do kit
@@ -2759,6 +2760,11 @@ function buildClaudeMd(niche){
   L.push("- **Não confunda encurtar com esquecer.** Regra que já evitou um erro real (está no DECISIONS) NÃO sai. Se algo sai, some ao CEREBRO — o CEREBRO é lido sob demanda, as Instruções em toda mensagem: mover é barato, apagar é caro.");
   L.push("- **Não inche.** Antes de acrescentar uma regra, pergunte se ela cabe no CEREBRO. Só vai para as Instruções o que precisa ser lembrado em TODO turno.");
   L.push("- **Princípio sem gatilho não dispara — e o remédio é oportunista, não uma auditoria.** Virtude é escrita no infinitivo («analisa antes de aceitar», «explica trade-offs») e não tem hora; gatilho é escrito com o **evento na frente** («quando o dono impõe uma restrição para evitar perda, proponha a forma mais barata de obter a mesma proteção») e dispara sozinho. Percorrer todos os princípios inventando gatilhos gera tabela longa que ninguém lê. **A política é outra: toda vez que um princípio falhar em campo, aquele princípio ganha o gatilho — com o evento real que o teria disparado, colhido do caso.** O caso é o que torna o gatilho específico; sem ele, você escreve outra virtude e acha que escreveu um gatilho.");
+  L.push("- **Sincronia com o CEREBRO.** Quando uma customização estrutural entra no CEREBRO (novo modo, novo arquivo, mudança de processo), a versão curta das Instruções pode ficar para trás e até contradizê-lo. Ao mexer no CEREBRO, cheque se as Instruções ainda batem; se divergirem, proponha alinhar/regenerar a versão curta.");
+  L.push("- **Uma regra por linha, verbo no imperativo, sem preâmbulo.** Prosa explicativa vive no CEREBRO.");
+  L.push(`- **Teto:** na configuração **padrão**, as Instruções não devem passar de ~**6.900** caracteres. Ao propor uma mudança, diga o tamanho antes e depois.`);
+  L.push(`- **Teto por configuração.** Ligar um modo de trabalho tem orçamento próprio, porque o custo é real e recorrente: **+${MODO_ORCAMENTO.code}** para o Modo Code sobre o padrão, **+${MODO_ORCAMENTO.asu}** para o ASU sobre o que o Code já custa, e **${MODO_ORCAMENTO.compartilhado}** para as linhas que *qualquer* modo de trabalho liga (elas têm limite próprio, senão crescem sem dono), e **+${MODO_ORCAMENTO.grupo}** para o projeto em grupo. O **total** com modos ligados — contando a linha do sistema operacional, quando escolhido — não passa de **${INSTR_TETO_MODOS}**. O que se trava é o **incremento**, não o total: o total depende de quanta coisa este projeto tem, e isso é seu; o incremento é o que a regra nova custa, e é o que precisa caber. Não caber é sinal de que outra linha precisa ser curada primeiro — mandar detalhe para este CEREBRO é de graça, e a versão curta fica na Instrução.`);
+  L.push("- **Registre:** toda mudança de instrução vira uma linha no DECISIONS (o que mudou e por quê) e um item em «Feedback para o Kit» no IDEAS — é assim que o kit aprende com este projeto.");
   L.push("");
   L.push("## Medição delegada (quem tem o disco mede, quem tem o contexto decide)");
   L.push("");
@@ -2848,10 +2854,10 @@ function buildClaudeMd(niche){
   L.push("5. **Handoff** — por último, só quando houver arquivo trocando de mão: arquivo por arquivo, onde cada um vai. Handoff de conversa completa: o artefato se chama `AAMMDD-HANDOFF-BRIEF.md`. **O handoff nunca é versionado nem entra nas pastas do projeto:** é artefato de transferência, como a correspondência; o que nele for durável já tem endereço nos documentos de contexto.");
   L.push("**Esqueleto — copie e preencha; a condição de cada linha está à direita:**");
   L.push("```");
-  L.push("---");
   L.push("**Próximo**                                   (sempre)");
   L.push("- **Ação:** <a próxima coisa concreta a fazer>");
   L.push("- **Peça no próximo turno:** «<frase copiável como está, sem lacuna>»");
+  L.push("---");
   L.push("**Estado:** Base: <arquivo lido NESTE turno + a data/commit que ELE traz> · <versão ou fase> · <harness> · <commit>   (sempre)");
   L.push("**Arquivar / Manter**                         (se há avulso no mount — listado, não lembrado)");
   L.push("- **Arquivar:** <nome> — <motivo>");
@@ -2865,12 +2871,6 @@ function buildClaudeMd(niche){
   L.push("**De quem é este bloco:** da raia de **planejamento** (o assistente no chat). Quem **executa** no Claude Code não fecha assim — fecha com o **relatório de trabalho**: o que fez, o que encontrou que foge do que a tarefa pedia, os arquivos tocados, o resultado do build/validação e o commit. Trocar o relatório por este formulário perde a informação que só quem executou tem.");
   L.push("**Este formato é o ponto de partida, não uma jaula.** Se este projeto tem um dado recorrente que merece linha própria (prazo, custo, publicação, estoque, o que for), acrescente — e se uma linha nunca se aplica aqui, proponha removê-la no refino.");
   L.push("Vale para todo turno de trabalho, não só ao encerrar a conversa: é o que me deixa retomar sem reconstruir contexto.");
-  L.push("");
-  L.push("- **Sincronia com o CEREBRO.** Quando uma customização estrutural entra no CEREBRO (novo modo, novo arquivo, mudança de processo), a versão curta das Instruções pode ficar para trás e até contradizê-lo. Ao mexer no CEREBRO, cheque se as Instruções ainda batem; se divergirem, proponha alinhar/regenerar a versão curta.");
-  L.push("- **Uma regra por linha, verbo no imperativo, sem preâmbulo.** Prosa explicativa vive no CEREBRO.");
-  L.push(`- **Teto:** na configuração **padrão**, as Instruções não devem passar de ~**6.900** caracteres. Ao propor uma mudança, diga o tamanho antes e depois.`);
-  L.push(`- **Teto por configuração.** Ligar um modo de trabalho tem orçamento próprio, porque o custo é real e recorrente: **+${MODO_ORCAMENTO.code}** para o Modo Code sobre o padrão, **+${MODO_ORCAMENTO.asu}** para o ASU sobre o que o Code já custa, e **${MODO_ORCAMENTO.compartilhado}** para as linhas que *qualquer* modo de trabalho liga (elas têm limite próprio, senão crescem sem dono), e **+${MODO_ORCAMENTO.grupo}** para o projeto em grupo. O **total** com modos ligados — contando a linha do sistema operacional, quando escolhido — não passa de **${INSTR_TETO_MODOS}**. O que se trava é o **incremento**, não o total: o total depende de quanta coisa este projeto tem, e isso é seu; o incremento é o que a regra nova custa, e é o que precisa caber. Não caber é sinal de que outra linha precisa ser curada primeiro — mandar detalhe para este CEREBRO é de graça, e a versão curta fica na Instrução.`);
-  L.push("- **Registre:** toda mudança de instrução vira uma linha no DECISIONS (o que mudou e por quê) e um item em «Feedback para o Kit» no IDEAS — é assim que o kit aprende com este projeto.");
 
   L.push("");
   L.push("## Tabela de gatilhos (evento → o que o assistente entrega)");
@@ -3380,7 +3380,9 @@ function buildWoTemplate(){
     "> **Ancora semantica:** se um trecho-ancora nao bater EXATAMENTE, **PARE e reporte** — nunca chute um",
     "> lugar proximo. Os arquivos podem ter mudado entre a escrita desta WO e a aplicacao.",
     "> **Idempotencia:** antes de cada edicao, procure o texto NOVO INTEIRO no arquivo — frase-chave nao basta: na forma",
-    "> «trocar» o texto novo repete a ancora, e um trecho dele ja existe antes de aplicar. Se o inteiro ja estiver, **PULE**",
+    "> «trocar» o texto novo repete a ancora, e um trecho dele ja existe antes de aplicar. Ja aplicada = o texto novo INTEIRO esta",
+    "> no arquivo **e a ancora nao** — salvo quando a ancora esta DENTRO do texto novo (forma «trocar»). Na REMOCAO o texto novo e",
+    "> um pedaco da ancora: sem a segunda condicao, ela seria pulada sem nunca ter sido aplicada. Ja aplicada, **PULE**",
     "> o item e diga no relatorio — nao duplique.",
     "> **Ancoras lidas em:** para CADA edicao, o arquivo e o trecho literal que voce leu NESTE turno para escrever a ancora.",
     "> Campo OBRIGATORIO em WO que edita arquivo existente. **Quem aplica RECUSA a WO se vier vazio** — a conferencia sai de",
@@ -3534,6 +3536,8 @@ function buildWoTemplate(){
     "> BORDA do texto novo nao sobrevive ao bloco cercado — ponha-a no MEIO, entre a ancora e o texto.",
     "> **Caso medido:** um script de aplicacao tratou «inserir apos» como «substituir» em tres edicoes; o",
     "> saldo de linhas previsto pela WO acusou, e quem aplicou corrigiu antes do commit.",
+    "> **Ancora e texto novo sem linha em branco nas BORDAS.** A borda em branco casa uma linha a menos (ou a mais), o saldo",
+    "> «quase bate» e quem aplica racionaliza a diferenca. Recorte sem borda; saldo de linhas diferente do previsto e VERMELHO.",
     "",
     "## Edicao 2 — `caminho/real/do/arquivo.ext` · [...]",
     "",
@@ -3630,7 +3634,8 @@ function buildWoTemplate(){
     "        porque nenhum instrumento abriu um deles. Fechar a lacuna costuma custar pouco.",
     "      - **Prova de vida:** quando \"passou\" se parece com \"nada aconteceu\", o passo precisa do par negativo",
     "        que forca o sinal. Lista vazia so significa alguma coisa depois de voce ter visto a mesma checagem",
-    "        devolver um item.",
+    "        devolver um item. Teste novo: rode-o contra o codigo de ANTES — ele tem de falhar, no numero previsto;",
+    "        teste que passa antes da mudanca nao testa a mudanca.",
     "      - **`grep` casa por LINHA.** Se a frase que voce mandou conferir esta quebrada em duas linhas — e o",
     "        proprio texto que a WO insere costuma quebra-la —, o `grep` devolve zero e o passo acusa ausencia",
     "        onde ha presenca. Conferir frase que atravessa linha pede `grep -Pzo`, `rg -U` ou uma ancora curta",
@@ -3643,6 +3648,8 @@ function buildWoTemplate(){
     "O que foi feito · o que fugiu do texto literal da WO · arquivos tocados · resultado da validacao · o commit e o push. Escreva-o DEPOIS de resolver o push: relatorio anterior a decisao conta so parte da historia.",
     "**Nao** substitua este relatorio pelo bloco de fecho do chat: aquele e da raia de planejamento, e trocar",
     "relatorio por formulario perde justamente o que so quem aplicou viu.",
+    "Relatorio e log se gravam pela ferramenta de escrita de arquivo, nunca por `echo -e`/`printf`: o escape come a barra",
+    "invertida dos caminhos do Windows e grava byte invalido.",
     "",
     "## Commit — blocos separados, mensagem SEM acento",
     "",
@@ -3728,7 +3735,7 @@ function buildCodeKitFiles(){
     "Leia o arquivo de WO indicado em `meta/workorders/` e execute-o.",
     "ANTES de editar: se a WO edita arquivo existente e o cabeçalho dela NÃO traz o campo «Âncoras lidas em» preenchido, RECUSE — não aplique, e diga que falta. Quem escreveu a WO é quem tem o viés; esta conferência é sua justamente por isso.",
     "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.",
-    "Antes de cada edição, confira a idempotência pelo texto NOVO INTEIRO: se ele já está no arquivo, PULE e diga no relatório. Frase-chave não basta — na forma «trocar» o texto novo repete a âncora, e um trecho dele já existe antes de aplicar.",
+    "Antes de cada edição, confira a idempotência pelo texto NOVO INTEIRO: se ele já está no arquivo **e a âncora não** — salvo quando a âncora está dentro do texto novo, na forma «trocar» —, PULE e diga no relatório. Frase-chave não basta: na forma «trocar» o texto novo repete a âncora, e um trecho dele já existe antes de aplicar; e na REMOÇÃO o texto novo é um pedaço da âncora, presente antes de aplicar.",
     "Se o banner «Canal dos meta» disser CHAT e o corpo trouxer edição numerada num documento `meta/`, a WO é contraditória: PARE e pergunte. O banner decide quem APLICA; escolher um dos lados em silêncio já deixou o registro de uma WO inteira de fora.",
     "Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.",
     "Ao terminar, RELATE com corpo mínimo, nesta ordem: (1) o que foi feito, edição por edição; (2) a SAÍDA CRUA das conferências — o número e o comando que o produziu, nunca só «bate»; (3) o que fugiu do texto literal da WO; (4) o que muda para quem usa; (5) o que você olhou além da WO; (6) arquivos tocados; (7) build/validação; (8) commit e push. Relatório que só repete «bate, bate, bate» não foi escrito por quem olhou o diff.",
@@ -3747,7 +3754,7 @@ function buildCodeKitFiles(){
     "Encerre a tarefa: atualize `meta/STATUS.md` (append, não reescreva), acrescente `DEC-`/`FIX-` em `meta/DECISIONS.md` se houve decisão/bug,",
     "e confira o `git diff` — a forma esperada, nada além. Mensagem de commit SEM acento.",
     "**Antes do commit, conte a ESTRUTURA que você editou.** No `STATUS.md`, o bloco da sessão anterior tem de continuar no arquivo depois da sua edição — procure o título dele: mover tem duas metades, e a que some é sempre a de apagar. Estrutura que costuma duplicar (`<details>`, o bloco do topo do STATUS) tem contagem esperada — `grep -c` da abertura e do fechamento, um de cada. Aviso em prosa já falhou duas vezes seguidas; contagem não.",
-    "Se o commit toca `INSTRUCOES-DO-PROJETO.md`, meça `wc -m` e escreva o número no relatório, ao lado do teto do projeto: teto que ninguém mede envelhece calado.",
+    "Se o commit toca `INSTRUCOES-DO-PROJETO.md`, meça os caracteres com `LC_ALL=C.UTF-8 wc -m` (sem o locale, `wc -m` conta bytes) e escreva o número no relatório, ao lado do teto do projeto: teto que ninguém mede envelhece calado.",
     "O `HHMM` do nome do relatório sai de `date +%y%m%d-%H%M`, rodado na hora — nunca de cabeça.",
     "Ao mudar um número ou um estado no `STATUS.md` (contagem de testes/checagens, versão, «funciona até X»), procure o valor ANTIGO no arquivo INTEIRO e atualize todas as ocorrências — o cabeçalho não é o único lugar onde ele aparece, e a cópia esquecida no meio do texto passa a mentir.",
     "Escreva o log do dia em `logs/AAAA-MM-DD.md` (formato em `meta/LOG-TEMPLATE.md`). Se o arquivo do dia NÃO existe, CRIE — não regenerar é uma coisa, não criar é outra. Se já existe, acrescente. Cinco linhas escritas hoje valem mais que uma página reconstituída na semana que vem: só você viu o que aconteceu aqui.",
