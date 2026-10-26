@@ -2270,3 +2270,17 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Também decidido no mesmo ponto da análise (registrado na `i-N71`):** o método C entra em piloto na casa — dez WOs, começando pelas de documentação, com o dono por documento escrito antes da primeira —, e só depois o kit documenta a variante.
 
 **Números** `[medido em sandbox — réplica do HEAD; o relatório da wo0142 traz a medida no repo]`: `index.html` 936.658 → 938.573 bytes; Instruções no padrão 5.852 → 5.816 (incremento do Code 540/550, igual); `C111` 5 → 7 pares; `C43` 72 → 76 cláusulas; harness 113/113.
+
+## D-170 — O método C em piloto na casa: o chat grava na árvore, a WO confere e publica, por dez WOs
+
+**Data:** 2026-10-24 · **WO:** 0143 · **Origem:** `i-N71`, ponto 4 da análise `meta/analises/261023-ANALISE-lacunas-do-pacote-e-metodo-c.md`, aceito pelo dono em 2026-10-24 · **Revê, durante o piloto:** o dono por documento da `D-157` e a raia do Code (append em STATUS, DECISIONS e log, pelo `/wrap`).
+
+**Decisão.** Da wo0144 à wo0153: (1) o chat grava na árvore tudo o que entra no commit — `src/`, `validate.js`, `meta/` com STATUS, DECISIONS e o log do dia, as skills, o `CLAUDE.md`, as Instruções e a WO —, por troca exata sobre o arquivo lido no turno e no fim de linha que o arquivo já tem, e roda build + harness numa réplica do HEAD com os arquivos dele por cima antes de entregar; (2) a WO vira ordem de conferência e publicação (forma «conferencia» no molde): inventário com `+/−` e `sha1sum`, `git status` contra ele, build, harness, commit, push; (3) o Code não reescreve e não escreve em doc — gera o `index.html` e escreve o relatório; falhou, para e relata, e o chat corrige na árvore e atualiza a mesma WO; sem `/wrap`. As duas primeiras WOs só de documentação; código a partir da terceira, se elas passaram sem parar. A tabela da `i-N71` mede cada uma contra as dez anteriores. Um erro que chegue a um commit, ou duas paradas seguidas por conteúdo, suspende o piloto. No fim, a análise do resultado decide se a casa fica no método C e se o kit ganha a variante (M2).
+
+**Por que esta WO ainda é na forma «edições».** A regra que ela troca — quem escreve cada documento — é a mesma que diz que o CEREBRO, as skills e o molde mudam por WO. Gravar a regra nova no método C seria usá-la antes de valer; e o dono por documento tinha de estar escrito antes da primeira WO de conferência, ou os dois escritores brigam (o risco que a análise apontou).
+
+**Por que o `index.html` fica com o Code.** O chat não roda build no repo vivo — a réplica é o lugar dele —, e o `index.html` é gerado, não escrito: quem o gera é quem commita. O inventário traz os bytes e o `sha1sum` sem CR medidos na réplica, e o que o Code gerar tem de bater.
+
+**O que o piloto mede que o satelite-web não mediu:** um verificador de 113 checks em vez de tsc + ESLint, e uma casa em que o Code também escrevia os docs. O caso que nenhuma das duas amostras tem — o projeto sem verificador — segue fora: é a condição de entrada da M2.
+
+**Números** `[medido no disco e na réplica do HEAD 0549b16]`: Instruções da casa 7.199 → 7.636 caracteres (`len()` em UTF-8); harness 113/113, sem check novo; base do piloto, as dez WOs anteriores: 469 linhas em média.

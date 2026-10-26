@@ -5,6 +5,7 @@ disable-model-invocation: true
 ---
 
 Encerre a tarefa atual (fechamento da raia de EXECUÇÃO — relatório, não o bloco de fecho do chat):
+- **Depois de uma WO de conferência (método C, piloto da wo0144 à wo0153, D-170), não feche aqui:** STATUS, DECISIONS e o log do dia são do chat durante o piloto, e o relatório do `/apply-wo` já é o fecho. Diga isso e pare, sem editar nada.
 - **ANTES de escrever qualquer coisa:** abra o relatório que carrega o **COMMIT MAIS NOVO** em
   `../AAMMDD-HHMM-code-*.txt` — ordene por commit, **não** por nome nem por data do arquivo, porque
   relatório antigo que foi **reaberto** tem data nova — e confira o que ele AFIRMA contra `git status`

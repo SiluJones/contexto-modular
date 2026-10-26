@@ -586,7 +586,12 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 
 **Proposta, para a WO:** no canal pasta, o download se chama `AAMMDD-kcm-update-vX.Y.Z.zip`, e o zip traz o conteúdo dentro de uma pasta com esse nome, para «Extrair tudo» criar a pasta certa sem o dono renomear; e o `_UPDATE-PROMPT.md` abre mandando conferir a linha `Kit:` do manifesto contra a versão que a carta ou o dono anunciou — diferente = PARE e avise antes de comparar qualquer coisa. Um check no harness confere que o nome do download e o nome que o prompt cita são o mesmo.
 
-## i-N71 — O «método C» do satelite-web: o chat aplica direto e o Code confere — EM PILOTO NA CASA (decidido em 2026-10-24, ponto 4 da análise `261023`): dez WOs no método C, começando pelas de documentação, com o dono por documento escrito antes da primeira; depois, o kit documenta a variante do modo Code com a condição de entrada. Dado de campo do satelite-web (2026-10-20): 10 WOs, 10 verdes
+## i-N71 — O «método C» do satelite-web: o chat aplica direto e o Code confere — PILOTO EM CURSO NA CASA (wo0143, `D-170`): dez WOs de conferência, da wo0144 à wo0153, as duas primeiras só de documentação; o dono por documento do piloto está no CEREBRO, «Método C»; no fim, a análise do resultado decide a casa e a variante do kit (M2). Dado de campo do satelite-web (2026-10-20): 10 WOs, 10 verdes
+
+**Medida do piloto** (`D-170`) — o chat preenche uma linha a cada conferência de volta; linhas da WO por `wc -l`. **Base**, as dez WOs anteriores na forma «edições» (wo0133 a wo0142, medidas em 2026-10-24): **469 linhas** em média (222 a 709) e 32 KB; nenhuma parada no Code por conteúdo; dois achados de fim de linha que só o Code via (wo0138, wo0140); nenhum erro conhecido no commit.
+
+| WO | Tipo | Parou no Code? | Erro no commit? | Linhas | Nota |
+|---|---|---|---|---|---|
 
 **2026-10-20 — um segundo projeto no método C:** o **Observatorio** (`C:\Users\alexk\Trabalho\Observatorio`), novo, começa orientado pelo dono a seguir o fluxo do satelite-web `[relatado pelo dono]`. Ainda não lido pelo KCM. Quando tiver dez WOs, é o segundo conjunto de dado de campo — e o primeiro de um projeto que nasceu no método C, sem a transição.
 

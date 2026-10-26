@@ -8,6 +8,8 @@ Leia o arquivo de WO em `meta/workorders/$ARGUMENTS` e execute-o (se o argumento
 `meta/workorders/`, use-o como está). Se o nome não vier na invocação,
 PEÇA — não escolha uma WO por conta própria.
 
+**WO de conferência (método C, piloto da wo0144 à wo0153, D-170):** se o cabeçalho trouxer a linha «**Forma:** conferencia», o chat JÁ GRAVOU tudo na árvore, e você CONFERE e PUBLICA: `git pull --ff-only`; o `git status --short` mostra exatamente o Inventário (faltou ou sobrou, PARE); o `sha1sum` e o `git diff --numstat` de cada arquivo batem com ele (não bateu, PARE — alguém mexeu depois do chat); leia o diff inteiro; `node build.js` se `src/` mudou (bytes e sha1 do `index.html` contra o Inventário) e `node validate.js index.html`; verde, `add` só do Inventário, do `index.html` gerado e da WO, commit, push. **Não reescreva o que o chat gravou e não escreva em doc nenhum** — STATUS, DECISIONS e o log são do chat no piloto; achado vai no relatório. Sem `/wrap`. As regras de âncora, fim de linha e idempotência abaixo são da forma «edições»; push antes do relatório, menu no vermelho, corpo mínimo e relatório na pasta-pai valem para as duas.
+
 Regras de aplicação:
 - **ANTES de editar:** se a WO edita arquivo existente e o cabeçalho dela NÃO traz o campo «Âncoras
   lidas em» preenchido, **RECUSE** — não aplique, e diga que falta. Quem escreveu a WO é quem tem o

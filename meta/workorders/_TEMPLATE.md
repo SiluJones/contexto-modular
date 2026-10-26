@@ -8,6 +8,8 @@
 > **O que e uma WO:** instrucao de APLICACAO — ancora + texto exato — que o chat autora e o Code posiciona.
 > **O que NAO e:** a spec de feature diz **o que** construir e quando esta pronto; a WO diz **como aplicar**.
 > Se voce ainda nao sabe o que construir, nao e hora de escrever WO — e hora de analise ou spec.
+>
+> **Forma «conferencia» (piloto do metodo C, D-170, wo0144 a wo0153):** o chat ja gravou tudo na arvore e a WO so confere e publica — sem ancora e sem texto novo; o esqueleto esta no fim deste arquivo. Fora do piloto, vale a forma «edicoes» abaixo.
 
 ---
 
@@ -310,3 +312,39 @@ git commit -m "tipo(escopo): descricao no imperativo curto" -m "Corpo explicando
 ```
 git push
 ```
+
+---
+
+## Forma «conferencia» — WO do metodo C (piloto, D-170)
+
+> Da wo0144 a wo0153. O chat JA GRAVOU tudo na arvore (troca exata, no fim de linha do arquivo) e ja rodou build + harness numa replica do HEAD com os arquivos dele por cima. Esta forma nao traz ancora nem texto novo: o diff e o registro. Quem aplica CONFERE e PUBLICA; nao reescreve e nao escreve em doc. Falhou, PARE e relate: o chat corrige na arvore e atualiza esta mesma WO. Protocolo: `meta/CEREBRO.md`, «Metodo C — piloto na casa».
+
+**Cabecalho**
+
+> **Forma:** conferencia (metodo C, piloto N/10, D-170) · **Tipo:** DOC · CODIGO · mista.
+> **Config sugerida:** modelo e esforco para quem confere (costuma bastar o mais leve).
+> **Pre-requisito:** HEAD = `xxxxxxx`, `main` = `origin/main`; harness em 19/19 · NNN/NNN.
+> **Base:** a decisao, a analise ou o pedido que originou.
+> **Ancoras lidas em:** o HEAD e o `git status --short` de partida, lidos neste turno ANTES das gravacoes do chat.
+> **Proximo comando:** nenhum — no piloto nao ha `/wrap`.
+
+**Inventario** — saido do `git status --short` e do `git diff --numstat` da arvore depois das gravacoes do chat (arquivo novo: `+N / 0` pelo `wc -l`); `sha1sum` do arquivo da arvore.
+
+| Arquivo | O que muda | + / − | sha1sum |
+|---|---|---|---|
+| `caminho/do/arquivo` | o que muda, em poucas palavras | N / N | `...` |
+
+Gerado por quem aplica (so quando `src/` muda): `index.html` com NNN bytes e `tr -d '\r' < index.html | sha1sum` = `...`, medidos na replica.
+Nao rastreados que ficam fora: `.claude/launch.json` (e o que mais o `git status` de partida mostrar).
+
+**Passos**
+
+1. `git pull --ff-only`; HEAD = o do cabecalho. Diferente: PARE.
+2. `git status --short` = exatamente o inventario, esta WO como `??` e os nao rastreados que ficam fora. Faltou ou sobrou: PARE.
+3. `sha1sum` de cada arquivo = o do inventario, e `git diff --numstat` = a coluna + / −. Diferente: PARE — alguem mexeu depois do chat.
+4. Leia o diff inteiro.
+5. So se `src/` mudou: `node build.js`; bytes e sha1 do `index.html` = os do inventario.
+6. `node validate.js index.html`: `RESULTADO: VERDE — 19/19, 0 erros`, com NNN/NNN.
+7. Verde: `git add` de cada caminho do inventario, do `index.html` gerado e desta WO; `git commit -m "tipo(escopo): descricao sem acento"`; `git push`; `git status -sb` com `main` = `origin/main`.
+
+**Relatorio** — o corpo minimo da forma «edicoes», com dois acrescimos: o que voce viu no diff que a WO nao diz, e se o fim de linha de cada arquivo continuou o que era (`git ls-files --eol`). Nao edite STATUS, DECISIONS nem log: no piloto eles sao do chat.

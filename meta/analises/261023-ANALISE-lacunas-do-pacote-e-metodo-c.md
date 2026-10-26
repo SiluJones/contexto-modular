@@ -1,8 +1,8 @@
 # ANÁLISE — O que o merge do v1.129.0 achou nos vizinhos (i-N73), e o método C como modo do kit (i-N71)
 
-> **Status:** Decidida em 2026-10-24 — os cinco pontos aceitos pelo dono como recomendados, com uma correção no item 1b (abaixo); a `i-N73` vira a wo0142, e o piloto do método C fica para depois dela
+> **Status:** Implementada em parte — a `i-N73` entrou na wo0142 (`9b0a3a6`, v1.132.0, conferida de volta em 2026-10-24); a `i-N71` virou a wo0143 (`D-170`): o piloto do método C na casa (M3), da wo0144 à wo0153, com o dono por documento escrito antes da primeira; a M2 espera o resultado. Decidida em 2026-10-24 — os cinco pontos aceitos pelo dono como recomendados, com uma correção no item 1b (abaixo)
 > **Data:** 261023 · **Base:** v1.131.0, commit `4814df2` (`main` = `origin/main`); medido numa réplica `git archive` de `322a027`; relatórios do Code em `../notas-arquivadas/`; seções de feedback dos três vizinhos lidas em 23/10 (Mapoteca `57ffe6e`, GameDataHub `4c9de45`, satelite-web `74ef8d2`)
-> **Vira:** `meta/workorders/261024-wo0142-lacunas-do-pacote.md` · **Decisão:** `D-169` · **Origem:** `i-N73` e `i-N71` (livro de leitura de 2026-10-23)
+> **Vira:** `meta/workorders/261024-wo0142-lacunas-do-pacote.md` e `meta/workorders/261024-wo0143-piloto-do-metodo-c.md` · **Decisão:** `D-169` e `D-170` · **Origem:** `i-N73` e `i-N71` (livro de leitura de 2026-10-23)
 
 ## Problema
 

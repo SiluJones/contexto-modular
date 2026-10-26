@@ -10,6 +10,10 @@ de mexer, se a WO e aplicavel como esta escrita.
 
 Passos:
 
+0. **WO de conferencia** (metodo C, D-170; a linha «Forma» do cabecalho diz conferencia): ela nao tem ancora. Os
+   passos 1 e 2 viram: o `git status --short` mostra exatamente o Inventario, e o `sha1sum` e o `git diff --numstat`
+   de cada arquivo batem com ele. Os passos 3 a 5 valem igual.
+
 1. Leia a WO inteira. Liste, numeradas, TODAS as edicoes que ela pede (arquivo · tipo · ancora).
 2. Para CADA ancora ("Ancora / Substituir por"), procure o texto exato no arquivo-alvo e conte as
    ocorrencias:
@@ -23,7 +27,7 @@ Passos:
    `meta/STATUS.md`? A arvore esta limpa (`git status --short`)? Se a WO pede arquivo NOVO, ele ja
    existe (colisao)? Se ela cria um check novo, o numero ja esta em uso?
 4. Verifique se o repo esta verde ANTES de aplicar: `node validate.js index.html` (leitura, nao muda
-   nada) — regra de ouro **18/18 nichos, 0 erros**. Se ja estiver vermelho, diga — nao se aplica WO
+   nada) — regra de ouro **19/19 nichos, 0 erros**. Se ja estiver vermelho, diga — nao se aplica WO
    sobre repo vermelho.
 5. Aponte contradicoes internas: dois trechos da WO editando a mesma linha; tarefa que depende de
    outra que ela mesma nao faz; check novo que colide com check existente.

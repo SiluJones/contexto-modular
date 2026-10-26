@@ -18,7 +18,7 @@ O chat lê e grava **direto na pasta do repo** (`…\Contexto\contexto-modular`)
 
 ## Regras duras de ENTREGA (a parte que mais falhou no passado — não burlar)
 - **Arquivo que você autora vai direto para o lugar dele no repo**, em LF, relido antes de sobrescrever — nunca para download. Dono de cada documento: CEREBRO, «Canal do chat».
-- **Delta (bloco/edição cirúrgica) só existe como WO-para-Code ou instrução-para-ASU** — destinatário é um agente + `git diff`, nunca o humano. **Nunca** trechos para eu colar à mão.
+- **Delta (bloco/edição cirúrgica) só existe como WO-para-Code ou instrução-para-ASU** — ou, no piloto do método C, troca sua na árvore. Destinatário é um agente + `git diff`, nunca o humano. **Nunca** trechos para eu colar à mão.
 - **A WO confere o que você gravou:** cada arquivo seu que ela versiona entra no cabeçalho com o `sha1sum`; a Edição 0 confere antes de tudo.
 - **Um canal por doc por ciclo:** se um doc muda por WO, você não o grava inteiro no mesmo ciclo (dois escritores brigam).
 - **WO nunca vai sozinha:** toda WO entregue vem acompanhada da linha `/apply-wo <arquivo>` para colar no Code. Sem a linha, a entrega está incompleta.
@@ -26,6 +26,7 @@ O chat lê e grava **direto na pasta do repo** (`…\Contexto\contexto-modular`)
 ## Raias Chat ↔ Code
 - **Chat (planejamento):** arquitetura, análise, pesquisa, curadoria que reescreve. Autora o texto exato; grava inteiro o que é dele OU escreve a WO (o Code posiciona). Nunca edita o `index.html` à mão — edita `src/` e roda `node build.js`. Antes de entregar WO que toca código, **roda build + harness numa réplica do HEAD** (`git archive HEAD | tar -x`, fora da pasta do repo): âncora chega testada (e a réplica morre ali — item 4 do ritual).
 - **Code (execução):** implementa, testa, `build`, `git`, e **append** em STATUS/DECISIONS/logs. WOs em `meta/workorders/` (nome `AAMMDD-woNNNN-desc.md`); instruções ASU `AAMMDD-asuNNNN.yaml`. Ambiente Windows: abrir pelo **PowerShell**. **O Code não fecha com o bloco de fecho** — fecha com o **relatório de trabalho** na pasta-pai (o que fez, achados e desvios do texto da WO, arquivos tocados, build/validação, commit).
+- **Piloto do método C (D-170, wo0144 a wo0153 — no lugar das duas linhas acima):** você grava na árvore tudo o que entra no commit, por troca exata e no fim de linha do arquivo, e roda build + harness numa réplica do HEAD com os seus arquivos por cima; a WO só confere (inventário com `sha1sum`), valida e publica, e o Code não reescreve nem escreve em doc. Detalhe: CEREBRO, «Método C».
 - **Reescrita conflita; append não.** O repo é a única fonte de verdade; o chat o lê no disco, no turno.
 - **Glossário — WO vs Spec:** **WO (Work Order)** = instrução de aplicação Chat→Code. «Spec» fica reservado para a spec-de-feature (SDD). **Análise** = documento que precede o compromisso (`meta/analises/`, `AAMMDD-ANALISE-<assunto>.md`). Funil: **análise → WO → `DECISIONS.md`**.
 - **Análise antes do compromisso:** mudança não-trivial começa por análise escrita (problema · o que foi medido · opções · recomendação · riscos · ponto de decisão) — nunca por plano de execução. Mudança pequena vai direto a WO, sem cerimônia.
