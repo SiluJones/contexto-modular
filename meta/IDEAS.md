@@ -594,10 +594,11 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 
 ## i-N71 — O «método C» do satelite-web: o chat aplica direto e o Code confere — PILOTO EM CURSO NA CASA (wo0143, `D-170`): dez WOs de conferência, da wo0144 à wo0153, as duas primeiras só de documentação; o dono por documento do piloto está no CEREBRO, «Método C»; no fim, a análise do resultado decide a casa e a variante do kit (M2). Dado de campo do satelite-web (2026-10-20): 10 WOs, 10 verdes
 
-**Medida do piloto** (`D-170`) — o chat preenche uma linha a cada conferência de volta; linhas da WO por `wc -l`. **Base**, as dez WOs anteriores na forma «edições» (wo0133 a wo0142, medidas em 2026-10-24): **469 linhas** em média (222 a 709) e 32 KB; nenhuma parada no Code por conteúdo; dois achados de fim de linha que só o Code via (wo0138, wo0140); nenhum erro conhecido no commit.
+**Medida do piloto** (`D-170`) — o chat preenche uma linha a cada conferência de volta; linhas da WO por `wc -l`. **Base**, as dez WOs anteriores na forma «edições» (wo0133 a wo0142, medidas em 2026-10-24): **469 linhas** em média (222 a 709) e 32 KB; nenhuma parada no Code por conteúdo; dois achados de fim de linha que só o Code via (wo0138, wo0140); nenhum erro conhecido no commit. A coluna «Conferência» (chamadas de shell e segundos, do relatório do Code) entrou na wo0145; a base não a tem.
 
-| WO | Tipo | Parou no Code? | Erro no commit? | Linhas | Nota |
-|---|---|---|---|---|---|
+| WO | Tipo | Parou no Code? | Erro no commit? | Linhas | Conferência | Nota |
+|---|---|---|---|---|---|---|
+| wo0144 (`63fea0c`) | DOC | não | nenhum | 58 | 4 chamadas de shell; 42 s do início da conferência ao push | a skill `apply-wo` que a própria WO mudava leu o caminho sem dobrar; fim de linha dos três arquivos igual |
 
 **2026-10-20 — um segundo projeto no método C:** o **Observatorio** (`C:\Users\alexk\Trabalho\Observatorio`), novo, começa orientado pelo dono a seguir o fluxo do satelite-web `[relatado pelo dono]`. Ainda não lido pelo KCM. Quando tiver dez WOs, é o segundo conjunto de dado de campo — e o primeiro de um projeto que nasceu no método C, sem a transição.
 

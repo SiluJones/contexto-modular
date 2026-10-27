@@ -347,4 +347,4 @@ Nao rastreados que ficam fora: `.claude/launch.json` (e o que mais o `git status
 6. `node validate.js index.html`: `RESULTADO: VERDE — 19/19, 0 erros`, com NNN/NNN.
 7. Verde: `git add` de cada caminho do inventario, do `index.html` gerado e desta WO; `git commit -m "tipo(escopo): descricao sem acento"`; `git push`; `git status -sb` com `main` = `origin/main`.
 
-**Relatorio** — o corpo minimo da forma «edicoes», com dois acrescimos: o que voce viu no diff que a WO nao diz, e se o fim de linha de cada arquivo continuou o que era (`git ls-files --eol`). Nao edite STATUS, DECISIONS nem log: no piloto eles sao do chat.
+**Relatorio** — o corpo minimo da forma «edicoes», com tres acrescimos: o que voce viu no diff que a WO nao diz; se o fim de linha de cada arquivo continuou o que era (`git ls-files --eol`); e o custo da conferencia — quantas chamadas de shell, e o `date +%s` antes do passo 1 e depois do push. Nao edite STATUS, DECISIONS nem log: no piloto eles sao do chat.
