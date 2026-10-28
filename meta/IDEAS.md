@@ -600,6 +600,7 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 |---|---|---|---|---|---|---|
 | wo0144 (`63fea0c`) | DOC | não | nenhum | 58 | 4 chamadas de shell; 42 s do início da conferência ao push | a skill `apply-wo` que a própria WO mudava leu o caminho sem dobrar; fim de linha dos três arquivos igual |
 | wo0145 (`db5b54f`) | DOC | não | nenhum | 57 | 3 chamadas de shell; 28 s | a primeira com arquivo CRLF gravado pelo chat (o molde e o CEREBRO): o diff deu uma linha em cada, sem mistura; o relatório contou 58 linhas na WO, o git conta 57 |
+| wo0146 (`ce3c7d7`) | CÓDIGO | não | nenhum | 66 | 4 chamadas de shell; 70 s | a primeira de código: o chat gravou `src/` e `validate.js` (CRLF) e o Code gerou o `index.html` — 940.470 bytes e o sha1 sem CR previsto na réplica; o pre-commit rodou build + harness de novo, verde |
 
 **2026-10-20 — um segundo projeto no método C:** o **Observatorio** (`C:\Users\alexk\Trabalho\Observatorio`), novo, começa orientado pelo dono a seguir o fluxo do satelite-web `[relatado pelo dono]`. Ainda não lido pelo KCM. Quando tiver dez WOs, é o segundo conjunto de dado de campo — e o primeiro de um projeto que nasceu no método C, sem a transição.
 
