@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.132.0";
+const KIT_VERSION = "1.133.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2560,6 +2560,16 @@ const CANAL_PASTA = [
    "(se há avulso na pasta-pai — listado, não lembrado)"],
 ];
 function canalPasta(s){ return CANAL_PASTA.reduce((t, [velho, novo]) => t.split(velho).join(novo), s); }
+/* Tabela de gatilhos com o Code ligado (wo0146, i-N74, FK-BE do Mapoteca): «Entrega X.md completo» vira
+   «Atualiza X.md pelo canal do documento» — com executor, documento grande e vivo muda por WO, e a secao
+   «Ao final da conversa» diz qual canal serve a qual documento. Sem o Code, a tabela fica como e. */
+function gatilhoComCode(ac){
+  return ac
+    .replace(/Entrega (o |a |os )?(.+?) completos( atualizados)?/g, (m, art, doc) => "Atualiza " + (art||"") + doc + " pelo canal de cada um")
+    .replace(/Entrega (o |a )?(.+?) completo( e atualizado| atualizado)?/g, (m, art, doc) => "Atualiza " + (art||"") + doc + " pelo canal do documento")
+    .replace(/(\.md`?) completos\b/g, "$1 (pelo canal de cada um)")
+    .replace(/(\.md`?) completo\b/g, "$1 (pelo canal do documento)");
+}
 function buildClaudeMd(niche){
   if(!niche) niche = getCurrentNiche();
   if(!niche) return "";
@@ -2877,15 +2887,24 @@ function buildClaudeMd(niche){
   L.push("");
   L.push("| Evento | O assistente entrega |");
   L.push("|---|---|");
-  const baseTriggers = TRIGGERS_BASE.map(([ev,ac])=>{
+  const baseTriggers = [];
+  TRIGGERS_BASE.forEach(([ev,ac])=>{
     if(!hasChangelog){
       ac = ac.replace(" → última entrada do CHANGELOG.", ".").replace(" + CHANGELOG.md (se fechou algo)", "");
     }
-    return [ev, ac];
+    // wo0146 (i-N74, FK-BF do Mapoteca): no canal pasta o ritual e em dois tempos (secao «Canal do chat») —
+    // os arquivos de contexto ao abrir a conversa; em todo turno, so o barato e verificavel.
+    if(ev === "Início de turno" && !mountModeOn()){
+      baseTriggers.push(["Abertura de conversa", ac.replace(" **Todo turno**, não só ao abrir a conversa.", "")]);
+      baseTriggers.push(["Início de TODO turno", (codeModeOn() ? "Roda `git log -3 --oneline` e `git status --short` e lista a pasta-pai" : "Lista a pasta do projeto e a pasta-pai") + ", antes de responder e de qualquer ferramenta; arquivo de contexto que mudou se relê — o ritual em dois tempos da seção «Canal do chat»."]);
+      return;
+    }
+    baseTriggers.push([ev, ac]);
   });
-  const triggers = [...baseTriggers, ...((niche.triggersExtra)||[])];
+  const triggers = [...baseTriggers, ...((niche.triggersExtra)||[])].map(([ev,ac]) => [ev, codeModeOn() ? gatilhoComCode(ac) : ac]);
   triggers.forEach(([ev,ac]) => L.push(`| ${ev} | ${ac} |`));
   L.push("");
+  if(codeModeOn()){ L.push("> **Com o executor no repositório, «pelo canal do documento» é o que a seção «Ao final da conversa» diz:** documento grande e vivo muda por WO; inteiro só o arquivo novo, pequeno ou de curadoria que reescreve."); L.push(""); }
   L.push("> Se um arquivo da **camada universal** (STATUS, IDEAS, DECISIONS) referenciado acima ainda não existir, o assistente o CRIA na primeira necessidade, a partir do papel descrito. **Arquivos de outros nichos (CHANGELOG, ROADMAP, etc.) que NÃO fazem parte deste nicho não são criados** — a ausência é intencional, não um erro.");
 
   // Saídas que o assistente ENTREGA como arquivos completos

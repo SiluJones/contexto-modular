@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.132.0**.
+> Histórico de versões. Versão atual: **v1.133.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.133.0 — A tabela de gatilhos para de se contradizer: o canal do documento com o Code, e o ritual em dois tempos no canal pasta (wo0146, D-171)
+- **Com o Code ligado, a tabela de gatilhos não manda mais entregar documento «completo»** (`FK-BE` do Mapoteca): «Entrega o DECISIONS.md completo» e as outras linhas do mesmo molde — 123 nos 19 nichos (três da base em cada um, 66 próprias dos nichos) — passam a «Atualiza o DECISIONS.md pelo canal do documento» — e uma nota logo abaixo da tabela diz qual é o canal (documento grande e vivo por WO; inteiro só o arquivo novo, pequeno ou de curadoria), como a seção «Ao final da conversa». Sem o Code, a tabela fica como era: sem executor, o arquivo inteiro é a única entrega.
+- **No canal pasta, a linha «Início de turno» se divide em duas** (`FK-BF` do Mapoteca): «Abertura de conversa» lê os arquivos de contexto; «Início de TODO turno» roda `git log` e `git status` (ou lista a pasta, sem o Code) e a pasta-pai — o ritual em dois tempos da seção «Canal do chat». No mount a linha fica como era (`D-111`).
+- **`C111` 7 → 9 pares:** os dois, com prova negativa (desligada cada troca, o par acusa). O `C40` aceita a forma de duas linhas.
+- **Origem:** o livro de leitura de 2026-10-27 (`i-N74`, itens 1 e 2); o item 3, o manifesto «mudou desde a vX» do GameDataHub, segue aberto. Primeira WO de código do piloto do método C (`D-170`). Harness **19/19 · 113/113**.
 
 ## v1.132.0 — O que o merge do v1.129.0 achou nos vizinhos: dois pares contraditórios, bullets fora do lugar, `.claude/`, `wc -m`, a pasta do histórico e o molde de WO (wo0142, D-169)
 - **Dois pares contraditórios a menos, e no `C111`:** as Instruções diziam «se a PRÓXIMA etapa pedir config diferente» e o CEREBRO «a Config sai SEMPRE» — vale o CEREBRO, e as Instruções encolhem 36 caracteres; o texto diz «**Próximo** vem antes de um divisor» (`D-094`, a ordem que o dono aprovou) e o esqueleto abria com `---` acima do Próximo — o esqueleto passa a ter o divisor logo abaixo do «Peça», no kit e na casa. Os cinco bullets do refino das Instruções saem do fim do bloco de fecho e voltam à seção «Refino», com asserção de posição.

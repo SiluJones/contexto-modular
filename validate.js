@@ -1277,8 +1277,9 @@ check("C40 vocabulario turno x conversa + o prompt de update alcanca projeto des
       assert(!/lido toda sessão/.test(txt), id+" ("+onde+"): 'lido toda sessão' — contexto e lido em todo turno");
     });
     assert(/Ao final da conversa/.test(instr) && /Ao final da conversa/.test(cmd), id+": a entrega de arquivos completos e da CONVERSA, e o titulo nao diz isso");
-    assert(/Início de turno/.test(cmd), id+": tabela de gatilhos sem a linha 'Inicio de turno'");
-    assert(/\*\*Todo turno\*\*, não só ao abrir a conversa/.test(cmd), id+": o gatilho de inicio nao diz que vale todo turno");
+    // wo0146 (i-N74, FK-BF): no canal pasta (o padrao) a linha se divide em duas — abertura e todo turno.
+    assert(/\| Início de turno \|/.test(cmd) || /\| Início de TODO turno \|/.test(cmd), id+": tabela de gatilhos sem a linha 'Inicio de turno'");
+    assert(/\*\*Todo turno\*\*, não só ao abrir a conversa/.test(cmd) || (/\| Abertura de conversa \|/.test(cmd) && /\| Início de TODO turno \|/.test(cmd)), id+": o gatilho de inicio nao diz que vale todo turno");
     assert(/Fim da conversa/.test(cmd), id+": tabela de gatilhos ainda diz 'Fim de sessao' ao lado de 'Fim de QUALQUER turno' — os dois eventos ficam indistinguiveis");
     assert(/Fim de QUALQUER turno/.test(cmd), id+": perdeu o gatilho do bloco de fecho por turno (wo0082)");
     assert(/fim de turno\)/.test(cmd), id+": a recomendacao de configuracao ainda se declara 'fim de sessao' — ela sai no bloco de fecho, que e por turno");
@@ -1822,7 +1823,10 @@ check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coe
     ["commit sem excecao x commit e da WO",               /\*\*Commit:\*\* ao concluir mudança versionada, ENTREGUE/, /Havendo WO no turno, o bloco de commit/, true],
     // wo0142 (i-N73, FK-BC do Mapoteca): o lado velho de cada par sai na mesma WO.
     ["config se a proxima etapa x config sempre",         /se a PRÓXIMA etapa pedir config diferente/,               /\*\*Config recomendada\*\* saem SEMPRE/,       false],
-    ["divisor depois do proximo x esqueleto que abre com ele", /vem antes de um divisor; o resto vem depois dele/,      /```\n---\n\*\*Próximo\*\*/,                   false]
+    ["divisor depois do proximo x esqueleto que abre com ele", /vem antes de um divisor; o resto vem depois dele/,      /```\n---\n\*\*Próximo\*\*/,                   false],
+    // wo0146 (i-N74, FK-BE e FK-BF do Mapoteca): a tabela de gatilhos contra o canal do documento e contra o ritual em dois tempos.
+    ["gatilho entrega completo x modo Code registra",     /^\| [^|\n]+ \| Entrega [^\n]*complet/m,                     /o assistente REGISTRA o que falta/,             true],
+    ["gatilho le tudo todo turno x ritual em dois tempos", /\*\*Todo turno\*\*, não só ao abrir a conversa/,         /- \*\*Ritual em dois tempos\.\*\*/,          false]
   ];
   const fora=[]; let textos=0;
   Object.keys(T.NICHES).forEach(id => {

@@ -2284,3 +2284,17 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **O que o piloto mede que o satelite-web não mediu:** um verificador de 113 checks em vez de tsc + ESLint, e uma casa em que o Code também escrevia os docs. O caso que nenhuma das duas amostras tem — o projeto sem verificador — segue fora: é a condição de entrada da M2.
 
 **Números** `[medido no disco e na réplica do HEAD 0549b16]`: Instruções da casa 7.199 → 7.636 caracteres (`len()` em UTF-8); harness 113/113, sem check novo; base do piloto, as dez WOs anteriores: 469 linhas em média.
+
+## D-171 — A tabela de gatilhos segue o canal do documento com o Code, e o ritual em dois tempos no canal pasta
+
+**Data:** 2026-10-28 · **WO:** 0146 (piloto do método C 3/10, a primeira de código) · **Origem:** `i-N74`, itens 1 e 2 — a `FK-BE` e a `FK-BF` do Mapoteca, lidas em 2026-10-27 e conferidas no `src/` da v1.132.0 · **Aplica:** `D-166` (com executor, a entrega remete ao canal) e o ritual em dois tempos da `D-157`.
+
+**Decisão.** (1) Com o Code ligado, toda linha da tabela de gatilhos que manda «Entrega X.md completo» passa a «Atualiza X.md pelo canal do documento» (ou «de cada um», no plural), por uma função só (`gatilhoComCode`) aplicada às linhas da base e às dos nichos — 123 linhas nos 19 nichos —, e uma nota abaixo da tabela diz qual é o canal, nas palavras da seção «Ao final da conversa». Sem o Code a tabela não muda: sem executor, o arquivo inteiro é a única entrega. (2) No canal pasta, a linha «Início de turno» vira duas: «Abertura de conversa» (os arquivos de contexto) e «Início de TODO turno» (`git log` e `git status` com o Code, a listagem da pasta sem ele, e a pasta-pai). No mount, a linha fica como a `D-111` a fixou. (3) Os dois entram no `C111` como pares, com prova negativa na réplica: desligada cada troca, o par acusa nos 19 nichos.
+
+**Por que sem análise.** Nenhum dos dois decide coisa nova: os dois lados novos já estavam decididos e registrados (`D-166`, o ritual em dois tempos da `D-157`); a WO só leva a tabela de gatilhos até eles. Foi a regra «mudança pequena vai direto a WO».
+
+**Por que pelo gerador e não por troca no CANAL_PASTA.** A tabela da `D-167` é de trocas exatas e não sabe se o Code está ligado; a linha nova de todo turno depende disso (`git log` com o Code, a listagem da pasta sem ele). As duas regras vivem onde a tabela de gatilhos é montada.
+
+**Fora:** o item 3 da `i-N74` (o manifesto dizer, por arquivo, «mudou desde a vX») — pede desenho e fica para a próxima análise de kit.
+
+**Números** `[medido na réplica do HEAD db5b54f com os arquivos do chat por cima]`: `index.html` 938.573 → 940.470 bytes; `C111` 7 → 9 pares; harness 113/113, sem check novo. Corta a **v1.133.0** (`D-158`).
