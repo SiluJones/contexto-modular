@@ -1044,6 +1044,8 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     ["modelo de WO: recortado",       /RECORTADO, nunca redigitado/,  ["woTemplate"]],
     ["modelo de WO: valor tem fonte", /declara ONDE NASCE/,           ["woTemplate"]],
     ["modelo de WO: olho humano",     /olho humano num renderizador/, ["woTemplate"]],
+    // wo0150 (i-N79): o roteiro saiu no turno seguinte em quatro projetos; o molde dizia «vai para o fecho do chat».
+    ["modelo de WO: roteiro no mesmo turno", /no MESMO turno que entrega a WO/, ["woTemplate"]],
     // wo0125: FK-R e FK-S, as duas que a triagem de 13/09 deixou passar porque o projeto do mapa as
     // marcava como «ainda nao enviadas» — e o canal deles e o arquivo, nao a carta.
     ["modelo de WO: comando no lugar do numero", /peca o COMANDO — nao o numero/, ["woTemplate"]],

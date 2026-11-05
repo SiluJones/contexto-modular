@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.134.0**.
+> Histórico de versões. Versão atual: **v1.135.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.135.0 — O roteiro do dono vai no chat, no mesmo turno da WO; e o `.claude/` se confere em vez de se supor (wo0150, D-173)
+- **Molde de WO:** o roteiro do dono «vai **no chat, no MESMO turno que entrega a WO**, como bloco próprio — nunca só dentro do arquivo da WO, nunca no turno seguinte: nada nele depende do relatório». Antes dizia «vai para o fecho do chat», sem dizer qual, e o cabeçalho pedia o **Estado** com o commit — que só existe depois do relatório. Agora o Estado nomeia a WO («o commit da woNNNN»). Mesmo texto no molde da casa.
+- **Instruções geradas com o Code:** «WO nunca vai sozinha: `/apply-wo <arquivo>` em bloco cercado; roteiro do dono, se houver, no chat» — dentro dos orçamentos das linhas de modo (`C26`, 950: 921) e do modo Code (`C28`, 550: 549). A linha mostrava o comando inline, contra a regra do bloco cercado do CEREBRO; o «mesmo turno» e o «não só no arquivo» ficam no molde de WO.
+- **CEREBRO, `.claude/` no canal pasta:** o `settings.json` é gravado no lugar quando a ponte grava — e na primeira vez se confere, relendo o que gravou; se não gravar, vai para a pasta-pai com o comando de cópia. A frase «a ponte do chat também não grava em `.claude/`» sai: três projetos mediram que grava. O motivo de a permissão não passar pelo executor fica dito como é: divisão de raias, não impossibilidade técnica.
+- **`C43`** ganha a cláusula «roteiro no mesmo turno» no molde de WO (o gerado e o da casa).
+- **Origem:** `i-N79` (o roteiro em turno separado no FrameMatch, no PrintImposer e no GameDataHub, e o dono contando quatro projetos num dia) e `i-N78` (Mapoteca, FrameMatch, PrintImposer). Terceira WO de código do piloto do método C (`D-170`). Harness **19/19 · 114/114**.
 
 ## v1.134.0 — O manifesto do pacote conta e nomeia o que o pacote traz (wo0149, D-172)
 - **A linha do carimbo sai da geração:** o manifesto dizia «Quatro arquivos deste pacote terminam em `Gerado pelo Kit…`: o CEREBRO, o modelo de WO e as duas skills» desde que a `sondar` entrou no kit do Code (v1.127.0) — eram cinco. Agora o número e a lista são os arquivos do pacote que trazem a linha: cinco com o Code (o CEREBRO, `apply-wo`, `wrap`, `sondar` e o modelo de WO), um sem ele, no singular.

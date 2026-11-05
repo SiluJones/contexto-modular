@@ -254,10 +254,12 @@ WO avisou que certa frase «nao e citada por nenhum texto inserido — conferido
         o comando exato, o que esperar ver, e o que fazer se vier diferente —
         **nunca peca um resultado que voce nao ensinou a produzir.**
       - **Quando o passo e do dono, ele nao e item de checklist: e ROTEIRO, e roteiro tem forma.** Sai da
-        lista de quem aplica e vai para o fecho do chat, como bloco proprio. **Cinco linhas de
+        lista de quem aplica e vai **no chat, no MESMO turno que entrega a WO**, como bloco proprio —
+        nunca so dentro do arquivo da WO, nunca no turno seguinte: nada nele depende do relatorio, porque
+        ele sai da spec e do que a WO muda. **Cinco linhas de
         cabecalho:** **Para** (quem, e com o que aberto) · **Por que** (o que a automacao nao cobriu,
         nomeando a WO) · **Formato** (cada item diz **o que se ve quando esta certo**, com numero quando
-        existe numero) · **Tempo** (quanto dura num passe so) · **Estado** (commit, versao instalada e
+        existe numero) · **Tempo** (quanto dura num passe so) · **Estado** (a WO pelo nome — «o commit da woNNNN», nao um hash que ainda nao existe —, versao instalada e
         **onde esta o rollback vivo** — e a linha que decide se o dono pode mexer sem medo). **Tres
         secoes:** **Preparo** (o que abrir e deixar pronto antes de comecar, para o passe nao parar no
         meio), os itens, e **«o que este roteiro NAO testa»**, que impede «passou tudo» de ser lido como
