@@ -633,6 +633,7 @@ A seção nasceu universal nos 18 nichos (wo0063/D-097), com o mesmo vocabulári
 | wo0147 (`2e72dee`) | DOC | não | nenhum | 55 | 4 chamadas de shell; 88 s | o fecho de conversa: três arquivos LF gravados pelo chat; o aviso de `autocrlf` do git sem efeito no índice |
 | wo0148 (`4175091`) | DOC | não | nenhum | 63 | 4 chamadas de shell; 57 s | a primeira com arquivo novo no inventário, conferido por `wc -l` (o `numstat` não vê não rastreado); o relatório diz «3 chamadas» e «total 4» — vale 4 |
 | wo0149 (`258e4f7`) | CÓDIGO | não | nenhum | 67 | 5 chamadas de shell (+3 de leitura); 155 s | a segunda de código: `index.html` com o sha1 sem CR previsto, hook verde; o Code acrescentou `Co-Authored-By` ao commit (declarado). A réplica do chat rodou em duas fatias (a VM do desktop não roda o harness inteiro numa chamada) |
+| wo0150 (`4a5b4e2`) | CÓDIGO | não | nenhum | 72 | 6 chamadas de shell (+1 de leitura); 87 s | a terceira de código; o Code leu o diff de código inteiro e conferiu os docs só por sha1 e `numstat` (o passo 4 pedia o diff inteiro); `Co-Authored-By` de novo, desta vez sem aviso. Na réplica, antes da WO existir, o harness pegou três erros do chat (`C26`, `C28`, `C105`) |
 
 **2026-10-20 — um segundo projeto no método C:** o **Observatorio** (`C:\Users\alexk\Trabalho\Observatorio`), novo, começa orientado pelo dono a seguir o fluxo do satelite-web `[relatado pelo dono]`. Ainda não lido pelo KCM. Quando tiver dez WOs, é o segundo conjunto de dado de campo — e o primeiro de um projeto que nasceu no método C, sem a transição.
 
