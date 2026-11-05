@@ -2298,3 +2298,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Fora:** o item 3 da `i-N74` (o manifesto dizer, por arquivo, «mudou desde a vX») — pede desenho e fica para a próxima análise de kit.
 
 **Números** `[medido na réplica do HEAD db5b54f com os arquivos do chat por cima]`: `index.html` 938.573 → 940.470 bytes; `C111` 7 → 9 pares; harness 113/113, sem check novo. Corta a **v1.133.0** (`D-158`).
+
+## D-172 — O manifesto do pacote conta e nomeia o que o pacote traz, e as skills do Code saem de uma lista só
+
+**Data:** 2026-11-04 · **WO:** 0149 (piloto do método C 6/10, a segunda de código) · **Origem:** `i-N76`, item 1 — a seção de feedback do Cancioneiro, lida em 2026-10-31; o defeito medido por eles em três pacotes seguidos e conferido no pacote v1.133.0.
+
+**Decisão.** (1) No `_UPDATE-MANIFEST.md`, a linha «Carimbo de versão» deixa de escrever um número e uma lista: os dois saem dos arquivos do pacote cujo conteúdo traz `Gerado pelo Kit de Contexto Universal v<versão>` — hoje cinco com o Code e um sem ele, com a frase no singular nesse caso. (2) As skills do kit do Code ficam numa lista só (`CODE_KIT_SKILLS`: `apply-wo`, `wrap`, `sondar`), que o `buildUpdatePack` usa para empacotar e o manifesto usa para escrever a nota «As skills do modo Code — …» e o marcador do `skills-do-nicho` («além de …»). (3) O `C113` confere as duas coisas nos 19 nichos, com o Code ligado e desligado, sem copiar a lista do gerador.
+
+**Por que sem análise.** Conserto de prosa que mentia sobre o próprio pacote, sem decidir coisa nova: a regra do carimbo é a da `wo0103`/`D-158`; só o número e os nomes deixam de ser escritos à mão. Foi a regra «mudança pequena vai direto a WO».
+
+**O que o Cancioneiro não mediu.** A mesma lista congelada estava em mais dois lugares: a nota do `skills-do-nicho` (que listava só `apply-wo` e `wrap` como skills do Code) e o marcador do modo, cujo sinal era existir em `.claude/skills/` algo «além de `apply-wo` e `wrap`» — com a `sondar` lá, o carimbo decidível (`wo0093`) levava um projeto com o Code a concluir que tinha skills do nicho ligadas. A raiz era a mesma: a `sondar` entrou no kit do Code (v1.127.0) e a prosa do manifesto não acompanhou.
+
+**Números** `[medido na réplica do HEAD 4175091 com os arquivos do chat por cima; o harness em duas fatias, porque a VM do desktop tem 2 CPUs e 2,9 GB e o harness inteiro passa do limite de uma chamada]`: `index.html` 940.470 → 942.009 bytes; harness 113 → 114 checks; o `C113` leva ~0,3 s. Corta a **v1.134.0** (`D-158`).

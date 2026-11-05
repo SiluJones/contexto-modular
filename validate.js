@@ -1886,6 +1886,50 @@ check("C112 no canal pasta, o CEREBRO nao manda fazer pelo mount o que a pasta f
   return "ok (" + P.length + " trocas em " + textos + " CEREBROs do canal pasta; o mount sai sem elas)";
 });
 
+check("C113 o manifesto do pacote conta e nomeia o que o pacote traz (wo0149, D-172): os carimbos saem dos arquivos que os trazem, e as skills do Code sao as que viajam", () => {
+  // A prosa dizia «Quatro arquivos... as duas skills» desde que a sondar entrou (v1.127.0): o
+  // Cancioneiro mediu cinco portadores em tres pacotes seguidos (i-N76). E o marcador do
+  // skills-do-nicho («alem de apply-wo e wrap») lia a sondar como skill do nicho. O check nao
+  // copia a lista do gerador: as skills do Code saem por diferenca (com o Code menos sem ele).
+  const S = T.STATE; S.workmode = S.workmode || {}; const prevC = S.workmode.codeMode;
+  const STAMP = "Gerado pelo Kit de Contexto Universal v" + T.KIT_VERSION;
+  const NUM = ["nenhum","um","dois","tres","quatro","cinco","seis","sete","oito","nove","dez"];
+  const sk = (pack) => pack.files.map(f => (f.real.match(/^\.claude\/skills\/([^/]+)\/SKILL\.md$/) || [])[1]).filter(Boolean);
+  const linhaDe = (man, ini) => (man.split("\n").find(l => l.indexOf(ini) === 0) || "");
+  let resumo = "";
+  try {
+    Object.keys(T.NICHES).forEach(id => {
+      const packs = {};
+      ["yes", "no"].forEach(code => {
+        S.workmode.codeMode = code;
+        const pack = T.buildUpdatePack(T.normNiche(T.NICHES[id])); packs[code] = pack;
+        const port = pack.files.filter(f => (f.content || "").indexOf(STAMP) !== -1);
+        const linha = linhaDe(pack.manifest, "- **Carimbo de versao");
+        assert(port.length >= 1, id + "/Code " + code + ": nenhum arquivo do pacote traz o carimbo");
+        const w = NUM[port.length] || String(port.length);
+        const abre = port.length === 1 ? "Um arquivo deste pacote termina em" : (w.charAt(0).toUpperCase() + w.slice(1)) + " arquivos deste pacote terminam em";
+        assert(linha.indexOf(abre) !== -1, id + "/Code " + code + ": o pacote traz " + port.length + " carimbo(s) e o manifesto diz outra coisa — «" + linha.slice(40, 140) + "»");
+        port.forEach(f => {
+          const m = f.real.match(/^\.claude\/skills\/([^/]+)\/SKILL\.md$/);
+          const nome = f.real === "meta/CEREBRO.md" ? "o CEREBRO" : f.real === "meta/workorders/_TEMPLATE.md" ? "o modelo de WO" : m ? "`" + m[1] + "`" : "`" + f.real + "`";
+          assert(linha.indexOf(nome) !== -1, id + "/Code " + code + ": " + f.real + " traz o carimbo e o manifesto nao o nomeia");
+        });
+        if (id === "dev") resumo += (resumo ? "; " : "") + "dev Code " + (code === "yes" ? "sim" : "nao") + ": " + port.length + " carimbo(s)";
+      });
+      const codeSk = sk(packs.yes).filter(s => sk(packs.no).indexOf(s) === -1);
+      assert(codeSk.length >= 1, id + ": o Code ligado nao acrescenta skill nenhuma ao pacote");
+      const nota = linhaDe(packs.yes.manifest, "- **`skills-do-nicho` NAO e a pasta");
+      const marc = linhaDe(packs.yes.manifest, "| skills-do-nicho |");
+      codeSk.forEach(s => {
+        assert(nota.indexOf("`" + s + "`") !== -1, id + ": a skill " + s + " viaja com o Code e a nota do skills-do-nicho nao a lista entre as do modo Code");
+        assert(marc.indexOf("`" + s + "`") !== -1, id + ": a skill " + s + " viaja com o Code e o marcador do skills-do-nicho a conta como sinal de skill do nicho");
+      });
+      if (id === "dev") resumo += "; skills do Code: " + codeSk.join(", ");
+    });
+  } finally { S.workmode.codeMode = prevC; }
+  return "ok (" + resumo + ")";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";

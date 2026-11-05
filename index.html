@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.133.0";
+const KIT_VERSION = "1.134.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -10595,6 +10595,15 @@ async function downloadStructuredZIP(){
 
 /* ---- Modo Atualizacao (i-N40), Fase A: motor de empacotamento achatado + afixado (spec0035) ---- */
 const UPDATE_AFFIX = "__template-update";
+// As skills do kit do Code, numa lista so: o pacote empacota por ela e o manifesto escreve por ela.
+// A sondar entrou na v1.127.0 e a prosa do manifesto ficou dizendo «as duas skills» por seis versoes (i-N76, wo0149).
+const CODE_KIT_SKILLS = [
+  { name: "apply-wo", key: "applyWo", role: "Comando /apply-wo." },
+  { name: "wrap",     key: "wrap",    role: "Comando /wrap." },
+  { name: "sondar",   key: "sondar",  role: "Comando /sondar (exploracao)." }
+];
+function listaPt(xs){ return xs.length < 2 ? (xs[0] || "") : xs.slice(0, -1).join(", ") + " e " + xs[xs.length - 1]; }
+function numPt(n){ return (["nenhum","um","dois","tres","quatro","cinco","seis","sete","oito","nove","dez"][n]) || String(n); }
 function updateFlat(displayName){
   // insere o afixo antes da ultima extensao; trata "<skill>.SKILL.md" como unidade (o . fica no base)
   const dot = displayName.lastIndexOf(".");
@@ -10611,7 +10620,7 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push(`- Kit: v${KIT_VERSION}`);
   L.push(`- Modos ligados: skills-do-nicho ${skillsOn ? "sim" : "nao"} · Code ${codeOn ? "sim" : "nao"} · ASU ${asuModeOn() ? "sim" : "nao"} · compartilhado ${groupModeOn() ? "sim" : "nao"}`);
   if(codeOn){
-    L.push("- **`skills-do-nicho` NAO e a pasta `.claude/skills/`.** Sao os comandos opcionais do NICHO (um pacote a parte). As skills do modo Code — `apply-wo` e `wrap` — viajam com `Code sim` e estao neste pacote, em `.claude/skills/`. Se voce tem outras skills ali (uma sonda, um lint), elas sao suas: o kit nao as envia e **nao as declara sobra**.");
+    L.push("- **`skills-do-nicho` NAO e a pasta `.claude/skills/`.** Sao os comandos opcionais do NICHO (um pacote a parte). As skills do modo Code — " + listaPt(CODE_KIT_SKILLS.map(s => "`" + s.name + "`")) + " — viajam com `Code sim` e estao neste pacote, em `.claude/skills/`. Se voce tem outras skills ali (um lint, um formatador), elas sao suas: o kit nao as envia e **nao as declara sobra**.");
   }
   L.push("- **Este carimbo e declaracao, nao ordem — mas agora ele e DECIDIVEL.** Cada modo tem um marcador: um cabecalho que so existe no arquivo gerado quando aquele modo esta LIGADO. Confira o marcador no seu arquivo vivo:");
   L.push("");
@@ -10620,13 +10629,21 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push(`| Code | ${codeOn ? "sim" : "nao"} | \`## Ao final da conversa, o assistente REGISTRA o que falta\` | CEREBRO |`);
   L.push(`| ASU | ${asuModeOn() ? "sim" : "nao"} | \`## Saida de codigo via ASU (patch)\` | CEREBRO |`);
   L.push(`| compartilhado | ${groupModeOn() ? "sim" : "nao"} | \`## Projeto em grupo (HUB compartilhado)\` | CEREBRO |`);
-  L.push(`| skills-do-nicho | ${skillsOn ? "sim" : "nao"} | **nao ha marcador no CEREBRO** — o sinal e existir arquivo em \`.claude/skills/\` alem de \`apply-wo\` e \`wrap\` | pasta |`);
+  L.push(`| skills-do-nicho | ${skillsOn ? "sim" : "nao"} | **nao ha marcador no CEREBRO** — o sinal e existir arquivo em \`.claude/skills/\` alem de ${listaPt(CODE_KIT_SKILLS.map(s => "\`" + s.name + "\`"))} | pasta |`);
   L.push("");
   L.push("**Como decidir, sem perguntar a ninguem:** marcador PRESENTE e modo declarado `nao` = **sobra** de um pacote anterior, gerado quando o modo estava ligado — um pacote com o modo ligado carimbaria `sim`. Pode remover a secao, e diga no relatorio que removeu. Marcador AUSENTE e modo `sim` = **novidade** deste pacote, adote. **O que o marcador NAO decide:** se o dono esqueceu de LIGAR um modo que este projeto deveria usar. Isso e pergunta para ele, nao para o arquivo — e e a unica hipotese que ainda pede confirmacao.");
   L.push(`- Data: ${today}`);
   L.push(`- Afixo: ${UPDATE_AFFIX}`);
   L.push("");
-  L.push(`- **Carimbo de versao — linha do KIT, nao do projeto.** Quatro arquivos deste pacote terminam em \`Gerado pelo Kit de Contexto Universal v${KIT_VERSION}\`: o CEREBRO, o modelo de WO e as duas skills. Essa linha **nao se funde**: substitua sempre pela do pacote mais recente. **Conferencia depois do merge:** os quatro carimbos do seu projeto devem dizer \`v${KIT_VERSION}\`. Se algum ficou para tras, o merge daquele arquivo deixou passar — e e assim que um projeto perde a resposta para «de que versao eu vim?». Quatro carriers porque o do CEREBRO e a ultima linha do arquivo mais mesclado do pacote, e ultima linha de merge e o que mais se perde.`);
+  const STAMP = `Gerado pelo Kit de Contexto Universal v${KIT_VERSION}`;
+  const portadores = files.filter(f => (f.content || "").indexOf(STAMP) !== -1).map(f =>
+    f.real === "meta/CEREBRO.md" ? "o CEREBRO" :
+    f.real === "meta/workorders/_TEMPLATE.md" ? "o modelo de WO" :
+    /^\.claude\/skills\/[^/]+\/SKILL\.md$/.test(f.real) ? "a skill `" + f.real.split("/")[2] + "`" : "`" + f.real + "`");
+  const nP = portadores.length, wP = numPt(nP), WP = wP.charAt(0).toUpperCase() + wP.slice(1);
+  L.push(nP === 1
+    ? `- **Carimbo de versao — linha do KIT, nao do projeto.** Um arquivo deste pacote termina em \`${STAMP}\`: ${portadores[0]}. Essa linha **nao se funde**: substitua sempre pela do pacote mais recente. **Conferencia depois do merge:** o carimbo do seu projeto deve dizer \`v${KIT_VERSION}\`. Se ficou para tras, o merge deixou passar — e e assim que um projeto perde a resposta para «de que versao eu vim?». (O numero e a lista saem da propria geracao: contam os arquivos deste pacote que trazem a linha.)`
+    : `- **Carimbo de versao — linha do KIT, nao do projeto.** ${WP} arquivos deste pacote terminam em \`${STAMP}\`: ${listaPt(portadores)}. Essa linha **nao se funde**: substitua sempre pela do pacote mais recente. **Conferencia depois do merge:** os ${wP} carimbos do seu projeto devem dizer \`v${KIT_VERSION}\`. Se algum ficou para tras, o merge daquele arquivo deixou passar — e e assim que um projeto perde a resposta para «de que versao eu vim?». Mais de um portador porque o do CEREBRO e a ultima linha do arquivo mais mesclado do pacote, e ultima linha de merge e o que mais se perde. (O numero e a lista saem da propria geracao: contam os arquivos deste pacote que trazem a linha.)`);
   L.push("");
   L.push("> Isto e um **template-update** do KCM: arquivos genericos/estruturais, propositalmente vazios do");
   L.push("> especifico desta obra. NAO substitua conteudo vivo por template vazio. Natureza `template` =");
@@ -10777,12 +10794,8 @@ function buildUpdatePack(niche){
         "**`Write` no `allow`.** As skills mandam CRIAR o log do dia e o relatorio de trabalho. Sem `Write` isso nao e negado em silencio — vira **pedido de aprovacao a cada arquivo novo**, e o custo e atrito: numa sequencia longa, o passo que pede permissao e o primeiro a ser pulado. Se o seu arquivo tem `defaultMode: acceptEdits`, ele disfarca a falta — funciona, mas por outro motivo, e para de funcionar no dia em que o modo mudar.",
         "**`additionalDirectories` com a pasta-pai (`\"../\"`).** Sem ele, o relatorio de trabalho em `../AAMMDD-HHMM-code-<slug>-<ato>-<alvo>.txt` nao tem onde ser gravado, e a medicao fora da raiz tambem nao.",
       ], content: k.settings });
-    files.push({ flat: updateFlat("apply-wo.SKILL.md"), real: ".claude/skills/apply-wo/SKILL.md",
-      nature: "template", role: "Comando /apply-wo.", content: k.applyWo });
-    files.push({ flat: updateFlat("wrap.SKILL.md"), real: ".claude/skills/wrap/SKILL.md",
-      nature: "template", role: "Comando /wrap.", content: k.wrap });
-    files.push({ flat: updateFlat("sondar.SKILL.md"), real: ".claude/skills/sondar/SKILL.md",
-      nature: "template", role: "Comando /sondar (exploracao).", content: k.sondar });
+    CODE_KIT_SKILLS.forEach(s => files.push({ flat: updateFlat(`${s.name}.SKILL.md`), real: `.claude/skills/${s.name}/SKILL.md`,
+      nature: "template", role: s.role, content: k[s.key] }));
     files.push({ flat: updateFlat("workorders._TEMPLATE.md"), real: "meta/workorders/_TEMPLATE.md",
       nature: "template", role: "Modelo de WO (o proprio modelo, nao uma WO preenchida).", content: k.woTemplate });
   }

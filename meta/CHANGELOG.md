@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.133.0**.
+> Histórico de versões. Versão atual: **v1.134.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.134.0 — O manifesto do pacote conta e nomeia o que o pacote traz (wo0149, D-172)
+- **A linha do carimbo sai da geração:** o manifesto dizia «Quatro arquivos deste pacote terminam em `Gerado pelo Kit…`: o CEREBRO, o modelo de WO e as duas skills» desde que a `sondar` entrou no kit do Code (v1.127.0) — eram cinco. Agora o número e a lista são os arquivos do pacote que trazem a linha: cinco com o Code (o CEREBRO, `apply-wo`, `wrap`, `sondar` e o modelo de WO), um sem ele, no singular.
+- **As skills do Code numa lista só** (`CODE_KIT_SKILLS`), que empacota e escreve: a nota «As skills do modo Code — …» e o marcador do `skills-do-nicho` («além de …») passam a nomear as três. O marcador dizia «além de `apply-wo` e `wrap`», e um projeto com o Code lia a `sondar` como sinal de skill do nicho ligada.
+- **`C113` novo** (113 → 114): nos 19 nichos, com o Code ligado e desligado, o número e os nomes da linha do carimbo batem com os arquivos que o trazem, e toda skill que só viaja com o Code está na nota e no marcador — sem copiar a lista do gerador (por diferença entre os dois pacotes). Duas provas negativas: o «Quatro» fixo de volta e a nota sem a `sondar` acusam.
+- **Origem:** a `i-N76`, item 1 — o Cancioneiro mediu o número errado em três pacotes seguidos (v1.127.0, v1.131.0, v1.133.0). Segunda WO de código do piloto do método C (`D-170`). Harness **19/19 · 114/114**.
 
 ## v1.133.0 — A tabela de gatilhos para de se contradizer: o canal do documento com o Code, e o ritual em dois tempos no canal pasta (wo0146, D-171)
 - **Com o Code ligado, a tabela de gatilhos não manda mais entregar documento «completo»** (`FK-BE` do Mapoteca): «Entrega o DECISIONS.md completo» e as outras linhas do mesmo molde — 123 nos 19 nichos (três da base em cada um, 66 próprias dos nichos) — passam a «Atualiza o DECISIONS.md pelo canal do documento» — e uma nota logo abaixo da tabela diz qual é o canal (documento grande e vivo por WO; inteiro só o arquivo novo, pequeno ou de curadoria), como a seção «Ao final da conversa». Sem o Code, a tabela fica como era: sem executor, o arquivo inteiro é a única entrega.
