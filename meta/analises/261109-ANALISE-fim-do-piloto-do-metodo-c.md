@@ -1,8 +1,8 @@
 # ANÁLISE — O fim do piloto do método C: a casa fica, e o kit ganha a variante com a troca exata como regra
 
-> **Status:** Em discussão
+> **Status:** Decidida (2026-11-09: A1; M2b, a variante espera; a carta 01 ao Observatorio pelo KCM)
 > **Data:** 261109 · **Base:** v1.135.0, HEAD `a343d6c` (wo0153, a décima do piloto)
-> **Vira:** a decisão da casa (emenda da `D-170`) e, se aceita, a WO de código da variante do kit (M2 da `i-N71`) · **Decisão:** —
+> **Vira:** a decisão da casa (emenda da `D-170`) e, se aceita, a WO de código da variante do kit (M2 da `i-N71`) · **Decisão:** `D-174`
 
 ## Problema
 

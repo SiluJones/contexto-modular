@@ -2322,3 +2322,11 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Fora.** As Instruções da própria casa, que têm a mesma linha inline e já passam do teto do kit (7.636 caracteres): decidir o teto da casa antes, e mexer pede recolar no painel.
 
 **Números** `[medido na réplica do HEAD 258e4f7 com os arquivos do chat por cima; o harness em duas fatias]`: harness 114/114 (sem check novo; o `C43` ganha uma cláusula). A linha das Instruções coube em 102 caracteres: o orçamento do modo Code (`C28`, 550) fica em **549** — a próxima frase do modo Code nas Instruções pede tirar outra antes. O `C105` barrou o `sha1sum` na frase do `.claude/`, que aparece também sem o Code. Corta a **v1.135.0** (`D-158`).
+
+## D-174 — A casa fica no método C; a variante do kit espera mais dados
+
+**Data:** 2026-11-09 · **WO:** 0155 · **Origem:** a análise `meta/analises/261109-ANALISE-fim-do-piloto-do-metodo-c.md` (wo0154), decidida pelo dono em 2026-11-09 · **Emenda:** a `D-170` (o piloto vira a forma da casa).
+
+**Decisão.** (1) **A casa fica no método C (A1):** o chat grava na árvore tudo o que entra no commit, por troca exata de ocorrência única sobre o arquivo lido no turno, e a WO confere e publica. A forma «edições» fica como reserva para quando o chat não tiver a pasta. Voltar atrás, mesmo em parte, é decisão escrita. (2) **A variante do kit espera (M2b):** o dado que falta é o do projeto sem verificador — a Carreira, com dez WOs de conferência — e o do GameDataHub, cujas WOs de código passam de 1.000 linhas e que estuda o método do lado dele. Quando vier, a regra 1 é a troca exata. (3) **O achado vai ao Observatorio por carta do KCM** (a carta 01, na pasta-pai dele): o recuo de 28/10 não está em decisão nenhuma, e a troca exata tira a razão dele.
+
+**Números** `[medido na tabela da i-N71 e nos relatórios]`: dez WOs, nenhuma parada e nenhum erro no commit; 60 linhas por WO em média contra 469 da base; os quatro erros do chat no piloto, pegos pelo harness na réplica antes de a WO existir.
