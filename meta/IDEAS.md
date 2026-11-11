@@ -787,7 +787,7 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 >
 > | Projeto | Seção de feedback | Último item lido | Lido em |
 > |---|---|---|---|
-> | Mapoteca (era Sand-Land-Map) | `meta/IDEAS.md`, «📮 Feedback ao KCM — leva nova» | `FK-BG` | 2026-10-31 |
+> | Mapoteca (era Sand-Land-Map) | `meta/IDEAS.md`, «📮 Feedback ao KCM — leva nova» | `FK-BH` (04/11, lida pelo aviso da carta 10; nada depois) | 2026-11-11 |
 > | GameDataHub | `meta/IDEAS.md`, «🔁 Feedback para o Kit» e «🧩 Feedback para o Kit» | «Fusão do v1.131.0 (DEC-105) — resposta à carta 03» (2026-10-23), e os três itens de 21–22/10 acima dele | 2026-10-31 |
 > | satelite-web | `meta/IDEAS.md`, «🧰 Feedback para o Kit» | item de 02/11 («Permissão que não chega a tempo»); aviso de lido da carta 07 | 2026-11-04 |
 > | Cancioneiro | `meta/IDEAS.md`, «Feedback para o Kit» | item de 2026-10-31 («O nicho Música é de música tocada…»); cartas 01 e 02 (2026-11-05) | 2026-11-05 |
@@ -813,6 +813,7 @@ Reafirmado: `.gitignore` personalizado e README quase nunca saem (mesmo em dev);
 
 - **Negócios e Licitações**, vizinho novo e o primeiro projeto real do `business`: a carta 01 (10/11), conferida contra o `src/` da v1.135.0 — dois defeitos medidos (o `PLANO.md` que o nicho promete e não cria; o placeholder que vaza) e o nicho desenhado para startup — ver `i-N88`, que também atualiza a `i-N61`. Aviso de lido pendente: a carta não diz a pasta do projeto.
 - **Artista**, a quinta área (escolha do chat): oito ferramentas para o Aseprite, todas `dev` anteriores à v1.73, paradas desde julho; o espelho executável e a segunda voz para o lugar do conhecimento pesquisado — ver `i-N89`.
+- **Mapoteca**, a pedido do dono (o método C lhe serve?): já faz quase tudo — o chat grava código com `sha1` na Edição 0 e valida na réplica com `check`, `build` e a WO reaplicada numa segunda cópia —, mas as WOs seguem na forma «edições» (sete das onze últimas acima de 450 linhas) e o `/wrap` errou no STATUS em 11/11. A **carta 11** (na pasta-pai deles) sugere análise e piloto do lado deles, com o risco do Observatorio: eles reescrevem componentes inteiros. Seria a terceira amostra para a variante do kit (`D-174`). Seção de feedback sem item novo depois da `FK-BH`; DECISIONS lido em parte (DEC-075 a DEC-099 pelos títulos, a DEC-089 inteira).
 
 ### 2026-11-08 — Livro de leitura: a Carreira e a área Historiador, a primeira passada do mapa dos projetos
 
