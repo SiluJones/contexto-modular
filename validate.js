@@ -1932,6 +1932,49 @@ check("C113 o manifesto do pacote conta e nomeia o que o pacote traz (wo0149, D-
   return "ok (" + resumo + ")";
 });
 
+/* C114 (wo0160, D-175; i-N84 item 2, i-N88 item 1) — Todo arquivo que a tabela de gatilhos ou um prompt do
+   nicho manda ler ou entregar existe nos arquivos do nicho. A linha de abertura citava CONTEXT.md em 16 dos 19
+   nichos (o ritual logo acima ja usava o documento-ancora), e o business prometia um PLANO.md que nao criava:
+   o assistente promete o arquivo, o projeto nao o tem. Ficam de fora os nomes da camada universal e do fecho
+   (lista UNI); caminho com pasta casa pelo nome inteiro ou pelo nome base (mecanicas/INDICE.md = INDICE.md).
+   Varre o CEREBRO nos tres modos (padrao, Code, mount) e os prompts base e do nicho. */
+check("C114 todo arquivo que a tabela de gatilhos ou um prompt do nicho cita existe no nicho (wo0160): o ritual e a tabela leem o mesmo documento-ancora", () => {
+  const UNI = new Set(["CEREBRO.md","INSTRUCOES-DO-PROJETO.md","CLAUDE.md","STATUS.md","IDEAS.md","DECISIONS.md","LOG-TEMPLATE.md","logs/AAAA-MM-DD.md","AAMMDD-HANDOFF-BRIEF.md","SKILL.md","HUB.md","README.md"]);
+  const re = /(?<![\w\/.\[\]-])((?:[a-z0-9_\[\]-]+\/)*[A-Z][A-Z0-9_-]*\.md)\b/g;
+  const S = T.STATE; S.workmode = S.workmode || {};
+  const prevC = S.workmode.codeMode, prevM = S.workmode.mountMode;
+  const fora = []; let citados = 0;
+  try {
+    [["no","no"],["yes","no"],["no","yes"]].forEach(([c, m]) => {
+      S.workmode.codeMode = c; S.workmode.mountMode = m;
+      Object.keys(T.NICHES).forEach(id => {
+        const n = T.normNiche(T.NICHES[id]);
+        const nomes = new Set();
+        T.effectiveFiles(n).forEach(f => { nomes.add(f.name); nomes.add(f.name.split("/").pop()); });
+        const cmd = T.buildClaudeMd(n);
+        const ini = cmd.indexOf("## Tabela de gatilhos");
+        assert(ini !== -1, id + ": CEREBRO sem a tabela de gatilhos");
+        const fim = cmd.indexOf("\n\n>", ini);
+        const fontes = [["gatilhos", cmd.slice(ini, fim === -1 ? undefined : fim)]];
+        (T.PROMPTS_BASE || []).concat(n.promptsExtra || []).forEach(p => {
+          let txt; try { txt = p.body({}, n); } catch (e) { txt = String(p.body); }
+          fontes.push(["prompt " + p.id, txt]);
+        });
+        fontes.forEach(([onde, txt]) => {
+          let mm; re.lastIndex = 0;
+          while ((mm = re.exec(txt))) {
+            const f = mm[1]; citados++;
+            if (UNI.has(f) || nomes.has(f) || nomes.has(f.split("/").pop())) continue;
+            fora.push(id + " (" + (c === "yes" ? "Code" : m === "yes" ? "mount" : "padrao") + ", " + onde + "): cita " + f + ", que o nicho nao tem");
+          }
+        });
+      });
+    });
+  } finally { S.workmode.codeMode = prevC; S.workmode.mountMode = prevM; }
+  assert(!fora.length, fora.slice(0, 6).join(" | ") + (fora.length > 6 ? " | (+" + (fora.length - 6) + ")" : ""));
+  return "ok (" + citados + " citacoes em 19 nichos x 3 modos, todas no nicho ou na camada universal)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";

@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.135.0**.
+> Histórico de versões. Versão atual: **v1.136.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.136.0 — Todo arquivo que a tabela de gatilhos e os prompts citam existe no nicho (wo0160, D-175)
+- **A linha de abertura da tabela de gatilhos lê o documento-âncora do nicho:** dizia «Lê CEREBRO.md → CONTEXT.md → STATUS.md» em todo nicho, e 16 dos 19 não têm `CONTEXT.md` (o `music` tem `PROJETO.md`, o `companion` tem `ALVO.md`, o `narrative` tem `BIBLIA.md`…). O ritual de início, logo acima na mesma página, já usava o documento certo; agora a tabela usa o mesmo. Vale nos dois canais (no canal pasta, a linha «Abertura de conversa»). O `custom`, sem documento-âncora, lê o CEREBRO e o STATUS.
+- **`business` ganha o `PLANO.md` opcional:** o gatilho «Plano de ação montado/atualizado» e o prompt J mandavam entregar um `PLANO.md` que o nicho não criava. Agora ele existe — objetivo, premissas, movimentos em ordem, recursos, riscos e o que fica de fora —, desligado por padrão no fecho, como o MODELO-FINANCEIRO.
+- **`C114` novo** (114 → 115): nos 19 nichos e em três modos (padrão, Code, mount), todo `X.md` citado na tabela de gatilhos do CEREBRO e nos prompts (base e do nicho) existe nos arquivos do nicho ou na camada universal; caminho com pasta casa pelo nome base. 2.659 citações conferidas. Duas provas negativas: sem o conserto da linha de abertura, e sem o `PLANO.md`.
+- **Origem:** a `i-N84`, item 2 (o Album-Referencias, nicho `music`) e a `i-N88`, item 1 (a carta 01 do Negócios e Licitações, o primeiro uso real do `business`). Harness **19/19 · 115/115**.
 
 ## v1.135.0 — O roteiro do dono vai no chat, no mesmo turno da WO; e o `.claude/` se confere em vez de se supor (wo0150, D-173)
 - **Molde de WO:** o roteiro do dono «vai **no chat, no MESMO turno que entrega a WO**, como bloco próprio — nunca só dentro do arquivo da WO, nunca no turno seguinte: nada nele depende do relatório». Antes dizia «vai para o fecho do chat», sem dizer qual, e o cabeçalho pedia o **Estado** com o commit — que só existe depois do relatório. Agora o Estado nomeia a WO («o commit da woNNNN»). Mesmo texto no molde da casa.

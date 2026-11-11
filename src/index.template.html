@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.135.0";
+const KIT_VERSION = "1.136.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2889,6 +2889,9 @@ function buildClaudeMd(niche){
   L.push("|---|---|");
   const baseTriggers = [];
   TRIGGERS_BASE.forEach(([ev,ac])=>{
+    // wo0160 (i-N84 item 2, D-175): a linha de abertura le o documento-ancora do nicho, o mesmo do ritual
+    // logo acima — 16 dos 19 nichos nao tem CONTEXT.md. Nicho sem ancora (custom) le CEREBRO e STATUS.
+    if(ev === "Início de turno") ac = ac.replace("CONTEXT.md → ", ctxF ? ctxF.name + " → " : "");
     if(!hasChangelog){
       ac = ac.replace(" → última entrada do CHANGELOG.", ".").replace(" + CHANGELOG.md (se fechou algo)", "");
     }

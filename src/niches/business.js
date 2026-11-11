@@ -254,6 +254,38 @@ NICHES.business = {
 > Em 3-4 frases: o que estes números contam sobre a saúde e o futuro do negócio.
 [...]
 `},
+    { name:"PLANO.md", cat:"opcional", role:"OPCIONAL — plano de ação: do objetivo aos poucos movimentos, em ordem, com premissas e riscos. Use quando um objetivo virou plano.", short:"OPCIONAL — plano de ação, premissas e riscos.",
+      content:`# PLANO.md — Plano de Ação
+
+> **Opcional** — use quando um objetivo virou plano. Ancorado em OBJETIVOS.md (o quê) e CONTEXT.md (as restrições).
+> Regra de ouro: poucos movimentos que mais impactam, em sequência; o que fica de fora também é decisão.
+
+---
+
+## Objetivo e prazo
+- [Objetivo — resultado-chave mensurável — prazo.]
+
+## Premissas do plano
+> O que precisa ser verdade para o plano funcionar. Se uma cair, o plano é revisto.
+- [Premissa — validada/estimada — fonte.]
+
+## Movimentos (em ordem)
+| # | Movimento | Depende de | Responsável | Prazo | Status |
+|---|---|---|---|---|---|
+| 1 | [...] | [—] | [...] | [...] | [a fazer] |
+
+## Recursos × restrições
+- [Capital, equipe, tempo: o plano cabe no que temos?]
+
+## Riscos e sinais de alerta
+- [Risco — o sinal que avisa — o que fazer se aparecer.]
+
+## Fica de fora (foco)
+- [O que deliberadamente não entra agora, e por quê.]
+
+## O que derrubaria o plano
+- [...]
+`},
     { name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído.", short:"Modelo do log do dia; nunca substituído.",
       content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
@@ -292,6 +324,7 @@ NICHES.business = {
     { key:"analise", name:"ANALISE.md", role:"completo, se uma análise avançou (com premissas e sensibilidade)", active:true },
     { key:"objetivos", name:"OBJETIVOS.md", role:"completo, se um objetivo/KR mudou", active:false },
     { key:"modelo", name:"MODELO-FINANCEIRO.md", role:"completo, se houve modelagem de números (quando usa o arquivo)", active:false },
+    { key:"plano", name:"PLANO.md", role:"completo, se o plano de ação mudou (quando usa o arquivo)", active:false },
     { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[
