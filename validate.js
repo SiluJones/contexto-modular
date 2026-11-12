@@ -149,11 +149,11 @@ check("G7 modo Code (dev: kit vira download separado, ponteiro no CEREBRO, sem i
   assert(/Kit de arranque do Claude Code/i.test(yesC), "codeMode=yes deveria ter a secao (ponteiro) do kit");
   assert(/claude-code-kit\.zip/i.test(yesC), "ponteiro sem apontar o pacote claude-code-kit.zip");
   assert(!/pode apagar este ap.ndice/i.test(yesC), "instrucao autodestrutiva 'apagar apendice' nao pode existir no CEREBRO");
-  assert(!/<NOME DO PROJETO> — guia para o Claude Code/.test(yesC), "conteudo do CLAUDE.md vazou inline pro CEREBRO — deveria ficar so no zip");
+  assert(!/Arquivo-raiz lido pelo Claude Code em todo turno/.test(yesC), "conteudo do CLAUDE.md vazou inline pro CEREBRO — deveria ficar so no zip");
   assert(!/"deny": \["Bash\(rm -rf/.test(yesC), "conteudo do settings.json vazou inline pro CEREBRO — deveria ficar so no zip");
   assert(noC !== yesC, "round-trip do modo Code nao alterou o CEREBRO.md");
   const f = T.buildCodeKitFiles();
-  assert(/^# <NOME DO PROJETO>/.test(f.claudeMd) && /< 200 linhas/.test(f.claudeMd), "CLAUDE.md starter invalido");
+  assert(/^# (.+ — g|G)uia para o Claude Code\n/.test(f.claudeMd) && /< 200 linhas/.test(f.claudeMd), "CLAUDE.md starter invalido");
   assert(/"permissions"/.test(f.settings) && /"deny"/.test(f.settings), "settings.json starter invalido");
   assert(/^---\nname: apply-wo\ndescription: /.test(f.applyWo) && /disable-model-invocation: true/.test(f.applyWo), "apply-wo nao esta no formato Skill atual");
   assert(/^---\nname: wrap\ndescription: /.test(f.wrap) && /disable-model-invocation: true/.test(f.wrap), "wrap nao esta no formato Skill atual");
@@ -1973,6 +1973,40 @@ check("C114 todo arquivo que a tabela de gatilhos ou um prompt do nicho cita exi
   } finally { S.workmode.codeMode = prevC; S.workmode.mountMode = prevM; }
   assert(!fora.length, fora.slice(0, 6).join(" | ") + (fora.length > 6 ? " | (+" + (fora.length - 6) + ")" : ""));
   return "ok (" + citados + " citacoes em 19 nichos x 3 modos, todas no nicho ou na camada universal)";
+});
+
+/* C115 (wo0162, D-176; i-N88 item 2, i-N84 item 1) — Nada que o gerador nao sabe sai como placeholder de
+   preencher: com o nome do projeto vazio, as Instrucoes diziam «# Projeto: [NOME]» e o CLAUDE.md
+   «# <NOME DO PROJETO>»; com idioma «Outro», «Respostas em o idioma escolhido»; e todo nicho, ate o de
+   documentos, recebia «Build: <seu comando de build, ex.: npm run build>». Dois projetos reais mediram
+   (Album-Referencias, Negocios e Licitacoes). Confere os dois lados: sem nome, nada vaza; com nome, ele aparece. */
+check("C115 nada que o gerador nao sabe vaza como placeholder (wo0162): nome vazio, idioma Outro, build em nicho sem codigo", () => {
+  const S = T.STATE; S.topbar = S.topbar || {}; S.workmode = S.workmode || {};
+  const prevTb = JSON.stringify(S.topbar), prevN = S.niche, prevC = S.workmode.codeMode;
+  const VAZA = /\[NOME\]|<NOME DO PROJETO>|em o idioma escolhido/;
+  let docs = 0;
+  try {
+    S.workmode.codeMode = "yes";
+    Object.keys(T.NICHES).forEach(id => {
+      S.niche = id;
+      const n = T.normNiche(T.NICHES[id]);
+      ["project","projeto","peca","tema"].forEach(k => { delete S.topbar[k]; });
+      S.topbar.langSel = "other";
+      const instr = T.buildInstr(n), cmd = T.buildClaudeMd(n), cl = T.buildCodeKitFiles().claudeMd;
+      [["Instrucoes", instr], ["CEREBRO", cmd], ["CLAUDE.md", cl]].forEach(([onde, txt]) => {
+        const m = txt.match(VAZA);
+        assert(!m, id + " (" + onde + ", sem nome e idioma Outro): vaza «" + (m && m[0]) + "»");
+      });
+      assert(/^# Projeto — /.test(instr), id + ": sem nome, o titulo das Instrucoes deveria dizer o dominio");
+      const codigo = ["dev","game","custom"].includes(id);
+      assert(codigo === /npm run build/.test(cl), id + ": " + (codigo ? "nicho de codigo perdeu o build de exemplo" : "nicho sem codigo recebeu o build de exemplo no CLAUDE.md"));
+      if (!codigo) { assert(/A validação é o `git diff`/.test(cl), id + ": nicho sem codigo sem a validacao pelo git diff"); docs++; }
+      S.topbar.project = "Projeto X"; S.topbar.langSel = "pt";
+      assert(/^# Projeto: Projeto X/.test(T.buildInstr(n)), id + ": com nome, as Instrucoes nao o trazem no titulo");
+      assert(/^# Projeto X — guia para o Claude Code/.test(T.buildCodeKitFiles().claudeMd), id + ": com nome, o CLAUDE.md nao o traz no titulo");
+    });
+  } finally { S.topbar = JSON.parse(prevTb); S.niche = prevN; S.workmode.codeMode = prevC; }
+  return "ok (19 nichos sem nome e com nome; " + docs + " sem codigo validam pelo git diff)";
 });
 
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {

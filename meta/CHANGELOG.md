@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.136.0**.
+> Histórico de versões. Versão atual: **v1.137.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.137.0 — O que o gerador não sabe não sai como placeholder de preencher (wo0162, D-176)
+- **Sem nome do projeto no gerador**, as Instruções saíam com `# Projeto: [NOME]` e o `CLAUDE.md` com `# <NOME DO PROJETO> — guia para o Claude Code`. Agora o título das Instruções diz o domínio (`# Projeto — Negócios`) e o do `CLAUDE.md` é `# Guia para o Claude Code`; com nome, os dois o trazem como antes.
+- **Idioma «Outro»:** «Respostas em o idioma escolhido» vira «Respostas no idioma do projeto — escreva qual aqui», nas Instruções e no CEREBRO.
+- **Nicho sem código** (16 dos 19 — todos menos `dev`, `game` e `custom`): o `CLAUDE.md` não traz mais o build de exemplo (`npm run build`); diz que o projeto é só de documentos e que a validação é o `git diff`. Nos três de código, a linha do build ganha a ressalva «se ele for só de documentos, apague esta linha e a de testes».
+- **`C115` novo** (115 → 116): nos 19 nichos, sem nome e com idioma «Outro», nada vaza nas Instruções, no CEREBRO e no `CLAUDE.md`; com nome, ele aparece nos dois títulos; nicho sem código valida pelo `git diff`. Quatro provas negativas, uma por conserto. O `G7` passa a aceitar o título novo do `CLAUDE.md`.
+- **Origem:** a `i-N88`, item 2 (carta 01 do Negócios e Licitações, reproduzida no pacote v1.136.0 gerado na pasta deles) e a `i-N84`, item 1 (Album-Referencias, a primeira voz). Harness **19/19 · 116/116**.
 
 ## v1.136.0 — Todo arquivo que a tabela de gatilhos e os prompts citam existe no nicho (wo0160, D-175)
 - **A linha de abertura da tabela de gatilhos lê o documento-âncora do nicho:** dizia «Lê CEREBRO.md → CONTEXT.md → STATUS.md» em todo nicho, e 16 dos 19 não têm `CONTEXT.md` (o `music` tem `PROJETO.md`, o `companion` tem `ALVO.md`, o `narrative` tem `BIBLIA.md`…). O ritual de início, logo acima na mesma página, já usava o documento certo; agora a tabela usa o mesmo. Vale nos dois canais (no canal pasta, a linha «Abertura de conversa»). O `custom`, sem documento-âncora, lê o CEREBRO e o STATUS.

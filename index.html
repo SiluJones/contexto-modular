@@ -1304,7 +1304,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.136.0";
+const KIT_VERSION = "1.137.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8951,7 +8951,9 @@ function buildInstr(niche){
   const langTxt = langText(langKey);
 
   const lines = [];
-  lines.push(`# Projeto: ${tb.project || tb.projeto || tb.peca || tb.tema || "[NOME]"}`);
+  // wo0162 (i-N88 item 2, D-176): sem nome no gerador, o titulo diz o dominio e nao vaza «[NOME]».
+  const nomeProj = String(tb.project || tb.projeto || tb.peca || tb.tema || "").trim();
+  lines.push(nomeProj ? `# Projeto: ${nomeProj}` : `# Projeto — ${niche.label}`);
   lines.push(`Domínio: ${niche.label}.`);
   if(tb.version || tb.versao || tb.fase || tb.phase){
     lines.push(`Estágio: ${tb.version || tb.versao || tb.fase || tb.phase}.`);
@@ -9070,7 +9072,7 @@ function buildInstr(niche){
 
   lines.push("");
   lines.push(`## Idioma`);
-  lines.push(`Respostas em ${langTxt}.`);
+  lines.push(langKey === "other" ? "Respostas no idioma do projeto — escreva qual aqui." : `Respostas em ${langTxt}.`);
   if(OSENV.value !== "none" && OS_CMDNOTE[OSENV.value]){
     lines.push(`Sistema do usuário: ${OS_LABELS[OSENV.value]}. ${OS_CMDNOTE[OSENV.value]}`);
   }
@@ -9597,7 +9599,7 @@ function buildClaudeMd(niche){
   L.push("");
   L.push("## Idioma");
   L.push("");
-  L.push(`Respostas em ${langTxt}, incluindo comentários quando houver código.`);
+  L.push((tb.langSel === "other" ? "Respostas no idioma do projeto — escreva qual aqui —" : `Respostas em ${langTxt},`) + " incluindo comentários quando houver código.");
 
   L.push("");
   L.push("## Recomendação de configuração (fim de turno)");
@@ -10325,8 +10327,13 @@ function buildWoTemplate(){
 }
 
 function buildCodeKitFiles(){
+  // wo0162 (i-N88 item 2, D-176): o CLAUDE.md nao vaza «<NOME DO PROJETO>», e projeto de nicho sem codigo
+  // nao recebe um build de exemplo — a validacao dele e o git diff.
+  const tbK = STATE.topbar || {};
+  const nomeK = String(tbK.project || tbK.projeto || tbK.peca || tbK.tema || "").trim();
+  const temCodigo = !STATE.niche || ["dev","game","custom"].includes(STATE.niche);
   const claudeMd = [
-    "# <NOME DO PROJETO> — guia para o Claude Code",
+    nomeK ? `# ${nomeK} — guia para o Claude Code` : "# Guia para o Claude Code",
     "",
     "> Arquivo-raiz lido pelo Claude Code em todo turno. Mantenha CURTO (< 200 linhas — custa token em todo turno).",
     "> Regra prática: se remover uma linha e o Claude ainda acerta, ela não pertence aqui. Procedural detalhado → vira skill em `.claude/skills/`.",
@@ -10336,8 +10343,13 @@ function buildCodeKitFiles(){
     "Leia `meta/CEREBRO.md` → o doc de contexto do projeto (ex.: `meta/CONTEXT.md`) → `meta/STATUS.md` antes de agir. Confirme em uma frase o que entendeu.",
     "",
     "## Build / validação",
-    "- Build: `<seu comando de build, ex.: npm run build>`  (PLACEHOLDER — troque pelo do seu projeto)",
-    "- Testes/validação: `<seu comando de teste>` — rode antes de commitar mudança de código.",
+    ...(temCodigo ? [
+      "- Build: `<seu comando de build, ex.: npm run build>`  (PLACEHOLDER — troque pelo do seu projeto; se ele for só de documentos, apague esta linha e a de testes)",
+      "- Testes/validação: `<seu comando de teste>` — rode antes de commitar mudança de código.",
+    ] : [
+      "- Projeto só de documentos: não há build nem teste. A validação é o `git diff`, lido inteiro antes do commit.",
+      "- Se o projeto ganhar código, acrescente aqui o comando de build e o de teste.",
+    ]),
     "- Mudança só de doc (meta/) NÃO precisa de build; a rede é o `git diff`.",
     "- Adicione seus comandos de build/teste ao `allow` de `.claude/settings.json`.",
     "",
