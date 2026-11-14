@@ -1135,6 +1135,10 @@ const UNIVERSAL_IDEAS_TPL = { name:"IDEAS.md", cat:"ctx",
 ## Feedback para o ASU
 Anote aqui melhorias e bugs da ferramenta **ASU** percebidos ao usá-la neste projeto
 (para a equipe do ASU). Mesmo critério da seção acima: só o que for acionável.
+
+---
+
+> **Fim do IDEAS.** Acréscimo entra sob o título da seção certa, nunca aqui embaixo: o fim do arquivo é a seção de feedback, e o que cai nela se perde do lugar dele.
 `};
 
 /* Template do HUB de grupo de projetos (i-N24): injetado quando o projeto marca "em grupo". */
@@ -1169,7 +1173,7 @@ const REVOCATIONS = [
 const HYGIENE_RULES = [
   "Referência cruzada, não duplicação: um dado tem UMA fonte de verdade. Quando uma ideia vira trabalho, ela aparece também no STATUS — mas continua no IDEAS, só mudando de status. Não copie o conteúdo para dois lugares. **Mensagem trocada com outro projeto ou frente irmã é nota, não artefato:** vive fora do repositório enquanto serve e vai para o arquivo morto depois — **não crie pasta versionada para ela**. Quando a troca é uma negociação continuada, ela vira **carta** e ganha nome e contador próprios (CEREBRO, «Correspondência entre projetos»); continua fora do repositório. O que precisa sobreviver é o que você extraiu dela para os documentos, não o texto da mensagem; guardar os dois é duplicar, e o texto envelhece enquanto o registro fica.",
   "STATUS é só o agora: item resolvido sai do STATUS e vai para o CHANGELOG (e para o log do dia). Médio/longo prazo vive no ROADMAP, não no STATUS.",
-  "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida.",
+  "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida. **Acréscimo entra sob o título da seção certa, nunca no fim do arquivo:** o fim é a seção de feedback, e o que cai nela se perde do lugar dele (doze entradas de cânone de um projeto acabaram no «Feedback para o Kit»).",
   "DECISIONS arquiva por EVENTO, não por tamanho: entrada resolvida ou decisão substituída vai para o arquivo morto, e o tamanho (~700 linhas) é só alarme. Para o critério ser mecânico, toda entrada traz `**Status:**` com valor fechado (aceita · substituída por X · resolvida · aberta) — «resolvido» que não está escrito no Status é opinião.",
   "Artefato gerado que convive com edição humana precisa de três coisas: (i) **enxergar o que existe fora dele** — senão duplica em silêncio o que a pessoa já escreveu; (ii) **precedência definida por posição** — quem vence quando os dois falam do mesmo; (iii) **nunca apagar nem desfazer o que não é seu**. Bloco gerado dentro de arquivo editável: delimite com marcadores, mantenha-o no FIM do arquivo, escreva só dentro deles, e diga na primeira linha que ali dentro é território da ferramenta (o que a pessoa escrever ali será reescrito). Se o gerado não enxerga o manual, ele desfaz gestos sem avisar — e o sintoma aparece longe da causa. **Anatomia do bloco gerado — cinco regras, e são as cinco juntas que compram a liberdade de editar o mesmo arquivo à mão:** (1) comentário fica FORA do bloco — dentro, o gerador reescreve tudo e ele some; (2) regra fica DENTRO — é o território da ferramenta; (3) existe UM bloco, e só um — dois são ambiguidade; (4) o bloco é o ÚLTIMO conteúdo do arquivo, nada depois dele; (5) **os marcadores não se citam em comentário** — o gerador costuma procurá-los por substring, e um exemplo é indistinguível de um segundo bloco. A quinta decorre da terceira, mas precisa ser dita em voz alta: é o erro que se comete justamente ao DOCUMENTAR a convenção, então descreva os marcadores em vez de reproduzi-los. **Duas obrigações do lado da ferramenta:** diante de ambiguidade, **recusar, não adivinhar** — reescrever é a única operação irreversível, e chutar ali destrói conteúdo; e **normalizar só o que é seu** — mover o próprio bloco para o fim é legítimo, mover o texto da pessoa não, e se a normalização mudar o efeito de alguma regra dela, avise antes.",
   "**Abertura de turno, antes de QUALQUER outra ferramenta:** liste o mount, leia o cabeçalho da cópia achatada se houver (data de geração + estado do repo), e confira a versão viva do artefato principal contra a que você acha que sabe. Um passo, quatro fatos, e só então o trabalho. **Sem cópia achatada nem manifesto** o passo continua valendo com o que houver — a listagem sozinha já mostra nota nova —; o que muda é o carimbo do fecho, que declara a base pobre em vez de fingir precisão. Não é cerimônia de início de SESSÃO: é de TURNO, e o turno pesado é justamente o que a dispensa por conta própria.",
@@ -1304,7 +1308,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.137.0";
+const KIT_VERSION = "1.138.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1589,6 +1593,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 📮 Feedback para o ASU
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
+
+---
+
+> **Fim do IDEAS.** Acréscimo entra sob o título da seção certa, nunca aqui embaixo: o fim do arquivo é a seção de feedback, e o que cai nela se perde do lugar dele.
 `},
     {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 
@@ -2499,7 +2507,8 @@ NICHES.narrative = {
     ["Fato novo do mundo/personagem estabelecido", "Entrega BIBLIA.md ou PERSONAGENS.md completo com o cânone atualizado."],
     ["Decisão de enredo (morte, reviravolta, mudança de arco)", "Entrega ENREDO.md completo (a decisão + impacto no que vem)."],
     ["Inconsistência encontrada/resolvida ou grafia definida", "Entrega CONTINUIDADE.md completo (a nota de continuidade / grafia canônica)."],
-    ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
+    ["Sessão de concepção concluída (decisões tomadas, nenhuma prosa escrita)", "Registra cada decisão no DECISIONS.md e atualiza BIBLIA.md, ENREDO.md e PERSONAGENS.md no que mudou; o log do dia diz o que foi decidido e o que ficou em aberto. Concepção não dispara «capítulo concluído»: este gatilho é o dela."],
+  ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
     ["Erro mecânico apontado pelo autor na prosa", "Vira linha PERMANENTE na «Lista de invariantes» de CONTINUIDADE.md (a lista só cresce — o mesmo erro nunca se corrige duas vezes); se for erro de voz, ganha espelho também em VOZ.md → «O que EVITAR»."],
     ["Nota/arquivo antigo do acervo entra em extração, ou uma nota contradiz o que já está escrito", "Apresenta em FICHA (skill `ficha-de-choque`): quatro campos com citação literal dos dois lados, marca de confiança e status. Nunca pergunta solta nem referência cruzada nua — o autor não decora o que escreveu. A leva sai em ticket `AAMMDD-HHMM-leva-<assunto>.md`, só com o que está em aberto."],
     ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada. A cada ARCO concluído, propõe 1–2 exemplos novos substituindo os mais antigos — a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar a voz atual."],
@@ -2783,10 +2792,9 @@ NICHES.narrative = {
 - [ ] [Próxima cena/beat + o que precisa acontecer nela.]
 - [ ] [...]
 
-## Decisões de enredo (DEC)
-> Escolhas que mudam o rumo: matar um personagem, uma reviravolta, alterar um arco. Com o porquê.
-### DEC-[N] — [a decisão] · [data]
-[O que foi decidido, por quê, e o que isso afeta no que vem.]
+## Decisões de enredo — índice
+> Escolhas que mudam o rumo (matar um personagem, uma reviravolta, alterar um arco): uma linha aqui; o registro inteiro, com o porquê e o que afeta no que vem, no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md
 
 ## Fios soltos / a pagar
 > Promessas feitas ao leitor que precisam de resolução (setups esperando payoff).
@@ -2813,6 +2821,10 @@ NICHES.narrative = {
 \`\`\`
 [Trecho 2.]
 \`\`\`
+
+## Amostras propostas (NÃO aprovadas)
+> Em obra nova ainda não há prosa aprovada, e o VOZ fica vazio quando mais importa. Aqui ficam os trechos que o ASSISTENTE propôs para calibrar o tom, marcados como não aprovados. O primeiro trecho que o autor aprovar entra na seção acima e TIRA estes daqui.
+- [Amostra proposta 1 — não aprovada.]
 
 ## Diálogo
 - [Como os diálogos soam: realistas e cheios de subtexto? estilizados? Diferença de fala entre personagens vive em PERSONAGENS.md.]
@@ -4834,7 +4846,8 @@ NICHES.game = {
     ["Fato novo de lore/mundo/personagem", "Entrega UNIVERSO.md completo com o cânone atualizado."],
     ["Mudança de escopo (corte, adição, fase)", "Entrega PRODUCAO.md completo (o escopo atual + o que foi cortado/adiado e por quê)."],
     ["Resultado de playtest", "Entrega STATUS.md e MECANICAS.md (o que o teste confirmou/refutou; o que ajustar)."],
-    ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
+    ["*Feel* de mecânica aprovado, ou regressão achada depois de um patch", "Vira linha PERMANENTE em «Invariantes de feel» do MECANICAS.md: uma frase testável (o que fazer, o que tem de acontecer, como se vê que regrediu). A lista só cresce."],
+  ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
     ["Cena, missão ou diálogo ramificado escrito/decidido", "Entrega ROTEIRO.md completo (a cena no formato de jogo: escolhas com consequências, requisitos, lore passivo, estado de sincronia)."],
   ],
   contextFiles:[
@@ -4906,10 +4919,13 @@ NICHES.game = {
 ## Controles / verbos do jogador
 - [Os verbos centrais (pular, atirar, falar, construir) — o vocabulário de ação do jogo.]
 
-## Decisões de design (DEC)
-> Escolhas de mecânica/sistema com o porquê. Evita rediscutir.
-### DEC-[N] — [a decisão] · [data]
-[O que foi decidido, a intenção por trás, alternativas, e o efeito sistêmico esperado.]
+## Invariantes de feel (testáveis)
+> *Feel* já aprovado que um patch pode quebrar. Uma frase testável por linha: o que o jogador faz, o que tem de acontecer, e como se vê que regrediu. A lista SÓ CRESCE — a mesma regressão nunca se descobre duas vezes.
+- [Ex.: depois do wall-jump sem input, a personagem descreve um arco; se cair reto, regrediu.]
+
+## Decisões de design — índice
+> Uma linha por escolha de mecânica/sistema; o registro inteiro (a intenção, as alternativas, o efeito sistêmico) no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md
 `},
     { name:"UNIVERSO.md", cat:"essencial", role:"Lore, mundo, personagens e tom — a bíblia de ficção do jogo. Estável; consultada antes de inventar.", short:"Lore e mundo; consulte antes de inventar.",
       content:`# UNIVERSO.md — Mundo e Lore
@@ -6073,6 +6089,10 @@ NICHES.brainstorm = {
 ## 📮 Feedback para o ASU
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
+
+---
+
+> **Fim do IDEAS.** Acréscimo entra sob o título da seção certa, nunca aqui embaixo: o fim do arquivo é a seção de feedback, e o que cai nela se perde do lugar dele.
 `},
     { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.", short:"Clusters e eixos do espaço de ideias.",
       content:`# MAPA.md — Clusters e Eixos
@@ -6433,10 +6453,9 @@ NICHES.music = {
 - **Camadas:** [o que sustenta a base; o que entra para destacar momentos.]
 - **"Tirar para destacar":** [onde o vazio trabalha a favor.]
 
-## Decisões (DEC)
-> Escolhas de arranjo/harmonia/produção com a intenção por trás.
-### DEC-[N] — [a decisão] · [data]
-[O que foi decidido + a sensação pretendida + alternativa considerada. Ex.: "tirar a bateria no 2º verso para criar intimidade antes do refrão final".]
+## Decisões — índice
+> Escolhas de arranjo/harmonia/produção: uma linha aqui; o registro inteiro no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md [lá: o que foi decidido + a sensação pretendida + alternativa considerada. Ex.: "tirar a bateria no 2º verso para criar intimidade antes do refrão final".]
 
 ---
 
@@ -6768,10 +6787,9 @@ NICHES.rpg = {
 > Curto: o suficiente para o assistente saber a história até aqui.
 - **Sessão [N] — [título]:** [o que rolou de relevante; decisões da party; consequências.]
 
-## Decisões de campanha (DEC)
-> Mudanças de rumo importantes (matar um vilão, revelar uma reviravolta) com o porquê.
-### DEC-[N] — [a decisão] · [data]
-[O que e por quê; o que afeta nos fios.]
+## Decisões de campanha — índice
+> Mudanças de rumo importantes (matar um vilão, revelar uma reviravolta): uma linha aqui; o porquê e o que afeta nos fios, no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md
 `},
     { name:"SESSAO.md", cat:"rolante", role:"Prep da PRÓXIMA sessão (método Lazy DM). Rolante — recriada a cada sessão.", short:"Prep da PRÓXIMA sessão. Recriada a cada uma.", content:`# SESSAO.md — Prep da Próxima Sessão
 

@@ -133,6 +133,10 @@ NICHES.brainstorm = {
 ## 📮 Feedback para o ASU
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
+
+---
+
+> **Fim do IDEAS.** Acréscimo entra sob o título da seção certa, nunca aqui embaixo: o fim do arquivo é a seção de feedback, e o que cai nela se perde do lugar dele.
 `},
     { name:"MAPA.md", cat:"essencial", role:"Clusters (afinidade) e eixos que organizam o espaço de ideias. Cresce-rolante.", short:"Clusters e eixos do espaço de ideias.",
       content:`# MAPA.md — Clusters e Eixos

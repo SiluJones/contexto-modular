@@ -55,7 +55,8 @@ NICHES.narrative = {
     ["Fato novo do mundo/personagem estabelecido", "Entrega BIBLIA.md ou PERSONAGENS.md completo com o cânone atualizado."],
     ["Decisão de enredo (morte, reviravolta, mudança de arco)", "Entrega ENREDO.md completo (a decisão + impacto no que vem)."],
     ["Inconsistência encontrada/resolvida ou grafia definida", "Entrega CONTINUIDADE.md completo (a nota de continuidade / grafia canônica)."],
-    ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
+    ["Sessão de concepção concluída (decisões tomadas, nenhuma prosa escrita)", "Registra cada decisão no DECISIONS.md e atualiza BIBLIA.md, ENREDO.md e PERSONAGENS.md no que mudou; o log do dia diz o que foi decidido e o que ficou em aberto. Concepção não dispara «capítulo concluído»: este gatilho é o dela."],
+  ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
     ["Erro mecânico apontado pelo autor na prosa", "Vira linha PERMANENTE na «Lista de invariantes» de CONTINUIDADE.md (a lista só cresce — o mesmo erro nunca se corrige duas vezes); se for erro de voz, ganha espelho também em VOZ.md → «O que EVITAR»."],
     ["Nota/arquivo antigo do acervo entra em extração, ou uma nota contradiz o que já está escrito", "Apresenta em FICHA (skill `ficha-de-choque`): quatro campos com citação literal dos dois lados, marca de confiança e status. Nunca pergunta solta nem referência cruzada nua — o autor não decora o que escreveu. A leva sai em ticket `AAMMDD-HHMM-leva-<assunto>.md`, só com o que está em aberto."],
     ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada. A cada ARCO concluído, propõe 1–2 exemplos novos substituindo os mais antigos — a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar a voz atual."],
@@ -339,10 +340,9 @@ NICHES.narrative = {
 - [ ] [Próxima cena/beat + o que precisa acontecer nela.]
 - [ ] [...]
 
-## Decisões de enredo (DEC)
-> Escolhas que mudam o rumo: matar um personagem, uma reviravolta, alterar um arco. Com o porquê.
-### DEC-[N] — [a decisão] · [data]
-[O que foi decidido, por quê, e o que isso afeta no que vem.]
+## Decisões de enredo — índice
+> Escolhas que mudam o rumo (matar um personagem, uma reviravolta, alterar um arco): uma linha aqui; o registro inteiro, com o porquê e o que afeta no que vem, no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md
 
 ## Fios soltos / a pagar
 > Promessas feitas ao leitor que precisam de resolução (setups esperando payoff).
@@ -369,6 +369,10 @@ NICHES.narrative = {
 \`\`\`
 [Trecho 2.]
 \`\`\`
+
+## Amostras propostas (NÃO aprovadas)
+> Em obra nova ainda não há prosa aprovada, e o VOZ fica vazio quando mais importa. Aqui ficam os trechos que o ASSISTENTE propôs para calibrar o tom, marcados como não aprovados. O primeiro trecho que o autor aprovar entra na seção acima e TIRA estes daqui.
+- [Amostra proposta 1 — não aprovada.]
 
 ## Diálogo
 - [Como os diálogos soam: realistas e cheios de subtexto? estilizados? Diferença de fala entre personagens vive em PERSONAGENS.md.]

@@ -1135,6 +1135,10 @@ const UNIVERSAL_IDEAS_TPL = { name:"IDEAS.md", cat:"ctx",
 ## Feedback para o ASU
 Anote aqui melhorias e bugs da ferramenta **ASU** percebidos ao usá-la neste projeto
 (para a equipe do ASU). Mesmo critério da seção acima: só o que for acionável.
+
+---
+
+> **Fim do IDEAS.** Acréscimo entra sob o título da seção certa, nunca aqui embaixo: o fim do arquivo é a seção de feedback, e o que cai nela se perde do lugar dele.
 `};
 
 /* Template do HUB de grupo de projetos (i-N24): injetado quando o projeto marca "em grupo". */
@@ -1169,7 +1173,7 @@ const REVOCATIONS = [
 const HYGIENE_RULES = [
   "Referência cruzada, não duplicação: um dado tem UMA fonte de verdade. Quando uma ideia vira trabalho, ela aparece também no STATUS — mas continua no IDEAS, só mudando de status. Não copie o conteúdo para dois lugares. **Mensagem trocada com outro projeto ou frente irmã é nota, não artefato:** vive fora do repositório enquanto serve e vai para o arquivo morto depois — **não crie pasta versionada para ela**. Quando a troca é uma negociação continuada, ela vira **carta** e ganha nome e contador próprios (CEREBRO, «Correspondência entre projetos»); continua fora do repositório. O que precisa sobreviver é o que você extraiu dela para os documentos, não o texto da mensagem; guardar os dois é duplicar, e o texto envelhece enquanto o registro fica.",
   "STATUS é só o agora: item resolvido sai do STATUS e vai para o CHANGELOG (e para o log do dia). Médio/longo prazo vive no ROADMAP, não no STATUS.",
-  "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida.",
+  "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida. **Acréscimo entra sob o título da seção certa, nunca no fim do arquivo:** o fim é a seção de feedback, e o que cai nela se perde do lugar dele (doze entradas de cânone de um projeto acabaram no «Feedback para o Kit»).",
   "DECISIONS arquiva por EVENTO, não por tamanho: entrada resolvida ou decisão substituída vai para o arquivo morto, e o tamanho (~700 linhas) é só alarme. Para o critério ser mecânico, toda entrada traz `**Status:**` com valor fechado (aceita · substituída por X · resolvida · aberta) — «resolvido» que não está escrito no Status é opinião.",
   "Artefato gerado que convive com edição humana precisa de três coisas: (i) **enxergar o que existe fora dele** — senão duplica em silêncio o que a pessoa já escreveu; (ii) **precedência definida por posição** — quem vence quando os dois falam do mesmo; (iii) **nunca apagar nem desfazer o que não é seu**. Bloco gerado dentro de arquivo editável: delimite com marcadores, mantenha-o no FIM do arquivo, escreva só dentro deles, e diga na primeira linha que ali dentro é território da ferramenta (o que a pessoa escrever ali será reescrito). Se o gerado não enxerga o manual, ele desfaz gestos sem avisar — e o sintoma aparece longe da causa. **Anatomia do bloco gerado — cinco regras, e são as cinco juntas que compram a liberdade de editar o mesmo arquivo à mão:** (1) comentário fica FORA do bloco — dentro, o gerador reescreve tudo e ele some; (2) regra fica DENTRO — é o território da ferramenta; (3) existe UM bloco, e só um — dois são ambiguidade; (4) o bloco é o ÚLTIMO conteúdo do arquivo, nada depois dele; (5) **os marcadores não se citam em comentário** — o gerador costuma procurá-los por substring, e um exemplo é indistinguível de um segundo bloco. A quinta decorre da terceira, mas precisa ser dita em voz alta: é o erro que se comete justamente ao DOCUMENTAR a convenção, então descreva os marcadores em vez de reproduzi-los. **Duas obrigações do lado da ferramenta:** diante de ambiguidade, **recusar, não adivinhar** — reescrever é a única operação irreversível, e chutar ali destrói conteúdo; e **normalizar só o que é seu** — mover o próprio bloco para o fim é legítimo, mover o texto da pessoa não, e se a normalização mudar o efeito de alguma regra dela, avise antes.",
   "**Abertura de turno, antes de QUALQUER outra ferramenta:** liste o mount, leia o cabeçalho da cópia achatada se houver (data de geração + estado do repo), e confira a versão viva do artefato principal contra a que você acha que sabe. Um passo, quatro fatos, e só então o trabalho. **Sem cópia achatada nem manifesto** o passo continua valendo com o que houver — a listagem sozinha já mostra nota nova —; o que muda é o carimbo do fecho, que declara a base pobre em vez de fingir precisão. Não é cerimônia de início de SESSÃO: é de TURNO, e o turno pesado é justamente o que a dispensa por conta própria.",
@@ -1304,7 +1308,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.137.0";
+const KIT_VERSION = "1.138.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};

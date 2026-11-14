@@ -273,6 +273,10 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## 📮 Feedback para o ASU
 > Melhorias e bugs da ferramenta **ASU** percebidos ao usá-la aqui. Mesmo critério da seção acima: só o que for acionável.
 - **[AAAA-MM-DD]** [o que aconteceu + o que resolveria].
+
+---
+
+> **Fim do IDEAS.** Acréscimo entra sob o título da seção certa, nunca aqui embaixo: o fim do arquivo é a seção de feedback, e o que cai nela se perde do lugar dele.
 `},
     {name:"LOG-TEMPLATE.md", cat:"ref", role:"Modelo do log do dia. Referência fixa — nunca substituído pelo conteúdo preenchido.", short:"Modelo do log do dia; nunca substituído.", content:`# LOG-TEMPLATE.md — Formato do Log do Dia
 

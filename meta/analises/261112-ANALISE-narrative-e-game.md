@@ -1,8 +1,8 @@
 # ANÁLISE — Os nichos `narrative` e `game` pelo que os projetos parados ensinaram: a incubadora, a concepção, as invariantes e o DEC em dois lugares
 
-> **Status:** Aberta — aguarda o dono (ponto de decisão no fim)
+> **Status:** Decidida (2026-11-14: 1 como recomendado; N1 (b); N3 (b)) — a WO A na wo0163, a WO B na seguinte
 > **Data:** 261112 · **Base:** v1.137.0 na árvore (wo0162, sem commit ao escrever), HEAD `e2800b4`
-> **Vira:** uma ou duas WOs de código (v1.138.0 em diante) e o que for adiado, com gatilho, na `i-N83`, `i-N86` e `i-N87` · **Decisão:** a escrever (`D-177`)
+> **Vira:** uma ou duas WOs de código (v1.138.0 em diante) e o que for adiado, com gatilho, na `i-N83`, `i-N86` e `i-N87` · **Decisão:** `D-177`
 
 ## Problema
 

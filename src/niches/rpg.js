@@ -175,10 +175,9 @@ NICHES.rpg = {
 > Curto: o suficiente para o assistente saber a história até aqui.
 - **Sessão [N] — [título]:** [o que rolou de relevante; decisões da party; consequências.]
 
-## Decisões de campanha (DEC)
-> Mudanças de rumo importantes (matar um vilão, revelar uma reviravolta) com o porquê.
-### DEC-[N] — [a decisão] · [data]
-[O que e por quê; o que afeta nos fios.]
+## Decisões de campanha — índice
+> Mudanças de rumo importantes (matar um vilão, revelar uma reviravolta): uma linha aqui; o porquê e o que afeta nos fios, no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md
 `},
     { name:"SESSAO.md", cat:"rolante", role:"Prep da PRÓXIMA sessão (método Lazy DM). Rolante — recriada a cada sessão.", short:"Prep da PRÓXIMA sessão. Recriada a cada uma.", content:`# SESSAO.md — Prep da Próxima Sessão
 

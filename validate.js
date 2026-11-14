@@ -2009,6 +2009,37 @@ check("C115 nada que o gerador nao sabe vaza como placeholder (wo0162): nome vaz
   return "ok (19 nichos sem nome e com nome; " + docs + " sem codigo validam pelo git diff)";
 });
 
+/* C116 (wo0163, D-177; analise 261112, N2 N4 N5 N6 N9) — O que os projetos parados de narrative e game
+   ensinaram, e as duas familias que a medicao achou maiores que o relato. (1) Um lugar so numera DEC: nenhum
+   molde que nao seja o DECISIONS abre entrada «### DEC-[N]» (eram quatro: MECANICAS, ENREDO, ARRANJO, CAMPANHA).
+   (2) O IDEAS de todo nicho termina na marca de fim — o acrescimo no fim do arquivo caia na secao de feedback.
+   (3) O narrative tem o gatilho da sessao de concepcao e o VOZ guarda amostra NAO aprovada; o game tem as
+   invariantes de feel no MECANICAS e o gatilho que as faz crescer. */
+check("C116 narrative e game pelo que os projetos parados ensinaram (wo0163): DEC num lugar so, fim do IDEAS, concepcao, VOZ provisorio, invariantes de feel", () => {
+  let n19 = 0;
+  Object.keys(T.NICHES).forEach(id => {
+    const n = T.normNiche(T.NICHES[id]); const fs_ = T.effectiveFiles(n);
+    fs_.forEach(f => {
+      if (f.name === "DECISIONS.md") return;
+      assert(!/^#{2,3} DEC-\[N\]/m.test(f.content || ""), id + "/" + f.name + ": abre entrada DEC-[N] fora do DECISIONS — dois lugares numerando decisao");
+    });
+    const ideas = fs_.find(f => f.name === "IDEAS.md");
+    assert(ideas, id + ": sem IDEAS.md");
+    assert(/> \*\*Fim do IDEAS\.\*\* Acréscimo entra sob o título da seção certa/.test(ideas.content.trim().split("\n").pop()), id + ": o IDEAS nao termina na marca de fim — o acrescimo no fim cai na secao de feedback");
+    assert(/Acréscimo entra sob o título da seção certa, nunca no fim do arquivo/.test(T.buildClaudeMd(n)), id + ": a regra de higiene do acrescimo nao chegou ao CEREBRO");
+    n19++;
+  });
+  const nar = T.normNiche(T.NICHES.narrative), gam = T.normNiche(T.NICHES.game);
+  const cn = T.buildClaudeMd(nar), cg = T.buildClaudeMd(gam);
+  assert(/\| Sessão de concepção concluída/.test(cn), "narrative: sem o gatilho da sessao de concepcao na tabela");
+  const voz = T.effectiveFiles(nar).find(f => f.name === "VOZ.md").content;
+  assert(/## Amostras propostas \(NÃO aprovadas\)/.test(voz) && voz.indexOf("## Amostras propostas") > voz.indexOf("## Exemplos de prosa APROVADA"), "narrative: o VOZ nao guarda a amostra provisoria depois da aprovada");
+  const mec = T.effectiveFiles(gam).find(f => f.name === "MECANICAS.md").content;
+  assert(/## Invariantes de feel \(testáveis\)/.test(mec) && /SÓ CRESCE/.test(mec), "game: o MECANICAS sem as invariantes de feel");
+  assert(/\| \*Feel\* de mecânica aprovado/.test(cg) && /Invariantes de feel/.test(cg), "game: sem o gatilho das invariantes de feel na tabela");
+  return "ok (" + n19 + " nichos: DEC so no DECISIONS, IDEAS com marca de fim; concepcao e VOZ no narrative; invariantes no game)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";

@@ -1,10 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.137.0**.
+> Histórico de versões. Versão atual: **v1.138.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.138.0 — `narrative` e `game` pelo que os projetos parados ensinaram: a concepção, a voz provisória, as invariantes de feel, o DEC num lugar só e o fim do IDEAS (wo0163, D-177)
+- **`narrative` — sessão de concepção:** gatilho novo «Sessão de concepção concluída (decisões tomadas, nenhuma prosa escrita)» → cada decisão no DECISIONS, BIBLIA/ENREDO/PERSONAGENS no que mudou, e o log. A concepção não disparava nada: o gatilho de capítulo não vale para sessão sem prosa.
+- **`narrative` — VOZ provisório:** o molde do VOZ ganha «Amostras propostas (NÃO aprovadas)», depois dos exemplos aprovados; o primeiro trecho aprovado pelo autor as tira. Em obra nova o VOZ ficava vazio quando mais importa.
+- **`game` — invariantes de feel:** o MECANICAS ganha «Invariantes de feel (testáveis)» — uma frase por *feel* aprovado (o que fazer, o que tem de acontecer, como se vê que regrediu), lista que só cresce — e um gatilho que a alimenta quando um *feel* é aprovado ou uma regressão aparece depois de um patch. É o par da «Lista de invariantes» do CONTINUIDADE no `narrative`.
+- **Um lugar só numera decisão:** quatro moldes (MECANICAS no `game`, ENREDO no `narrative`, ARRANJO no `music`, CAMPANHA no `rpg`) abriam entradas `### DEC-[N]` ao lado do DECISIONS — duas listas com o mesmo número. A seção vira um **índice** de uma linha por decisão, com o registro inteiro no DECISIONS.
+- **O IDEAS termina numa marca de fim** nos 19 nichos (os três moldes: o universal, o do `dev` e o do `brainstorm`), e a regra de higiene «IDEAS nunca perde» ganha «acréscimo entra sob o título da seção certa, nunca no fim do arquivo»: o fim era a seção de feedback, e o que caía nela saía do lugar.
+- **`C116` novo** (116 → 117), com quatro provas negativas: DEC fora do DECISIONS, IDEAS sem a marca, o gatilho da concepção e as invariantes de feel. O `C114` confere os nomes dos gatilhos novos (2.674 citações).
+- **Origem:** a análise `261112-ANALISE-narrative-e-game.md` (N2, N4, N5, N6, N9), sobre a `i-N83`, a `i-N86` e a `i-N87`. A incubadora (N1) e o escopo que vence a entrega (N3) vêm na próxima WO. Harness **19/19 · 117/117**.
 
 ## v1.137.0 — O que o gerador não sabe não sai como placeholder de preencher (wo0162, D-176)
 - **Sem nome do projeto no gerador**, as Instruções saíam com `# Projeto: [NOME]` e o `CLAUDE.md` com `# <NOME DO PROJETO> — guia para o Claude Code`. Agora o título das Instruções diz o domínio (`# Projeto — Negócios`) e o do `CLAUDE.md` é `# Guia para o Claude Code`; com nome, os dois o trazem como antes.

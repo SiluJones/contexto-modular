@@ -169,10 +169,9 @@ NICHES.music = {
 - **Camadas:** [o que sustenta a base; o que entra para destacar momentos.]
 - **"Tirar para destacar":** [onde o vazio trabalha a favor.]
 
-## Decisões (DEC)
-> Escolhas de arranjo/harmonia/produção com a intenção por trás.
-### DEC-[N] — [a decisão] · [data]
-[O que foi decidido + a sensação pretendida + alternativa considerada. Ex.: "tirar a bateria no 2º verso para criar intimidade antes do refrão final".]
+## Decisões — índice
+> Escolhas de arranjo/harmonia/produção: uma linha aqui; o registro inteiro no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md [lá: o que foi decidido + a sensação pretendida + alternativa considerada. Ex.: "tirar a bateria no 2º verso para criar intimidade antes do refrão final".]
 
 ---
 

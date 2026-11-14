@@ -59,7 +59,8 @@ NICHES.game = {
     ["Fato novo de lore/mundo/personagem", "Entrega UNIVERSO.md completo com o cânone atualizado."],
     ["Mudança de escopo (corte, adição, fase)", "Entrega PRODUCAO.md completo (o escopo atual + o que foi cortado/adiado e por quê)."],
     ["Resultado de playtest", "Entrega STATUS.md e MECANICAS.md (o que o teste confirmou/refutou; o que ajustar)."],
-    ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
+    ["*Feel* de mecânica aprovado, ou regressão achada depois de um patch", "Vira linha PERMANENTE em «Invariantes de feel» do MECANICAS.md: uma frase testável (o que fazer, o que tem de acontecer, como se vê que regrediu). A lista só cresce."],
+  ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
     ["Cena, missão ou diálogo ramificado escrito/decidido", "Entrega ROTEIRO.md completo (a cena no formato de jogo: escolhas com consequências, requisitos, lore passivo, estado de sincronia)."],
   ],
   contextFiles:[
@@ -131,10 +132,13 @@ NICHES.game = {
 ## Controles / verbos do jogador
 - [Os verbos centrais (pular, atirar, falar, construir) — o vocabulário de ação do jogo.]
 
-## Decisões de design (DEC)
-> Escolhas de mecânica/sistema com o porquê. Evita rediscutir.
-### DEC-[N] — [a decisão] · [data]
-[O que foi decidido, a intenção por trás, alternativas, e o efeito sistêmico esperado.]
+## Invariantes de feel (testáveis)
+> *Feel* já aprovado que um patch pode quebrar. Uma frase testável por linha: o que o jogador faz, o que tem de acontecer, e como se vê que regrediu. A lista SÓ CRESCE — a mesma regressão nunca se descobre duas vezes.
+- [Ex.: depois do wall-jump sem input, a personagem descreve um arco; se cair reto, regrediu.]
+
+## Decisões de design — índice
+> Uma linha por escolha de mecânica/sistema; o registro inteiro (a intenção, as alternativas, o efeito sistêmico) no DECISIONS.md. Um lugar só numera DEC — duas listas com o mesmo número divergem.
+- DEC-[N] — [a decisão em uma linha] · [data] → DECISIONS.md
 `},
     { name:"UNIVERSO.md", cat:"essencial", role:"Lore, mundo, personagens e tom — a bíblia de ficção do jogo. Estável; consultada antes de inventar.", short:"Lore e mundo; consulte antes de inventar.",
       content:`# UNIVERSO.md — Mundo e Lore
