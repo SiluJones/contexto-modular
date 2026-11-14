@@ -52,11 +52,12 @@ NICHES.narrative = {
     "Manter a bíblia no essencial (Tier 1); não super-documentar."
   ],
   triggersExtra:[
+    ["Projeto em incubação — a obra ainda não foi escolhida", "Registra premissas, dossiês e a direção do autor em PREMISSAS.md. BIBLIA.md, PERSONAGENS.md, ENREDO.md e VOZ.md ficam no molde até uma premissa ser escolhida: não os preencha por inferência. Escolhida, o dossiê dela vira a primeira BIBLIA."],
     ["Fato novo do mundo/personagem estabelecido", "Entrega BIBLIA.md ou PERSONAGENS.md completo com o cânone atualizado."],
     ["Decisão de enredo (morte, reviravolta, mudança de arco)", "Entrega ENREDO.md completo (a decisão + impacto no que vem)."],
     ["Inconsistência encontrada/resolvida ou grafia definida", "Entrega CONTINUIDADE.md completo (a nota de continuidade / grafia canônica)."],
     ["Sessão de concepção concluída (decisões tomadas, nenhuma prosa escrita)", "Registra cada decisão no DECISIONS.md e atualiza BIBLIA.md, ENREDO.md e PERSONAGENS.md no que mudou; o log do dia diz o que foi decidido e o que ficou em aberto. Concepção não dispara «capítulo concluído»: este gatilho é o dela."],
-  ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
+    ["Capítulo/cena concluída OU revisada (correção de capítulo existente conta igual)", "Gatilho TRIPLO, não simples: (1) STATUS.md e ENREDO.md completos — incluindo o resumo do capítulo EM PROSA, não só a checklist marcada; (2) busca ativa por todo bloco «Estado atual»/«Status atual» nos arquivos afetados, conferindo que o RÓTULO (Cap. N) bate com o capítulo recém-escrito — o doc que «parece atualizado» porque a checklist bate é o bug clássico; (3) fatos novos da cena para CONTINUIDADE.md."],
     ["Erro mecânico apontado pelo autor na prosa", "Vira linha PERMANENTE na «Lista de invariantes» de CONTINUIDADE.md (a lista só cresce — o mesmo erro nunca se corrige duas vezes); se for erro de voz, ganha espelho também em VOZ.md → «O que EVITAR»."],
     ["Nota/arquivo antigo do acervo entra em extração, ou uma nota contradiz o que já está escrito", "Apresenta em FICHA (skill `ficha-de-choque`): quatro campos com citação literal dos dois lados, marca de confiança e status. Nunca pergunta solta nem referência cruzada nua — o autor não decora o que escreveu. A leva sai em ticket `AAMMDD-HHMM-leva-<assunto>.md`, só com o que está em aberto."],
     ["Voz/estilo calibrado num trecho aprovado", "Entrega VOZ.md completo com o novo exemplo de prosa aprovada. A cada ARCO concluído, propõe 1–2 exemplos novos substituindo os mais antigos — a voz amadurece; exemplos presos nos primeiros capítulos deixam de representar a voz atual."],
@@ -479,6 +480,29 @@ NICHES.narrative = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
+    { name:"PREMISSAS.md", cat:"opcional", role:"OPCIONAL — incubadora: o catálogo de premissas enquanto a obra ainda não foi escolhida, cada uma com estado e dossiê. Os arquivos da obra ficam no molde até a escolha.", short:"OPCIONAL — premissas antes da obra.",
+      content:`# PREMISSAS.md — Incubadora de premissas
+
+> **Opcional** — use quando o projeto ainda está ESCOLHENDO a obra. Enquanto nenhuma premissa for escolhida, BIBLIA, PERSONAGENS, ENREDO e VOZ ficam no molde **de propósito**: não os preencha por inferência a partir de uma premissa em aberto.
+> Quando uma premissa for escolhida, o dossiê dela vira a primeira versão da BIBLIA, e as outras ficam aqui com o estado que tinham.
+
+---
+
+## Catálogo
+| Premissa | Em uma frase | Estado | Dossiê |
+|---|---|---|---|
+| [A] | [o gancho] | [viva · em dossiê · escolhida · descartada] | [seção abaixo] |
+
+## Dossiê — [Premissa A]
+- **Gancho:** [...]
+- **O que a torna diferente:** [...]
+- **Personagens que ela pede:** [...]
+- **O que ainda falta saber:** [...]
+- **Direção do autor:** [o que o autor disse sobre ela, com a data]
+
+## Descartadas
+- [Premissa] — [por quê, para não reabrir sem motivo novo]
+`},
     {name:"CRONOLOGIA.md", cat:"opcional", role:"OPCIONAL — linha do tempo dos eventos da obra. Use quando há saltos temporais ou tramas paralelas.", short:"OPCIONAL — linha do tempo dos eventos.", content:`# CRONOLOGIA.md — Linha do Tempo
 
 > **Opcional.** Use quando a obra tem saltos temporais, flashbacks, tramas paralelas ou uma história longa onde "quando aconteceu o quê" começa a escapar.
@@ -567,6 +591,7 @@ NICHES.narrative = {
     {key:"continuidade", name:"CONTINUIDADE.md", role:"completo, se surgiu fato novo, grafia ou furo resolvido", active:true},
     {key:"personagens", name:"PERSONAGENS.md", role:"completo, se um arco avançou ou traço se firmou", active:false},
     {key:"voz", name:"VOZ.md", role:"completo, se um trecho de prosa aprovado virou referência", active:false},
+    {key:"premissas", name:"PREMISSAS.md", role:"completo, se uma premissa mudou de estado ou ganhou dossiê (quando usa o arquivo)", active:false},
     {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[

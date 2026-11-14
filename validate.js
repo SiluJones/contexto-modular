@@ -2040,6 +2040,33 @@ check("C116 narrative e game pelo que os projetos parados ensinaram (wo0163): DE
   return "ok (" + n19 + " nichos: DEC so no DECISIONS, IDEAS com marca de fim; concepcao e VOZ no narrative; invariantes no game)";
 });
 
+/* C117 (wo0164, D-177; analise 261112, N1 e N3) — A WO B da analise: (1) a incubadora — o projeto que ainda
+   escolhe a obra (narrative) ou o jogo (game) tem um arquivo opcional para isso (PREMISSAS.md, PROTOTIPOS.md),
+   desligado no fecho, e um gatilho que manda deixar os arquivos da obra no molde ate a escolha (tres vozes:
+   Otome Mob, Botsu Route, aevum); (2) o escopo vence a entrega — o principio do pedido composto diz, no
+   CEREBRO dos 19 nichos, que a restricao de escopo vence a entrega que a contradiz e que o conflito e dito. */
+check("C117 a incubadora e o escopo que vence a entrega (wo0164): PREMISSAS no narrative, PROTOTIPOS no game, a restricao vence no CEREBRO dos 19", () => {
+  [["narrative","PREMISSAS.md",["BIBLIA.md","PERSONAGENS.md","ENREDO.md","VOZ.md"]],["game","PROTOTIPOS.md",["JOGO.md","MECANICAS.md"]]].forEach(([id, arq, obra]) => {
+    const n = T.normNiche(T.NICHES[id]);
+    const f = T.effectiveFiles(n).find(x => x.name === arq);
+    assert(f && f.cat === "opcional", id + ": sem o " + arq + " opcional da incubadora");
+    assert(/de propósito/.test(f.content) && /não os preencha por inferência/.test(f.content), id + "/" + arq + ": o molde nao diz que os arquivos da obra ficam no molde ate a escolha");
+    const o = (n.outputs || []).find(x => (x.label || "").indexOf(arq + " — ") === 0);
+    assert(o && o.defaultOn === false, id + ": o " + arq + " deveria estar no fecho e desligado por padrao");
+    const cmd = T.buildClaudeMd(n);
+    const linha = cmd.split("\n").find(l => /^\| Projeto em incubação/.test(l));
+    assert(linha, id + ": sem o gatilho da incubacao na tabela");
+    assert(linha.indexOf(arq) !== -1 && obra.every(a => linha.indexOf(a) !== -1) && /não os preencha por inferência/.test(linha), id + ": o gatilho da incubacao nao nomeia o arquivo dela e os da obra que ficam no molde");
+  });
+  let n19 = 0;
+  Object.keys(T.NICHES).forEach(id => {
+    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    assert(/\*\*Quando uma parte restringe o escopo\*\*/.test(cmd) && /\*\*a restrição vence\*\*/.test(cmd) && /diz o conflito numa linha/.test(cmd), id + ": o CEREBRO nao diz que a restricao de escopo vence a entrega que a contradiz");
+    n19++;
+  });
+  return "ok (incubadora no narrative e no game; a restricao vence em " + n19 + " CEREBROs)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";

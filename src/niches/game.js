@@ -55,12 +55,13 @@ NICHES.game = {
     "O assistente também CONSTRÓI: protótipo jogável, código, conteúdo e dados — design vira artefato testável, não só documento. A narrativa cena a cena (missões, diálogos ramificados, lore passivo) vive em ROTEIRO.md."
   ],
   triggersExtra:[
+    ["Projeto em incubação — o jogo ainda não foi escolhido", "Registra sistemas e protótipos, com o que cada um provou, em PROTOTIPOS.md. JOGO.md e MECANICAS.md ficam no molde até um protótipo virar o jogo: não os preencha por inferência."],
     ["Decisão de mecânica ou sistema", "Entrega MECANICAS.md completo (a regra + a intenção/curva por trás + o efeito sistêmico)."],
     ["Fato novo de lore/mundo/personagem", "Entrega UNIVERSO.md completo com o cânone atualizado."],
     ["Mudança de escopo (corte, adição, fase)", "Entrega PRODUCAO.md completo (o escopo atual + o que foi cortado/adiado e por quê)."],
     ["Resultado de playtest", "Entrega STATUS.md e MECANICAS.md (o que o teste confirmou/refutou; o que ajustar)."],
     ["*Feel* de mecânica aprovado, ou regressão achada depois de um patch", "Vira linha PERMANENTE em «Invariantes de feel» do MECANICAS.md: uma frase testável (o que fazer, o que tem de acontecer, como se vê que regrediu). A lista só cresce."],
-  ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
+    ["Ideia que não cabe agora", "Registra em PRODUCAO.md (ou IDEAS) como pós-lançamento/DLC, sem inflar o escopo atual."],
     ["Cena, missão ou diálogo ramificado escrito/decidido", "Entrega ROTEIRO.md completo (a cena no formato de jogo: escolhas com consequências, requisitos, lore passivo, estado de sincronia)."],
   ],
   contextFiles:[
@@ -288,6 +289,28 @@ NICHES.game = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
+    { name:"PROTOTIPOS.md", cat:"opcional", role:"OPCIONAL — incubadora: sistemas reaproveitáveis e protótipos, com o que cada um provou, enquanto o jogo ainda não foi escolhido. JOGO e MECANICAS ficam no molde até a escolha.", short:"OPCIONAL — protótipos antes do jogo.",
+      content:`# PROTOTIPOS.md — Incubadora de sistemas e protótipos
+
+> **Opcional** — use quando o projeto ainda está ESCOLHENDO o jogo: um portfólio de sistemas reaproveitáveis e de protótipos que testam ideias. Enquanto nenhum for escolhido como o jogo, JOGO e MECANICAS ficam no molde **de propósito**: não os preencha por inferência a partir de um protótipo.
+> A lore, se houver, pode morar noutro projeto do grupo; aqui fica o que cada protótipo provou.
+
+---
+
+## Sistemas reaproveitáveis
+| Sistema | O que faz | Onde já foi usado | Estado |
+|---|---|---|---|
+| [nome] | [...] | [protótipo] | [estável · em teste · abandonado] |
+
+## Protótipos
+### [Protótipo] — [a pergunta que ele testa] · [data]
+- **Provou:** [o que o teste confirmou ou refutou]
+- **Sistemas que usa:** [...]
+- **Vira jogo?** [não · talvez · escolhido — com o porquê]
+
+## Escolhido
+- [Quando um protótipo vira o jogo: qual, quando e por quê — e o JOGO.md nasce dele.]
+`},
     { name:"NIVEIS.md", cat:"opcional", role:"OPCIONAL — design de níveis/fases/encontros. Use quando o jogo tem level design estruturado.", short:"OPCIONAL — design de níveis e encontros.",
       content:`# NIVEIS.md — Design de Níveis
 
@@ -392,6 +415,7 @@ SAÍDA: [o que mudou no mundo/estado ao fim da cena]
     { key:"universo", name:"UNIVERSO.md", role:"completo, se surgiu fato novo de lore/mundo/personagem", active:false },
     { key:"roteiro", name:"ROTEIRO.md", role:"completo, se cena/missão/diálogo ramificado foi escrito ou alterado", active:false },
     { key:"arte", name:"ARTE-E-SOM.md", role:"completo, se a direção audiovisual mudou", active:false },
+    { key:"prototipos", name:"PROTOTIPOS.md", role:"completo, se um protótipo provou algo ou um sistema mudou de estado (quando usa o arquivo)", active:false },
     { key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true },
   ],
   promptsExtra:[

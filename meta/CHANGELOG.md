@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.138.0**.
+> Histórico de versões. Versão atual: **v1.139.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.139.0 — A incubadora e o escopo que vence a entrega (wo0164, D-177)
+- **Incubadora, no `narrative` e no `game`:** o projeto que ainda está escolhendo a obra ganha um arquivo opcional — `PREMISSAS.md` (catálogo de premissas com estado e dossiê) e `PROTOTIPOS.md` (sistemas reaproveitáveis e protótipos, com o que cada um provou) — e um gatilho «Projeto em incubação»: os arquivos da obra (BIBLIA, PERSONAGENS, ENREDO, VOZ; JOGO, MECANICAS) ficam no molde até a escolha, sem ser preenchidos por inferência. Os dois arquivos entram no fecho desligados por padrão. Três projetos fizeram isso à mão: Otome Mob e Botsu Route no `narrative`, aevum no `game`.
+- **O escopo vence a entrega**, em todo nicho: o princípio do pedido composto ganha, no CEREBRO, «quando uma parte restringe o escopo ("ainda não vamos preencher X") e outra pede uma entrega que a contradiz, a restrição vence: o assistente entrega o que cabe nela e diz o conflito numa linha». Nas Instruções o princípio sai só pelo nome, então o teto não muda por isso.
+- **`C117` novo** (117 → 118), com quatro provas negativas (o arquivo fora de opcional, o gatilho renomeado, a frase sem o grifo, o arquivo ligado por padrão no fecho). As Instruções do pior nicho passam de 5.829 a 5.985 caracteres (os dois arquivos novos na lista), dentro dos 6.900.
+- **De passagem:** duas linhas de gatilho com indentação de 2 espaços em vez de 4, deixadas pela wo0163 (achado do Code).
+- **Origem:** a WO B da análise `261112-ANALISE-narrative-e-game.md` (N1 (b), N3 (b)). Harness **19/19 · 118/118**.
 
 ## v1.138.0 — `narrative` e `game` pelo que os projetos parados ensinaram: a concepção, a voz provisória, as invariantes de feel, o DEC num lugar só e o fim do IDEAS (wo0163, D-177)
 - **`narrative` — sessão de concepção:** gatilho novo «Sessão de concepção concluída (decisões tomadas, nenhuma prosa escrita)» → cada decisão no DECISIONS, BIBLIA/ENREDO/PERSONAGENS no que mudou, e o log. A concepção não disparava nada: o gatilho de capítulo não vale para sessão sem prosa.
