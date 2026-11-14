@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.139.0**.
+> Histórico de versões. Versão atual: **v1.140.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.140.0 — Três defeitos pequenos do toolchain: a seção do ASU só com o ASU, o log por dia no README, e a parada que grava o relatório (wo0166, D-178)
+- **IDEAS sem «Feedback para o ASU» quando o ASU está desligado:** o corte acontece no `effectiveFiles`, por onde passa todo download (templates, pacote novo, pacote de atualização); a marca de fim do IDEAS fica. Com o ASU ligado, a seção volta. Cinco projetos a apagavam à mão (CDC, ClearDrop, FrameMatch, Lunoda, PrintImposer).
+- **O README do pacote diz log por DIA** («duas conversas no mesmo dia vão no mesmo arquivo»); dizia «um arquivo por sessão», contra o resto do kit.
+- **A skill `apply-wo` gerada manda a parada também gravar o relatório em arquivo**, antes de perguntar ou de mostrar o menu, com o passo em que parou e a saída crua. O CDC parou numa WO e nada ficou gravado.
+- **`C118` novo** (118 → 119), com três provas negativas; o `C31` passa a exigir a seção do ASU só com o ASU ligado.
+- **Origem:** a `i-N91`, itens 1 a 3 (a área Arquiteturas: o CDC e o ClearDrop). Harness **19/19 · 119/119**.
 
 ## v1.139.0 — A incubadora e o escopo que vence a entrega (wo0164, D-177)
 - **Incubadora, no `narrative` e no `game`:** o projeto que ainda está escolhendo a obra ganha um arquivo opcional — `PREMISSAS.md` (catálogo de premissas com estado e dossiê) e `PROTOTIPOS.md` (sistemas reaproveitáveis e protótipos, com o que cada um provou) — e um gatilho «Projeto em incubação»: os arquivos da obra (BIBLIA, PERSONAGENS, ENREDO, VOZ; JOGO, MECANICAS) ficam no molde até a escolha, sem ser preenchidos por inferência. Os dois arquivos entram no fecho desligados por padrão. Três projetos fizeram isso à mão: Otome Mob e Botsu Route no `narrative`, aevum no `game`.

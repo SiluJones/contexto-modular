@@ -1579,7 +1579,9 @@ check("C31 paridade dos templates de nicho (wo0075): IDEAS de todo nicho tem os 
     assert(ideas, id+": nicho sem IDEAS.md nos arquivos efetivos");
     const c=ideas.content||"";
     assert(/Feedback para o Kit/.test(c), id+": IDEAS.md sem a secao «Feedback para o Kit» que o CEREBRO manda usar");
-    assert(/Feedback para o ASU/.test(c), id+": IDEAS.md sem a secao «Feedback para o ASU»");
+    { const S=T.STATE; S.workmode=S.workmode||{}; const pA=S.workmode.asuMode; S.workmode.asuMode="yes";
+      const cA=((T.effectiveFiles(n)||[]).find(f => f.name==="IDEAS.md")||{}).content||""; S.workmode.asuMode=pA;
+      assert(/Feedback para o ASU/.test(cA), id+": com o ASU ligado, IDEAS.md sem a secao «Feedback para o ASU»"); }
     if(!/Segundo cérebro do projeto: captura toda ideia/.test(ideas.role||"")) overrides++;
     const cmd=T.buildClaudeMd(n);
     assert(/Duas conversas no mesmo dia = o MESMO arquivo/.test(cmd), id+": tabela de docs nao resolve duas conversas no mesmo dia");
@@ -2065,6 +2067,35 @@ check("C117 a incubadora e o escopo que vence a entrega (wo0164): PREMISSAS no n
     n19++;
   });
   return "ok (incubadora no narrative e no game; a restricao vence em " + n19 + " CEREBROs)";
+});
+
+/* C118 (wo0166, D-178; i-N91 itens 1 a 3) — Tres defeitos pequenos que o CDC e o ClearDrop mediram:
+   (1) sem o ASU, o IDEAS nao traz «Feedback para o ASU» (cinco projetos a apagavam a mao) e a marca de fim fica;
+   com o ASU, a secao volta. (2) O README do pacote diz log por DIA, como o resto do kit (dizia «por sessao»).
+   (3) A skill apply-wo gerada manda a parada tambem gravar o relatorio em arquivo, antes do menu. */
+check("C118 os tres defeitos do toolchain (wo0166): IDEAS sem a secao do ASU com o ASU desligado, README com log por dia, a parada grava o relatorio", () => {
+  const S = T.STATE; S.workmode = S.workmode || {}; const pA = S.workmode.asuMode, pC = S.workmode.codeMode;
+  let n19 = 0;
+  try {
+    Object.keys(T.NICHES).forEach(id => {
+      const n = T.normNiche(T.NICHES[id]);
+      S.workmode.asuMode = "no";
+      const sem = (T.effectiveFiles(n).find(f => f.name === "IDEAS.md") || {}).content || "";
+      assert(!/Feedback para o ASU/.test(sem), id + ": com o ASU desligado, o IDEAS ainda traz «Feedback para o ASU»");
+      assert(/Feedback para o Kit/.test(sem) && /> \*\*Fim do IDEAS\.\*\*/.test(sem.trim().split("\n").pop()), id + ": tirar a secao do ASU levou junto a de feedback ao kit ou a marca de fim");
+      assert(!/\n\n\n/.test(sem), id + ": tirar a secao do ASU deixou linha em branco dobrada no IDEAS");
+      S.workmode.asuMode = "yes";
+      const com = (T.effectiveFiles(n).find(f => f.name === "IDEAS.md") || {}).content || "";
+      assert(/Feedback para o ASU/.test(com), id + ": com o ASU ligado, o IDEAS perdeu «Feedback para o ASU»");
+      n19++;
+    });
+    const src = fs.readFileSync(path, "utf8");
+    assert(!/um arquivo por sessao/.test(src) && /`logs\/` — um arquivo por DIA/.test(src), "o README do pacote ainda diz log por sessao");
+    S.workmode.codeMode = "yes";
+    const aw = T.buildCodeKitFiles().applyWo;
+    assert(/\*\*A parada tambem grava o relatorio em arquivo\.\*\*/.test(aw) && /ANTES de perguntar ou de mostrar o menu/.test(aw), "a skill apply-wo gerada nao manda a parada gravar o relatorio em arquivo");
+  } finally { S.workmode.asuMode = pA; S.workmode.codeMode = pC; }
+  return "ok (" + n19 + " IDEAS sem a secao do ASU quando ele esta desligado; README por dia; a parada grava o relatorio)";
 });
 
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {

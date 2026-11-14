@@ -1308,7 +1308,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.139.0";
+const KIT_VERSION = "1.140.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2305,7 +2305,14 @@ function effectiveFiles(niche){
   // O HUB.md NÃO entra no download por-nicho (seria um HUB genérico repetido em cada nicho).
   // Ele é montado e baixado na página HUB (um por grupo). O switch "Projeto em grupo?"
   // só adiciona a SEÇÃO de instruções do HUB ao CLAUDE.md gerado deste projeto.
-  return (niche && niche.contextFiles) || [];
+  const files = (niche && niche.contextFiles) || [];
+  // wo0166 (i-N91 item 1, D-178): sem o ASU, o IDEAS sai sem «Feedback para o ASU» — cinco projetos a
+  // apagavam à mão. A marca de fim do IDEAS (D-177) fica. Todo download passa por aqui.
+  if(asuModeOn()) return files;
+  return files.map(f => (f.name === "IDEAS.md" && f.content) ? Object.assign({}, f, { content: semSecaoAsu(f.content) }) : f);
+}
+function semSecaoAsu(c){
+  return c.replace(/\n## [^\n]*Feedback para o ASU[\s\S]*?(?=\n---\n\n> \*\*Fim do IDEAS\.\*\*|\n## |$)/, "");
 }
 /* Arquivos GERADOS que nao vivem em contextFiles (CEREBRO, INSTRUCOES). Fonte unica: todo download
    de "templates" consome isto, para nunca sair pacote incompleto. meta:true -> meta/; meta:false -> raiz. */
@@ -3781,6 +3788,7 @@ function buildCodeKitFiles(){
     "Ao terminar, RELATE com corpo mínimo, nesta ordem: (1) o que foi feito, edição por edição; (2) a SAÍDA CRUA das conferências — o número e o comando que o produziu, nunca só «bate»; (3) o que fugiu do texto literal da WO; (4) o que muda para quem usa; (5) o que você olhou além da WO; (6) arquivos tocados; (7) build/validação; (8) commit e push. Relatório que só repete «bate, bate, bate» não foi escrito por quem olhou o diff.",
     "Resolva o push ANTES de escrever o relatorio, e escreva o campo do push com o RESULTADO REAL — nunca «pendente» por antecipacao. Se ele ficar mesmo pendente, REABRA o relatorio e corrija quando resolver: o arquivo que afirma o falso e o que a proxima sessao le. Confira tambem que nenhum relatorio `.txt` ficou DENTRO do repo (`git status` o mostraria como nao rastreado): o lugar dele e a pasta-pai, e relatorio na raiz vira `??` que ninguem identifica. Verde: `add`, `commit` e `push` sem perguntar — e, se a WO declarar um **Proximo comando**, termine o relatorio com ele CRU e SOZINHO na ultima linha, sem frase de apresentacao (texto em volta esconde o comando). Vermelho: nao commite nem empurre — feche com MENU DE OPCOES pela ferramenta `AskUserQuestion`, com a recomendada em primeiro lugar e marcada `(Recomendado)`. **Nunca pergunte em prosa — e menu numerado escrito no corpo da mensagem TAMBEM e prosa**, porque obriga o dono a digitar a resposta em vez de clicar. Sem a ferramenta, caia no menu numerado em texto e DIGA que caiu no fallback. **O cartao serve para ESCOLHER, nao para DISPARAR:** ele nao contorna `disable-model-invocation`, entao nao o use para oferecer «rodar a skill agora» — medido duas vezes, isso acrescenta um passo sem tirar nenhum. Resolva o push ANTES de escrever o relatorio. Grave o MESMO relatório em `../AAMMDD-HHMM-code-<slug>-apply-<alvo>.txt` (pasta-pai do repo) — o ato é sempre `apply` nesta skill, e `<alvo>` é a WO aplicada (`wo0108`). Se a escrita for negada, diga e siga.",
     "O `HHMM` do nome do relatório sai de `date +%y%m%d-%H%M`, rodado na hora — nunca de cabeça.",
+    "**A parada tambem grava o relatorio em arquivo.** Quando voce PARA — ancora nao achada, hash diferente, validacao vermelha, WO contraditoria —, grave o relatorio em `../AAMMDD-HHMM-code-<slug>-apply-<alvo>.txt` ANTES de perguntar ou de mostrar o menu: o passo em que parou e a saida crua que o fez parar. Sem o arquivo, o dono copia a tela para o chat.",
     "WO: $ARGUMENTS",
     ""
   ].join("\n");
@@ -3951,7 +3959,7 @@ function structuredReadme(niche, root, codeOn, skillsOn){
     "## Estrutura",
     "- `meta/` — arquivos de contexto (CEREBRO define COMO o assistente age; CONTEXT, O QUE o projeto e; STATUS/DECISIONS/IDEAS...).",
     "- `INSTRUCOES-DO-PROJETO.md` — cole em Projeto -> Instrucoes no claude.ai (versao curta, lida em toda mensagem).",
-    "- `logs/` — um arquivo por sessao (vazia por enquanto).",
+    "- `logs/` — um arquivo por DIA; duas conversas no mesmo dia vao no mesmo arquivo (vazia por enquanto).",
     "- `meta/analises/` — uma analise por decisao nao-trivial (problema, o que foi medido, opcoes, recomendacao, riscos, ponto de decisao). NAO vem no pacote: a pasta nasce quando a primeira analise for escrita."
   ];
   if(codeOn){
