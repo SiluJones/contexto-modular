@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -2098,6 +2098,62 @@ check("C118 os tres defeitos do toolchain (wo0166): IDEAS sem a secao do ASU com
   return "ok (" + n19 + " IDEAS sem a secao do ASU quando ele esta desligado; README por dia; a parada grava o relatorio)";
 });
 
+/* C119 (wo0167, D-179; i-N25, analise 261114) — Musica gerada por IA: com «Producao: Gerada por IA (Suno)» o nicho
+   music recebe, copiado byte a byte do Cancioneiro e com carimbo (commit, data, sha1), a Parte 1 do bloco nas
+   Instrucoes, a Parte 2 no CEREBRO, as skills macetes-suno e revisar-faixa e o prompt-modelo do JSON; e, do lado
+   do KCM, o FAIXAS e o LOG-TEMPLATE com o Suno, o gatilho do relato do dono e o prompt da faixa. Com «Tocada»,
+   nada muda. O sha1 de cada carimbo tem de ser o do texto copiado: e a conferencia de que a copia e a declarada. */
+check("C119 musica gerada por IA (wo0167): a variante Suno do music, copiada do Cancioneiro com carimbo, e Tocada sem nada dela", () => {
+  const crypto = require("crypto"); const sha = t => crypto.createHash("sha1").update(t, "utf8").digest("hex");
+  const S = T.STATE; S.topbar = S.topbar || {}; S.workmode = S.workmode || {};
+  const prevTb = JSON.stringify(S.topbar), pN = S.niche, pC = S.workmode.codeMode, pA = S.workmode.asuMode;
+  const base = T.normNiche(T.NICHES.music); const v = (base.variantes || [])[0];
+  assert(v && v.campo === "producao" && v.valor === "Gerada por IA (Suno)", "music sem a variante de Producao do Suno");
+  assert((base.topbar || []).some(f => f.id === "producao"), "music sem o campo Producao no construtor");
+  const medidas = [];
+  try {
+    S.niche = "music";
+    S.topbar.producao = "Tocada";
+    let n = T.nicheEfetivo(base);
+    assert(n === base, "com Producao Tocada a variante nao deveria mudar o nicho");
+    assert(!/## Suno \(faixa gerada por IA\)/.test(T.buildInstr(n)) && !/Produção com IA de música/.test(T.buildClaudeMd(n)) && !n.skillsPack, "Tocada: o gerado traz algo do Suno");
+    S.topbar.producao = v.valor;
+    n = T.nicheEfetivo(base);
+    [["no","no"],["yes","no"],["yes","yes"]].forEach(([c, a]) => {
+      S.workmode.codeMode = c; S.workmode.asuMode = a;
+      const ins = T.buildInstr(n), len = [...ins].length;
+      assert(ins.indexOf(v.instr) !== -1, "Suno (Code " + c + ", ASU " + a + "): as Instrucoes sem a Parte 1 do bloco, inteira");
+      const teto = (c === "no" && a === "no") ? T.INSTR_TETO : 7600;
+      assert(len <= teto, "Suno (Code " + c + ", ASU " + a + "): Instrucoes com " + len + " caracteres, acima de " + teto);
+      medidas.push(len);
+    });
+    S.workmode.codeMode = "no"; S.workmode.asuMode = "no";
+    const cmd = T.buildClaudeMd(n);
+    assert(cmd.indexOf(v.cerebro) !== -1, "Suno: o CEREBRO sem a Parte 2 do bloco com o carimbo");
+    const p2 = v.cerebro.split("\n\n> Copiado byte a byte")[0];
+    assert(v.cerebro.indexOf("sha1 `" + sha(p2) + "`") !== -1 && v.cerebro.indexOf("commit `" + v.origem.commit + "`") !== -1, "o carimbo da Parte 2 nao bate com o texto copiado");
+    assert((n.skillsPack.skills || []).map(x => x.name).join(",") === "macetes-suno,revisar-faixa", "Suno: as skills do pacote nao sao as duas do Cancioneiro");
+    n.skillsPack.skills.forEach(sk => {
+      const md = T.buildSkillMd(sk);
+      assert(md.indexOf(sk.raw.replace(/\s*$/, "")) === 0, sk.name + ": a skill nao sai byte a byte");
+      assert(sk.carimbo.indexOf("sha1 `" + sha(sk.raw) + "`") !== -1 && md.indexOf(sk.carimbo) !== -1, sk.name + ": o carimbo nao bate com o texto copiado, ou nao sai na skill");
+    });
+    assert(/\| `macetes-suno` \|/.test(cmd) && /## Skills do Suno \(Agent Skills\) — pacote separado/.test(cmd), "Suno: o CEREBRO nao apresenta as skills do Suno");
+    const fs_ = T.effectiveFiles(n);
+    const pm = fs_.find(f => f.name === "PROMPT-PARA-CHATS.md");
+    assert(pm && /^# Prompt-modelo — gerar canções no esquema do Cancioneiro/.test(pm.content) && /Copiado byte a byte do Cancioneiro/.test(pm.content), "Suno: sem o prompt-modelo do Cancioneiro, ou sem o carimbo");
+    const faixas = fs_.find(f => f.name === "FAIXAS.md").content, log = fs_.find(f => f.name === "LOG-TEMPLATE.md").content;
+    assert(/## No Suno \(Produção: Gerada por IA\)/.test(faixas) && /## Gerações no Suno/.test(log) && /## Medições pendentes/.test(log), "Suno: o FAIXAS ou o LOG-TEMPLATE sem a parte do Suno");
+    assert(/\| O dono gerou no Suno e relatou o que ouviu \|/.test(cmd), "Suno: sem o gatilho do relato do dono");
+    const ps = (n.promptsExtra || []).find(p => p.id === "S"); assert(ps, "Suno: sem o prompt da faixa");
+    const nomes = new Set(fs_.map(f => f.name)), UNI = new Set(["CEREBRO.md","STATUS.md","IDEAS.md","DECISIONS.md","LOG-TEMPLATE.md"]);
+    const txt = ps.body({}, n) + " " + v.gatilhos.map(g => g.join(" ")).join(" ");
+    (txt.match(/[A-Z][A-Z0-9_-]*\.md/g) || []).forEach(f => assert(nomes.has(f) || UNI.has(f), "o prompt ou o gatilho do Suno cita " + f + ", que o nicho nao tem"));
+    assert(!/fórmula/i.test(ps.body({}, n).replace(/Não invente fórmula[^\n]*/, "")), "o prompt da faixa pede formula — e acervo do dono (DEC-038 do Cancioneiro)");
+  } finally { S.topbar = JSON.parse(prevTb); S.niche = pN; S.workmode.codeMode = pC; S.workmode.asuMode = pA; }
+  return "ok (Suno: Instrucoes " + medidas.join(" / ") + " no padrao / Code / Code+ASU; carimbos com sha1 do texto copiado; Tocada sem nada)";
+});
+
 check("C27 leva sand-land (wo0070): modelo de WO, Tecnicas especificas, Estado ilegivel pelo canal, data nao envelhece", () => {
   const k=T.buildCodeKitFiles();
   const wo=k.woTemplate||"";
@@ -2362,7 +2418,11 @@ check("C16 SDD leve (wo0054): SPEC.md no dev, criterios de aceite nos prompts, c
 
 check("C15 rename spec->WO (spec0053): caminhos, comando e prosa; sem quebrar palavras pt-BR nem CSS", () => {
   const raw=fs.readFileSync(path,"utf8");
-  assert(!/meta\/specs\//.test(raw),"ainda ha meta/specs/ (deveria ser meta/workorders/)");
+  // wo0167 (D-179): texto copiado byte a byte de outro projeto (variantes de nicho) pode citar o meta/specs/ DELE;
+  // conta so o que esta fora dessas copias.
+  const copiado = Object.keys(T.NICHES).map(id => JSON.stringify(T.NICHES[id].variantes || [])).join("");
+  const nRaw = (raw.match(/meta\/specs\//g) || []).length, nCop = (copiado.match(/meta\/specs\//g) || []).length;
+  assert(nRaw === nCop, "ainda ha meta/specs/ fora do texto copiado de outro projeto (deveria ser meta/workorders/): " + nRaw + " no index.html, " + nCop + " nas copias");
   assert(/meta\/workorders\//.test(raw),"meta/workorders/ ausente");
   assert(!/apply-spec/.test(raw),"ainda ha apply-spec (deveria ser apply-wo)");
   assert(/AAMMDD-woNNNN-desc\.md/.test(raw),"padrao AAMMDD-woNNNN-desc.md ausente");

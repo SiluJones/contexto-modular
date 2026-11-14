@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.140.0**.
+> Histórico de versões. Versão atual: **v1.141.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.141.0 — Música gerada por IA: o Suno no nicho Música, copiado do Cancioneiro (wo0167, D-179)
+- **Campo «Produção» no nicho Música:** Tocada · Gerada por IA (Suno). Com «Tocada», nada muda. Com o Suno, o projeto recebe, **copiado byte a byte do Cancioneiro** (commit `110e0ba`, 14/11) e com carimbo de origem (commit, data e sha1 do texto): a Parte 1 do `BLOCO-SUNO.md` nas Instruções, a Parte 2 no CEREBRO (o artefato é o pedido; o orçamento do Suno; a revisão antes de entregar; o ciclo de uma faixa; as tags de seção conforme o gênero; direito de uso e nome de artista perguntados, nunca supostos), as skills `macetes-suno` e `revisar-faixa` e o prompt-modelo do JSON (`PROMPT-PARA-CHATS.md`).
+- **Do lado do KCM, com o Suno ligado:** o FAIXAS ganha a tabela «No Suno» (estado, última geração, o que o dono ouviu, o próximo ajuste) com o JSON como o copiável; o LOG-TEMPLATE ganha «Gerações no Suno» e «Medições pendentes»; um gatilho para quando o dono gera e relata o que ouviu (uma variável por vez); e o prompt «Gerar faixa para o Suno», que entrega o JSON e não pede fórmula de referência (é acervo do dono, DEC-038 do Cancioneiro).
+- **Mecanismo novo, genérico:** a **variante de nicho ligada por um campo do construtor** (`variantes` no módulo do nicho, `nicheEfetivo` no gerador), aplicada na hora da geração sobre uma cópia do nicho normalizado. Uma skill copiada de outro projeto sai byte a byte (`raw`), com o carimbo no fim.
+- **Teto:** com o Suno, as Instruções do Música ficam em 5.580 (padrão), 6.129 (Code) e 6.501 (Code + ASU) caracteres.
+- **`C119` novo** (119 → 120): com o Suno, o gerado tem as cinco peças copiadas e o carimbo confere com o sha1 do texto; com «Tocada», nada delas. Três provas negativas (um byte mudado na skill copiada; a Parte 1 fora das Instruções; a variante ligada sem o campo). O `C15` (o nome antigo `meta/specs/`) passa a descontar o que está dentro de texto copiado de outro projeto: o prompt-modelo do Cancioneiro cita uma spec dele, e a cópia é byte a byte; fora das cópias, o nome antigo continua acusando (prova negativa feita).
+- **Origem:** a `i-N25` (a ideia, de junho), a carta 01 do Cancioneiro (o kit de música, 31/10), o Album-Referencias (`i-N84`, item 1) e a análise `261114-ANALISE-musica-gerada-por-ia.md`, decidida pelo dono com a recomendação do Cancioneiro (carta 04). Harness **19/19 · 120/120**.
 
 ## v1.140.0 — Três defeitos pequenos do toolchain: a seção do ASU só com o ASU, o log por dia no README, e a parada que grava o relatório (wo0166, D-178)
 - **IDEAS sem «Feedback para o ASU» quando o ASU está desligado:** o corte acontece no `effectiveFiles`, por onde passa todo download (templates, pacote novo, pacote de atualização); a marca de fim do IDEAS fica. Com o ASU ligado, a seção volta. Cinco projetos a apagavam à mão (CDC, ClearDrop, FrameMatch, Lunoda, PrintImposer).

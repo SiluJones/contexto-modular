@@ -1,8 +1,8 @@
 # ANÁLISE — Música gerada por IA no nicho `music`: um eixo «Produção», o bloco do Cancioneiro dentro do kit, e quem é a fonte
 
-> **Status:** Aberta — aguarda o dono (ponto de decisão no fim)
+> **Status:** Decidida (2026-11-14: B; dois valores — Tocada · Gerada por IA (Suno); as skills copiadas com carimbo — com a recomendação do Cancioneiro, carta 04) — implementada na wo0167 (v1.141.0)
 > **Data:** 261114 · **Base:** v1.140.0 na árvore (wo0166, sem commit ao escrever), HEAD `d0f9237`
-> **Vira:** uma WO de código (v1.141.0) e a carta 03 ao Cancioneiro · **Decisão:** a escrever (`D-179`)
+> **Vira:** uma WO de código (v1.141.0) e a carta 03 ao Cancioneiro · **Decisão:** `D-179`
 
 ## Problema
 

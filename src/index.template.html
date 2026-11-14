@@ -1308,7 +1308,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.140.0";
+const KIT_VERSION = "1.141.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1508,6 +1508,33 @@ function normNiche(n){
   _normCache[n.id] = norm;
   return norm;
 }
+/* wo0167 (i-N25, D-179): variante de nicho ligada por um campo do construtor (ex.: music, «Produção: Gerada
+   por IA (Suno)»). O nicho normalizado fica em cache; a variante entra na hora da geração, sobre uma cópia —
+   arquivos, anexos a arquivos do molde, gatilhos, prompts, saídas, skills e as linhas das Instruções e do CEREBRO. */
+function nicheEfetivo(n){
+  if(!n || !(n.variantes || []).length) return n;
+  const tb = STATE.topbar || {};
+  const on = n.variantes.filter(v => tb[v.campo] === v.valor);
+  if(!on.length) return n;
+  let out = { ...n, contextFiles:[...(n.contextFiles||[])], triggersExtra:[...(n.triggersExtra||[])], promptsExtra:[...(n.promptsExtra||[])],
+    outputs:[...(n.outputs||[])], instrExtra:[...(n.instrExtra||[])], cerebroExtra:[...(n.cerebroExtra||[])] };
+  on.forEach(v => {
+    (v.anexos || []).forEach(([nome, texto]) => {
+      out.contextFiles = out.contextFiles.map(f => f.name === nome ? { ...f, content: String(f.content || "").replace(/\s*$/, "\n") + texto } : f);
+    });
+    out.contextFiles = out.contextFiles.concat(normFiles(v.arquivos || []));
+    out.triggersExtra = out.triggersExtra.concat(v.gatilhos || []);
+    out.promptsExtra = out.promptsExtra.concat(v.prompts || []);
+    out.outputs = out.outputs.concat(normOutputs(v.saidas || []));
+    if(v.instr) out.instrExtra.push(v.instr);
+    if(v.cerebro) out.cerebroExtra.push(v.cerebro);
+    if((v.skills || []).length){
+      const sp = n.skillsPack || {};
+      out.skillsPack = { title: v.skillsTitulo || sp.title, intro: v.skillsIntro || sp.intro, skills: [...(sp.skills || []), ...v.skills] };
+    }
+  });
+  return out;
+}
 
 /* ---------- State ---------- */
 const STATE = {
@@ -1544,7 +1571,7 @@ function getCurrentNiche(){
   if(raw.isBuilder && STATE.customPreset){
     return mergeCustom(raw, STATE.customPreset);
   }
-  return normNiche(raw);
+  return nicheEfetivo(normNiche(raw));
 }
 function mergeCustom(base, preset){
   const merged = {
@@ -2450,6 +2477,7 @@ function buildInstr(niche){
     lines.push("- **Fecho do turno** — formato fixo (divisor, listas, condição por linha) que não cabe aqui: **copie o esqueleto do CEREBRO**, não reconstitua de memória — o esqueleto tem cinco itens; sem saber nomeá-los, abra-o. `Estado` abre com `Base:` — o lido NESTE turno.");
   }
 
+  (niche.instrExtra || []).forEach(t => { lines.push(""); lines.push(t); });
   lines.push("");
   lines.push(`## Idioma`);
   lines.push(langKey === "other" ? "Respostas no idioma do projeto — escreva qual aqui." : `Respostas em ${langTxt}.`);
@@ -2976,6 +3004,7 @@ function buildClaudeMd(niche){
     L.push("- Na dúvida sobre a sintaxe de um comando neste sistema, perguntar em vez de gerar algo que pode quebrar.");
   }
 
+  (niche.cerebroExtra || []).forEach(t => { L.push(""); L.push(t); });
   L.push("");
   L.push("## Idioma");
   L.push("");
@@ -3057,7 +3086,7 @@ if(asuModeOn()){
     L.push("");
     L.push("---");
     L.push("");
-    L.push("## Skills de escrita (Agent Skills) — pacote separado");
+    L.push(`## ${sp.title || "Skills de escrita (Agent Skills)"} — pacote separado`);
     L.push("");
     L.push(sp.intro);
     L.push("");
@@ -3292,6 +3321,8 @@ async function downloadZIP(){
 }
 // Renderiza UM SKILL.md a partir do dado da skill (fonte unica: mesma estrutura que ia inline no CEREBRO).
 function buildSkillMd(sk){
+  // wo0167 (D-179): skill copiada de outro projeto sai byte a byte, com o carimbo de origem no fim.
+  if(sk.raw) return sk.raw.replace(/\s*$/, "\n") + (sk.carimbo ? "\n" + sk.carimbo + "\n" : "");
   const L = [];
   L.push("---");
   L.push(`name: ${sk.name}`);
