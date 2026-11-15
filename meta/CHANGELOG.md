@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.141.0**.
+> Histórico de versões. Versão atual: **v1.142.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.142.0 — A fusão do CEREBRO e das Instruções parte do pacote (wo0169, D-180)
+- **O pacote de update muda a direção da fusão:** nos dois arquivos `fusao` (CEREBRO, Instruções), a base é o arquivo do pacote, e o projeto transplanta para ela o que é dele — a seção «Técnicas específicas deste projeto», seção sem par no pacote, regra local com DEC, colisão já julgada. Antes, o kit dizia «compare e proponha o merge», sem dizer de onde partir, e quem partia do vivo enxertava o novo bloco a bloco: o merge só soma.
+- **Antes de gravar, o inventário:** o que foi transplantado, o que do vivo ficou de fora, e **toda linha do pacote que falta no resultado**, com o motivo — o usuário decide. Nas Instruções, o que sai para caber no teto sai do transplante, nunca de uma regra do pacote. Vale no prompt do update, no manifesto e no CEREBRO gerado dos 19 nichos; a regra de que template genérico não substitui o `meta/` especializado ganha a exceção escrita: o CEREBRO é `fusao`.
+- **`C120` novo** (120 → 121), com três provas negativas (o prompt, o manifesto, o CEREBRO na forma antiga). Teto das Instruções inalterado (o texto novo mora no prompt, no manifesto e no CEREBRO).
+- **Origem:** o update v1.73 → v1.138 do got-legends (`i-N92`): 13 turnos, duas WOs, e a terceira fatia planejava fundir 50 blocos de um CEREBRO de 104 KB num vivo de 55 KB; a fusão das Instruções perdeu a linha `Git só leitura (GIT_OPTIONAL_LOCKS=0)` do pacote, e o turno seguinte rodou `git add` pelo chat. Os outros projetos do dono já partiam do pacote `[relatado pelo dono]`, e o próprio CEREBRO gerado já dizia que tudo fora das «Técnicas específicas» é substituído quando o kit evolui. Harness **19/19 · 121/121**.
 
 ## v1.141.0 — Música gerada por IA: o Suno no nicho Música, copiado do Cancioneiro (wo0167, D-179)
 - **Campo «Produção» no nicho Música:** Tocada · Gerada por IA (Suno). Com «Tocada», nada muda. Com o Suno, o projeto recebe, **copiado byte a byte do Cancioneiro** (commit `110e0ba`, 14/11) e com carimbo de origem (commit, data e sha1 do texto): a Parte 1 do `BLOCO-SUNO.md` nas Instruções, a Parte 2 no CEREBRO (o artefato é o pedido; o orçamento do Suno; a revisão antes de entregar; o ciclo de uma faixa; as tags de seção conforme o gênero; direito de uso e nome de artista perguntados, nunca supostos), as skills `macetes-suno` e `revisar-faixa` e o prompt-modelo do JSON (`PROMPT-PARA-CHATS.md`).

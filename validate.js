@@ -2734,6 +2734,29 @@ check("G25 ritual cita o doc-ancora de cada nicho; Instr nao cita .md inexistent
   return "ok";
 });
 
+check("C120 a fusao parte do pacote (wo0169, D-180): o prompt, o manifesto e o CEREBRO de todo nicho mandam transplantar o que e do projeto para a base do pacote e inventariar o corte", () => {
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.builder  = T.STATE.builder  || {};
+  const dev = T.normNiche(T.NICHES.dev);
+  T.STATE.workmode.codeMode = "yes";
+  const s = T.buildUpdatePrompt(dev);
+  const m = T.buildUpdatePack(dev).manifest;
+  T.STATE.workmode.codeMode = "no";
+  ["A fusao parte do PACOTE", "transplanta", "me mostre o inventario", "toda linha do pacote que falta no resultado", "fora o CEREBRO, que e `fusao`"].forEach(k =>
+    assert(s.indexOf(k) !== -1, "prompt sem: " + k));
+  assert(!/compare e proponha o merge/.test(s), "prompt ainda manda partir do vivo (compare e proponha o merge)");
+  assert(/a BASE e o arquivo/.test(m) && /transplante para ele/.test(m) && /toda linha do pacote cortada/.test(m), "manifesto sem a base do pacote / o transplante / o corte");
+  assert(!/e propor merge, o usuario decide/.test(m), "manifesto ainda manda propor merge a partir do vivo");
+  const sem = [];
+  Object.keys(T.NICHES).forEach(id => {
+    const c = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    ["a fusão parte do pacote", "transplanta para ele", "toda linha do pacote que falta no resultado", "fora o CEREBRO, que é `fusao`"].forEach(k => { if(c.indexOf(k) === -1) sem.push(id + " sem «" + k + "»"); });
+    if(c.indexOf("propõe o merge, o usuário decide") !== -1) sem.push(id + " com a forma antiga");
+  });
+  assert(sem.length === 0, "CEREBRO: " + sem.join(" | "));
+  return "ok (prompt, manifesto e " + Object.keys(T.NICHES).length + " CEREBROs)";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");
