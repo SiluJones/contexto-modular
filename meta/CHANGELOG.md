@@ -1,10 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.142.0**.
+> Histórico de versões. Versão atual: **v1.143.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.143.0 — O protocolo do kit: as permissões que as skills pedem, o git sem lock no update, a sobra de modo só sem artefato, e o índice do CEREBRO (wo0172, D-181)
+- **O `settings.json` do kit do Code libera o que as skills mandam rodar:** `git log`, `git show`, `git ls-files`, `git cat-file`, `date`, `sha1sum`, `wc`, `grep` e `head` entram no `allow` (antes: só `git status/diff/add/commit/push`). Cada relatório pedia aprovação pelo `date`, e o 1b da `wrap` pelo `git log`. O `git stash` do molde de WO segue pedindo aprovação, de propósito (muda a árvore).
+- **O prompt do update roda o git com `GIT_OPTIONAL_LOCKS=0`**, e diz por quê: o CEREBRO novo ainda não foi lido, e um `git status` comum grava o `.git/index.lock`, que o chat não consegue apagar.
+- **Sobra de modo, só sem artefato:** marcador presente e modo `nao` continua sendo sobra — salvo se o projeto ainda usa o modo (a pasta `meta/ASU/` e as instruções `.yaml`, a seção de projeto em grupo, as skills do nicho); com artefato, é pergunta ao dono. No CEREBRO, no prompt e no manifesto.
+- **Três coisas que o update de projeto atrasado esquece**, no prompt: conferir o topo do STATUS contra o disco antes de comparar; fundir o CEREBRO e as Instruções não fecha o update (os carimbos dos portadores dizem quando); trocar de modo deixa sobras fora do repositório, listadas e não apagadas.
+- **O CEREBRO abre com o índice das próprias seções**, gerado do texto (uma linha por seção de nível 2 fora de bloco de código), antes do primeiro divisor. O do `dev` com o Code: 24 seções, 104.022 → 105.646 bytes.
+- **`C121` novo** (121 → 122), com quatro provas negativas (o `date` fora do `allow`; o `git status` sem a variável; a ressalva fora do CEREBRO; o índice sem uma seção). O `G4` pegou a primeira redação, que citava o HUB no CEREBRO sem o modo grupo. Teto das Instruções inalterado.
+- **Origem:** a WO A da análise `261115-ANALISE-o-nicho-dev.md` (V4, V5, V6 (b), V7 (b)), decidida pelo dono; os relatos do EditX, do fileview, do Vectorforge e do got-legends (`i-N92`, `i-N93`). Harness **19/19 · 122/122**.
 
 ## v1.142.0 — A fusão do CEREBRO e das Instruções parte do pacote (wo0169, D-180)
 - **O pacote de update muda a direção da fusão:** nos dois arquivos `fusao` (CEREBRO, Instruções), a base é o arquivo do pacote, e o projeto transplanta para ela o que é dele — a seção «Técnicas específicas deste projeto», seção sem par no pacote, regra local com DEC, colisão já julgada. Antes, o kit dizia «compare e proponha o merge», sem dizer de onde partir, e quem partia do vivo enxertava o novo bloco a bloco: o merge só soma.

@@ -2757,6 +2757,51 @@ check("C120 a fusao parte do pacote (wo0169, D-180): o prompt, o manifesto e o C
   return "ok (prompt, manifesto e " + Object.keys(T.NICHES).length + " CEREBROs)";
 });
 
+check("C121 o protocolo do kit (wo0172, D-181): o settings libera o que as skills mandam rodar, o prompt do update roda o git sem lock, a sobra de modo so sem artefato, e o CEREBRO abre com o indice das proprias secoes", () => {
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.builder  = T.STATE.builder  || {};
+  const dev = T.normNiche(T.NICHES.dev);
+  T.STATE.workmode.codeMode = "yes";
+  // (1) todo comando de leitura que as skills e o molde de WO mandam rodar esta no allow (git stash pede aprovacao de proposito)
+  const k = T.buildCodeKitFiles(dev);
+  const allow = JSON.parse(k.settings).permissions.allow;
+  const pede = new Set();
+  ["claudeMd","applyWo","wrap","sondar","woTemplate"].forEach(n => ((k[n] || "").match(/`([^`\n]+)`/g) || []).forEach(m => {
+    const w = m.slice(1, -1).trim().replace(/^GIT_OPTIONAL_LOCKS=0 /, "").split(/\s+/);
+    if(/^(git|date|sha1sum|wc|grep|head)$/.test(w[0])) pede.add(w[0] === "git" ? "git " + w[1] : w[0]);
+  }));
+  const isento = ["git stash"];
+  const falta = [...pede].filter(c => !isento.includes(c) && !allow.includes("Bash(" + c + ":*)"));
+  assert(pede.size >= 8, "a extracao dos comandos das skills achou pouco (" + pede.size + "): o check ficou cego");
+  assert(falta.length === 0, "as skills mandam rodar e o settings nao libera: " + falta.join(", "));
+  // (2) o prompt do update roda o git com a variavel (canal pasta)
+  const s = T.buildUpdatePrompt(dev);
+  assert(s.indexOf("`GIT_OPTIONAL_LOCKS=0 git log -3 --oneline`") !== -1 && s.indexOf("`GIT_OPTIONAL_LOCKS=0 git status --short`") !== -1, "o prompt do update roda o git sem GIT_OPTIONAL_LOCKS=0");
+  assert(!/rode `git (log|status)/.test(s), "o prompt do update ainda manda rodar git sem a variavel");
+  // (3) a sobra de modo so sem artefato; as tres coisas do update atrasado
+  const m = T.buildUpdatePack(dev).manifest;
+  const c = T.buildClaudeMd(dev);
+  assert(/salvo se o projeto ainda usa o modo/.test(s) && /salvo se o projeto ainda usa o modo/.test(m) && /salvo se o projeto ainda usa o modo/.test(c), "a sobra de modo sem a ressalva do modo ainda em uso (prompt, manifesto ou CEREBRO)");
+  ["o STATUS diz a verdade?", "nao fecha o update", "sobras fora do repositorio"].forEach(f => assert(s.indexOf(f) !== -1, "prompt sem: " + f));
+  T.STATE.workmode.codeMode = "no";
+  // (4) o indice: toda secao de nivel 2 fora de bloco de codigo tem a sua linha, na ordem, e nada mais — em todo nicho, com e sem o Code
+  const ruim = [];
+  ["no", "yes"].forEach(cm => { T.STATE.workmode.codeMode = cm; Object.keys(T.NICHES).forEach(id => {
+    const md = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    let fence = false; const heads = [];
+    const lines = md.split("\n");
+    lines.forEach(l => { if(/^```/.test(l)) fence = !fence; else if(!fence && /^## /.test(l)) heads.push(l.slice(3).trim()); });
+    const i0 = lines.findIndex(l => l.indexOf("**Seções deste arquivo**") !== -1);
+    if(i0 < 0) { ruim.push(id + "/" + cm + " sem indice"); return; }
+    const idx = []; for(let i = i0 + 1; i < lines.length && lines[i].indexOf("> - ") === 0; i++) idx.push(lines[i].slice(4));
+    if(idx.join("|") !== heads.join("|")) ruim.push(id + "/" + cm + " indice != secoes (" + idx.length + " x " + heads.length + ")");
+    if(lines.indexOf("---") < i0) ruim.push(id + "/" + cm + " indice depois do primeiro divisor");
+  }); });
+  T.STATE.workmode.codeMode = "no";
+  assert(ruim.length === 0, "indice do CEREBRO: " + ruim.join(" | "));
+  return "ok (" + pede.size + " comandos das skills no allow; prompt, manifesto e CEREBRO; indice em 19 nichos x 2 modos)";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");
