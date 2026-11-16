@@ -2132,7 +2132,7 @@ check("C119 musica gerada por IA (wo0167): a variante Suno do music, copiada do 
     assert(cmd.indexOf(v.cerebro) !== -1, "Suno: o CEREBRO sem a Parte 2 do bloco com o carimbo");
     const p2 = v.cerebro.split("\n\n> Copiado byte a byte")[0];
     assert(v.cerebro.indexOf("sha1 `" + sha(p2) + "`") !== -1 && v.cerebro.indexOf("commit `" + v.origem.commit + "`") !== -1, "o carimbo da Parte 2 nao bate com o texto copiado");
-    assert((n.skillsPack.skills || []).map(x => x.name).join(",") === "macetes-suno,revisar-faixa", "Suno: as skills do pacote nao sao as duas do Cancioneiro");
+    assert((n.skillsPack.skills || []).map(x => x.name).join(",") === "macetes-suno,revisar-faixa,escrever-letra-suno,conceber-album", "Suno: as skills do pacote nao sao as quatro do Cancioneiro (wo0174: o commit 94235bd deles)");
     n.skillsPack.skills.forEach(sk => {
       const md = T.buildSkillMd(sk);
       assert(md.indexOf(sk.raw.replace(/\s*$/, "")) === 0, sk.name + ": a skill nao sai byte a byte");

@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.144.0**.
+> Histórico de versões. Versão atual: **v1.145.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.145.0 — O Suno no nicho Música, na leva 2 do Cancioneiro: o v6 e quatro skills (wo0174, D-183)
+- **A cópia do Cancioneiro atualizada** do commit `110e0ba` (14/11) para o `94235bd` deles (16/11), byte a byte, com o carimbo novo (commit, data e sha1 de cada texto): a **Parte 2** do `BLOCO-SUNO.md` (o «Ciclo de uma faixa» cita as duas skills novas); a **`macetes-suno`** (o v6: o Variety em Off como padrão para style escrito à mão, as Voices e o Letrista, a faixa que segue tocando → Recortar) e a **`revisar-faixa`** (o rótulo também chega pelo style salvo numa Voice).
+- **Duas skills novas** no pacote da variante Suno, provadas pelo Cancioneiro no Rainha da Preguiça: **`escrever-letra-suno`** (a cena antes da rima, o orçamento da letra, as tags, a pronúncia em pt-BR) e **`conceber-album`** (o estilo-base fixo, a voz, a faixa-piloto, o arco, a bíblia do projeto). Quatro skills no `skillsPack`.
+- **Sem mudança:** a Parte 1 (as Instruções do Música com o Suno seguem em 5.580 / 6.129 / 6.501) e o prompt-modelo — o script da cópia confere os dois iguais nos dois commits.
+- **`C119`** passa a esperar as quatro skills; duas provas negativas (um byte mudado na skill nova; a skill renomeada).
+- **Origem:** as cartas 05 e 06 do Cancioneiro (a `D-179`: mudança chega por carta e vira WO do KCM). A carta 07 (uma linha na `macetes-suno` §5, a WO 0045 deles) espera o commit dela. Harness **19/19 · 123/123**.
 
 ## v1.144.0 — O nicho `dev`: a rede de cada projeto e o alvo que não roda, o SETUP para o humano, três gatilhos e quatro lugares (wo0173, D-182)
 - **A rede deste projeto**, seção nova do CEREBRO do `dev`: todo projeto declara a sua no CONTEXT (o comando sem argumentos com código de saída, a linha de base reexecutável, o roteiro do dono para a tela); quando o alvo não roda no ambiente do chat, o assistente constrói o que roda (o núcleo separado da tela, o espelho executável com paridade, a checagem de sintaxe e de nomes) e **diz o que ficou sem verificar**; quando a máquina do dono não compila, é ambiente (vai para o SETUP), e trocar de stack é DEC; convenção de sinal ou ângulo nunca de memória. O CONTEXT do `dev` ganha «Build e validação (a rede deste projeto)».
