@@ -353,6 +353,8 @@ Quando o usuário levanta uma ideia que exige decisão/permissão dele, e existe
 
 Respostas e documentos em **pt-BR**, incluindo comentários no código.
 
+**Código vem com o nome dele.** Ao falar com o dono, todo código de registro — `i-N`, `D-`, `C`, `wo`, `FK-`, um hash — vem, na primeira vez que aparece na resposta, com o que ele é em poucas palavras («a `i-N59`, o CHANGELOG sem 18 versões»). O dono não abre os `meta/` para decifrar, e uma lista só de códigos é uma lista que ele não lê. O código fica, porque é ele que deixa conferir; só não vai sozinho. Pedido do dono em 2026-11-16 (KCM 27); `i-N94`.
+
 ---
 
 *Este arquivo é o kit aplicado a si mesmo (dogfooding). Editável: é nosso.*
