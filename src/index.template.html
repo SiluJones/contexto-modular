@@ -1308,7 +1308,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.143.0";
+const KIT_VERSION = "1.144.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -3945,11 +3945,11 @@ function projectSlug(raw){
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   return s || "projeto";
 }
-function structuredGitignore(){
+function structuredGitignore(codeOn){
   return [
     "# .gitignore — lixo de SO / editor. NAO ignore .claude/, meta/ nem logs/ (versionados de proposito).",
-    ".DS_Store", "Thumbs.db", "*.swp", ".vscode/", ".idea/", ""
-  ].join("\n");
+    ".DS_Store", "Thumbs.db", "*.swp", ".vscode/", ".idea/"
+  ].concat(codeOn ? ["# o Claude Code cria e enche de caminhos desta maquina; e do usuario, nao do projeto (wo0173)", ".claude/settings.local.json"] : []).concat([""]).join("\n");
 }
 function structuredFlatdropignore(codeOn){
   // Convencao KCM (wo0067): comentario SO fora do bloco (dentro, o editor do FlatDrop apaga
@@ -4056,7 +4056,7 @@ async function downloadStructuredZIP(){
     niche.skillsPack.skills.forEach(sk => zip.file(`${base}/${sk.name}/SKILL.md`, buildSkillMd(sk)));
   }
   // Ignores + README
-  zip.file(`${root}/.gitignore`, structuredGitignore());
+  zip.file(`${root}/.gitignore`, structuredGitignore(codeOn));
   zip.file(`${root}/.flatdropignore`, structuredFlatdropignore(codeOn));
   zip.file(`${root}/README.md`, structuredReadme(niche, root, codeOn, skillsOn));
 
@@ -4280,7 +4280,7 @@ function buildUpdatePack(niche){
   files.push({ flat: updateFlat("analises._TEMPLATE.md"), real: "meta/analises/_TEMPLATE.md", nature: "modelo-em-espera",
     role: "Modelo de analise. So coloque quando a pasta NASCER — nao crie a pasta para receber o modelo.", content: buildAnaliseTemplate() });
   files.push({ flat: updateFlat("gitignore"), real: ".gitignore", nature: "template",
-    role: "Ignora lixo de SO/editor.", content: structuredGitignore() });
+    role: "Ignora lixo de SO/editor (e, com o Code, o settings.local.json).", content: structuredGitignore(codeOn) });
   files.push({ flat: updateFlat("flatdropignore"), real: ".flatdropignore", nature: "template",
     role: "Canal de reserva (FlatDrop): enxuga o que sobe ao Projeto do Claude (logs/, workorders no modo Code).", content: structuredFlatdropignore(codeOn) });
   const manifest = buildUpdateManifest(niche, files, codeOn, skillsOn);

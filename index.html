@@ -1308,7 +1308,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.143.0";
+const KIT_VERSION = "1.144.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1357,11 +1357,27 @@ NICHES.dev = {
     other:true
   },
   conventions:true, conventionsFor:"code",
+  // Secoes proprias do CEREBRO do dev (wo0173, D-182): a rede de cada projeto e o alvo que nao roda; README e LICENSE
+  cerebroExtra:[
+`## A rede deste projeto (como ele se verifica)
+
+Todo projeto de código tem uma rede: o que diz «quebrou» antes do dono. **Ela é declarada no CONTEXT** («Build e validação»): o comando que roda sem argumentos e devolve código de saída, a linha de base reexecutável quando o resultado é grande demais para conferir à mão, e o roteiro do dono para o que só se vê na tela. Mudança que toca código roda a rede antes de ser chamada de pronta, e teste novo prova que falha sem a mudança.
+
+- **Quando o alvo não roda no ambiente do chat** (a extensão do editor, a interface gráfica, a engine, o hardware): não entregue código plausível. Construa o que roda — separe o núcleo da tela e teste o núcleo; faça um espelho executável do algoritmo e confira a paridade com o alvo; confira ao menos a sintaxe e os nomes (um \`import\` que falta não aparece numa checagem de sintaxe). E **diga o que ficou sem verificar**, para o roteiro do dono cobrir.
+- **Quando a máquina do dono não compila** (o compilador nativo que falta, a política do sistema que bloqueia o executável): é ambiente, não bug. O passo que resolveu vai para o \`SETUP.md\`, se o projeto o usa; trocar de stack por causa disso é decisão (DEC), não conserto.
+- **Convenção de sinal, ângulo, eixo ou unidade nunca de memória:** confira contra a fórmula do próprio código. Algoritmo geométrico se confere numa forma sintética simétrica, em mais de um parâmetro.`,
+`## README e LICENSE
+
+O \`README.md\` é do projeto — o que ele faz e como rodar —, não índice do kit. Repositório público pede \`LICENSE\`: pergunte ao dono qual, nunca escolha por ele.`
+  ],
   // Gatilhos específicos de dev (somam aos universais no CLAUDE.md gerado)
   triggersExtra:[
     ["Decisão de arquitetura ou troca de lib", "Entrega o DECISIONS.md completo (nova DEC-N: contexto, decisão, alternativas, consequências)."],
     ["Mudança de fase do projeto", "Entrega o ROADMAP.md completo com a fase atualizada (concluída / em curso / próxima)."],
     ["Termo técnico próprio do projeto usado", "Entrega o GLOSSARY.md completo com o termo definido."],
+    ["Log ou traceback colado sem descrição do problema", "Lê os arquivos citados no erro, confere as dependências contra o manifesto do projeto (requirements.txt, package.json), separa causa de ambiente de bug, e só então propõe — dizendo qual das duas é."],
+    ["Projeto existente com os documentos ainda no molde", "Lê o código antes de escrever: CONTEXT.md e STATUS.md saem do que o repositório é, não do molde vazio; o que não deu para ler, declara."],
+    ["A mesma fórmula ou regra em dois módulos", "Registra a duplicação no backlog do STATUS.md e converge na próxima mudança que tocar um dos dois: correção numa cópia só é bug adiado."],
   ],
   contextFiles:[
     {name:"SPEC.md", cat:"opcional", role:"Modelo de **spec de feature** (Spec-Driven Development): o problema, os critérios de aceite verificáveis, as decisões e o fora-de-escopo. **Sob demanda** — copie para `specs/AAMMDD-nome.md`, uma por feature, e a pasta nasce aí. **Não é o modelo das WOs** (instrução de aplicação Chat→Code, em `meta/workorders/`): spec diz o QUE construir, WO diz COMO aplicar.", short:"Spec de feature (o QUÊ), sob demanda; não WO.", content:`# SPEC — [nome da feature]
@@ -1404,6 +1420,12 @@ NICHES.dev = {
 - **Front-end:** [se houver]
 - **Testes:** [ex: pytest]
 - **Deploy:** [ex: Docker + VPS]
+
+## Build e validação (a rede deste projeto)
+- **Rede automática:** [o comando que roda sem argumentos e devolve código de saída — ex: \`pytest\`, \`npm test\`, um harness próprio. «Nenhuma ainda» também é resposta: escreva.]
+- **Linha de base:** [quando o resultado é grande demais para conferir à mão — snapshot, golden set, chaves de regressão — e o comando que a regrava.]
+- **Na tela, pelo dono:** [o que só se confere usando — o roteiro que o assistente entrega junto da mudança.]
+- **O que o ambiente do chat não roda:** [o alvo que não executa lá — a extensão do editor, a interface, a engine, o hardware — e o que se faz no lugar (ver o CEREBRO, «A rede deste projeto»).]
 
 ## Estrutura do Projeto
 \`\`\`
@@ -1614,6 +1636,9 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## Feito
 - [Mudanças concretas: arquivos tocados, funções criadas, bugs resolvidos.]
 
+## Entregas
+- [WOs aplicadas (com o commit), specs e análises escritas no dia — o que outro turno vai procurar pelo nome.]
+
 ## Decisões
 - [Decisões tomadas → quais viraram DEC-N em DECISIONS.md.]
 
@@ -1675,15 +1700,36 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ## Identificadores
 - **[Sigla/ID]** — [o que significa no projeto.]
 `},
-    {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado de fases antigas (guias, análises que não cabem no CONTEXT enxuto). Lido sob demanda.", short:"OPCIONAL — fases antigas; lido sob demanda.", content:`# HISTORY.md — Conhecimento Consolidado
+    {name:"SETUP.md", cat:"opcional", role:"OPCIONAL — guia de ambiente para o humano: instalar, configurar e rodar do zero, e o que já deu errado. Fora do ritual de leitura.", short:"OPCIONAL — ambiente, para o humano.", content:`# SETUP.md — Guia de Ambiente
 
-> **Opcional.** Arquivo-baú para conhecimento denso que já foi aprendido e não muda mais — guias técnicos, análises de viabilidade, notas de migração — que tornariam o CONTEXT pesado demais.
+> **Opcional, para o humano.** Como instalar, configurar e rodar o projeto do zero nesta máquina, e o que já deu errado. **Não entra no ritual de leitura** do assistente: ele o consulta quando o assunto é ambiente, e acrescenta aqui o passo que resolveu um bloqueio.
+
+---
+
+## Pré-requisitos
+- [ex: Node 20+, Python 3.11, o compilador nativo do sistema]
+
+## Instalar
+1. [passo]
+
+## Rodar
+- [o comando de desenvolvimento; o de build; o da rede (ver CONTEXT, «Build e validação»)]
+
+## Configurar
+- [variáveis de ambiente, arquivos \`.env\` — nunca o valor secreto aqui]
+
+## Já deu errado (e como saiu)
+- **[AAAA-MM-DD] [sintoma]** — [causa] → [o que resolveu].
+`},
+    {name:"HISTORY.md", cat:"opcional", role:"OPCIONAL — conhecimento consolidado: fases antigas e a pesquisa densa da partida (API, algoritmos), que não cabem no CONTEXT enxuto. Lido sob demanda.", short:"OPCIONAL — fases antigas e pesquisa.", content:`# HISTORY.md — Conhecimento Consolidado
+
+> **Opcional.** Arquivo-baú para conhecimento denso que já foi aprendido e não muda mais — guias técnicos, análises de viabilidade, notas de migração, a pesquisa densa feita na partida (API, algoritmos) — que tornariam o CONTEXT pesado demais.
 > Não é lido no início da conversa; o assistente consulta sob demanda quando o assunto aparece.
 
 ---
 
 ## 1. [Guia técnico consolidado]
-[Conteúdo de referência que já é estável. Ex: «como inspecionar um site novo», «como configurar o ambiente do zero».]
+[Conteúdo de referência que já é estável. Ex: «como inspecionar um site novo». O ambiente para o humano mora no \`SETUP.md\`, quando o projeto o usa.]
 
 ## 2. [Análise/decisão histórica]
 [Notas de uma fase encerrada que ainda têm valor de consulta.]
@@ -1705,6 +1751,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
     {key:"ideas", name:"IDEAS.md", role:"completo, com as ideias da conversa capturadas e reclassificadas", active:true},
     {key:"roadmap", name:"ROADMAP.md", role:"completo, se alguma fase mudou de estado (quando o projeto usa roadmap)", active:false},
     {key:"glossary", name:"GLOSSARY.md", role:"completo, se surgiu termo novo (quando o projeto usa glossário)", active:false},
+    {key:"setup", name:"SETUP.md", role:"completo, se um passo de ambiente mudou ou um bloqueio foi resolvido (quando usa o arquivo)", active:false},
     {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
@@ -10668,11 +10715,11 @@ function projectSlug(raw){
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   return s || "projeto";
 }
-function structuredGitignore(){
+function structuredGitignore(codeOn){
   return [
     "# .gitignore — lixo de SO / editor. NAO ignore .claude/, meta/ nem logs/ (versionados de proposito).",
-    ".DS_Store", "Thumbs.db", "*.swp", ".vscode/", ".idea/", ""
-  ].join("\n");
+    ".DS_Store", "Thumbs.db", "*.swp", ".vscode/", ".idea/"
+  ].concat(codeOn ? ["# o Claude Code cria e enche de caminhos desta maquina; e do usuario, nao do projeto (wo0173)", ".claude/settings.local.json"] : []).concat([""]).join("\n");
 }
 function structuredFlatdropignore(codeOn){
   // Convencao KCM (wo0067): comentario SO fora do bloco (dentro, o editor do FlatDrop apaga
@@ -10779,7 +10826,7 @@ async function downloadStructuredZIP(){
     niche.skillsPack.skills.forEach(sk => zip.file(`${base}/${sk.name}/SKILL.md`, buildSkillMd(sk)));
   }
   // Ignores + README
-  zip.file(`${root}/.gitignore`, structuredGitignore());
+  zip.file(`${root}/.gitignore`, structuredGitignore(codeOn));
   zip.file(`${root}/.flatdropignore`, structuredFlatdropignore(codeOn));
   zip.file(`${root}/README.md`, structuredReadme(niche, root, codeOn, skillsOn));
 
@@ -11003,7 +11050,7 @@ function buildUpdatePack(niche){
   files.push({ flat: updateFlat("analises._TEMPLATE.md"), real: "meta/analises/_TEMPLATE.md", nature: "modelo-em-espera",
     role: "Modelo de analise. So coloque quando a pasta NASCER — nao crie a pasta para receber o modelo.", content: buildAnaliseTemplate() });
   files.push({ flat: updateFlat("gitignore"), real: ".gitignore", nature: "template",
-    role: "Ignora lixo de SO/editor.", content: structuredGitignore() });
+    role: "Ignora lixo de SO/editor (e, com o Code, o settings.local.json).", content: structuredGitignore(codeOn) });
   files.push({ flat: updateFlat("flatdropignore"), real: ".flatdropignore", nature: "template",
     role: "Canal de reserva (FlatDrop): enxuga o que sobe ao Projeto do Claude (logs/, workorders no modo Code).", content: structuredFlatdropignore(codeOn) });
   const manifest = buildUpdateManifest(niche, files, codeOn, skillsOn);

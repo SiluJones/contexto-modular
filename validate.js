@@ -2802,6 +2802,41 @@ check("C121 o protocolo do kit (wo0172, D-181): o settings libera o que as skill
   return "ok (" + pede.size + " comandos das skills no allow; prompt, manifesto e CEREBRO; indice em 19 nichos x 2 modos)";
 });
 
+check("C122 o nicho dev (wo0173, D-182): a rede de cada projeto e o alvo que nao roda, README e LICENSE, o SETUP opcional, tres gatilhos, o LOG com Entregas, o HISTORY da pesquisa, e o settings.local.json fora do git com o Code", () => {
+  T.STATE.workmode = T.STATE.workmode || {};
+  T.STATE.builder  = T.STATE.builder  || {};
+  const raw = T.NICHES.dev, dev = T.normNiche(raw);
+  ["no", "yes"].forEach(cm => {
+    T.STATE.workmode.codeMode = cm;
+    const c = T.buildClaudeMd(dev);
+    ["## A rede deste projeto (como ele se verifica)", "## README e LICENSE"].forEach(h => {
+      assert(c.indexOf("\n" + h + "\n") !== -1, "CEREBRO do dev (Code " + cm + ") sem a secao: " + h);
+      assert(c.indexOf("> - " + h.slice(3)) !== -1, "o indice do CEREBRO do dev nao lista: " + h);
+    });
+    assert(/Quando o alvo não roda no ambiente do chat/.test(c) && /diga o que ficou sem verificar/.test(c) && /Quando a máquina do dono não compila/.test(c), "a rede do dev sem o alvo que nao roda ou sem a maquina que nao compila");
+  });
+  T.STATE.workmode.codeMode = "no";
+  const outros = Object.keys(T.NICHES).filter(id => id !== "dev" && T.buildClaudeMd(T.normNiche(T.NICHES[id])).indexOf("## A rede deste projeto") !== -1);
+  assert(outros.length === 0, "a secao do dev vazou para: " + outros.join(", "));
+  const cf = name => (raw.contextFiles || []).find(f => f.name === name) || {};
+  assert(/## Build e validação \(a rede deste projeto\)/.test(cf("CONTEXT.md").content || ""), "o CONTEXT do dev sem «Build e validacao»");
+  const st = cf("SETUP.md");
+  assert(st.cat === "opcional" && /Não entra no ritual de leitura/.test(st.content || ""), "o SETUP.md do dev ausente, nao opcional, ou sem a regra de fora do ritual");
+  const os = (raw.outputs || []).find(o => o.key === "setup");
+  assert(os && os.active === false, "o SETUP.md deveria entrar no fecho desligado por padrao");
+  const ev = (raw.triggersExtra || []).map(t => t[0]);
+  ["Log ou traceback colado sem descrição do problema", "Projeto existente com os documentos ainda no molde", "A mesma fórmula ou regra em dois módulos"].forEach(e => assert(ev.includes(e), "gatilho ausente no dev: " + e));
+  assert(/\n## Entregas\n/.test(cf("LOG-TEMPLATE.md").content || ""), "o LOG-TEMPLATE do dev sem «Entregas»");
+  assert(/pesquisa densa da partida/.test(cf("HISTORY.md").role || ""), "o HISTORY do dev sem a pesquisa da partida");
+  T.STATE.workmode.codeMode = "yes";
+  const gYes = T.buildUpdatePack(dev).files.find(f => f.real === ".gitignore").content;
+  T.STATE.workmode.codeMode = "no";
+  const gNo = T.buildUpdatePack(dev).files.find(f => f.real === ".gitignore").content;
+  assert(/^\.claude\/settings\.local\.json$/m.test(gYes), "com o Code, o .gitignore gerado sem o settings.local.json");
+  assert(!/settings\.local\.json/.test(gNo), "sem o Code, o .gitignore nao deveria citar o settings.local.json");
+  return "ok (CEREBRO e indice com e sem o Code; so no dev; CONTEXT, SETUP, fecho, 3 gatilhos, LOG, HISTORY, .gitignore)";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

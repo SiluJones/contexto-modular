@@ -1,6 +1,6 @@
 # ANÁLISE — O nicho `dev` pelo que vinte e seis projetos ensinaram: a verificação quando o alvo não roda, as permissões que as skills pedem, o peso do CEREBRO e o update de projeto atrasado
 
-> **Status:** Decidida (2026-11-15: as duas WOs, nesta ordem; V6 só o índice; V9 (c) entra) — a WO A na wo0172 (v1.143.0, `D-181`); a WO B em seguida
+> **Status:** Decidida (2026-11-15: as duas WOs, nesta ordem; V6 só o índice; V9 (c) entra) — a WO A na wo0172 (v1.143.0, `D-181`); a WO B na wo0173 (v1.144.0, `D-182`). **Implementada.**
 > **Data:** 261115 · **Base:** v1.142.0, HEAD `42f3b54`
 > **Vira:** duas WOs de código (A: o protocolo do kit, todos os nichos; B: o módulo `dev`) e o que for adiado, com gatilho, nas `i-N89` a `i-N93` · **Decisão:** a escrever (`D-181` em diante)
 

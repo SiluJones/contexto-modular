@@ -1,10 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.143.0**.
+> Histórico de versões. Versão atual: **v1.144.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.144.0 — O nicho `dev`: a rede de cada projeto e o alvo que não roda, o SETUP para o humano, três gatilhos e quatro lugares (wo0173, D-182)
+- **A rede deste projeto**, seção nova do CEREBRO do `dev`: todo projeto declara a sua no CONTEXT (o comando sem argumentos com código de saída, a linha de base reexecutável, o roteiro do dono para a tela); quando o alvo não roda no ambiente do chat, o assistente constrói o que roda (o núcleo separado da tela, o espelho executável com paridade, a checagem de sintaxe e de nomes) e **diz o que ficou sem verificar**; quando a máquina do dono não compila, é ambiente (vai para o SETUP), e trocar de stack é DEC; convenção de sinal ou ângulo nunca de memória. O CONTEXT do `dev` ganha «Build e validação (a rede deste projeto)».
+- **README e LICENSE**, seção curta: o README é do projeto; repositório público pede LICENSE, e quem escolhe é o dono.
+- **`SETUP.md` opcional** (desligado no fecho): o guia de ambiente para o humano — instalar, rodar, configurar, o que já deu errado —, fora do ritual de leitura.
+- **Três gatilhos novos:** log ou traceback colado sem descrição; projeto existente com os documentos no molde (ler o código antes); a mesma fórmula em dois módulos.
+- **Quatro lugares:** o LOG-TEMPLATE com «Entregas»; o HISTORY também para a pesquisa densa da partida; e o `.gitignore` gerado com `.claude/settings.local.json` quando o Code está ligado (em todos os nichos: o `.gitignore` é um só).
+- **`C122` novo** (122 → 123), com cinco provas negativas. O `C107` pegou os papéis curtos do SETUP e do HISTORY acima de 45 caracteres. Instruções do `dev`: 5.305 → 5.456 com o Code (o SETUP na lista); o pior nicho segue em 5.985/6.900. O CEREBRO do `dev` com o Code: 105.646 → 108.336 bytes.
+- **Origem:** a WO B da análise `261115-ANALISE-o-nicho-dev.md` (V1, V2, V3, V8, V9), decidida pelo dono; as `i-N89`, `i-N90`, `i-N92` e `i-N93`. Harness **19/19 · 123/123**.
 
 ## v1.143.0 — O protocolo do kit: as permissões que as skills pedem, o git sem lock no update, a sobra de modo só sem artefato, e o índice do CEREBRO (wo0172, D-181)
 - **O `settings.json` do kit do Code libera o que as skills mandam rodar:** `git log`, `git show`, `git ls-files`, `git cat-file`, `date`, `sha1sum`, `wc`, `grep` e `head` entram no `allow` (antes: só `git status/diff/add/commit/push`). Cada relatório pedia aprovação pelo `date`, e o 1b da `wrap` pelo `git log`. O `git stash` do molde de WO segue pedindo aprovação, de propósito (muda a árvore).
