@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.145.0**.
+> Histórico de versões. Versão atual: **v1.146.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
 > o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+
+## v1.146.0 — A palavra de andamento na `macetes-suno`: a carta 07 do Cancioneiro (wo0176)
+- **A `macetes-suno` copiada do `e13b9d9` deles** (a WO 0045, «docs: i-029 fechada»), byte a byte: a §5 ganha a linha da palavra de andamento — ela acompanha o número («slow tempo» com 70, «uptempo» com 128); ao mudar o BPM, reveja a palavra; «fast» e «slow» que falam do canto ou do arranjo não são andamento — e o cabeçalho da skill registra a data. Carimbo novo: commit `e13b9d9`, sha1 `6d756b8`.
+- **Só o texto que muda troca de carimbo**, como o prompt-modelo, que segue no `110e0ba`: a Parte 2, a `revisar-faixa`, a `escrever-letra-suno` e a `conceber-album` são iguais nos dois commits e seguem no `94235bd`. O script da cópia conferiu antes: desde o `94235bd`, um commit só tocou o `kit-musica` deles, e só esse arquivo.
+- **Sem check novo:** o `C119` recalcula o sha1 de cada skill; prova negativa na réplica (um byte mudado na `macetes-suno` → vermelho).
+- **Origem:** a carta 07 do Cancioneiro (a `D-179`; o procedimento da `D-183`). Harness **19/19 · 123/123**.
 
 ## v1.145.0 — O Suno no nicho Música, na leva 2 do Cancioneiro: o v6 e quatro skills (wo0174, D-183)
 - **A cópia do Cancioneiro atualizada** do commit `110e0ba` (14/11) para o `94235bd` deles (16/11), byte a byte, com o carimbo novo (commit, data e sha1 de cada texto): a **Parte 2** do `BLOCO-SUNO.md` (o «Ciclo de uma faixa» cita as duas skills novas); a **`macetes-suno`** (o v6: o Variety em Off como padrão para style escrito à mão, as Voices e o Letrista, a faixa que segue tocando → Recortar) e a **`revisar-faixa`** (o rótulo também chega pelo style salvo numa Voice).
