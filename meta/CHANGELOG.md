@@ -3,8 +3,8 @@
 > Histórico de versões. Versão atual: **v1.146.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
-> **v1.102–v1.119 sem entrada própria aqui**: o CHANGELOG parou de ser mantido depois da v1.101.0;
-> o histórico completo dessas versões vive em `meta/DECISIONS.md`/`meta/STATUS.md`, versão por versão.)
+> **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
+> o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
 
 ## v1.146.0 — A palavra de andamento na `macetes-suno`: a carta 07 do Cancioneiro (wo0176)
 - **A `macetes-suno` copiada do `e13b9d9` deles** (a WO 0045, «docs: i-029 fechada»), byte a byte: a §5 ganha a linha da palavra de andamento — ela acompanha o número («slow tempo» com 70, «uptempo» com 128); ao mudar o BPM, reveja a palavra; «fast» e «slow» que falam do canto ou do arranjo não são andamento — e o cabeçalho da skill registra a data. Carimbo novo: commit `e13b9d9`, sha1 `6d756b8`.
@@ -213,6 +213,66 @@
 - Check **C53** novo (duas provas negativas), e quatro cláusulas novas no **C43**.
 - `KIT_VERSION 1.120.0`. **Custo de teto: zero** — C28 idêntico (`padrao 6605/6900 · +Code 514/550 · +ASU 372/400 · compart 372/450 · combo 7491/7600`). `index.html` de **823.845 → 828.852** bytes. Harness **18/18, 96/96 → 97/97, 0 erros**.
 - **Correção do carimbo (wo0103):** a constante `KIT_VERSION` tinha ficado em `1.119.0` enquanto os documentos já declaravam v1.120.0 — todo artefato gerado sairia com a versão errada. Constante corrigida e amarrada por check: o **C54** confere `KIT_VERSION` contra o topo do `CHANGELOG.md` e o cabeçalho do `STATUS.md`, nos três lugares.
+
+## v1.119.0 — Duas coberturas declaradas separadas; o esqueleto do relatório de sonda entra como FORMA; e o verde ganha o gatilho que o campo da FK-M não tinha (wo0100, D-134)
+- 2026-08-18 · harness **18/18 · 96/96**. O detalhe vive em `D-134`, no `meta/DECISIONS.md`.
+
+## v1.118.0 — O pacote descreve bem O QUE mudar e mal COMO conduzir a mudança: número como piso, regras do merge na frente, e o menu vira botão (wo0099, D-133)
+- 2026-08-18 · harness **18/18 · 95/95**. O detalhe vive em `D-133`, no `meta/DECISIONS.md`.
+
+## v1.117.0 — Varredura muda não é varredura limpa: o pacote confere se as superfícies chegaram antes de mandar varrê-las (wo0098, D-132)
+- 2026-08-14 · harness **18/18 · 94/94**. O detalhe vive em `D-132`, no `meta/DECISIONS.md`.
+
+## v1.116.0 — Fecha a FK-M: «existência não é aptidão» ganha a metade operacional — o relatório declara qual das duas perguntas o instrumento NÃO responde (wo0097, D-131)
+- 2026-08-13 · harness **18/18 · 93/93**. O detalhe vive em `D-131`, no `meta/DECISIONS.md`.
+
+## v1.115.0 — O pacote de update era a camada que nenhuma varredura alcançava: cada projeto nascia com a cadência errada e depois recebia um pacote mandando corrigi-la (wo0096, D-130)
+- 2026-08-13 · harness **18/18 · 93/93**. O detalhe vive em `D-130`, no `meta/DECISIONS.md`.
+
+## v1.114.0 — A refinaria MANDA × RELATA tem um terceiro caso: título que define a UNIDADE do documento muda junto. E a exceção de domínio sai da disciplina e entra no instrumento (wo0095, D-129)
+- 2026-08-13 · harness **18/18 · 93/93**. O detalhe vive em `D-129`, no `meta/DECISIONS.md`.
+
+## v1.113.0 — O kit aplica a própria revogação ao próprio gerado; a sonda ganha o terceiro estado (instrumento); e amostra deixa de passar por cobertura (wo0094, D-128)
+- 2026-08-13 · harness **18/18 · 93/93**. O detalhe vive em `D-128`, no `meta/DECISIONS.md`.
+
+## v1.112.0 — O primeiro merge real do pacote expôs três defeitos nossos: carimbo ambíguo, revogação sem escopo, e um diagnóstico refutado com evidência (wo0093, D-127)
+- 2026-08-13 · harness **18/18 · 92/92**. O detalhe vive em `D-127`, no `meta/DECISIONS.md`.
+
+## v1.111.0 — A skill de fecho escreve o log; medição não é WO mas é arquivo; ler antes de sobrescrever; e a correção obrigatória para de chegar cortada (wo0092, D-126)
+- 2026-08-12 · harness **18/18 · 91/91**. O detalhe vive em `D-126`, no `meta/DECISIONS.md`.
+
+## v1.110.1 — O gerado não pode conter a linha que ele mesmo revoga: a skill `wrap` publicada parava de se contradizer, e o C43 passa a cobrar isso pela lista de revogações (wo0091, D-125)
+- 2026-08-12 · harness **18/18 · 90/90** · correção, não feature. O detalhe vive em `D-125`, no `meta/DECISIONS.md`.
+
+## v1.110.0 — As revogações alcançam o instalado: três decisões entram na lista, e a varredura do update passa a ser pelo fato, começando pelas skills (wo0090, D-124)
+- 2026-08-12 · harness **18/18 · 90/90**. O detalhe vive em `D-124`, no `meta/DECISIONS.md`.
+
+## v1.109.0 — Correspondência entre projetos vira tipo nomeado (carta), com contador compartilhado e regra de descarte; e o instantâneo de dado derivável vira regra de higiene (wo0089, D-123)
+- 2026-08-12 · harness **18/18 · 89/89**. O detalhe vive em `D-123`, no `meta/DECISIONS.md`.
+
+## v1.108.0 — Sonda e exploração entram como PAR (uma produz evidência, a outra hipótese); quem abre fecha; e o gatilho de princípio passa a ser oportunista (wo0088, D-122)
+- 2026-08-12 · harness **18/18 · 88/88**. O detalhe vive em `D-122`, no `meta/DECISIONS.md`.
+
+## v1.107.1 — O KCM é usuário do próprio kit: o instalado deixa de ficar atrás do gerado, e um check passa a vigiar isso (wo0087, D-121)
+- 2026-08-12 · harness **18/18 · 87/87** · correção, não feature. O detalhe vive em `D-121`, no `meta/DECISIONS.md`.
+
+## v1.107.0 — A conferência sai do artefato: três campos por passo, inventário declarado e não truncado, e a frase pedida de volta só cobra o que o dono sabe produzir (wo0086, D-120)
+- 2026-08-12 · harness **18/18 · 86/86**. O detalhe vive em `D-120`, no `meta/DECISIONS.md`.
+
+## v1.106.0 — O fecho de conversa em modo Code registra em vez de listar; o log do dia ganha gatilho de evento; fato relatado carrega a origem (wo0085, D-119)
+- 2026-08-11 · harness **18/18 · 85/85**. O detalhe vive em `D-119`, no `meta/DECISIONS.md`.
+
+## v1.105.0 — Vocabulário decidido pelo autor (turno x conversa); o prompt de update passa a carregar as linhas revogadas e o carimbo de modos; o modelo de WO entra no próprio `git add` (wo0084, D-118)
+- 2026-08-11 · harness **18/18 · 84/84** (entra o `C40`). O detalhe vive em `D-118`, no `meta/DECISIONS.md`.
+
+## v1.104.0 — Quinta skill do pacote narrativo: `ficha-de-choque`, para extração de acervo pré-existente e choque de continuidade (wo0083, D-117)
+- 2026-08-07 · harness **18/18 · 83/83** (entra o `C39`). O detalhe vive em `D-117`, no `meta/DECISIONS.md`.
+
+## v1.103.0 — O protocolo de update é aditivo (o merge só compara o que é novo); registro `REVOCATIONS` publicado no manifesto do pacote + carimbo de modos completo com a regra de reportar e não remover; quatro regras de higiene universais nos 18 CEREBROs; gatilho do bloco de fecho entra na tabela de eventos (wo0082, D-116)
+- 2026-08-07 · harness **18/18 · 82/82** (entra o `C38`). O detalhe vive em `D-116`, no `meta/DECISIONS.md`.
+
+## v1.102.0 — O `.claude/settings.json` gerado é JSON válido; `Write` entra no allow; o kit do Code ganha a ordem do push; `CONTINUIDADE.md` deixa de ser rotulada como snapshot (wo0081, D-115)
+- 2026-08-07 · harness **18/18 · 81/81** (entra o `C37`). O detalhe vive em `D-115`, no `meta/DECISIONS.md`.
 
 ## v1.101.0 — Modelo de análise no pacote, contagem repetida no STATUS e IDEAS por ID (wo0080, D-114)
 - **Base:** `IDEAS-mapsmith.md` («Feedback para o Kit», levas C e D — as duas últimas do lote de quatro).
