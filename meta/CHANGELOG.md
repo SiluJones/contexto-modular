@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.146.0**.
+> Histórico de versões. Versão atual: **v1.147.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.147.0 — As chaves do KCM no navegador: prefixo próprio, migração uma vez, e um botão para esquecer (wo0179, D-184)
+- **Prefixo próprio:** o que o KCM guarda no navegador passa de `kit-…` a `kcm:…` — `kcm:niche`, `kcm:state:<nicho>`, `kcm:custom-presets`, `kcm:custom-current`, `kcm:hub-v1`. Aberto por `file://`, o navegador dá um armazenamento só a todas as páginas locais, e `kit-` era genérico demais para isso.
+- **Migração automática, uma vez, na abertura:** cada chave antiga, pelo nome exato, vira a nova e sai; a nova nunca é sobrescrita. Quem já usava o KCM não perde o nicho, o que marcou, os presets do Custom nem o grupo.
+- **«Esquecer o que o KCM guardou»**, na engrenagem (seção «Neste navegador»): apaga só as chaves do KCM, pela lista exata, e recomeça do zero. Até aqui, um estado por nicho aberto ficava para sempre.
+- **A regra de toda limpeza, escrita no código e cobrada pelo harness:** nunca o `clear()` do armazenamento, nunca laço por índice ou prefixo.
+- **`C123` novo** (123 → 124): roda a migração e o esquecer no armazenamento do JSDOM com chaves de outras páginas em volta; cinco provas negativas (sobrescrever a nova; não apagar a antiga; o prefixo antigo; laço por índice; `clear()`).
+- **Origem:** a carta 02 do Cancioneiro (05/11), a sonda que listou as chaves no Chrome do dono; a `i-N81`. Harness **19/19 · 124/124**.
 
 ## v1.146.0 — A palavra de andamento na `macetes-suno`: a carta 07 do Cancioneiro (wo0176)
 - **A `macetes-suno` copiada do `e13b9d9` deles** (a WO 0045, «docs: i-029 fechada»), byte a byte: a §5 ganha a linha da palavra de andamento — ela acompanha o número («slow tempo» com 70, «uptempo» com 128); ao mudar o BPM, reveja a palavra; «fast» e «slow» que falam do canto ou do arranjo não são andamento — e o cabeçalho da skill registra a data. Carimbo novo: commit `e13b9d9`, sha1 `6d756b8`.

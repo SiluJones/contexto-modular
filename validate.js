@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -2835,6 +2835,42 @@ check("C122 o nicho dev (wo0173, D-182): a rede de cada projeto e o alvo que nao
   assert(/^\.claude\/settings\.local\.json$/m.test(gYes), "com o Code, o .gitignore gerado sem o settings.local.json");
   assert(!/settings\.local\.json/.test(gNo), "sem o Code, o .gitignore nao deveria citar o settings.local.json");
   return "ok (CEREBRO e indice com e sem o Code; so no dev; CONTEXT, SETUP, fecho, 3 gatilhos, LOG, HISTORY, .gitignore)";
+});
+
+/* C123 (wo0179, D-184; i-N81, carta 02 do Cancioneiro) — as chaves do KCM no localStorage. Aberto por file://, o
+   navegador da UM localStorage a todas as paginas locais: o KCM usa prefixo proprio («kcm:»), migra as antigas
+   («kit-») uma vez pelo nome exato sem sobrescrever a nova, esquece so o que e dele, e nunca usa clear() nem laco
+   por prefixo (localStorage.key). O teste roda no localStorage do JSDOM, com chaves de outras paginas em volta. */
+check("C123 as chaves do KCM no navegador (wo0179): prefixo kcm:, migracao das kit- pelo nome exato, esquecer so o que e do KCM", () => {
+  const ls = T.localStorage, src = fs.readFileSync(path, "utf8");
+  [T.LS_NICHE, T.LS_STATE, T.LS_PRESETS, T.LS_PRESET_CURR, T.LS_HUB].forEach(k => assert(/^kcm:/.test(k), "chave do KCM sem o prefixo kcm: — " + k));
+  assert(!/localStorage\.clear\s*\(/.test(src), "o KCM chama localStorage.clear(): apagaria as chaves das outras paginas locais");
+  assert(!/localStorage\.key\s*\(/.test(src), "o KCM percorre o localStorage por indice (laco por prefixo): limpeza tem de ser pela lista exata");
+  assert(/id="kcm-forget"/.test(src), "a configuracao sem o botao de esquecer o que o KCM guardou");
+  const alheias = { "base_v4": "de outra pagina", "kit-outra-coisa": "nao e do KCM" };
+  const todas = () => { const o = {}; for(let i = 0; i < ls.length; i++){ const k = ls.key(i); o[k] = ls.getItem(k); } return o; };
+  const antes = todas();
+  try{
+    Object.keys(antes).forEach(k => ls.removeItem(k));
+    Object.entries(alheias).forEach(([k, v]) => ls.setItem(k, v));
+    ls.setItem("kit-niche", "dev"); ls.setItem("kit-state-dev", "{\"a\":1}"); ls.setItem("kit-custom-presets", "[]");
+    ls.setItem("kit-hub-v1", "{}"); ls.setItem("kit-state-music", "{\"velho\":1}"); ls.setItem(T.LS_STATE + "music", "{\"novo\":1}");
+    const n = T.migrateKcmStorage();
+    assert(n === 5, "a migracao deveria tratar 5 chaves antigas, tratou " + n);
+    assert(ls.getItem(T.LS_NICHE) === "dev" && ls.getItem(T.LS_STATE + "dev") === "{\"a\":1}" && ls.getItem(T.LS_PRESETS) === "[]" && ls.getItem(T.LS_HUB) === "{}", "a migracao nao copiou o valor para a chave nova");
+    assert(ls.getItem(T.LS_STATE + "music") === "{\"novo\":1}", "a migracao sobrescreveu uma chave nova que ja existia");
+    ["kit-niche", "kit-state-dev", "kit-custom-presets", "kit-hub-v1", "kit-state-music"].forEach(k => assert(ls.getItem(k) === null, "a chave antiga ficou depois da migracao: " + k));
+    Object.entries(alheias).forEach(([k, v]) => assert(ls.getItem(k) === v, "a migracao tocou uma chave que nao e do KCM: " + k));
+    assert(T.migrateKcmStorage() === 0, "a migracao nao e idempotente: a segunda rodada achou chave antiga");
+    const f = T.forgetKcmStorage();
+    assert(f === 5 && T.kcmStorageKeys().every(k => ls.getItem(k) === null), "esquecer deixou chave do KCM (" + f + " apagadas)");
+    Object.entries(alheias).forEach(([k, v]) => assert(ls.getItem(k) === v, "esquecer apagou uma chave que nao e do KCM: " + k));
+    assert(ls.length === Object.keys(alheias).length, "sobrou algo alem das chaves alheias: " + ls.length);
+  } finally {
+    Object.keys(todas()).forEach(k => ls.removeItem(k));
+    Object.entries(antes).forEach(([k, v]) => ls.setItem(k, v));
+  }
+  return "ok (5 chaves com kcm:; migracao de 5, sem sobrescrever a nova, idempotente; esquecer 5; as alheias intactas; sem clear() nem key())";
 });
 
 // ============ SUMARIO ============

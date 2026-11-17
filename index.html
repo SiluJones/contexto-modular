@@ -925,6 +925,11 @@
         </select>
         <p class="affix-preview">Se o assistente gerar comandos de terminal (git, instalação), ele usa a sintaxe certa do seu sistema. Entra nas Instruções e no CEREBRO.md.</p>
       </section>
+      <section class="cfg-sec" id="cfg-sec-navegador">
+        <h3>Neste navegador</h3>
+        <p class="affix-preview">O KCM guarda neste navegador o nicho aberto, o que você marcou em cada nicho, os presets do Custom e o grupo de projetos. Nada sai daqui. Esquecer apaga só o que é do KCM e recomeça do zero.</p>
+        <button type="button" class="btn ghost sm" id="kcm-forget">Esquecer o que o KCM guardou</button>
+      </section>
       <section class="cfg-sec" id="cfg-sec-nicho" hidden>
         <h3>Nicho</h3>
         <div id="cfg-nicho-body"></div>
@@ -1308,7 +1313,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.146.0";
+const KIT_VERSION = "1.147.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8326,11 +8331,38 @@ const STATE = {
 };
 
 /* ---------- LocalStorage keys ---------- */
-const LS_NICHE       = "kit-niche";
-const LS_STATE       = "kit-state-";
-const LS_PRESETS     = "kit-custom-presets";
-const LS_PRESET_CURR = "kit-custom-current";
-const LS_HUB         = "kit-hub-v1";
+/* i-N81 (wo0179): aberto por file://, o navegador dá UM localStorage só a todas as páginas locais.
+   O KCM usa prefixo próprio («kcm:») e migra as chaves antigas («kit-») uma vez, pelo nome EXATO.
+   Regra para toda limpeza: nunca o clear() do armazenamento, nunca laço por índice ou prefixo —
+   só a lista do que o KCM escreveu. */
+const LS_NICHE       = "kcm:niche";
+const LS_STATE       = "kcm:state:";
+const LS_PRESETS     = "kcm:custom-presets";
+const LS_PRESET_CURR = "kcm:custom-current";
+const LS_HUB         = "kcm:hub-v1";
+const LS_LEGADO      = { niche:"kit-niche", state:"kit-state-", presets:"kit-custom-presets", current:"kit-custom-current", hub:"kit-hub-v1" };
+function kcmStorageKeys(){
+  return [LS_NICHE, LS_PRESETS, LS_PRESET_CURR, LS_HUB].concat(Object.keys(NICHES).map(id => LS_STATE + id));
+}
+function migrateKcmStorage(){
+  const pares = [[LS_LEGADO.niche, LS_NICHE], [LS_LEGADO.presets, LS_PRESETS], [LS_LEGADO.current, LS_PRESET_CURR], [LS_LEGADO.hub, LS_HUB]]
+    .concat(Object.keys(NICHES).map(id => [LS_LEGADO.state + id, LS_STATE + id]));
+  let n = 0;
+  pares.forEach(([velha, nova]) => {
+    try{
+      const v = localStorage.getItem(velha);
+      if(v === null) return;
+      if(localStorage.getItem(nova) === null) localStorage.setItem(nova, v);  // a nova nunca é sobrescrita
+      localStorage.removeItem(velha); n++;
+    }catch(_){}
+  });
+  return n;
+}
+function forgetKcmStorage(){
+  let n = 0;
+  kcmStorageKeys().forEach(k => { try{ if(localStorage.getItem(k) !== null){ localStorage.removeItem(k); n++; } }catch(_){} });
+  return n;
+}
 
 /* ---------- Language map fix ---------- */
 /* LANGS é [["pt","..."], ["en","..."], ["es","..."], ["other","..."]]
@@ -11913,6 +11945,7 @@ function wireHub(){
    ========================================================= */
 function boot(){
   try {
+    migrateKcmStorage();  // i-N81: as chaves antigas «kit-» passam a «kcm:», uma vez
     renderNicheCards();
     loadHub(); wireHub();
 
@@ -11985,6 +12018,12 @@ function boot(){
     const cfgClose  = $("#cfg-close");
     if(cfgClose && cfgDialog) cfgClose.addEventListener("click", () => cfgDialog.close());
     if(cfgDialog) cfgDialog.addEventListener("click", (e) => { if(e.target === cfgDialog) cfgDialog.close(); });
+    const kcmForget = $("#kcm-forget");
+    if(kcmForget) kcmForget.addEventListener("click", () => {
+      if(!confirm("Esquecer o nicho aberto, o que você marcou em cada nicho, os presets do Custom e o grupo? Só o que é do KCM, e só neste navegador.")) return;
+      forgetKcmStorage();
+      location.reload();
+    });
 
     // Modal de atualização — fechar + duas saídas (baixar zip / copiar prompt) (spec0036)
     const updDialog = $("#upd-dialog");
