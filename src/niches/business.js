@@ -158,7 +158,7 @@ NICHES.business = {
 ---
 
 ## DEC-[N] — [a decisão, em uma linha]
-**Data:** AAAA-MM-DD · **Status:** ativa | revista por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto / pergunta
 [O que forçou esta decisão; qual objetivo (OBJETIVOS.md) ela serve.]

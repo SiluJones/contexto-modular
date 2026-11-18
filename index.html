@@ -979,14 +979,16 @@ const PROMPTS_BASE = [
     when:"Primeira sessão de um projeto que ainda não existe.",
     fill:"about", fillLabel:"Sobre o projeto (o que é, para quem, suas ideias, o que fazer primeiro)",
     body:(p,n)=>{
-      const files = n.contextFiles.map(f=>f.name).join(", ");
+      // wo0183 (i-N85 item 3, i-N91 item 9, D-185): molde nao se preenche; opcional nasce quando o projeto o usa
+      const files = n.contextFiles.filter(f => !/^ref/.test(f.cat || "") && f.cat !== "opcional").map(f=>f.name).join(", ");
+      const moldes = n.contextFiles.filter(f => /^ref/.test(f.cat || "")).map(f=>f.name), opcionais = n.contextFiles.filter(f => f.cat === "opcional").map(f=>f.name);
       const L = [];
       L.push(`Vou iniciar um novo projeto${p.project?` (${p.project})`:""} no domínio "${n.label}". Ajude a desenvolver a ideia e a criar a documentação de contexto para eu transitar entre conversas sem perder nada.`);
       L.push("");
       L.push("SOBRE O PROJETO:");
       L.push(p.about||"[Escreva tudo: o que é, para quem, suas ideias, o que fazer primeiro]");
       L.push("");
-      L.push(`AO FINAL, gere preenchidos (sem os comentários de exemplo, só conteúdo real): ${files}, logs/${today}.md.`);
+      L.push(`AO FINAL, gere preenchidos (sem os comentários de exemplo, só conteúdo real): ${files}, logs/${today}.md.` + (moldes.length ? ` Copie como estão, sem preencher (são moldes): ${moldes.join(", ")}.` : "") + (opcionais.length ? ` Opcionais — crie só os que este projeto já usa agora, e diga quais deixou de fora: ${opcionais.join(", ")}.` : ""));
       if(codeModeOn()){
         L.push("");
         L.push("**Modo Code:** este projeto vai virar um repositório. Organize a saída na árvore certa — `meta/` para os arquivos de contexto, `INSTRUCOES-DO-PROJETO.md` na raiz, `logs/` para os diários — e feche com o `git init` + primeiro commit prontos. (Se eu preferir a árvore pronta em zip, o botão ↓ do KCM já entrega tudo estruturado — me lembre disso.)");
@@ -1179,7 +1181,7 @@ const HYGIENE_RULES = [
   "Referência cruzada, não duplicação: um dado tem UMA fonte de verdade. Quando uma ideia vira trabalho, ela aparece também no STATUS — mas continua no IDEAS, só mudando de status. Não copie o conteúdo para dois lugares. **Mensagem trocada com outro projeto ou frente irmã é nota, não artefato:** vive fora do repositório enquanto serve e vai para o arquivo morto depois — **não crie pasta versionada para ela**. Quando a troca é uma negociação continuada, ela vira **carta** e ganha nome e contador próprios (CEREBRO, «Correspondência entre projetos»); continua fora do repositório. O que precisa sobreviver é o que você extraiu dela para os documentos, não o texto da mensagem; guardar os dois é duplicar, e o texto envelhece enquanto o registro fica.",
   "STATUS é só o agora: item resolvido sai do STATUS e vai para o CHANGELOG (e para o log do dia). Médio/longo prazo vive no ROADMAP, não no STATUS.",
   "IDEAS nunca perde: ideia implementada vai para a seção «Concluídas»; ideia descartada vai para «Descartadas» com o motivo. Assim nunca se reabre discussão já resolvida. **Acréscimo entra sob o título da seção certa, nunca no fim do arquivo:** o fim é a seção de feedback, e o que cai nela se perde do lugar dele (doze entradas de cânone de um projeto acabaram no «Feedback para o Kit»).",
-  "DECISIONS arquiva por EVENTO, não por tamanho: entrada resolvida ou decisão substituída vai para o arquivo morto, e o tamanho (~700 linhas) é só alarme. Para o critério ser mecânico, toda entrada traz `**Status:**` com valor fechado (aceita · substituída por X · resolvida · aberta) — «resolvido» que não está escrito no Status é opinião.",
+  "DECISIONS arquiva por EVENTO, não por tamanho: decisão substituída ou evento fechado vai para o arquivo morto, e **FIX fica enquanto a lição valer** — a lição é o conteúdo dele. O tamanho (~700 linhas) é só alarme. Para o critério ser mecânico, toda entrada traz `**Status:**` com valor fechado — aceita · aceita — emendada por DEC-X · substituída por DEC-X · resolvida · aberta, o mesmo conjunto do molde do DECISIONS —; «resolvido» que não está escrito no Status é opinião. Entrada antiga sem Status não se reescreve: o conjunto vale para as novas.",
   "Artefato gerado que convive com edição humana precisa de três coisas: (i) **enxergar o que existe fora dele** — senão duplica em silêncio o que a pessoa já escreveu; (ii) **precedência definida por posição** — quem vence quando os dois falam do mesmo; (iii) **nunca apagar nem desfazer o que não é seu**. Bloco gerado dentro de arquivo editável: delimite com marcadores, mantenha-o no FIM do arquivo, escreva só dentro deles, e diga na primeira linha que ali dentro é território da ferramenta (o que a pessoa escrever ali será reescrito). Se o gerado não enxerga o manual, ele desfaz gestos sem avisar — e o sintoma aparece longe da causa. **Anatomia do bloco gerado — cinco regras, e são as cinco juntas que compram a liberdade de editar o mesmo arquivo à mão:** (1) comentário fica FORA do bloco — dentro, o gerador reescreve tudo e ele some; (2) regra fica DENTRO — é o território da ferramenta; (3) existe UM bloco, e só um — dois são ambiguidade; (4) o bloco é o ÚLTIMO conteúdo do arquivo, nada depois dele; (5) **os marcadores não se citam em comentário** — o gerador costuma procurá-los por substring, e um exemplo é indistinguível de um segundo bloco. A quinta decorre da terceira, mas precisa ser dita em voz alta: é o erro que se comete justamente ao DOCUMENTAR a convenção, então descreva os marcadores em vez de reproduzi-los. **Duas obrigações do lado da ferramenta:** diante de ambiguidade, **recusar, não adivinhar** — reescrever é a única operação irreversível, e chutar ali destrói conteúdo; e **normalizar só o que é seu** — mover o próprio bloco para o fim é legítimo, mover o texto da pessoa não, e se a normalização mudar o efeito de alguma regra dela, avise antes.",
   "**Abertura de turno, antes de QUALQUER outra ferramenta:** liste o mount, leia o cabeçalho da cópia achatada se houver (data de geração + estado do repo), e confira a versão viva do artefato principal contra a que você acha que sabe. Um passo, quatro fatos, e só então o trabalho. **Sem cópia achatada nem manifesto** o passo continua valendo com o que houver — a listagem sozinha já mostra nota nova —; o que muda é o carimbo do fecho, que declara a base pobre em vez de fingir precisão. Não é cerimônia de início de SESSÃO: é de TURNO, e o turno pesado é justamente o que a dispensa por conta própria.",
   "A releitura do mount não tem gatilho próprio — e é por isso que ela falha. Quatro modos, todos observados em projetos reais: (1) **trabalho pedido expulsa ritual não-pedido** — mensagem cheia de perguntas explícitas empurra a releitura para fora, e é justamente aí que ela mais importa, porque quem pede muito costuma ter subido algo antes de pedir; (2) **previsão vestida de observação** — relatar o estado que o seu próprio turno anterior previa («ele vai aplicar isso depois»), que por dentro é indistinguível de ter verificado; (3) **campo obrigatório preenchido de memória**, quando falta dado fresco; (4) **regra escrita longe do ponto onde ela quebra**. O antídoto é sempre o mesmo: o gatilho mora no gesto, não no apêndice — se você está prestes a afirmar estado, essa é a hora de ler. **E os canais não chegam juntos:** relatório que a execução grava em arquivo nasce no instante da aplicação, enquanto a cópia achatada exige um passo manual de quem a gera. **Compare os dois carimbos de commit — o do manifesto e o do relatório — e o mais recente vence.** O relatório lidera **por padrão**, porque normalmente nasce primeiro; não por natureza: o dono commita entre relatórios (salva um doc que o chat entregou, corrige um arquivo à mão) e aí o manifesto está à frente e é a cópia que está em dia. Uma vez que se compara em vez de supor, a divergência vira diagnóstico: **iguais** = o mount é o estado pós-aplicação; **manifesto à frente** = houve commit sem executor, o manifesto lidera; **manifesto atrás** = o mount foi gerado antes de aplicar, o relatório lidera; **iguais mas com arquivo divergindo do commit** = há trabalho por cima, leia quais; **dois relatórios com o mesmo commit** = um foi reaberto e corrigido, vale o corrigido.",
@@ -1314,7 +1316,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.148.0";
+const KIT_VERSION = "1.149.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1528,7 +1530,7 @@ Cada decisão recebe um ID sequencial (DEC-001, DEC-002…) e segue o formato ab
 ---
 
 ## DEC-[N] — [Título curto da decisão]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -1983,7 +1985,7 @@ NICHES.design = {
 ---
 
 ## DEC-[N] — [A decisão, em uma linha]
-**Data:** AAAA-MM-DD · **Status:** ativa | revista por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que escolha precisou ser feita e por quê agora.]
@@ -2396,7 +2398,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -3019,7 +3021,7 @@ NICHES.narrative = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -3411,7 +3413,7 @@ NICHES.marketing = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -3741,7 +3743,7 @@ Para cada fonte: citekey, dados completos na norma da pesquisa, e — o mais imp
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -4021,7 +4023,7 @@ NICHES.product = {
 ---
 
 ## DEC-[N] — [a decisão, em uma linha]
-**Data:** AAAA-MM-DD · **Status:** ativa | revista por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto / problema
 [Que problema ou oportunidade forçou esta decisão. Qual job/persona/jornada toca.]
@@ -4329,7 +4331,7 @@ NICHES.business = {
 ---
 
 ## DEC-[N] — [a decisão, em uma linha]
-**Data:** AAAA-MM-DD · **Status:** ativa | revista por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto / pergunta
 [O que forçou esta decisão; qual objetivo (OBJETIVOS.md) ela serve.]
@@ -4818,7 +4820,7 @@ Uma entrada por fato. Formato:
 ---
 
 ## DEC-001 — [Título da decisão]
-- **Data:** [AAAA-MM-DD]
+- **Data:** [AAAA-MM-DD] · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 - **Contexto:** [o que estava em jogo.]
 - **Decisão:** [o que foi decidido, em uma frase.]
 - **Premissas:** [em que isto se apoia. Marque a frágil.]
@@ -5188,7 +5190,7 @@ NICHES.game = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -5998,7 +6000,7 @@ NICHES.pixel = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -6343,7 +6345,7 @@ NICHES.brainstorm = {
 ---
 
 ## DEC-[N] — [a decisão, em uma linha]
-**Data:** AAAA-MM-DD · **Status:** ativa | revista por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### O que foi decidido
 [Direto.]
@@ -6656,7 +6658,7 @@ NICHES.music = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -7053,7 +7055,7 @@ NICHES.rpg = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -7360,7 +7362,7 @@ NICHES.cuisine = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -7728,7 +7730,7 @@ NICHES.animation = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -8062,7 +8064,7 @@ QUADRO 2 — [...]
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -8204,7 +8206,7 @@ NICHES.custom = {
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]
@@ -10451,16 +10453,18 @@ function buildWoTemplate(){
     "",
     "**Ancora** *(diga ONDE fica: secao, funcao, item — nunca numero de linha)*:",
     "",
-    "```",
+    "````",
     "[trecho literal e unico do arquivo vivo, copiado sem reformatar]",
-    "```",
+    "````",
     "",
     "**Substituir por:**",
     "",
-    "```",
+    "````",
     "[texto exato que entra]",
-    "```",
+    "````",
     "",
+    "> **Cerca de QUATRO crases** nos blocos de ancora e de texto novo: texto com `## titulo` ou com bloco de tres crases dentro",
+    "> quebra quem delimita pelo cabecalho ou pela cerca de tres; a de quatro so fecha na linha de quatro, e quem aplica delimita por ela.",
     "> Variantes — use a que couber, sempre com a ancora acima: **Inserir IMEDIATAMENTE APOS** ·",
     "> **Inserir IMEDIATAMENTE ANTES** · **Remover o bloco inteiro** · **Criar arquivo novo** (sem ancora;",
     "> diga o que fazer se ele ja existir) · **MOVER**.",
@@ -10687,7 +10691,7 @@ function buildCodeKitFiles(){
     "---",
     "Leia o arquivo de WO indicado em `meta/workorders/` e execute-o.",
     "ANTES de editar: se a WO edita arquivo existente e o cabeçalho dela NÃO traz o campo «Âncoras lidas em» preenchido, RECUSE — não aplique, e diga que falta. Quem escreveu a WO é quem tem o viés; esta conferência é sua justamente por isso.",
-    "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo.",
+    "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo. Delimite a âncora e o texto novo pela cerca de QUATRO crases do molde, nunca por cabeçalho nem pela cerca de três: o texto novo pode trazer `## título` ou um bloco de três crases dentro.",
     "Antes de cada edição, confira a idempotência pelo texto NOVO INTEIRO: se ele já está no arquivo **e a âncora não** — salvo quando a âncora está dentro do texto novo, na forma «trocar» —, PULE e diga no relatório. Frase-chave não basta: na forma «trocar» o texto novo repete a âncora, e um trecho dele já existe antes de aplicar; e na REMOÇÃO o texto novo é um pedaço da âncora, presente antes de aplicar.",
     "Se o banner «Canal dos meta» disser CHAT e o corpo trouxer edição numerada num documento `meta/`, a WO é contraditória: PARE e pergunte. O banner decide quem APLICA; escolher um dos lados em silêncio já deixou o registro de uma WO inteira de fora.",
     "Não toque em nada fora das edições nomeadas. Ao fim, rode `git diff` e confira a forma esperada antes de commitar.",
@@ -11089,11 +11093,14 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
       L.push("");
     });
   }
-  L.push("| Nome no upload | Destino real | Natureza | Papel |");
-  L.push("|---|---|---|---|");
+  // wo0183 (i-N76 item 2, D-185): a resposta esperada por arquivo — ponto de partida do merge, nao a decisao
+  L.push("A coluna **Resposta esperada** e o ponto de partida, nao a decisao: o inventario do merge pode muda-la, dizendo por que.");
+  L.push("");
+  L.push("| Nome no upload | Destino real | Natureza | Resposta esperada | Papel |");
+  L.push("|---|---|---|---|---|");
   files.forEach(f => {
     const role = (f.role || "").replace(/\|/g, "/").replace(/\s+/g, " ").trim().slice(0, 120);
-    L.push(`| \`${f.flat}\` | \`${f.real}\` | ${f.nature} | ${role} |`);
+    L.push(`| \`${f.flat}\` | \`${f.real}\` | ${f.nature} | ${respostaEsperada(f)} | ${role} |`);
   });
   L.push("");
   return L.join("\n");
@@ -11148,6 +11155,14 @@ function buildUpdatePack(niche){
   const manifest = buildUpdateManifest(niche, files, codeOn, skillsOn);
   return { files, manifest, codeOn, skillsOn, affix: UPDATE_AFFIX };
 }
+/* wo0183 (i-N76 item 2, D-185): o que se espera fazer com cada arquivo do pacote. Coerente com o prompt:
+   template generico nunca substitui arquivo vivo refinado. */
+function respostaEsperada(f){
+  if(f.nature === "fusao") return "fundir: o pacote e a base";
+  if(f.nature === "modelo-em-espera") return "guardar ate a pasta nascer";
+  if(/^meta\//.test(f.real) && !/(^|\/)(LOG-)?_?TEMPLATE\.md$|LOG-TEMPLATE\.md$/.test(f.real)) return "fica o vivo; adote so estrutura nova";
+  return "comparar; adotar o novo, sem apagar o que o projeto especializou";
+}
 /* Prompt de atualizacao: DISPARO para a IA-alvo (comparar/propor/fundir), NUNCA lista de diffs (analise §3). */
 // i-N72 (wo0139): o nome que o zip cria e o nome que o prompt cita saem daqui, e de nenhum outro lugar.
 function updatePackFolder(){ return today.slice(2).replace(/-/g, "") + "-kcm-update-v" + KIT_VERSION; }
@@ -11191,6 +11206,7 @@ function buildUpdatePrompt(niche){
   });
   L.push("");
   L.push("Comece pelas duas secoes do manifesto (linhas revogadas e carimbo de modos), e so entao liste o que encontrou em (a), (b) e (c). Eu decido os merges.");
+  if(pack.codeOn) L.push("**Quando eu aprovar, instale as skills do pacote (`.claude/skills/*`) ANTES de aplicar qualquer WO:** a WO de migracao se aplica com a skill que o pacote traz, e a skill velha a aplicaria pelas regras velhas.");
   return L.join("\n");
 }
 async function downloadUpdatePack(){

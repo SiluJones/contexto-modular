@@ -1,10 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.148.0**.
+> Histórico de versões. Versão atual: **v1.149.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.149.0 — O update atrasado e o DECISIONS: um conjunto de Status, a resposta esperada por arquivo, as skills antes da WO, quatro crases e o prompt C sem molde a preencher (wo0183, D-186)
+- **Um conjunto só de Status no DECISIONS** — `aceita · aceita — emendada por DEC-X · substituída por DEC-X · resolvida · aberta` — na regra de higiene do CEREBRO e nos 18 moldes (eram três conjuntos; o `career` não tinha Status). A higiene arquiva a decisão substituída e o evento fechado, e **a FIX fica enquanto a lição valer**; entrada antiga sem Status não se reescreve.
+- **O manifesto do pacote ganha a coluna «Resposta esperada»**, por arquivo: fundir (CEREBRO, Instruções), guardar até a pasta nascer, fica o vivo (os `meta/` do nicho), ou comparar e adotar o novo sem apagar o que o projeto especializou. É o ponto de partida do merge, não a decisão.
+- **Com o Code, o prompt do update manda instalar as skills do pacote antes de aplicar qualquer WO.**
+- **O molde de WO usa cerca de quatro crases** nos blocos de âncora e de texto novo, e a skill `apply-wo` delimita por ela: texto novo com `##` ou com bloco de três crases dentro não quebra mais o aplicador.
+- **O prompt C (projeto do zero) não manda preencher molde:** os moldes (o `LOG-TEMPLATE.md`) se copiam como estão, e os opcionais (o `SPEC.md`, o `PROCESSO.md`) só nascem se o projeto já os usa.
+- **`C125` novo** (125 → 126) e um par novo no `C111`. A base cresce 226 bytes (na leva, 1.166 dos 1.500).
+- **Origem:** a análise `261117` (a frente K2): Mapoteca, satelite-web, FrameMatch e o KCM (`i-N75` item 1); Cancioneiro (`i-N76` itens 2 e 3); PrintImposer (`i-N80` item 8); Observatório e CDC (`i-N85` item 3, `i-N91` item 9). Harness **19/19 · 126/126**.
 
 ## v1.148.0 — O trabalho por encomenda: as portas do Design Visual, o valor aceito à parte do escopo, e cinco linhas da base (wo0182, D-185)
 - **`PROCESSO.md` opcional no Design Visual:** as seis portas (escopo aceito, **valor aceito**, conteúdo congelado, entrada paga, estrutura aprovada, arte aprovada), cada uma fechada por uma mensagem do cliente que se possa citar; as regras de conduta (rodada é lista, erro do material é rodada do cliente, sentido se pergunta com duas opções, desconto corta escopo, o material bruto vence o resumo) e os sinais de descarrilhamento. Escala com o trabalho: uma peça rápida usa as portas 1 a 3.

@@ -190,7 +190,7 @@ NICHES.design = {
 ---
 
 ## DEC-[N] — [A decisão, em uma linha]
-**Data:** AAAA-MM-DD · **Status:** ativa | revista por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que escolha precisou ser feita e por quê agora.]

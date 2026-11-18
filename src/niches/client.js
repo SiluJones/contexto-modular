@@ -181,7 +181,7 @@ Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui
 ---
 
 ## DEC-[N] — [título curto]
-**Data:** AAAA-MM-DD · **Status:** aceita | superada por DEC-X
+**Data:** AAAA-MM-DD · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 
 ### Contexto
 [Que problema ou pergunta forçou esta decisão.]

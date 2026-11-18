@@ -289,7 +289,7 @@ Uma entrada por fato. Formato:
 ---
 
 ## DEC-001 — [Título da decisão]
-- **Data:** [AAAA-MM-DD]
+- **Data:** [AAAA-MM-DD] · **Status:** aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta
 - **Contexto:** [o que estava em jogo.]
 - **Decisão:** [o que foi decidido, em uma frase.]
 - **Premissas:** [em que isto se apoia. Marque a frágil.]

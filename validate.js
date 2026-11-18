@@ -1830,7 +1830,9 @@ check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coe
     ["divisor depois do proximo x esqueleto que abre com ele", /vem antes de um divisor; o resto vem depois dele/,      /```\n---\n\*\*Próximo\*\*/,                   false],
     // wo0146 (i-N74, FK-BE e FK-BF do Mapoteca): a tabela de gatilhos contra o canal do documento e contra o ritual em dois tempos.
     ["gatilho entrega completo x modo Code registra",     /^\| [^|\n]+ \| Entrega [^\n]*complet/m,                     /o assistente REGISTRA o que falta/,             true],
-    ["gatilho le tudo todo turno x ritual em dois tempos", /\*\*Todo turno\*\*, não só ao abrir a conversa/,         /- \*\*Ritual em dois tempos\.\*\*/,          false]
+    ["gatilho le tudo todo turno x ritual em dois tempos", /\*\*Todo turno\*\*, não só ao abrir a conversa/,         /- \*\*Ritual em dois tempos\.\*\*/,          false],
+    // wo0183 (i-N75 item 1, D-185): a FIX fica enquanto a licao valer; o lado velho sai na mesma WO.
+    ["arquivar entrada resolvida x FIX fica enquanto a licao valer", /entrada resolvida ou decisão substituída vai para o arquivo morto/, /FIX fica enquanto a lição valer/, false]
   ];
   const fora=[]; let textos=0;
   Object.keys(T.NICHES).forEach(id => {
@@ -2900,6 +2902,41 @@ check("C124 o trabalho por encomenda (wo0182, D-185): o PROCESSO.md opcional do 
     });
     return "ok (PROCESSO.md opcional com as portas, a folga e a escala; price_gate; a saida; ACORDOS com o valor a parte; 3 linhas da base em " + n + " CEREBROs, 2 so no canal pasta)";
   } finally { Object.assign(S.workmode, antes); }
+});
+
+check("C125 o update atrasado e o DECISIONS (wo0183, D-186): um conjunto de Status nos moldes e na higiene, a resposta esperada por arquivo, as skills antes da WO, a cerca de quatro crases e o prompt C sem molde a preencher", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{});
+  try {
+    const CONJ="aceita | aceita — emendada por DEC-X | substituída por DEC-X | resolvida | aberta";
+    let moldes=0;
+    Object.keys(T.NICHES).forEach(id => {
+      const d=(T.NICHES[id].contextFiles||[]).find(f => f.name === "DECISIONS.md");
+      if(!d) return; moldes++;
+      assert(d.content.indexOf("**Status:** " + CONJ) > -1, id + ": o molde do DECISIONS nao traz o conjunto de Status");
+      assert(!/superada por DEC-X|revista por DEC-X/.test(d.content), id + ": o molde do DECISIONS ainda traz um conjunto velho");
+    });
+    S.workmode={codeMode:"yes", asuMode:"", groupMode:"no", mountMode:""};
+    const dev=T.normNiche(T.NICHES.dev);
+    const md=T.buildClaudeMd(dev);
+    assert(md.indexOf(CONJ.split(" | ").join(" · ")) > -1 && md.indexOf("**FIX fica enquanto a lição valer**") > -1, "a higiene do CEREBRO nao traz o mesmo conjunto, ou o FIX que fica");
+    const pk=T.buildUpdatePack(dev);
+    assert(pk.manifest.indexOf("| Natureza | Resposta esperada | Papel |") > -1, "o manifesto nao tem a coluna Resposta esperada");
+    const linhas=pk.manifest.split("\n").filter(l => /^\| `/.test(l));
+    assert(linhas.length === pk.files.length && linhas.every(l => l.split("|").length === 7), "linha do manifesto sem a resposta esperada");
+    const cer=linhas.find(l => l.indexOf("`meta/CEREBRO.md`") > -1);
+    assert(cer && cer.indexOf("fundir: o pacote e a base") > -1, "o CEREBRO nao aparece como fundir no manifesto");
+    assert(T.buildUpdatePrompt(dev).indexOf("instale as skills do pacote (`.claude/skills/*`) ANTES de aplicar qualquer WO") > -1, "o prompt do update com o Code nao manda instalar as skills antes da WO");
+    const k=T.buildCodeKitFiles();
+    assert(k.woTemplate.indexOf("````\n[trecho literal") > -1 && k.woTemplate.indexOf("````\n[texto exato que entra]\n````") > -1, "o molde de WO nao usa a cerca de quatro crases");
+    assert(k.applyWo.indexOf("cerca de QUATRO crases") > -1, "a skill apply-wo nao delimita pela cerca de quatro crases");
+    S.workmode={codeMode:"", asuMode:"", groupMode:"no", mountMode:""};
+    assert(T.buildUpdatePrompt(dev).indexOf("ANTES de aplicar qualquer WO") === -1, "sem o Code, o prompt do update fala de WO");
+    const C=T.PROMPTS_BASE.find(p => p.id === "C"), body=C.body({}, dev);
+    const pre=(body.match(/gere preenchidos[^:]*: ([^\n]*?)\. Copie/) || [])[1] || "";
+    assert(pre && pre.indexOf("SPEC.md") === -1 && pre.indexOf("LOG-TEMPLATE.md") === -1, "o prompt C manda preencher molde: " + pre.slice(0, 120));
+    assert(/são moldes\): [^\n]*LOG-TEMPLATE\.md/.test(body) && /Opcionais[^\n]*SPEC\.md/.test(body), "o prompt C nao diz o que copiar como esta e o que e opcional");
+    return "ok (" + moldes + " moldes do DECISIONS com o conjunto; a higiene igual; " + linhas.length + " linhas do manifesto com a resposta; as skills antes da WO so com o Code; quatro crases no molde e na skill; o prompt C sem molde a preencher)";
+  } finally { S.workmode=prev; }
 });
 
 // ============ SUMARIO ============
