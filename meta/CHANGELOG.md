@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.150.0**.
+> Histórico de versões. Versão atual: **v1.151.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.151.0 — O GUIA-DO-KIT: o que tem gatilho observável sai do CEREBRO da abertura para um arquivo do kit (wo0185, D-188)
+- **O CEREBRO encolhe um quinto sem perder regra.** Ele é lido inteiro na abertura de toda conversa e tinha triplicado desde julho. Quatro seções que só servem quando um evento acontece — chegou um pacote de update, chegou uma carta, é preciso medir, a conversa roda sem a pasta — mudam para `meta/GUIA-DO-KIT.md`, com o texto igual. O CEREBRO do `design` no canal pasta vai de 102.137 a 82.544 bytes; o do `custom` padrão, de 96.322 a 76.729; a pior configuração, de 115.987 a 97.978.
+- **O que mudou de lugar:** «Ao receber um template-update do KCM» (no CEREBRO fica uma seção-ponteiro com o essencial), «Transferência — canal de reserva» (só no canal pasta; no CEREBRO ficam quatro linhas; no mount ela é o canal e continua inteira), «Sonda e exploração» e «Correspondência entre projetos». A Medição delegada fica no CEREBRO.
+- **O CEREBRO aponta cada seção pelo nome:** os gatilhos da medição e da carta dizem qual seção do GUIA abrir, as duas seções-ponteiro também, e o índice do topo ganha a linha «No `GUIA-DO-KIT.md`». O GUIA tem índice e carimbo de versão próprios. As Instruções não mudam.
+- **Natureza nova no pacote, `do-kit`:** o update troca o GUIA inteiro, sem fusão; a linha própria do projeto vai para «Técnicas específicas», no CEREBRO. O manifesto e o prompt avisam que as quatro seções aparecem no inventário como «do vivo ficou de fora» e não voltam pelo transplante. O GUIA vai também nos downloads (`meta/`).
+- **`C127` novo** (127 → 128): o GUIA nos 19 nichos e quatro modos, os ponteiros, o índice, nenhuma linha repetida entre os dois arquivos, o pacote, o manifesto e o prompt. Treze checks que procuravam frase de seção movida passam a ler o CEREBRO e o GUIA juntos, e o `C114` aceita o GUIA como arquivo universal: muda a fonte, não a asserção.
+- **Origem:** a análise `261118` (o enxugamento do CEREBRO, a WO A de duas), com as vozes do fileview, do got-legends, do cardápio e do Cinzeiro (`i-N92`, `i-N93`, `i-N95`, `i-N98`). A WO B (o «como» da Análise e do Refino, e o teto da base) espera dois eventos de vizinho com o GUIA aberto (`i-N99`). Harness **19/19 · 128/128**.
 
 ## v1.150.0 — O custom composto cabe no teto, e três nichos com dado de campo: o modelo financeiro por tipo de negócio, o que se perde no companion, o currículo na primeira conversa da carreira (wo0184, D-187)
 - **O custom composto cabe no teto das Instruções.** A composição de nichos perdia o papel curto dos arquivos e dos comportamentos e a marca «só no CEREBRO» das convenções, e juntava as saídas pelo rótulo inteiro (o `STATUS.md` vinha uma vez por nicho). Com quatro nichos, as Instruções passavam de 16 mil caracteres (o Cinzeiro, `i-N98`). Agora o curto e a marca atravessam a composição, a saída se junta pelo nome do arquivo, e o custom — só ele — **encolhe por níveis** quando passa do teto: as convenções viram um ponteiro para o CEREBRO; depois os comportamentos do nicho e as saídas ficam só com o nome; por último, os arquivos. O composto do Cinzeiro vai de 16.358 a 6.117 caracteres (6.666 com o Code). Nicho pronto nunca encolhe.

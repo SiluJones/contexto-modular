@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -39,6 +39,9 @@ try { T = loadT(path); }
 catch(e){ console.error("FALHA AO CARREGAR:", e.message); process.exit(2); }
 
 const ids = Object.keys(T.NICHES);
+// wo0185 (D-188): o que o kit gera para o assistente ler sao dois arquivos — o CEREBRO e o GUIA-DO-KIT.
+// Check que procura frase de secao que se mudou para o GUIA le os dois juntos: muda a FONTE, nunca a assercao.
+function CG(n){ return T.buildClaudeMd(n) + "\n" + T.buildGuiaKit(n); }
 
 // ============ GLOBAIS ============
 check("G1 shim/__T populado, 14 chaves, 19 nichos", () => {
@@ -217,8 +220,8 @@ const dev = T.normNiche(T.NICHES.dev);
 const devCmd = T.buildClaudeMd(dev);
 
 check("C1 D-018 mount (upload direto + conector do GitHub) no CEREBRO.md", () => {
-  assert(/upload direto/i.test(devCmd), "sem 'upload direto'");
-  assert(/conector do GitHub/i.test(devCmd), "sem 'conector do GitHub'");
+  assert(/upload direto/i.test(CG(dev)), "sem 'upload direto'");
+  assert(/conector do GitHub/i.test(CG(dev)), "sem 'conector do GitHub'");
   return "ok";
 });
 check("C2 i-N19 'pista, nao fato' (P8 refinado)", () => {
@@ -654,7 +657,7 @@ check("C52 duas coberturas, o esqueleto do relatorio e o gatilho do verde (wo010
   assert(/nao alcanca o arquivo que esconde/.test(man), "falta a razao: a regra trata do que eles escondem, nao deles mesmos");
   // (3) o esqueleto do relatorio de sonda, com os tres detalhes que so aparecem depois de usar
   Object.keys(T.NICHES).forEach(id => {
-    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    const cmd = CG(T.normNiche(T.NICHES[id]));
     assert(/# SONDA — <assunto>/.test(cmd), id+": a secao da sonda descreve as propriedades e nao mostra a FORMA — molde por descricao e o que a D-120 proibe");
     // O assert olha o BLOCO de codigo, nao a secao: a frase tambem aparece no paragrafo de prosa
     // logo abaixo, e sem o recorte o check ficava verde com o esqueleto sem a marca (prova
@@ -742,7 +745,7 @@ check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario 
     const n = T.normNiche(T.NICHES[id]);
     const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
     S.workmode.codeMode = "yes";
-    const cmd = T.buildClaudeMd(n), ins = T.buildInstr(n);
+    const cmd = CG(n), ins = T.buildInstr(n);
     S.workmode.codeMode = prev;
     [["CEREBRO", cmd], ["INSTRUCOES", ins]].forEach(([nome, txt]) => {
       const linha = txt.split("\n").find(l => REVOGADO.test(l));
@@ -787,7 +790,7 @@ check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario 
   });
   // (3) terceiro estado do funil: instrumento, com o gatilho da promocao
   Object.keys(T.NICHES).forEach(id => {
-    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    const cmd = CG(T.normNiche(T.NICHES[id]));
     assert(/\*\*`instrumento`\*\* \(mede sempre\)/.test(cmd), id+": o funil da sonda para em dois artefatos — falta o instrumento, onde o valor se acumula");
     assert(/rodada uma SEGUNDA vez para comparar antes\/depois/.test(cmd), id+": falta o gatilho da promocao de sonda para instrumento");
     assert(/a proibição de veredito \*\*deixa de valer\*\*/.test(cmd), id+": a proibicao de veredito continua generalizada — instrumento que nao reprova ninguem roda");
@@ -799,7 +802,7 @@ check("C49 o retorno do primeiro merge (wo0094): o gerado nao usa o vocabulario 
   // (3b) FK-M do sand-land: existencia nao e aptidao, e o relatorio DECLARA qual das duas
   //       perguntas o instrumento nao responde — do mesmo jeito que ja declara o que nao olhou.
   Object.keys(T.NICHES).forEach(id => {
-    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    const cmd = CG(T.normNiche(T.NICHES[id]));
     assert(/qual das duas perguntas o instrumento não responde/.test(cmd), id+": a propriedade 2 do relatorio so declara o que nao foi olhado — falta declarar qual pergunta o instrumento nao responde, e o verde de «esta la?» passa a ser lido como verde de «presta?»");
     assert(/30 bytes de cabeçalho/.test(cmd), id+": a regra veio sem o argumento de custo — sem ele, «declare a lacuna» perde para a pressa");
   });
@@ -899,7 +902,7 @@ check("C46 as revogacoes alcancam o instalado (wo0090): as tres decisoes que MUD
 
 check("C45 correspondencia entre projetos como tipo nomeado (wo0089): contador compartilhado, transitoriedade, espera com gatilho; e instantaneo de dado derivavel", () => {
   Object.keys(T.NICHES).forEach(id => {
-    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    const cmd = CG(T.normNiche(T.NICHES[id]));
     // (1) o tipo existe e esta separado dos que ja existiam
     assert(/## Correspondência entre projetos/.test(cmd), id+": CEREBRO sem a secao de correspondencia");
     // A partir daqui os asserts do tipo «carta» olham SO a secao dela. Sem recortar, uma frase
@@ -936,7 +939,7 @@ check("C44 sonda e exploracao como par (wo0088): tres propriedades, sem veredito
   const S = T.STATE; S.workmode = S.workmode || {}; const prev = S.workmode.codeMode;
   Object.keys(T.NICHES).forEach(id => {
     const n = T.normNiche(T.NICHES[id]);
-    const cmd = T.buildClaudeMd(n);
+    const cmd = CG(n);
     // (1) o par existe e esta separado: uma produz hipotese, a outra evidencia
     assert(/## Sonda e exploração/.test(cmd), id+": CEREBRO sem a secao da sonda");
     assert(/Produz evidência/.test(cmd) && /Produz hipótese/.test(cmd), id+": sonda e exploracao nao estao separadas pelo que cada uma produz — sem isso viram sinonimos e a exploracao vira sonda mal feita");
@@ -956,7 +959,7 @@ check("C44 sonda e exploracao como par (wo0088): tres propriedades, sem veredito
     assert(/comando que o reproduz/.test(cmd), id+": achado sem forma de reproduzir ainda entra no relatorio");
     // (6) o funil ganhou o degrau que MEDE, antes do que raciocina
     S.workmode.codeMode = "yes";
-    const cmdC = T.buildClaudeMd(n);
+    const cmdC = CG(n);
     S.workmode.codeMode = prev;
     assert(/exploração\/sonda \(medem, não decidem\)/.test(cmdC), id+" (Code): o funil nao traz o degrau que mede antes de raciocinar");
     // (7) gatilhos de evento novos
@@ -1134,7 +1137,7 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
   // com nada. Entra com as duas clausulas desta leva, nao com as antigas: comparar retroativamente
   // transformaria adaptacao legitima em falha, que e o erro que o comentario acima ja evitou uma vez.
   const instCerebro = lerRepo("meta/CEREBRO.md");
-  const gerado = { wrap: kit.wrap, applyWo: kit.applyWo, woTemplate: kit.woTemplate, claudeMd: kit.claudeMd, cerebro: T.buildClaudeMd(T.normNiche(T.NICHES.dev)) };
+  const gerado = { wrap: kit.wrap, applyWo: kit.applyWo, woTemplate: kit.woTemplate, claudeMd: kit.claudeMd, cerebro: CG(T.normNiche(T.NICHES.dev)) };
   const instalado = { wrap: instWrap, applyWo: instApply, woTemplate: instTpl, claudeMd: instClaude, cerebro: instCerebro };
   const CAMINHO = {
     wrap: ".claude/skills/wrap/SKILL.md", applyWo: ".claude/skills/apply-wo/SKILL.md",
@@ -1374,7 +1377,7 @@ check("C38 higiene universal + o update que sabe subtrair (wo0082): quatro regra
     [/essa você pergunta, e não remove sozinho/, "sobra de modo desligado sem a regra: marcador decide a sobra, e so o modo esquecido de LIGAR fica para o dono (D-137, wo0139)"],
   ];
   Object.keys(T.NICHES).forEach(id => {
-    const cmd = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    const cmd = CG(T.normNiche(T.NICHES[id]));
     marcas.forEach(([re, msg]) => assert(re.test(cmd), id+": "+msg));
   });
   // o registro de revogacoes existe, tem forma, e so carrega comportamento apagado
@@ -1657,7 +1660,7 @@ check("C29 fecho da leva sand-land (wo0072): gaveta Adiadas com gatilho, tipos d
   assert(comHistory>=2, "HISTORY deveria existir em pelo menos 2 nichos (achei "+comHistory+")");
   // 3) CEREBRO: pacote de update e transitorio, mas fica ate o merge fechar + cobertura de leitura
   Object.keys(T.NICHES).forEach(id => {
-    const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    const cmd=CG(T.normNiche(T.NICHES[id]));
     assert(/continuar (no mount|na pasta-pai) até o merge fechar/.test(cmd), id+": CEREBRO nao manda manter o pacote no mount ate o merge fechar");
     assert(/declara a cobertura de leitura/.test(cmd), id+": CEREBRO nao exige declarar o que foi lido verbatim");
   });
@@ -1874,9 +1877,9 @@ check("C112 no canal pasta, o CEREBRO nao manda fazer pelo mount o que a pasta f
     [["",""],["yes",""],["","yes"],["yes","yes"]].forEach(([c,a]) => {
       const tag=id+(c?"+Code":"")+(a?"+ASU":"");
       S.workmode={codeMode:c, asuMode:a, groupMode:"no", mountMode:"yes"};
-      const M=T.buildClaudeMd(n);
+      const M=CG(n);
       S.workmode={codeMode:c, asuMode:a, groupMode:"no", mountMode:""};
-      const C=T.buildClaudeMd(n); textos++;
+      const C=CG(n); textos++;
       P.forEach(([velho,novo],i) => {
         if(M.indexOf(velho)>-1) usada[i]++;
         if(C.indexOf(velho)>-1) fora.push(tag+": «"+velho.slice(0,48)+"»");
@@ -1943,7 +1946,7 @@ check("C113 o manifesto do pacote conta e nomeia o que o pacote traz (wo0149, D-
    (lista UNI); caminho com pasta casa pelo nome inteiro ou pelo nome base (mecanicas/INDICE.md = INDICE.md).
    Varre o CEREBRO nos tres modos (padrao, Code, mount) e os prompts base e do nicho. */
 check("C114 todo arquivo que a tabela de gatilhos ou um prompt do nicho cita existe no nicho (wo0160): o ritual e a tabela leem o mesmo documento-ancora", () => {
-  const UNI = new Set(["CEREBRO.md","INSTRUCOES-DO-PROJETO.md","CLAUDE.md","STATUS.md","IDEAS.md","DECISIONS.md","LOG-TEMPLATE.md","logs/AAAA-MM-DD.md","AAMMDD-HANDOFF-BRIEF.md","SKILL.md","HUB.md","README.md"]);
+  const UNI = new Set(["CEREBRO.md","INSTRUCOES-DO-PROJETO.md","CLAUDE.md","STATUS.md","IDEAS.md","DECISIONS.md","LOG-TEMPLATE.md","logs/AAAA-MM-DD.md","AAMMDD-HANDOFF-BRIEF.md","SKILL.md","HUB.md","README.md","GUIA-DO-KIT.md"]);
   const re = /(?<![\w\/.\[\]-])((?:[a-z0-9_\[\]-]+\/)*[A-Z][A-Z0-9_-]*\.md)\b/g;
   const S = T.STATE; S.workmode = S.workmode || {};
   const prevC = S.workmode.codeMode, prevM = S.workmode.mountMode;
@@ -2221,7 +2224,7 @@ check("C25 protocolo de update e gatilho da releitura (wo0068): estado do repo, 
   assert(/Sob demanda/i.test(specFile.role||""),"o manifesto do SPEC.md nao diz que e sob demanda");
   Object.keys(T.NICHES).forEach(id => {
     const n=T.normNiche(T.NICHES[id]);
-    const instr=T.buildInstr(n), cmd=T.buildClaudeMd(n);
+    const instr=T.buildInstr(n), cmd=CG(n);
     assert(/Mensagem cheia de pedidos é onde essa releitura mais falha/.test(instr), id+": Instrucoes sem o gatilho da causa 1 (trabalho pedido expulsa ritual)");
     assert(/nunca de memória/.test(instr), id+": Instrucoes perderam a regra de nao responder de memoria");
     assert(/previsão vestida de observação/.test(cmd), id+": CEREBRO sem os modos de falha da releitura");
@@ -2508,7 +2511,7 @@ check("C101 a exploracao tem gatilho (wo0112): o kit gera a skill sondar com as 
   assert(/observacoes descartadas/i.test(s), "skill sondar sem observacoes descartadas");
   assert(/-explore-/.test(s), "skill sondar nao grava o relatorio com o ato explore do vocabulario fechado");
   assert(/NAO abra ordem de trabalho/.test(s), "skill sondar nao respeita a raia: candidato vai para IDEAS pela raia de planejamento");
-  const cmd = T.buildClaudeMd(T.normNiche(T.NICHES.dev));
+  const cmd = CG(T.normNiche(T.NICHES.dev));
   assert(/`\/sondar`/.test(cmd), "o CEREBRO nao cita o comando /sondar: a skill nasceria sem gatilho");
   assert(/carimbo vem PRIMEIRO e o tipo depois/.test(cmd), "o CEREBRO nao traz a errata do nome (unica x serie)");
   // wo0113: o funil cobre os QUATRO estados quanto a commit, nao so os dois que nao tem.
@@ -2751,7 +2754,7 @@ check("C120 a fusao parte do pacote (wo0169, D-180): o prompt, o manifesto e o C
   assert(!/e propor merge, o usuario decide/.test(m), "manifesto ainda manda propor merge a partir do vivo");
   const sem = [];
   Object.keys(T.NICHES).forEach(id => {
-    const c = T.buildClaudeMd(T.normNiche(T.NICHES[id]));
+    const c = CG(T.normNiche(T.NICHES[id]));
     ["a fusão parte do pacote", "transplanta para ele", "toda linha do pacote que falta no resultado", "fora o CEREBRO, que é `fusao`"].forEach(k => { if(c.indexOf(k) === -1) sem.push(id + " sem «" + k + "»"); });
     if(c.indexOf("propõe o merge, o usuário decide") !== -1) sem.push(id + " com a forma antiga");
   });
@@ -2782,7 +2785,7 @@ check("C121 o protocolo do kit (wo0172, D-181): o settings libera o que as skill
   assert(!/rode `git (log|status)/.test(s), "o prompt do update ainda manda rodar git sem a variavel");
   // (3) a sobra de modo so sem artefato; as tres coisas do update atrasado
   const m = T.buildUpdatePack(dev).manifest;
-  const c = T.buildClaudeMd(dev);
+  const c = CG(dev);
   assert(/salvo se o projeto ainda usa o modo/.test(s) && /salvo se o projeto ainda usa o modo/.test(m) && /salvo se o projeto ainda usa o modo/.test(c), "a sobra de modo sem a ressalva do modo ainda em uso (prompt, manifesto ou CEREBRO)");
   ["o STATUS diz a verdade?", "nao fecha o update", "sobras fora do repositorio"].forEach(f => assert(s.indexOf(f) !== -1, "prompt sem: " + f));
   T.STATE.workmode.codeMode = "no";
@@ -2974,6 +2977,71 @@ check("C126 o custom composto cabe no teto, e os nichos com dado de campo (wo018
     assert(T.NICHES.career.triggersExtra.some(t => /^Primeira conversa/.test(t[0]) && /currículo atual/.test(t[1])), "a carreira nao pede o curriculo na primeira conversa");
     return "ok (" + n + " composicoes dos 6 nichos mais pesados: padrao ate " + maxP + "/" + T.INSTR_TETO + ", com o Code ate " + maxC + "/" + T.INSTR_TETO_MODOS + "; nicho pronto sem compactacao; business, companion e career)";
   } finally { S.workmode=prev; T.OSENV.value=osAntes; }
+});
+
+// wo0185 (D-188, analise 261118): o GUIA-DO-KIT. O CEREBRO e lido inteiro na abertura de toda conversa e
+// tinha triplicado (33 KB em julho, 102 KB no design). O que tem gatilho observavel — chegou pacote, chegou
+// carta, precisa de um numero, a conversa roda sem a pasta — mudou para um arquivo do kit, lido quando o
+// gatilho pede. O texto mudou de lugar, nao de forma. O risco medido fora (a Vercel: 56% das skills nao
+// chamadas) e o GUIA nao ser aberto: por isso o CEREBRO aponta cada secao pelo nome, na tabela de gatilhos,
+// nas secoes-ponteiro e no indice, e este check cobra os tres.
+check("C127 o GUIA-DO-KIT (wo0185, D-188): o que tem gatilho observavel sai do CEREBRO para um arquivo do kit, o CEREBRO aponta cada secao, o pacote o troca inteiro e nada volta pelo transplante", () => {
+  const S = T.STATE; const prev = Object.assign({}, S.workmode || {});
+  const MUDOU = ["## Sonda e exploração", "## Correspondência entre projetos"];
+  const RESERVA = "## Transferência entre conversas — canal de reserva";
+  const ruim = []; let medidos = 0; let dPasta = 0;
+  try {
+    Object.keys(T.NICHES).forEach(id => {
+      const n = T.normNiche(T.NICHES[id]);
+      [["", ""], ["yes", ""], ["", "yes"], ["yes", "yes"]].forEach(([c, m]) => {
+        S.workmode = { codeMode: c, mountMode: m, groupMode: "no", asuMode: "" };
+        const tag = id + (c ? "+Code" : "") + (m ? "+mount" : "");
+        const C = T.buildClaudeMd(n), G = T.buildGuiaKit(n); medidos++;
+        if(id === "design" && !c && !m) dPasta = C.length;
+        MUDOU.forEach(h => {
+          if(C.indexOf("\n" + h) > -1) ruim.push(tag + ": «" + h.slice(3) + "» ainda no CEREBRO");
+          if(G.indexOf("\n" + h) < 0) ruim.push(tag + ": «" + h.slice(3) + "» fora do GUIA");
+        });
+        const iU = C.indexOf("## Ao receber um template-update do KCM"), fU = C.indexOf("\n## ", iU + 5);
+        const secU = iU < 0 ? "" : C.slice(iU, fU < 0 ? undefined : fU);
+        if(!secU || secU.length > 1400) ruim.push(tag + ": a secao do update no CEREBRO nao e ponteiro (" + secU.length + " caracteres)");
+        if(secU.indexOf("`GUIA-DO-KIT.md`") < 0) ruim.push(tag + ": o ponteiro do update nao nomeia o GUIA");
+        if(G.indexOf("O merge sabe somar, não sabe subtrair") < 0) ruim.push(tag + ": o corpo do update nao esta no GUIA");
+        if(m){
+          if(C.indexOf("Manifesto de achatamento") < 0) ruim.push(tag + ": no mount a transferencia saiu do CEREBRO (la ela e o canal, nao a reserva)");
+          if(G.indexOf("Manifesto de achatamento") > -1) ruim.push(tag + ": no mount a transferencia esta duplicada no GUIA");
+        } else {
+          const iR = C.indexOf(RESERVA), fR = C.indexOf("\n## ", iR + 5);
+          const secR = iR < 0 ? "" : C.slice(iR, fR < 0 ? undefined : fR);
+          if(!secR) ruim.push(tag + ": o CEREBRO do canal pasta perdeu o ponteiro da reserva");
+          if(secR.indexOf("`GUIA-DO-KIT.md`") < 0 || secR.indexOf("Manifesto de achatamento") > -1) ruim.push(tag + ": a reserva no CEREBRO nao e ponteiro para o GUIA");
+          if(G.indexOf(RESERVA) < 0 || G.indexOf("Manifesto de achatamento") < 0) ruim.push(tag + ": o corpo da reserva nao esta no GUIA");
+        }
+        if(!/leia «Correspondência entre projetos» no `GUIA-DO-KIT\.md`/.test(C)) ruim.push(tag + ": o gatilho da carta nao aponta o GUIA");
+        if(!/esta em «Sonda e exploração», no `GUIA-DO-KIT\.md`/.test(C)) ruim.push(tag + ": o gatilho da medicao nao aponta o GUIA");
+        const lg = C.split("\n").find(l => l.indexOf("> **No `GUIA-DO-KIT.md`**") === 0) || "";
+        let fence = false; const hg = [];
+        G.split("\n").forEach(l => { if(/^```/.test(l)) fence = !fence; else if(!fence && /^## /.test(l)) hg.push(l.slice(3).trim()); });
+        if(!lg) ruim.push(tag + ": o indice do CEREBRO nao lista o GUIA");
+        hg.forEach(h => { if(lg.indexOf("«" + h + "»") < 0) ruim.push(tag + ": o indice do CEREBRO nao lista «" + h.slice(0, 30) + "» do GUIA"); });
+        if(G.indexOf("> **Seções deste guia**") < 0) ruim.push(tag + ": o GUIA sem o proprio indice");
+        G.split("\n").filter(l => l.length > 200).forEach(l => { if(C.indexOf(l) > -1) ruim.push(tag + ": linha do GUIA repetida no CEREBRO — «" + l.slice(0, 50) + "»"); });
+        if(G.indexOf("Gerado pelo Kit de Contexto Universal v" + T.KIT_VERSION) < 0) ruim.push(tag + ": o GUIA sem o carimbo de versao");
+      });
+    });
+    S.workmode = { codeMode: "yes" };
+    const des = T.normNiche(T.NICHES.design);
+    const pack = T.buildUpdatePack(des), s = T.buildUpdatePrompt(des);
+    const g = pack.files.find(f => f.real === "meta/GUIA-DO-KIT.md");
+    if(!g || g.nature !== "do-kit") ruim.push("o pacote nao traz o GUIA como do-kit");
+    if(pack.manifest.indexOf("substituir inteiro: e do kit, nao se funde") < 0) ruim.push("o manifesto sem a resposta esperada do GUIA");
+    if(pack.manifest.indexOf("NAO as transplante de volta para o CEREBRO") < 0) ruim.push("o manifesto nao proibe o transplante de volta");
+    if(s.indexOf("nao as transplante de volta") < 0 || s.indexOf("vai para «Tecnicas especificas deste projeto»") < 0) ruim.push("o prompt do update nao proibe o transplante de volta nem leva a linha propria a Tecnicas especificas");
+    if(!T.generatedContextFiles(des).some(f => f.name === "GUIA-DO-KIT.md" && f.meta === true && (f.content || "").length)) ruim.push("os downloads nao trazem o GUIA em meta/");
+  } finally { S.workmode = prev; }
+  assert(ruim.length === 0, ruim.slice(0, 6).join(" | ") + (ruim.length > 6 ? " (+" + (ruim.length - 6) + ")" : ""));
+  assert(dPasta > 0 && dPasta < 85000, "o CEREBRO do design no canal pasta nao encolheu como a analise mediu (" + dPasta + " caracteres)");
+  return "ok (" + medidos + " pares CEREBRO + GUIA em 19 nichos x 4 modos; o CEREBRO do design no canal pasta com " + dPasta + " caracteres; pacote do-kit, manifesto e prompt sem transplante de volta)";
 });
 
 // ============ SUMARIO ============
