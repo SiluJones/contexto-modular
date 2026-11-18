@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.149.0**.
+> Histórico de versões. Versão atual: **v1.150.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.150.0 — O custom composto cabe no teto, e três nichos com dado de campo: o modelo financeiro por tipo de negócio, o que se perde no companion, o currículo na primeira conversa da carreira (wo0184, D-187)
+- **O custom composto cabe no teto das Instruções.** A composição de nichos perdia o papel curto dos arquivos e dos comportamentos e a marca «só no CEREBRO» das convenções, e juntava as saídas pelo rótulo inteiro (o `STATUS.md` vinha uma vez por nicho). Com quatro nichos, as Instruções passavam de 16 mil caracteres (o Cinzeiro, `i-N98`). Agora o curto e a marca atravessam a composição, a saída se junta pelo nome do arquivo, e o custom — só ele — **encolhe por níveis** quando passa do teto: as convenções viram um ponteiro para o CEREBRO; depois os comportamentos do nicho e as saídas ficam só com o nome; por último, os arquivos. O composto do Cinzeiro vai de 16.358 a 6.117 caracteres (6.666 com o Code). Nicho pronto nunca encolhe.
+- **Negócios:** o `MODELO-FINANCEIRO.md` traz um bloco por tipo de negócio — startup (unit economics), varejo (margem por categoria, ticket, preço mínimo por divisor; PME, giro e ciclo financeiro quando houver CMV) e fornecedor do governo (preço vencedor ÷ custo de reposição, a fatia de itens exclusivos de ME/EPP); o prompt H usa o bloco certo. O «Tipo de negócio» ganha varejo físico e B2G; as lentes, ciclo financeiro e curva ABC × PQR; o Escopo, a opção «Vários»; e a convenção do valor legal com data de vigência e fonte.
+- **Companion:** o `ARMADILHAS.md` ganha «O que se perde se não for feito agora» (conteúdo com janela de estação, clima ou evento), e a rota abre por ele.
+- **Carreira:** na primeira conversa, o assistente pede o currículo atual antes de perguntar a trajetória (gatilho e o `CONTEXT.md`).
+- **`C126` novo** (126 → 127): as 57 composições de 2 a 6 dos seis nichos de Instruções mais pesadas, sem e com o Code, cabem no teto; a compactação não alcança nicho pronto. A base do CEREBRO não muda (a leva fecha em 1.166 dos 1.500 bytes).
+- **Origem:** a análise `261117` (a frente K4) e a `i-N98` (o Cinzeiro, incluída pelo dono): o Negócios e Licitações (`i-N88` itens 3 a 6 e 9), o coral-island (`i-N84` item 3), a Carreira (`i-N82` item 4). Harness **19/19 · 127/127**.
 
 ## v1.149.0 — O update atrasado e o DECISIONS: um conjunto de Status, a resposta esperada por arquivo, as skills antes da WO, quatro crases e o prompt C sem molde a preencher (wo0183, D-186)
 - **Um conjunto só de Status no DECISIONS** — `aceita · aceita — emendada por DEC-X · substituída por DEC-X · resolvida · aberta` — na regra de higiene do CEREBRO e nos 18 moldes (eram três conjuntos; o `career` não tinha Status). A higiene arquiva a decisão substituída e o evento fechado, e **a FIX fica enquanto a lição valer**; entrada antiga sem Status não se reescreve.

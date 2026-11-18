@@ -2,7 +2,7 @@
 
 > **Status:** Decidida (2026-11-17, KCM 28: as três como recomendado — três WOs, K1, K2 e K4; o processo comercial no `design` e no `client`; o enxugamento do CEREBRO numa análise própria depois da WO C, com a leva crescendo a base no máximo 1,5 KB)
 > **Data:** 261117 · **Base:** v1.147.0, HEAD `9f5bd20` (wo0181), árvore limpa (só `?? .claude/launch.json`)
-> **Vira:** três WOs de código — a WO A na wo0182 (v1.148.0), a WO B na wo0183 (v1.149.0; a E11 era metade do que dizia: o `SPEC.md` já se declarava modelo, faltava o prompt C, que mandava preencher também o `LOG-TEMPLATE.md`), a WO C a seguir —; o enxugamento do CEREBRO numa análise própria depois da WO C · **Decisão:** `D-185`
+> **Vira:** três WOs de código — a WO A na wo0182 (v1.148.0), a WO B na wo0183 (v1.149.0; a E11 era metade do que dizia: o `SPEC.md` já se declarava modelo, faltava o prompt C, que mandava preencher também o `LOG-TEMPLATE.md`), a WO C na wo0184 (v1.150.0), com o teto do custom composto incluído pelo dono — a `i-N98`, o Cinzeiro —; o enxugamento do CEREBRO numa análise própria depois da WO C · **Decisão:** `D-185`
 
 ## Problema
 

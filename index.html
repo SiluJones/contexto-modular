@@ -1316,7 +1316,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.149.0";
+const KIT_VERSION = "1.150.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -4184,7 +4184,7 @@ NICHES.business = {
   topbar:[
     { id:"company", label:"Empresa/Projeto", placeholder:"ex: padaria-do-bairro" },
     { id:"escopoSel", label:"Escopo", type:"select",
-      options:["Estratégia","Finanças","Operações","Crescimento","Modelo de negócio","Decisão pontual"] },
+      options:["Estratégia","Finanças","Operações","Crescimento","Modelo de negócio","Decisão pontual","Vários — liste no CONTEXT.md"] },
     { id:"langSel", label:"Idioma do output", type:"select", opts:LANGS, default:"pt" },
   ],
   behaviors:[
@@ -4200,11 +4200,11 @@ NICHES.business = {
     hint:"Define setor, tipo de saída e as lentes úteis. Entra nas instruções.",
     items:[
       { kind:"radios", label:"Tipo de negócio", name:"sector", opts:[
-        ["startup","Startup"], ["smb","Pequeno/médio negócio"], ["solo","Autônomo/solo"], ["enterprise","Empresa estabelecida"], ["nonprofit","Sem fins lucrativos"], ["ecommerce","E-commerce/varejo"] ] },
+        ["startup","Startup"], ["smb","Pequeno/médio negócio"], ["solo","Autônomo/solo"], ["enterprise","Empresa estabelecida"], ["nonprofit","Sem fins lucrativos"], ["ecommerce","E-commerce"], ["retail","Varejo físico"], ["b2g","Fornecedor do governo (B2G)"] ] },
       { kind:"radios", label:"Tipo de saída", name:"outtype", opts:[
         ["analysis","Análise/diagnóstico"], ["plan","Plano de ação"], ["model","Modelo financeiro"], ["decision","Apoio a decisão"], ["pitch","Material para terceiros"] ] },
       { kind:"chips", label:"Lentes que valem usar", name:"lenses", opts:[
-        ["swot","SWOT"], ["okr","OKRs"], ["canvas","Business Model Canvas"], ["lean","Lean Canvas"], ["porter","5 Forças de Porter"], ["pestle","PESTLE"], ["unit","Unit economics"], ["jtbd","JTBD"], ["bcg","Matriz BCG"], ["ansoff","Ansoff"] ] },
+        ["swot","SWOT"], ["okr","OKRs"], ["canvas","Business Model Canvas"], ["lean","Lean Canvas"], ["porter","5 Forças de Porter"], ["pestle","PESTLE"], ["unit","Unit economics"], ["jtbd","JTBD"], ["bcg","Matriz BCG"], ["ansoff","Ansoff"], ["ciclo","Ciclo financeiro / capital de giro"], ["abc","Curva ABC × PQR"] ] },
     ]
   },
   conventionsSoCerebro:[
@@ -4219,7 +4219,8 @@ NICHES.business = {
     "Toda recomendação carrega o melhor contra-argumento e o «o que precisaria ser verdade para estar errada».",
     "Framework é lente, não receita: entender o problema vem antes; combinar frameworks só se cada um agregar.",
     "Decisão é avaliada por risco E custo de oportunidade; métricas financeiras são interdependentes.",
-    "A estratégia (OBJETIVOS) é o filtro: o que não serve à meta é sinalizado como distração."
+    "A estratégia (OBJETIVOS) é o filtro: o que não serve à meta é sinalizado como distração.",
+    "Valor legal (alíquota, limite, faixa de enquadramento) vem com a data de vigência e a fonte: a regra muda todo 1º de janeiro."
   ],
   triggersExtra:[
     ["Decisão de negócio tomada", "Entrega DECISIONS.md completo (decisão, premissas, alternativas, contra-argumento, risco)."],
@@ -4386,7 +4387,7 @@ NICHES.business = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.", short:"OPCIONAL — unit economics e projeções.",
+    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — os números que dizem se o modelo se sustenta, pelo tipo de negócio: unit economics (startup), margem e giro (varejo), preço vencedor ÷ custo (B2G). Use quando há decisão financeira.", short:"OPCIONAL — números por tipo de negócio.",
       content:`# MODELO-FINANCEIRO.md — Unit Economics e Projeções
 
 > **Opcional**, mas valioso quando há decisão financeira. Reúne os poucos números que dizem se o modelo se sustenta.
@@ -4398,7 +4399,10 @@ NICHES.business = {
 > Tudo que sustenta os números abaixo. Se mudar aqui, muda tudo.
 - [Premissa — valor — validada/estimada — fonte.]
 
-## Unit economics (por cliente/unidade)
+## As métricas do seu tipo de negócio
+> **Use o bloco do seu tipo e apague os outros.** Cada tipo decide por números diferentes: o de startup não serve ao varejo, e o do varejo não basta para quem vende ao governo.
+
+### Startup ou assinatura — unit economics (por cliente)
 | Métrica | Valor | Como foi calculado / fonte |
 |---|---|---|
 | Preço médio (ticket) | [...] | [...] |
@@ -4411,6 +4415,27 @@ NICHES.business = {
 | Churn / retenção | [...] | [...] |
 
 > Lembrete: as métricas são interdependentes. LTV:CAC bom não salva se o payback é longo demais ou a retenção é ruim.
+
+### Varejo (físico ou e-commerce)
+| Métrica | Valor | Como foi calculado / fonte |
+|---|---|---|
+| Margem bruta por categoria | [...] | [(preço − custo de reposição) ÷ preço, por categoria] |
+| Ticket médio | [...] | [faturamento ÷ número de vendas] |
+| Preço mínimo por divisor | [...] | [custo ÷ (1 − impostos − despesas − margem desejada)] |
+| Prazo médio de estoque (PME) | [...] dias | [estoque médio ÷ CMV × dias do período] — **quando houver CMV** |
+| Giro de estoque | [...] | [CMV ÷ estoque médio] — **quando houver CMV** |
+| Ciclo financeiro | [...] dias | [PME + PMR − PMP] — **quando houver CMV** |
+
+> Sem o CMV mensal, PME, giro e ciclo financeiro ficam como sensibilidade, não como número.
+
+### Fornecedor do governo (B2G, licitação)
+| Métrica | Valor | Como foi calculado / fonte |
+|---|---|---|
+| Preço vencedor ÷ custo de reposição, por grupo | [...] | [preço homologado nas atas ÷ custo do item hoje] |
+| Fatia de itens exclusivos de ME/EPP, por tipo de órgão | [...] | [itens exclusivos ÷ itens do edital] |
+| Margem por categoria e preço mínimo por divisor | [...] | [como no varejo] |
+
+> Valor legal (alíquota, limite, faixa de enquadramento) vem com a data de vigência e a fonte.
 
 ## Visão de caixa
 - **Receita (período):** [valor / projeção — base/otimista/pessimista.]
@@ -4507,7 +4532,7 @@ NICHES.business = {
     },
     { id:"H", title:"Modelar números / unit economics", when:"Preciso calcular se a conta fecha (margem, CAC/LTV, runway).",
       fill:"numbers", fillLabel:"Os números que você tem + o que quer descobrir",
-      body:(p,n)=>`Modelagem de números.\n\nDADOS E PERGUNTA:\n${p.numbers||"[Os números que tenho — preço, custos, clientes, gastos — + o que quero descobrir: margem? a conta fecha? quanto de runway?]"}\n\nModele com clareza (não sofisticação):\n- DECLARE as premissas primeiro; marque cada uma como validada ou estimada\n- Mostre a CONTA de cada métrica (não só o resultado): margem de contribuição, CAC, LTV, LTV:CAC, payback, runway — o que for aplicável\n- Lembre da interdependência: LTV:CAC bom não salva payback longo ou churn alto\n- Faça 3 cenários (base/otimista/pessimista) — o pessimista é o que importa para sobreviver\n- Conte a HISTÓRIA por trás dos números em 3-4 frases\n\nNão invente cifra que falta — peça ou estime com faixa rotulada. Entregue MODELO-FINANCEIRO.md completo.`
+      body:(p,n)=>`Modelagem de números.\n\nDADOS E PERGUNTA:\n${p.numbers||"[Os números que tenho — preço, custos, clientes, gastos — + o que quero descobrir: margem? a conta fecha? quanto de runway?]"}\n\nModele com clareza (não sofisticação):\n- DECLARE as premissas primeiro; marque cada uma como validada ou estimada\n- Use as métricas do tipo de negócio (o bloco certo do MODELO-FINANCEIRO): startup — margem de contribuição, CAC, LTV, LTV:CAC, payback, runway; varejo — margem por categoria, ticket, preço mínimo por divisor, e PME, giro e ciclo financeiro quando houver CMV; B2G — preço vencedor ÷ custo de reposição por grupo e a fatia de itens exclusivos de ME/EPP\n- Mostre a CONTA de cada uma (não só o resultado)\n- Lembre da interdependência: LTV:CAC bom não salva payback longo ou churn alto\n- Faça 3 cenários (base/otimista/pessimista) — o pessimista é o que importa para sobreviver\n- Conte a HISTÓRIA por trás dos números em 3-4 frases\n\nNão invente cifra que falta — peça ou estime com faixa rotulada. Entregue MODELO-FINANCEIRO.md completo.`
     },
     { id:"I", title:"Avaliar uma decisão (com contraponto)", when:"Tenho uma decisão a tomar e quero pensá-la sem me enganar.",
       fill:"decision", fillLabel:"A decisão em jogo + as opções + o que está em jogo",
@@ -4597,6 +4622,7 @@ NICHES.career = {
     ["meta/ de outro projeto entregue", "Rodada de mineração → EVIDENCIAS.md + DOSSIE.md atualizados."],
     ["Candidatura enviada ou respondida", "Atualiza o pipeline em MERCADO.md (estágio, resultado, aprendizado)."],
     ["Currículo/pitch pedido", "Checa o lastro antes de escrever; entrega o artefato + registra a versão em MERCADO.md."],
+    ["Primeira conversa do projeto", "Pede o currículo atual (e o LinkedIn, se houver) ANTES de perguntar a trajetória: ele responde de uma vez o que as perguntas levam várias conversas para juntar. O que ele afirma entra em EVIDENCIAS.md como «a provar»."],
   ],
   contextFiles:[
     { name:"CONTEXT.md", cat:"essencial", role:"Quem sou: formação, histórico, restrições reais, o que busco. O pano de fundo. Estável.", short:"Quem sou, restrições reais, o que busco.",
@@ -4604,6 +4630,7 @@ NICHES.career = {
 
 > Arquivo **estável**. O assistente lê primeiro para saber com quem está falando.
 > Muda pouco: só em mudança real de emprego, formação ou objetivo.
+> **Primeira conversa:** comece pelo currículo atual (cole ou anexe) — ele preenche este arquivo de uma vez.
 
 ---
 
@@ -5516,6 +5543,14 @@ NICHES.companion = {
 - **Custo se cair:** [tempo perdido, recurso gasto, porta fechada]
 - **Como não cair:** [o gesto concreto]
 
+## ⏳ O que se perde se não for feito agora
+> Conteúdo com janela: o que só existe numa estação, num clima, num evento, ou some quando a história avança. Nenhum guia de passo a passo avisa, porque o custo aparece meses depois — a coleção que fecha o ano incompleta.
+
+### [O que se perde]
+- **Janela:** [estação / clima / evento / até tal ponto da história]
+- **Se perder:** [espera um ciclo inteiro / some para sempre]
+- **Como não perder:** [o gesto, e a rota em que ele entra]
+
 ## 📰 Armadilhas da fonte
 > A informação que você vai encontrar por aí está errada, velha ou fora de contexto.
 
@@ -5592,6 +5627,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 
 ## Antes de começar
 - [Pré-requisito real — item, nível, acesso.]
+- [O que se perde se não for feito NESTA rota (estação, clima, evento) → \`ARMADILHAS.md\`, «O que se perde». A rota abre por aqui.]
 - [Armadilha que mora logo no começo → \`ARMADILHAS.md\`.]
 
 ## A sequência
@@ -8447,6 +8483,7 @@ function mergeCustom(base, preset){
     },
     behaviors:    preset.behaviors    || [],
     conventions:  preset.conventions  || [],
+    conventionsSoCerebro: preset.conventionsSoCerebro || [],
     contextFiles: preset.contextFiles || [],
     outputs:      preset.outputs && preset.outputs.length ? preset.outputs : base.outputs,
     promptsExtra: preset.promptsExtra || [],
@@ -9209,7 +9246,19 @@ function generatedContextFiles(niche){
     { name: "INSTRUCOES-DO-PROJETO.md", role: "Instrucoes lidas em toda mensagem.", content: buildInstr(niche), meta: false }
   ];
 }
+/* wo0184 (i-N98 item 1, D-187): o custom composto (varios nichos) encolhe por niveis ate caber no teto —
+   1: as convencoes viram um ponteiro para o CEREBRO; 2: os comportamentos do nicho, so o nome; 3: os arquivos, so o nome.
+   Nicho pronto nunca encolhe: o teto dele e cobrado pelo C28. O teto do composto e o do padrao, ou o dos modos se algum estiver ligado. */
 function buildInstr(niche){
+  if(!niche) return "";
+  let txt = buildInstrNivel(niche, 0);
+  if(niche.isBuilder){
+    const teto = (codeModeOn() || asuModeOn() || groupModeOn()) ? INSTR_TETO_MODOS : INSTR_TETO;
+    for(let nv = 1; nv <= 3 && txt.length > teto; nv++) txt = buildInstrNivel(niche, nv);
+  }
+  return txt;
+}
+function buildInstrNivel(niche, nivel){
   if(!niche) return "";
   const tb = STATE.topbar || {};
   const builder = STATE.builder || {};
@@ -9282,7 +9331,8 @@ function buildInstr(niche){
     const uni = bhOn.filter(b => baseIds.has(b.id));
     const own = bhOn.filter(b => !baseIds.has(b.id));
     if(uni.length) lines.push(`Princípios universais (definição completa no CEREBRO.md): ${uni.map(b => b.label.toLowerCase()).join(" · ")}.`);
-    own.forEach(b => lines.push(`- **${b.label}.** ${b.short || shortDef(b.def)}`));
+    if(nivel >= 2 && own.length) lines.push(`Do nicho (definição no CEREBRO.md): ${own.map(b => b.label.replace(/\.$/, "")).join(" · ")}.`);
+    else own.forEach(b => lines.push(`- **${b.label}.** ${b.short || shortDef(b.def)}`));
   }
 
   // Builder (stack/tom/etc) — escolhas concretas
@@ -9311,7 +9361,8 @@ function buildInstr(niche){
   if(niche.conventions && niche.conventions.length){
     lines.push("");
     lines.push("## Convenções");
-    conventionsInstr(niche).forEach(c => lines.push(`- ${c}`));
+    if(nivel >= 1) lines.push(`- As ${niche.conventions.length} convenções deste projeto estão no CEREBRO.md, seção «Convenções».`);
+    else conventionsInstr(niche).forEach(c => lines.push(`- ${c}`));
   }
 
   // Arquivos + saídas — compacto
@@ -9320,7 +9371,8 @@ function buildInstr(niche){
     lines.push("");
     lines.push(mountModeOn() ? "## Arquivos de contexto (no Projeto)" : "## Arquivos de contexto");
     lines.push("- **CEREBRO.md** — o comportamento completo do assistente.");
-    _instrFiles.forEach(f => lines.push(`- **${f.name}** — ${f.short || f.role}`));
+    if(nivel >= 3) lines.push(`- ${_instrFiles.map(f => "**" + f.name + "**").join(" · ")} — o papel de cada um no CEREBRO.md.`);
+    else _instrFiles.forEach(f => lines.push(`- **${f.name}** — ${f.short || f.role}`));
     lines.push(!mountModeOn() ? "- Logs detalhados do dia vivem em `logs/` e são lidos sob demanda." : "- Logs detalhados do dia NÃO ficam no Projeto: vivem em `logs/` no Git e são lidos sob demanda.");
   }
 
@@ -9331,7 +9383,8 @@ function buildInstr(niche){
     lines.push(codeModeOn()
       ? "Registre AQUI, não liste para depois: doc grande por WO (com a linha `/apply-wo`), arquivo novo ou pequeno inteiro, e o log do dia SEMPRE. A lista termina vazia. Regenerar × criar: CEREBRO.md."
       : !mountModeOn() ? "Grave cada documento afetado INTEIRO e atualizado, direto no lugar dele e relido antes de sobrescrever; nunca blocos soltos para colar à mão. Aplicar é decisão do usuário: diga o que gravou. Detalhes e exceções no CEREBRO.md." : "Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
-    outOn.forEach(o => lines.push(`- ${o.label}`));
+    if(nivel >= 2) lines.push(`- ${outOn.map(o => (o.label || "").split(" — ")[0].trim()).join(" · ")} — o que pede cada um no CEREBRO.md.`);
+    else outOn.forEach(o => lines.push(`- ${o.label}`));
     lines.push("- Higiene no CEREBRO.md (resumo: STATUS só o agora; IDEAS nunca perde; uma fonte de verdade por dado).");
     lines.push("- **Fecho do turno** — formato fixo (divisor, listas, condição por linha) que não cabe aqui: **copie o esqueleto do CEREBRO**, não reconstitua de memória — o esqueleto tem cinco itens; sem saber nomeá-los, abra-o. `Estado` abre com `Base:` — o lido NESTE turno.");
   }
@@ -11290,18 +11343,20 @@ function composeFromNiches(niches, sel){
     if(!inc(niches[ni].id, "files", key)) return;
     const from = niches[ni].label, _norm = (f.content||"").trim();
     if(!filesByName.has(key)){
-      filesByName.set(key, { name:f.name, versions:[{ from, content:f.content, cat:f.cat, role:f.role, _norm }] });
+      filesByName.set(key, { name:f.name, versions:[{ from, content:f.content, cat:f.cat, role:f.role, short:f.short, _norm }] });
       report.files.added++;
     } else {
       const e = filesByName.get(key);
       if(e.versions.some(v => v._norm === _norm)){ report.files.merged.push({ name:f.name, from, identical:true }); }
-      else { e.versions.push({ from, content:f.content, cat:f.cat, role:f.role, _norm }); report.files.merged.push({ name:f.name, from, identical:false }); }
+      else { e.versions.push({ from, content:f.content, cat:f.cat, role:f.role, short:f.short, _norm }); report.files.merged.push({ name:f.name, from, identical:false }); }
     }
   }));
   const files = [];
   for(const e of filesByName.values()){
     const kept = e.versions[0];
-    files.push({ name:e.name, cat:kept.cat, role:kept.role, content:kept.content });
+    // wo0184 (i-N98 item 1, D-187): o papel curto e a marca «so no CEREBRO» atravessam a composicao —
+    // sem eles, as Instrucoes do custom composto saiam com o texto longo de tudo (16 mil caracteres com quatro nichos)
+    files.push({ name:e.name, cat:kept.cat, role:kept.role, short:kept.short, content:kept.content });
     if(e.versions.length > 1){
       report.conflicts.files.push({
         name: e.name, keptFrom: kept.from,
@@ -11325,7 +11380,7 @@ function composeFromNiches(niches, sel){
         c.alternatives.push({ from, def:b.def });
       }
     } else {
-      const item = { id:b.id, label:b.label, def:b.def };
+      const item = { id:b.id, label:b.label, def:b.def, short:b.short };
       if(idKey) bhKept.set("id:"+idKey, { item, from }); if(lblKey) bhKept.set("lbl:"+lblKey, { item, from });
       behaviors.push(item); report.behaviors.added++;
     }
@@ -11338,12 +11393,16 @@ function composeFromNiches(niches, sel){
     if(convSeen.has(k.toLowerCase())){ report.conventions.dups++; }
     else { convSeen.add(k.toLowerCase()); conventions.push(k); report.conventions.added++; }
   }));
+  const soSet = new Set();
+  norm.forEach(n => (n.conventionsSoCerebro||[]).forEach(c => soSet.add((c||"").trim().toLowerCase())));
+  const conventionsSoCerebro = conventions.filter(c => soSet.has(c.toLowerCase()));
 
   // saídas — {id,label}, dedup por rótulo
   const outSeen = new Set(), outputs = [];
   norm.forEach(n => (n.outputs||[]).forEach(o => {
     const label = (typeof o === "string" ? o : (o.label||"")).trim();
-    const k = label.toLowerCase(); if(!k) return;
+    // wo0184 (i-N98, D-187): a saida se junta pelo NOME do arquivo — o papel muda de nicho para nicho, e o STATUS vinha quatro vezes
+    const k = label.split(" — ")[0].trim().toLowerCase(); if(!k) return;
     if(outSeen.has(k)){ report.outputs.dups++; }
     else { outSeen.add(k); outputs.push({ id:"o"+outputs.length, label }); report.outputs.added++; }
   }));
@@ -11368,7 +11427,7 @@ function composeFromNiches(niches, sel){
   const cf = {
     label, icon: niches[0].icon || "🧩", headline:"", lede:"", ctxBlurb:"",
     cardColor: niches[0].cardColor || "#5eead4", group: niches[0].group || "serif",
-    files, behaviors, promptsExtra, conventions, outputs
+    files, behaviors, promptsExtra, conventions, conventionsSoCerebro, outputs
   };
   return { cf, report };
 }
@@ -11833,6 +11892,7 @@ function toPreset(cf, name){
     ctxBlurb: cf.ctxBlurb || "",
     behaviors: cf.behaviors || [],
     conventions: cf.conventions || [],
+    conventionsSoCerebro: cf.conventionsSoCerebro || [],
     contextFiles: cf.files || [],
     outputs: cf.outputs || [],
     promptsExtra: (cf.promptsExtra || []).map(p => ({
@@ -11849,6 +11909,7 @@ function fromPreset(p){
     headline: p.headline || "", lede: p.lede || "", ctxBlurb: p.ctxBlurb || "",
     files: p.contextFiles || [], behaviors: p.behaviors || [],
     conventions: p.conventions || [],
+    conventionsSoCerebro: p.conventionsSoCerebro || [],
     outputs: (p.outputs||[]).map(o => typeof o === "string" ? o : (o.label || "")),
     promptsExtra: (p.promptsExtra||[]).map(pr => ({
       id: pr.id, title: pr.title, when: pr.when,

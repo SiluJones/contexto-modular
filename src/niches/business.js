@@ -11,7 +11,7 @@ NICHES.business = {
   topbar:[
     { id:"company", label:"Empresa/Projeto", placeholder:"ex: padaria-do-bairro" },
     { id:"escopoSel", label:"Escopo", type:"select",
-      options:["Estratégia","Finanças","Operações","Crescimento","Modelo de negócio","Decisão pontual"] },
+      options:["Estratégia","Finanças","Operações","Crescimento","Modelo de negócio","Decisão pontual","Vários — liste no CONTEXT.md"] },
     { id:"langSel", label:"Idioma do output", type:"select", opts:LANGS, default:"pt" },
   ],
   behaviors:[
@@ -27,11 +27,11 @@ NICHES.business = {
     hint:"Define setor, tipo de saída e as lentes úteis. Entra nas instruções.",
     items:[
       { kind:"radios", label:"Tipo de negócio", name:"sector", opts:[
-        ["startup","Startup"], ["smb","Pequeno/médio negócio"], ["solo","Autônomo/solo"], ["enterprise","Empresa estabelecida"], ["nonprofit","Sem fins lucrativos"], ["ecommerce","E-commerce/varejo"] ] },
+        ["startup","Startup"], ["smb","Pequeno/médio negócio"], ["solo","Autônomo/solo"], ["enterprise","Empresa estabelecida"], ["nonprofit","Sem fins lucrativos"], ["ecommerce","E-commerce"], ["retail","Varejo físico"], ["b2g","Fornecedor do governo (B2G)"] ] },
       { kind:"radios", label:"Tipo de saída", name:"outtype", opts:[
         ["analysis","Análise/diagnóstico"], ["plan","Plano de ação"], ["model","Modelo financeiro"], ["decision","Apoio a decisão"], ["pitch","Material para terceiros"] ] },
       { kind:"chips", label:"Lentes que valem usar", name:"lenses", opts:[
-        ["swot","SWOT"], ["okr","OKRs"], ["canvas","Business Model Canvas"], ["lean","Lean Canvas"], ["porter","5 Forças de Porter"], ["pestle","PESTLE"], ["unit","Unit economics"], ["jtbd","JTBD"], ["bcg","Matriz BCG"], ["ansoff","Ansoff"] ] },
+        ["swot","SWOT"], ["okr","OKRs"], ["canvas","Business Model Canvas"], ["lean","Lean Canvas"], ["porter","5 Forças de Porter"], ["pestle","PESTLE"], ["unit","Unit economics"], ["jtbd","JTBD"], ["bcg","Matriz BCG"], ["ansoff","Ansoff"], ["ciclo","Ciclo financeiro / capital de giro"], ["abc","Curva ABC × PQR"] ] },
     ]
   },
   conventionsSoCerebro:[
@@ -46,7 +46,8 @@ NICHES.business = {
     "Toda recomendação carrega o melhor contra-argumento e o «o que precisaria ser verdade para estar errada».",
     "Framework é lente, não receita: entender o problema vem antes; combinar frameworks só se cada um agregar.",
     "Decisão é avaliada por risco E custo de oportunidade; métricas financeiras são interdependentes.",
-    "A estratégia (OBJETIVOS) é o filtro: o que não serve à meta é sinalizado como distração."
+    "A estratégia (OBJETIVOS) é o filtro: o que não serve à meta é sinalizado como distração.",
+    "Valor legal (alíquota, limite, faixa de enquadramento) vem com a data de vigência e a fonte: a regra muda todo 1º de janeiro."
   ],
   triggersExtra:[
     ["Decisão de negócio tomada", "Entrega DECISIONS.md completo (decisão, premissas, alternativas, contra-argumento, risco)."],
@@ -213,7 +214,7 @@ NICHES.business = {
 ## 💬 Última conversa
 **[data]** — [o que avançou + onde parei + próximo passo óbvio.]
 `},
-    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — unit economics, projeções, runway. Use quando o negócio precisa modelar números com rigor.", short:"OPCIONAL — unit economics e projeções.",
+    { name:"MODELO-FINANCEIRO.md", cat:"opcional", role:"OPCIONAL — os números que dizem se o modelo se sustenta, pelo tipo de negócio: unit economics (startup), margem e giro (varejo), preço vencedor ÷ custo (B2G). Use quando há decisão financeira.", short:"OPCIONAL — números por tipo de negócio.",
       content:`# MODELO-FINANCEIRO.md — Unit Economics e Projeções
 
 > **Opcional**, mas valioso quando há decisão financeira. Reúne os poucos números que dizem se o modelo se sustenta.
@@ -225,7 +226,10 @@ NICHES.business = {
 > Tudo que sustenta os números abaixo. Se mudar aqui, muda tudo.
 - [Premissa — valor — validada/estimada — fonte.]
 
-## Unit economics (por cliente/unidade)
+## As métricas do seu tipo de negócio
+> **Use o bloco do seu tipo e apague os outros.** Cada tipo decide por números diferentes: o de startup não serve ao varejo, e o do varejo não basta para quem vende ao governo.
+
+### Startup ou assinatura — unit economics (por cliente)
 | Métrica | Valor | Como foi calculado / fonte |
 |---|---|---|
 | Preço médio (ticket) | [...] | [...] |
@@ -238,6 +242,27 @@ NICHES.business = {
 | Churn / retenção | [...] | [...] |
 
 > Lembrete: as métricas são interdependentes. LTV:CAC bom não salva se o payback é longo demais ou a retenção é ruim.
+
+### Varejo (físico ou e-commerce)
+| Métrica | Valor | Como foi calculado / fonte |
+|---|---|---|
+| Margem bruta por categoria | [...] | [(preço − custo de reposição) ÷ preço, por categoria] |
+| Ticket médio | [...] | [faturamento ÷ número de vendas] |
+| Preço mínimo por divisor | [...] | [custo ÷ (1 − impostos − despesas − margem desejada)] |
+| Prazo médio de estoque (PME) | [...] dias | [estoque médio ÷ CMV × dias do período] — **quando houver CMV** |
+| Giro de estoque | [...] | [CMV ÷ estoque médio] — **quando houver CMV** |
+| Ciclo financeiro | [...] dias | [PME + PMR − PMP] — **quando houver CMV** |
+
+> Sem o CMV mensal, PME, giro e ciclo financeiro ficam como sensibilidade, não como número.
+
+### Fornecedor do governo (B2G, licitação)
+| Métrica | Valor | Como foi calculado / fonte |
+|---|---|---|
+| Preço vencedor ÷ custo de reposição, por grupo | [...] | [preço homologado nas atas ÷ custo do item hoje] |
+| Fatia de itens exclusivos de ME/EPP, por tipo de órgão | [...] | [itens exclusivos ÷ itens do edital] |
+| Margem por categoria e preço mínimo por divisor | [...] | [como no varejo] |
+
+> Valor legal (alíquota, limite, faixa de enquadramento) vem com a data de vigência e a fonte.
 
 ## Visão de caixa
 - **Receita (período):** [valor / projeção — base/otimista/pessimista.]
@@ -334,7 +359,7 @@ NICHES.business = {
     },
     { id:"H", title:"Modelar números / unit economics", when:"Preciso calcular se a conta fecha (margem, CAC/LTV, runway).",
       fill:"numbers", fillLabel:"Os números que você tem + o que quer descobrir",
-      body:(p,n)=>`Modelagem de números.\n\nDADOS E PERGUNTA:\n${p.numbers||"[Os números que tenho — preço, custos, clientes, gastos — + o que quero descobrir: margem? a conta fecha? quanto de runway?]"}\n\nModele com clareza (não sofisticação):\n- DECLARE as premissas primeiro; marque cada uma como validada ou estimada\n- Mostre a CONTA de cada métrica (não só o resultado): margem de contribuição, CAC, LTV, LTV:CAC, payback, runway — o que for aplicável\n- Lembre da interdependência: LTV:CAC bom não salva payback longo ou churn alto\n- Faça 3 cenários (base/otimista/pessimista) — o pessimista é o que importa para sobreviver\n- Conte a HISTÓRIA por trás dos números em 3-4 frases\n\nNão invente cifra que falta — peça ou estime com faixa rotulada. Entregue MODELO-FINANCEIRO.md completo.`
+      body:(p,n)=>`Modelagem de números.\n\nDADOS E PERGUNTA:\n${p.numbers||"[Os números que tenho — preço, custos, clientes, gastos — + o que quero descobrir: margem? a conta fecha? quanto de runway?]"}\n\nModele com clareza (não sofisticação):\n- DECLARE as premissas primeiro; marque cada uma como validada ou estimada\n- Use as métricas do tipo de negócio (o bloco certo do MODELO-FINANCEIRO): startup — margem de contribuição, CAC, LTV, LTV:CAC, payback, runway; varejo — margem por categoria, ticket, preço mínimo por divisor, e PME, giro e ciclo financeiro quando houver CMV; B2G — preço vencedor ÷ custo de reposição por grupo e a fatia de itens exclusivos de ME/EPP\n- Mostre a CONTA de cada uma (não só o resultado)\n- Lembre da interdependência: LTV:CAC bom não salva payback longo ou churn alto\n- Faça 3 cenários (base/otimista/pessimista) — o pessimista é o que importa para sobreviver\n- Conte a HISTÓRIA por trás dos números em 3-4 frases\n\nNão invente cifra que falta — peça ou estime com faixa rotulada. Entregue MODELO-FINANCEIRO.md completo.`
     },
     { id:"I", title:"Avaliar uma decisão (com contraponto)", when:"Tenho uma decisão a tomar e quero pensá-la sem me enganar.",
       fill:"decision", fillLabel:"A decisão em jogo + as opções + o que está em jogo",

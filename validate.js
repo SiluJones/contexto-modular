@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -2937,6 +2937,43 @@ check("C125 o update atrasado e o DECISIONS (wo0183, D-186): um conjunto de Stat
     assert(/são moldes\): [^\n]*LOG-TEMPLATE\.md/.test(body) && /Opcionais[^\n]*SPEC\.md/.test(body), "o prompt C nao diz o que copiar como esta e o que e opcional");
     return "ok (" + moldes + " moldes do DECISIONS com o conjunto; a higiene igual; " + linhas.length + " linhas do manifesto com a resposta; as skills antes da WO so com o Code; quatro crases no molde e na skill; o prompt C sem molde a preencher)";
   } finally { S.workmode=prev; }
+});
+
+check("C126 o custom composto cabe no teto, e os nichos com dado de campo (wo0184, D-187): o curto atravessa a composicao, a compactacao por niveis so no custom, o modelo financeiro por tipo de negocio, o que se perde no companion e o curriculo na primeira conversa da carreira", () => {
+  const S=T.STATE; const prev=Object.assign({}, S.workmode||{}), osAntes=T.OSENV.value;
+  try {
+    T.OSENV.value="none";
+    const comp = ids => T.mergeCustom(T.NICHES.custom, T.toPreset(T.composeFromNiches(ids.map(i => T.NICHES[i]), {}).cf, "c126"));
+    // o curto e a marca «so no CEREBRO» atravessam a composicao
+    const cz=comp(["narrative","game","pixel","music"]);
+    assert(cz.contextFiles.every(f => f.short) && cz.behaviors.filter(b => b.short).length >= cz.behaviors.length - 4 && (cz.conventionsSoCerebro||[]).length > 0, "a composicao perdeu o papel curto ou a marca so-no-CEREBRO");
+    assert(cz.outputs.filter(o => /^STATUS\.md/i.test(o.label || "")).length === 1, "a composicao repete a saida do STATUS (junta pelo rotulo, nao pelo nome)");
+    // o teto: as combinacoes de 2 a 6 dos seis nichos de Instrucoes mais pesadas, sem e com o Code
+    const pes=Object.keys(T.NICHES).filter(id => id !== "custom").map(id => { S.workmode={mountMode:"", groupMode:"no", codeMode:"", asuMode:""}; return [id, T.buildInstr(T.normNiche(T.NICHES[id])).length]; }).sort((a,b) => b[1]-a[1]).slice(0,6).map(x => x[0]);
+    let n=0, maxP=0, maxC=0; const fora=[];
+    for(let m=1; m<64; m++){ const ids=pes.filter((_,i) => m>>i & 1); if(ids.length < 2) continue; const c=comp(ids); n++;
+      S.workmode={mountMode:"", groupMode:"no", codeMode:"", asuMode:""}; const p=T.buildInstr(c).length;
+      S.workmode.codeMode="yes"; const k=T.buildInstr(c).length;
+      maxP=Math.max(maxP,p); maxC=Math.max(maxC,k);
+      if(p > T.INSTR_TETO) fora.push(ids.join("+")+" "+p); if(k > T.INSTR_TETO_MODOS) fora.push(ids.join("+")+"+Code "+k); }
+    assert(fora.length === 0, "custom composto acima do teto -> " + fora.slice(0,4).join(" | "));
+    // a compactacao nunca toca nicho pronto: as convencoes dele seguem nas Instrucoes
+    S.workmode={mountMode:"", groupMode:"no", codeMode:"yes", asuMode:"yes"}; T.OSENV.value="win-cmd";
+    const nar=T.buildInstr(T.normNiche(T.NICHES.narrative));
+    assert(nar.indexOf("convenções deste projeto estão no CEREBRO.md") === -1 && nar.indexOf("Do nicho (definição no CEREBRO.md)") === -1, "a compactacao alcancou um nicho pronto");
+    T.OSENV.value="none";
+    // o business: o modelo por tipo, os tipos novos, a vigencia
+    const biz=T.NICHES.business, mf=biz.contextFiles.find(f => f.name === "MODELO-FINANCEIRO.md");
+    assert(/### Varejo/.test(mf.content) && /### Fornecedor do governo/.test(mf.content) && /quando houver CMV/.test(mf.content) && /Preço vencedor ÷ custo de reposição/.test(mf.content), "o MODELO-FINANCEIRO nao tem os blocos de varejo e B2G");
+    const tipos=biz.builderSection.items.find(i => i.name === "sector").opts.map(o => o[0]);
+    assert(tipos.indexOf("retail") > -1 && tipos.indexOf("b2g") > -1, "o tipo de negocio nao tem varejo fisico nem B2G");
+    assert(biz.conventions.some(c => /data de vigência e a fonte/.test(c)), "o business nao pede a vigencia do valor legal");
+    // o companion: o que se perde; a carreira: o curriculo na primeira conversa
+    const arm=T.NICHES.companion.contextFiles.find(f => f.name === "ARMADILHAS.md");
+    assert(arm && /## ⏳ O que se perde se não for feito agora/.test(arm.content), "o ARMADILHAS do companion nao pergunta o que se perde");
+    assert(T.NICHES.career.triggersExtra.some(t => /^Primeira conversa/.test(t[0]) && /currículo atual/.test(t[1])), "a carreira nao pede o curriculo na primeira conversa");
+    return "ok (" + n + " composicoes dos 6 nichos mais pesados: padrao ate " + maxP + "/" + T.INSTR_TETO + ", com o Code ate " + maxC + "/" + T.INSTR_TETO_MODOS + "; nicho pronto sem compactacao; business, companion e career)";
+  } finally { S.workmode=prev; T.OSENV.value=osAntes; }
 });
 
 // ============ SUMARIO ============

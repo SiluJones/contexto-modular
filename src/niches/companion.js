@@ -150,6 +150,14 @@ NICHES.companion = {
 - **Custo se cair:** [tempo perdido, recurso gasto, porta fechada]
 - **Como não cair:** [o gesto concreto]
 
+## ⏳ O que se perde se não for feito agora
+> Conteúdo com janela: o que só existe numa estação, num clima, num evento, ou some quando a história avança. Nenhum guia de passo a passo avisa, porque o custo aparece meses depois — a coleção que fecha o ano incompleta.
+
+### [O que se perde]
+- **Janela:** [estação / clima / evento / até tal ponto da história]
+- **Se perder:** [espera um ciclo inteiro / some para sempre]
+- **Como não perder:** [o gesto, e a rota em que ele entra]
+
 ## 📰 Armadilhas da fonte
 > A informação que você vai encontrar por aí está errada, velha ou fora de contexto.
 
@@ -226,6 +234,7 @@ Um arquivo por **sistema que o próprio jogo trata como sistema** — tem menu, 
 
 ## Antes de começar
 - [Pré-requisito real — item, nível, acesso.]
+- [O que se perde se não for feito NESTA rota (estação, clima, evento) → \`ARMADILHAS.md\`, «O que se perde». A rota abre por aqui.]
 - [Armadilha que mora logo no começo → \`ARMADILHAS.md\`.]
 
 ## A sequência

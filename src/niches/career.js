@@ -66,6 +66,7 @@ NICHES.career = {
     ["meta/ de outro projeto entregue", "Rodada de mineração → EVIDENCIAS.md + DOSSIE.md atualizados."],
     ["Candidatura enviada ou respondida", "Atualiza o pipeline em MERCADO.md (estágio, resultado, aprendizado)."],
     ["Currículo/pitch pedido", "Checa o lastro antes de escrever; entrega o artefato + registra a versão em MERCADO.md."],
+    ["Primeira conversa do projeto", "Pede o currículo atual (e o LinkedIn, se houver) ANTES de perguntar a trajetória: ele responde de uma vez o que as perguntas levam várias conversas para juntar. O que ele afirma entra em EVIDENCIAS.md como «a provar»."],
   ],
   contextFiles:[
     { name:"CONTEXT.md", cat:"essencial", role:"Quem sou: formação, histórico, restrições reais, o que busco. O pano de fundo. Estável.", short:"Quem sou, restrições reais, o que busco.",
@@ -73,6 +74,7 @@ NICHES.career = {
 
 > Arquivo **estável**. O assistente lê primeiro para saber com quem está falando.
 > Muda pouco: só em mudança real de emprego, formação ou objetivo.
+> **Primeira conversa:** comece pelo currículo atual (cole ou anexe) — ele preenche este arquivo de uma vez.
 
 ---
 
