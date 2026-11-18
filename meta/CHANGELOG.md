@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.147.0**.
+> Histórico de versões. Versão atual: **v1.148.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.148.0 — O trabalho por encomenda: as portas do Design Visual, o valor aceito à parte do escopo, e cinco linhas da base (wo0182, D-185)
+- **`PROCESSO.md` opcional no Design Visual:** as seis portas (escopo aceito, **valor aceito**, conteúdo congelado, entrada paga, estrutura aprovada, arte aprovada), cada uma fechada por uma mensagem do cliente que se possa citar; as regras de conduta (rodada é lista, erro do material é rodada do cliente, sentido se pergunta com duas opções, desconto corta escopo, o material bruto vence o resumo) e os sinais de descarrilhamento. Escala com o trabalho: uma peça rápida usa as portas 1 a 3.
+- **O comportamento «Valor aceito por escrito é porta própria»**, o gatilho «cliente aceitou escopo, valor ou conteúdo — ou só parte» e o `PROCESSO.md` nas saídas do nicho.
+- **No Cliente (`client`):** o valor é acordo à parte do escopo — no comportamento «Confirma o combinado por escrito» e no `ACORDOS.md`.
+- **Cinco linhas na base do CEREBRO.** Em todo nicho: a proposta do assistente ainda sem resposta leva `[proposto pelo assistente]`; nome de pasta ou de arquivo sem dado pessoal; o código de registro vem com o nome dele. Só no canal pasta: o insumo permanente (o material do cliente, as fontes brutas) numa subpasta da pasta-pai, fora do «Arquivar / Manter»; e a permissão pedida que expira sem resposta.
+- **`C124` novo** (124 → 125), com duas provas negativas. A base cresce 940 bytes (o teto da leva é 1,5 KB, `D-185`).
+- **Origem:** a análise `261117` (a frente K1): o primeiro cardápio do dono e o projeto novo, que já usava as portas dele (`i-N96`); o projeto novo (`i-N95`); o pedido do dono (`i-N94`); o satelite-web (`i-N77`). Harness **19/19 · 125/125**.
 
 ## v1.147.0 — As chaves do KCM no navegador: prefixo próprio, migração uma vez, e um botão para esquecer (wo0179, D-184)
 - **Prefixo próprio:** o que o KCM guarda no navegador passa de `kit-…` a `kcm:…` — `kcm:niche`, `kcm:state:<nicho>`, `kcm:custom-presets`, `kcm:custom-current`, `kcm:hub-v1`. Aberto por `file://`, o navegador dá um armazenamento só a todas as páginas locais, e `kit-` era genérico demais para isso.

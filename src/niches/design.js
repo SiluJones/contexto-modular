@@ -18,6 +18,7 @@ NICHES.design = {
     ["feedback_specific","Feedback: problema do cliente, solução do designer","Quando o cliente dá feedback vago (\"não gostei\", \"deixa mais moderno\"), traduz em problema concreto antes de agir — faz perguntas específicas (\"a cor está forte demais? o título compete com a imagem?\"). A intuição do cliente sobre o PROBLEMA costuma estar certa; a SOLUÇÃO vem do designer. Não aplica a solução literal do cliente sem entender o problema por trás.","Traduz feedback vago em problema concreto antes de agir."],
     ["system_consistency","Consistência com o sistema visual","Antes de propor qualquer elemento (cor, fonte, espaçamento, tratamento), consulta MARCA.md e REFERENCIAS.md. Não introduz cor fora da paleta nem fonte fora do sistema sem sinalizar explicitamente como decisão nova. Coerência entre peças é o que separa identidade de colagem.","Consulta MARCA.md e REFERENCIAS.md antes de propor cor, fonte ou espaçamento."],
     ["scope_rounds","Guarda escopo e rodadas de revisão","Toda peça tem entregáveis e número de rodadas definidos em PROJETO.md. Quando um pedido extrapola (nova peça, mais rodadas que o contratado), sinaliza com \"Yes-and\": reconhece, posiciona como adicional/fase-2, oferece caminho. Quando a rodada atual é a última contratada, avisa com gentileza."],
+    ["price_gate","Valor aceito por escrito é porta própria","Escopo aceito não fecha o preço: o cliente pode aceitar formato, peças e prazo e silenciar sobre o valor. Antes de abrir o arquivo, o valor tem de estar aceito por escrito — uma mensagem do cliente que se possa citar depois —, separado do aceite do escopo; sem ele, avisa em uma linha e não diagrama. Pedido de desconto se responde cortando escopo (menos rodadas, uma peça em vez de duas), nunca só o preço.","Valor aceito por escrito, à parte do escopo, antes de abrir o arquivo."],
     ["print_verify","Verifica specs técnicas antes de afirmar","Em assuntos onde um erro vira retrabalho ou peça impressa errada (CMYK vs RGB, sangria, resolução, fontes incorporadas, specs de uma ferramenta), confirma o fato por busca antes de afirmar. Não inventa configuração; aponta a dúvida. Pré-impressão tem regras duras — segue o checklist em PRODUCAO.md.","Confere especificação técnica (CMYK, sangria, resolução) antes de afirmar."],
     ["ref_type","Distingue referência de conteúdo vs. de estilo","Quando o cliente manda uma referência, separa o que é referência de CONTEÚDO (usar o texto/dados/informação) do que é referência de ESTILO (usar o visual/tom). Confundir as duas gera erro de direção. Anota qual é qual em REFERENCIAS.md.","Separa referência de conteúdo de referência de estilo antes de usar."],
   ],
@@ -51,6 +52,7 @@ NICHES.design = {
     ["Decisão de cor/fonte/símbolo", "Entrega MARCA.md e DECISIONS.md completos atualizados."],
     ["Peça indo para impressão", "Roda e entrega o checklist de PRODUCAO.md; só marca pronta se passar."],
     ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISIONS/STATUS o impacto no escopo."],
+    ["Cliente aceitou escopo, valor ou conteúdo — ou só parte", "Registra a porta fechada (em PROCESSO.md, se usa; senão em STATUS.md) com a data e a mensagem citável; o que ele não respondeu segue aberto, e a pergunta volta numerada, só com o que falta."],
   ],
   contextFiles:[
     {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", short:"O brief: objetivo, entregáveis, exclusões.", content:`# PROJETO.md — [Nome do Projeto]
@@ -261,6 +263,52 @@ NICHES.design = {
 ## 💬 Última conversa
 **[data]** — [o que rolou + onde parou + próximo passo óbvio.]
 `},
+    {name:"PROCESSO.md", cat:"opcional", role:"OPCIONAL — como o trabalho pago avança: as portas (escopo, valor, conteúdo, aprovação), o que fecha cada uma e os sinais de descarrilhamento. Use quando há cliente pagante.", short:"OPCIONAL — as portas do trabalho pago.", content:`# PROCESSO.md — Como este trabalho pago avança
+
+> **Opcional**, para projeto com cliente pagante. Estável: muda quando o processo muda, não a cada peça.
+> **Princípio:** quem desenha conduz o processo; o cliente decide o conteúdo e aprova. Quase todo trabalho não pago nasce de inverter isso — o cliente ditando o ritmo (manda quando quer, muda quando lembra) e quem desenha adivinhando o conteúdo.
+> **Escala com o trabalho:** uma peça rápida usa as portas 1 a 3 e a regra das rodadas; o resto entra quando o trabalho pedir. Apague o que não usar.
+
+---
+
+## As portas
+Nenhuma fase começa antes de a porta anterior fechar **por escrito** — uma mensagem do cliente que se possa citar depois, registrada abaixo com a data.
+
+| # | Porta | Fecha quando | Estado |
+|---|---|---|---|
+| 1 | **Escopo aceito** | o cliente aceita formato, peças, idiomas, rodadas e prazo | [aberta / fechada em AAAA-MM-DD] |
+| 2 | **Valor aceito** | o cliente aceita o **valor**, à parte do escopo: aceitar o escopo e silenciar sobre o preço não fecha esta porta | [...] |
+| 3 | **Conteúdo congelado** | o cliente responde «aprovado» ao documento com todos os textos, nomes e preços, com as dúvidas marcadas como pergunta | [...] |
+| 4 | **Entrada paga** | o sinal combinado cai (pode andar junto da 3; nunca antes da 2) | [...] |
+| 5 | **Estrutura aprovada** | o cliente aprova o que está onde, antes do texto final e das outras versões | [...] |
+| 6 | **Arte aprovada** | «aprovado» na versão final; daqui em diante é serviço novo | [...] |
+
+- **Nunca abrir o arquivo antes das portas 1 e 2.** Trabalho adiantado não acelera: só transfere o risco. Mudança pedida antes de abrir o arquivo sai de graça; depois, custa.
+- **O conteúdo congelado tem folga para o ajuste pequeno** que aparece quando o texto entra no leiaute; mudança de estrutura ou de quantidade depois da porta 3 é rodada.
+
+## Regras de conduta
+- **Rodada é lista, não pingo:** o cliente olha a peça inteira e manda todos os ajustes de uma vez; ajustes espalhados por dias contam um a um. Diga isso antes de começar, e conte em voz alta («rodada 1 de 2»).
+- **Erro no material do cliente consome rodada dele** — senão revisar o texto dele vira serviço gratuito.
+- **Ortografia se corrige em silêncio; sentido se pergunta**, com duas opções concretas, nunca em aberto.
+- **Perguntas numa mensagem só, numerada;** se ele responder metade, reenvie só as que faltam.
+- **Silêncio em item pequeno:** decida, aplique e avise em uma linha. Em item que muda estrutura ou valor, espere.
+- **Responda primeiro à pergunta que o cliente fez.** Diante de pedido ambíguo, não ofereça a leitura ruim: pergunte com as opções boas.
+- **Desconto se responde cortando escopo**, nunca só o preço. Derivado (outra versão, outro tamanho) tem preço próprio, que não passa o do original sem uma explicação que caiba numa frase.
+- **O que o cliente mandou vence o resumo:** quando a conversa exportada ou o material bruto diverge de um documento derivado, vale o bruto, e o derivado se corrige.
+
+## Sinais de descarrilhamento
+| Sinal | O que fazer, na hora |
+|---|---|
+| «É só mudar X» | Nomeie por escrito o trabalho real antes de dar preço. |
+| Ajustes chegando picados | A regra da rodada, contada em voz alta. |
+| Conteúdo chegando em pedaços | Não comece: espere a lista fechar e mande o documento de conteúdo. |
+| «Só mais uma coisinha» depois do aprovado | Serviço novo, com gentileza. |
+| Escopo aceito, valor sem resposta | A porta 2 está aberta: não diagrame. |
+| Você adivinhando o que ele quis dizer | Pare: vire pergunta com duas opções. |
+
+## Registro das portas
+- AAAA-MM-DD — Porta [N] fechada · [onde está a mensagem: arquivo, data, primeira frase]
+`},
     {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", short:"OPCIONAL — checklist de pré-impressão.", content:`# PRODUCAO.md — Pré-impressão e Exportação
 
 > **Opcional**, mas obrigatório quando há peça para impressão. Reúne as specs e o checklist que evitam reimpressão cara.
@@ -335,6 +383,7 @@ NICHES.design = {
     {key:"decisoes", name:"DECISIONS.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
     {key:"marca", name:"MARCA.md", role:"completo, se o sistema visual mudou (cor, fonte, regra de logo)", active:false},
     {key:"producao", name:"PRODUCAO.md", role:"completo, se uma peça foi para impressão (quando usa o arquivo)", active:false},
+    {key:"processo", name:"PROCESSO.md", role:"completo, se uma porta fechou ou abriu (quando usa o arquivo)", active:false},
     {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[

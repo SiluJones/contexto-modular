@@ -2873,6 +2873,35 @@ check("C123 as chaves do KCM no navegador (wo0179): prefixo kcm:, migracao das k
   return "ok (5 chaves com kcm:; migracao de 5, sem sobrescrever a nova, idempotente; esquecer 5; as alheias intactas; sem clear() nem key())";
 });
 
+check("C124 o trabalho por encomenda (wo0182, D-185): o PROCESSO.md opcional do design com o valor aceito como porta propria, o valor a parte no ACORDOS do client, e as cinco linhas da base", () => {
+  const S=T.STATE; S.workmode = S.workmode || {};
+  const antes={mountMode:S.workmode.mountMode, codeMode:S.workmode.codeMode};
+  try {
+    const proc=T.NICHES.design.contextFiles.find(f => f.name === "PROCESSO.md");
+    assert(proc && proc.cat === "opcional", "o design nao tem o PROCESSO.md opcional");
+    assert(/\*\*Valor aceito\*\*/.test(proc.content) && proc.content.indexOf("aceitar o escopo e silenciar sobre o preço não fecha esta porta") > -1, "o PROCESSO.md nao separa o valor aceito do escopo aceito");
+    assert(proc.content.indexOf("folga para o ajuste pequeno") > -1 && proc.content.indexOf("Escala com o trabalho") > -1, "o PROCESSO.md perdeu a folga do conteudo congelado ou a escala com o trabalho");
+    assert(T.NICHES.design.behaviors.some(b => b[0] === "price_gate"), "o design nao tem o comportamento price_gate");
+    assert(T.NICHES.design.outputs.some(o => o.name === "PROCESSO.md"), "o PROCESSO.md nao esta nas saidas do design");
+    const ac=T.NICHES.client.contextFiles.find(f => f.name === "ACORDOS.md");
+    assert(ac && ac.content.indexOf("Escopo aceito e valor aceito são acordos separados") > -1, "o ACORDOS.md do client nao separa o valor do escopo");
+    const base=["`[proposto pelo assistente]`", "Nome de pasta ou de arquivo não leva dado pessoal", "Código de registro (`DEC-`, `FIX-`, `wo`) vem"];
+    const canal=["**Insumo permanente não é nota:**", "**Permissão pedida pode expirar sem resposta.**"];
+    let n=0;
+    Object.keys(T.NICHES).forEach(id => {
+      const ni=T.normNiche(T.NICHES[id]);
+      [0,1].forEach(m => [0,1].forEach(cd => {
+        S.workmode.mountMode = m ? "yes" : ""; S.workmode.codeMode = cd ? "yes" : "";
+        const md=T.buildClaudeMd(ni); n++;
+        const cfg=id + (m ? " mount" : " pasta") + (cd ? "+Code" : "");
+        base.forEach(t => assert(md.split(t).length === 2, cfg + ": a base deveria ter uma vez «" + t + "»"));
+        canal.forEach(t => assert(md.split(t).length === (m ? 1 : 2), cfg + ": «" + t + "» " + (m ? "fora do canal pasta" : "ausente ou repetido no canal pasta")));
+      }));
+    });
+    return "ok (PROCESSO.md opcional com as portas, a folga e a escala; price_gate; a saida; ACORDOS com o valor a parte; 3 linhas da base em " + n + " CEREBROs, 2 so no canal pasta)";
+  } finally { Object.assign(S.workmode, antes); }
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

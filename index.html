@@ -1262,7 +1262,8 @@ const UPDATE_PROTOCOL = {
   privacidadeRegras: [
     "Registre o que serve ao projeto (ideias, decisões, estado, preferências de trabalho). Informação pessoal incidental que aparecer de passagem numa conversa e NÃO tiver valor de contexto não vai para os documentos — não por censura, mas por irrelevância. (Ex.: um desabafo pessoal no meio de uma ideia técnica fica fora; a ideia técnica entra.)",
     "Se uma informação claramente pessoal ou sensível PRECISA ser registrada para o projeto funcionar, sinalize isso ao registrá-la e me ofereça a opção de generalizar ou omitir o detalhe — preservando o dado útil e protegendo o que for constrangedor. A decisão final é minha.",
-    "Na dúvida entre 'isto é contexto útil' e 'isto é pessoal demais', pergunte antes de gravar — em vez de decidir sozinho num ou noutro sentido."
+    "Na dúvida entre 'isto é contexto útil' e 'isto é pessoal demais', pergunte antes de gravar — em vez de decidir sozinho num ou noutro sentido.",
+    "Nome de pasta ou de arquivo não leva dado pessoal (telefone, e-mail): cada listagem o põe no contexto. Ao achar um, sugira renomear."
   ],
   handoffTitulo: "Transferência entre conversas: o que vai para o Projeto e o que se anexa",
   handoffIntro: "Pense na janela de contexto como a memória RAM: rápida, finita, zerada a cada conversa. Os arquivos do Projeto são o disco. Para editar ou reproduzir um arquivo com fidelidade, o assistente precisa dele COMPLETO à vista — e há mais de um caminho para isso (conhecimento do Projeto, ferramenta de código + mount, ou anexo). Saber qual usar evita perder fidelidade e desperdiçar tokens.",
@@ -1313,7 +1314,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.147.0";
+const KIT_VERSION = "1.148.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1810,6 +1811,7 @@ NICHES.design = {
     ["feedback_specific","Feedback: problema do cliente, solução do designer","Quando o cliente dá feedback vago (\"não gostei\", \"deixa mais moderno\"), traduz em problema concreto antes de agir — faz perguntas específicas (\"a cor está forte demais? o título compete com a imagem?\"). A intuição do cliente sobre o PROBLEMA costuma estar certa; a SOLUÇÃO vem do designer. Não aplica a solução literal do cliente sem entender o problema por trás.","Traduz feedback vago em problema concreto antes de agir."],
     ["system_consistency","Consistência com o sistema visual","Antes de propor qualquer elemento (cor, fonte, espaçamento, tratamento), consulta MARCA.md e REFERENCIAS.md. Não introduz cor fora da paleta nem fonte fora do sistema sem sinalizar explicitamente como decisão nova. Coerência entre peças é o que separa identidade de colagem.","Consulta MARCA.md e REFERENCIAS.md antes de propor cor, fonte ou espaçamento."],
     ["scope_rounds","Guarda escopo e rodadas de revisão","Toda peça tem entregáveis e número de rodadas definidos em PROJETO.md. Quando um pedido extrapola (nova peça, mais rodadas que o contratado), sinaliza com \"Yes-and\": reconhece, posiciona como adicional/fase-2, oferece caminho. Quando a rodada atual é a última contratada, avisa com gentileza."],
+    ["price_gate","Valor aceito por escrito é porta própria","Escopo aceito não fecha o preço: o cliente pode aceitar formato, peças e prazo e silenciar sobre o valor. Antes de abrir o arquivo, o valor tem de estar aceito por escrito — uma mensagem do cliente que se possa citar depois —, separado do aceite do escopo; sem ele, avisa em uma linha e não diagrama. Pedido de desconto se responde cortando escopo (menos rodadas, uma peça em vez de duas), nunca só o preço.","Valor aceito por escrito, à parte do escopo, antes de abrir o arquivo."],
     ["print_verify","Verifica specs técnicas antes de afirmar","Em assuntos onde um erro vira retrabalho ou peça impressa errada (CMYK vs RGB, sangria, resolução, fontes incorporadas, specs de uma ferramenta), confirma o fato por busca antes de afirmar. Não inventa configuração; aponta a dúvida. Pré-impressão tem regras duras — segue o checklist em PRODUCAO.md.","Confere especificação técnica (CMYK, sangria, resolução) antes de afirmar."],
     ["ref_type","Distingue referência de conteúdo vs. de estilo","Quando o cliente manda uma referência, separa o que é referência de CONTEÚDO (usar o texto/dados/informação) do que é referência de ESTILO (usar o visual/tom). Confundir as duas gera erro de direção. Anota qual é qual em REFERENCIAS.md.","Separa referência de conteúdo de referência de estilo antes de usar."],
   ],
@@ -1843,6 +1845,7 @@ NICHES.design = {
     ["Decisão de cor/fonte/símbolo", "Entrega MARCA.md e DECISIONS.md completos atualizados."],
     ["Peça indo para impressão", "Roda e entrega o checklist de PRODUCAO.md; só marca pronta se passar."],
     ["Pedido de nova peça ou rodada extra", "Entrega o rascunho 'Yes-and' e registra em DECISIONS/STATUS o impacto no escopo."],
+    ["Cliente aceitou escopo, valor ou conteúdo — ou só parte", "Registra a porta fechada (em PROCESSO.md, se usa; senão em STATUS.md) com a data e a mensagem citável; o que ele não respondeu segue aberto, e a pergunta volta numerada, só com o que falta."],
   ],
   contextFiles:[
     {name:"PROJETO.md", cat:"ctx", role:"O brief: objetivo, público, mídia, tom, entregáveis, rodadas e exclusões. Estável.", short:"O brief: objetivo, entregáveis, exclusões.", content:`# PROJETO.md — [Nome do Projeto]
@@ -2053,6 +2056,52 @@ NICHES.design = {
 ## 💬 Última conversa
 **[data]** — [o que rolou + onde parou + próximo passo óbvio.]
 `},
+    {name:"PROCESSO.md", cat:"opcional", role:"OPCIONAL — como o trabalho pago avança: as portas (escopo, valor, conteúdo, aprovação), o que fecha cada uma e os sinais de descarrilhamento. Use quando há cliente pagante.", short:"OPCIONAL — as portas do trabalho pago.", content:`# PROCESSO.md — Como este trabalho pago avança
+
+> **Opcional**, para projeto com cliente pagante. Estável: muda quando o processo muda, não a cada peça.
+> **Princípio:** quem desenha conduz o processo; o cliente decide o conteúdo e aprova. Quase todo trabalho não pago nasce de inverter isso — o cliente ditando o ritmo (manda quando quer, muda quando lembra) e quem desenha adivinhando o conteúdo.
+> **Escala com o trabalho:** uma peça rápida usa as portas 1 a 3 e a regra das rodadas; o resto entra quando o trabalho pedir. Apague o que não usar.
+
+---
+
+## As portas
+Nenhuma fase começa antes de a porta anterior fechar **por escrito** — uma mensagem do cliente que se possa citar depois, registrada abaixo com a data.
+
+| # | Porta | Fecha quando | Estado |
+|---|---|---|---|
+| 1 | **Escopo aceito** | o cliente aceita formato, peças, idiomas, rodadas e prazo | [aberta / fechada em AAAA-MM-DD] |
+| 2 | **Valor aceito** | o cliente aceita o **valor**, à parte do escopo: aceitar o escopo e silenciar sobre o preço não fecha esta porta | [...] |
+| 3 | **Conteúdo congelado** | o cliente responde «aprovado» ao documento com todos os textos, nomes e preços, com as dúvidas marcadas como pergunta | [...] |
+| 4 | **Entrada paga** | o sinal combinado cai (pode andar junto da 3; nunca antes da 2) | [...] |
+| 5 | **Estrutura aprovada** | o cliente aprova o que está onde, antes do texto final e das outras versões | [...] |
+| 6 | **Arte aprovada** | «aprovado» na versão final; daqui em diante é serviço novo | [...] |
+
+- **Nunca abrir o arquivo antes das portas 1 e 2.** Trabalho adiantado não acelera: só transfere o risco. Mudança pedida antes de abrir o arquivo sai de graça; depois, custa.
+- **O conteúdo congelado tem folga para o ajuste pequeno** que aparece quando o texto entra no leiaute; mudança de estrutura ou de quantidade depois da porta 3 é rodada.
+
+## Regras de conduta
+- **Rodada é lista, não pingo:** o cliente olha a peça inteira e manda todos os ajustes de uma vez; ajustes espalhados por dias contam um a um. Diga isso antes de começar, e conte em voz alta («rodada 1 de 2»).
+- **Erro no material do cliente consome rodada dele** — senão revisar o texto dele vira serviço gratuito.
+- **Ortografia se corrige em silêncio; sentido se pergunta**, com duas opções concretas, nunca em aberto.
+- **Perguntas numa mensagem só, numerada;** se ele responder metade, reenvie só as que faltam.
+- **Silêncio em item pequeno:** decida, aplique e avise em uma linha. Em item que muda estrutura ou valor, espere.
+- **Responda primeiro à pergunta que o cliente fez.** Diante de pedido ambíguo, não ofereça a leitura ruim: pergunte com as opções boas.
+- **Desconto se responde cortando escopo**, nunca só o preço. Derivado (outra versão, outro tamanho) tem preço próprio, que não passa o do original sem uma explicação que caiba numa frase.
+- **O que o cliente mandou vence o resumo:** quando a conversa exportada ou o material bruto diverge de um documento derivado, vale o bruto, e o derivado se corrige.
+
+## Sinais de descarrilhamento
+| Sinal | O que fazer, na hora |
+|---|---|
+| «É só mudar X» | Nomeie por escrito o trabalho real antes de dar preço. |
+| Ajustes chegando picados | A regra da rodada, contada em voz alta. |
+| Conteúdo chegando em pedaços | Não comece: espere a lista fechar e mande o documento de conteúdo. |
+| «Só mais uma coisinha» depois do aprovado | Serviço novo, com gentileza. |
+| Escopo aceito, valor sem resposta | A porta 2 está aberta: não diagrame. |
+| Você adivinhando o que ele quis dizer | Pare: vire pergunta com duas opções. |
+
+## Registro das portas
+- AAAA-MM-DD — Porta [N] fechada · [onde está a mensagem: arquivo, data, primeira frase]
+`},
     {name:"PRODUCAO.md", cat:"opcional", role:"OPCIONAL — checklist de pré-impressão/exportação por entregável. Use quando há peça impressa ou entrega técnica.", short:"OPCIONAL — checklist de pré-impressão.", content:`# PRODUCAO.md — Pré-impressão e Exportação
 
 > **Opcional**, mas obrigatório quando há peça para impressão. Reúne as specs e o checklist que evitam reimpressão cara.
@@ -2127,6 +2176,7 @@ NICHES.design = {
     {key:"decisoes", name:"DECISIONS.md", role:"completo, com nova DEC se houve decisão de conceito/visual", active:true},
     {key:"marca", name:"MARCA.md", role:"completo, se o sistema visual mudou (cor, fonte, regra de logo)", active:false},
     {key:"producao", name:"PRODUCAO.md", role:"completo, se uma peça foi para impressão (quando usa o arquivo)", active:false},
+    {key:"processo", name:"PROCESSO.md", role:"completo, se uma porta fechou ou abriu (quando usa o arquivo)", active:false},
     {key:"log", name:"logs/AAAA-MM-DD.md", role:"log do dia preenchido (formato em LOG-TEMPLATE.md)", active:true},
   ],
   promptsExtra:[
@@ -2182,7 +2232,7 @@ NICHES.client = {
     ["dualview","Atua como profissional E como cliente-final","Avalia o trabalho com dois olhares: o do prestador (qualidade técnica, escopo, viabilidade) e o de quem vai receber/usar o resultado. Aponta o que o cliente provavelmente vai sentir/reclamar antes de ele reclamar. Sem elogio falso — crítica honesta é o serviço.","Avalia como prestador e como quem vai receber o resultado."],
     ["feedbacksource","Distingue feedback do cliente vs. de terceiros","Clientes às vezes repassam feedback de uma IA (GPT/Gemini) ou de um conhecido como se fosse deles. Quando o feedback chega com cara de \"analisado por fora\", trata com cuidado: separa o que é a vontade real do cliente do que é sugestão de terceiro, e valida o ambíguo antes de agir.","Checa se o feedback é do cliente ou repassado de terceiro/IA."],
     ["scopeguard","Guarda o escopo com 'Yes-and', não 'No-but'","Quando um pedido extrapola o contratado, não diz \"não está no escopo\" de forma seca. Reconhece a ideia, posiciona como adicional/fase-2, e oferece caminho (orçamento extra, próxima etapa). Consulta sempre PROJETO.md (entregáveis, rodadas, exclusões) antes de classificar algo como fora de escopo.","Fora do escopo: yes-and (o que custa, o que muda), nunca um não seco."],
-    ["writeitdown","Confirma o combinado por escrito","Todo acordo verbal ou decisão importante vira item em ACORDOS.md. Quando algo combinado não tem registro formal, sugere uma confirmação curta por escrito ao cliente — proteção dos dois lados."],
+    ["writeitdown","Confirma o combinado por escrito","Todo acordo verbal ou decisão importante vira item em ACORDOS.md. Quando algo combinado não tem registro formal, sugere uma confirmação curta por escrito ao cliente — proteção dos dois lados. Valor é acordo à parte: aceitar o escopo e silenciar sobre o preço não fecha o preço — o valor aceito vira acordo próprio, com a mensagem citável."],
     ["preserve_rel","Preserva a relação ao comunicar","Antes de redigir comunicação delicada, considera o que se quer preservar na relação e qual resultado se quer de fato — não só \"o que responder\". Sinaliza se o tom pretendido pode sair pela culatra. O profissional sempre edita antes de enviar; o texto é um rascunho forte, não a palavra final.","Antes de comunicação delicada, define o que preservar e o resultado desejado."],
     ["verify_claims","Verifica afirmações técnicas antes de afirmar","Em assuntos onde um erro vira retrabalho ou promessa furada ao cliente (specs de impressão, prazos de terceiros, limites de uma ferramenta), confirma o fato por busca/consulta antes de afirmar. Não inventa correção; aponta a dúvida.","Verifica afirmação técnica antes de prometer ao cliente."],
   ],
@@ -2291,6 +2341,7 @@ NICHES.client = {
 
 ## Como usar
 Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui (e atualiza PROJETO.md).
+**Escopo aceito e valor aceito são acordos separados:** o cliente pode aceitar o que será feito e silenciar sobre o preço. Valor sem aceite escrito vai para «Pendências de confirmação», não para cá.
 
 ---
 
@@ -9480,10 +9531,12 @@ function buildClaudeMd(niche){
       ? "Padrão: o chat escreve inteiros a análise, a WO, CONTEXT, CEREBRO, Instruções e GLOSSARY; o Code escreve o código, STATUS, DECISIONS, CHANGELOG e a sua seção do log; IDEAS e todo doc grande e vivo mudam por WO."
       : "Padrão: o chat escreve os documentos; o dono revisa e versiona.") + " O projeto pode mudar a divisão — registrando em DECISIONS —, nunca deixá-la implícita.");
     L.push("- **Notas e relatórios moram na pasta-pai,** fora do Git. Leia inteira a que chegou, funda nos meta/ e arquive **movendo** para `notas-arquivadas/` dentro dela — mover, nunca apagar. Liste a pasta antes e depois: arquivo que some sem comando que o cite é perda, não arquivamento.");
+    L.push("- **Insumo permanente não é nota:** o material do cliente, as fontes brutas e os logs de equipamento moram numa subpasta própria da pasta-pai (`material/`) e não entram no «Arquivar / Manter».");
     L.push("- **Se o dono mantém uma pasta de histórico das conversas** (por exemplo, exportada pelo CDC para dentro da pasta de arquivo), **ela é dele e só leitura:** leia quando a origem de uma decisão ajudar; não ponha nada dentro, não mova, não renomeie, não apague e não versione — nem no «Arquivar», que move para a RAIZ da pasta de arquivo, nunca para uma subpasta dela. Se ela numera as conversas, o handoff e o log citam esse número.");
     L.push("- **Segredo não mora em pasta que o chat lê a cada turno.** `.env`, cookie e token ficam no repositório (ignorados pelo Git) ou fora das pastas concedidas: o que está na pasta-pai entra no contexto todo turno.");
     L.push("- **As Instruções do Projeto têm duas cópias, e a fonte é o arquivo do repositório.** Mudança nas Instruções muda primeiro o arquivo; o fecho pede ao dono que cole no painel do Projeto. O tamanho sai no turno, em caracteres — `len()` do texto em UTF-8, ou `LC_ALL=C.UTF-8 wc -m`: sem o locale, `wc -m` conta bytes —, nunca de número gravado em documento.");
     L.push("- **O terminal do chat não é o do dono.** É uma VM Linux: cada comando começa do zero, tem teto de cerca de 3 minutos, e processo em segundo plano morre com a chamada. Arquivo «modificado» só por fim de linha (`i/lf w/crlf`) não mudou. Apagar vem desligado: peça a permissão, não contorne.");
+    L.push("- **Permissão pedida pode expirar sem resposta.** No mesmo turno, deixe o arquivo pronto e o passo a passo para o dono, dizendo qual permissão faltou; o fecho dá as duas saídas — ele roda, ou você tenta de novo.");
   }
   // Tecnicas especificas do projeto (sand-land FK/DEC-018): o unico conteudo que sobrevive a um rebase do kit
   L.push("");
@@ -9647,6 +9700,7 @@ function buildClaudeMd(niche){
   L.push("- **Dados fora da raiz exigem permissão.** Se o material a medir vive ao lado do repositório e não dentro dele, o executor precisa de `permissions.additionalDirectories` no `.claude/settings.json` — a mesma chave que libera gravar o relatório na pasta-pai, agora para ler.");
   L.push("- **Onde o número pousa.** No relatório da execução, sempre. Se ele mudar uma decisão, também no registro de decisões; se ele revelar um risco, nas armadilhas da ordem de trabalho. Número medido e não registrado volta a ser deduzido no turno seguinte.");
   L.push("- **Fato que o usuário relata no chat não existe até estar num arquivo — e a origem vai junto.** `[relatado pelo dono]` e `[medido por instrumento]` têm forças diferentes, e a diferença é o que permite decidir se vale remedir. Apagar essa marca é pior que não registrar: cria um fato de primeira classe a partir de uma lembrança. É a metade simétrica da regra acima — a de cima protege o número que a execução mediu, esta protege o que o usuário contou, e as duas se perdem no mesmo lugar: a transferência entre conversas, onde só sobrevive o que está escrito.");
+  L.push("- **Proposta sua ainda sem resposta do dono também leva marca:** `[proposto pelo assistente]`, que só sai quando ele aprovar. Sem ela, a sugestão de uma conversa vira o fato da seguinte.");
   L.push("");
   L.push("## Sonda e exploração — o par que produz evidência");
   L.push("");
@@ -9827,6 +9881,8 @@ function buildClaudeMd(niche){
   L.push("## Idioma");
   L.push("");
   L.push((tb.langSel === "other" ? "Respostas no idioma do projeto — escreva qual aqui —" : `Respostas em ${langTxt},`) + " incluindo comentários quando houver código.");
+  L.push("");
+  L.push("Código de registro (`DEC-`, `FIX-`, `wo`) vem, na primeira vez que aparece na resposta, com o que ele é em poucas palavras: o dono não abre os documentos para decifrar uma lista de códigos.");
 
   L.push("");
   L.push("## Recomendação de configuração (fim de turno)");

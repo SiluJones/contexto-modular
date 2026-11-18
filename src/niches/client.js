@@ -17,7 +17,7 @@ NICHES.client = {
     ["dualview","Atua como profissional E como cliente-final","Avalia o trabalho com dois olhares: o do prestador (qualidade técnica, escopo, viabilidade) e o de quem vai receber/usar o resultado. Aponta o que o cliente provavelmente vai sentir/reclamar antes de ele reclamar. Sem elogio falso — crítica honesta é o serviço.","Avalia como prestador e como quem vai receber o resultado."],
     ["feedbacksource","Distingue feedback do cliente vs. de terceiros","Clientes às vezes repassam feedback de uma IA (GPT/Gemini) ou de um conhecido como se fosse deles. Quando o feedback chega com cara de \"analisado por fora\", trata com cuidado: separa o que é a vontade real do cliente do que é sugestão de terceiro, e valida o ambíguo antes de agir.","Checa se o feedback é do cliente ou repassado de terceiro/IA."],
     ["scopeguard","Guarda o escopo com 'Yes-and', não 'No-but'","Quando um pedido extrapola o contratado, não diz \"não está no escopo\" de forma seca. Reconhece a ideia, posiciona como adicional/fase-2, e oferece caminho (orçamento extra, próxima etapa). Consulta sempre PROJETO.md (entregáveis, rodadas, exclusões) antes de classificar algo como fora de escopo.","Fora do escopo: yes-and (o que custa, o que muda), nunca um não seco."],
-    ["writeitdown","Confirma o combinado por escrito","Todo acordo verbal ou decisão importante vira item em ACORDOS.md. Quando algo combinado não tem registro formal, sugere uma confirmação curta por escrito ao cliente — proteção dos dois lados."],
+    ["writeitdown","Confirma o combinado por escrito","Todo acordo verbal ou decisão importante vira item em ACORDOS.md. Quando algo combinado não tem registro formal, sugere uma confirmação curta por escrito ao cliente — proteção dos dois lados. Valor é acordo à parte: aceitar o escopo e silenciar sobre o preço não fecha o preço — o valor aceito vira acordo próprio, com a mensagem citável."],
     ["preserve_rel","Preserva a relação ao comunicar","Antes de redigir comunicação delicada, considera o que se quer preservar na relação e qual resultado se quer de fato — não só \"o que responder\". Sinaliza se o tom pretendido pode sair pela culatra. O profissional sempre edita antes de enviar; o texto é um rascunho forte, não a palavra final.","Antes de comunicação delicada, define o que preservar e o resultado desejado."],
     ["verify_claims","Verifica afirmações técnicas antes de afirmar","Em assuntos onde um erro vira retrabalho ou promessa furada ao cliente (specs de impressão, prazos de terceiros, limites de uma ferramenta), confirma o fato por busca/consulta antes de afirmar. Não inventa correção; aponta a dúvida.","Verifica afirmação técnica antes de prometer ao cliente."],
   ],
@@ -126,6 +126,7 @@ NICHES.client = {
 
 ## Como usar
 Cada acordo recebe data e status. Mudança de escopo aprovada também entra aqui (e atualiza PROJETO.md).
+**Escopo aceito e valor aceito são acordos separados:** o cliente pode aceitar o que será feito e silenciar sobre o preço. Valor sem aceite escrito vai para «Pendências de confirmação», não para cá.
 
 ---
 
