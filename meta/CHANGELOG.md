@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.151.0**.
+> Histórico de versões. Versão atual: **v1.152.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.152.0 — A recusa da apply-wo também grava o relatório, e o relatório abre dizendo o que entrou (wo0187, D-189)
+- **A recusa grava o relatório em arquivo.** A skill `apply-wo` gerada recusava a WO sem «Âncoras lidas em» e só avisava na tela; a regra da parada (âncora não achada, hash diferente, validação vermelha, WO contraditória) gravava o relatório, mas a recusa não estava na lista. Agora a recusa entra nela, e a linha da recusa manda gravar.
+- **A primeira linha do relatório de parada ou de recusa diz o que entrou:** `NADA FOI APLICADO — motivo: …`, ou `APLICADO ATE <a edição ou o passo N> — motivo: …`, com o commit, se houve.
+- **A casa** ganhou a mesma regra na sua `apply-wo`, que não a tinha; o `C43` passa a conferir a cláusula nos dois lados (78 cláusulas), e o `C118`, a recusa e a primeira linha na skill gerada.
+- **Origem:** a carta 04 do Negócios e Licitações (19/11): a recusa só na tela, o dono viu a sessão terminar e relatou a WO como aplicada; o chat deles achou o HEAD sem o commit. A skill é a mesma em todo nicho: não era diferença entre o `dev` e o `business`. Harness **19/19 · 128/128**.
 
 ## v1.151.0 — O GUIA-DO-KIT: o que tem gatilho observável sai do CEREBRO da abertura para um arquivo do kit (wo0185, D-188)
 - **O CEREBRO encolhe um quinto sem perder regra.** Ele é lido inteiro na abertura de toda conversa e tinha triplicado desde julho. Quatro seções que só servem quando um evento acontece — chegou um pacote de update, chegou uma carta, é preciso medir, a conversa roda sem a pasta — mudam para `meta/GUIA-DO-KIT.md`, com o texto igual. O CEREBRO do `design` no canal pasta vai de 102.137 a 82.544 bytes; o do `custom` padrão, de 96.322 a 76.729; a pior configuração, de 115.987 a 97.978.

@@ -12,9 +12,10 @@ PEÇA — não escolha uma WO por conta própria.
 
 Regras de aplicação:
 - **ANTES de editar:** se a WO edita arquivo existente e o cabeçalho dela NÃO traz o campo «Âncoras
-  lidas em» preenchido, **RECUSE** — não aplique, e diga que falta. Quem escreveu a WO é quem tem o
+  lidas em» preenchido, **RECUSE** — não aplique, grave o relatório de recusa (a regra logo abaixo) e diga que falta. Quem escreveu a WO é quem tem o
   viés; esta conferência é sua justamente por isso.
 - Localize cada âncora EXATAMENTE. Se não achar uma, PARE e reporte — nunca chute um lugar próximo.
+- **Parada e recusa gravam o relatório em arquivo.** Quando você PARA ou RECUSA — a WO sem «Âncoras lidas em», âncora não achada, hash ou `numstat` diferente, validação vermelha, WO contraditória —, grave o relatório em `../AAMMDD-HHMM-code-kcm-apply-<alvo>.txt` ANTES de perguntar ou de mostrar o menu: o passo em que parou e a saída crua que o fez parar. A primeira linha diz o que entrou: `NADA FOI APLICADO — motivo: <...>`, ou `APLICADO ATE <a edição ou o passo N> — motivo: <...>`, com o commit, se houve. Sem o arquivo, o dono vê a sessão terminar, presume a aplicação, e a próxima WO nasce sobre um estado falso (carta 04 do Negócios e Licitações, `D-189`).
 - **Fim de linha por arquivo:** na **árvore de trabalho** (o que o editor abre),
   `src/index.template.html` é **CRLF** — garantido pelo `.gitattributes`, não pela configuração da
   máquina. Os demais variam com o `core.autocrlf` da máquina — medido em 2026-10-15: `validate.js`,

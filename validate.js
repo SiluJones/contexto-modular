@@ -1014,6 +1014,8 @@ check("C43 o instalado nao fica atras do gerado (wo0087, generalizado na wo0116 
     ["menu por ferramenta",/AskUserQuestion/,                 ["wrap","applyWo"]],
     ["relatorio em arquivo", /-code-/,                        ["wrap","applyWo"]],
     ["ancora exata",       /PARE e reporte/i,                 ["applyWo"]],
+    // wo0187 (D-189): a casa nao tinha a regra da parada; a recusa que so avisa na tela custou uma rodada ao Negocios.
+    ["parada e recusa gravam", /NADA FOI APLICADO/,           ["applyWo"]],
     // wo0102: as quatro clausulas da leva do Mapsmith 11. Entram AQUI, e nao so no C53, porque
     // e esta tabela que confere o GERADO e o INSTALADO lado a lado — a casa e o primeiro instalado.
     ["cartao escolhe",     /para ESCOLHER, n[ãa]o para DISPARAR/, ["wrap","applyWo"]],
@@ -2099,6 +2101,10 @@ check("C118 os tres defeitos do toolchain (wo0166): IDEAS sem a secao do ASU com
     S.workmode.codeMode = "yes";
     const aw = T.buildCodeKitFiles().applyWo;
     assert(/\*\*A parada tambem grava o relatorio em arquivo\.\*\*/.test(aw) && /ANTES de perguntar ou de mostrar o menu/.test(aw), "a skill apply-wo gerada nao manda a parada gravar o relatorio em arquivo");
+    // wo0187 (D-189, carta 04 do Negocios e Licitacoes): a RECUSA (a WO sem «Ancoras lidas em») tambem grava, e o
+    // relatorio abre dizendo o que entrou — a recusa so na tela fez o dono presumir a aplicacao.
+    assert(/PARA ou RECUSA — a WO sem «Ancoras lidas em»/.test(aw) && /RECUSE — não aplique, grave o relatório de recusa/.test(aw), "a recusa da apply-wo gerada nao grava o relatorio em arquivo");
+    assert(/`NADA FOI APLICADO — motivo: <\.\.\.>`/.test(aw) && /`APLICADO ATE /.test(aw), "o relatorio de parada nao abre dizendo o que entrou");
   } finally { S.workmode.asuMode = pA; S.workmode.codeMode = pC; }
   return "ok (" + n19 + " IDEAS sem a secao do ASU quando ele esta desligado; README por dia; a parada grava o relatorio)";
 });
