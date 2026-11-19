@@ -3050,6 +3050,45 @@ check("C127 o GUIA-DO-KIT (wo0185, D-188): o que tem gatilho observavel sai do C
   return "ok (" + medidos + " pares CEREBRO + GUIA em 19 nichos x 4 modos; o CEREBRO do design no canal pasta com " + dPasta + " caracteres; pacote do-kit, manifesto e prompt sem transplante de volta)";
 });
 
+// wo0188 (D-190, analise 261119): a engine no nicho de jogo — so o Godot, a engine com amostra. O Hey Mother
+// tinha resolvido a checagem por comando sozinho em julho (i-N86 item 1); o Cinzeiro e a VM do chat provaram o
+// teste de fumaca com screenshot (i-N98 item 7). Sem o Godot escolhido, nada disto aparece.
+check("C128 a engine no nicho de jogo (wo0188, D-190): com o Godot, o .gitignore, a checagem sem janela no CLAUDE.md, o teste de fumaca no GUIA com gatilho, e o cache versionado no update; sem ele, nada", () => {
+  const S = T.STATE; const prevW = Object.assign({}, S.workmode || {}), prevT = Object.assign({}, S.topbar || {}), prevN = S.niche;
+  const ruim = []; let vistos = 0;
+  try {
+    [["game", "Godot"], ["game", "Unity"], ["game", ""], ["dev", "Godot"]].forEach(([id, eng]) => {
+      [["", ""], ["yes", ""], ["yes", "yes"]].forEach(([c, m]) => {
+        S.niche = id; S.topbar = Object.assign({}, prevT, { engineSel: eng }); S.workmode = { codeMode: c, mountMode: m };
+        const n = T.normNiche(T.NICHES[id]); const tag = id + "/" + (eng || "sem engine") + (c ? "+Code" : "") + (m ? "+mount" : ""); vistos++;
+        const godot = id === "game" && eng === "Godot";
+        const pack = T.buildUpdatePack(n);
+        const gi = (pack.files.find(f => f.real === ".gitignore") || {}).content || "";
+        const C = T.buildClaudeMd(n), G = T.buildGuiaKit(n), P = T.buildUpdatePrompt(n);
+        const k = c ? T.buildCodeKitFiles() : null;
+        const temGi = /^\.godot\/$/m.test(gi) && /^\/android\/$/m.test(gi);
+        if(godot !== temGi) ruim.push(tag + ": o bloco do Godot no .gitignore " + (godot ? "falta" : "sobra"));
+        if(k){
+          const cl = k.claudeMd;
+          const temCl = /--headless --path <pasta do projeto> --quit-after 2/.test(cl) && /git rm -r --cached <projeto>\/\.godot/.test(cl);
+          if(godot !== temCl) ruim.push(tag + ": a checagem do Godot no CLAUDE.md " + (godot ? "falta" : "sobra"));
+          if(godot && /<seu comando de build/.test(cl)) ruim.push(tag + ": o CLAUDE.md do Godot ainda traz o build de exemplo");
+          if(id === "game" && !godot && !/<seu comando de build/.test(cl)) ruim.push(tag + ": jogo sem o Godot perdeu a linha do build");
+        }
+        const querSecao = godot && !m;
+        const temSecao = /\n## Teste de fumaça do Godot na VM do chat/.test(G) && /--write-movie/.test(G) && /xvfb-run/.test(G) && /get_tree\(\)\.quit\(1\)/.test(G) && /«abre, desenha e não dá erro\?»/.test(G);
+        if(querSecao !== temSecao) ruim.push(tag + ": o teste de fumaca no GUIA " + (querSecao ? "falta" : "sobra"));
+        const temGat = /\| Mudou código, cena ou mecânica do jogo \(Godot\) \| .*leia «Teste de fumaça do Godot na VM do chat» no `GUIA-DO-KIT\.md`/.test(C);
+        if(querSecao !== temGat) ruim.push(tag + ": o gatilho do teste de fumaca " + (querSecao ? "falta" : "sobra"));
+        if(querSecao && C.indexOf("«Teste de fumaça do Godot na VM do chat»") < 0) ruim.push(tag + ": o indice do CEREBRO nao lista a secao do Godot no GUIA");
+        if(godot !== /Godot: cache ja versionado/.test(P)) ruim.push(tag + ": a linha do cache no prompt do update " + (godot ? "falta" : "sobra"));
+      });
+    });
+  } finally { S.workmode = prevW; S.topbar = prevT; S.niche = prevN; }
+  assert(ruim.length === 0, ruim.slice(0, 6).join(" | ") + (ruim.length > 6 ? " (+" + (ruim.length - 6) + ")" : ""));
+  return "ok (" + vistos + " combinacoes: game com Godot, com Unity e sem engine, e dev com o campo; com e sem o Code, pasta e mount)";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

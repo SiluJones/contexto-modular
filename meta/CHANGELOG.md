@@ -1,10 +1,20 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.152.0**.
+> Histórico de versões. Versão atual: **v1.153.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.153.0 — A engine no nicho de jogo: o Godot no .gitignore, a checagem sem janela no CLAUDE.md e o teste de fumaça do chat (wo0188, D-190)
+- **Com o «Engine» em Godot** (no `game`, e no `custom` que o carregue), o kit passa a usar o campo que o nicho tinha e nenhum texto lia:
+  - o **`.gitignore`** ganha `.godot/` e `/android/`, o que o próprio Godot ignora no projeto novo;
+  - o **`CLAUDE.md`** troca o build de exemplo pela seção do Godot: o executável de console desta máquina (a preencher na primeira conversa, sem adivinhar depois), a checagem sem janela (`--headless --path <projeto> --quit-after 2`) e como tirar do índice o cache já versionado — a forma que o Hey Mother tinha escrito à mão em julho;
+  - no canal pasta, o **`GUIA-DO-KIT.md`** ganha «Teste de fumaça do Godot na VM do chat» (a mesma versão baixada do GitHub, numa cópia do projeto, `--import`, `--check-only`, um quadro gravado com `xvfb-run` e `--write-movie`, e a cena de teste que sai com código), com gatilho próprio na tabela do CEREBRO: «mudou código, cena ou mecânica»; o teste diz qual pergunta responde — «abre, desenha e não dá erro?», nunca «o feel está certo?»;
+  - o **prompt do update** manda tirar com `git rm -r --cached` o `.godot/` que entrou antes do `.gitignore`.
+- **Sem o Godot, nada disso aparece** — o Unity e as outras engines esperam um projeto com amostra.
+- **`C128` novo** (128 → 129).
+- **Origem:** a análise `261119` (o `game` antes do pacote do Hey Mother): o Hey Mother (a checagem por comando, o cache versionado), o Cinzeiro e a VM do chat (o teste de fumaça com screenshot, medido em 19/11 numa cópia do protótipo). Fecha a `i-N86` item 1 para o Godot e a `i-N98` item 7. Harness **19/19 · 129/129**.
 
 ## v1.152.0 — A recusa da apply-wo também grava o relatório, e o relatório abre dizendo o que entrou (wo0187, D-189)
 - **A recusa grava o relatório em arquivo.** A skill `apply-wo` gerada recusava a WO sem «Âncoras lidas em» e só avisava na tela; a regra da parada (âncora não achada, hash diferente, validação vermelha, WO contraditória) gravava o relatório, mas a recusa não estava na lista. Agora a recusa entra nela, e a linha da recusa manda gravar.

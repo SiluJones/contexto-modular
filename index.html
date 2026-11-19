@@ -1316,7 +1316,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.152.0";
+const KIT_VERSION = "1.153.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9539,7 +9539,21 @@ function withSectionIndex(md, cab, extra){
 /* wo0185 (D-188, analise 261118): o GUIA-DO-KIT.md — o que tem gatilho observavel sai da abertura da conversa.
    Arquivo do kit (natureza «do-kit»): o update o troca inteiro, nao se funde. O CEREBRO aponta cada secao
    (tabela de gatilhos, secoes-ponteiro e o indice); o texto saiu dele sem mudar de forma. */
-const GUIA_SECOES = () => ["Ao receber um template-update do KCM"].concat(mountModeOn() ? [] : [canalPasta("## " + UPDATE_PROTOCOL.handoffTitulo).slice(3)]).concat(["Sonda e exploração — o par que produz evidência", "Correspondência entre projetos — quando o interlocutor é outro assistente"]);
+const GUIA_SECOES = () => ["Ao receber um template-update do KCM"].concat(mountModeOn() ? [] : [canalPasta("## " + UPDATE_PROTOCOL.handoffTitulo).slice(3)]).concat(["Sonda e exploração — o par que produz evidência", "Correspondência entre projetos — quando o interlocutor é outro assistente"]).concat(engineGodot() && !mountModeOn() ? ["Teste de fumaça do Godot na VM do chat"] : []);
+function guiaSecaoGodot(L){
+  L.push("## Teste de fumaça do Godot na VM do chat");
+  L.push("");
+  L.push("Mudou código, cena ou mecânica: o chat pode ver o jogo abrir sem esperar o dono. No canal pasta, a VM do chat roda o Godot — medido no Cinzeiro e no Hey Mother, com a versão oficial baixada do GitHub.");
+  L.push("");
+  L.push("1. **A mesma versão:** a do `project.godot` (`config/features`). Baixe o binário oficial para Linux da página de releases do Godot no GitHub, numa pasta da VM fora do projeto. Download recusado pela rede: diga, e fique com a checagem sem janela do Code, na máquina do dono (o `CLAUDE.md`).");
+  L.push("2. **Numa cópia, nunca na pasta do projeto:** o Godot grava `.godot/` e as importações onde roda. Copie a pasta do projeto para a VM e rode ali.");
+  L.push("3. **Importe e cheque:** `--headless --path <cópia> --import`; depois `--headless --path <cópia> --quit-after 120` para a cena principal, ou `--headless --path <cópia> --check-only --script <arquivo.gd>` para um script. Erro de script sai na saída.");
+  L.push("4. **Veja:** `xvfb-run -a -s \"-screen 0 1280x720x24\" <godot> --path <cópia> --rendering-driver opengl3 --write-movie <pasta>/q.png --fixed-fps 30 --quit-after 60` grava um quadro por frame; abra o último. Pega o que o headless não pega: texto cortado na borda, cor fora da paleta, câmera no lugar errado.");
+  L.push("5. **Regra que se confere sozinha:** para «o chinelo volta», «o pulo alcança a plataforma», escreva uma cena de teste que roda sem input e encerra com `get_tree().quit(1)` quando falha. O código de saída é o veredito; o quadro é a prova.");
+  L.push("");
+  L.push("**Qual pergunta ele responde:** «abre, desenha e não dá erro?» — nunca «o feel está certo?». Diga isso na mesma linha do verde. Feel e input se conferem jogando: pelo dono, num roteiro de tela, ou por um servidor MCP do Godot na máquina dele, quando o projeto pedir.");
+  L.push("");
+}
 function guiaSecaoUpdate(L){
   L.push("## Ao receber um template-update do KCM");
   L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio** — e mais: **template genérico não é candidato a substituir arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados (fora o CEREBRO, que é `fusao`) caem por padrão em (c) — o genérico ensina estrutura, o vivo já evoluiu; não é escolha a ser oferecida ao usuário a cada update. A **única** exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). Antes de comparar, o assistente lista o mount e diz em que versão/commit o projeto está: comparar sem saber o estado atual é comparar com memória. **O pacote é entrada transitória, mas não descartável no meio do caminho:** enquanto um merge estiver em curso, ele precisa continuar no mount até o merge fechar — pacote que sai antes do fim leva embora o original de comparação, e o que ficou de fora só aparece depois. Se ele já saiu, o assistente **declara a cobertura de leitura**: quais faixas leu **verbatim** e quais não. É essa declaração que permite fechar a lacuna com um diff dirigido em vez de refazer o merge inteiro. Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído, e **a fusão parte do pacote**: o arquivo do pacote é a base, e o assistente transplanta para ele o que é deste projeto (a seção «Técnicas específicas deste projeto», seção sem par no pacote, regra local com DEC, colisão já julgada). Partir do vivo e enxertar o novo só soma — o merge não sabe subtrair. Antes de gravar, mostra ao usuário o inventário: o que transplantou, o que do vivo ficou de fora, e toda linha do pacote que falta no resultado, com o motivo; o usuário decide. Nas Instruções, o que sai para caber no teto sai do transplante, nunca de uma regra do pacote. Nunca substituição cega.");
@@ -9640,6 +9654,7 @@ function buildGuiaKit(niche){
   L.push("");
   guiaSecaoSonda(L);
   guiaSecaoCorrespondencia(L);
+  if(engineGodot() && !mountModeOn()) guiaSecaoGodot(L);
   L.push(`*Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — nicho ${niche.label}. Arquivo do kit: o update o troca inteiro; o que for deste projeto mora no CEREBRO.*`);
   const md = L.join("\n");
   return withSectionIndex(mountModeOn() ? md : canalPasta(md), "> **Seções deste guia** (índice gerado pelo kit; abra a seção que o gatilho do CEREBRO nomear):");
@@ -9922,6 +9937,8 @@ function buildClaudeMd(niche){
     }
     baseTriggers.push([ev, ac]);
   });
+  // wo0188 (D-190): com o Godot no canal pasta, o teste de fumaca da VM do chat tem gatilho proprio (o corpo mora no GUIA).
+  if(engineGodot() && !mountModeOn()) baseTriggers.push(["Mudou código, cena ou mecânica do jogo (Godot)", "Antes de dar por pronto, roda o teste de fumaça na VM do chat — leia «Teste de fumaça do Godot na VM do chat» no `GUIA-DO-KIT.md` — e diz qual pergunta ele respondeu: «abre, desenha e não dá erro?», não «o feel está certo?»."]);
   const triggers = [...baseTriggers, ...((niche.triggersExtra)||[])].map(([ev,ac]) => [ev, codeModeOn() ? gatilhoComCode(ac) : ac]);
   triggers.forEach(([ev,ac]) => L.push(`| ${ev} | ${ac} |`));
   L.push("");
@@ -10735,7 +10752,11 @@ function buildCodeKitFiles(){
     "Leia `meta/CEREBRO.md` → o doc de contexto do projeto (ex.: `meta/CONTEXT.md`) → `meta/STATUS.md` antes de agir. Confirme em uma frase o que entendeu.",
     "",
     "## Build / validação",
-    ...(temCodigo ? [
+    ...(temCodigo && engineGodot() ? [
+      "- Engine: **Godot**. Executável de console nesta máquina: `<caminho do Godot_v<versão>_console.exe>` — preencha na primeira conversa e não procure nem adivinhe depois (o `_console.exe` mostra a saída e os erros).",
+      "- Checagem sem janela, depois de mudar código: `\"<executável>\" --headless --path <pasta do projeto> --quit-after 2` — relate a saída; erro de script aparece ali. Ela prova que abre, não que o feel está certo.",
+      "- Cache já versionado: se `git ls-files` mostrar `.godot/`, tire do índice com `git rm -r --cached <projeto>/.godot` — o `.gitignore` não desfaz o que já foi commitado.",
+    ] : temCodigo ? [
       "- Build: `<seu comando de build, ex.: npm run build>`  (PLACEHOLDER — troque pelo do seu projeto; se ele for só de documentos, apague esta linha e a de testes)",
       "- Testes/validação: `<seu comando de teste>` — rode antes de commitar mudança de código.",
     ] : [
@@ -10914,11 +10935,14 @@ function projectSlug(raw){
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   return s || "projeto";
 }
+/* wo0188 (D-190, analise 261119): a engine que o nicho de jogo escolheu. So o Godot tem amostra (Hey Mother, Cinzeiro). */
+function engineGodot(){ return ["game","custom"].includes(STATE.niche) && (STATE.topbar || {}).engineSel === "Godot"; }
 function structuredGitignore(codeOn){
   return [
     "# .gitignore — lixo de SO / editor. NAO ignore .claude/, meta/ nem logs/ (versionados de proposito).",
     ".DS_Store", "Thumbs.db", "*.swp", ".vscode/", ".idea/"
-  ].concat(codeOn ? ["# o Claude Code cria e enche de caminhos desta maquina; e do usuario, nao do projeto (wo0173)", ".claude/settings.local.json"] : []).concat([""]).join("\n");
+  ].concat(codeOn ? ["# o Claude Code cria e enche de caminhos desta maquina; e do usuario, nao do projeto (wo0173)", ".claude/settings.local.json"] : [])
+   .concat(engineGodot() ? ["# Godot 4: cache de importacao e build Android — o que o proprio Godot ignora no projeto novo (wo0188)", ".godot/", "/android/"] : []).concat([""]).join("\n");
 }
 function structuredFlatdropignore(codeOn){
   // Convencao KCM (wo0067): comentario SO fora do bloco (dentro, o editor do FlatDrop apaga
@@ -11309,6 +11333,7 @@ function buildUpdatePrompt(niche){
   L.push("- **Reporte-me, sem aplicar nada sozinho:** (a) novidade util que meu projeto ainda nao tem; (b) choque com o que ja existe — apresente lado a lado, eu decido; (c) algo que meu projeto tem e o template nao cobre.");
   L.push("- **Nunca sobrescreva conteudo vivo** por template vazio.");
   L.push("- Itens marcados **`fusao`** (CEREBRO, INSTRUCOES) carregam comportamento que meu projeto pode ter evoluido. **A fusao parte do PACOTE, nao do vivo:** o arquivo do pacote e a base, e voce **transplanta** para ele o que e deste projeto — a secao «Tecnicas especificas deste projeto», secao sem par no pacote, regra local com DEC, colisao ja julgada. Partir do vivo e enxertar o novo bloco a bloco so soma (o merge nao sabe subtrair) e, num projeto muitas versoes atras, vira um projeto a parte. **Antes de gravar, me mostre o inventario:** o que transplantou (secao a secao, com o motivo) e o que do vivo ficou de fora; eu decido os dois. **O corte tambem entra nele:** compare o resultado com o arquivo do pacote — toda linha do pacote que falta no resultado vai ao inventario, com o motivo. Nas Instrucoes, o que sai para caber no teto sai do transplante, nunca de uma regra do pacote. Nunca substituicao cega: a base do pacote sem o transplante apaga o que este projeto aprendeu.");
+  if(engineGodot()) L.push("- **Godot: cache ja versionado.** Se `git ls-files` mostrar arquivos em `.godot/`, eles entraram antes do `.gitignore` e continuam no indice: tire com `git rm -r --cached <projeto>/.godot` (os arquivos ficam no disco) e diga no inventario.");
   L.push("- **O `GUIA-DO-KIT.md` e do kit (`do-kit`): substitua o vivo pelo do pacote, inteiro.** Desde a v1.151.0, quatro secoes sairam do CEREBRO para ele (o update, a transferencia de reserva no canal pasta, a sonda e a correspondencia): no inventario da fusao elas aparecem como «do vivo ficou de fora» — e **ficam de fora; nao as transplante de volta**. Antes de largar a versao viva delas, procure ali linha que este projeto acrescentou e que o GUIA do pacote nao tem: essa vai para «Tecnicas especificas deste projeto», no CEREBRO, e entra no inventario.");
   L.push("");
   L.push("Arquivos no pacote:");
