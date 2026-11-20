@@ -561,6 +561,9 @@
   .ncard:hover{transform:translateY(-3px);border-color:var(--cardc);box-shadow:0 10px 30px rgba(0,0,0,.5)}
   .ncard:hover::before{opacity:.22}
   .ncard.active{border-color:var(--cardc);box-shadow:inset 0 0 0 1px var(--cardc),0 12px 32px rgba(0,0,0,.5)}
+  /* wo0191 (D-192): o nicho salvo e um card ao lado do Custom, separado pelo tracejado e pelo selo */
+  .ncard.saved{border-style:dashed}
+  .ncard.saved .badge{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
   .ncard .icn{font-size:21px;line-height:1;margin-bottom:2px;color:var(--cardc)}
   .ncard .name{font-family:var(--mono);font-size:13.5px;color:var(--cardc);font-weight:500;letter-spacing:.2px}
   .ncard .desc{font-size:11.5px;color:var(--ink-dim);line-height:1.4;margin-top:1px}
@@ -617,7 +620,6 @@
 
     <div class="ov-sec">Personalizado</div>
     <div class="ngrid" id="ng-custom"></div>
-    <div class="ng-saved" id="ng-custom-saved" style="max-width:260px;margin-top:12px"></div>
   </div>
 </div>
 
@@ -1321,7 +1323,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.154.0";
+const KIT_VERSION = "1.155.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -8553,6 +8555,22 @@ function fileTag(f){
 /* =========================================================
    1. NICHE CARDS (overlay)
    ========================================================= */
+/* wo0191 (D-192): os nichos salvos (presets do Custom) como cards na escolha de nicho, ao lado do Custom e marcados
+   como separados (tracejado e o selo «salvo»). Pura sobre o localStorage, testavel no harness. */
+function savedPresetCardsHTML(){
+  const ps = (typeof listPresets === "function") ? listPresets() : [];
+  const ativo = STATE.niche === "custom" && STATE.customPreset && STATE.customPreset.name;
+  return ps.map(pr => {
+    const nA = (pr.contextFiles || []).length, nB = (pr.behaviors || []).length;
+    return `<div class="ncard saved${ativo === pr.name ? " active" : ""}" data-preset="${escAttr(pr.name)}" style="--cardc:${pr.cardColor || "var(--ink-faint)"}">
+        <span class="badge">salvo</span>
+        <div class="icn">${pr.icon || "⚙"}</div>
+        <div class="name">${escapeHTML(pr.label || pr.name)}</div>
+        <div class="desc">Nicho salvo do Custom: ${nA} arquivo${nA === 1 ? "" : "s"}, ${nB} comportamento${nB === 1 ? "" : "s"} do nicho.</div>
+        <div class="tags"><span>${escapeHTML(pr.name)}</span></div>
+      </div>`;
+  }).join("");
+}
 function renderNicheCards(){
   const groups = { core:[], creative:[], special:[], custom:[] };
   Object.values(NICHES).forEach(n => {
@@ -8575,13 +8593,21 @@ function renderNicheCards(){
   fillGrid($("#ng-core"), groups.core);
   fillGrid($("#ng-creative"), groups.creative);
   fillGrid($("#ng-custom"), groups.special);
-  // wo0190 (D-191, i-N102 item 2): os nichos salvos moram abaixo do card do Custom, nao na barra de cima de todo nicho
-  const sv = $("#ng-custom-saved");
-  if(sv){ sv.innerHTML = savedNichesShortcutHTML(); wireSavedNichesShortcut(); }
+  // wo0191 (D-192, i-N102 item 2, corrigido): cada nicho salvo ganha o seu card ao lado do Custom
+  const gc = $("#ng-custom");
+  if(gc) gc.insertAdjacentHTML("beforeend", savedPresetCardsHTML());
 
-  $$(".ncard").forEach(card => {
+  $$(".ncard[data-id]").forEach(card => {
     card.addEventListener("click", () => {
       setNiche(card.dataset.id);
+      closeOverlay();
+    });
+  });
+  $$(".ncard[data-preset]").forEach(card => {
+    card.addEventListener("click", () => {
+      if(!listPresets().find(pr => pr.name === card.dataset.preset)) return;
+      localStorage.setItem(LS_PRESET_CURR, card.dataset.preset);
+      setNiche("custom");
       closeOverlay();
     });
   });
@@ -8640,7 +8666,8 @@ function setNiche(id){
 
   $("#foot-niche").textContent = `${niche.label} · v${KIT_VERSION}`;
 
-  $$(".ncard").forEach(c => c.classList.toggle("active", c.dataset.id === id));
+  $$(".ncard[data-id]").forEach(c => c.classList.toggle("active", c.dataset.id === id && !(id === "custom" && STATE.customPreset)));
+  $$(".ncard[data-preset]").forEach(c => c.classList.toggle("active", !!(id === "custom" && STATE.customPreset && STATE.customPreset.name === c.dataset.preset)));
 
   persistState();
   updatePreview();
@@ -8934,9 +8961,11 @@ function renderTopbar(niche){
   const host = $("#topbar");
   if(!host) return;
   const fields = (niche.topbar || []).filter(f => f.panel !== "modal");
-  const _saved = ""; // wo0190 (D-191): «Nichos salvos» saiu da barra de cima; mora abaixo do card do Custom
+  // wo0191 (D-192): o seletor de nichos salvos fica na barra de cima do Custom (vazio ou com um salvo ativo), e so dele
+  const _saved = STATE.niche === "custom" ? savedNichesShortcutHTML() : "";
   if(fields.length === 0){
     host.innerHTML = modesClusterHTML() + _saved + actionsClusterHTML();
+    wireSavedNichesShortcut();
     wireModes();
     wireActions();
     return;

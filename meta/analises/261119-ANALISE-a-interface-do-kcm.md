@@ -2,7 +2,7 @@
 
 > **Status:** Decidida (2026-11-19, KCM 29: como recomendado — U1, duas WOs; a linha «quando usar» à vista; o índice rola e copia; os nichos salvos num seletor abaixo do card do Custom)
 > **Data:** 261119 · **Base:** v1.153.0, HEAD `b828a8b` (wo0189), árvore limpa (só `?? .claude/launch.json`)
-> **Vira:** a WO A na wo0190 (v1.154.0; o `G17`, que exigia o Engine no modal, foi revisto); a WO B depois · **Decisão:** `D-191`
+> **Vira:** a WO A na wo0190 (v1.154.0; o `G17`, que exigia o Engine no modal, foi revisto); o item 2 (os nichos salvos) estava lido ao contrário nesta análise e foi corrigido na wo0191 (v1.155.0, `D-192`): cards ao lado do Custom, o seletor na barra do Custom; a WO B depois · **Decisão:** `D-191`
 > **Raia:** Chat (análise; **não** é WO). **Entrada do IDEAS:** `i-N102` (a nota do dono `261119-1958` e quatro capturas de tela).
 > **Método:** leitura do `src/index.template.html` da v1.153.0 (o CSS da sobreposição e do modal, `renderTopbar`, `savedNichesShortcutHTML`, `renderPrompts`, `renderBehaviors`, o formulário do Custom); sonda em Node sobre os 222 prompts dos 19 nichos (o corpo renderizado com o campo vazio); as quatro capturas do dono; pesquisa de fora.
 

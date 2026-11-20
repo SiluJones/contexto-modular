@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3095,7 +3095,7 @@ check("C128 a engine no nicho de jogo (wo0188, D-190): com o Godot, o .gitignore
 
 // wo0190 (D-191, analise 261119 da interface, i-N102): a WO A — os defeitos de rolagem, a copia sem o marcador,
 // o «Engine» na barra de cima do jogo, e «Nichos salvos» fora da barra de cima de todo nicho.
-check("C129 a interface, WO A (wo0190, D-191): a rolagem contida no modal e travada na escolha de nicho, a copia do prompt sem o marcador vazio, o Engine na barra do jogo, e os nichos salvos abaixo do card do Custom", () => {
+check("C129 a interface, WO A (wo0190, D-191): a rolagem contida no modal e travada na escolha de nicho, a copia do prompt sem o marcador vazio, o Engine na barra do jogo, e os nichos salvos: o seletor na barra do Custom, os cards ao lado dele (corrigido na wo0191)", () => {
   const html = fs.readFileSync(path, "utf8");
   ["html:has(.overlay.on){overflow:hidden}", ".cfg:modal{overscroll-behavior:contain}", "overflow:hidden;overscroll-behavior:contain}", ".cfg-body{padding:18px 20px;overflow:auto;overscroll-behavior:contain}"].forEach(k =>
     assert(html.indexOf(k) > -1, "CSS sem: " + k));
@@ -3119,9 +3119,19 @@ check("C129 a interface, WO A (wo0190, D-191): a rolagem contida no modal e trav
   assert(/promptCopyText\(/.test(T.renderPrompts.toString()), "o botao de copiar nao usa promptCopyText");
   const eng = (T.NICHES.game.topbar || []).find(f => f.id === "engineSel");
   assert(eng && eng.panel !== "modal", "o Engine do jogo ainda mora no modal");
-  assert(!/savedNichesShortcutHTML\(\)/.test(T.renderTopbar.toString()), "Nichos salvos ainda na barra de cima");
-  assert(/savedNichesShortcutHTML\(\)/.test(T.renderNicheCards.toString()) && html.indexOf('id="ng-custom-saved"') > -1, "Nichos salvos nao foi para baixo do card do Custom");
-  return "ok (a copia sem o marcador em " + com + " prompts; o CSS da rolagem; o Engine na barra; os nichos salvos no card do Custom)";
+  // wo0191 (D-192): a wo0190 tinha lido o pedido ao contrario. O seletor fica na barra de cima do Custom (e so dele);
+  // na escolha de nicho, cada nicho salvo vira um card ao lado do Custom, tracejado e com o selo «salvo».
+  assert(/STATE\.niche === "custom" \? savedNichesShortcutHTML\(\)/.test(T.renderTopbar.toString()), "o seletor de nichos salvos nao esta na barra de cima do Custom (ou aparece fora dele)");
+  assert(/savedPresetCardsHTML\(\)/.test(T.renderNicheCards.toString()) && html.indexOf('id="ng-custom-saved"') < 0, "a escolha de nicho nao desenha os cards dos nichos salvos (ou ainda tem o seletor)");
+  const LS = T.localStorage, antes = LS.getItem(T.LS_PRESETS);
+  try {
+    LS.setItem(T.LS_PRESETS, JSON.stringify([{ name: "teste-a", label: "Teste A", contextFiles: [{}, {}], behaviors: [] }, { name: "teste-b", label: "Teste B" }]));
+    const cards = T.savedPresetCardsHTML();
+    assert((cards.match(/class="ncard saved/g) || []).length === 2 && /data-preset="teste-a"/.test(cards) && /data-preset="teste-b"/.test(cards) && />salvo</.test(cards), "os cards dos nichos salvos nao saem um por preset, tracejados e com o selo");
+    LS.setItem(T.LS_PRESETS, "[]");
+    assert(T.savedPresetCardsHTML() === "", "sem nicho salvo, a escolha de nicho ainda desenha card");
+  } finally { if(antes === null) LS.removeItem(T.LS_PRESETS); else LS.setItem(T.LS_PRESETS, antes); }
+  return "ok (a copia sem o marcador em " + com + " prompts; o CSS da rolagem; o Engine na barra; o seletor na barra do Custom e os cards dos nichos salvos ao lado dele)";
 });
 
 // ============ SUMARIO ============

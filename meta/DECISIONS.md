@@ -2506,3 +2506,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **O contrário, registrado.** Travar a página na sobreposição contraria a regra geral do Chrome para modais; aqui o motivo é a barra dupla, e o `scrollbar-gutter` evita o pulo do layout. Fora do Chrome recente, o modal sem rolagem própria ainda deixa a página rolar — melhoria progressiva.
 
 **Números** `[medido na réplica do HEAD b828a8b com os arquivos do chat por cima]`: `index.html` 1.043.791 → 1.045.251 bytes; harness 129/129 → 130/130; o que o kit gera (Instruções, CEREBRO, GUIA, pacote) sem mudança; `C28` sem mudança. O `C129` com uma prova negativa, vermelha e restaurada (o botão de copiar sem `promptCopyText`). Corta a **v1.154.0** (`D-158`).
+
+## D-192 — Os nichos salvos: um card por nicho salvo ao lado do Custom, e o seletor na barra de cima do Custom (corrige a D-191 no item 2)
+
+**Data:** 2026-11-19 · **WO:** 0191 · **Origem:** as duas capturas do dono de 19/11 (22h13 e 22h14, na pasta do satelite-web), depois do roteiro da wo0190: «eu queria que no espaço onde seleciona nicho fossem gerados os quadrados de blocos para os nichos personalizados, para irem ficando do lado (mas claramente sinalizado como separado) do custom, enquanto o seletor de nicho personalizado era para continuar aparecendo no header de qualquer nicho personalizado e obviamente no do custom» `[relatado pelo dono]`.
+
+**Decisão.** (1) Na escolha de nicho, cada nicho salvo é um card na seção «Personalizado», ao lado do Custom, com borda tracejada e o selo «salvo»; o clique ativa o nicho salvo e fecha a tela (`savedPresetCardsHTML`, pura sobre o `localStorage`). (2) O seletor «Nichos salvos» fica na barra de cima do Custom — vazio ou com um nicho salvo ativo — e não aparece nos nichos prontos. (3) Sai o seletor abaixo do card do Custom que a wo0190 tinha posto.
+
+**Por quê.** A `D-191` leu o item 2 da nota ao contrário: tirou o seletor da barra de cima de todo nicho, inclusive do Custom, e pôs um seletor onde o dono queria cards. O roteiro de tela passou 6/6 porque conferia a leitura errada — o roteiro confere o que a WO diz, não o que o dono quis. O `C129` cobrava a mesma leitura errada.
+
+**O contrário, registrado.** Nada a pesar: é o pedido do dono, desenhado por ele nas capturas.
+
+**Números** `[medido na réplica do HEAD 3c4f07c com os arquivos do chat por cima]`: `index.html` 1.045.251 → 1.047.234 bytes; harness 130/130 (o `C129` corrigido, sem check novo); o que o kit gera sem mudança. Uma prova negativa, vermelha e restaurada: o seletor na barra de cima de todo nicho → `C129`. Corta a **v1.155.0** (`D-158`).
