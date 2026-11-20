@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.155.0**.
+> Histórico de versões. Versão atual: **v1.156.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.156.0 — A interface, segunda parte: os prompts e os blocos das Instruções recolhem, e o índice lateral leva e copia (wo0192, D-193)
+- **Os prompts vêm recolhidos.** À vista ficam a letra, o título, a linha «quando usar», o copiar e o campo da solicitação; o corpo abre no «ver o prompt». O campo começa com uma linha e cresce com o texto até 5 linhas; depois rola por dentro.
+- **O índice lateral** da aba de Prompts lista a letra e o título de cada prompt; o clique leva até ele e já o copia, com o aviso «copiado». Em tela estreita, o índice vai para baixo.
+- **Os blocos das Instruções** (Comportamento, o específico do nicho, Convenções, Saídas obrigatórias, Regras adicionais) vêm recolhidos, com a contagem no cabeçalho («18 de 20 marcados», «vazio») e um botão para abrir ou fechar todos.
+- **`C130` novo** (130 → 131), rodando no DOM do jsdom.
+- **Origem:** a nota do dono de 19/11 (`i-N102` itens 4, 6 e 7) e a análise `261119` da interface. Harness **19/19 · 131/131**.
 
 ## v1.155.0 — Os nichos salvos como o dono pediu: um card por nicho salvo ao lado do Custom, e o seletor de volta na barra do Custom (wo0191, D-192)
 - **Na escolha de nicho, cada nicho salvo ganha o seu card** na seção «Personalizado», ao lado do Custom, separado pelo tracejado e pelo selo «salvo»; o clique ativa o nicho e fecha a tela. Sai o seletor que a v1.154.0 tinha posto abaixo do card do Custom.

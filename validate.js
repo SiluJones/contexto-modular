@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3132,6 +3132,52 @@ check("C129 a interface, WO A (wo0190, D-191): a rolagem contida no modal e trav
     assert(T.savedPresetCardsHTML() === "", "sem nicho salvo, a escolha de nicho ainda desenha card");
   } finally { if(antes === null) LS.removeItem(T.LS_PRESETS); else LS.setItem(T.LS_PRESETS, antes); }
   return "ok (a copia sem o marcador em " + com + " prompts; o CSS da rolagem; o Engine na barra; o seletor na barra do Custom e os cards dos nichos salvos ao lado dele)";
+});
+
+// wo0192 (D-193, analise 261119 da interface, WO B): o que recolhe. Roda no DOM do jsdom: o prompt recolhido com a
+// linha «quando usar» e o campo a vista, o indice lateral que leva e copia, e os blocos das Instrucoes com a contagem.
+check("C130 a interface, WO B (wo0192, D-193): os prompts recolhidos com o «quando usar» e o campo a vista, o campo que cresce ate 5 linhas, o indice que leva e copia, e os blocos das Instrucoes recolhidos com a contagem", () => {
+  const D = T.document; const S = T.STATE; const prevN = S.niche;
+  const host = D.createElement("div"); host.id = "prompt-cards"; D.body.appendChild(host);
+  let vistos = 0;
+  try {
+    ["dev", "narrative", "custom"].forEach(id => {
+      S.niche = id; const n = T.normNiche(T.NICHES[id]);
+      const all = [...T.PROMPTS_BASE, ...(n.promptsExtra || [])];
+      T.renderPrompts(n);
+      const cards = host.querySelectorAll(".pcard");
+      assert(cards.length === all.length, id + ": " + cards.length + " cards para " + all.length + " prompts");
+      cards.forEach(c => {
+        assert(c.classList.contains("closed"), id + "/" + c.dataset.pid + ": o prompt nao vem recolhido");
+        assert(c.querySelector(".pwhen") && c.querySelector("[data-cp]") && c.querySelector("[data-toggle]"), id + "/" + c.dataset.pid + ": faltou o «quando usar», o copiar ou o abrir");
+        const ta = c.querySelector("textarea[data-fill]");
+        if(ta) assert(ta.getAttribute("rows") === "1", id + "/" + c.dataset.pid + ": o campo nao comeca com uma linha");
+      });
+      const ix = host.querySelectorAll(".pindex [data-goto]");
+      assert(ix.length === all.length, id + ": o indice tem " + ix.length + " de " + all.length + " prompts");
+      const c0 = cards[0]; c0.querySelector("[data-toggle]").click();
+      assert(!c0.classList.contains("closed"), id + ": o abrir nao abriu o prompt");
+      ix[0].click();
+      assert(/copiado/.test(ix[0].textContent), id + ": o indice nao avisou «copiado»");
+      vistos++;
+    });
+    assert(T.PFILL_MAX_LINHAS === 5 && /PFILL_MAX_LINHAS/.test(T.autoGrowFill.toString()), "o campo nao tem o limite de 5 linhas");
+    // os blocos das Instrucoes, num DOM sintetico com a forma do construtor
+    const box = D.createElement("div"); box.className = "controls";
+    box.innerHTML = '<div class="group"><div class="glabel">Comportamento</div><div id="g-behaviors"><label><input type="checkbox" checked></label><label><input type="checkbox" checked></label><label><input type="checkbox"></label></div></div>'
+      + '<div class="group"><div class="glabel">Regras adicionais</div><textarea></textarea></div>';
+    D.body.appendChild(box);
+    T.enhanceCollapsibleGroups(box);
+    const gs = box.querySelectorAll(".group.collap");
+    assert(gs.length === 2 && gs[0].classList.contains("closed") && gs[1].classList.contains("closed"), "os blocos nao vem recolhidos");
+    assert(/2 de 3 marcados/.test(gs[0].querySelector(".gcount").textContent) && /vazio/.test(gs[1].querySelector(".gcount").textContent), "a contagem do cabecalho nao diz o que esta marcado");
+    box.querySelector("[data-collap-all]").click();
+    assert(!gs[0].classList.contains("closed") && !gs[1].classList.contains("closed"), "o abrir tudo nao abriu");
+    gs[0].querySelector(".glabel").click();
+    assert(gs[0].classList.contains("closed"), "o clique no cabecalho nao recolheu o bloco");
+    box.remove();
+  } finally { S.niche = prevN; host.remove(); }
+  return "ok (" + vistos + " nichos com os prompts recolhidos e o indice; o campo ate 5 linhas; os blocos com a contagem e o abrir tudo)";
 });
 
 // ============ SUMARIO ============

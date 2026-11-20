@@ -291,6 +291,25 @@
   .pwhen{margin:0 0 12px;font-size:13px;color:var(--ink-faint);font-style:italic}
   .pfill{margin-bottom:10px}
   .pfill label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+  /* wo0192 (D-193): o prompt recolhido, o indice lateral e os blocos das Instrucoes que recolhem */
+  .pwrap{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:18px;align-items:start}
+  .pcard.closed pre{display:none}
+  .pfill textarea{resize:none;overflow-y:hidden;min-height:0}
+  .pindex{position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;overscroll-behavior:contain;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:10px}
+  .pindex-h{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);margin:2px 4px 8px}
+  .pix{display:flex;gap:8px;align-items:baseline;width:100%;text-align:left;background:transparent;border:0;border-radius:6px;padding:5px 6px;color:var(--ink-dim);cursor:pointer;font-size:12px}
+  .pix:hover{background:rgba(255,255,255,.05);color:var(--ink)}
+  .pix b{font-family:var(--mono);color:var(--amber);min-width:18px}
+  .pix span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pix.copied{color:var(--green)}
+  @media (max-width: 1100px){ .pwrap{grid-template-columns:1fr} .pindex{position:static;max-height:none} }
+  .collap-bar{display:flex;justify-content:flex-end;margin-bottom:-4px}
+  .group.collap>.glabel{cursor:pointer;user-select:none;margin-bottom:14px}
+  .group.collap>.glabel::before{content:"▾";font-size:10px;color:var(--ink-faint)}
+  .group.collap.closed>.glabel{margin-bottom:0}
+  .group.collap.closed>.glabel::before{content:"▸"}
+  .group.collap.closed>:not(.glabel){display:none}
+  .gcount{margin-left:auto;font-size:10px;letter-spacing:.5px;color:var(--ink-faint);text-transform:none}
 
   /* templates */
   .tpl{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;margin-bottom:9px}
@@ -1323,7 +1342,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.155.0";
+const KIT_VERSION = "1.156.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2258,8 +2277,57 @@ function renderBuilder(niche){
     osSel.onchange = (e) => { OSENV.value = e.target.value; STATE.os = e.target.value; persistState(); updatePreview(); };
   }
   injectActiveCustomBar(niche);
+  enhanceCollapsibleGroups();
 }
 
+/* wo0192 (D-193, WO B): os blocos das Instrucoes recolhem. Padrao recolhido; o cabecalho mostra a contagem
+   («18 de 20 marcados») para o dono ver o que esta desmarcado sem abrir; um botao abre ou fecha todos.
+   Recebe a raiz (testavel no harness com um DOM sintetico). */
+const GRUPO_ABERTO = {};
+function grupoResumo(g){
+  const cb = g.querySelectorAll('input[type="checkbox"]');
+  if(cb.length){ let n = 0; cb.forEach(c => { if(c.checked) n++; }); return n + " de " + cb.length + " marcados"; }
+  const ta = g.querySelector("textarea");
+  if(ta) return String(ta.value || "").trim() ? "preenchido" : "vazio";
+  const ch = g.querySelectorAll(".chip.on, .chip.active, [aria-pressed=\"true\"]");
+  return ch.length ? ch.length + " escolhido" + (ch.length === 1 ? "" : "s") : "";
+}
+function enhanceCollapsibleGroups(root){
+  const box = root || document.querySelector(".builder .controls");
+  if(!box || !box.querySelector("#g-behaviors")) return;
+  const groups = Array.from(box.children).filter(g => g.classList && g.classList.contains("group") && g.querySelector(".glabel"));
+  groups.forEach((g, i) => {
+    const lab = g.querySelector(".glabel");
+    const key = g.id || ("grupo-" + i);
+    g.classList.add("collap");
+    g.classList.toggle("closed", !GRUPO_ABERTO[key]);
+    let cnt = lab.querySelector(".gcount");
+    if(!cnt){ cnt = document.createElement("span"); cnt.className = "gcount"; lab.appendChild(cnt); }
+    cnt.textContent = grupoResumo(g);
+    lab.setAttribute("role", "button"); lab.setAttribute("tabindex", "0");
+    lab.setAttribute("aria-expanded", GRUPO_ABERTO[key] ? "true" : "false");
+    if(!lab.dataset.collap){
+      lab.dataset.collap = "1";
+      const alterna = () => { GRUPO_ABERTO[key] = !GRUPO_ABERTO[key]; g.classList.toggle("closed", !GRUPO_ABERTO[key]); lab.setAttribute("aria-expanded", GRUPO_ABERTO[key] ? "true" : "false"); };
+      lab.addEventListener("click", e => { if(e.target && e.target.closest && e.target.closest("input,select,textarea,button")) return; alterna(); });
+      lab.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); alterna(); } });
+      g.addEventListener("change", () => { cnt.textContent = grupoResumo(g); });
+      g.addEventListener("input", () => { cnt.textContent = grupoResumo(g); });
+    }
+  });
+  let bar = box.querySelector(".collap-bar");
+  if(!bar){
+    bar = document.createElement("div"); bar.className = "collap-bar";
+    bar.innerHTML = '<button type="button" class="btn ghost sm" data-collap-all>▾ abrir tudo</button>';
+    box.insertBefore(bar, box.firstChild);
+    bar.querySelector("[data-collap-all]").addEventListener("click", () => {
+      const gs = Array.from(box.children).filter(x => x.classList && x.classList.contains("collap"));
+      const abrir = gs.some(x => x.classList.contains("closed"));
+      gs.forEach((x, j) => { const k = x.id || ("grupo-" + (j)); GRUPO_ABERTO[k] = abrir; x.classList.toggle("closed", !abrir); const l = x.querySelector(".glabel"); if(l) l.setAttribute("aria-expanded", abrir ? "true" : "false"); });
+      bar.querySelector("[data-collap-all]").textContent = abrir ? "▸ fechar tudo" : "▾ abrir tudo";
+    });
+  }
+}
 function renderBehaviors(niche){
   const host = $("#g-behaviors");
   if(!host) return;
@@ -3341,6 +3409,25 @@ function promptCopyText(body, valor){
   if(String(valor || "").trim()) return b;
   return b.replace(PROMPT_MARCADOR_FIM, "").replace(/\s+$/, "");
 }
+/* wo0192 (D-193, analise 261119 da interface, WO B): o prompt recolhido — a letra, o titulo, a linha «quando usar»,
+   o copiar e o campo a vista; o corpo abre no clique. O campo cresce ate PFILL_MAX_LINHAS e entao rola por dentro.
+   O indice lateral leva ate o prompt e ja o copia, com o aviso «copiado». */
+const PFILL_MAX_LINHAS = 5;
+function autoGrowFill(t){
+  if(!t || !t.style) return;
+  const cs = (typeof getComputedStyle === "function") ? getComputedStyle(t) : null;
+  const lh = cs ? (parseFloat(cs.lineHeight) || 19) : 19;
+  const pad = cs ? ((parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0) + (parseFloat(cs.borderTopWidth) || 0) + (parseFloat(cs.borderBottomWidth) || 0)) : 0;
+  const max = Math.round(lh * PFILL_MAX_LINHAS + pad);
+  t.style.height = "auto";
+  const h = Math.min(t.scrollHeight || 0, max);
+  if(h > 0) t.style.height = h + "px";
+  t.style.overflowY = (t.scrollHeight > max) ? "auto" : "hidden";
+}
+function promptIndexHTML(all){
+  return `<nav class="pindex" aria-label="Índice dos prompts"><div class="pindex-h">Índice · clique leva e copia</div>` +
+    all.map(pr => `<button type="button" class="pix" data-goto="${escAttr(pr.id)}" title="${escAttr(pr.title||"")}"><b>${escapeHTML(pr.id)}</b><span>${escapeHTML(pr.title||"")}</span></button>`).join("") + `</nav>`;
+}
 function renderPrompts(niche){
   if(!niche) niche = getCurrentNiche();
   if(!niche) return;
@@ -3349,55 +3436,78 @@ function renderPrompts(niche){
 
   const all = [...PROMPTS_BASE, ...(niche.promptsExtra||[])];
   const p = STATE.fillValues;
+  const bodyOf = (pr, vals) => {
+    try { return typeof pr.body === "function" ? pr.body(vals, niche) : String(pr.body||""); }
+    catch(e){ return `[erro ao renderizar: ${e.message}]`; }
+  };
 
-  host.innerHTML = all.map(pr => {
-    let body;
-    try {
-      body = typeof pr.body === "function" ? pr.body(p, niche) : String(pr.body||"");
-    } catch(e){
-      body = `[erro ao renderizar: ${e.message}]`;
-    }
+  const cards = all.map(pr => {
+    const body = bodyOf(pr, p);
     const fillBox = pr.fill ? `
       <div class="pfill">
         <label>${escapeHTML(pr.fillLabel || "Substitui o marcador no corpo:")}</label>
-        <textarea class="txt" data-fill="${pr.fill}" rows="2" placeholder="(opcional — deixar vazio mantém o marcador)">${escapeHTML(p[pr.fill]||"")}</textarea>
+        <textarea class="txt" data-fill="${pr.fill}" rows="1" placeholder="(opcional — deixar vazio mantém o marcador na tela, e ele não vai na cópia)">${escapeHTML(p[pr.fill]||"")}</textarea>
       </div>` : "";
     return `
-      <div class="pcard">
+      <div class="pcard closed" id="pcard-${escAttr(pr.id)}" data-pid="${escAttr(pr.id)}">
         <div class="ph">
           <span class="ptag">${pr.id}</span>
           <h3>${escapeHTML(pr.title||"")}</h3>
-          <button class="btn ghost sm" data-cp="${pr.id}" style="margin-left:auto">⧉ copiar</button>
+          <button type="button" class="btn ghost sm ptoggle" data-toggle="${pr.id}" aria-expanded="false" style="margin-left:auto">▸ ver o prompt</button>
+          <button class="btn ghost sm" data-cp="${pr.id}">⧉ copiar</button>
         </div>
         <p class="pwhen">${escapeHTML(pr.when||"")}</p>
         ${fillBox}
         <pre data-body="${pr.id}">${escapeHTML(body)}</pre>
       </div>`;
   }).join("");
+  host.innerHTML = `<div class="pwrap"><div class="plist">${cards}</div>${promptIndexHTML(all)}</div>`;
+
+  const copyOf = (id) => {
+    const pr = all.find(x => x.id === id);
+    const card = host.querySelector(`[data-pid="${id}"]`);
+    if(!pr || !card) return "";
+    return promptCopyText(card.querySelector("[data-body]").textContent, pr.fill ? STATE.fillValues[pr.fill] : "x");
+  };
+  const flash = (btn, txt) => {
+    const old = btn.innerHTML;
+    btn.classList.add("copied"); btn.textContent = txt;
+    setTimeout(() => { btn.classList.remove("copied"); btn.innerHTML = old; }, 1400);
+  };
+  const copiar = (id, btn, txt) => {
+    const text = copyOf(id);
+    const ok = () => flash(btn, txt);
+    if(typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, ok);
+    else ok();
+    return text;
+  };
 
   host.querySelectorAll("[data-fill]").forEach(t => {
+    autoGrowFill(t);
     t.addEventListener("input", () => {
+      autoGrowFill(t);
       STATE.fillValues[t.dataset.fill] = t.value;
       const card = t.closest(".pcard");
-      const id = card.querySelector("[data-cp]").dataset.cp;
-      const pr = all.find(x => x.id === id);
-      if(pr){
-        let body;
-        try { body = typeof pr.body === "function" ? pr.body(STATE.fillValues, niche) : String(pr.body||""); }
-        catch(e){ body = `[erro: ${e.message}]`; }
-        card.querySelector("[data-body]").textContent = body;
-      }
+      const pr = all.find(x => x.id === card.dataset.pid);
+      if(pr) card.querySelector("[data-body]").textContent = bodyOf(pr, STATE.fillValues);
+    });
+  });
+  host.querySelectorAll("[data-toggle]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".pcard");
+      const aberto = card.classList.toggle("closed") === false;
+      btn.setAttribute("aria-expanded", aberto ? "true" : "false");
+      btn.textContent = aberto ? "▾ recolher" : "▸ ver o prompt";
     });
   });
   host.querySelectorAll("[data-cp]").forEach(btn => {
+    btn.addEventListener("click", () => copiar(btn.dataset.cp, btn, "✓ copiado"));
+  });
+  host.querySelectorAll("[data-goto]").forEach(btn => {
     btn.addEventListener("click", () => {
-      const card = btn.closest(".pcard");
-      const prc = all.find(x => x.id === btn.dataset.cp);
-      const text = promptCopyText(card.querySelector("[data-body]").textContent, prc && prc.fill ? STATE.fillValues[prc.fill] : "x");
-      navigator.clipboard.writeText(text).then(() => {
-        btn.classList.add("copied"); btn.textContent = "✓ copiado";
-        setTimeout(() => { btn.classList.remove("copied"); btn.textContent = "⧉ copiar"; }, 1400);
-      });
+      const card = host.querySelector(`[data-pid="${btn.dataset.goto}"]`);
+      if(card && card.scrollIntoView) card.scrollIntoView({ behavior:"smooth", block:"start" });
+      copiar(btn.dataset.goto, btn, "✓ " + btn.dataset.goto + " copiado");
     });
   });
 }

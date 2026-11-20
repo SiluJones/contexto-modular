@@ -2518,3 +2518,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **O contrário, registrado.** Nada a pesar: é o pedido do dono, desenhado por ele nas capturas.
 
 **Números** `[medido na réplica do HEAD 3c4f07c com os arquivos do chat por cima]`: `index.html` 1.045.251 → 1.047.234 bytes; harness 130/130 (o `C129` corrigido, sem check novo); o que o kit gera sem mudança. Uma prova negativa, vermelha e restaurada: o seletor na barra de cima de todo nicho → `C129`. Corta a **v1.155.0** (`D-158`).
+
+## D-193 — A interface, WO B: os prompts e os blocos das Instruções recolhem, com o que decide à vista; o índice lateral leva e copia
+
+**Data:** 2026-11-20 · **WO:** 0192 (a segunda das duas da `D-191`) · **Origem:** a análise `meta/analises/261119-ANALISE-a-interface-do-kcm.md`, decidida pelo dono em 2026-11-19 (`D-191`); a nota `261119-1958` (`i-N102` itens 4, 6 e 7).
+
+**Decisão.** (1) **Prompts:** cada card vem recolhido; à vista ficam a letra, o título, a linha «quando usar», o copiar e o campo da solicitação; o corpo abre no clique. O campo começa com uma linha e cresce até 5 (`PFILL_MAX_LINHAS`), depois rola por dentro. (2) **Índice lateral** na aba de Prompts (letra e título), cujo clique rola até o prompt e o copia (pela `promptCopyText`), com o aviso «copiado»; em tela estreita, vai para baixo dos cards. (3) **Blocos das Instruções** recolhidos por padrão (`enhanceCollapsibleGroups`), com a contagem no cabeçalho e um botão para abrir ou fechar todos. O formulário do Custom fica como está.
+
+**Por quê.** A aba de Prompts mostrava até 13 corpos abertos (mediana de 728 caracteres) e a de Instruções, cada comportamento com a definição inteira. O dono usa um prompt por vez; nas Instruções, revisa vários blocos — por isso o cabeçalho conta o que está marcado, e o que fica à vista no prompt recolhido é o que decide se ele serve (a linha «quando usar»): o conteúdo recolhido pode passar despercebido (Nielsen Norman).
+
+**O contrário, registrado.** O clique no índice copia sem perguntar e sobrescreve a área de transferência — é o pedido do dono; o aviso «copiado» mostra o que aconteceu.
+
+**Números** `[medido na réplica do HEAD 9b2fb01 com os arquivos do chat por cima]`: `index.html` 1.047.234 → 1.054.823 bytes; harness 130/130 → 131/131; o que o kit gera sem mudança. O `C130` roda no DOM do jsdom (três nichos, os 13 prompts do `narrative`, um bloco sintético das Instruções) e tem uma prova negativa, vermelha e restaurada (o card sem o recolhido). Corta a **v1.156.0** (`D-158`).
