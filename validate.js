@@ -3198,6 +3198,28 @@ check("C130 a interface, WO B (wo0192, D-193): os prompts recolhidos com o «qua
   return "ok (" + vistos + " nichos com os prompts recolhidos, o abrir longe do copiar, a faixa de baixo e o indice; a --topo; o campo ate 5 linhas; os blocos com a contagem e o abrir tudo)";
 });
 
+// wo0194 (D-195): o titulo das Instrucoes mora na coluna dos blocos, o preview sobe ao lado dele e fica inteiro na tela,
+// abaixo da barra de cima. Roda no DOM da pagina carregada (o titulo e o CSS) e no construtor de verdade (o «abrir tudo»).
+check("C131 as Instrucoes, o layout (wo0194, D-195): o titulo na coluna dos blocos, o preview sticky com a altura da tela abaixo da barra (--topo), e o «abrir tudo» depois do titulo", () => {
+  const P = new JSDOM(fs.readFileSync(path, "utf8")).window.document;  // a pagina como sai, sem rodar o script
+  const v = P.getElementById("v-instrucoes");
+  assert(v, "faltou a vista das Instrucoes");
+  const ctl = v.querySelector(".builder > .controls");
+  const cab = ctl && ctl.firstElementChild;
+  assert(cab && cab.classList.contains("bhead") && cab.querySelector("h1.page") && cab.querySelector(".lede"), "o titulo e o texto das Instrucoes nao abrem a coluna dos blocos");
+  assert(!Array.from(v.children).some(x => x.matches && x.matches("h1.page, p.lede")), "o titulo ainda ocupa a largura toda acima do construtor");
+  const css = Array.from(P.querySelectorAll("style")).map(s => s.textContent).join("\n");
+  const out = (css.match(/\.out\{position:sticky;[^}]*\}/) || [""])[0];
+  assert(/top:calc\(var\(--topo/.test(out) && /height:calc\(100vh - var\(--topo/.test(out), "o preview nao para abaixo da barra de cima ou nao tem a altura da tela: " + out.slice(0, 120));
+  const D = T.document; const box = D.createElement("div"); box.className = "controls"; box.innerHTML = ctl.innerHTML; D.body.appendChild(box);
+  try {
+    T.enhanceCollapsibleGroups(box);
+    const bar = box.querySelector(".collap-bar");
+    assert(bar && bar.previousElementSibling === box.querySelector(".bhead"), "o «abrir tudo» nao vem logo depois do titulo");
+  } finally { box.remove(); }
+  return "ok (o titulo na coluna, o preview com top e altura pela --topo, o abrir tudo depois do titulo)";
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

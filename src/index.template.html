@@ -274,7 +274,10 @@
   .txt:focus{outline:none;border-color:var(--amber)}
 
   /* output sticky preview */
-  .out{position:sticky;top:80px;background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;padding:18px;min-height:340px;max-height:calc(100vh - 110px);display:flex;flex-direction:column;box-shadow:var(--shadow)}
+  /* wo0194 (D-195): o preview sobe ao lado do titulo e fica inteiro na tela, abaixo da barra de cima (--topo) */
+  .out{position:sticky;top:calc(var(--topo,84px) + 14px);background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;padding:18px;min-height:340px;height:calc(100vh - var(--topo,84px) - 28px);display:flex;flex-direction:column;box-shadow:var(--shadow)}
+  .out pre{min-height:0}
+  .bhead .lede{margin:0}
   .outhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
   .outhead .ttl{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint)}
   .out-tabs{display:flex;gap:4px;background:var(--panel2);padding:3px;border-radius:9px;border:1px solid var(--line-soft)}
@@ -619,7 +622,8 @@
   }
   @media (max-width: 700px){
     .builder{grid-template-columns:1fr}
-    .out{position:static;max-height:none}
+    .out{position:static;max-height:none;height:auto}
+    .out pre{max-height:70vh}
   }
 </style>
 </head>
@@ -733,12 +737,13 @@
 
     <!-- ============ VIEW: INSTRUÇÕES ============ -->
     <section class="view" id="v-instrucoes">
-      <p class="kicker">Construtor</p>
-      <h1 class="page">Instruções do Projeto.</h1>
-      <p class="lede">Marque o que importa — o bloco à direita se atualiza em tempo real. Cole o resultado em <b>Projeto → Instruções</b> no Claude.ai. Tudo vem com padrões sensatos já marcados.</p>
-
       <div class="builder">
         <div class="controls">
+          <div class="bhead">
+            <p class="kicker">Construtor</p>
+            <h1 class="page">Instruções do Projeto.</h1>
+            <p class="lede">Marque o que importa — o bloco à direita se atualiza em tempo real. Cole o resultado em <b>Projeto → Instruções</b> no Claude.ai. Tudo vem com padrões sensatos já marcados.</p>
+          </div>
 
           <div class="group">
             <div class="glabel">Comportamento <span class="gn">· como o Claude trabalha</span></div>
@@ -1347,7 +1352,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.157.0";
+const KIT_VERSION = "1.158.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2325,7 +2330,8 @@ function enhanceCollapsibleGroups(root){
   if(!bar){
     bar = document.createElement("div"); bar.className = "collap-bar";
     bar.innerHTML = '<button type="button" class="btn ghost sm" data-collap-all>▾ abrir tudo</button>';
-    box.insertBefore(bar, box.firstChild);
+    const cab = Array.from(box.children).find(x => x.classList && x.classList.contains("bhead"));  // wo0194: o «abrir tudo» vem depois do titulo
+    box.insertBefore(bar, cab ? cab.nextSibling : box.firstChild);
     bar.querySelector("[data-collap-all]").addEventListener("click", () => {
       const gs = Array.from(box.children).filter(x => x.classList && x.classList.contains("collap"));
       const abrir = gs.some(x => x.classList.contains("closed"));

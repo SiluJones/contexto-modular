@@ -2542,3 +2542,13 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **O contrário, registrado.** O começo do corpo aumenta um pouco a altura do card recolhido (duas linhas por card). Se pesar, a faixa sozinha resolve.
 
 **Números** `[medido na réplica do HEAD 64baa49 com os arquivos do chat por cima]`: `index.html` 1.054.823 → 1.057.828 bytes; harness 131/131 (o `C130` ampliado); prova negativa vermelha e restaurada (o copiar sem o `margin-left:auto`). Corta a **v1.157.0** (`D-158`).
+
+## D-195 — Nas Instruções, o título mora na coluna dos blocos e o preview fica inteiro na tela, abaixo da barra
+
+**Data:** 2026-11-20 · **WO:** 0194 · **Origem:** o pedido do dono de 20/11 (roteiro da wo0193, 4/4): o texto «Instruções do Projeto. Marque o que importa…» pode ocupar a mesma coluna dos blocos, o bloco das instruções em tempo real sobe e se move com a página para sempre aparecer por inteiro, com o tamanho relativo à tela e sem ser escondido pela barra de cima.
+
+**Decisão.** (1) O kicker, o título e o texto de abertura entram num `.bhead` no topo da coluna `.controls`; o preview `.out` passa a começar na altura do título. (2) O `.out` fica sticky com `top` = `--topo` + 14 px e `height` = altura da tela − `--topo` − 28 px (a variável da `D-194`, medida da barra): sempre inteiro, e o texto rola por dentro. (3) O «abrir tudo» das Instruções vem logo depois do título. (4) Abaixo de 700 px nada muda no empilhamento; o preview rola por dentro até 70% da tela.
+
+**Por quê.** O preview é o produto da tela; com o título em cima de tudo, ele começava lá embaixo e, sticky a 80 px, ficava com as abas e o copiar sob a barra de cima (a captura de 12h39). Altura fixa pela tela, e não só máxima, faz o painel sempre aparecer inteiro, como o dono pediu.
+
+**Números** `[medido na réplica do HEAD 35b09ed com os arquivos do chat por cima]`: `index.html` 1.057.828 → 1.058.315 bytes; harness 131/131 → 132/132; o que o kit gera sem mudança. O `C131` lê a página como sai (sem rodar o script) e roda o construtor num DOM com a mesma coluna; prova negativa vermelha e restaurada (o `.out` de volta a `top:80px`). Corta a **v1.158.0** (`D-158`).

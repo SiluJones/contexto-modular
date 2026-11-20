@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.157.0**.
+> Histórico de versões. Versão atual: **v1.158.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.158.0 — Nas Instruções, o título vai para a coluna dos blocos e o preview sobe, inteiro na tela (wo0194, D-195)
+- **O título e o texto de abertura das Instruções** ocupam a coluna dos blocos, não a largura toda; o preview à direita começa na altura do título.
+- **O preview acompanha a rolagem e cabe inteiro na tela:** a altura vem da tela menos a barra de cima (a mesma `--topo` do índice dos Prompts). Na v1.157.0 a barra cobria o topo do preview — as abas e o copiar.
+- **O «abrir tudo»** vem logo depois do título. Abaixo de 700 px, tudo empilha e o preview rola por dentro até 70% da tela.
+- **`C131` novo** (131 → 132). **Origem:** o pedido do dono de 20/11 e as capturas dele. Harness **19/19 · 132/132**.
 
 ## v1.157.0 — O prompt abre por baixo também, o «ver o prompt» se afasta do copiar, e o índice para abaixo da barra (wo0193, D-194)
 - **O recolhido mostra o começo do corpo**, apagando para baixo, e o clique ali abre o prompt. Embaixo de cada card, uma faixa «ver o prompt inteiro» / «recolher o prompt»; recolher por ela devolve o topo do card à tela. O título também abre e recolhe.
