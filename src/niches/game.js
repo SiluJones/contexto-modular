@@ -12,7 +12,7 @@ NICHES.game = {
     { id:"project", label:"Jogo", placeholder:"ex: ecos-do-abismo" },
     { id:"genreSel", label:"Gênero", type:"multi", panel:"modal",
       options:["Ação","Plataforma","RPG","Estratégia","Puzzle","Roguelike","Metroidvania","Aventura","Simulação","Survival","Visual novel","Tiro","Card game","Outro"] },
-    { id:"engineSel", label:"Engine", type:"select", panel:"modal",
+    { id:"engineSel", label:"Engine", type:"select",
       options:["Godot","Unity","Unreal","GameMaker","Construct","Bevy","Phaser","LÖVE","RPG Maker","Própria","Indefinida"] },
     { id:"phase", label:"Fase", type:"select", panel:"modal",
       options:["Conceito","Protótipo","Vertical slice","Produção","Polimento","Lançamento"] },

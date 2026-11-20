@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -404,10 +404,14 @@ check("G17 SO vive no modal e o DOM vem antes do script (D-059)", () => {
   assert(os > dlg, "o select do SO nao esta dentro do modal de configuracoes");
   assert(os < scr, "DOM do SO depois do <script> final (D-059: listener anexaria em null)");
   const gameTb = T.NICHES.game.topbar || [];
-  ["engineSel","phase"].forEach(fid => {
+  // wo0190 (D-191): o Engine voltou para a barra de cima, ao lado do nome do jogo — pedido do dono, que o tinha
+  // mandado para o modal; desde a wo0188 e ele que liga o Godot no que o kit gera. A Fase segue no modal.
+  ["phase"].forEach(fid => {
     const f = gameTb.find(x => x.id === fid);
     assert(f && f.panel === "modal", "campo " + fid + " do game deveria ter panel:modal");
   });
+  const eng = gameTb.find(x => x.id === "engineSel");
+  assert(eng && eng.panel !== "modal", "o Engine do game deveria estar na barra de cima (D-191)");
   return "ok";
 });
 
@@ -3087,6 +3091,37 @@ check("C128 a engine no nicho de jogo (wo0188, D-190): com o Godot, o .gitignore
   } finally { S.workmode = prevW; S.topbar = prevT; S.niche = prevN; }
   assert(ruim.length === 0, ruim.slice(0, 6).join(" | ") + (ruim.length > 6 ? " (+" + (ruim.length - 6) + ")" : ""));
   return "ok (" + vistos + " combinacoes: game com Godot, com Unity e sem engine, e dev com o campo; com e sem o Code, pasta e mount)";
+});
+
+// wo0190 (D-191, analise 261119 da interface, i-N102): a WO A — os defeitos de rolagem, a copia sem o marcador,
+// o «Engine» na barra de cima do jogo, e «Nichos salvos» fora da barra de cima de todo nicho.
+check("C129 a interface, WO A (wo0190, D-191): a rolagem contida no modal e travada na escolha de nicho, a copia do prompt sem o marcador vazio, o Engine na barra do jogo, e os nichos salvos abaixo do card do Custom", () => {
+  const html = fs.readFileSync(path, "utf8");
+  ["html:has(.overlay.on){overflow:hidden}", ".cfg:modal{overscroll-behavior:contain}", "overflow:hidden;overscroll-behavior:contain}", ".cfg-body{padding:18px 20px;overflow:auto;overscroll-behavior:contain}"].forEach(k =>
+    assert(html.indexOf(k) > -1, "CSS sem: " + k));
+  assert(typeof T.promptCopyText === "function", "promptCopyText ausente");
+  let com = 0, sobrou = [];
+  const S = T.STATE; const prevN = S.niche;
+  try {
+    Object.keys(T.NICHES).forEach(id => {
+      S.niche = id; const n = T.normNiche(T.NICHES[id]);
+      [...T.PROMPTS_BASE, ...(n.promptsExtra || [])].forEach(pr => {
+        let b = ""; try { b = typeof pr.body === "function" ? pr.body({}, n) : String(pr.body || ""); } catch(e){ return; }
+        const c = T.promptCopyText(b, "");
+        if(c !== b) com++;
+        if(/\n-{3}\n\[[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-ZÁÂÃÉÊÍÓÔÕÚÇ0-9 \/,.\-]{3,}\]\s*$/.test(c)) sobrou.push(id + "/" + pr.id);
+        assert(T.promptCopyText(b, "algo") === b, id + "/" + pr.id + ": com o campo preenchido a copia mudou o corpo");
+      });
+    });
+  } finally { S.niche = prevN; }
+  assert(sobrou.length === 0, "copia ainda leva o marcador vazio: " + sobrou.slice(0, 6).join(", "));
+  assert(com >= 50, "a copia sem marcador alcancou poucos prompts (" + com + "): o padrao do marcador mudou?");
+  assert(/promptCopyText\(/.test(T.renderPrompts.toString()), "o botao de copiar nao usa promptCopyText");
+  const eng = (T.NICHES.game.topbar || []).find(f => f.id === "engineSel");
+  assert(eng && eng.panel !== "modal", "o Engine do jogo ainda mora no modal");
+  assert(!/savedNichesShortcutHTML\(\)/.test(T.renderTopbar.toString()), "Nichos salvos ainda na barra de cima");
+  assert(/savedNichesShortcutHTML\(\)/.test(T.renderNicheCards.toString()) && html.indexOf('id="ng-custom-saved"') > -1, "Nichos salvos nao foi para baixo do card do Custom");
+  return "ok (a copia sem o marcador em " + com + " prompts; o CSS da rolagem; o Engine na barra; os nichos salvos no card do Custom)";
 });
 
 // ============ SUMARIO ============

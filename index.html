@@ -85,7 +85,9 @@
 
   /* ============ 3. LAYOUT ============ */
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scrollbar-gutter:stable}
+  /* wo0190 (D-191, i-N102 itens 3 e 8): a sobreposicao de nicho trava a pagina de tras (era a barra dupla) */
+  html:has(.overlay.on){overflow:hidden}
   body{
     margin:0;background:var(--bg);color:var(--ink);
     font-family:var(--body);font-size:15px;line-height:1.6;
@@ -318,12 +320,14 @@
   .actbtn:hover{border-color:var(--ink-faint);color:var(--ink);background:rgba(231,162,63,.08)}
   .actbtn:focus-visible{outline:2px solid var(--amber-soft);outline-offset:2px}
   .cfg{width:min(560px,92vw);max-height:86vh;border:1px solid var(--line);border-radius:14px;background:var(--panel2);color:var(--ink);padding:0;box-shadow:var(--shadow)}
-  .cfg::backdrop{background:rgba(8,6,3,.62)}
+  .cfg::backdrop{background:rgba(8,6,3,.62);overflow:hidden;overscroll-behavior:contain}
+  /* wo0190 (D-191): o modal contem a rolagem — a orientacao do Chrome, sem travar o html */
+  .cfg:modal{overscroll-behavior:contain}
   .cfg-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line-soft)}
   .cfg-head h2{margin:0;font-size:18px;font-weight:600;color:var(--ink)}
   .cfg-x{width:30px;height:30px;border-radius:7px;border:1px solid var(--line);background:transparent;color:var(--ink-dim);cursor:pointer;font-size:14px}
   .cfg-x:hover{color:var(--ink);border-color:var(--ink-faint)}
-  .cfg-body{padding:18px 20px;overflow:auto}
+  .cfg-body{padding:18px 20px;overflow:auto;overscroll-behavior:contain}
   .cfg-sec{margin-bottom:8px}
   .cfg-sec>h3{margin:0 0 10px;font-family:var(--mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-faint)}
   .upd-note{font-size:13px;color:var(--ink-dim);line-height:1.5;margin:0 0 12px}
@@ -536,7 +540,7 @@
   .overlay{
     position:fixed;inset:0;background:rgba(8,7,4,.88);backdrop-filter:blur(8px);
     z-index:1000;display:none;align-items:flex-start;justify-content:center;
-    padding:50px 24px;overflow-y:auto;
+    padding:50px 24px;overflow-y:auto;overscroll-behavior:contain;
   }
   .overlay.on{display:flex;animation:fadeOverlay .25s ease}
   @keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
@@ -613,6 +617,7 @@
 
     <div class="ov-sec">Personalizado</div>
     <div class="ngrid" id="ng-custom"></div>
+    <div class="ng-saved" id="ng-custom-saved" style="max-width:260px;margin-top:12px"></div>
   </div>
 </div>
 
@@ -1316,7 +1321,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.153.0";
+const KIT_VERSION = "1.154.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -4956,7 +4961,7 @@ NICHES.game = {
     { id:"project", label:"Jogo", placeholder:"ex: ecos-do-abismo" },
     { id:"genreSel", label:"Gênero", type:"multi", panel:"modal",
       options:["Ação","Plataforma","RPG","Estratégia","Puzzle","Roguelike","Metroidvania","Aventura","Simulação","Survival","Visual novel","Tiro","Card game","Outro"] },
-    { id:"engineSel", label:"Engine", type:"select", panel:"modal",
+    { id:"engineSel", label:"Engine", type:"select",
       options:["Godot","Unity","Unreal","GameMaker","Construct","Bevy","Phaser","LÖVE","RPG Maker","Própria","Indefinida"] },
     { id:"phase", label:"Fase", type:"select", panel:"modal",
       options:["Conceito","Protótipo","Vertical slice","Produção","Polimento","Lançamento"] },
@@ -8570,6 +8575,9 @@ function renderNicheCards(){
   fillGrid($("#ng-core"), groups.core);
   fillGrid($("#ng-creative"), groups.creative);
   fillGrid($("#ng-custom"), groups.special);
+  // wo0190 (D-191, i-N102 item 2): os nichos salvos moram abaixo do card do Custom, nao na barra de cima de todo nicho
+  const sv = $("#ng-custom-saved");
+  if(sv){ sv.innerHTML = savedNichesShortcutHTML(); wireSavedNichesShortcut(); }
 
   $$(".ncard").forEach(card => {
     card.addEventListener("click", () => {
@@ -8868,6 +8876,7 @@ function wireSavedNichesShortcut(){
       if(!found){ sel.value = ""; return; }
       localStorage.setItem(LS_PRESET_CURR, name);
       setNiche("custom");
+      if(typeof closeOverlay === "function") closeOverlay();
     });
   });
 }
@@ -8925,10 +8934,9 @@ function renderTopbar(niche){
   const host = $("#topbar");
   if(!host) return;
   const fields = (niche.topbar || []).filter(f => f.panel !== "modal");
-  const _saved = savedNichesShortcutHTML();
+  const _saved = ""; // wo0190 (D-191): «Nichos salvos» saiu da barra de cima; mora abaixo do card do Custom
   if(fields.length === 0){
     host.innerHTML = modesClusterHTML() + _saved + actionsClusterHTML();
-    wireSavedNichesShortcut();
     wireModes();
     wireActions();
     return;
@@ -10156,6 +10164,14 @@ function updatePreview(){
 /* =========================================================
    8. PROMPTS
    ========================================================= */
+/* wo0190 (D-191, i-N102 item 5): com o campo vazio, o marcador do fim («---» e «[SUA SOLICITAÇÃO]») mostra na tela
+   onde se escreve, mas nao vai na copia. Pura, testavel no harness. */
+const PROMPT_MARCADOR_FIM = /\n*-{3}\n\[[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-ZÁÂÃÉÊÍÓÔÕÚÇ0-9 \/,.\-]{3,}\]\s*$/;
+function promptCopyText(body, valor){
+  const b = String(body || "");
+  if(String(valor || "").trim()) return b;
+  return b.replace(PROMPT_MARCADOR_FIM, "").replace(/\s+$/, "");
+}
 function renderPrompts(niche){
   if(!niche) niche = getCurrentNiche();
   if(!niche) return;
@@ -10207,7 +10223,8 @@ function renderPrompts(niche){
   host.querySelectorAll("[data-cp]").forEach(btn => {
     btn.addEventListener("click", () => {
       const card = btn.closest(".pcard");
-      const text = card.querySelector("[data-body]").textContent;
+      const prc = all.find(x => x.id === btn.dataset.cp);
+      const text = promptCopyText(card.querySelector("[data-body]").textContent, prc && prc.fill ? STATE.fillValues[prc.fill] : "x");
       navigator.clipboard.writeText(text).then(() => {
         btn.classList.add("copied"); btn.textContent = "✓ copiado";
         setTimeout(() => { btn.classList.remove("copied"); btn.textContent = "⧉ copiar"; }, 1400);

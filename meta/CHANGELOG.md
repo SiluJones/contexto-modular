@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.153.0**.
+> Histórico de versões. Versão atual: **v1.154.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.154.0 — A interface, primeira parte: a rolagem que não vaza, a cópia sem o marcador vazio, o Engine na barra do jogo e os nichos salvos no card do Custom (wo0190, D-191)
+- **A rolagem.** O modal de configuração contém a própria rolagem (`overscroll-behavior: contain` no modal e no fundo dele, a orientação do Chrome): a página de trás para de rolar. A tela de escolha de nicho trava a página enquanto está aberta — sumiu a segunda barra.
+- **A cópia do prompt** deixa de levar o marcador do fim (`---` e `[SUA SOLICITAÇÃO]`, `[O QUE QUER FAZER HOJE]`) quando o campo está vazio; a tela continua mostrando onde se escreve. São 57 prompts.
+- **O «Engine» do Game Design** sai do modal para a barra de cima, ao lado do nome do jogo — é ele que liga o Godot no que o kit gera.
+- **«Nichos salvos»** sai da barra de cima de todo nicho e vira um seletor abaixo do card do Custom, na escolha de nicho; o formulário do Custom continua com o seu.
+- **`C129` novo** (129 → 130); o `G17` passa a exigir o Engine fora do modal (a Fase segue nele).
+- **Origem:** a nota do dono de 19/11 e quatro capturas de tela (`i-N102`), a análise `261119` da interface. A WO B (o que recolhe nos Prompts e nas Instruções, o índice lateral) vem depois. Harness **19/19 · 130/130**.
 
 ## v1.153.0 — A engine no nicho de jogo: o Godot no .gitignore, a checagem sem janela no CLAUDE.md e o teste de fumaça do chat (wo0188, D-190)
 - **Com o «Engine» em Godot** (no `game`, e no `custom` que o carregue), o kit passa a usar o campo que o nicho tinha e nenhum texto lia:
