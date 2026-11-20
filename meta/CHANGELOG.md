@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.156.0**.
+> Histórico de versões. Versão atual: **v1.157.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.157.0 — O prompt abre por baixo também, o «ver o prompt» se afasta do copiar, e o índice para abaixo da barra (wo0193, D-194)
+- **O recolhido mostra o começo do corpo**, apagando para baixo, e o clique ali abre o prompt. Embaixo de cada card, uma faixa «ver o prompt inteiro» / «recolher o prompt»; recolher por ela devolve o topo do card à tela. O título também abre e recolhe.
+- **O «ver o prompt» vai para junto do título**, à esquerda, e o copiar fica sozinho à direita.
+- **O índice lateral e a rolagem do índice param abaixo da barra de cima** (a variável `--topo`, medida da barra). Na v1.156.0 a barra cortava o índice.
+- **O «abrir tudo» das Instruções** guarda a chave de cada bloco no próprio bloco (o achado do relatório da wo0192, para blocos sem `id`).
+- **`C130` ampliado** (sem check novo). **Origem:** o pedido do dono de 20/11 e as quatro capturas dele. Harness **19/19 · 131/131**.
 
 ## v1.156.0 — A interface, segunda parte: os prompts e os blocos das Instruções recolhem, e o índice lateral leva e copia (wo0192, D-193)
 - **Os prompts vêm recolhidos.** À vista ficam a letra, o título, a linha «quando usar», o copiar e o campo da solicitação; o corpo abre no «ver o prompt». O campo começa com uma linha e cresce com o texto até 5 linhas; depois rola por dentro.

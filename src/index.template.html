@@ -293,9 +293,14 @@
   .pfill label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
   /* wo0192 (D-193): o prompt recolhido, o indice lateral e os blocos das Instrucoes que recolhem */
   .pwrap{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:18px;align-items:start}
-  .pcard.closed pre{display:none}
+  /* wo0193 (D-194): o recolhido mostra o comeco do corpo apagando, e a faixa de baixo abre e recolhe */
+  .pcard.closed pre{max-height:4.4em;overflow:hidden;cursor:pointer;-webkit-mask-image:linear-gradient(to bottom,#000 30%,transparent);mask-image:linear-gradient(to bottom,#000 30%,transparent)}
+  .pcard .ph h3,.pcard .ph .ptag{cursor:pointer}
+  .pcard{scroll-margin-top:calc(var(--topo,84px) + 14px)}
+  .pfoot{display:block;width:100%;margin-top:8px;padding:7px 10px;border:1px dashed var(--line-soft);border-radius:8px;background:transparent;color:var(--ink-faint);font-family:var(--mono);font-size:11px;letter-spacing:.5px;cursor:pointer;text-align:center}
+  .pfoot:hover,.pfoot:focus-visible{color:var(--amber);border-color:var(--amber)}
   .pfill textarea{resize:none;overflow-y:hidden;min-height:0}
-  .pindex{position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;overscroll-behavior:contain;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:10px}
+  .pindex{position:sticky;top:calc(var(--topo,84px) + 14px);max-height:calc(100vh - var(--topo,84px) - 28px);overflow:auto;overscroll-behavior:contain;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:10px}
   .pindex-h{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);margin:2px 4px 8px}
   .pix{display:flex;gap:8px;align-items:baseline;width:100%;text-align:left;background:transparent;border:0;border-radius:6px;padding:5px 6px;color:var(--ink-dim);cursor:pointer;font-size:12px}
   .pix:hover{background:rgba(255,255,255,.05);color:var(--ink)}
@@ -1342,7 +1347,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.156.0";
+const KIT_VERSION = "1.157.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2298,7 +2303,8 @@ function enhanceCollapsibleGroups(root){
   const groups = Array.from(box.children).filter(g => g.classList && g.classList.contains("group") && g.querySelector(".glabel"));
   groups.forEach((g, i) => {
     const lab = g.querySelector(".glabel");
-    const key = g.id || ("grupo-" + i);
+    const key = g.dataset.gkey || g.id || ("grupo-" + i);
+    g.dataset.gkey = key;
     g.classList.add("collap");
     g.classList.toggle("closed", !GRUPO_ABERTO[key]);
     let cnt = lab.querySelector(".gcount");
@@ -2323,7 +2329,7 @@ function enhanceCollapsibleGroups(root){
     bar.querySelector("[data-collap-all]").addEventListener("click", () => {
       const gs = Array.from(box.children).filter(x => x.classList && x.classList.contains("collap"));
       const abrir = gs.some(x => x.classList.contains("closed"));
-      gs.forEach((x, j) => { const k = x.id || ("grupo-" + (j)); GRUPO_ABERTO[k] = abrir; x.classList.toggle("closed", !abrir); const l = x.querySelector(".glabel"); if(l) l.setAttribute("aria-expanded", abrir ? "true" : "false"); });
+      gs.forEach(x => { const k = x.dataset.gkey; GRUPO_ABERTO[k] = abrir; x.classList.toggle("closed", !abrir); const l = x.querySelector(".glabel"); if(l) l.setAttribute("aria-expanded", abrir ? "true" : "false"); });
       bar.querySelector("[data-collap-all]").textContent = abrir ? "▸ fechar tudo" : "▾ abrir tudo";
     });
   }
@@ -3428,6 +3434,19 @@ function promptIndexHTML(all){
   return `<nav class="pindex" aria-label="Índice dos prompts"><div class="pindex-h">Índice · clique leva e copia</div>` +
     all.map(pr => `<button type="button" class="pix" data-goto="${escAttr(pr.id)}" title="${escAttr(pr.title||"")}"><b>${escapeHTML(pr.id)}</b><span>${escapeHTML(pr.title||"")}</span></button>`).join("") + `</nav>`;
 }
+/* wo0193 (D-194): a altura da barra de cima vira a variavel --topo, para o indice lateral e o destino da rolagem
+   pararem abaixo dela (a v1.156.0 colava o indice em 18px e a barra o cortava). Sem medida (0), fica 84px. */
+function vigiarTopo(tb){
+  const bar = tb || document.querySelector(".topbar");
+  if(!bar) return;
+  const pinta = () => { const h = bar.offsetHeight || 84; document.documentElement.style.setProperty("--topo", h + "px"); };
+  pinta();
+  if(!bar.dataset.topo){
+    bar.dataset.topo = "1";
+    if(typeof ResizeObserver === "function") new ResizeObserver(pinta).observe(bar);
+    else window.addEventListener("resize", pinta);
+  }
+}
 function renderPrompts(niche){
   if(!niche) niche = getCurrentNiche();
   if(!niche) return;
@@ -3453,12 +3472,13 @@ function renderPrompts(niche){
         <div class="ph">
           <span class="ptag">${pr.id}</span>
           <h3>${escapeHTML(pr.title||"")}</h3>
-          <button type="button" class="btn ghost sm ptoggle" data-toggle="${pr.id}" aria-expanded="false" style="margin-left:auto">▸ ver o prompt</button>
-          <button class="btn ghost sm" data-cp="${pr.id}">⧉ copiar</button>
+          <button type="button" class="btn ghost sm ptoggle" data-toggle="${pr.id}" aria-expanded="false" aria-controls="pbody-${escAttr(pr.id)}">▾ ver o prompt</button>
+          <button class="btn ghost sm" data-cp="${pr.id}" style="margin-left:auto">⧉ copiar</button>
         </div>
         <p class="pwhen">${escapeHTML(pr.when||"")}</p>
         ${fillBox}
-        <pre data-body="${pr.id}">${escapeHTML(body)}</pre>
+        <pre data-body="${pr.id}" id="pbody-${escAttr(pr.id)}" title="clique para abrir o prompt inteiro">${escapeHTML(body)}</pre>
+        <button type="button" class="pfoot" data-foot="${pr.id}" aria-expanded="false" aria-controls="pbody-${escAttr(pr.id)}">▾ ver o prompt inteiro</button>
       </div>`;
   }).join("");
   host.innerHTML = `<div class="pwrap"><div class="plist">${cards}</div>${promptIndexHTML(all)}</div>`;
@@ -3492,13 +3512,22 @@ function renderPrompts(niche){
       if(pr) card.querySelector("[data-body]").textContent = bodyOf(pr, STATE.fillValues);
     });
   });
-  host.querySelectorAll("[data-toggle]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const card = btn.closest(".pcard");
-      const aberto = card.classList.toggle("closed") === false;
-      btn.setAttribute("aria-expanded", aberto ? "true" : "false");
-      btn.textContent = aberto ? "▾ recolher" : "▸ ver o prompt";
-    });
+  /* wo0193 (D-194): quatro jeitos de abrir, um estado so — o botao do cabecalho, o titulo, o comeco do corpo e a faixa
+     de baixo. Recolher pela faixa de baixo devolve o topo do card a tela (senao o leitor fica perdido mais abaixo). */
+  const setAberto = (card, aberto, deBaixo) => {
+    card.classList.toggle("closed", !aberto);
+    const t = card.querySelector("[data-toggle]"), f = card.querySelector("[data-foot]");
+    if(t){ t.setAttribute("aria-expanded", aberto ? "true" : "false"); t.textContent = aberto ? "▴ recolher" : "▾ ver o prompt"; }
+    if(f){ f.setAttribute("aria-expanded", aberto ? "true" : "false"); f.textContent = aberto ? "▴ recolher o prompt" : "▾ ver o prompt inteiro"; }
+    if(!aberto && deBaixo && card.getBoundingClientRect && card.getBoundingClientRect().top < 0 && card.scrollIntoView) card.scrollIntoView({ block:"start" });
+  };
+  host.querySelectorAll(".pcard").forEach(card => {
+    const alterna = (deBaixo) => setAberto(card, card.classList.contains("closed"), deBaixo);
+    const t = card.querySelector("[data-toggle]"); if(t) t.addEventListener("click", () => alterna(false));
+    const f = card.querySelector("[data-foot]"); if(f) f.addEventListener("click", () => alterna(true));
+    card.querySelectorAll(".ph h3, .ph .ptag").forEach(el => el.addEventListener("click", () => alterna(false)));
+    const pre = card.querySelector("[data-body]");
+    if(pre) pre.addEventListener("click", () => { if(card.classList.contains("closed")) setAberto(card, true, false); });
   });
   host.querySelectorAll("[data-cp]").forEach(btn => {
     btn.addEventListener("click", () => copiar(btn.dataset.cp, btn, "✓ copiado"));
@@ -5459,6 +5488,7 @@ function wireHub(){
 function boot(){
   try {
     migrateKcmStorage();  // i-N81: as chaves antigas «kit-» passam a «kcm:», uma vez
+    vigiarTopo();         // wo0193: o indice e a rolagem param abaixo da barra de cima
     renderNicheCards();
     loadHub(); wireHub();
 

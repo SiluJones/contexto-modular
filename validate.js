@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3159,8 +3159,24 @@ check("C130 a interface, WO B (wo0192, D-193): os prompts recolhidos com o «qua
       assert(!c0.classList.contains("closed"), id + ": o abrir nao abriu o prompt");
       ix[0].click();
       assert(/copiado/.test(ix[0].textContent), id + ": o indice nao avisou «copiado»");
+      // wo0193 (D-194): o botao do cabecalho antes do copiar, longe dele; a faixa de baixo; o comeco do corpo abre
+      cards.forEach(c => {
+        const kids = Array.from(c.querySelector(".ph").children);
+        const it = kids.indexOf(c.querySelector("[data-toggle]")), ic = kids.indexOf(c.querySelector("[data-cp]"));
+        assert(it > -1 && it < ic && /margin-left:\s*auto/.test(c.querySelector("[data-cp]").getAttribute("style") || ""), id + "/" + c.dataset.pid + ": o abrir nao fica a esquerda, longe do copiar");
+        assert(c.querySelector("[data-foot]"), id + "/" + c.dataset.pid + ": faltou a faixa de baixo");
+      });
+      const c1 = cards[1], foot = c1.querySelector("[data-foot]");
+      foot.click(); assert(!c1.classList.contains("closed") && foot.getAttribute("aria-expanded") === "true", id + ": a faixa de baixo nao abriu");
+      foot.click(); assert(c1.classList.contains("closed") && c1.querySelector("[data-toggle]").getAttribute("aria-expanded") === "false", id + ": a faixa de baixo nao recolheu, ou o botao de cima ficou fora de sincronia");
+      c1.querySelector("[data-body]").click(); assert(!c1.classList.contains("closed"), id + ": o clique no comeco do corpo nao abriu");
+      c1.querySelector("[data-body]").click(); assert(!c1.classList.contains("closed"), id + ": o clique no corpo aberto recolheu (atrapalha selecionar o texto)");
       vistos++;
     });
+    const tb = D.createElement("div"); tb.className = "topbar"; D.body.appendChild(tb);
+    T.vigiarTopo(tb);
+    assert(D.documentElement.style.getPropertyValue("--topo") === "84px", "a barra de cima nao virou a variavel --topo");
+    tb.remove();
     assert(T.PFILL_MAX_LINHAS === 5 && /PFILL_MAX_LINHAS/.test(T.autoGrowFill.toString()), "o campo nao tem o limite de 5 linhas");
     // os blocos das Instrucoes, num DOM sintetico com a forma do construtor
     const box = D.createElement("div"); box.className = "controls";
@@ -3173,11 +3189,13 @@ check("C130 a interface, WO B (wo0192, D-193): os prompts recolhidos com o «qua
     assert(/2 de 3 marcados/.test(gs[0].querySelector(".gcount").textContent) && /vazio/.test(gs[1].querySelector(".gcount").textContent), "a contagem do cabecalho nao diz o que esta marcado");
     box.querySelector("[data-collap-all]").click();
     assert(!gs[0].classList.contains("closed") && !gs[1].classList.contains("closed"), "o abrir tudo nao abriu");
+    T.enhanceCollapsibleGroups(box);
+    assert(!gs[0].classList.contains("closed") && !gs[1].classList.contains("closed"), "o abrir tudo nao sobreviveu ao re-render (a chave dos blocos sem id)");
     gs[0].querySelector(".glabel").click();
     assert(gs[0].classList.contains("closed"), "o clique no cabecalho nao recolheu o bloco");
     box.remove();
   } finally { S.niche = prevN; host.remove(); }
-  return "ok (" + vistos + " nichos com os prompts recolhidos e o indice; o campo ate 5 linhas; os blocos com a contagem e o abrir tudo)";
+  return "ok (" + vistos + " nichos com os prompts recolhidos, o abrir longe do copiar, a faixa de baixo e o indice; a --topo; o campo ate 5 linhas; os blocos com a contagem e o abrir tudo)";
 });
 
 // ============ SUMARIO ============

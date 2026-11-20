@@ -2530,3 +2530,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **O contrário, registrado.** O clique no índice copia sem perguntar e sobrescreve a área de transferência — é o pedido do dono; o aviso «copiado» mostra o que aconteceu.
 
 **Números** `[medido na réplica do HEAD 9b2fb01 com os arquivos do chat por cima]`: `index.html` 1.047.234 → 1.054.823 bytes; harness 130/130 → 131/131; o que o kit gera sem mudança. O `C130` roda no DOM do jsdom (três nichos, os 13 prompts do `narrative`, um bloco sintético das Instruções) e tem uma prova negativa, vermelha e restaurada (o card sem o recolhido). Corta a **v1.156.0** (`D-158`).
+
+## D-194 — O prompt recolhido abre também por baixo, o abrir fica junto do título, e o índice para abaixo da barra
+
+**Data:** 2026-11-20 · **WO:** 0193 · **Origem:** o roteiro do dono da wo0192 (4/4) com três pedidos e quatro capturas: o abrir mais prático «no espaço onde ele estaria», o botão afastado do copiar e mais à esquerda, e o índice cortado pela barra de cima.
+
+**Decisão.** (1) O card recolhido mostra o começo do corpo (cerca de duas linhas) apagando para baixo; o clique ali abre. Aberto, o clique no corpo não recolhe (atrapalharia selecionar o texto). (2) Uma faixa larga embaixo de cada card, «▾ ver o prompt inteiro» / «▴ recolher o prompt», no mesmo estado do botão de cima; recolher por ela, se o topo do card saiu da tela, rola até ele. (3) O título e a letra também abrem e recolhem; o «ver o prompt» fica logo depois do título e o copiar sozinho à direita. Seta para baixo para abrir, para cima para recolher. (4) A altura da barra de cima vira a variável `--topo` (`vigiarTopo`), usada pelo índice lateral e pelo `scroll-margin-top` dos cards.
+
+**Por quê.** Os guias de acordeão (Nielsen Norman, os sistemas de design) pedem a área clicável inteira e não só o ícone, a seta para baixo e para cima (a da direita lembra link) e um controle no fim do conteúdo longo. Recolher por baixo sem rolar deixa o leitor perdido mais abaixo da página — por isso a rolagem até o topo do card. Botões de ação diferente lado a lado convidam o clique errado: o copiar fica isolado.
+
+**O contrário, registrado.** O começo do corpo aumenta um pouco a altura do card recolhido (duas linhas por card). Se pesar, a faixa sozinha resolve.
+
+**Números** `[medido na réplica do HEAD 64baa49 com os arquivos do chat por cima]`: `index.html` 1.054.823 → 1.057.828 bytes; harness 131/131 (o `C130` ampliado); prova negativa vermelha e restaurada (o copiar sem o `margin-left:auto`). Corta a **v1.157.0** (`D-158`).
