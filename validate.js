@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -1857,15 +1857,15 @@ check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coe
   // i-N72: no canal pasta, o prompt cita a pasta que o zip cria, e abre pela versao
   const dev=T.normNiche(T.NICHES.dev);
   S.workmode={codeMode:"yes", asuMode:"", groupMode:"no", mountMode:""};
-  const upP=T.buildUpdatePrompt(dev), pasta=T.updatePackFolder();
+  const upP=T.buildUpdatePrompt(dev), pasta=T.updatePackFolder(dev);
   S.workmode={codeMode:"yes", asuMode:"", groupMode:"no", mountMode:"yes"};
   const upM=T.buildUpdatePrompt(dev);
   S.workmode=prev;
   const fonte=fs.readFileSync(path,"utf8");
   assert(fora.length===0, "o kit gera duas regras que se contradizem -> "+fora.slice(0,6).join(" | ")+(fora.length>6?" (+"+(fora.length-6)+")":""));
-  assert(/^\d{6}-kcm-update-v\d+\.\d+\.\d+$/.test(pasta) && pasta.endsWith(T.KIT_VERSION), "o nome da pasta do pacote nao tem a forma AAMMDD-kcm-update-vX.Y.Z com a versao do kit: "+pasta);
+  assert(/^\d{6}-kcm-update-[a-z0-9-]+-v\d+\.\d+\.\d+$/.test(pasta) && pasta.endsWith(T.KIT_VERSION), "o nome da pasta do pacote nao tem a forma AAMMDD-kcm-update-<nicho>-vX.Y.Z com a versao do kit: "+pasta);
   assert(upP.indexOf("`"+pasta+"/`")>-1, "no canal pasta, o prompt de atualizacao nao cita a pasta que o zip cria ("+pasta+"/)");
-  assert(/updatePackFolder\(\) \+ "\.zip"/.test(fonte) && /zip\.file\(dir \+ f\.flat/.test(fonte), "o download do pacote nao usa a pasta que o prompt cita — o nome do zip e o do prompt voltam a divergir");
+  assert(/updatePackFolder\(niche\) \+ "\.zip"/.test(fonte) && /zip\.file\(dir \+ f\.flat/.test(fonte), "o download do pacote nao usa a pasta que o prompt cita — o nome do zip e o do prompt voltam a divergir");
   [upP, upM].forEach(u => assert(/\*\*Primeiro, a versao:\*\*/.test(u) && u.indexOf("v"+T.KIT_VERSION)>-1, "o prompt de atualizacao nao manda conferir a versao do pacote antes de comparar"));
   assert(upP.indexOf("**Primeiro, a versao:**") < upP.indexOf("**Antes de comparar qualquer coisa:**"), "a conferencia da versao vem DEPOIS da ordem de comparar");
   // wo0142 (FK-BC 4): os cinco bullets do refino das Instrucoes moram na secao «Refino», nao no fim do fecho.
@@ -3222,6 +3222,40 @@ check("C131 as Instrucoes, o layout (wo0194, D-195): o titulo na coluna dos bloc
     assert(bar && bar.previousElementSibling === box.querySelector(".bhead"), "o «abrir tudo» nao vem logo depois do titulo");
   } finally { box.remove(); }
   return "ok (o titulo na coluna, o preview com top e altura pela --topo, o abrir tudo depois do titulo)";
+});
+
+check("C132 os nomes dos zips com o nicho, a linha revogada cacada pelo comportamento, a resposta do PROTOTIPOS e o indice dos prompts legivel (wo0197, D-197, i-N103)", () => {
+  const S = T.STATE; const prev = S.workmode;
+  try {
+    const game = T.normNiche(T.NICHES.game), dev = T.normNiche(T.NICHES.dev);
+    // (a) i-N103 item 3: sem o nome do projeto, o zip diz o nicho e a versao; o pacote de update traz o nicho e nao o projeto
+    assert(T.structuredZipName(game, "projeto") === "projeto-game-v" + T.KIT_VERSION + ".zip", "sem o nome do projeto, o zip nao diz o nicho e a versao: " + T.structuredZipName(game, "projeto"));
+    assert(T.structuredZipName(game, "hey-mother") === "hey-mother.zip", "com o nome do projeto, o zip deixou de ser so o nome");
+    const pasta = T.updatePackFolder(game);
+    assert(/^\d{6}-kcm-update-game-v\d+\.\d+\.\d+$/.test(pasta), "a pasta do pacote de update nao traz o nicho: " + pasta);
+    // (b) i-N103 item 1: a linha revogada se caca pelo comportamento, no manifesto, no prompt e no GUIA
+    S.workmode = {codeMode:"yes", asuMode:"", groupMode:"no", mountMode:""};
+    const man = T.buildUpdatePack(dev).manifest, up = T.buildUpdatePrompt(dev), guia = T.buildGuiaKit(dev);
+    assert(man.indexOf("**Cace o") > -1 && man.indexOf("comportamento, nao a frase:**") > -1, "o manifesto abre a secao das linhas revogadas mandando procurar a frase");
+    assert(man.indexOf("| Como o kit dizia (ponto de partida) | Por que saiu (o comportamento a cacar) |") > -1 && man.indexOf("| Texto a procurar |") < 0, "a tabela das linhas revogadas ainda diz «Texto a procurar»");
+    assert(man.indexOf("o PISO da varredura, nao a varredura") > -1, "a receita do grep nao diz que ele so acha quem copiou a frase");
+    assert(up.indexOf("Cace cada uma pelo COMPORTAMENTO") > -1 && up.indexOf("Procure cada uma — no CEREBRO") < 0, "o prompt do update manda procurar cada linha revogada pela frase");
+    assert(guia.indexOf("Cace cada uma pelo comportamento que a coluna «Por que saiu» descreve") > -1 && guia.indexOf("Procure cada texto listado") < 0, "o GUIA manda procurar cada texto listado");
+    // (c) i-N103 item 2: o PROTOTIPOS so para quem ainda escolhe o jogo
+    const lin = T.buildUpdatePack(game).manifest.split("\n").find(l => l.indexOf("`meta/PROTOTIPOS.md`") > -1);
+    assert(lin && lin.indexOf("so se o jogo AINDA nao foi escolhido") > -1 && lin.indexOf("PRODUCAO.md") > -1 && lin.split("|").length === 7, "a resposta esperada do PROTOTIPOS nao traz a condicao: " + (lin || "linha ausente").slice(0, 160));
+    // (d) nota do dono 261120-1425: o indice dos prompts maior, e a letra do prompt num selo grande e grosso
+    const P = new JSDOM(fs.readFileSync(path, "utf8")).window.document;
+    const css = Array.from(P.querySelectorAll("style")).map(s => s.textContent).join("\n");
+    const regra = sel => (css.match(new RegExp("\\" + sel + "\\{[^}]*\\}")) || [""])[0];
+    const px = (r, prop) => { const m = r.match(new RegExp("(?:^|[;{])" + prop + ":([\\d.]+)px")); return m ? Number(m[1]) : 0; };
+    const fw = r => { const m = r.match(/font-weight:(\d+)/); return m ? Number(m[1]) : 400; };
+    assert(/minmax\(0,1fr\) 280px/.test(regra(".pwrap")), "a coluna do indice nao tem 280px: " + regra(".pwrap"));
+    const pix = regra(".pix"), b = (css.match(/\.pix b\{[^}]*\}/) || [""])[0];
+    assert(px(pix, "font-size") >= 13.5 && fw(pix) >= 500 && /color:var\(--ink\)/.test(pix), "o nome no indice nao ficou maior, mais grosso e com mais contraste: " + pix);
+    assert(px(b, "font-size") >= 14 && fw(b) >= 700 && /border:/.test(b), "a letra do prompt nao esta num selo grande e grosso: " + b);
+    return "ok (projeto-game-v" + T.KIT_VERSION + ".zip, " + pasta + ", o comportamento nas tres superficies, o PROTOTIPOS condicional, o indice 280px com a letra em selo)";
+  } finally { S.workmode = prev; }
 });
 
 // ============ SUMARIO ============

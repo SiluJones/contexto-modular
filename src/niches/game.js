@@ -289,7 +289,7 @@ NICHES.game = {
 ## FIX-[N] — [problema grave resolvido]
 **Sintoma:** [o que se via.] · **Causa raiz:** [o porquê.] · **Solução:** [o que resolveu.] · **Lição:** [como evitar de novo.]
 `},
-    { name:"PROTOTIPOS.md", cat:"opcional", role:"OPCIONAL — incubadora: sistemas reaproveitáveis e protótipos, com o que cada um provou, enquanto o jogo ainda não foi escolhido. JOGO e MECANICAS ficam no molde até a escolha.", short:"OPCIONAL — protótipos antes do jogo.",
+    { name:"PROTOTIPOS.md", cat:"opcional", role:"OPCIONAL — incubadora: sistemas reaproveitáveis e protótipos, com o que cada um provou, enquanto o jogo ainda não foi escolhido. JOGO e MECANICAS ficam no molde até a escolha.", short:"OPCIONAL — protótipos antes do jogo.", respostaUpdate:"so se o jogo AINDA nao foi escolhido; ja escolhido, a tabela de prototipos mora no PRODUCAO.md — nao crie este arquivo",
       content:`# PROTOTIPOS.md — Incubadora de sistemas e protótipos
 
 > **Opcional** — use quando o projeto ainda está ESCOLHENDO o jogo: um portfólio de sistemas reaproveitáveis e de protótipos que testam ideias. Enquanto nenhum for escolhido como o jogo, JOGO e MECANICAS ficam no molde **de propósito**: não os preencha por inferência a partir de um protótipo.

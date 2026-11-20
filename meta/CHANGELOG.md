@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.159.0**.
+> Histórico de versões. Versão atual: **v1.160.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.160.0 — Os zips dizem o nicho, a linha revogada se caça pelo comportamento, o PROTOTIPOS só para quem ainda escolhe, e o índice dos prompts legível (wo0197, D-197)
+- **Os nomes dos zips:** sem o nome do projeto, o zip do projeto sai `projeto-<nicho>-v<versão>.zip` (antes, `projeto.zip` em todo nicho); com o nome, fica o nome. A pasta do pacote de update ganha o nicho, `AAMMDD-kcm-update-<nicho>-vX.Y.Z`, e não leva o nome do projeto.
+- **A linha revogada caçada pelo comportamento:** a seção do manifesto abre mandando caçar o comportamento, com o caso real do Hey Mother; as colunas viram «Como o kit dizia (ponto de partida)» e «Por que saiu (o comportamento a caçar)»; a receita do `grep` diz que ele é o piso da varredura. O prompt do update e o GUIA-DO-KIT dizem o mesmo (o GUIA ainda mandava procurar cada texto listado).
+- **O `PROTOTIPOS.md`** chega ao manifesto com a condição: só se o jogo ainda não foi escolhido; escolhido, a tabela mora no `PRODUCAO.md`. Um campo novo por arquivo de nicho (`respostaUpdate`) carrega a resposta própria.
+- **O índice dos Prompts** passa de 230 para 280 px, com o nome maior (13,5 px), mais grosso e mais claro; a letra de cada prompt vai num selo de 14 px, em negrito e contornado, que se acende ao passar o mouse.
+- **`C132` novo** (132 → 133); o `C111` espera o nicho no nome da pasta. **Origem:** o aviso de lido do Hey Mother, as notas do dono `261120-0910` e `261120-1425` e o pedido dele no chat (a letra do prompt). Harness **19/19 · 133/133**.
 
 ## v1.159.0 — O preview das Instruções não sobe mais para baixo da barra no fim da rolagem (wo0195, D-196)
 - **O defeito da v1.158.0:** no fim da rolagem, a barra de cima ainda cobria o topo do preview (as abas e o copiar). Um elemento sticky não sai da caixa que o contém; a vista tinha 90 px de respiro abaixo do construtor, e no fim da página a caixa acabava antes da tela e empurrava o preview 76 px para cima.
