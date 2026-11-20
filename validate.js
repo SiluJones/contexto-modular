@@ -3211,6 +3211,10 @@ check("C131 as Instrucoes, o layout (wo0194, D-195): o titulo na coluna dos bloc
   const css = Array.from(P.querySelectorAll("style")).map(s => s.textContent).join("\n");
   const out = (css.match(/\.out\{position:sticky;[^}]*\}/) || [""])[0];
   assert(/top:calc\(var\(--topo/.test(out) && /height:calc\(100vh - var\(--topo/.test(out), "o preview nao para abaixo da barra de cima ou nao tem a altura da tela: " + out.slice(0, 120));
+  // wo0195 (D-196): o sticky nao sai da caixa. No fim da rolagem, o topo do preview fica em --topo + 28 - (respiro abaixo
+  // do construtor); para nao subir alem do --topo + 14, o respiro da vista nao pode passar de 14px.
+  const resp = css.match(/#v-instrucoes\{padding-bottom:(\d+)px\}/);
+  assert(resp && Number(resp[1]) <= 14, "o respiro abaixo do construtor passa da folga do sticky: no fim da rolagem a barra cobre o topo do preview");
   const D = T.document; const box = D.createElement("div"); box.className = "controls"; box.innerHTML = ctl.innerHTML; D.body.appendChild(box);
   try {
     T.enhanceCollapsibleGroups(box);

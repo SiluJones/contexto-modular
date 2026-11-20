@@ -2552,3 +2552,15 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Por quê.** O preview é o produto da tela; com o título em cima de tudo, ele começava lá embaixo e, sticky a 80 px, ficava com as abas e o copiar sob a barra de cima (a captura de 12h39). Altura fixa pela tela, e não só máxima, faz o painel sempre aparecer inteiro, como o dono pediu.
 
 **Números** `[medido na réplica do HEAD 35b09ed com os arquivos do chat por cima]`: `index.html` 1.057.828 → 1.058.315 bytes; harness 131/131 → 132/132; o que o kit gera sem mudança. O `C131` lê a página como sai (sem rodar o script) e roda o construtor num DOM com a mesma coluna; prova negativa vermelha e restaurada (o `.out` de volta a `top:80px`). Corta a **v1.158.0** (`D-158`).
+
+## D-196 — O respiro abaixo do construtor das Instruções não passa da folga do sticky
+
+**Data:** 2026-11-20 · **WO:** 0195 · **Origem:** o roteiro do dono da wo0194, item 4 vermelho («ainda está ficando escondido atrás»), com duas capturas.
+
+**Decisão.** Em tela larga (acima de 900 px), a vista `#v-instrucoes` tem 14 px de respiro embaixo, no lugar dos 90 px de toda vista. O `C131` cobra o respiro ≤ 14 px.
+
+**Por quê.** Um elemento sticky não sai da caixa que o contém (a linha do grid do construtor). No fim da rolagem, a tela termina no fim da vista; a caixa do preview termina o respiro antes, e o preview, preso à caixa, sobe: o topo fica em `--topo` + 28 − respiro. Com 90 px, 76 px sob a barra — o que as capturas mostram. Com 14 px, o topo fica em `--topo` + 14, a folga pedida. Encolher o preview pelo respiro também resolveria, mas gastaria 76 px de texto em toda tela.
+
+**A lição.** O `C131` da wo0194 cobrava o `top` e a altura, e passou; o defeito era da geometria do fim da página, que o jsdom não calcula. O check agora cobra a desigualdade que decide (respiro ≤ folga); o resto continua com o roteiro de tela.
+
+**Números** `[medido na réplica do HEAD 751ac7e com os arquivos do chat por cima]`: `index.html` 1.058.315 → 1.058.723 bytes; harness 132/132; prova negativa vermelha e restaurada (o respiro de volta a 90 px). Corta a **v1.159.0** (`D-158`).

@@ -1,10 +1,15 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.158.0**.
+> Histórico de versões. Versão atual: **v1.159.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.159.0 — O preview das Instruções não sobe mais para baixo da barra no fim da rolagem (wo0195, D-196)
+- **O defeito da v1.158.0:** no fim da rolagem, a barra de cima ainda cobria o topo do preview (as abas e o copiar). Um elemento sticky não sai da caixa que o contém; a vista tinha 90 px de respiro abaixo do construtor, e no fim da página a caixa acabava antes da tela e empurrava o preview 76 px para cima.
+- **O conserto:** em tela larga, o respiro abaixo do construtor das Instruções fica em 14 px, a mesma folga do sticky. O preview para sempre abaixo da barra.
+- **`C131` ampliado** (cobra o respiro ≤ 14 px). **Origem:** o roteiro do dono da wo0194 (3/4) e duas capturas. Harness **19/19 · 132/132**.
 
 ## v1.158.0 — Nas Instruções, o título vai para a coluna dos blocos e o preview sobe, inteiro na tela (wo0194, D-195)
 - **O título e o texto de abertura das Instruções** ocupam a coluna dos blocos, não a largura toda; o preview à direita começa na altura do título.
