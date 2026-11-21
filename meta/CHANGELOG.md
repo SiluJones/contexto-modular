@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.161.0**.
+> Histórico de versões. Versão atual: **v1.162.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.162.0 — O rádio que você não tocou nasce sem marca, e o perfil do pacote diz «(nao escolhido)» (wo0204, D-201)
+- **O rádio sem escolha:** o bloco do nicho marcava a primeira opção de cada rádio, mas esse valor nunca entrou nas Instruções nem no CEREBRO (as Instruções só levam o que você marcou; o CEREBRO não lê o bloco). Quem o levava adiante era a tabela do perfil do pacote (v1.161.0), que o carimbava como escolhido. Agora o rádio nasce sem marca, e o perfil diz «(nao escolhido)», com uma linha dizendo que o campo não entrou nas Instruções e que o valor do projeto continua valendo. Vale para os 25 rádios de 13 nichos.
+- **O nome no upload com subpasta:** quando o pacote tem arquivo em subpasta (o `companion`: `mecanicas/`, `rotas/`), o manifesto avisa que quem descompacta à mão ou grava por script cria a pasta antes.
+- **Para projetos instalados:** as Instruções e o CEREBRO gerados não mudam; muda o manifesto do pacote de update. Um pacote gerado sem marcar um rádio dizia a primeira opção no perfil: regere-o para ver o que estava marcado.
+- **`C135` novo** (135 → 136). **Origem:** os seis pacotes gerados pelo chat em 21/11 (`i-N107`). Harness **19/19 · 136/136**.
 
 ## v1.161.0 — O update olha o painel e o perfil do pacote, e o kit do Code indica o /doctor prompt-audit (wo0202, D-200)
 - **O painel também é superfície:** o prompt do update pede, antes de comparar, o texto das Instruções que está no painel do Projeto (que é o que o assistente lê em toda mensagem) e varre as linhas revogadas nele também; o merge só fecha quando o dono recolar as Instruções fundidas e confirmar. O GUIA-DO-KIT diz o mesmo. Na Carreira, as Instruções fundidas em 07/11 nunca chegaram ao painel, que seguiu na v1.73.

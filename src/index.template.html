@@ -1361,7 +1361,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.161.0";
+const KIT_VERSION = "1.162.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2382,7 +2382,9 @@ function renderBuilderSection(niche){
   if(sec.hint) html += `<div style="font-size:12px;color:var(--ink-faint);margin:-6px 0 10px;line-height:1.5">${escapeHTML(sec.hint)}</div>`;
   (sec.items||[]).forEach(item => {
     if(item.kind === "radios"){
-      const cur = STATE.builder[item.name] || (item.opts && item.opts[0] && item.opts[0][0]) || "";
+      // wo0204 (i-N107 item 1, D-201): o radio nao tocado nasce sem marca. A tela marcava a primeira opcao, que nao entrava
+      // nas Instrucoes, e o perfil do pacote a carimbava como escolhida (o Farmeryan «Game jam», o Coral Island «Jogo-servico»).
+      const cur = STATE.builder[item.name] || "";
       html += `<div class="subhead">${escapeHTML(item.label||"")}</div><div class="radio-row">`;
       (item.opts||[]).forEach(([v,l]) => {
         html += `<button type="button" class="chip ${cur===v?"on":""}" data-radio="${item.name}" data-val="${escAttr(v)}">${escapeHTML(l)}</button>`;
@@ -4449,7 +4451,7 @@ function perfilDoPacote(niche){
   ((sec && sec.items) || []).forEach(it => {
     const lab = o => { const x = (it.opts || []).find(p => p[0] === o); return x ? x[1] : o; };
     let v;
-    if(it.kind === "radios") v = lab(bd[it.name] || (it.opts && it.opts[0] && it.opts[0][0]) || "");
+    if(it.kind === "radios") v = bd[it.name] ? lab(bd[it.name]) : "(nao escolhido)";
     else if(it.kind === "chips") v = (bd[it.name] || []).map(lab).join(", ");
     else v = bd[it.name] || "";
     rows.push([limpa(it.label || it.name), limpa(v) || "(vazio)"]);
@@ -4516,6 +4518,11 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   L.push("|---|---|");
   perfil.forEach(([k, v]) => L.push(`| ${k} | ${v} |`));
   L.push("");
+  if(perfil.some(([, v]) => v === "(nao escolhido)")){
+    L.push("`(nao escolhido)`: o dono nao marcou o campo ao gerar, e ele nao entra nas Instrucoes deste pacote. Se o projeto declara");
+    L.push("um valor, o valor do projeto continua valendo: pergunte ao dono se ele quer marcar o campo e regerar o pacote.");
+    L.push("");
+  }
   if(REVOCATIONS.length){
     L.push("## Linhas revogadas (o merge nao acha sozinho)");
     L.push("");
@@ -4623,6 +4630,12 @@ function buildUpdateManifest(niche, files, codeOn, skillsOn){
   // wo0183 (i-N76 item 2, D-185): a resposta esperada por arquivo — ponto de partida do merge, nao a decisao
   L.push("A coluna **Resposta esperada** e o ponto de partida, nao a decisao: o inventario do merge pode muda-la, dizendo por que.");
   L.push("");
+  // wo0204 (i-N107 item 2): o nome no upload pode ter subpasta (o companion: mecanicas/, rotas/)
+  const comSub = files.find(f => f.flat.indexOf("/") > -1);
+  if(comSub){
+    L.push("Alguns nomes no upload tem subpasta (`" + comSub.flat + "`): o zip do navegador cria a pasta sozinho; quem descompacta a mao ou grava por script cria a pasta antes.");
+    L.push("");
+  }
   L.push("| Nome no upload | Destino real | Natureza | Resposta esperada | Papel |");
   L.push("|---|---|---|---|---|");
   files.forEach(f => {

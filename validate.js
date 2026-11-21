@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, renderBuilderSection, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3322,6 +3322,47 @@ check("C134 o update olha o painel e o perfil, e o kit do Code indica o /doctor 
     assert(k.claudeMd.indexOf("`/doctor prompt-audit .`") > -1 && k.claudeMd.indexOf("Ele não lê o `meta/CEREBRO.md` nem o `meta/GUIA-DO-KIT.md`") > -1, "o kit do Code nao indica o /doctor prompt-audit, ou nao diz o que ele nao cobre");
     return "ok (o perfil: barra, bloco do nicho e SO; o painel no prompt e no GUIA; o /doctor prompt-audit no CLAUDE.md)";
   } finally { S.workmode = prevW; S.topbar = prevTb; S.builder = prevBd; S.niche = prevN; T.OSENV.value = prevOs; }
+});
+
+check("C135 o radio nao tocado nasce sem marca e o perfil diz (nao escolhido) (wo0204, D-201, i-N107)", () => {
+  const S = T.STATE, D = T.document, prevW = S.workmode, prevTb = S.topbar, prevBd = S.builder, prevN = S.niche;
+  // o documento do harness e vazio: o bloco do nicho nasce aqui e sai no fim
+  let host = D.getElementById("g-builder-section"), criado = null;
+  if(!host){ criado = host = D.createElement("div"); host.id = "g-builder-section"; D.body.appendChild(host); }
+  try {
+    S.workmode = {codeMode:"yes", asuMode:"", groupMode:"no", mountMode:""};
+    const game = T.normNiche(T.NICHES.game);
+    S.niche = "game"; S.topbar = { project: "farmeryan" };
+    // (1) a tela: sem escolha, nenhum radio marcado; com escolha, so o escolhido
+    S.builder = {};
+    T.renderBuilderSection(game);
+    assert(host.querySelectorAll("[data-radio]").length > 0, "o bloco do jogo nao tem radio");
+    const marcados = Array.from(host.querySelectorAll("[data-radio].on")).map(b => b.dataset.radio + "=" + b.dataset.val);
+    assert(marcados.length === 0, "radio nao tocado nasceu marcado: " + marcados.join(", "));
+    S.builder = { scope: "medium" };
+    T.renderBuilderSection(game);
+    const on = Array.from(host.querySelectorAll("[data-radio].on")).map(b => b.dataset.radio + "=" + b.dataset.val);
+    assert(on.length === 1 && on[0] === "scope=medium", "a escolha nao aparece marcada, ou marcou outra: " + on.join(", "));
+    // (2) o perfil do pacote: o nao escolhido diz que nao foi escolhido, e o texto gerado tambem nao o traz
+    S.builder = {};
+    const p0 = T.perfilDoPacote(game).map(r => r.join(" = "));
+    assert(p0.indexOf("Escopo realista = (nao escolhido)") > -1 && p0.indexOf("Equipe = (nao escolhido)") > -1, "o perfil carimba a primeira opcao como escolhida: " + p0.join(" | "));
+    const man0 = T.buildUpdatePack(game).manifest;
+    assert(man0.indexOf("| Escopo realista | (nao escolhido) |") > -1 && man0.indexOf("`(nao escolhido)`: o dono nao marcou o campo ao gerar") > -1, "o manifesto nao explica o (nao escolhido)");
+    assert(T.buildInstr(game).indexOf("Game jam") < 0, "o radio nao tocado entrou nas Instrucoes");
+    S.builder = { scope: "medium", team: "solo" };
+    const man1 = T.buildUpdatePack(game).manifest;
+    assert(man1.indexOf("| Escopo realista | Médio (meses/1 ano) |") > -1 && man1.indexOf("`(nao escolhido)`:") < 0, "com tudo escolhido, o perfil nao traz o valor ou ainda explica o nao escolhido");
+    // (3) o nome no upload com subpasta: o companion avisa, o jogo nao
+    assert(man1.indexOf("Alguns nomes no upload tem subpasta") < 0, "o aviso da subpasta saiu num pacote sem subpasta");
+    S.niche = "companion"; S.builder = {};
+    const comp = T.buildUpdatePack(T.normNiche(T.NICHES.companion)).manifest;
+    assert(/Alguns nomes no upload tem subpasta \(`[^`]*\/[^`]*`\)/.test(comp), "o companion nao avisa que o nome no upload tem subpasta");
+    return "ok (a tela sem marca e com a escolha; o perfil (nao escolhido) e explicado; as Instrucoes sem o padrao; a subpasta so no companion)";
+  } finally {
+    if(criado) criado.remove(); else host.innerHTML = "";
+    S.workmode = prevW; S.topbar = prevTb; S.builder = prevBd; S.niche = prevN;
+  }
 });
 
 // ============ SUMARIO ============
