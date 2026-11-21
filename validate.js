@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3293,6 +3293,35 @@ check("C133 cada aba lembra a propria rolagem, so no nicho atual e so na memoria
     if(vis0) T.setView(vis0.id.replace(/^v-/, ""));
   }
   return "ok (cada aba volta onde estava; a aba nova abre no topo; trocar de nicho zera; nada no localStorage)";
+});
+
+check("C134 o update olha o painel e o perfil, e o kit do Code indica o /doctor prompt-audit (wo0202, D-200, i-N106, i-N100)", () => {
+  const S = T.STATE, prevW = S.workmode, prevTb = S.topbar, prevBd = S.builder, prevN = S.niche, prevOs = T.OSENV.value;
+  try {
+    S.workmode = {codeMode:"yes", asuMode:"", groupMode:"no", mountMode:""};
+    // (1) o perfil no manifesto: barra (o Engine do jogo), bloco do nicho (a modalidade da carreira) e o SO
+    S.niche = "game"; S.topbar = { project: "farmeryan", engineSel: "Godot" }; S.builder = {}; T.OSENV.value = "win-ps";
+    const game = T.normNiche(T.NICHES.game), man = T.buildUpdatePack(game).manifest;
+    assert(man.indexOf("## Perfil com que o pacote foi gerado") > -1, "o manifesto nao carimba o perfil com que o pacote foi gerado");
+    assert(man.indexOf("| Jogo | farmeryan |") > -1 && man.indexOf("| Engine | Godot |") > -1, "o perfil nao traz os campos da barra de cima");
+    assert(man.indexOf("| Sistema operacional | Windows (PowerShell) |") > -1, "o perfil nao traz o sistema operacional");
+    assert(man.indexOf("**Campo diferente e pergunta ao dono ANTES") > -1, "o manifesto nao diz o que fazer com campo diferente");
+    const linhas = man.split("\n").filter(l => /^\| `/.test(l));
+    assert(linhas.length === T.buildUpdatePack(game).files.length, "o perfil baguncou a tabela de arquivos do manifesto");
+    S.niche = "career"; S.topbar = {}; S.builder = { modality: "hybrid" };
+    const car = T.buildUpdatePack(T.normNiche(T.NICHES.career)).manifest;
+    assert(car.indexOf("| Modalidade aceita | Híbrido |") > -1, "o perfil nao traz o bloco do nicho (a modalidade da Carreira)");
+    // (2) o painel no prompt do update e no GUIA
+    const up = T.buildUpdatePrompt(game), guia = T.buildGuiaKit(game);
+    assert(up.indexOf("**O painel tambem e superficie.**") > -1 && up.indexOf("so fecha quando eu recolar o `INSTRUCOES-DO-PROJETO.md` fundido no painel") > -1, "o prompt do update nao olha o painel");
+    assert(up.indexOf("**Primeiro, a versao:**") < up.indexOf("**O painel tambem e superficie.**") && up.indexOf("**O painel tambem e superficie.**") < up.indexOf("**Antes de comparar qualquer coisa:**"), "o painel nao vem entre a versao e a comparacao");
+    assert(up.indexOf("3. **Perfil com que o pacote foi gerado.**") > -1 && up.indexOf("Comece pelas tres secoes do manifesto") > -1 && up.indexOf("Comece pelas duas secoes") < 0, "o prompt nao manda comparar o perfil");
+    assert(guia.indexOf("**O painel e o perfil, que nenhum arquivo mostra.**") > -1, "o GUIA nao fala do painel e do perfil");
+    // (3) o /doctor prompt-audit no CLAUDE.md do kit do Code
+    const k = T.buildCodeKitFiles();
+    assert(k.claudeMd.indexOf("`/doctor prompt-audit .`") > -1 && k.claudeMd.indexOf("Ele não lê o `meta/CEREBRO.md` nem o `meta/GUIA-DO-KIT.md`") > -1, "o kit do Code nao indica o /doctor prompt-audit, ou nao diz o que ele nao cobre");
+    return "ok (o perfil: barra, bloco do nicho e SO; o painel no prompt e no GUIA; o /doctor prompt-audit no CLAUDE.md)";
+  } finally { S.workmode = prevW; S.topbar = prevTb; S.builder = prevBd; S.niche = prevN; T.OSENV.value = prevOs; }
 });
 
 // ============ SUMARIO ============

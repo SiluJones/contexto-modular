@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.160.1**.
+> Histórico de versões. Versão atual: **v1.161.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.161.0 — O update olha o painel e o perfil do pacote, e o kit do Code indica o /doctor prompt-audit (wo0202, D-200)
+- **O painel também é superfície:** o prompt do update pede, antes de comparar, o texto das Instruções que está no painel do Projeto (que é o que o assistente lê em toda mensagem) e varre as linhas revogadas nele também; o merge só fecha quando o dono recolar as Instruções fundidas e confirmar. O GUIA-DO-KIT diz o mesmo. Na Carreira, as Instruções fundidas em 07/11 nunca chegaram ao painel, que seguiu na v1.73.
+- **O perfil com que o pacote foi gerado:** o manifesto ganha uma tabela com os campos que o dono preencheu (a barra de cima e o modal, o bloco do nicho, o sistema operacional). Campo diferente do projeto é pergunta ao dono antes de fundir; o remédio é regerar o pacote. Na Carreira, o pacote saiu com «Híbrido», sem fronteira e sem sistema operacional.
+- **O `/doctor prompt-audit` no `CLAUDE.md` do kit do Code:** depois de fundir um pacote ou trocar de modelo, ele audita o `CLAUDE.md`, as regras e as skills e propõe as edições sem aplicar (Claude Code 2.1.283 ou mais novo); não lê o CEREBRO nem o GUIA.
+- **`C134` novo** (134 → 135). **Origem:** o feedback da Carreira de 20/11 (`i-N106`) e as capturas do dono de 18/11 (`i-N100`). Harness **19/19 · 135/135**.
 
 ## v1.160.1 — As Instruções sem a margem a mais em cima, e cada aba lembra a própria rolagem (wo0198, D-198, D-199)
 - **A margenzinha das Instruções:** em cima do construtor havia 58 px (38 da vista e 20 do construtor), e o preview foi feito para caber na tela a 14 px da barra; a página rolava 44 px à toa. Em tela larga, o topo da vista das Instruções fica em 14 px, e a página cabe inteira na tela até você abrir os blocos.
