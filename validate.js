@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3200,7 +3200,7 @@ check("C130 a interface, WO B (wo0192, D-193): os prompts recolhidos com o «qua
 
 // wo0194 (D-195): o titulo das Instrucoes mora na coluna dos blocos, o preview sobe ao lado dele e fica inteiro na tela,
 // abaixo da barra de cima. Roda no DOM da pagina carregada (o titulo e o CSS) e no construtor de verdade (o «abrir tudo»).
-check("C131 as Instrucoes, o layout (wo0194, D-195): o titulo na coluna dos blocos, o preview sticky com a altura da tela abaixo da barra (--topo), e o «abrir tudo» depois do titulo", () => {
+check("C131 as Instrucoes, o layout (wo0194, D-195; o respiro do sticky, wo0195, D-196; o topo, wo0198, D-198): o titulo na coluna dos blocos, o preview sticky com a altura da tela abaixo da barra (--topo), e o «abrir tudo» depois do titulo", () => {
   const P = new JSDOM(fs.readFileSync(path, "utf8")).window.document;  // a pagina como sai, sem rodar o script
   const v = P.getElementById("v-instrucoes");
   assert(v, "faltou a vista das Instrucoes");
@@ -3213,8 +3213,11 @@ check("C131 as Instrucoes, o layout (wo0194, D-195): o titulo na coluna dos bloc
   assert(/top:calc\(var\(--topo/.test(out) && /height:calc\(100vh - var\(--topo/.test(out), "o preview nao para abaixo da barra de cima ou nao tem a altura da tela: " + out.slice(0, 120));
   // wo0195 (D-196): o sticky nao sai da caixa. No fim da rolagem, o topo do preview fica em --topo + 28 - (respiro abaixo
   // do construtor); para nao subir alem do --topo + 14, o respiro da vista nao pode passar de 14px.
-  const resp = css.match(/#v-instrucoes\{padding-bottom:(\d+)px\}/);
-  assert(resp && Number(resp[1]) <= 14, "o respiro abaixo do construtor passa da folga do sticky: no fim da rolagem a barra cobre o topo do preview");
+  const resp = css.match(/#v-instrucoes\{padding-top:(\d+)px;padding-bottom:(\d+)px\}/);
+  assert(resp && Number(resp[2]) <= 14, "o respiro abaixo do construtor passa da folga do sticky: no fim da rolagem a barra cobre o topo do preview");
+  // wo0198 (D-198): em cima vale o mesmo. O preview tem a altura da tela menos a barra e 28px; se o topo e o fundo da vista
+  // somam mais de 28px (e o construtor tem margem propria), a pagina rola a toa (a margenzinha: 38 + 20 + 14 - 28 = 44px).
+  assert(Number(resp[1]) + Number(resp[2]) <= 28 && /#v-instrucoes \.builder\{margin-top:0\}/.test(css), "o topo da vista das Instrucoes passa da folga do sticky: a pagina rola a toa (a margenzinha)");
   const D = T.document; const box = D.createElement("div"); box.className = "controls"; box.innerHTML = ctl.innerHTML; D.body.appendChild(box);
   try {
     T.enhanceCollapsibleGroups(box);
@@ -3256,6 +3259,40 @@ check("C132 os nomes dos zips com o nicho, a linha revogada cacada pelo comporta
     assert(px(b, "font-size") >= 14 && fw(b) >= 700 && /border:/.test(b), "a letra do prompt nao esta num selo grande e grosso: " + b);
     return "ok (projeto-game-v" + T.KIT_VERSION + ".zip, " + pasta + ", o comportamento nas tres superficies, o PROTOTIPOS condicional, o indice 280px com a letra em selo)";
   } finally { S.workmode = prev; }
+});
+
+check("C133 cada aba lembra a propria rolagem, so no nicho atual e so na memoria da pagina (wo0198, D-198)", () => {
+  // o jsdom nao rola: a prova troca o elemento de rolagem por um objeto que guarda o scrollTop
+  const D = T.document, fake = { scrollTop: 0 };
+  const vis0 = D.querySelector(".view.on"), nicho0 = T.STATE.niche;
+  // o harness roda o script num documento vazio: as duas abas da prova nascem aqui e saem no fim
+  const criadas = ["instrucoes", "prompts"].filter(v => !D.getElementById("v-" + v)).map(v => {
+    const s = D.createElement("section"); s.className = "view"; s.id = "v-" + v; D.body.appendChild(s); return s; });
+  Object.defineProperty(D, "scrollingElement", { configurable: true, get: () => fake });
+  try {
+    T.rolagemDoNicho("__teste_a");
+    T.setView("instrucoes"); fake.scrollTop = 500;
+    T.setView("prompts");
+    assert(fake.scrollTop === 0, "a aba nova herdou a rolagem da anterior: " + fake.scrollTop);
+    fake.scrollTop = 1200;
+    T.setView("instrucoes");
+    assert(fake.scrollTop === 500, "as Instrucoes nao voltaram onde estavam: " + fake.scrollTop);
+    T.setView("prompts");
+    assert(fake.scrollTop === 1200, "os Prompts nao voltaram onde estavam: " + fake.scrollTop);
+    T.rolagemDoNicho("__teste_b");
+    assert(fake.scrollTop === 0, "trocar de nicho nao voltou ao topo");
+    T.setView("instrucoes");
+    assert(fake.scrollTop === 0, "a rolagem de um nicho passou para outro: " + fake.scrollTop);
+    const fonte = fs.readFileSync(path, "utf8");
+    assert(/rolagemDoNicho\(id\);/.test(fonte), "o setNiche nao zera a rolagem ao trocar de nicho");
+    assert(!/localStorage[^\n]{0,120}ROLAGEM|ROLAGEM[^\n]{0,120}localStorage/.test(fonte), "a rolagem foi para o localStorage: ela volta ao topo ao recarregar, de proposito");
+  } finally {
+    delete D.scrollingElement;
+    criadas.forEach(s => s.remove());
+    T.rolagemDoNicho(nicho0);
+    if(vis0) T.setView(vis0.id.replace(/^v-/, ""));
+  }
+  return "ok (cada aba volta onde estava; a aba nova abre no topo; trocar de nicho zera; nada no localStorage)";
 });
 
 // ============ SUMARIO ============

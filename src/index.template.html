@@ -280,7 +280,10 @@
   /* wo0195 (D-196): um sticky nao sai da caixa que o contem. A vista tinha 90px de respiro abaixo do construtor; no fim
      da rolagem a caixa acabava 90px antes da tela e empurrava o preview para cima, 76px sob a barra. O respiro abaixo
      do construtor fica igual a folga do sticky (14px), e o preview nunca sobe alem do --topo. */
-  @media (min-width: 901px){ #v-instrucoes{padding-bottom:14px} }
+  /* wo0198 (D-198, nota do dono 261120-1617): em cima vale o mesmo. Os 38px da vista e os 20px do construtor davam 58px
+     acima do preview, que foi feito para caber na tela a 14px da barra: a pagina rolava 44px a toa (58 + 14 - 28).
+     O topo fica tambem em 14px, e a pagina cabe inteira na tela. */
+  @media (min-width: 901px){ #v-instrucoes{padding-top:14px;padding-bottom:14px} #v-instrucoes .builder{margin-top:0} }
   .bhead .lede{margin:0}
   .outhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
   .outhead .ttl{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint)}
@@ -1358,7 +1361,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.160.0";
+const KIT_VERSION = "1.160.1";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -1809,6 +1812,7 @@ function setNiche(id){
 
   STATE.niche = id;
   restoreStateFor(id);
+  rolagemDoNicho(id);
 
   const niche = getCurrentNiche();
   if(!niche) return;
@@ -5363,10 +5367,25 @@ function openOverlay(){
   if(c) c.style.display = STATE.niche ? "" : "none";
 }
 function closeOverlay(){ $("#niche-overlay").classList.remove("on"); }
+/* wo0198 (D-198, nota do dono 261120-1617): cada aba lembra a propria rolagem, so no nicho atual e so enquanto a pagina
+   esta aberta. Em memoria, de proposito: recarregar a pagina ou trocar de nicho volta ao topo. */
+const ROLAGEM = { niche: null, pos: {} };
+function rolagemEl(){ return document.scrollingElement || document.documentElement; }
+function guardarRolagem(){
+  const on = document.querySelector(".view.on");
+  if(on) ROLAGEM.pos[on.id] = rolagemEl().scrollTop || 0;
+}
+function rolagemDoNicho(id){
+  if(ROLAGEM.niche === id) return;
+  ROLAGEM.niche = id; ROLAGEM.pos = {};
+  rolagemEl().scrollTop = 0;
+}
 function setView(v){
+  guardarRolagem();
   $$(".view").forEach(s => s.classList.toggle("on", s.id === "v-" + v));
   $$(".navbtn").forEach(b => b.classList.toggle("on", b.dataset.view === v));
   if(v === "hub") renderHub();
+  rolagemEl().scrollTop = ROLAGEM.pos["v-" + v] || 0;
 }
 
 /* ---------- HUB de grupo de projetos (i-N24) ---------- */

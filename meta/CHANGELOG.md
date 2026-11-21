@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.160.0**.
+> Histórico de versões. Versão atual: **v1.160.1**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.160.1 — As Instruções sem a margem a mais em cima, e cada aba lembra a própria rolagem (wo0198, D-198, D-199)
+- **A margenzinha das Instruções:** em cima do construtor havia 58 px (38 da vista e 20 do construtor), e o preview foi feito para caber na tela a 14 px da barra; a página rolava 44 px à toa. Em tela larga, o topo da vista das Instruções fica em 14 px, e a página cabe inteira na tela até você abrir os blocos.
+- **A rolagem por aba:** cada aba volta onde estava quando você retorna a ela; trocar de nicho volta todas ao topo; recarregar a página também (fica só na memória da página).
+- **Primeiro patch pela regra nova (`D-199`):** a mudança é só de tela. **Para projetos instalados, nada muda:** o que o kit gera é o da v1.160.0, só com o carimbo novo.
+- **`C133` novo** (133 → 134); o `C131` cobra também o topo. **Origem:** a nota do dono `261120-1617` e as duas capturas de 16h17. Harness **19/19 · 134/134**.
 
 ## v1.160.0 — Os zips dizem o nicho, a linha revogada se caça pelo comportamento, o PROTOTIPOS só para quem ainda escolhe, e o índice dos prompts legível (wo0197, D-197)
 - **Os nomes dos zips:** sem o nome do projeto, o zip do projeto sai `projeto-<nicho>-v<versão>.zip` (antes, `projeto.zip` em todo nicho); com o nome, fica o nome. A pasta do pacote de update ganha o nicho, `AAMMDD-kcm-update-<nicho>-vX.Y.Z`, e não leva o nome do projeto.

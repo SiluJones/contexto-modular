@@ -2574,3 +2574,21 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Por quê.** (1) Dois `projeto.zip` de nichos diferentes se sobrepõem na pasta de downloads, e o pacote de update não dizia de que nicho era. (2) O manifesto e o prompt já tinham «varra pelo FATO», e foi seguindo isso que o Hey Mother achou «só dê push se a spec pedir» na skill deles; mas a abertura da seção, a coluna e a receita do `grep` ainda mandavam procurar a frase, e o GUIA só a frase. O que se lê primeiro é o que se faz. (3) O molde do `PROTOTIPOS.md` diz que serve a quem ainda escolhe o jogo, e o manifesto o oferecia a todo projeto: o chat deles quase criou uma segunda fonte para a tabela que já mora no `PRODUCAO.md`. (4) O dono achou o índice pequeno sem necessidade e a letra pouco nítida.
 
 **Números** `[medido na réplica do HEAD 53b50f1 com os arquivos do chat por cima]`: `index.html` 1.058.723 → 1.060.861 bytes; harness 132/132 → 133/133. O `C132` cobra os quatro itens; prova negativa vermelha e restaurada (o selo da letra de volta à regra antiga). Corta a **v1.160.0** (`D-158`).
+
+## D-198 — As Instruções sem a margem a mais em cima, e cada aba lembra a própria rolagem
+
+**Data:** 2026-11-21 · **WO:** 0198 · **Origem:** a nota do dono `261120-1617` («ainda tem uma margenzinha de espaço que não sei por que que está aí»; «a barra de rolar é compartilhada em todas as abas, não seria possível separar e também se lembrar onde estava? Mas apenas no nicho que você está») e as duas capturas de 16h17 `[relatado pelo dono]`.
+
+**Decisão.** (1) Em tela larga, a vista das Instruções tem 14 px em cima e embaixo, e o construtor perde a margem própria: topo + fundo ≤ 28 px, a folga do preview. (2) Ao sair de uma aba, a posição dela fica guardada; ao voltar, a rolagem volta para lá; aba nunca aberta abre no topo. Trocar de nicho zera todas. Fica numa variável da página (`ROLAGEM`), não no `localStorage`: recarregar volta ao topo, como o dono pediu.
+
+**Por quê.** (1) As capturas, com 2 s de diferença, mostram a página inteira rolando 44 px. O preview tem a altura da tela menos a barra e 28 px; acima dele havia 38 px da vista e 20 do construtor, e embaixo 14: 58 + 14 − 28 = 44. Era o espaço que o dono viu em cima, e a rolagem curta. (2) A página rola numa barra só, a da janela; trocar de aba trocava o conteúdo e deixava a posição.
+
+**Números** `[medido na réplica do HEAD 98d08b8 com os arquivos do chat por cima]`: harness 133/133 → 134/134. O `C133` troca o elemento de rolagem por um objeto que guarda o `scrollTop` (o jsdom não rola) e prova a ida, a volta, a aba nova no topo e o nicho que zera; o `C131` cobra o topo. Duas provas negativas, vermelhas e restauradas. O que o kit gera, comparado com a v1.160.0 em 76 configurações (os 19 nichos × Code × mount; Instruções, CEREBRO, GUIA, manifesto, arquivos do pacote, prompt do update e kit do Code — 532 saídas): **0 diferenças** fora o carimbo de versão. Corta a **v1.160.1** (`D-199`).
+
+## D-199 — Mudança só de tela corta patch; mudança no que o kit gera corta minor
+
+**Data:** 2026-11-21 · **WO:** 0198 · **Emenda:** `D-158` · **Origem:** a pergunta do dono no chat de 21/11 («você acha pertinente esses cortes de versões do KCM em implementações que são apenas mudança de tela e não de dados ou arquivos gerados?») `[relatado pelo dono]`.
+
+**Decisão.** WO que muda o que o kit gera (Instruções, CEREBRO, GUIA, moldes, skills, kit do Code, pacote de update, nomes de arquivo) corta **minor**, como na `D-158`. WO que muda só a tela do KCM (CSS, a navegação, o comportamento da interface) e deixa o gerado idêntico corta **patch** (`v1.X.Y` → `v1.X.Y+1`), com a linha «Para projetos instalados, nada muda» no CHANGELOG. WO que não toca `src/` não corta.
+
+**Por quê.** O número existe para dizer a um projeto instalado que ele está atrás (`D-158`). Seis das últimas oito versões (v1.154.0 a v1.159.0) foram só de tela e cada uma pareceu, de fora, um kit novo a fundir. Não cortar nada também falha: o rodapé e o CHANGELOG deixam de dizer qual tela o dono tem aberta, e a captura que prova um defeito precisa disso. O patch separa os dois sinais. O `C54` continua exigindo os três carimbos iguais, e o salto entre as duas versões do topo continua de no máximo uma minor.
