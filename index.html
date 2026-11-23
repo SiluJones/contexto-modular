@@ -1361,7 +1361,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.162.0";
+const KIT_VERSION = "1.162.1";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9188,13 +9188,18 @@ function enhanceCollapsibleGroups(root){
     cnt.textContent = grupoResumo(g);
     lab.setAttribute("role", "button"); lab.setAttribute("tabindex", "0");
     lab.setAttribute("aria-expanded", GRUPO_ABERTO[key] ? "true" : "false");
-    if(!lab.dataset.collap){
-      lab.dataset.collap = "1";
-      const alterna = () => { GRUPO_ABERTO[key] = !GRUPO_ABERTO[key]; g.classList.toggle("closed", !GRUPO_ABERTO[key]); lab.setAttribute("aria-expanded", GRUPO_ABERTO[key] ? "true" : "false"); };
-      lab.addEventListener("click", e => { if(e.target && e.target.closest && e.target.closest("input,select,textarea,button")) return; alterna(); });
-      lab.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); alterna(); } });
-      g.addEventListener("change", () => { cnt.textContent = grupoResumo(g); });
-      g.addEventListener("input", () => { cnt.textContent = grupoResumo(g); });
+    /* wo0207 (D-202): o clique mora no GRUPO, que nunca e reescrito, e acha o titulo na hora. O bloco do nicho e as
+       Convencoes reescrevem o proprio innerHTML (o clique num chip; a troca de nicho): o titulo com o ouvinte ia embora
+       junto, e o bloco ficava preso, fechado e surdo. */
+    if(!g.dataset.collap){
+      g.dataset.collap = "1";
+      const titulo = e => { const l = e.target && e.target.closest && e.target.closest(".glabel"); return l && l.parentElement === g ? l : null; };
+      const alterna = () => { const k = g.dataset.gkey; GRUPO_ABERTO[k] = !GRUPO_ABERTO[k]; g.classList.toggle("closed", !GRUPO_ABERTO[k]); const l = g.querySelector(":scope > .glabel"); if(l) l.setAttribute("aria-expanded", GRUPO_ABERTO[k] ? "true" : "false"); };
+      g.addEventListener("click", e => { if(!titulo(e)) return; if(e.target.closest("input,select,textarea,button")) return; alterna(); });
+      g.addEventListener("keydown", e => { if(!titulo(e)) return; if(e.key === "Enter" || e.key === " "){ e.preventDefault(); alterna(); } });
+      const conta = () => { const c = g.querySelector(":scope > .glabel .gcount"); if(c) c.textContent = grupoResumo(g); };
+      g.addEventListener("change", conta);
+      g.addEventListener("input", conta);
     }
   });
   let bar = box.querySelector(".collap-bar");
@@ -9270,6 +9275,7 @@ function renderBuilderSection(niche){
     html += `<label class="tsw" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" data-skills-toggle${skOn?" checked":""}/><span class="track"></span><span style="font-size:13px;color:var(--ink-dim)">${skOn?"Skills ativadas":"Skills desativadas"}</span></label>`;
   }
   host.innerHTML = html;
+  enhanceCollapsibleGroups();  // wo0207 (D-202): o innerHTML trocou o titulo; o recolher volta a valer nele
 
   host.querySelectorAll("[data-radio]").forEach(b => {
     b.addEventListener("click", () => {
@@ -9313,6 +9319,7 @@ function renderConventionsBlock(niche){
   host.style.display = "";
   host.innerHTML = `<div class="glabel">Convenções do nicho <span class="gn">· entram nas instruções</span></div>` +
     niche.conventions.map(c => `<div style="color:var(--ink-dim);font-size:13px;padding:5px 0;line-height:1.55">· ${escapeHTML(c)}${(niche.conventionsSoCerebro||[]).includes(c) ? ' <span class="gn">· só no CEREBRO</span>' : ''}</div>`).join("");
+  enhanceCollapsibleGroups();  // wo0207 (D-202): o setNiche pinta as Convencoes DEPOIS do renderBuilder, que ja tinha ligado o recolher
 }
 
 function renderOutputs(niche){

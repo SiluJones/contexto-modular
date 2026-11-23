@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, renderBuilderSection, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, renderBuilderSection, renderConventionsBlock, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3363,6 +3363,40 @@ check("C135 o radio nao tocado nasce sem marca e o perfil diz (nao escolhido) (w
     if(criado) criado.remove(); else host.innerHTML = "";
     S.workmode = prevW; S.topbar = prevTb; S.builder = prevBd; S.niche = prevN;
   }
+});
+
+check("C136 o recolher sobrevive ao bloco que se reescreve: as Convencoes e o bloco do nicho (wo0207, D-202)", () => {
+  const S = T.STATE, D = T.document, prevN = S.niche, prevBd = S.builder;
+  assert(!D.getElementById("g-conventions") && !D.getElementById("g-builder-section"), "o documento do harness ja tem os blocos: a prova acharia outros");
+  // o construtor de verdade tem esta forma: .builder > .controls > .group (o Comportamento, o bloco do nicho, as Convencoes)
+  const wrap = D.createElement("div"); wrap.className = "builder";
+  wrap.innerHTML = '<div class="controls"><div class="group"><div class="glabel">Comportamento</div><div id="g-behaviors"></div></div>'
+    + '<div class="group" id="g-builder-section"></div><div class="group" id="g-conventions"></div></div>';
+  D.body.appendChild(wrap);
+  const tit = g => g.querySelector(":scope > .glabel");
+  try {
+    const game = T.normNiche(T.NICHES.game), pixel = T.normNiche(T.NICHES.pixel);
+    S.niche = "game"; S.builder = {};
+    T.renderBuilderSection(game);
+    T.renderConventionsBlock(game);  // o setNiche pinta as Convencoes depois do renderBuilder
+    const conv = D.getElementById("g-conventions"), bs = D.getElementById("g-builder-section");
+    assert(conv.classList.contains("collap") && conv.classList.contains("closed"), "as Convencoes nao entraram no recolher");
+    tit(conv).click();
+    assert(!conv.classList.contains("closed"), "o clique nao abriu as Convencoes");
+    T.renderConventionsBlock(pixel);  // a troca de nicho reescreve o bloco
+    tit(conv).click();
+    assert(conv.classList.contains("closed"), "depois de trocar de nicho, o clique nas Convencoes nao responde");
+    tit(bs).click();
+    assert(!bs.classList.contains("closed"), "o clique nao abriu o bloco do nicho");
+    S.builder = { scope: "medium" }; T.renderBuilderSection(game);  // o que o clique num chip faz
+    const c = bs.querySelector(":scope > .glabel .gcount");
+    assert(c && /1 escolhido/.test(c.textContent), "a contagem do bloco do nicho sumiu depois do re-render");
+    tit(bs).click();
+    assert(bs.classList.contains("closed"), "depois do re-render, o clique no bloco do nicho nao responde");
+    tit(bs).click();
+    assert(!bs.classList.contains("closed"), "um clique alternou duas vezes: o ouvinte duplicou");
+    return "ok (as Convencoes recolhem e voltam a responder depois da troca de nicho; o bloco do nicho responde e conta depois do clique num chip; um clique, uma troca)";
+  } finally { wrap.remove(); S.niche = prevN; S.builder = prevBd; }
 });
 
 // ============ SUMARIO ============

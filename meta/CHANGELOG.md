@@ -1,10 +1,16 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.162.0**.
+> Histórico de versões. Versão atual: **v1.162.1**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.162.1 — Os blocos das Convenções e do nicho voltam a recolher (wo0207, D-202)
+- **As Convenções do nicho:** ao trocar de nicho, o bloco era pintado depois de o recolher ser ligado, e ficava preso, fechado e sem responder ao clique (no primeiro nicho, nem entrava no recolher). Agora ele religa o recolher depois de se pintar.
+- **O bloco do nicho («A obra», «Stack»…):** clicar num rádio ou chip reescrevia o bloco e levava junto o clique do título e a contagem. Agora ele religa o recolher a cada clique, e o clique mora no grupo, que não é reescrito.
+- **Para projetos instalados, nada muda:** o gerado é idêntico (Instruções, CEREBRO e pacote de update dos 19 nichos, com e sem o Modo Code, conferidos um a um).
+- **`C136` novo** (136 → 137). **Origem:** a nota do dono `261123-0948` («o colapsar do bloco Convenções do nicho não está funcionando»). Harness **19/19 · 137/137**.
 
 ## v1.162.0 — O rádio que você não tocou nasce sem marca, e o perfil do pacote diz «(nao escolhido)» (wo0204, D-201)
 - **O rádio sem escolha:** o bloco do nicho marcava a primeira opção de cada rádio, mas esse valor nunca entrou nas Instruções nem no CEREBRO (as Instruções só levam o que você marcou; o CEREBRO não lê o bloco). Quem o levava adiante era a tabela do perfil do pacote (v1.161.0), que o carimbava como escolhido. Agora o rádio nasce sem marca, e o perfil diz «(nao escolhido)», com uma linha dizendo que o campo não entrou nas Instruções e que o valor do projeto continua valendo. Vale para os 25 rádios de 13 nichos.
