@@ -1,10 +1,15 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.164.0**.
+> Histórico de versões. Versão atual: **v1.165.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.165.0 — O bloco de git para o usuário: um bloco só, um comando por linha (wo0211, D-205)
+- **O commit que o usuário roda:** o CEREBRO («Commit pronto ao final») e as Instruções mandam entregar `git add`, `git commit` e `git push` **num bloco de código só, um comando por linha**: o usuário copia uma vez e cola. Antes, o CEREBRO mandava três linhas «para colar uma a uma», e o assistente as entregava em três blocos.
+- **Para projetos instalados:** o próximo update troca a frase no CEREBRO e a linha do commit nas Instruções.
+- **`C139` novo** (139 → 140). **Origem:** a nota do dono `261125-1734`. Harness **19/19 · 140/140**.
 
 ## v1.164.0 — O CEREBRO mais leve: o «como» da Análise e do Refino vai para o GUIA, e a base ganha teto (wo0210, D-204)
 - **A Análise antes do compromisso:** no CEREBRO ficam a regra, os dois testes que dizem se é análise mesmo, onde ela mora, o funil e o gatilho do formato; o «como» — o que vai dentro, medir antes de propor, o risco que se confere por comando, o desfecho no DECISIONS, abandonar no meio, a convenção de outro nome e o modelo — vai para a seção «Análise antes do compromisso — como escrever» do `GUIA-DO-KIT.md`, e o CEREBRO a aponta.

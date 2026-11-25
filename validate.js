@@ -3478,6 +3478,22 @@ check("C138 o enxugamento, WO B: o «como» da Analise e do Refino no GUIA, a re
   } finally { S.workmode = prevW; S.niche = prevN; S.topbar = prevTb; S.builder = prevBd; }
 });
 
+check("C139 o bloco de git para o usuario: um bloco so, um comando por linha (wo0211, D-205)", () => {
+  const S = T.STATE, prevW = S.workmode, prevN = S.niche;
+  try {
+    ["dev", "narrative", "custom"].forEach(id => [{codeMode:""}, {codeMode:"yes"}].forEach(w => {
+      S.workmode = Object.assign({mountMode:"", groupMode:"no", asuMode:""}, w); S.niche = id;
+      const n = T.normNiche(T.NICHES[id]), C = T.buildClaudeMd(n), I = T.buildInstr(n), tag = id + "/Code " + (w.codeMode || "nao");
+      assert(C.indexOf("**um bloco de código só, um comando por linha**") > -1 && C.indexOf("**Nunca três blocos separados**") > -1, tag + ": o CEREBRO nao manda o bloco unico");
+      assert(C.indexOf("em TRÊS linhas separadas") < 0 && C.indexOf("prontas para colar uma a uma") < 0, tag + ": o CEREBRO ainda manda tres linhas para colar uma a uma");
+      if(I.indexOf("**Commit:**") > -1) assert(I.indexOf("num bloco SÓ, um por linha") > -1 && I.indexOf("em bloco SEPARADO") < 0, tag + ": as Instrucoes ainda mandam o bloco separado");
+    }));
+    const casa = fs.readFileSync(require("path").join(require("path").dirname(path), "INSTRUCOES-DO-PROJETO.md"), "utf8");
+    assert(casa.indexOf("num **bloco só, um comando por linha**") > -1 && casa.indexOf("em **bloco separado**") < 0, "as Instrucoes da casa ainda dizem bloco separado");
+    return "ok (o CEREBRO e as Instrucoes de 3 nichos x Code sim/nao, e as da casa: um bloco so, um comando por linha)";
+  } finally { S.workmode = prevW; S.niche = prevN; }
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

@@ -33,7 +33,7 @@ O chat lê e grava **direto na pasta do repo** (`…\Contexto\contexto-modular`)
 
 ## Ao final da sessão (obrigatório, mode-aware, sem travar)
 - **Validação:** nada que toca `index.html`/`src/` sai sem `node build.js` + `node validate.js` — regra de ouro **19/19 nichos, 0 erros** (o total de checagens sobe a cada check novo). Doc-only não precisa (a rede é o `git diff`).
-- **Commit:** o chat não commita. O que ele gravou é versionado pela WO seguinte; fora de WO, entregue o `git commit` pronto, em **bloco separado**, mensagem **sem acento** — os três em ordem (`add`/`commit`/`push`) ou só o `commit`; bloco só com `add` não serve.
+- **Commit:** o chat não commita. O que ele gravou é versionado pela WO seguinte; fora de WO, entregue `add`, `commit` e `push` num **bloco só, um comando por linha**, mensagem **sem acento** — nunca três blocos separados; bloco só com `add` não serve.
 - **Feche com o bloco padrão** (só o que se aplica — linha sem conteúdo real **não aparece**): **Próximo** (sempre — a ação + a frase pronta para eu copiar, dizendo QUEM produz o quê) · **Estado** (abre com `Base:` — o `git log` lido NESTE turno; versão + harness + commit) · **Arquivar / Manter** (em lista, só se houver nota na pasta-pai; arquivar = você MOVE para `notas-arquivadas\`, nunca apaga) · **Config recomendada** por raia — **Chat** e **Code**, nunca afirmando saber a atual · **Handoff** (sessão completa = `AAMMDD-HANDOFF-BRIEF.md` na pasta-pai). Formato completo no CEREBRO.
 
 ## Princípios (13 universais — definição completa no CEREBRO)
