@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.162.1**.
+> Histórico de versões. Versão atual: **v1.163.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.163.0 — O update enxuto: menos varredura, sem parada por campo vazio (wo0209, D-203)
+- **As linhas revogadas filtram pela versão:** o manifesto e o prompt do update mandam varrer só as linhas que o kit apagou depois da versão do seu projeto (o carimbo «Gerado pelo Kit»). A mais nova da tabela é a v1.106.0: projeto nessa versão ou depois pula a seção inteira. No caso que motivou a mudança, era um turno inteiro para zero correções.
+- **O perfil não para o merge por campo vazio:** campo vazio no formulário (`(vazio)`, `(nao escolhido)`, `(nao informado)`) vale o do projeto, por transplante, sem pergunta. Só campo preenchido e diferente vira pergunta, e no inventário da fusão, nunca antes de comparar. Regerar o pacote passa a ser uma das respostas, não a regra (revê a `D-200`).
+- **A tela avisa o vazio antes de baixar:** o diálogo «Atualizar projeto existente» lista os campos vazios do formulário, para você preencher ali se quiser.
+- **O kit sem três contradições que os merges achavam:** as skills `apply-wo` e `wrap` não mandam mais com «sessão»; a `wrap` e o `CLAUDE.md` tratam o STATUS como rolante, não como append; o `CLAUDE.md` fecha o caso vermelho pelo `AskUserQuestion`, como as skills.
+- **Para projetos instalados:** o pacote de update fica mais curto de aplicar; as skills do Code e o `CLAUDE.md` mudam três frases cada.
+- **`C137` novo; `C134` revisto** (137 → 138). **Origem:** a nota do dono `261125-1321` e a análise `261125-ANALISE-o-update-que-cansa.md` (opção B). Harness **19/19 · 138/138**.
 
 ## v1.162.1 — Os blocos das Convenções e do nicho voltam a recolher (wo0207, D-202)
 - **As Convenções do nicho:** ao trocar de nicho, o bloco era pintado depois de o recolher ser ligado, e ficava preso, fechado e sem responder ao clique (no primeiro nicho, nem entrava no recolher). Agora ele religa o recolher depois de se pintar.

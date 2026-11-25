@@ -4,7 +4,7 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, renderBuilderSection, renderConventionsBlock, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, renderBuilderSection, renderConventionsBlock, verMaior, revogadaMaisNova, renderUpdateDialog, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3305,7 +3305,7 @@ check("C134 o update olha o painel e o perfil, e o kit do Code indica o /doctor 
     assert(man.indexOf("## Perfil com que o pacote foi gerado") > -1, "o manifesto nao carimba o perfil com que o pacote foi gerado");
     assert(man.indexOf("| Jogo | farmeryan |") > -1 && man.indexOf("| Engine | Godot |") > -1, "o perfil nao traz os campos da barra de cima");
     assert(man.indexOf("| Sistema operacional | Windows (PowerShell) |") > -1, "o perfil nao traz o sistema operacional");
-    assert(man.indexOf("**Campo diferente e pergunta ao dono ANTES") > -1, "o manifesto nao diz o que fazer com campo diferente");
+    assert(man.indexOf("**E pergunta ao dono, no") > -1, "o manifesto nao diz o que fazer com campo diferente");  // wo0209 (D-203): no inventario, nao antes
     const linhas = man.split("\n").filter(l => /^\| `/.test(l));
     assert(linhas.length === T.buildUpdatePack(game).files.length, "o perfil baguncou a tabela de arquivos do manifesto");
     S.niche = "career"; S.topbar = {}; S.builder = { modality: "hybrid" };
@@ -3397,6 +3397,43 @@ check("C136 o recolher sobrevive ao bloco que se reescreve: as Convencoes e o bl
     assert(!bs.classList.contains("closed"), "um clique alternou duas vezes: o ouvinte duplicou");
     return "ok (as Convencoes recolhem e voltam a responder depois da troca de nicho; o bloco do nicho responde e conta depois do clique num chip; um clique, uma troca)";
   } finally { wrap.remove(); S.niche = prevN; S.builder = prevBd; }
+});
+
+check("C137 o update enxuto: as revogadas filtradas pela versao, o perfil sem parada por campo vazio, o vazio avisado na tela, e as tres contradicoes do kit (wo0209, D-203)", () => {
+  const S = T.STATE, D = T.document, prevW = S.workmode, prevTb = S.topbar, prevBd = S.builder, prevN = S.niche, prevOs = T.OSENV.value;
+  let p = D.getElementById("upd-modes"), criado = null;
+  if(!p){ criado = p = D.createElement("p"); p.id = "upd-modes"; D.body.appendChild(p); }
+  try {
+    S.workmode = {codeMode:"yes", asuMode:"", groupMode:"no", mountMode:""};
+    // (1) o filtro das revogadas: a comparacao de versao e a mais nova da tabela
+    assert(T.verMaior("1.135.0", "1.106.0") && !T.verMaior("1.106.0", "1.106.0") && T.verMaior("1.10.0", "1.9.9") && !T.verMaior("1.90.0", "1.104.0"), "a comparacao de versao erra (numerica, nao de texto)");
+    const mais = T.revogadaMaisNova();
+    assert(T.REVOCATIONS.every(r => !T.verMaior(r.desde, mais)) && T.REVOCATIONS.some(r => r.desde === mais), "a mais nova da tabela nao e a mais nova: " + mais);
+    S.niche = "game"; S.topbar = {}; S.builder = {}; T.OSENV.value = "";
+    const game = T.normNiche(T.NICHES.game), man = T.buildUpdatePack(game).manifest, up = T.buildUpdatePrompt(game);
+    const iFiltro = man.indexOf("**Primeiro, filtre pela versao"), iTabela = man.indexOf("| Apagada desde |");
+    assert(iFiltro > -1 && iFiltro < iTabela && man.indexOf("A mais nova desta tabela e a v" + mais + ": projeto na v" + mais + " ou") > -1, "o manifesto nao manda filtrar as revogadas pela versao antes da tabela");
+    assert(up.indexOf("1. **Secao «Linhas revogadas» — primeiro, filtre pela versao.**") > -1 && up.indexOf("projeto na v" + mais + " ou depois pula a secao inteira") > -1, "o prompt do update nao filtra as revogadas pela versao");
+    // (2) o perfil: vazio e transplante sem pergunta; preenchido e diferente e pergunta no inventario
+    assert(man.indexOf("**Vale o do projeto, por transplante,") > -1 && man.indexOf("**E pergunta ao dono, no") > -1, "o manifesto nao separa o campo vazio do preenchido e diferente");
+    assert(man.indexOf("Campo diferente e pergunta ao dono ANTES") < 0 && man.indexOf("O remedio de um campo") < 0 && up.indexOf("pergunta para mim antes de fundir") < 0, "a parada antiga do perfil continua no manifesto ou no prompt");
+    assert(up.indexOf("campo **vazio** (`(vazio)`, `(nao escolhido)`, `(nao informado)`) vale o do projeto") > -1, "o prompt nao diz que o campo vazio vale o do projeto");
+    assert(T.buildGuiaKit(game).indexOf("campo vazio vale o do projeto, por transplante, sem pergunta") > -1, "o GUIA ainda manda parar no perfil");
+    // (3) a tela avisa o vazio antes de baixar, e so o vazio
+    T.renderUpdateDialog();
+    assert(/Vazios no formulário: <b>[^<]*Escopo realista[^<]*Sistema operacional/.test(p.innerHTML), "a tela nao avisa os campos vazios: " + p.innerHTML.slice(0, 200));
+    S.builder = { scope: "medium" }; T.OSENV.value = "win-ps"; T.renderUpdateDialog();
+    assert(!/Escopo realista/.test(p.innerHTML) && !/Sistema operacional/.test(p.innerHTML), "a tela avisa campo que esta preenchido");
+    // (4) as tres contradicoes do kit
+    const k = T.buildCodeKitFiles();
+    [["apply-wo", k.applyWo], ["wrap", k.wrap]].forEach(([nome, txt]) => {
+      assert(txt.indexOf("proxima sessao") < 0 && txt.indexOf("ve a sessao terminar") < 0 && txt.indexOf("bloco da sessão anterior") < 0, "a skill " + nome + " ainda manda com «sessao» (a revogada da v1.106.0)");
+    });
+    assert(k.wrap.indexOf("append, não reescreva") < 0 && k.wrap.indexOf("rolante: o que se resolveu sai") > -1, "a wrap ainda manda append no STATUS, que o CEREBRO diz rolante");
+    assert(k.claudeMd.indexOf("append-only** pelo Code (STATUS") < 0, "o CLAUDE.md ainda diz que o STATUS e append-only");
+    assert(k.claudeMd.indexOf("Feche com um **menu numerado**") < 0 && /Feche com o \*\*menu de opções pela ferramenta `AskUserQuestion`\*\*/.test(k.claudeMd), "o CLAUDE.md manda menu numerado e as skills mandam AskUserQuestion");
+    return "ok (revogadas filtradas a partir da v" + mais + "; o vazio transplanta e o diferente pergunta no inventario; a tela avisa so o vazio; o kit sem as tres contradicoes)";
+  } finally { if(criado) criado.remove(); S.workmode = prevW; S.topbar = prevTb; S.builder = prevBd; S.niche = prevN; T.OSENV.value = prevOs; }
 });
 
 // ============ SUMARIO ============

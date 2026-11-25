@@ -1,8 +1,8 @@
 # ANÁLISE — O update que cansa: o que o merge de um pacote obriga a fazer, e o que dá para cortar
 
-> **Status:** Em discussão
+> **Status:** Implementada (o dono escolheu B, os quatro itens, em 25/11)
 > **Data:** 261125 · **Base:** v1.162.1 (`9ce052d`)
-> **Vira:** a WO de kit «o update enxuto», se o dono aprovar · **Decisão:** a registrar
+> **Vira:** wo0209 (v1.163.0) · **Decisão:** `D-203`
 
 ## Problema
 
