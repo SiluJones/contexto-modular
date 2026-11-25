@@ -1,10 +1,19 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.163.0**.
+> Histórico de versões. Versão atual: **v1.164.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.164.0 — O CEREBRO mais leve: o «como» da Análise e do Refino vai para o GUIA, e a base ganha teto (wo0210, D-204)
+- **A Análise antes do compromisso:** no CEREBRO ficam a regra, os dois testes que dizem se é análise mesmo, onde ela mora, o funil e o gatilho do formato; o «como» — o que vai dentro, medir antes de propor, o risco que se confere por comando, o desfecho no DECISIONS, abandonar no meio, a convenção de outro nome e o modelo — vai para a seção «Análise antes do compromisso — como escrever» do `GUIA-DO-KIT.md`, e o CEREBRO a aponta.
+- **O Refino das Instruções:** no CEREBRO ficam o dever (com o gatilho), os dois tetos e o registro; o «como» — o que merece texto integral, o feedback ao kit, o que migra para os meta/, cortar, especializar, não confundir encurtar com esquecer, não inchar, o gatilho de princípio, a sincronia, uma regra por linha — vai para «Refino das Instruções — como refinar», no GUIA.
+- **Nada se apaga:** o texto muda de lugar, não de forma. O manifesto e o prompt do update dizem que esse «como» não volta ao CEREBRO pelo transplante.
+- **O CEREBRO encolhe** cerca de 5,3 KB em todos os nichos: o `custom` padrão de 76.737 para 71.402 bytes; o maior (`narrative`, mount com o Code) de 97.991 para 92.656.
+- **O teto da base:** um check novo trava o CEREBRO do `custom` padrão em 72.500 bytes e a pior configuração em 94.000. Subir o teto passa a ser decisão escrita.
+- **Para projetos instalados:** o próximo update troca o GUIA inteiro e encurta duas seções do CEREBRO; o merge não transplanta o «como» de volta.
+- **`C138` novo** (138 → 139); dez checks mudam de fonte para o GUIA. **Origem:** a análise `261118-ANALISE-o-enxugamento-do-cerebro.md` (a WO B), destravada pelos três merges conferidos (`i-N99`). Harness **19/19 · 139/139**.
 
 ## v1.163.0 — O update enxuto: menos varredura, sem parada por campo vazio (wo0209, D-203)
 - **As linhas revogadas filtram pela versão:** o manifesto e o prompt do update mandam varrer só as linhas que o kit apagou depois da versão do seu projeto (o carimbo «Gerado pelo Kit»). A mais nova da tabela é a v1.106.0: projeto nessa versão ou depois pula a seção inteira. No caso que motivou a mudança, era um turno inteiro para zero correções.

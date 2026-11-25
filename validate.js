@@ -1484,7 +1484,7 @@ check("C36 modelo de analise no pacote + contagem repetida no STATUS (wo0080): n
   Object.keys(T.NICHES).forEach(id => {
     const cmd=T.buildClaudeMd(T.normNiche(T.NICHES[id]));
     assert(/organiza o IDEAS por status \+ ID/.test(cmd), id+": valvula de desvio sem o exemplo legitimo do IDEAS por ID");
-    assert(/natureza «modelo-em-espera»/.test(cmd), id+": CEREBRO ainda manda escrever o modelo de analise do zero, ignorando o pacote");
+    assert(/natureza «modelo-em-espera»/.test(T.buildGuiaKit(T.normNiche(T.NICHES[id]))), id+": o GUIA (o «como» da analise, desde a wo0210) ainda manda escrever o modelo de analise do zero, ignorando o pacote");
   });
   return "ok";
 });
@@ -1523,8 +1523,8 @@ check("C34 degrau de saida do funil de analise (wo0078): teste de quem decide, a
     assert(/Quem ainda decide\?/.test(cmd), id+": CEREBRO nao faz do teste (1) uma pergunta sobre QUEM decide");
     assert(/decisão registrada \+ ordem de trabalho/.test(cmd), id+": CEREBRO nao nomeia o par de artefatos que substitui a analise");
     assert(/Análise é para quando a pergunta ainda é dele/.test(cmd), id+": CEREBRO sem a definicao de uma linha do que e analise");
-    assert(/vai para as armadilhas da ordem de trabalho/.test(cmd), id+": o achado da analise abandonada continua sem endereco");
-    assert(/Achado sem endereço vira pergunta/.test(cmd), id+": CEREBRO nao explica POR QUE o achado precisa de destino");
+    assert(/vai para as armadilhas da ordem de trabalho/.test(T.buildGuiaKit(n)), id+": o achado da analise abandonada continua sem endereco (no GUIA, desde a wo0210)");
+    assert(/Achado sem endereço vira pergunta/.test(T.buildGuiaKit(n)), id+": o GUIA (desde a wo0210) nao explica POR QUE o achado precisa de destino");
     assert(/não crie pasta versionada para ela/.test(cmd), id+": CEREBRO nao impede a pasta versionada para mensagem entre frentes");
   });
   const raw=fs.readFileSync(path,"utf8");
@@ -1615,7 +1615,7 @@ check("C30 contrapeso do gatilho de analise + relatorio em arquivo (wo0074): tes
     assert(iGatilho>=0, id+": CEREBRO perdeu o gatilho concreto");
     assert(iTeste<iGatilho, id+": o lado que estreita ficou DEPOIS do que alarga (a ordem e o remedio)");
     assert(/Então isto é execução, não análise/.test(cmd), id+": CEREBRO sem o teste do QUE ja decidido");
-    assert(/Abandonar no meio é desfecho legítimo/.test(cmd), id+": CEREBRO sem a clausula de abandono");
+    assert(/Abandonar no meio é desfecho legítimo/.test(T.buildGuiaKit(n)), id+": o GUIA (o «como» da analise, desde a wo0210) sem a clausula de abandono");
     assert(/já é extensível\*\* não é mudar o formato/.test(cmd), id+": CEREBRO sem o limite do formato ja extensivel");
     assert(/pergunta a refazer DEPOIS de ler a fonte/.test(cmd), id+": gatilho nao virou pergunta a refazer apos ler a fonte");
     assert(/QUÊ já decidido = execução/.test(instr), id+": Instrucoes levam so o lado que alarga, sem o contrapeso");
@@ -1869,9 +1869,11 @@ check("C111 o que o kit gera nao se contradiz: pares de regras que nao podem coe
   [upP, upM].forEach(u => assert(/\*\*Primeiro, a versao:\*\*/.test(u) && u.indexOf("v"+T.KIT_VERSION)>-1, "o prompt de atualizacao nao manda conferir a versao do pacote antes de comparar"));
   assert(upP.indexOf("**Primeiro, a versao:**") < upP.indexOf("**Antes de comparar qualquer coisa:**"), "a conferencia da versao vem DEPOIS da ordem de comparar");
   // wo0142 (FK-BC 4): os cinco bullets do refino das Instrucoes moram na secao «Refino», nao no fim do fecho.
-  { const C=T.buildClaudeMd(dev), iR=C.indexOf("## Refino das Instruções"), iN=C.indexOf("\n## ", iR+5);
-    ["- **Sincronia com o CEREBRO.**", "- **Registre:** toda mudança de instrução"].forEach(b => { const i=C.indexOf(b);
-      assert(iR>-1 && i>iR && i<iN, "o bullet «"+b.slice(4,30)+"» saiu da secao «Refino das Instruções» — e a regra que so se le no lugar certo"); }); }
+  // wo0210 (D-204): a Sincronia foi para a secao «Refino das Instrucoes — como refinar» do GUIA; o Registre fica no CEREBRO
+  { const C=T.buildClaudeMd(dev), G=T.buildGuiaKit(dev);
+    [[C, "## Refino das Instruções do Projeto", "- **Registre:** toda mudança de instrução"], [G, "## Refino das Instruções — como refinar", "- **Sincronia com o CEREBRO.**"]].forEach(([X, sec, b]) => {
+      const iR=X.indexOf(sec), iN=X.indexOf("\n## ", iR+5), i=X.indexOf(b);
+      assert(iR>-1 && i>iR && (iN<0 || i<iN), "o bullet «"+b.slice(4,30)+"» saiu da secao «"+sec.slice(3)+"» — e a regra que so se le no lugar certo"); }); }
   return "ok (" + PARES.length + " pares em " + textos + " combinacoes; pasta do pacote " + pasta + ")";
 });
 
@@ -2315,8 +2317,8 @@ check("C21 analise antes do compromisso (wo0063): secao no CEREBRO dos 18, gatil
     const instr=T.buildInstr(n);
     assert(/## Análise antes do compromisso/.test(cmd), id+": CEREBRO sem a secao de analise");
     assert(/nasce no primeiro uso/.test(cmd), id+": CEREBRO nao ensina a pasta preguicosa");
-    assert(/Ponto de decisão/.test(cmd), id+": CEREBRO sem o ponto de decisao (analise nao decide sozinha)");
-    assert(/renomeie nada por conta própria/.test(cmd), id+": CEREBRO sem a clausula de adocao (outro nome ja em uso)");
+    assert(/Ponto de decisão/.test(T.buildGuiaKit(n)), id+": o GUIA (o «como» da analise, desde a wo0210) sem o ponto de decisao (analise nao decide sozinha)");
+    assert(/renomeie nada por conta própria/.test(T.buildGuiaKit(n)), id+": o GUIA (desde a wo0210) sem a clausula de adocao (outro nome ja em uso)");
     assert(/analises\/AAMMDD-ANALISE-/.test(instr), id+": Instrucoes sem o gatilho da analise");
     const temSpec=(n.contextFiles||[]).some(f=>/^SPEC\.md$/i.test(f.name||""));
     assert(temSpec === /specs\/AAMMDD-/.test(cmd), id+": funil de spec incoerente com a existencia do modelo SPEC.md");
@@ -2376,7 +2378,7 @@ check("C19 bloco de fecho de turno padronizado (wo0058): gatilho nas Instr + for
   assert(/\*\*\(a\) Ação\*\*/.test(c),"CEREBRO nao separa a acao no item Proximo");
   assert(/\*\*Em lista\*\*, como a Config e o Handoff/.test(c),"Arquivar \/ Manter nao esta em formato de lista");
   assert(/uma linha \*\*Arquivar:\*\* .*e uma linha \*\*Manter:\*\*/.test(c),"Arquivar \/ Manter sem as duas linhas nomeadas");
-  assert(/Personalização genérica migra para os meta/.test(c),"CEREBRO sem a regra de migracao para os meta/");
+  assert(/Personalização genérica migra para os meta/.test(T.buildGuiaKit(n)),"o GUIA (o «como» do refino, desde a wo0210) sem a regra de migracao para os meta/");
   assert(!/Estas instruções trazem só o essencial, lido em toda mensagem/.test(T.buildInstr(n)),"cabecalho auto-referencial nao foi podado");
   return "ok";
 });
@@ -2410,8 +2412,9 @@ check("C18 motor do enxugamento (wo0056-A): campo 'short' curado nas Instr, defi
 check("C17 auto-refino obrigatorio (wo0055): dever proativo, liberdade de promover regra, feedback ao kit", () => {
   const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
   assert(/É dever seu, não meu pedido/.test(md),"CEREBRO sem o dever proativo de refino");
-  assert(/Você decide o que merece texto integral/.test(md),"CEREBRO sem a liberdade de promover regra a integral");
-  assert(/vira feedback ao kit/.test(md),"CEREBRO sem o caminho de feedback ao KCM");
+  const gk=T.buildGuiaKit(T.normNiche(T.NICHES.dev));  // wo0210 (D-204): o «como» do refino mora no GUIA
+  assert(/Você decide o que merece texto integral/.test(gk),"o GUIA sem a liberdade de promover regra a integral");
+  assert(/vira feedback ao kit/.test(gk),"o GUIA sem o caminho de feedback ao KCM");
   assert(/Refino das Instruções do Projeto/.test(md),"bloco de refino (G19) sumiu");
   return "ok";
 });
@@ -2486,7 +2489,7 @@ check("C11 universais leva C (spec0049): pedido composto + genero em rename + si
   const md=T.buildClaudeMd(T.normNiche(T.NICHES.dev));
   assert(/Pedido composto/.test(md),"cadence sem 'pedido composto'");
   assert(/concordância \(gênero\/número\)/.test(md),"consistency sem regra de genero no rename");
-  assert(/Sincronia com o CEREBRO/.test(md),"refino sem regra de sincronia Instr<->CEREBRO");
+  assert(/Sincronia com o CEREBRO/.test(T.buildGuiaKit(T.normNiche(T.NICHES.dev))),"refino (no GUIA, desde a wo0210) sem regra de sincronia Instr<->CEREBRO");
   assert(T.NICHES && Object.keys(T.NICHES).length===19,"nichos != 19");
   return "ok";
 });
@@ -3434,6 +3437,45 @@ check("C137 o update enxuto: as revogadas filtradas pela versao, o perfil sem pa
     assert(k.claudeMd.indexOf("Feche com um **menu numerado**") < 0 && /Feche com o \*\*menu de opções pela ferramenta `AskUserQuestion`\*\*/.test(k.claudeMd), "o CLAUDE.md manda menu numerado e as skills mandam AskUserQuestion");
     return "ok (revogadas filtradas a partir da v" + mais + "; o vazio transplanta e o diferente pergunta no inventario; a tela avisa so o vazio; o kit sem as tres contradicoes)";
   } finally { if(criado) criado.remove(); S.workmode = prevW; S.topbar = prevTb; S.builder = prevBd; S.niche = prevN; T.OSENV.value = prevOs; }
+});
+
+// wo0210 (D-204, i-N99 WO B): o teto da base do CEREBRO, calibrado no resultado desta WO. Subir o teto e decisao escrita
+// (uma D-NNN que diga quanto e por que); toda WO de kit declara quanto a base mudou.
+const CEREBRO_TETO_BASE = 72500;   // o custom padrao no canal pasta, sem modo: 71.402 bytes na v1.164.0
+const CEREBRO_TETO_MAX  = 94000;   // a pior configuracao (19 nichos x pasta/mount x Code sim/nao): 92.656 bytes na v1.164.0
+check("C138 o enxugamento, WO B: o «como» da Analise e do Refino no GUIA, a regra e o gatilho no CEREBRO, e o teto da base (wo0210, D-204)", () => {
+  const S = T.STATE, prevW = S.workmode, prevN = S.niche, prevTb = S.topbar, prevBd = S.builder;
+  const COMO_ANALISE = ["- **O que tem dentro:**", "- **Meça antes de propor.**", "- **Risco que se confere por comando", "- **A análise não decide nem abre trabalho", "- **Abandonar no meio é desfecho legítimo.**", "- **Se este projeto já escreve documentos desse tipo", "- **Modelo:** o pacote de atualização"];
+  const COMO_REFINO = ["- **Você decide o que merece texto integral.**", "- **Atrito sem solução local vira feedback ao kit.**", "- **Personalização genérica migra para os meta/.**", "- **Corte o que não se aplica.**", "- **Especialize o que se aplica.**", "- **Não confunda encurtar com esquecer.**", "- **Não inche.**", "- **Princípio sem gatilho não dispara", "- **Sincronia com o CEREBRO.**", "- **Uma regra por linha, verbo no imperativo"];
+  const FICA = ["- **Antes de escrever, dois testes baratos.**", "- **Onde:**", "**Funil:**", "- **Gatilho concreto, além do «não-trivial»:**", "- **É dever seu, não meu pedido.**", "- **Teto:**", "- **Teto por configuração.**", "- **Registre:**"];
+  const secao = (X, t) => { const i = X.indexOf("\n## " + t), j = X.indexOf("\n## ", i + 4); return i < 0 ? "" : X.slice(i, j < 0 ? X.length : j); };
+  let maior = [0, ""], base = 0;
+  try {
+    [["pasta", {mountMode:"", codeMode:""}], ["pasta+Code", {mountMode:"", codeMode:"yes"}], ["mount", {mountMode:"yes", codeMode:""}], ["mount+Code", {mountMode:"yes", codeMode:"yes"}]].forEach(([cfg, w]) => {
+      Object.keys(T.NICHES).forEach(id => {
+        S.workmode = Object.assign({groupMode:"no", asuMode:""}, w); S.niche = id; S.topbar = {}; S.builder = {};
+        const n = T.normNiche(T.NICHES[id]), C = T.buildClaudeMd(n), G = T.buildGuiaKit(n);
+        const ca = secao(C, "Análise antes do compromisso"), cr = secao(C, "Refino das Instruções do Projeto");
+        const ga = secao(G, "Análise antes do compromisso — como escrever"), gr = secao(G, "Refino das Instruções — como refinar");
+        assert(ca && cr && ga && gr, id + "/" + cfg + ": falta uma das quatro secoes (as duas do CEREBRO e as duas do GUIA)");
+        COMO_ANALISE.forEach(b => assert(ga.indexOf(b) > -1 && C.indexOf(b) < 0, id + "/" + cfg + ": «" + b.slice(4, 40) + "» nao esta so no GUIA (sumiu, ou ficou nos dois)"));
+        COMO_REFINO.forEach(b => assert(gr.indexOf(b) > -1 && C.indexOf(b) < 0, id + "/" + cfg + ": «" + b.slice(4, 40) + "» nao esta so no GUIA (sumiu, ou ficou nos dois)"));
+        FICA.forEach(b => assert((ca + cr).indexOf(b) > -1, id + "/" + cfg + ": a regra ou o gatilho «" + b.slice(0, 40) + "» saiu do CEREBRO"));
+        assert(ca.indexOf("seção «Análise antes do compromisso — como escrever»") > -1 && cr.indexOf("seção «Refino das Instruções — como refinar»") > -1, id + "/" + cfg + ": o CEREBRO nao aponta a secao do GUIA");
+        assert(ca.indexOf("dois testes baratos") < ca.indexOf("Gatilho concreto"), id + "/" + cfg + ": o que estreita ficou depois do que alarga");
+        const b = Buffer.byteLength(C, "utf8");
+        if(id === "custom" && cfg === "pasta") base = b;
+        if(b > maior[0]) maior = [b, id + "/" + cfg];
+      });
+    });
+    S.workmode = {mountMode:"", codeMode:"yes", groupMode:"no", asuMode:""}; S.niche = "dev";
+    const dev = T.normNiche(T.NICHES.dev), C = T.buildClaudeMd(dev), pack = T.buildUpdatePack(dev), up = T.buildUpdatePrompt(dev);
+    assert(/No `GUIA-DO-KIT\.md`[^\n]*«Análise antes do compromisso — como escrever» · «Refino das Instruções — como refinar»/.test(C), "o indice do CEREBRO nao lista as duas secoes novas do GUIA");
+    assert(pack.manifest.indexOf("desde a v1.164.0, tambem o «como» da «Analise antes do compromisso»") > -1 && up.indexOf("desde a v1.164.0 o «como» da Analise antes do compromisso e do Refino das Instrucoes") > -1, "o manifesto ou o prompt nao proibe o transplante de volta do «como» que saiu");
+    assert(base > 0 && base <= CEREBRO_TETO_BASE, "a base do CEREBRO (custom padrao, pasta) passou o teto: " + base + " > " + CEREBRO_TETO_BASE + " — subir o teto e decisao escrita");
+    assert(maior[0] <= CEREBRO_TETO_MAX, "a pior configuracao do CEREBRO passou o teto: " + maior[1] + " " + maior[0] + " > " + CEREBRO_TETO_MAX);
+    return "ok (o «como» so no GUIA nos 19 nichos x 4 configuracoes; a regra e o gatilho no CEREBRO; base " + base + "/" + CEREBRO_TETO_BASE + "; pior " + maior[1] + " " + maior[0] + "/" + CEREBRO_TETO_MAX + ")";
+  } finally { S.workmode = prevW; S.niche = prevN; S.topbar = prevTb; S.builder = prevBd; }
 });
 
 // ============ SUMARIO ============
