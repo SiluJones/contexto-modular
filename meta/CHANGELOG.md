@@ -1,10 +1,18 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.166.0**.
+> Histórico de versões. Versão atual: **v1.167.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.167.0 — O `cd` da pasta abre o bloco de comandos, e o comando do «Próximo» vai num bloco só dele (wo0215, D-208)
+- **O `cd` no bloco:** o bloco de commit que o CEREBRO e as Instruções mandam entregar abre com `cd "<caminho completo do repositório>"`, entre aspas; depois `git add`, `git commit` e `git push`, um por linha. O usuário cola o bloco de qualquer pasta, no CMD ou no PowerShell, e ele roda certo. O CEREBRO estende a regra a todo bloco de terminal que o usuário roda (instalar, rodar script, build).
+- **O fecho:** a linha «Ação» do esqueleto do «Próximo» diz que o comando para colar vai num bloco de código só dele, logo abaixo.
+- **As Instruções com o Modo Code** encurtam a linha do commit para caber no orçamento do modo (`C28`: +544/550).
+- **A casa:** as Instruções e o CEREBRO da casa ganham o mesmo `cd`. **O dono recola as Instruções no painel.**
+- **Para projetos instalados:** o próximo update troca a frase do commit no CEREBRO, a linha do commit nas Instruções e a linha «Ação» do esqueleto.
+- **`C141` novo** (141 → 142). **Origem:** o pixel-projetista (o `cd` no bloco, commit `97f645a` dele) e as notas do dono `261126-1047` e `261126-1626` (`i-N113`); o fecho da wo0213 (`i-N112`). Harness **19/19 · 142/142**.
 
 ## v1.166.0 — As sobras do update, numa versão só: o painel no STATUS, as citações conferidas, o terminal duplo, a ponte sem `.claude/`, o projeto novo avisado e o GUIA no painel de saída (wo0213, D-206)
 - **O painel no STATUS:** o prompt do update e o GUIA mandam a pendência «colar as Instruções no painel» para o STATUS do projeto até o dono confirmar, não só para o log (o I will die a perdeu ao reescrever o STATUS).

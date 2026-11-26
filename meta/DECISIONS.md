@@ -2670,3 +2670,13 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Decisão.** Nas Instruções da casa, a linha `/apply-wo <arquivo>` vai **num bloco de código só dela**; o «Próximo» nomeia o «Peça no próximo turno»; e o fecho se faz **copiando o esqueleto do CEREBRO, não reconstituindo de memória**. No esqueleto do CEREBRO, a linha «Ação» diz que o comando para colar vai num bloco de código logo abaixo.
 
 **Por quê.** A falha foi de leitura, não de regra: o esqueleto existia, e o chat o remontou do resumo. A regra que impede isso precisa estar no texto lido em toda mensagem, que é o das Instruções. **O que fica como está:** o kit (o candidato está na `i-N112`, para a próxima WO de kit) e o resto do bloco de fecho. As Instruções da casa: 7.605 → 7.727 caracteres; o dono recola no painel.
+
+## D-208 — O `cd` da pasta abre o bloco de comandos, e o comando do «Próximo» vai num bloco só dele
+
+**Data:** 2026-11-26 · **WO:** 0215 · **Origem:** as notas do dono `261126-1047` («essa forma de entregar comandos […] é perfeita») e `261126-1626` `[relatado pelo dono]`, sobre o bloco que o pixel-projetista e o pixel-desenhista entregam (`i-N113`); o fecho da wo0213 (`i-N112`).
+
+**Decisão.** (1) O bloco de commit que o CEREBRO gerado e as Instruções geradas mandam entregar abre com `cd "<caminho completo do repositório>"`, entre aspas, e segue com `add`, `commit` e `push`, um por linha (a `D-205` ganha a primeira linha). O CEREBRO estende a regra a todo bloco de terminal que o usuário roda. (2) A linha «Ação» do esqueleto do fecho, no CEREBRO gerado, diz que o comando para colar vai num bloco de código só dele. (3) A casa: as Instruções e o CEREBRO.
+
+**Por quê.** O dono cola o bloco num terminal aberto em qualquer pasta, no CMD ou no PowerShell. Sem o `cd`, o `git add` roda no lugar errado ou falha; com o `cd` entre aspas e barra normal, o bloco roda certo nos dois. A linha «Ação» é o remédio da `D-207` levado ao kit. **O que fica como está:** o modelo de WO (o Code roda o commit da pasta dele). **O custo:** as Instruções com o Modo Code passaram do orçamento do modo (+563/550 no `design`); a linha do commit encurtou sem perder regra («com WO, o commit é dela»; «Bloco git parcial (só `add`) ou em três blocos não serve») e ficou em +544/550.
+
+**Números** `[medido na réplica do HEAD e7f2e52 com os arquivos do chat por cima]`: harness 141/141 → 142/142; o CEREBRO base 71.610 → 71.992/72.500 e a pior configuração 92.864 → 93.246/94.000 (`C138`); `C28` +Code 544/550, combo + SO 7.376/7.600; as Instruções da casa 7.727 → 7.751 caracteres. Prova negativa: o `validate.js` novo contra o `index.html` do HEAD → `C141` vermelho. Corta a **v1.167.0** (`D-158`).

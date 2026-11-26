@@ -296,7 +296,7 @@ Nunca publicar sem o harness passar em **19/19 nichos + todas as checagens, 0 er
 
 ## Commit pronto ao final (conteúdo que vai para o GitHub)
 
-Sempre que uma entrega inclui código ou conteúdo destinado ao repositório (o `index.html`, os meta-docs, etc.), o assistente fecha a resposta com o **comando de commit completo, pronto para colar no console**, num bloco de código.
+Sempre que uma entrega inclui código ou conteúdo destinado ao repositório (o `index.html`, os meta-docs, etc.), o assistente fecha a resposta com o **comando de commit completo, pronto para colar no console**, num bloco de código. **O bloco abre com o `cd` da pasta do repositório** (`cd "C:/Users/alexk/Arquiteturas/Contexto/contexto-modular"`, com aspas e barra normal, que servem ao CMD e ao PowerShell) e traz `add`, `commit` e `push`, um por linha (`D-205`, `D-208`). O mesmo vale para todo bloco de terminal que o dono roda: a primeira linha é o `cd` da pasta certa.
 
 **AMBIENTE: o usuário usa CMD do Windows.** O comando NÃO pode usar a continuação de linha `\` (sintaxe bash/Linux; no CMD quebra com `'\' is outside repository`).
 

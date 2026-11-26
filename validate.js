@@ -3532,6 +3532,24 @@ check("C140 as sobras do update: painel no STATUS, citacoes conferidas, terminal
   } finally { S.workmode = prevW; S.niche = prevN; T.OSENV.value = prevOs; S.outTab = prevTab; }
 });
 
+// wo0215 (D-208, i-N113 e i-N112): o cd da pasta abre o bloco de comandos; a linha «Acao» do fecho manda o comando num bloco so dele.
+check("C141 o cd da pasta abre o bloco de comandos, e o comando do Proximo vai num bloco so dele (wo0215, D-208)", () => {
+  const S = T.STATE, prevW = S.workmode, prevN = S.niche;
+  try {
+    ["dev", "narrative", "pixel", "custom"].forEach(id => [{codeMode:""}, {codeMode:"yes"}].forEach(w => {
+      S.workmode = Object.assign({mountMode:"", groupMode:"no", asuMode:""}, w); S.niche = id;
+      const n = T.normNiche(T.NICHES[id]), C = T.buildClaudeMd(n), I = T.buildInstr(n), tag = id + "/Code " + (w.codeMode || "nao");
+      assert(C.indexOf('nesta ordem: `cd "<caminho completo do repositório>"`') > -1, tag + ": o bloco de commit do CEREBRO nao abre com o cd da pasta");
+      assert(C.indexOf("**O mesmo vale para todo bloco de terminal que o usuário roda**") > -1, tag + ": o cd nao vale para todo bloco de terminal");
+      assert(C.indexOf("- **Ação:** <a próxima coisa concreta a fazer; o comando para colar vai num bloco de código só dele, logo abaixo>") > -1, tag + ": a linha Acao do esqueleto nao manda o comando num bloco so dele");
+      if(I.indexOf("**Commit:**") > -1) assert(I.indexOf('ENTREGUE `cd "<pasta do repo>"`, `add`, `commit` e `push` num bloco SÓ') > -1, tag + ": as Instrucoes nao abrem o bloco de commit com o cd");
+    }));
+    const pth = require("path"), casa = fs.readFileSync(pth.join(pth.dirname(path), "INSTRUCOES-DO-PROJETO.md"), "utf8");
+    assert(casa.indexOf('entregue `cd "<pasta do repo>"`, `add`, `commit` e `push`') > -1, "as Instrucoes da casa nao abrem o bloco com o cd");
+    return "ok (o CEREBRO e as Instrucoes de 4 nichos x Code sim/nao, e as da casa: o cd abre o bloco; a linha Acao do esqueleto)";
+  } finally { S.workmode = prevW; S.niche = prevN; }
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

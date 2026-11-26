@@ -1298,7 +1298,7 @@ const UPDATE_PROTOCOL = {
   ],
   nota: "Sobre os arquivos: os documentos já no Projeto chegam ao assistente como somente-leitura (ele lê, não salva por cima). Isso NÃO o impede de entregar versões novas — ele cria cada arquivo atualizado como arquivo novo para baixar. Sem ferramenta de download, entrega o conteúdo completo de cada arquivo no chat, um por bloco. Princípio único: arquivo inteiro, conjunto consistente, nunca pedaços para costurar.",
   commitTitulo: "Commit pronto ao final (se você versiona com Git)",
-  commitIntro: "Quando a entrega inclui arquivos que vão para um repositório Git/GitHub (código ou documentos), o assistente fecha a resposta com o bloco de commit pronto para copiar e colar, na convenção Conventional Commits (`tipo(escopo): descrição` — feat, fix, docs, refactor, chore), em **um bloco de código só, um comando por linha**, nesta ordem: `git add` listando os arquivos alterados (pode usar `git add .` ou `git add -A` quando o conjunto é pequeno e a árvore é conhecida/limpa), `git commit` com a mensagem completa, e `git push`. O usuário copia o bloco uma vez e cola no terminal: cada linha roda na sequência, e um erro aparece na linha em que parou. **Nunca três blocos separados** — são três cópias para fazer uma coisa só.",
+  commitIntro: "Quando a entrega inclui arquivos que vão para um repositório Git/GitHub (código ou documentos), o assistente fecha a resposta com o bloco de commit pronto para copiar e colar, na convenção Conventional Commits (`tipo(escopo): descrição` — feat, fix, docs, refactor, chore), em **um bloco de código só, um comando por linha**, nesta ordem: `cd \"<caminho completo do repositório>\"` (entre aspas, para o bloco rodar de qualquer pasta onde o usuário o colar), `git add` listando os arquivos alterados (pode usar `git add .` ou `git add -A` quando o conjunto é pequeno e a árvore é conhecida/limpa), `git commit` com a mensagem completa, e `git push`. O usuário copia o bloco uma vez e cola no terminal: cada linha roda na sequência, e um erro aparece na linha em que parou. **Nunca três blocos separados** — são três cópias para fazer uma coisa só. **O mesmo vale para todo bloco de terminal que o usuário roda** (instalar, rodar um script, gerar um build): a primeira linha é o `cd` da pasta certa, e todos os comandos vêm no mesmo bloco.",
   commitNota: "Se o seu sistema operacional estiver definido acima, cada comando já vem na sintaxe certa do seu shell (ex.: no CMD do Windows, comando numa linha só, `-m` repetido para parágrafos e mensagem SEM acentos, que o CMD corrompe). Para mudanças triviais, basta o título; para várias mudanças de naturezas diferentes, o assistente pode sugerir mais de um commit.",
   channelTitulo: "Canal de atualização do kit",
   channelIntro: "Este projeto foi montado com o Kit de Contexto. O Kit evolui — novos princípios, templates refinados, regras novas. Quando você trouxer uma atualização do Kit para esta conversa, o assistente deve reconhecê-la e aplicá-la daqui em diante.",
@@ -1368,7 +1368,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.166.0";
+const KIT_VERSION = "1.167.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2602,7 +2602,7 @@ function buildInstrNivel(niche, nivel){
   if(codeModeOn()) lines.push(mountModeOn() ? "**Arquivo não lido não se deduz — mande o Code medir.**" : "**Arquivo não lido não se deduz — leia do disco; o Code mede o que roda.**");
   if(codeModeOn()) lines.push("**WO nunca vai sozinha:** `/apply-wo <arquivo>` em bloco cercado; roteiro do dono, se houver, no chat.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
-    lines.push(codeModeOn() ? "**Commit:** havendo WO, o bloco de commit é dela; sem WO, ENTREGUE `add`, `commit` e `push` num bloco SÓ, um por linha, sem acento. Bloco git parcial (só `add`) não serve; três blocos também não." : "**Commit:** ao concluir mudança versionada, ENTREGUE `add`, `commit` e `push` num bloco SÓ, um por linha, sem acento. Bloco git parcial (só `add`) não serve; três blocos também não.");
+    lines.push(codeModeOn() ? "**Commit:** com WO, o commit é dela; sem WO, ENTREGUE `cd \"<pasta do repo>\"`, `add`, `commit` e `push` num bloco SÓ, um por linha, sem acento. Bloco git parcial (só `add`) ou em três blocos não serve." : "**Commit:** ao concluir mudança versionada, ENTREGUE `cd \"<pasta do repo>\"`, `add`, `commit` e `push` num bloco SÓ, um por linha, sem acento. Bloco git parcial (só `add`) ou em três blocos não serve.");
   if(asuModeOn() || codeModeOn() || coreFiles.some(n=>/CHANGELOG/i.test(n)))
     lines.push("**Entregáveis de repo (sem eu pedir):** `.gitignore` do stack na PRIMEIRA leva com estrutura; `README.md` quando ela estabilizar — se for cedo, DIGA e por quê. Detalhe no CEREBRO.");
 
@@ -3208,7 +3208,7 @@ function buildClaudeMd(niche){
   L.push("**Esqueleto — copie e preencha; a condição de cada linha está à direita:**");
   L.push("```");
   L.push("**Próximo**                                   (sempre)");
-  L.push("- **Ação:** <a próxima coisa concreta a fazer>");
+  L.push("- **Ação:** <a próxima coisa concreta a fazer; o comando para colar vai num bloco de código só dele, logo abaixo>");
   L.push("- **Peça no próximo turno:** «<frase copiável como está, sem lacuna>»");
   L.push("---");
   L.push("**Estado:** Base: <arquivo lido NESTE turno + a data/commit que ELE traz> · <versão ou fase> · <harness> · <commit>   (sempre)");
