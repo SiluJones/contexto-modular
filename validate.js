@@ -4,7 +4,9 @@
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 
-const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, renderBuilderSection, renderConventionsBlock, verMaior, revogadaMaisNova, renderUpdateDialog, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};';
+const SHIM = 'window.__T = {OSENV, OS_CMDNOTE, INSTR_TETO_MODOS, MODO_ORCAMENTO, structuredFlatdropignore, NICHES, STATE, BEHAVIORS_BASE, normBehaviors, normNiche, normBuilderSection, buildInstr, buildClaudeMd, effectiveFiles, groupModeOn, buildHub, NICHE_CODE, computeCodes, buildSkillMd, buildCodeKitFiles, workBadges, buildUpdatePack, buildUpdatePrompt, buildWoTemplate, fileBehaviorLabel, REVOCATIONS, generatedContextFiles, PROMPTS_BASE, INSTR_TETO, KIT_VERSION, updatePackFolder, structuredZipName, respostaEsperada, setView, rolagemDoNicho, perfilDoPacote, renderBuilderSection, renderConventionsBlock, verMaior, revogadaMaisNova, renderUpdateDialog, CANAL_PASTA, canalPasta, nicheEfetivo, migrateKcmStorage, forgetKcmStorage, kcmStorageKeys, LS_LEGADO, LS_NICHE, LS_STATE, LS_PRESETS, LS_PRESET_CURR, LS_HUB, localStorage, composeFromNiches, toPreset, mergeCustom, buildGuiaKit, promptCopyText, renderPrompts, renderTopbar, renderNicheCards, savedPresetCardsHTML, document, PFILL_MAX_LINHAS, autoGrowFill, enhanceCollapsibleGroups, vigiarTopo};'
+  // wo0213 (D-206): nomes novos entram guardados, para o harness novo ainda carregar o index.html antigo (a prova negativa)
+  + ' window.__T.OUT_TABS = typeof OUT_TABS !== "undefined" ? OUT_TABS : null; window.__T.outTabText = typeof outTabText !== "undefined" ? outTabText : null; window.__T.structuredReadme = structuredReadme; window.__T.OS_LABELS = OS_LABELS; window.__T.updatePreview = updatePreview;';
 
 function loadT(htmlPath){
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -3492,6 +3494,42 @@ check("C139 o bloco de git para o usuario: um bloco so, um comando por linha (wo
     assert(casa.indexOf("num **bloco só, um comando por linha**") > -1 && casa.indexOf("em **bloco separado**") < 0, "as Instrucoes da casa ainda dizem bloco separado");
     return "ok (o CEREBRO e as Instrucoes de 3 nichos x Code sim/nao, e as da casa: um bloco so, um comando por linha)";
   } finally { S.workmode = prevW; S.niche = prevN; }
+});
+
+// wo0213 (D-206): as sobras do update, numa WO so — i-N109 itens 1 e 2, i-N108 item 2, i-N110 itens 1 e 6, i-N99 item 2.
+check("C140 as sobras do update: painel no STATUS, citacoes conferidas, terminal duplo, ponte sem .claude/, projeto novo avisado, GUIA no painel de saida (wo0213, D-206)", () => {
+  const S = T.STATE, prevW = S.workmode, prevN = S.niche, prevOs = T.OSENV.value, prevTab = S.outTab;
+  const html = fs.readFileSync(path, "utf8");
+  try {
+    // (1) i-N108 item 2: o terminal duplo — a opcao, o rotulo e a regra de declarar o terminal em todo bloco
+    assert(html.indexOf('<option value="win-both">') > -1 && T.OS_LABELS["win-both"] === "Windows (CMD e PowerShell)", "o campo de SO nao tem a opcao CMD e PowerShell");
+    S.workmode = {mountMode:"", codeMode:"yes", groupMode:"no", asuMode:""}; S.niche = "narrative"; T.OSENV.value = "win-both";
+    const nar = T.normNiche(T.NICHES.narrative), I = T.buildInstr(nar), C = T.buildClaudeMd(nar);
+    [I, C].forEach((X, k) => assert(X.indexOf("todo bloco de terminal diz na 1ª linha para qual foi escrito (`REM CMD` ou `# PowerShell`)") > -1, (k ? "o CEREBRO" : "as Instrucoes") + " com CMD e PowerShell nao mandam o bloco declarar o terminal"));
+    // (2) o prompt do update: o painel no STATUS, as citacoes, a ponte sem .claude/ (so com o Code)
+    const up = T.buildUpdatePrompt(nar);
+    assert(up.indexOf("a pendencia «colar as Instrucoes no painel» vai para o STATUS**") > -1, "o prompt nao manda a pendencia do painel para o STATUS (i-N109 item 2)");
+    assert(up.indexOf("**Antes de fechar, confira as citacoes:**") > -1 && up.indexOf("**nasce agora, pela WO do merge, ou a citacao sai**") > -1, "o prompt nao confere as secoes citadas (i-N109 item 1)");
+    assert(up.indexOf("**Se a ponte desta conversa recusar gravar em `.claude/`**") > up.indexOf("ANTES de aplicar qualquer WO"), "o prompt com o Code nao da a saida para a ponte que nao grava em .claude/ (i-N110 item 1)");
+    S.workmode = {mountMode:"", codeMode:"", groupMode:"no", asuMode:""};
+    assert(T.buildUpdatePrompt(nar).indexOf("recusar gravar em `.claude/`") < 0, "sem o Code, o prompt fala da ponte e do .claude/");
+    // (3) o GUIA: as mesmas duas regras, mais o zip sem manifesto
+    const G = T.buildGuiaKit(nar);
+    assert(G.indexOf("**a pendência «colar as Instruções no painel» fica no STATUS**") > -1, "o GUIA nao manda a pendencia do painel para o STATUS");
+    assert(G.indexOf("**Antes de fechar, confira as citações:**") > -1, "o GUIA nao confere as secoes citadas");
+    assert(G.indexOf("**Zip sem `_UPDATE-MANIFEST.md` não é update: é projeto novo**") > -1, "o GUIA nao separa o projeto novo do pacote de update (i-N110 item 6)");
+    // (4) i-N110 item 6: o projeto novo avisa no README e no botao
+    const rd = T.structuredReadme(nar, "obra", true, true);
+    assert(rd.indexOf("**Se a pasta de destino ja tem `meta/`, pare:**") > -1 && rd.indexOf("**Se a pasta de destino") < rd.indexOf("## Estrutura"), "o README do projeto novo nao avisa, antes da estrutura, que projeto existente usa o pacote de update");
+    assert(html.indexOf('title="Baixar projeto NOVO (pasta pronta para começar) — projeto que já existe usa o ↻"') > -1, "o botao do projeto novo nao diz que e para projeto novo");
+    // (5) i-N99 item 2: o painel de saida mostra, copia e baixa o GUIA
+    assert(html.indexOf('id="tab-guia" data-target="guia"') > -1 && T.OUT_TABS && T.OUT_TABS.guia, "o painel de saida nao tem a aba do GUIA");
+    S.outTab = "guia";
+    assert(T.outTabText(nar) === G && T.OUT_TABS.guia.arquivo(nar) === "GUIA-DO-KIT.md", "a aba do GUIA nao copia nem baixa o GUIA");
+    S.outTab = "claude"; assert(T.outTabText(nar) === T.buildClaudeMd(nar), "a aba do CEREBRO mudou de texto");
+    S.outTab = "instr";  assert(T.outTabText(nar) === T.buildInstr(nar) && T.OUT_TABS.instr.arquivo(nar) === "instrucoes-narrative.txt", "a aba das Instrucoes mudou de texto ou de nome");
+    return "ok (o terminal duplo nas Instrucoes e no CEREBRO; o painel no STATUS e as citacoes no prompt e no GUIA; a ponte so com o Code; o projeto novo avisa no README e no botao; o GUIA na terceira aba)";
+  } finally { S.workmode = prevW; S.niche = prevN; T.OSENV.value = prevOs; S.outTab = prevTab; }
 });
 
 // ============ SUMARIO ============

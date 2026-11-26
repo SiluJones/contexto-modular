@@ -1,10 +1,20 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.165.0**.
+> Histórico de versões. Versão atual: **v1.166.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.166.0 — As sobras do update, numa versão só: o painel no STATUS, as citações conferidas, o terminal duplo, a ponte sem `.claude/`, o projeto novo avisado e o GUIA no painel de saída (wo0213, D-206)
+- **O painel no STATUS:** o prompt do update e o GUIA mandam a pendência «colar as Instruções no painel» para o STATUS do projeto até o dono confirmar, não só para o log (o I will die a perdeu ao reescrever o STATUS).
+- **As citações conferidas:** antes de fechar o merge, toda seção que as skills e o CEREBRO citam pelo nome precisa existir no `meta/`; a que falta nasce pela WO do merge, ou a citação sai (o I will die tinha skills apontando para duas seções de CONTINUIDADE que nunca nasceram).
+- **O terminal duplo:** o campo de sistema operacional ganha «Windows — CMD e PowerShell». Com ela, as Instruções e o CEREBRO mandam todo bloco de terminal dizer na primeira linha para qual dos dois foi escrito.
+- **A ponte que não grava em `.claude/`:** com o Code, o prompt do update dá a saída medida no My Little Lady — preparar as skills do pacote na pasta-pai e a primeira edição da WO do merge instalá-las.
+- **O projeto novo avisado:** o README do zip de projeto novo abre dizendo que pasta com `meta/` usa o pacote de atualização (↻); o botão ↓ diz «projeto NOVO»; o GUIA diz que zip sem `_UPDATE-MANIFEST.md` não é update (o Coral Island recebeu o projeto completo no lugar do pacote).
+- **O GUIA no painel de saída:** uma terceira aba mostra, copia e baixa o `GUIA-DO-KIT.md`, ao lado das Instruções e do CEREBRO.
+- **O CEREBRO base não muda** (71.610 bytes no `custom` padrão; pior 92.864). **Para projetos instalados:** o próximo update troca o GUIA inteiro; quem usa os dois terminais escolhe a opção nova ao gerar o pacote.
+- **`C140` novo** (140 → 141). **Origem:** `i-N109` itens 1 e 2, `i-N108` item 2, `i-N110` itens 1 e 6, `i-N99` item 2; a lista do dono `261125-1857`. Harness **19/19 · 141/141**.
 
 ## v1.165.0 — O bloco de git para o usuário: um bloco só, um comando por linha (wo0211, D-205)
 - **O commit que o usuário roda:** o CEREBRO («Commit pronto ao final») e as Instruções mandam entregar `git add`, `git commit` e `git push` **num bloco de código só, um comando por linha**: o usuário copia uma vez e cola. Antes, o CEREBRO mandava três linhas «para colar uma a uma», e o assistente as entregava em três blocos.
