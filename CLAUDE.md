@@ -44,7 +44,7 @@ O chat (Claude web) cuida de design/curadoria e entrega os `meta/` **inteiros**;
 implementa e **só acrescenta** em `STATUS`/`DECISIONS`/`logs/`/`ROADMAP` (append-only, não
 reescreve). Protocolo completo em `meta/CEREBRO.md` › «🤝 Fluxo Chat ↔ Claude Code».
 
-**Piloto do método C (D-170, da wo0144 à wo0153):** a WO de conferência traz o que o chat já gravou na árvore, inclusive STATUS, DECISIONS e o log. Você confere (inventário, `sha1sum`, diff), roda build e harness, commita e empurra; não reescreve, não escreve em doc (o achado vai no relatório) e não roda `/wrap`. Protocolo: `meta/CEREBRO.md` › «🧪 Método C — piloto na casa».
+**Método C (D-170, D-174, D-209):** a WO de conferência traz o que o chat já gravou na árvore, inclusive STATUS, DECISIONS e o log, e a primeira linha dela diz por que ela se paga (código, git arriscado, lote grande ou `.claude/`); mudança só de doc o dono versiona pelo bloco do chat, sem WO. Você confere (inventário, `sha1sum`, diff), roda build e harness, commita e empurra; não reescreve, não escreve em doc (o achado vai no relatório) e não roda `/wrap`. Protocolo: `meta/CEREBRO.md` › «🧪 Método C — a forma da casa».
 
 ## Não faça sem pedir
 - Não editar o `index.html` à mão (é gerado por `build.js`).
