@@ -2662,3 +2662,11 @@ Sete correções, cinco vindas de fora. **(1)** «Arquivar/Manter» ganha saída
 **Por quê.** Cada item é um tropeço de vizinho já medido: o I will die perdeu a linha do painel ao reescrever o STATUS e fundiu skills que citavam duas seções de CONTINUIDADE que nunca nasceram; o My Little Lady usa os dois terminais e a ponte dele recusou gravar em `.claude/`; o Coral Island recebeu o projeto completo no lugar do pacote, sem aviso; quem monta pelo painel de saída ficava sem o GUIA. **O que fica como está:** o CEREBRO base (o aviso do projeto novo vai ao README, que é o que chega por cima do projeto existente, e ao GUIA; o CEREBRO tem teto); a ordem «instale as skills ANTES de qualquer WO», da qual a ponte é o caso particular.
 
 **Números** `[medido na réplica do HEAD 6bd3b69 com os arquivos do chat por cima]`: `index.html` 1.073.572 → 1.077.506 bytes; harness 140/140 → 141/141; o CEREBRO base 71.610/72.500 e a pior configuração 92.864/94.000, sem mudança (`C138`); a linha de SO mais cara nas Instruções 213 → 253 caracteres, combo + SO 7.371/7.600 (`C28`). Prova negativa: o harness novo contra o `index.html` do HEAD → `C140` vermelho («o campo de SO nao tem a opcao CMD e PowerShell»). Corta a **v1.166.0** (`D-158`).
+
+## D-207 — O fecho da casa: a linha `/apply-wo` num bloco de código só dela, e o esqueleto copiado
+
+**Data:** 2026-11-25 · **WO:** 0214 · **Origem:** a nota do dono `261125-2120` («a linha deveria ser entregue dentro de um bloco de código fácil de copiar […] a parte de próxima ação […] também sumiu») `[relatado pelo dono]`.
+
+**Decisão.** Nas Instruções da casa, a linha `/apply-wo <arquivo>` vai **num bloco de código só dela**; o «Próximo» nomeia o «Peça no próximo turno»; e o fecho se faz **copiando o esqueleto do CEREBRO, não reconstituindo de memória**. No esqueleto do CEREBRO, a linha «Ação» diz que o comando para colar vai num bloco de código logo abaixo.
+
+**Por quê.** A falha foi de leitura, não de regra: o esqueleto existia, e o chat o remontou do resumo. A regra que impede isso precisa estar no texto lido em toda mensagem, que é o das Instruções. **O que fica como está:** o kit (o candidato está na `i-N112`, para a próxima WO de kit) e o resto do bloco de fecho. As Instruções da casa: 7.605 → 7.727 caracteres; o dono recola no painel.

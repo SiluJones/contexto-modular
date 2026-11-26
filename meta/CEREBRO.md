@@ -326,7 +326,7 @@ Todo turno de trabalho termina com este bloco, nesta ordem. **Próximo** vem ANT
 
 ```
 **Próximo**                                   (sempre)
-- **Ação:** <a próxima coisa concreta a fazer>
+- **Ação:** <a próxima coisa concreta a fazer; o comando para colar (`/apply-wo`, git) vai num bloco de código só dele, logo abaixo>
 - **Peça no próximo turno:** «<frase copiável como está, sem lacuna>»
 ---
 **Estado:** Base: <arquivo lido NESTE turno + data/commit que ELE traz> · <versão/fase> · <harness> · <commit>   (sempre)
