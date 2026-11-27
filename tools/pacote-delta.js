@@ -8,7 +8,9 @@
 // o pacote que o projeto recebeu na versao dele e o de agora, com o mesmo nicho, os mesmos modos e o mesmo perfil.
 // O index.html antigo sai do git (o commit que cortou a versao). O carimbo de versao nao conta como mudanca.
 // --perfil: JSON {"topbar": {...}, "builder": {...}, "os": "win-ps"} com o perfil com que o projeto foi gerado (os ids
-// dos campos do nicho; "os" e a chave do sistema operacional: win-cmd, win-ps, win-both, macos, linux); sem ele, o padrao do kit.
+// dos campos do nicho; "os" e a chave do sistema operacional: win-cmd, win-ps, win-both, macos, linux; no custom,
+// "compor": [ids dos nichos] e, opcionais, "nome" (o do preset, que vira o titulo das Instrucoes) e "label", como o compositor
+// da pagina faz); sem ele, o padrao do kit.
 // --saida: a pasta do pacote; padrao, a pasta-pai do repo com o nome que o prompt do update cita. Pasta existente com
 // arquivos: recusa (nada e sobrescrito).
 "use strict";
@@ -20,7 +22,11 @@ const SHIM = 'window.__D = {STATE: STATE, NICHES: NICHES, normNiche: normNiche,'
   + ' KIT_VERSION: (typeof KIT_VERSION !== "undefined" ? KIT_VERSION : "(sem versao)"),'
   + ' buildUpdatePrompt: (typeof buildUpdatePrompt !== "undefined" ? buildUpdatePrompt : null),'
   + ' updatePackFolder: (typeof updatePackFolder !== "undefined" ? updatePackFolder : null),'
-  + ' OSENV: (typeof OSENV !== "undefined" ? OSENV : null)};';
+  + ' OSENV: (typeof OSENV !== "undefined" ? OSENV : null),'
+  + ' nicheEfetivo: (typeof nicheEfetivo !== "undefined" ? nicheEfetivo : null),'
+  + ' composeFromNiches: (typeof composeFromNiches !== "undefined" ? composeFromNiches : null),'
+  + ' toPreset: (typeof toPreset !== "undefined" ? toPreset : null),'
+  + ' mergeCustom: (typeof mergeCustom !== "undefined" ? mergeCustom : null)};';
 
 // Carrega um index.html (de qualquer versao) e devolve o minimo para gerar o pacote. Shim proprio, e nao o do
 // validate.js: o do harness lista funcoes que as versoes antigas nao tinham.
@@ -40,18 +46,30 @@ function carregar(html){
 
 // Gera o pacote com o nicho, os modos e o perfil pedidos; devolve os arquivos, o manifesto, o prompt e a pasta.
 function pacote(D, o){
-  const S = D.STATE, prev = {w: S.workmode, n: S.niche, t: S.topbar, b: S.builder, os: D.OSENV ? D.OSENV.value : null};
+  const S = D.STATE, prev = {w: S.workmode, n: S.niche, t: S.topbar, b: S.builder, os: D.OSENV ? D.OSENV.value : null, cp: S.customPreset};
   try {
     S.workmode = Object.assign({}, S.workmode || {}, {mountMode: o.mount ? "yes" : "", codeMode: o.code ? "yes" : "", groupMode: "no", asuMode: ""});
     S.niche = o.nicho; S.topbar = Object.assign({}, (o.perfil || {}).topbar || {}); S.builder = Object.assign({}, (o.perfil || {}).builder || {});
     if(D.OSENV && (o.perfil || {}).os) D.OSENV.value = o.perfil.os;
     if(!D.buildUpdatePack) throw new Error("a v" + D.KIT_VERSION + " ainda nao gerava pacote de update: nao ha delta — faca o merge completo");
     if(!D.NICHES[o.nicho]) throw new Error("o nicho «" + o.nicho + "» nao existe na v" + D.KIT_VERSION);
-    const n = D.normNiche(D.NICHES[o.nicho]), pk = D.buildUpdatePack(n);
+    const pf = o.perfil || {};
+    let n;
+    if(o.nicho === "custom" && (pf.compor || []).length){
+      if(!D.composeFromNiches || !D.toPreset || !D.mergeCustom) throw new Error("a v" + D.KIT_VERSION + " nao tem o compositor do custom");
+      const cf = D.composeFromNiches(pf.compor.map(id => { if(!D.NICHES[id]) throw new Error("o nicho «" + id + "» nao existe na v" + D.KIT_VERSION); return D.normNiche(D.NICHES[id]); }), {}).cf;
+      if(pf.label) cf.label = pf.label;
+      S.customPreset = D.toPreset(cf, pf.nome || pf.label || "custom-composto");
+      n = D.mergeCustom(D.NICHES.custom, S.customPreset);
+    } else {
+      n = D.normNiche(D.NICHES[o.nicho]);
+      if(D.nicheEfetivo) n = D.nicheEfetivo(n);
+    }
+    const pk = D.buildUpdatePack(n);
     return {versao: D.KIT_VERSION, manifest: pk.manifest, prompt: D.buildUpdatePrompt ? D.buildUpdatePrompt(n) : "",
       pasta: D.updatePackFolder ? D.updatePackFolder(n) : "kcm-update-" + o.nicho + "-v" + D.KIT_VERSION,
       files: pk.files.map(f => ({real: f.real, flat: f.flat, nature: f.nature, content: f.content || ""}))};
-  } finally { S.workmode = prev.w; S.niche = prev.n; S.topbar = prev.t; S.builder = prev.b; if(D.OSENV) D.OSENV.value = prev.os; }
+  } finally { S.workmode = prev.w; S.niche = prev.n; S.topbar = prev.t; S.builder = prev.b; if(D.OSENV) D.OSENV.value = prev.os; S.customPreset = prev.cp; }
 }
 
 // Diff de linhas por LCS, com 2 linhas de contexto. Devolve {mudadas, hunks: [texto]}.
