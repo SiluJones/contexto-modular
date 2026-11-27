@@ -3550,6 +3550,36 @@ check("C141 o cd da pasta abre o bloco de comandos, e o comando do Proximo vai n
   } finally { S.workmode = prevW; S.niche = prevN; }
 });
 
+// wo0218 (D-210; D-209 K1): o metodo C como padrao do canal pasta com o Code, o teste de quando a WO se paga,
+// a troca exata tambem sem o Code, o «como» no GUIA, o molde e a apply-wo com a forma «conferencia» (i-N111).
+check("C142 o metodo C no kit: o teste de quando a WO se paga no canal pasta com o Code, a troca exata tambem sem o Code, o como no GUIA, o molde e a apply-wo com a conferencia (wo0218, D-210)", () => {
+  const S = T.STATE, prevW = S.workmode, prevN = S.niche, prevTb = S.topbar, prevBd = S.builder;
+  const PASTA_CODE = ["**Quando a WO se paga:**", "(4) um caminho onde a ponte do chat não grava", "Ligar o Code não é motivo", "**Alarme permanente:**", "Padrão (método C)", "o que já existe nunca vai inteiro", "seção «Método C — a WO de conferência e o bloco»"];
+  try {
+    ["dev", "narrative", "custom"].forEach(id => {
+      const run = (w) => { S.workmode = Object.assign({groupMode:"no", asuMode:""}, w); S.niche = id; S.topbar = {}; S.builder = {}; const n = T.normNiche(T.NICHES[id]); return {C: T.buildClaudeMd(n), G: T.buildGuiaKit(n), I: T.buildInstr(n), U: T.buildUpdatePrompt(n)}; };
+      const pc = run({mountMode:"", codeMode:"yes"}), p = run({mountMode:"", codeMode:""}), mc = run({mountMode:"yes", codeMode:"yes"});
+      PASTA_CODE.forEach(b => assert(pc.C.indexOf(b) > -1, id + "/pasta+Code: falta «" + b + "» no CEREBRO"));
+      assert(pc.C.indexOf("IDEAS e todo doc grande e vivo mudam por WO") < 0 && pc.C.indexOf('Método "doc por WO"') < 0, id + "/pasta+Code: o CEREBRO ainda ensina a forma «edições» como padrão");
+      assert(pc.C.indexOf("o que já existe muda por **troca exata**") > -1 && p.C.indexOf("o que já existe muda por **troca exata**") > -1, id + ": a troca exata não está no canal pasta (com e sem o Code)");
+      assert(p.C.indexOf("**Quando a WO se paga:**") < 0 && mc.C.indexOf("**Quando a WO se paga:**") < 0, id + ": o teste vazou para fora do canal pasta com o Code");
+      assert(mc.C.indexOf('Método "doc por WO"') > -1, id + "/mount+Code: a reserva perdeu a forma «edições»");
+      assert(pc.G.indexOf("## Método C — a WO de conferência e o bloco") > -1 && pc.G.indexOf("`git diff --cached --stat` conferido caminho a caminho") > -1 && pc.G.indexOf("o «sim» dado só no chat não chega ao Code") > -1 && pc.G.indexOf("`Capitulos/` não é `capitulos/`") > -1, id + "/pasta+Code: o GUIA não traz o como do método C");
+      assert(p.G.indexOf("## Método C") < 0 && mc.G.indexOf("## Método C") < 0, id + ": a seção do método C vazou do canal pasta com o Code");
+      assert(/«Método C — a WO de conferência e o bloco»/.test(pc.C.split("\n").find(l => l.indexOf("No `GUIA-DO-KIT.md`") > -1) || ""), id + "/pasta+Code: o índice do CEREBRO não lista a seção do GUIA");
+      assert(pc.I.indexOf("quando ela se paga") > -1 && mc.I.indexOf("doc grande por WO") > -1, id + ": as Instruções com o Code não ramificam pelo canal");
+      assert(pc.U.indexOf("O metodo C (desde a v1.168.0)") > -1 && pc.U.indexOf("PROPONHA ao dono") > -1 && mc.U.indexOf("O metodo C (desde") < 0, id + ": o prompt do update não propõe a troca de método (ou propõe no mount)");
+    });
+    S.workmode = {mountMode:"", codeMode:"yes", groupMode:"no", asuMode:""}; S.niche = "dev";
+    const k = T.buildCodeKitFiles(T.normNiche(T.NICHES.dev));
+    assert(k.applyWo.indexOf("**WO de conferência (método C):**") > -1 && k.applyWo.indexOf("`git diff --cached --stat` conferido contra o inventário ANTES do commit") > -1, "a apply-wo não tem o ramo da conferência");
+    assert(k.woTemplate.indexOf("## Forma «conferencia»") > -1 && k.woTemplate.indexOf("> **Por que WO:**") > -1 && k.woTemplate.indexOf("> **Aprovacao do dono:**") > -1, "o molde de WO não tem a forma «conferencia»");
+    assert(k.claudeMd.indexOf("WO de **conferência**") > -1, "o CLAUDE.md do kit não reconhece a WO de conferência");
+    assert(JSON.parse(k.settings).permissions.allow.includes("Bash(git pull:*)"), "o settings não libera o git pull da conferência");
+    return "ok (3 nichos x pasta+Code, pasta e mount+Code: o teste, a troca exata, o GUIA, as Instruções e o prompt do update ramificam pelo canal; a apply-wo, o molde, o CLAUDE.md e o settings do kit)";
+  } finally { S.workmode = prevW; S.niche = prevN; S.topbar = prevTb; S.builder = prevBd; }
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

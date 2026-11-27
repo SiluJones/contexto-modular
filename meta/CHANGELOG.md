@@ -1,10 +1,20 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.167.0**.
+> Histórico de versões. Versão atual: **v1.168.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.168.0 — O método C no kit: no canal pasta com o Code, o chat grava tudo e a WO só vem quando se paga (wo0218, D-210)
+- **O teste de quando a WO se paga** (`D-209`), no CEREBRO gerado, na seção «Desenvolvimento no Claude Code» reescrita para o canal pasta com o Code: só com pelo menos um de quatro motivos, escrito na primeira linha da WO — um passo que o chat não roda e que não é um comando curto para o usuário colar; uma operação de git arriscada; um lote grande; um caminho onde a ponte do chat não grava (`.claude/`). Fora disso, o bloco de git do chat e a conferência de volta no turno seguinte. Ligar o Code não é motivo.
+- **Um escritor por documento, o chat:** STATUS e DECISIONS inclusive; o Code gera o build, confere, publica e relata. **O alarme permanente:** um erro no commit, ou duas WOs seguidas paradas por conteúdo, suspende o método. Adotar ou voltar atrás é decisão escrita.
+- **A troca exata no canal pasta, com e sem o Code:** o que já existe muda por script, ocorrência única, sobre o arquivo lido no turno, no fim de linha dele — nunca regerado inteiro.
+- **O «como» no GUIA,** seção nova «Método C — a WO de conferência e o bloco»; **a forma «conferencia» no molde de WO e na `apply-wo`,** com as lições do My Little Lady (`i-N111`): o `git diff --cached --stat` contra o inventário antes do commit (a caixa do caminho no Windows), o «sim» do dono num arquivo, a troca de seção entre âncoras, o fim de linha por `git ls-files --eol`, nada de checkout. O `settings.json` libera o `git pull`.
+- **As Instruções com o Code** trocam «doc grande por WO» pela regra nova (o orçamento do modo, `C28`, foi de 544 para 538/550).
+- **O mount fica na forma «edições»** (reserva).
+- **Para projetos instalados:** o update **propõe** a troca de método — só funde com o sim do dono, registrado em DECISIONS; quem já adotou por decisão própria (a Carreira, o GameDataHub) é reconhecido, não reaplicado. Sem o Code, muda só a frase da troca exata no «Canal do chat».
+- **`C142` novo** (142 → 143). **Origem:** a análise `261126-ANALISE-quando-a-wo-se-paga.md` e o pixel-artista (13 commits pelo bloco; com o Code ligado, 5 WOs de edições seguidas). Harness **19/19 · 143/143**.
 
 ## v1.167.0 — O `cd` da pasta abre o bloco de comandos, e o comando do «Próximo» vai num bloco só dele (wo0215, D-208)
 - **O `cd` no bloco:** o bloco de commit que o CEREBRO e as Instruções mandam entregar abre com `cd "<caminho completo do repositório>"`, entre aspas; depois `git add`, `git commit` e `git push`, um por linha. O usuário cola o bloco de qualquer pasta, no CMD ou no PowerShell, e ele roda certo. O CEREBRO estende a regra a todo bloco de terminal que o usuário roda (instalar, rodar script, build).

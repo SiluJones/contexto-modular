@@ -1368,7 +1368,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.167.0";
+const KIT_VERSION = "1.168.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -9526,7 +9526,7 @@ function buildInstrNivel(niche, nivel){
     lines.push("");
     lines.push(codeModeOn() ? "## Ao final da conversa, REGISTRE o que falta (não liste)" : "## Ao final da conversa, entregue arquivos completos");
     lines.push(codeModeOn()
-      ? "Registre AQUI, não liste para depois: doc grande por WO (com a linha `/apply-wo`), arquivo novo ou pequeno inteiro, e o log do dia SEMPRE. A lista termina vazia. Regenerar × criar: CEREBRO.md."
+      ? !mountModeOn() ? "Registre AQUI, não liste: troca exata e o log do dia SEMPRE; versione pelo bloco, ou pela WO (linha `/apply-wo`) quando ela se paga. A lista termina vazia. Regenerar × criar: CEREBRO.md." : "Registre AQUI, não liste para depois: doc grande por WO (com a linha `/apply-wo`), arquivo novo ou pequeno inteiro, e o log do dia SEMPRE. A lista termina vazia. Regenerar × criar: CEREBRO.md."
       : !mountModeOn() ? "Grave cada documento afetado INTEIRO e atualizado, direto no lugar dele e relido antes de sobrescrever; nunca blocos soltos para colar à mão. Aplicar é decisão do usuário: diga o que gravou. Detalhes e exceções no CEREBRO.md." : "Entregue cada documento afetado INTEIRO e atualizado (arquivo novo para baixar e substituir o antigo), nunca blocos soltos para colar à mão. Aplicar é decisão do usuário. Detalhes e exceções no CEREBRO.md.");
     if(nivel >= 2) lines.push(`- ${outOn.map(o => (o.label || "").split(" — ")[0].trim()).join(" · ")} — o que pede cada um no CEREBRO.md.`);
     else outOn.forEach(o => lines.push(`- ${o.label}`));
@@ -9683,7 +9683,7 @@ function withSectionIndex(md, cab, extra){
 /* wo0185 (D-188, analise 261118): o GUIA-DO-KIT.md — o que tem gatilho observavel sai da abertura da conversa.
    Arquivo do kit (natureza «do-kit»): o update o troca inteiro, nao se funde. O CEREBRO aponta cada secao
    (tabela de gatilhos, secoes-ponteiro e o indice); o texto saiu dele sem mudar de forma. */
-const GUIA_SECOES = () => ["Ao receber um template-update do KCM"].concat(mountModeOn() ? [] : [canalPasta("## " + UPDATE_PROTOCOL.handoffTitulo).slice(3)]).concat(["Sonda e exploração — o par que produz evidência", "Correspondência entre projetos — quando o interlocutor é outro assistente", "Análise antes do compromisso — como escrever", "Refino das Instruções — como refinar"]).concat(engineGodot() && !mountModeOn() ? ["Teste de fumaça do Godot na VM do chat"] : []);
+const GUIA_SECOES = () => ["Ao receber um template-update do KCM"].concat(mountModeOn() ? [] : [canalPasta("## " + UPDATE_PROTOCOL.handoffTitulo).slice(3)]).concat(["Sonda e exploração — o par que produz evidência", "Correspondência entre projetos — quando o interlocutor é outro assistente", "Análise antes do compromisso — como escrever", "Refino das Instruções — como refinar"]).concat(codeModeOn() && !mountModeOn() ? ["Método C — a WO de conferência e o bloco"] : []).concat(engineGodot() && !mountModeOn() ? ["Teste de fumaça do Godot na VM do chat"] : []);
 /* wo0210 (D-204, i-N99 WO B): o «como» da Analise e do Refino mora no GUIA; no CEREBRO ficam a regra, o gatilho e o ponteiro. */
 function guiaSecaoAnalise(L, niche){
   L.push("## Análise antes do compromisso — como escrever");
@@ -9697,6 +9697,21 @@ function guiaSecaoAnalise(L, niche){
   L.push("- **Abandonar no meio é desfecho legítimo.** O que tem valor é ler a fonte, não escrever o documento. Se a leitura derrubar a premissa que disparou o gatilho — o formato já era extensível, o problema não existia, a decisão já estava tomada —, **pare, diga o que a leitura mostrou e vá trabalhar**. Análise que continua depois da premissa cair devolve como «ponto de decisão» o que era escolha técnica sua, e custa um turno. **E o que a leitura achou de bom não se perde: vai para as armadilhas da ordem de trabalho, como risco a tratar — não volta como pergunta.** Achado sem endereço vira pergunta: é assim que uma análise abandonada ressuscita disfarçada, propondo ao dono «não fazer» aquilo que ele acabou de decidir fazer.");
   L.push("- **Se este projeto já escreve documentos desse tipo com outro nome** (`design/`, `estudos/`, `rfc/`, `.md` avulso na raiz): não renomeie nada por conta própria. Adote a convenção onde ela cai — o documento que já existe ganha o cabeçalho de `Status` e os elos (o que nasceu dele, qual decisão registrou), e as análises novas nascem no formato acima. Renomear pasta ou arquivo é decisão do usuário: proponha, não execute.");
   L.push("- **Modelo:** o pacote de atualização do kit já traz um `analises/_TEMPLATE.md` pronto, com natureza «modelo-em-espera» — coloque-o quando a pasta nascer, e não antes. Sem o pacote, escreva o modelo junto com a primeira análise: o modelo é o que faz a convenção pegar. Se a pasta estiver ignorada no `.flatdropignore`, **reinclua o modelo** (`!analises/_TEMPLATE.md`): modelo e guia sempre sobem ao Projeto; corpo de análise, não.");
+  L.push("");
+}
+/* wo0218 (D-210, D-209 K1): o «como» do metodo C mora no GUIA; no CEREBRO, a regra e o teste. */
+function guiaSecaoMetodoC(L){
+  L.push("## Método C — a WO de conferência e o bloco");
+  L.push("");
+  L.push("> Aberta pela seção «Desenvolvimento no Claude Code» do CEREBRO, que guarda a regra e o teste de quando a WO se paga. Aqui, como se faz.");
+  L.push("");
+  L.push("- **Como gravar:** troca exata por script sobre o arquivo lido do disco no turno — conte as ocorrências de cada âncora e grave só se for 1, e só depois de todas as contagens do lote passarem; no fim de linha que o arquivo já tem (`git ls-files --eol` diz qual: CRLF continua CRLF); arquivo novo inteiro, em LF. Nunca regere um arquivo existente inteiro, nem o reconstrua a partir de saída de ferramenta, que pode vir truncada. Gravação que a ponte interrompe se confere pelo `sha1sum` antes de refazer: refazer às cegas aplica a troca duas vezes. Para trocar uma seção inteira, troque o bloco entre duas âncoras de uma linha e anote o `sha1sum` do bloco.");
+  L.push("- **Antes de entregar:** com build ou teste, rode-os numa cópia do HEAD fora da pasta (`git archive HEAD | tar -x`), com os arquivos do `git status --short` por cima; check novo prova que falha sem a mudança. Sem build nem teste, a rede é a troca exata e a leitura do diff — diga isso no fecho.");
+  L.push("- **O bloco de git:** `cd \"<pasta do repositório>\"`, `git add` com os caminhos copiados do `git status --short` (no Windows o índice guarda a caixa: `Capitulos/` não é `capitulos/`, e o `add` errado não acusa), `git commit` e `git push`, num bloco só; o fecho diz numa linha por que não houve WO.");
+  L.push("- **A WO de conferência:** a primeira linha diz por que ela se paga (o motivo do teste); «Âncoras lidas em» com o HEAD e o `git status --short` de partida; o inventário (arquivo, o que muda, `+/−` do `git diff --numstat`, fim de linha, `sha1sum`; arquivo novo com `wc -l`); quando há build, o artefato esperado (bytes e `sha1sum`, medidos na cópia); o commit exato. Se a WO depende de um «sim» do dono, o sim vai num arquivo que o Code lê (a frase dele, com a data): o «sim» dado só no chat não chega ao Code, que toma o `/apply-wo` como confirmação.");
+  L.push("- **O Code, na conferência:** `git pull --ff-only`; `git status --short` igual ao inventário; `sha1sum` e `numstat` iguais; o diff lido inteiro; o fim de linha por `git ls-files --eol` ou Python, nunca `grep -c` de CR (no Windows ele conta CR que não existe); o build e os testes; `git add` só do inventário, do gerado e da WO; `git diff --cached --stat` conferido caminho a caminho contra o inventário **antes** do commit; commit; push; relatório. Para devolver o fim de linha do índice, conversão por script conferida pelo `sha1sum` contra `git show :<arquivo>` — `git checkout -- <arquivo>` costuma ser negado pelo classificador de permissão do Code.");
+  L.push("- **A conferência de volta (você):** depois da WO, o relatório inteiro e o `git show --stat` contra o inventário; depois do bloco, o `git show --stat` contra a lista e o `git status --short` sem sobra. Atualize a linha do alarme no STATUS (erros que chegaram ao commit, por WO e por bloco; paradas seguidas por conteúdo). O hash do commit entra no STATUS pelo turno seguinte.");
+  L.push("- **A busca por palavra é piso:** procurar «cidade» não acha «Em Valmora»; ausência se prova lendo.");
   L.push("");
 }
 function guiaSecaoRefino(L){
@@ -9839,6 +9854,7 @@ function buildGuiaKit(niche){
   guiaSecaoCorrespondencia(L);
   guiaSecaoAnalise(L, niche);
   guiaSecaoRefino(L);
+  if(codeModeOn() && !mountModeOn()) guiaSecaoMetodoC(L);
   if(engineGodot() && !mountModeOn()) guiaSecaoGodot(L);
   L.push(`*Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — nicho ${niche.label}. Arquivo do kit: o update o troca inteiro; o que for deste projeto mora no CEREBRO.*`);
   const md = L.join("\n");
@@ -9888,11 +9904,11 @@ function buildClaudeMd(niche){
     L.push("> Este projeto roda com o chat **lendo e gravando na pasta do projeto** (app desktop com a pasta vinculada). Toda menção a mount, `_MANIFEST`, FlatDrop, upload e «nome de download» no resto deste arquivo é **canal de reserva**: vale só quando a conversa roda sem a pasta (site sem vínculo, outra conta). Se a pasta não responder, diga qual canal você tem e siga a reserva — nunca trabalhe de memória.");
     L.push("");
     L.push("- **Ritual em dois tempos.** Ao abrir a conversa, os arquivos de contexto na ordem acima. Em todo turno, só o barato e verificável: " + (comCode ? "`git log -3 --oneline`, `git status --short`" : "a listagem da pasta do projeto") + " e a listagem da pasta-pai; arquivo de contexto que mudou se relê. Ler tudo em todo turno não escala, e regra dura que ninguém cumpre ensina a ignorar as outras. O vigia é o `Base:` do fecho: turno que afirma estado sem leitura feita nele falhou o ritual.");
-    L.push("- **Git pelo chat é só leitura, sempre com `GIT_OPTIONAL_LOCKS=0`.** Um `git status` comum grava `.git/index.lock`, e o chat não consegue apagá-lo: o Git do dono fica travado até alguém remover à mão. " + (comCode ? "Commit e push são do Code." : "Commit é do dono: entregue o bloco pronto."));
-    L.push("- **Arquivo que você autora vai direto para o lugar definitivo** — nunca para download nem para pasta provisória. Em LF; releia do disco antes de sobrescrever, porque outro escritor pode ter mexido. O que o dono vai rodar ou abrir é gravado e conferido com `ls` **antes** da resposta que o cita.");
+    L.push("- **Git pelo chat é só leitura, sempre com `GIT_OPTIONAL_LOCKS=0`.** Um `git status` comum grava `.git/index.lock`, e o chat não consegue apagá-lo: o Git do dono fica travado até alguém remover à mão. " + (comCode ? "Commit e push: o bloco de git que você entrega ao dono, ou a WO, quando ela se paga (seção «Desenvolvimento no Claude Code»)." : "Commit é do dono: entregue o bloco pronto."));
+    L.push("- **Arquivo que você autora vai direto para o lugar definitivo** — nunca para download nem para pasta provisória. Arquivo novo vai inteiro, em LF; o que já existe muda por **troca exata** — script, ocorrência única, sobre o arquivo lido do disco no turno, no fim de linha dele —, nunca regerado inteiro: regerar é onde se perde conteúdo. O que o dono vai rodar ou abrir é gravado e conferido com `ls` **antes** da resposta que o cita.");
     if(comCode) L.push("- **A WO confere o que você gravou.** Cada arquivo que você gravou e a WO vai versionar entra no cabeçalho dela com o `sha1sum` medido ao gravar; a Edição 0 confere, e hash diferente para a aplicação. No mount, o meio impedia dois escritores; no disco, quem impede é o hash.");
     L.push("- **Um dono por documento, escrito.** O meio não impede mais dois escritores no mesmo arquivo; só a regra impede. " + (comCode
-      ? "Padrão: o chat escreve inteiros a análise, a WO, CONTEXT, CEREBRO, Instruções e GLOSSARY; o Code escreve o código, STATUS, DECISIONS, CHANGELOG e a sua seção do log; IDEAS e todo doc grande e vivo mudam por WO."
+      ? "Padrão (método C): você escreve tudo o que entra no commit — código e documentos, STATUS e DECISIONS inclusive —; o Code gera o que se gera (o build), confere e publica quando a WO se paga, e escreve só o relatório na pasta-pai."
       : "Padrão: o chat escreve os documentos; o dono revisa e versiona.") + " O projeto pode mudar a divisão — registrando em DECISIONS —, nunca deixá-la implícita.");
     L.push("- **Notas e relatórios moram na pasta-pai,** fora do Git. Leia inteira a que chegou, funda nos meta/ e arquive **movendo** para `notas-arquivadas/` dentro dela — mover, nunca apagar. Liste a pasta antes e depois: arquivo que some sem comando que o cite é perda, não arquivamento.");
     L.push("- **Insumo permanente não é nota:** o material do cliente, as fontes brutas e os logs de equipamento moram numa subpasta própria da pasta-pai (`material/`) e não entram no «Arquivar / Manter».");
@@ -9980,7 +9996,7 @@ function buildClaudeMd(niche){
   L.push(`## ${UPDATE_PROTOCOL.titulo}`);
   L.push("");
   L.push(UPDATE_PROTOCOL.intro);
-  if(codeModeOn()){ L.push(""); L.push("**Com executor no repositório, esta seção vale para o arquivo que você autora inteiro — e um teste decide o resto: arquivo com seção de OUTRO autor nunca vai inteiro.** Entregá-lo inteiro é sobrescrever o outro autor (o log do dia com as seções do Code é o caso clássico); ali só cabe âncora, numa WO. Arquivo novo vai inteiro na primeira vez; documento grande e vivo, por WO."); }
+  if(codeModeOn() && !mountModeOn()){ L.push(""); L.push("**Com o Code no canal pasta (método C), um escritor só — você:** arquivo novo vai inteiro; o que já existe nunca vai inteiro: muda por troca exata (ver «Canal do chat»), e o usuário recebe o arquivo no lugar dele, para versionar."); } else if(codeModeOn()){ L.push(""); L.push("**Com executor no repositório, esta seção vale para o arquivo que você autora inteiro — e um teste decide o resto: arquivo com seção de OUTRO autor nunca vai inteiro.** Entregá-lo inteiro é sobrescrever o outro autor (o log do dia com as seções do Code é o caso clássico); ali só cabe âncora, numa WO. Arquivo novo vai inteiro na primeira vez; documento grande e vivo, por WO."); }
   L.push("");
   L.push("**O assistente:**");
   UPDATE_PROTOCOL.claudeFaz.forEach(x => L.push(`- ${x}`));
@@ -10124,11 +10140,11 @@ function buildClaudeMd(niche){
     L.push("**Arquivo que SUBSTITUI outro e ficou MENOR vem com o que saiu e para onde foi** — uma linha basta: «encolheu 3 KB porque a parte de mecânicas migrou para `X.md`». Sem isso, quem recebe não consegue separar «enxugou» de «perdeu conteúdo», e **guardar os dois passa a ser a escolha racional** — foi assim que um projeto ficou com quatro guias onde deviam existir dois, sendo os obsoletos os MAIORES. Mandar apagar o antigo não basta: o pedido de apagar é justamente o que fica sem lastro quando o substituto encolheu e ninguém disse por quê.");
     L.push("");
     if(codeModeOn()){
-      L.push("**A regra geral — «entregue tudo inteiro» — foi escrita para projeto SEM executor, onde regenerar é a única saída. Aqui ela se inverte:** com um executor no repositório, o registro do fecho é **WO cirúrgica**, e reescrever um documento grande no fim de uma conversa pesada é justamente onde se perde conteúdo.");
+      L.push(!mountModeOn() ? "**A regra geral — «entregue tudo inteiro» — foi escrita para projeto SEM executor e sem a pasta, onde regenerar é a única saída. Aqui ela se inverte:** com a pasta vinculada e o Code, o registro do fecho é **troca exata** na pasta, e reescrever um documento grande no fim de uma conversa pesada é justamente onde se perde conteúdo." : "**A regra geral — «entregue tudo inteiro» — foi escrita para projeto SEM executor, onde regenerar é a única saída. Aqui ela se inverte:** com um executor no repositório, o registro do fecho é **WO cirúrgica**, e reescrever um documento grande no fim de uma conversa pesada é justamente onde se perde conteúdo.");
       L.push("");
-      L.push("- **Registrar é o entregável; listar não é.** «O que ainda falta registrar» é o inventário da dívida, não o pagamento dela. Um fecho bom termina com essa lista **vazia** — e o que ficou de fora vira WO agora, nesta conversa, não recado para a próxima.");
+      L.push("- **Registrar é o entregável; listar não é.** «O que ainda falta registrar» é o inventário da dívida, não o pagamento dela. Um fecho bom termina com essa lista **vazia** — e o que ficou de fora vira " + (mountModeOn() ? "WO" : "troca na pasta") + " agora, nesta conversa, não recado para a próxima.");
       L.push("- **Regenerar ≠ criar.** «Não regenere os arquivos de contexto» existe para não haver dois escritores no mesmo documento. Um arquivo que **não existe** não tem escritor nenhum: escrevê-lo não é regenerar, é criar — e é obrigatório. O log do dia é o caso que mais se perde por essa confusão.");
-      L.push("- **Qual canal para qual documento.** Documento grande e vivo → **WO** em `meta/workorders/`, com o texto exato de cada inserção e a linha `/apply-wo` junto. Arquivo **novo**, pequeno, ou que precise de curadoria que reescreve → **inteiro, para baixar**. Nunca os dois no mesmo ciclo para o mesmo documento.");
+      if(!mountModeOn()) L.push("- **Como cada documento muda.** O que já existe → **troca exata** na pasta; arquivo **novo** → inteiro, em LF; o conjunto versiona pelo bloco de git, ou pela WO quando ela se paga (seção «Desenvolvimento no Claude Code»), com a linha `/apply-wo` junto."); else L.push("- **Qual canal para qual documento.** Documento grande e vivo → **WO** em `meta/workorders/`, com o texto exato de cada inserção e a linha `/apply-wo` junto. Arquivo **novo**, pequeno, ou que precise de curadoria que reescreve → **inteiro, para baixar**. Nunca os dois no mesmo ciclo para o mesmo documento.");
       L.push("- **Nunca empurre bloco para o usuário colar no executor.** A caixa de mensagem dele tem limite de caracteres — é a razão de a WO existir. **Isso inclui pedido de medição.** Medição não tem âncora nem commit, então não é ordem de trabalho — mas continua sendo um arquivo: um script de sonda, ou um `.md` curto com o que rodar e o formato do relatório. «Não é WO» quer dizer «outro artefato», nunca «vai colado na mensagem». Se o usuário precisou criar o arquivo à mão para caber, o pedido estava errado.");
       L.push("");
       L.push("Os arquivos abaixo continuam sendo os afetados por este trabalho — o que muda é o canal de cada um, não a obrigação de registrar:");
@@ -10213,7 +10229,21 @@ if(asuModeOn()){
     L.push("");
     L.push("O `HUB.md` é gerado na página HUB do kit (um por grupo, não por projeto) e colado idêntico em cada projeto do grupo. Cada verdade tem UM dono (lore, mecânica, visual, som…); a responsabilidade atual de cada frente fica no bloco dela no HUB (seção 2). Na dúvida de quem é dono de um dado, pergunte ao usuário — não duplique.");
   }
-  if(codeModeOn()){
+  if(codeModeOn() && !mountModeOn()){
+    L.push("");
+    L.push("## Desenvolvimento no Claude Code (raias chat ↔ Code)");
+    L.push("");
+    L.push("Este projeto é desenvolvido com o **Claude Code** (CLI/desktop), além do chat de planejamento, no **método C**: o chat grava, e a WO, quando vem, só confere e publica.");
+    L.push("");
+    L.push("- **Chat (planejamento):** grava na pasta tudo o que entra no commit — código e documentos — por troca exata (ver «Canal do chat»); com build ou teste, roda-os numa cópia do HEAD fora da pasta, com os arquivos dele por cima, antes de entregar; entrega o bloco de git ou a WO.");
+    L.push("- **Claude Code (execução):** gera o que se gera (o build), confere, roda a validação, commita e empurra quando a WO se paga. Não reescreve e não escreve em doc: o achado vai no relatório da pasta-pai, e o chat o registra.");
+    L.push("- **Quando a WO se paga:** só com pelo menos um de quatro motivos, escrito na primeira linha dela — (1) um passo que o chat não roda e que não é um comando curto para o dono colar (build ou teste longo, com o toolchain do Windows, a engine ou a rede, ou cuja falha pede conserto); (2) uma operação de git arriscada num bloco (renomear, apagar, mover pasta, conflito, merge); (3) um lote grande (o merge de um update do kit, uma migração); (4) um caminho onde a ponte do chat não grava (`.claude/`). **Fora disso, o bloco de git** (ver «Commit pronto ao final»), com os caminhos copiados do `git status --short` lido no turno, e no turno seguinte a conferência de volta: `git show --stat` contra a lista e `git status` limpo. Ligar o Code não é motivo: WO só para repassar ao Code o que você já gravou não se paga.");
+    L.push("- **A WO de conferência** (forma «conferencia» no molde): inventário com cada arquivo, o `+/−` do `git diff --numstat`, o fim de linha e o `sha1sum`; o Code confere, lê o diff inteiro, confere o `git diff --cached --stat` contra o inventário antes do commit, roda o build e a validação, commita, empurra e relata. Falhou, para: você corrige na pasta e atualiza a mesma WO. Sem a pasta (reserva), a WO volta à forma «edições», com âncora. O como, inteiro: `GUIA-DO-KIT.md`, seção «Método C — a WO de conferência e o bloco».");
+    L.push("- **Alarme permanente:** um erro que chegue a um commit (por WO ou por bloco), ou duas WOs seguidas paradas por conteúdo, suspende o método — a seguinte vai na forma «edições» e o dono decide. Uma linha no STATUS conta os dois. Adotar o método ou voltar atrás, mesmo em parte, é decisão escrita em DECISIONS; a varredura de uma troca de método inclui o `CONTEXT.md`.");
+    L.push('- **Nomes padronizados:** WOs (work orders) em `meta/workorders/` seguem `AAMMDD-woNNNN-desc.md` (ex.: `260630-wo0007-asu-entrega-e-escopo.md`)'+(asuModeOn()?'; instruções ASU seguem `AAMMDD-asuNNNN.yaml`':'')+'. Numeração sequencial e estável; a data é a de criação. O chat nomeia; o Code confere.');
+    L.push("");
+    L.push('**Ambiente:** os comandos do Code rodam por um Git Bash interno (caminhos com `/` funcionam). Mensagens de commit **sem acento**. O arquivo-raiz `CLAUDE.md` (convenções + build) e a pasta `.claude/` (permissões + comandos `/`) ficam na raiz do repo — veja-os ao iniciar.');
+  } else if(codeModeOn()){
     L.push("");
     L.push("## Desenvolvimento no Claude Code (raias chat ↔ Code)");
     L.push("");
@@ -10988,6 +11018,37 @@ function buildWoTemplate(){
     "",
     "```",
     "git push",
+    "```",
+    "",
+    "---",
+    "",
+    "## Forma «conferencia» (metodo C, so no canal pasta)",
+    "",
+    "> Use quando o chat JA GRAVOU tudo na pasta e a WO so confere e publica — e so quando ela se paga (CEREBRO, «Desenvolvimento no Claude Code»; o como, no GUIA-DO-KIT, «Metodo C — a WO de conferencia e o bloco»). Sem ancora e sem texto novo: o diff e o registro.",
+    "",
+    "```",
+    "# WO NNNN — [titulo]",
+    "",
+    "> **Por que WO:** [o motivo do teste: passo que o chat nao roda · git arriscado · lote grande · caminho onde a ponte nao grava]",
+    "> **Forma:** conferencia · **Tipo:** [so doc | codigo]",
+    "> **Ancoras lidas em:** HEAD `[hash]` («[titulo]»), com `GIT_OPTIONAL_LOCKS=0 git log -3 --oneline` em [data]; `git status --short` de partida: [...]",
+    "> **Verificado pelo chat:** [build e testes na copia do HEAD com os arquivos por cima, e o resultado; ou «sem build nem teste: a rede e a troca exata e a leitura do diff»]",
+    "> **Aprovacao do dono:** [a frase dele e a data, quando a WO depende de um sim — o sim dado so no chat nao chega a quem aplica]",
+    "",
+    "## Inventario",
+    "",
+    "| Arquivo | O que muda | + / − | EOL | sha1sum |",
+    "|---|---|---|---|---|",
+    "| `[caminho copiado do git status]` | [...] | [n / n] | [lf ou crlf] | `[sha1]` |",
+    "",
+    "## Passos",
+    "",
+    "1. `git pull --ff-only`; HEAD = o de «Ancoras lidas em». Diferente: PARE.",
+    "2. `git status --short` = exatamente o inventario (mais esta WO). Faltou ou sobrou: PARE.",
+    "3. `sha1sum` e `git diff --numstat` = o inventario; arquivo novo por `wc -l`; o fim de linha por `git ls-files --eol`, nunca por `grep` de CR. Diferente: PARE.",
+    "4. Leia o diff inteiro, sem cortar linha. Rode o build e os testes, se houver.",
+    "5. `git add` so dos caminhos do inventario, do gerado e desta WO; `git diff --cached --stat` conferido caminho a caminho contra o inventario ANTES do commit (no Windows, o `add` com a caixa errada nao acusa); commit; push; relatorio.",
+    "6. Para devolver o fim de linha, nunca o checkout do git (o classificador de permissao costuma nega-lo): converta por script e confira o `sha1sum` contra `git show :<arquivo>`.",
     "```"
   ].join("\n");
 }
@@ -11027,6 +11088,7 @@ function buildCodeKitFiles(){
     "- Mensagens de commit **sem acento**.",
     "- Nos meta/, o Code atualiza o STATUS (rolante: só o agora) e **acrescenta** em DECISIONS (só cresce); curadoria que reescreve vem do chat (arquivo inteiro OU WO).",
     "- Ao aplicar uma WO de `meta/workorders/`: ache cada âncora exatamente; se não achar, PARE e reporte. Não mexa fora das edições nomeadas. `git diff` antes do commit.",
+    "- WO de **conferência** (método C, «**Forma:** conferencia»): o chat já gravou tudo, STATUS e DECISIONS inclusive — você confere, gera o build, commita, empurra e relata, sem escrever em doc. A primeira linha dela diz por que ela se paga.",
     "- **Ao fechar a tarefa, RELATE o trabalho** — o que fez, achados e desvios do que a tarefa pedia, arquivos tocados, resultado do build/validação e o commit. **Não** copie o bloco de fecho do `meta/CEREBRO.md`: aquele é da raia de planejamento, e trocar relatório por formulário perde o que só você viu.",
     "",
     "## Quando eu pedir medição",
@@ -11061,7 +11123,7 @@ function buildCodeKitFiles(){
     '    "allow": [',
     '      "Read", "Write", "Edit", "Grep", "Glob",',
     '      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git add:*)", "Bash(git commit:*)", "Bash(git push:*)",',
-    '      "Bash(git log:*)", "Bash(git show:*)", "Bash(git ls-files:*)", "Bash(git cat-file:*)", "Bash(date:*)", "Bash(sha1sum:*)", "Bash(wc:*)", "Bash(grep:*)", "Bash(head:*)"',
+    '      "Bash(git log:*)", "Bash(git pull:*)", "Bash(git show:*)", "Bash(git ls-files:*)", "Bash(git cat-file:*)", "Bash(date:*)", "Bash(sha1sum:*)", "Bash(wc:*)", "Bash(grep:*)", "Bash(head:*)"',
     "    ],",
     '    "deny": ["Bash(rm -rf:*)"],',
     '    "additionalDirectories": ["../"]',
@@ -11077,6 +11139,7 @@ function buildCodeKitFiles(){
     "---",
     "Leia o arquivo de WO indicado em `meta/workorders/` e execute-o.",
     "ANTES de editar: se a WO edita arquivo existente e o cabeçalho dela NÃO traz o campo «Âncoras lidas em» preenchido, RECUSE — não aplique, grave o relatório de recusa em arquivo (a regra da parada, abaixo) e diga que falta. Quem escreveu a WO é quem tem o viés; esta conferência é sua justamente por isso.",
+    "**WO de conferência (método C):** se o cabeçalho trouxer «**Forma:** conferencia», o chat JÁ GRAVOU tudo na árvore — não edite nada. Confira: `git status --short` igual ao inventário; `sha1sum` e `git diff --numstat` iguais; o fim de linha por `git ls-files --eol`, nunca por `grep` de CR; o diff lido inteiro. Rode o build e os testes; `git add` só do inventário, do gerado e da WO, com os caminhos copiados do `git status`; `git diff --cached --stat` conferido contra o inventário ANTES do commit; commit, push e relatório. Não reescreva, não escreva em doc (o achado vai no relatório) e não rode `/wrap`. Para devolver o fim de linha, converta por script e confira o `sha1sum` contra `git show :<arquivo>` — nunca o checkout do git. Diferente do inventário: PARE e grave o relatório.",
     "Localize cada âncora EXATAMENTE; se não achar uma, PARE e reporte — não chute um lugar próximo. Delimite a âncora e o texto novo pela cerca de QUATRO crases do molde, nunca por cabeçalho nem pela cerca de três: o texto novo pode trazer `## título` ou um bloco de três crases dentro.",
     "Antes de cada edição, confira a idempotência pelo texto NOVO INTEIRO: se ele já está no arquivo **e a âncora não** — salvo quando a âncora está dentro do texto novo, na forma «trocar» —, PULE e diga no relatório. Frase-chave não basta: na forma «trocar» o texto novo repete a âncora, e um trecho dele já existe antes de aplicar; e na REMOÇÃO o texto novo é um pedaço da âncora, presente antes de aplicar.",
     "Se o banner «Canal dos meta» disser CHAT e o corpo trouxer edição numerada num documento `meta/`, a WO é contraditória: PARE e pergunte. O banner decide quem APLICA; escolher um dos lados em silêncio já deixou o registro de uma WO inteira de fora.",
@@ -11680,6 +11743,7 @@ function buildUpdatePrompt(niche){
   L.push("- Itens marcados **`fusao`** (CEREBRO, INSTRUCOES) carregam comportamento que meu projeto pode ter evoluido. **A fusao parte do PACOTE, nao do vivo:** o arquivo do pacote e a base, e voce **transplanta** para ele o que e deste projeto — a secao «Tecnicas especificas deste projeto», secao sem par no pacote, regra local com DEC, colisao ja julgada. Partir do vivo e enxertar o novo bloco a bloco so soma (o merge nao sabe subtrair) e, num projeto muitas versoes atras, vira um projeto a parte. **Antes de gravar, me mostre o inventario:** o que transplantou (secao a secao, com o motivo) e o que do vivo ficou de fora; eu decido os dois. **O corte tambem entra nele:** compare o resultado com o arquivo do pacote — toda linha do pacote que falta no resultado vai ao inventario, com o motivo. Nas Instrucoes, o que sai para caber no teto sai do transplante, nunca de uma regra do pacote. Nunca substituicao cega: a base do pacote sem o transplante apaga o que este projeto aprendeu.");
   if(engineGodot()) L.push("- **Godot: cache ja versionado.** Se `git ls-files` mostrar arquivos em `.godot/`, eles entraram antes do `.gitignore` e continuam no indice: tire com `git rm -r --cached <projeto>/.godot` (os arquivos ficam no disco) e diga no inventario.");
   L.push("- **O `GUIA-DO-KIT.md` e do kit (`do-kit`): substitua o vivo pelo do pacote, inteiro.** Desde a v1.151.0, quatro secoes sairam do CEREBRO para ele (o update, a transferencia de reserva no canal pasta, a sonda e a correspondencia), e desde a v1.164.0 o «como» da Analise antes do compromisso e do Refino das Instrucoes (no CEREBRO ficam a regra, o gatilho e um ponteiro): no inventario da fusao elas aparecem como «do vivo ficou de fora» — e **ficam de fora; nao as transplante de volta**. Antes de largar a versao viva delas, procure ali linha que este projeto acrescentou e que o GUIA do pacote nao tem: essa vai para «Tecnicas especificas deste projeto», no CEREBRO, e entra no inventario.");
+  if(codeModeOn() && !mountModeOn()) L.push("- **O metodo C (desde a v1.168.0):** no canal pasta com o Code, o kit ensina o chat gravando tudo e a WO so quando se paga (o CEREBRO, «Desenvolvimento no Claude Code»; o GUIA, «Metodo C — a WO de conferencia e o bloco»). **E troca de metodo, nao de texto:** se este projeto ainda trabalha na forma «edicoes», com o Code escrevendo STATUS e DECISIONS, PROPONHA ao dono e so funda com o sim dele, registrado em DECISIONS; se ele ja adotou por decisao propria (um `DEC-` que diz metodo C), reconheca e nao reaplique; sem resposta, funda o resto e deixe essas secoes como o projeto ja tinha. A varredura da troca inclui o `CONTEXT.md`.");
   L.push("");
   L.push("Arquivos no pacote:");
   pack.files.forEach(f => {
