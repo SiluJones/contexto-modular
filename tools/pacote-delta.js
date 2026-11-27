@@ -7,16 +7,20 @@
 // Gera o pacote de update da versao atual (o index.html da raiz) e, junto dele, o _DELTA.md: o que mudou entre
 // o pacote que o projeto recebeu na versao dele e o de agora, com o mesmo nicho, os mesmos modos e o mesmo perfil.
 // O index.html antigo sai do git (o commit que cortou a versao). O carimbo de versao nao conta como mudanca.
-// --perfil: JSON {"topbar": {...}, "builder": {...}} com o perfil com que o projeto foi gerado; sem ele, o padrao do kit.
+// --perfil: JSON {"topbar": {...}, "builder": {...}, "os": "win-ps"} com o perfil com que o projeto foi gerado (os ids
+// dos campos do nicho; "os" e a chave do sistema operacional: win-cmd, win-ps, win-both, macos, linux); sem ele, o padrao do kit.
 // --saida: a pasta do pacote; padrao, a pasta-pai do repo com o nome que o prompt do update cita. Pasta existente com
 // arquivos: recusa (nada e sobrescrito).
 "use strict";
 const fs = require("fs"), path = require("path"), cp = require("child_process");
 
 const TETO = 400;
-const SHIM = 'window.__D = {STATE: STATE, NICHES: NICHES, normNiche: normNiche, buildUpdatePack: buildUpdatePack, KIT_VERSION: KIT_VERSION,'
+const SHIM = 'window.__D = {STATE: STATE, NICHES: NICHES, normNiche: normNiche,'
+  + ' buildUpdatePack: (typeof buildUpdatePack !== "undefined" ? buildUpdatePack : null),'
+  + ' KIT_VERSION: (typeof KIT_VERSION !== "undefined" ? KIT_VERSION : "(sem versao)"),'
   + ' buildUpdatePrompt: (typeof buildUpdatePrompt !== "undefined" ? buildUpdatePrompt : null),'
-  + ' updatePackFolder: (typeof updatePackFolder !== "undefined" ? updatePackFolder : null)};';
+  + ' updatePackFolder: (typeof updatePackFolder !== "undefined" ? updatePackFolder : null),'
+  + ' OSENV: (typeof OSENV !== "undefined" ? OSENV : null)};';
 
 // Carrega um index.html (de qualquer versao) e devolve o minimo para gerar o pacote. Shim proprio, e nao o do
 // validate.js: o do harness lista funcoes que as versoes antigas nao tinham.
@@ -36,16 +40,18 @@ function carregar(html){
 
 // Gera o pacote com o nicho, os modos e o perfil pedidos; devolve os arquivos, o manifesto, o prompt e a pasta.
 function pacote(D, o){
-  const S = D.STATE, prev = {w: S.workmode, n: S.niche, t: S.topbar, b: S.builder};
+  const S = D.STATE, prev = {w: S.workmode, n: S.niche, t: S.topbar, b: S.builder, os: D.OSENV ? D.OSENV.value : null};
   try {
     S.workmode = Object.assign({}, S.workmode || {}, {mountMode: o.mount ? "yes" : "", codeMode: o.code ? "yes" : "", groupMode: "no", asuMode: ""});
     S.niche = o.nicho; S.topbar = Object.assign({}, (o.perfil || {}).topbar || {}); S.builder = Object.assign({}, (o.perfil || {}).builder || {});
+    if(D.OSENV && (o.perfil || {}).os) D.OSENV.value = o.perfil.os;
+    if(!D.buildUpdatePack) throw new Error("a v" + D.KIT_VERSION + " ainda nao gerava pacote de update: nao ha delta — faca o merge completo");
     if(!D.NICHES[o.nicho]) throw new Error("o nicho «" + o.nicho + "» nao existe na v" + D.KIT_VERSION);
     const n = D.normNiche(D.NICHES[o.nicho]), pk = D.buildUpdatePack(n);
     return {versao: D.KIT_VERSION, manifest: pk.manifest, prompt: D.buildUpdatePrompt ? D.buildUpdatePrompt(n) : "",
       pasta: D.updatePackFolder ? D.updatePackFolder(n) : "kcm-update-" + o.nicho + "-v" + D.KIT_VERSION,
       files: pk.files.map(f => ({real: f.real, flat: f.flat, nature: f.nature, content: f.content || ""}))};
-  } finally { S.workmode = prev.w; S.niche = prev.n; S.topbar = prev.t; S.builder = prev.b; }
+  } finally { S.workmode = prev.w; S.niche = prev.n; S.topbar = prev.t; S.builder = prev.b; if(D.OSENV) D.OSENV.value = prev.os; }
 }
 
 // Diff de linhas por LCS, com 2 linhas de contexto. Devolve {mudadas, hunks: [texto]}.
@@ -106,6 +112,10 @@ function renderDelta(d, o){
   const L = [];
   L.push("# _DELTA.md — o que mudou no pacote desde a versão deste projeto");
   L.push("");
+  if(d.semBase){
+    L.push("> Gerado por `tools/pacote-delta.js` do KCM. **Sem base:** este projeto foi gerado num kit anterior ao pacote de update" + (o.commit ? " (commit `" + o.commit + "`)" : "") + ", e não há pacote antigo para comparar. **Faça o merge completo** do `_UPDATE-PROMPT.md` (v" + d.para + "); este arquivo não traz trechos.");
+    return L.join("\n") + "\n";
+  }
   L.push("> Gerado por `tools/pacote-delta.js` do KCM: o pacote da **v" + d.de + "**" + (o.commit ? " (commit `" + o.commit + "`)" : "") + " e o da **v" + d.para + "**, com o mesmo nicho (`" + o.nicho + "`), os mesmos modos (Code: " + (o.code ? "sim" : "não") + "; canal: " + (o.mount ? "mount" : "pasta") + ") e o mesmo perfil (" + (o.perfilNome || "vazio: o padrão do kit") + "). O carimbo de versão não conta como mudança.");
   L.push("> **Linhas de diff a fundir:** " + d.fusao + " (fora os arquivos `do-kit`, que se trocam inteiros) · **teto: " + TETO + "**.");
   L.push(d.acimaDoTeto
@@ -153,9 +163,11 @@ function main(){
   const raiz = path.join(__dirname, ".."), repo = o.repo || raiz;
   o.commit = commitDaVersao(repo, o.de);
   if(o.perfil){ o.perfilNome = "`" + path.basename(o.perfil) + "`"; o.perfil = JSON.parse(fs.readFileSync(o.perfil, "utf8")); }
-  const velho = pacote(carregar(git(repo, ["show", o.commit + ":index.html"])), o);
+  let velho = null;
+  try { velho = pacote(carregar(git(repo, ["show", o.commit + ":index.html"])), o); }
+  catch(e){ if(!/nao gerava pacote de update/.test(e.message)) throw e; }
   const novo = pacote(carregar(fs.readFileSync(path.join(raiz, "index.html"), "utf8")), o);
-  const d = delta(velho, novo);
+  const d = velho ? delta(velho, novo) : {de: "(anterior ao pacote de update)", para: novo.versao, itens: [], fusao: 0, acimaDoTeto: true, semBase: true};
   const saida = o.saida || path.join(raiz, "..", novo.pasta);
   if(fs.existsSync(saida) && fs.readdirSync(saida).length) throw new Error("a pasta de saida ja tem arquivos, nada foi gravado: " + saida);
   fs.mkdirSync(saida, {recursive: true});
@@ -163,6 +175,7 @@ function main(){
   fs.writeFileSync(path.join(saida, "_UPDATE-MANIFEST.md"), novo.manifest);
   if(novo.prompt) fs.writeFileSync(path.join(saida, "_UPDATE-PROMPT.md"), novo.prompt);
   fs.writeFileSync(path.join(saida, "_DELTA.md"), renderDelta(d, o));
+  if(d.semBase){ console.log("sem base (" + o.commit + ": anterior ao pacote de update) -> v" + d.para + " · " + o.nicho + " · " + novo.files.length + " arquivos · MERGE COMPLETO · " + saida); return; }
   const mud = d.itens.filter(x => x.situacao !== "igual" && x.situacao !== "só o carimbo").length;
   console.log("v" + d.de + " (" + o.commit + ") -> v" + d.para + " · " + o.nicho + " · " + d.itens.length + " arquivos, " + mud + " com mudanca · " + d.fusao + " linhas a fundir (teto " + TETO + (d.acimaDoTeto ? ": ACIMA, merge completo" : "") + ") · " + saida);
 }
