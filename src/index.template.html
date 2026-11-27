@@ -1368,7 +1368,7 @@ const INSTR_TETO = 6900;
 const INSTR_TETO_MODOS = 7600;
 const MODO_ORCAMENTO = { code: 550, asu: 400, compartilhado: 450, grupo: 250 };
 // Versao do kit (i-N10). Fonte unica: rodape da UI + carimbo dos downloads.
-const KIT_VERSION = "1.168.0";
+const KIT_VERSION = "1.169.0";
 // Linha de credito padrao dos artefatos gerados (README, manifestos).
 function kitStamp(){ return `Gerado pelo Kit de Contexto Universal v${KIT_VERSION} — ${today}.`; }
 const NICHES = {};
@@ -2888,6 +2888,8 @@ function guiaSecaoGodot(L){
 function guiaSecaoUpdate(L){
   L.push("## Ao receber um template-update do KCM");
   L.push("Se aparecerem no mount arquivos com sufixo `__template-update` junto de um `_UPDATE-MANIFEST.md`: são atualizações genéricas do próprio template (propositalmente vazias do específico desta obra), não conteúdo novo do projeto. Para cada arquivo: compara com o vivo equivalente (o destino real está no manifesto) e **reporta** ao usuário — (a) novidade útil que falta aqui, (b) choque com o que já existe (lado a lado, o usuário decide), (c) algo que este projeto tem e o template não cobre. **Nunca sobrescreve conteúdo vivo por template vazio** — e mais: **template genérico não é candidato a substituir arquivo vivo refinado.** `CLAUDE.md`, `.claude/*`, skills e os `meta/` já especializados (fora o CEREBRO, que é `fusao`) caem por padrão em (c) — o genérico ensina estrutura, o vivo já evoluiu; não é escolha a ser oferecida ao usuário a cada update. A **única** exceção é formato descontinuado, que sempre migra (hoje: `.claude/commands/` → `.claude/skills/<nome>/SKILL.md`). Antes de comparar, o assistente lista o mount e diz em que versão/commit o projeto está: comparar sem saber o estado atual é comparar com memória. **O pacote é entrada transitória, mas não descartável no meio do caminho:** enquanto um merge estiver em curso, ele precisa continuar no mount até o merge fechar — pacote que sai antes do fim leva embora o original de comparação, e o que ficou de fora só aparece depois. Se ele já saiu, o assistente **declara a cobertura de leitura**: quais faixas leu **verbatim** e quais não. É essa declaração que permite fechar a lacuna com um diff dirigido em vez de refazer o merge inteiro. Itens marcados `fusao` no manifesto (CEREBRO, INSTRUCOES) carregam comportamento que este projeto pode ter evoluído, e **a fusão parte do pacote**: o arquivo do pacote é a base, e o assistente transplanta para ele o que é deste projeto (a seção «Técnicas específicas deste projeto», seção sem par no pacote, regra local com DEC, colisão já julgada). Partir do vivo e enxertar o novo só soma — o merge não sabe subtrair. Antes de gravar, mostra ao usuário o inventário: o que transplantou, o que do vivo ficou de fora, e toda linha do pacote que falta no resultado, com o motivo; o usuário decide. Nas Instruções, o que sai para caber no teto sai do transplante, nunca de uma regra do pacote. Nunca substituição cega.");
+  L.push("");
+  L.push("**Com `_DELTA.md`, o merge é focado.** Quando o chat do KCM gera o pacote para este projeto, ele pode trazer um `_DELTA.md`: o que mudou entre o pacote da versão deste projeto e o de agora, com o mesmo perfil, arquivo por arquivo. Abaixo do teto que ele declara (400 linhas), funda só os trechos dele; o arquivo «igual» ou «só o carimbo» não se compara. Acima do teto, o merge completo. As revogadas e o perfil do manifesto valem nos dois casos.");
   L.push("");
   L.push("**Zip sem `_UPDATE-MANIFEST.md` não é update: é projeto novo** (o botão ↓ do KCM, não o ↻). Chegou por cima de um projeto que já tem `meta/`? Pare antes de comparar e peça ao dono o pacote de atualização: o projeto novo traz o molde com os campos do formulário, e fundi-lo regride o vivo.");
   L.push("");
@@ -4890,6 +4892,8 @@ function buildUpdatePrompt(niche){
     const role = (f.role || "").replace(/\s+/g, " ").trim().slice(0, 90);
     L.push(`- \`${f.flat}\` -> \`${f.real}\` (${f.nature})${role ? " — " + role : ""}`);
   });
+  L.push("");
+  L.push("**Se a pasta trouxer um `_DELTA.md`, comece por ele.** Ele diz, arquivo por arquivo, o que o kit mudou desde a versao deste projeto, com o mesmo perfil: abaixo do teto (400 linhas), funda so os trechos dele e nao compare os arquivos que ele marca «igual» ou «so o carimbo»; acima do teto, ou se ele mandar, faca o merge completo. As revogadas e o perfil do manifesto seguem valendo.");
   L.push("");
   L.push("Comece pelas tres secoes do manifesto (linhas revogadas, carimbo de modos e perfil), e so entao liste o que encontrou em (a), (b) e (c). Eu decido os merges.");
   if(pack.codeOn) L.push("**Quando eu aprovar, instale as skills do pacote (`.claude/skills/*`) ANTES de aplicar qualquer WO:** a WO de migracao se aplica com a skill que o pacote traz, e a skill velha a aplicaria pelas regras velhas. **Se a ponte desta conversa recusar gravar em `.claude/`** (acontece: «Writing to .claude is not permitted»), nao pare nem me mande copiar a mao: prepare as skills do pacote na pasta-pai e faca a **primeira edicao da WO do merge** instala-las — a `apply-wo` velha aplica so essa WO, de copia, e as seguintes ja rodam com a nova.");

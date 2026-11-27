@@ -1,8 +1,8 @@
 # ANÁLISE — O update focado: o pacote diz só o que mudou desde a versão do projeto
 
-> **Status:** Decidida (2026-11-26: U3, com o teto de 400 linhas de diff; acima dele, o merge completo)
+> **Status:** Implementada (wo0219, v1.169.0; decidida em 2026-11-26: U3, com o teto de 400 linhas de diff). Na implementação, o script carrega o `index.html` antigo com um shim próprio, e não com o `validate.js` da época: é mais simples e serve a qualquer versão.
 > **Data:** 261126 · **Base:** v1.167.0, HEAD `e34beea`; pacotes gerados na VM do chat a partir do `index.html` de `894be99` (v1.162.0), `1369c85` (v1.167.0) e da réplica da WO de kit (v1.168.0)
-> **Vira:** a WO de kit do update focado, se aceita · **Decisão:** a registrar na WO do delta · **Origem:** `i-N114`; o pedido do dono de 26/11 por updates «mais focados»
+> **Vira:** a WO de kit do update focado, se aceita · **Decisão:** `D-211` · **Origem:** `i-N114`; o pedido do dono de 26/11 por updates «mais focados»
 
 ## Problema
 

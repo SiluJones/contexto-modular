@@ -3580,6 +3580,34 @@ check("C142 o metodo C no kit: o teste de quando a WO se paga no canal pasta com
   } finally { S.workmode = prevW; S.niche = prevN; S.topbar = prevTb; S.builder = prevBd; }
 });
 
+// wo0219 (D-211; analise 261126-ANALISE-o-update-focado.md, U3): o delta de pacote para pacote. Sem git: o check
+// compara o pacote do index.html com o de uma copia em que uma frase do CEREBRO mudou.
+check("C143 o update focado: o tools/pacote-delta.js acha so o que mudou entre dois pacotes, o _DELTA.md declara o teto de 400 linhas, e o prompt e o GUIA mandam comecar por ele (wo0219, D-211)", () => {
+  const P = require(require("path").join(__dirname, "tools", "pacote-delta.js"));
+  const S = T.STATE, prev = {w: S.workmode, n: S.niche, t: S.topbar, b: S.builder};
+  try {
+    const d0 = P.diffLinhas(["a", "b", "c", "d"], ["a", "x", "c", "d", "e"]);
+    assert(d0.mudadas === 3 && d0.hunks.length === 1 && /\n-b\n\+x\n/.test(d0.hunks[0]), "o diff de linhas errou num caso de tres linhas");
+    const o = {nicho: "dev", code: true, mount: false};
+    const frase = "Ligar o Code não é motivo", html = fs.readFileSync(path, "utf8");
+    assert(html.split(frase).length === 2, "a frase de teste nao e unica no index.html");
+    const A = P.pacote(T, o), B = P.pacote(P.carregar(html.split(frase).join("Ligar o Code NAO e motivo")), o);
+    const igual = P.delta(A, A), mud = P.delta(A, B);
+    assert(igual.fusao === 0 && igual.itens.every(x => x.situacao === "igual"), "o pacote comparado com ele mesmo nao deu tudo igual");
+    const cer = mud.itens.find(x => x.real === "meta/CEREBRO.md");
+    assert(cer && cer.situacao === "mudou" && cer.mudadas === 2 && mud.fusao === 2, "a frase trocada nao virou 2 linhas no CEREBRO (deu " + (cer ? cer.mudadas : "nada") + ", fusao " + mud.fusao + ")");
+    assert(mud.itens.filter(x => x.situacao !== "igual").length === 1, "a troca de uma frase do CEREBRO mudou outros arquivos");
+    const md = P.renderDelta(mud, o);
+    assert(md.indexOf("**teto: 400**") > -1 && md.indexOf("funda só os trechos abaixo") > -1 && md.indexOf("NAO e motivo") > -1, "o _DELTA.md nao declara o teto ou nao traz o trecho");
+    assert(P.renderDelta(Object.assign({}, mud, {fusao: 401, acimaDoTeto: true}), o).indexOf("faça o merge completo") > -1, "acima do teto o _DELTA.md nao manda o merge completo");
+    S.workmode = {mountMode: "", codeMode: "yes", groupMode: "no", asuMode: ""}; S.niche = "dev"; S.topbar = {}; S.builder = {};
+    const n = T.normNiche(T.NICHES.dev);
+    assert(T.buildUpdatePrompt(n).indexOf("**Se a pasta trouxer um `_DELTA.md`, comece por ele.**") > -1, "o prompt do update nao manda comecar pelo _DELTA.md");
+    assert(T.buildGuiaKit(n).indexOf("**Com `_DELTA.md`, o merge é focado.**") > -1, "o GUIA nao explica o _DELTA.md");
+    return "ok (o diff de linhas; o pacote contra ele mesmo: tudo igual; uma frase trocada: 2 linhas, so no CEREBRO; o teto no _DELTA.md; o prompt e o GUIA)";
+  } finally { S.workmode = prev.w; S.niche = prev.n; S.topbar = prev.t; S.builder = prev.b; }
+});
+
 // ============ SUMARIO ============
 const fail = results.filter(r => !r.ok);
 console.log("\n=== HARNESS — " + path + " ===");

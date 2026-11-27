@@ -1,10 +1,17 @@
 # CHANGELOG — Kit de Contexto Universal
 
-> Histórico de versões. Versão atual: **v1.168.0**.
+> Histórico de versões. Versão atual: **v1.169.0**.
 > (v1.54–v1.66 reconstruídas a partir de `meta/DECISIONS.md`/`meta/STATUS.md` na spec0045 — i-N47.
 > **Não existe v1.64.0**: houve um salto real de numeração no histórico, de v1.63.0 para v1.65.0.
 > **v1.102–v1.119 reconstruídas na wo0178** (`i-N59`) a partir de `meta/DECISIONS.md` (`D-115` a `D-134`, uma decisão por versão) e das datas do `meta/STATUS.md`:
 > o CHANGELOG tinha parado de ser mantido depois da v1.101.0. Cada uma ganhou só o título, a data, o harness e o elo para a decisão — o detalhe segue lá.)
+
+## v1.169.0 — O update focado: o `_DELTA.md` diz só o que mudou desde a versão do projeto (wo0219, D-211)
+- **O `tools/pacote-delta.js`** (ferramenta de dev, fora do produto): gera o pacote de update da versão atual e, junto, o `_DELTA.md` — o diff, arquivo por arquivo, entre o pacote da versão do projeto (o `index.html` tirado do git) e o de agora, com o mesmo nicho, os mesmos modos e o mesmo perfil; o carimbo de versão não conta. Acima de 400 linhas a fundir, o `_DELTA.md` manda o merge completo.
+- **O prompt do update e o GUIA** mandam começar pelo `_DELTA.md` quando ele vier: fundir só os trechos dele, sem comparar os arquivos iguais.
+- **Medido:** v1.162.0 → v1.168.0 no `narrative` com o Code: 8 de 29 arquivos, 113 linhas; v1.130.0 → v1.168.0 no `dev`: 15 de 23, 422 linhas (acima do teto: merge completo).
+- **Para projetos instalados:** o próximo pacote que o chat do KCM gerar pode vir com o `_DELTA.md`; a linha nova do prompt e do GUIA chega pelo update.
+- **`C143` novo** (143 → 144). **Origem:** a análise `261126-ANALISE-o-update-focado.md` (`i-N114`). Harness **19/19 · 144/144**.
 
 ## v1.168.0 — O método C no kit: no canal pasta com o Code, o chat grava tudo e a WO só vem quando se paga (wo0218, D-210)
 - **O teste de quando a WO se paga** (`D-209`), no CEREBRO gerado, na seção «Desenvolvimento no Claude Code» reescrita para o canal pasta com o Code: só com pelo menos um de quatro motivos, escrito na primeira linha da WO — um passo que o chat não roda e que não é um comando curto para o usuário colar; uma operação de git arriscada; um lote grande; um caminho onde a ponte do chat não grava (`.claude/`). Fora disso, o bloco de git do chat e a conferência de volta no turno seguinte. Ligar o Code não é motivo.

@@ -21,6 +21,7 @@ O `index.html` é **gerado** a partir de `src/` — **não editar o `index.html`
 ## Comandos
 - **Montar:** `node build.js`  → gera o `index.html` na raiz
 - **Validar:** `node validate.js index.html`  (precisa de jsdom: `npm install jsdom` uma vez)
+- **Delta de update** (o pacote de um vizinho com o `_DELTA.md`): `node tools/pacote-delta.js --de <versão> --nicho <id> [--code]`
 - **Conferir uma WO antes de aplicar:** `/check-wo <arquivo>` (read-only) · **aplicar:** `/apply-wo <arquivo>` · **fechar:** `/wrap`
 - **Nunca** commitar sem o harness em **19/19 nichos, 0 erros** (o total de checagens sobe a cada check novo).
 
